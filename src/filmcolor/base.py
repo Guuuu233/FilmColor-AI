@@ -1,0 +1,179 @@
+"""Film base (unexposed film + orange mask) estimation in linear camera RGB. Pure numpy.
+
+The film base is the least dense part of the film, so it transmits the most light of any
+area *covered by film*. Two kinds of area can be brighter and must not be taken as base:
+saturated samples, and light reaching the sensor without passing through film (gaps at the
+film edge). On the NLP sample set the latter differed clearly from base in chromaticity
+(experiments/s1_diag), which the automatic estimator uses as a consensus check.
+
+Regions are (top, left, height, width) in CFA pixel coordinates.
+"""
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass, field
+
+import numpy as np
+
+from .raw import CHANNELS, channel_stats, check_region, sample_stats, superpixel
+
+# warning thresholds
+MAX_REGION_CV = 0.05        # per-channel coefficient of variation inside a base region
+MAX_REGION_SPREAD = 0.03    # relative disagreement between manual regions
+MIN_SAMPLES = 200           # per channel
+
+
+@dataclass
+class BaseEstimate:
+    rgb: tuple[float, float, float]           # linear camera RGB of film base, 1 = white level
+    method: str                                 # "manual" | "auto"
+    regions: list[tuple[int, int, int, int]]
+    stats: dict                                 # per-channel statistics of the pooled samples
+    params: dict = field(default_factory=dict)
+    diagnostics: dict = field(default_factory=dict)
+    warnings: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+
+def _pooled_stats(linear, colors, sat, regions):
+    """Channel statistics over the union of regions (CFA-aware)."""
+    mask = np.zeros(linear.shape, bool)
+    for top, left, h, w in regions:
+        check_region((top, left, h, w), linear.shape)
+        mask[top : top + h, left : left + w] = True
+    return sample_stats(linear[mask], colors[mask], sat[mask])
+
+
+def _check_stats(stats, warnings, where):
+    for name in CHANNELS:
+        s = stats[name]
+        if s["n"] < MIN_SAMPLES:
+            warnings.append(f"{where}: only {s['n']} usable {name} samples")
+        if s["sat_frac"] > 0:
+            warnings.append(f"{where}: {s['sat_frac']:.2%} of {name} samples saturated (excluded)")
+        if s["n"] and s["cv"] > MAX_REGION_CV:
+            warnings.append(f"{where}: {name} not uniform (cv={s['cv']:.3f}); region may include image content")
+        if s["n"] and s["median"] <= 0:
+            warnings.append(f"{where}: {name} median at or below black level")
+
+
+def estimate_base_manual(linear, colors, sat, regions) -> BaseEstimate:
+    """Film base from user-specified regions. Uses the median of non-saturated samples per channel."""
+    if not regions:
+        raise ValueError("at least one region is required")
+    regions = [tuple(int(x) for x in r) for r in regions]
+    warnings: list[str] = []
+    per_region = [channel_stats(linear, colors, sat, r) for r in regions]
+    for i, s in enumerate(per_region):
+        _check_stats(s, warnings, f"region {i}")
+    pooled = _pooled_stats(linear, colors, sat, regions)
+    if any(pooled[c]["n"] == 0 for c in CHANNELS):
+        raise ValueError("regions contain no usable samples for at least one channel")
+    rgb = tuple(pooled[c]["median"] for c in CHANNELS)
+    spread = {}
+    if len(regions) > 1:
+        for c in CHANNELS:
+            meds = [s[c]["median"] for s in per_region if s[c]["n"]]
+            spread[c] = float((max(meds) - min(meds)) / np.median(meds))
+            if spread[c] > MAX_REGION_SPREAD:
+                warnings.append(f"regions disagree on {c} by {spread[c]:.1%}")
+    return BaseEstimate(
+        rgb=rgb, method="manual", regions=regions, stats=pooled,
+        diagnostics=dict(per_region=per_region, region_spread=spread), warnings=warnings,
+    )
+
+
+def _neighbourhood_rel_std(sp):
+    """Max over channels of the 3x3 neighbourhood std / mean, per block (edge blocks -> inf)."""
+    h, w, _ = sp.shape
+    out = np.full((h, w), np.inf, np.float32)
+    if h < 3 or w < 3:
+        return out
+    win = np.stack([sp[dy : h - 2 + dy, dx : w - 2 + dx] for dy in range(3) for dx in range(3)])
+    mean = win.mean(0)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        rel = np.where(mean > 0, win.std(0) / mean, np.inf)
+    out[1:-1, 1:-1] = rel.max(-1)
+    return out
+
+
+def estimate_base_auto(
+    linear, colors, sat, pattern_size: int, *,
+    block: int = 24, top_frac: float = 0.01, max_rel_std: float = 0.03,
+    chroma_tol: float = 0.05, crop: tuple[int, int, int, int] | None = None,
+) -> BaseEstimate:
+    """Automatic film base estimate.
+
+    1. Downsample to CFA-aware blocks; drop blocks with any saturated sample and blocks outside
+       ``crop`` (decoder-reported valid area).
+    2. Keep spatially uniform blocks (3x3 neighbourhood relative std <= ``max_rel_std``).
+    3. Candidates = brightest ``top_frac`` of the uniform blocks (at least 10).
+    4. Chromaticity consensus: keep candidates whose log2(R/G) and log2(B/G) lie within
+       ``chroma_tol`` of the candidates' median (iterated once around the new median).
+    5. Base = per-channel median of the kept blocks.
+
+    Known limitation: unsaturated light that bypassed the film and makes up the majority of the
+    candidates would be taken as base. A wider candidate pool was tried and rejected because large
+    bright image areas then dominated the consensus (_DSF9235). Use manual regions in that case.
+    """
+    params = dict(block=block, top_frac=top_frac, max_rel_std=max_rel_std,
+                  chroma_tol=chroma_tol, crop=crop)
+    sp, sp_sat = superpixel(linear, colors, sat, pattern_size, block)
+    hb, wb, _ = sp.shape
+    valid = ~sp_sat & np.all(sp > 0, -1)
+    if crop is not None:
+        t, l, h, w = crop
+        rows, cols = np.arange(hb) * block, np.arange(wb) * block
+        inside = ((rows >= t) & (rows + block <= t + h))[:, None] & ((cols >= l) & (cols + block <= l + w))[None, :]
+        valid &= inside
+    uniform = valid & (_neighbourhood_rel_std(sp) <= max_rel_std)
+    warnings: list[str] = []
+    n_uniform = int(uniform.sum())
+    if n_uniform == 0:
+        raise ValueError("no uniform unsaturated blocks; specify the film base region manually")
+
+    Y = sp.mean(-1)
+    n_cand = min(n_uniform, max(10, int(round(top_frac * n_uniform))))
+    thr = float(np.sort(Y[uniform])[-n_cand])
+    cand = uniform & (Y >= thr)
+    idx = np.argwhere(cand)
+    vals = sp[cand]
+    chroma = np.log2(vals[:, [0, 2]] / vals[:, [1]])
+    consensus = np.ones(len(vals), bool)
+    for _ in range(2):
+        centre = np.median(chroma[consensus], 0)
+        consensus = np.all(np.abs(chroma - centre) <= chroma_tol, -1)
+        if not consensus.any():
+            raise ValueError("no chromatically consistent base candidates; specify region manually")
+    outlier_frac = float(1 - consensus.mean())
+
+    keep = consensus
+    if outlier_frac > 0.2:
+        warnings.append(f"{outlier_frac:.0%} of the brightest candidates rejected by chromaticity check; "
+                        "possible light bypassing the film - verify base region")
+
+    kept = vals[keep]
+    rgb = tuple(float(x) for x in np.median(kept, 0))
+    regions = [(int(r * block), int(c * block), block, block) for r, c in idx[keep]]
+    stats = {}
+    for i, name in enumerate(CHANNELS):
+        p05, p95 = np.percentile(kept[:, i], [5, 95])
+        stats[name] = dict(n_blocks=int(len(kept)), median=rgb[i], p05=float(p05), p95=float(p95),
+                           rel_spread=float((p95 - p05) / rgb[i]))
+        if stats[name]["rel_spread"] > 0.1:
+            warnings.append(f"{name} base blocks spread {stats[name]['rel_spread']:.1%} (p05-p95)")
+    sat_blocks = int(sp_sat.sum())
+    if sat_blocks:
+        warnings.append(f"{sat_blocks} blocks contain saturated samples (excluded)")
+    kr, kc = idx[keep][:, 0] * block, idx[keep][:, 1] * block
+    diagnostics = dict(
+        n_blocks=hb * wb, n_saturated_blocks=sat_blocks, n_uniform=n_uniform, n_candidates=int(len(vals)),
+        n_kept=int(keep.sum()), chroma_outlier_frac=outlier_frac,
+        chroma_centre_log2_RG_BG=[float(x) for x in centre],
+        rejected_mean_rgb=[float(x) for x in vals[~keep].mean(0)] if (~keep).any() else None,
+        kept_bbox=[int(kr.min()), int(kc.min()), int(kr.max() + block), int(kc.max() + block)],
+        brightness_threshold=thr,
+    )
+    return BaseEstimate(rgb=rgb, method="auto", regions=regions, stats=stats, params=params,
+                        diagnostics=diagnostics, warnings=warnings)

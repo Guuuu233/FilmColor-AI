@@ -1,0 +1,96 @@
+"""Tests on the NLP official sample RAFs (Fujifilm X-T2, X-Trans). Skipped when the files are absent.
+
+Expected values are regression baselines observed on 2026-10-13 (experiments/s1_diag), not
+physical ground truth.
+"""
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+from filmcolor.base import estimate_base_auto, estimate_base_manual
+from filmcolor.raw import linearize, saturation_mask, superpixel
+from filmcolor.rawpy_io import demosaic_linear, load_raw
+
+SRC = Path(__file__).resolve().parents[1] / "data/raw/public/nlp_official"
+FILES = sorted(SRC.glob("*.RAF")) if SRC.is_dir() else []
+pytestmark = pytest.mark.skipif(len(FILES) != 12, reason="NLP sample RAFs not present")
+
+# frames whose auto base chromaticity agreed within 0.04 (log2) when first measured
+CONSISTENT_GROUP = ["_DSF9229", "_DSF9231", "_DSF9235", "_DSF9237", "_DSF9238", "_DSF9239"]
+
+
+def _prepare(path):
+    f = load_raw(path)
+    return f, linearize(f), f.colors, saturation_mask(f)
+
+
+def _auto(path):
+    f, lin, col, sat = _prepare(path)
+    return f, lin, col, sat, estimate_base_auto(lin, col, sat, f.pattern.shape[0], crop=f.crop)
+
+
+@pytest.mark.parametrize("path", FILES, ids=lambda p: p.stem)
+def test_load_raw_xtrans(path):
+    f = load_raw(path)
+    assert f.pattern.shape == (6, 6)
+    assert sorted(np.bincount(f.pattern.ravel())) == [8, 8, 20]  # X-Trans: 8 R, 8 B, 20 G
+    assert f.cfa.shape == (4032, 6032)
+    assert f.white == 16383
+    assert np.all(f.black == 1022)
+    assert f.meta["margins"] == (0, 0)  # crop basis is unambiguous only in this case
+    t, l, h, w = f.crop
+    assert 0 <= t and 0 <= l and t + h <= f.cfa.shape[0] and l + w <= f.cfa.shape[1]
+
+
+def test_auto_base_regression_and_determinism():
+    path = SRC / "_DSF9235.RAF"
+    *_, a = _auto(path)
+    *_, b = _auto(path)
+    assert a.to_dict() == b.to_dict()
+    rg, bg = a.diagnostics["chroma_centre_log2_RG_BG"]
+    assert abs(rg - 0.432) < 0.01 and abs(bg - (-1.698)) < 0.01
+
+
+def test_auto_base_chromaticity_consistent_in_group():
+    chroma = np.array([_auto(SRC / f"{s}.RAF")[-1].diagnostics["chroma_centre_log2_RG_BG"]
+                       for s in CONSISTENT_GROUP])
+    assert np.all(chroma.max(0) - chroma.min(0) < 0.05), chroma
+
+
+@pytest.mark.parametrize("stem", ["_DSF8434", "_DSF8951"])
+def test_auto_base_excludes_saturated_blocks(stem):
+    *_, est = _auto(SRC / f"{stem}.RAF")
+    assert est.diagnostics["n_saturated_blocks"] > 0
+    assert any("saturated" in w for w in est.warnings)
+    # every kept block is free of saturated samples
+    f, lin, col, sat = _prepare(SRC / f"{stem}.RAF")
+    for t, l, h, w in est.regions:
+        assert not sat[t : t + h, l : l + w].any()
+
+
+@pytest.mark.parametrize("stem", ["_DSF8948", "_DSF9235"])
+def test_manual_base_agrees_with_auto(stem):
+    """Manual estimate on regions taken from the auto result: different statistic, same answer."""
+    f, lin, col, sat, auto = _auto(SRC / f"{stem}.RAF")
+    regions = auto.regions[:: max(1, len(auto.regions) // 5)][:5]
+    manual = estimate_base_manual(lin, col, sat, regions)
+    assert np.max(np.abs(np.array(manual.rgb) / np.array(auto.rgb) - 1)) < 0.01
+    assert all(manual.stats[c]["sat_frac"] == 0 for c in "RGB")
+
+
+def test_analysis_and_render_paths_agree():
+    """CFA block means (analysis path) vs demosaiced block means (render path), same pixels."""
+    path = SRC / "_DSF9235.RAF"
+    f, lin, col, sat = _prepare(path)
+    block = 48
+    sp, sp_sat = superpixel(lin, col, sat, f.pattern.shape[0], block)
+    dm = demosaic_linear(path)
+    assert dm.shape[:2] == f.cfa.shape
+    h, w = sp.shape[0] * block, sp.shape[1] * block
+    bm = dm[:h, :w].reshape(sp.shape[0], block, sp.shape[1], block, 3).mean(axis=(1, 3))
+    ok = ~sp_sat & np.all(sp > 0.02, -1)  # render path clips below-black samples to 0
+    ratio = bm[ok] / sp[ok]
+    med = np.median(ratio, 0)
+    assert np.all(np.abs(med - 1) < 0.01), med
+    assert np.all(np.percentile(ratio, 1, 0) > 0.97) and np.all(np.percentile(ratio, 99, 0) < 1.03)
