@@ -149,7 +149,7 @@
  },
  "software": {
   "filmcolor": "0.0.1",
-  "git_commit": "245f37a1019b9ebc271628b1b56b8e9753ad6eac",
+  "git_commit": "52a4acc2d9bfb8deafd4c5be75c90ac4e39a5634",
   "src_dirty": false,
   "rawpy": "0.27.1",
   "libraw": "0.22.1",
@@ -1533,6 +1533,76 @@
    0.1186279409945897,
    0.09729318962885773
   ]
+ },
+ "qc": {
+  "status": "warn",
+  "checks": [
+   {
+    "name": "finite",
+    "value": true,
+    "threshold": true,
+    "status": "pass"
+   },
+   {
+    "name": "value_range",
+    "value": [
+     0.0,
+     0.9999999403953552
+    ],
+    "threshold": [
+     0,
+     1
+    ],
+    "status": "pass"
+   },
+   {
+    "name": "median_luma",
+    "value": 0.2515367865562439,
+    "threshold": [
+     0.15,
+     0.85
+    ],
+    "status": "pass"
+   },
+   {
+    "name": "tonal_range",
+    "value": 0.8807538300752644,
+    "threshold": 0.35,
+    "status": "pass"
+   },
+   {
+    "name": "channel_mean_ratio",
+    "value": 1.0126229524612427,
+    "threshold": 1.5,
+    "status": "pass"
+   },
+   {
+    "name": "clip_high",
+    "value": 0.0009976553618794997,
+    "threshold": 0.005,
+    "status": "pass"
+   },
+   {
+    "name": "below_black",
+    "value": 0.07397007625994695,
+    "threshold": 0.1,
+    "status": "pass"
+   },
+   {
+    "name": "base_inside_image",
+    "value": 1.0,
+    "threshold": 0.5,
+    "status": "warn"
+   }
+  ],
+  "provisional": true,
+  "info": {
+   "full_image_above_white": [
+    0.09781187667098228,
+    0.1186279409945897,
+    0.09729318962885773
+   ]
+  }
  },
  "output": {
   "encoding": "srgb",
