@@ -114,3 +114,21 @@ def test_inversion_on_real_negative(rendered_9235):
     assert min(res.report["full_image_above_white"]) > 0.25  # holder mask flagged
     assert np.all(np.isfinite(res.positive))
     assert res.display.dtype == np.float32 and res.display.min() >= 0 and res.display.max() <= 1
+
+
+def test_pipeline_output_reproducible_and_replayable(tmp_path):
+    import tifffile
+
+    from filmcolor.pipeline import replay_kwargs, write
+
+    path = SRC / "_DSF8948.RAF"
+    a = write(path, tmp_path / "a")
+    b = write(path, tmp_path / "b")
+    assert a["output"]["sha256"] == b["output"]["sha256"]  # same input, same version: identical bytes
+    assert a["input"]["sha256"] == "644375ef0652998341a34ba0ddc904901a4b13ea5232aeca119c822201754326"
+    for key in ("schema", "input", "software", "decode", "base", "image_region", "inversion", "report", "output"):
+        assert key in a
+    assert a["output"]["colorimetric_calibration"] == "none"
+    c = write(path, tmp_path / "c", **replay_kwargs(a))  # no estimation, parameters from the sidecar
+    assert c["base"]["method"] == "given" and c["inversion"]["d_hi_source"] == "given"
+    assert np.array_equal(tifffile.imread(tmp_path / "a/_DSF8948.tif"), tifffile.imread(tmp_path / "c/_DSF8948.tif"))

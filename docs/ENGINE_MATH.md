@@ -48,3 +48,18 @@
 ## 4. 诊断（`range_report`）
 
 每通道：`clip_high`（画面区域高于输出白的比例）、`below_black`（低于黑点）、`brighter_than_base`（比片基更透）、密度 0.1% / 99.9% 分位；以及 `full_image_above_white`。全部参数由 `InversionParams.to_dict()` 输出，可写入 sidecar。
+
+## 5. 导出（S1-6，`export.py`）
+
+- 16-bit RGB TIFF（zlib 压缩），值 = `round(clip(x, 0, 1) · 65535)`。
+- `encoding="srgb"`（默认）：写入第 3 节的 `O`；`encoding="linear"`：写入 `clip(exposure · P, 0, 1)`。
+- 嵌入自生成的 ICC v2.1 矩阵/TRC 配置文件：原色取 sRGB（Bradford 适配到 D50 PCS），TRC 为 sRGB 曲线（4096 点）或恒等。描述字段写明 “FilmColor uncalibrated camera RGB - sRGB primaries assumed”。**这是让色彩管理软件能显示的解读方式，不是色度校准结论**；sidecar 中 `colorimetric_calibration = "none"`。
+- 不写时间戳，同输入同版本输出逐字节一致。ICC 用 littleCMS（Pillow，仅测试依赖）解析并验证。
+
+## 6. Sidecar 与复现（S1-7，`pipeline.py`）
+
+每个输出 `<stem>.tif` 旁边写 `<stem>.json`（`schema = filmcolor.sidecar/0.1`）：输入路径与 sha256、CFA/黑白电平/crop/元数据；软件版本（filmcolor、git commit、`src` 是否有未提交改动、rawpy、LibRaw、numpy）；解码设置；片基估计（方法、全部区域、统计、诊断、渲染信号上的片基值）；画面区域及来源；反转参数；诊断；输出编码、ICC 描述、输出 sha256。
+
+复现方式：`pipeline.replay_kwargs(sidecar)` 取出片基、白点、画面区域、gamma、曝光、编码，跳过所有估计步骤重放。测试验证两次运行字节一致、重放像素一致。
+
+方向：输出保持传感器方向，不应用 `meta.flip`。
