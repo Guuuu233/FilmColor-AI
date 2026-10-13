@@ -1,6 +1,7 @@
 """rawpy/LibRaw adapter. The only module that touches the RAW decoding library."""
 from __future__ import annotations
 
+from contextlib import contextmanager
 from pathlib import Path
 
 import numpy as np
@@ -9,8 +10,25 @@ import rawpy
 from .raw import RawFrame
 
 
+class RawDecodeError(ValueError):
+    """The decoder could not read the file (not a supported RAW, truncated or corrupted)."""
+
+
+@contextmanager
+def _open(path):
+    path = Path(path)
+    if not path.is_file():
+        raise FileNotFoundError(f"RAW file not found: {path}")
+    try:
+        with rawpy.imread(str(path)) as r:
+            yield r
+    except rawpy.LibRawError as e:
+        raise RawDecodeError(f"{path}: LibRaw could not decode the file ({type(e).__name__}: {e}); "
+                             "not a supported RAW, truncated or corrupted") from e
+
+
 def load_raw(path: str | Path) -> RawFrame:
-    with rawpy.imread(str(path)) as r:
+    with _open(path) as r:
         if r.raw_type != rawpy.RawType.Flat or r.raw_pattern is None:
             raise ValueError(f"{path}: only single-plane CFA RAW files are supported")
         lib_pattern = np.asarray(r.raw_pattern)
@@ -49,7 +67,7 @@ def demosaic_linear(path: str | Path, algorithm: rawpy.DemosaicAlgorithm | None 
     Scaled to match ``linearize``: 0 = black level, 1 = white level. No white balance, no colour
     matrix, no orientation flip, no auto-brightness. Values below black are clipped to 0 by LibRaw.
     """
-    with rawpy.imread(str(path)) as r:
+    with _open(path) as r:
         img = r.postprocess(
             demosaic_algorithm=algorithm,
             output_color=rawpy.ColorSpace.raw,

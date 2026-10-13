@@ -37,6 +37,8 @@ class InversionParams:
         for name in ("base", "d_lo", "d_hi"):
             setattr(self, name, tuple(float(x) for x in getattr(self, name)))
         self.gamma, self.exposure = float(self.gamma), float(self.exposure)
+        if not np.all(np.isfinite([*self.base, *self.d_lo, *self.d_hi, self.gamma, self.exposure])):
+            raise ValueError("inversion parameters must be finite")
         if np.any(np.asarray(self.base) <= 0):
             raise ValueError(f"film base must be positive, got {self.base}")
         if np.any(np.asarray(self.d_hi) <= np.asarray(self.d_lo)):
@@ -101,6 +103,8 @@ def estimate_white_point(D, mask=None, pct: float = 99.9) -> tuple[float, float,
 
     Assumes the densest image areas (scene highlights) are neutral, which balances channel contrast.
     """
+    if not 0 < pct <= 100:
+        raise ValueError(f"white point percentile must be in (0, 100], got {pct}")
     vals = D[mask] if mask is not None else D.reshape(-1, 3)
     if len(vals) == 0:
         raise ValueError("no pixels to estimate the white point from")
@@ -152,9 +156,18 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
                     exposure: float = 1.0, d_lo=None, d_hi=None) -> InversionResult:
     """Full chain with automatic white point unless ``d_hi`` is given. ``mask`` selects image pixels
     used for the white point and the report (exclude borders, rebate, holder and saturated areas)."""
+    if not np.all(np.isfinite(rgb)):
+        raise ValueError("input image contains NaN or infinite values")
+    if not np.all(np.isfinite(base)) or np.any(np.asarray(base) <= 0):
+        raise ValueError(f"film base must be positive and finite, got {tuple(base)}")
     D = density(rgb, base)
     if d_hi is None:
         d_hi = estimate_white_point(D, mask, white_pct)
+        lo = d_lo or (0.0, 0.0, 0.0)
+        flat = [c for c, hi, l in zip("RGB", d_hi, lo) if hi <= l]
+        if flat:
+            raise ValueError(f"no density above the black point in channel(s) {''.join(flat)} of the image "
+                             "region: blank or unexposed frame, or wrong image region / film base")
     p = InversionParams(base=tuple(float(x) for x in base), d_lo=tuple(d_lo or (0.0, 0.0, 0.0)),
                         d_hi=tuple(float(x) for x in d_hi), gamma=gamma, exposure=exposure)
     P = invert(D, p)

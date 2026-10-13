@@ -129,6 +129,36 @@ def test_pipeline_output_reproducible_and_replayable(tmp_path):
     for key in ("schema", "input", "software", "decode", "base", "image_region", "inversion", "report", "output"):
         assert key in a
     assert a["output"]["colorimetric_calibration"] == "none"
+    assert a["qc"]["status"] in ("pass", "warn") and a["qc"]["provisional"]
+    assert {c["name"]: c["status"] for c in a["qc"]["checks"]}["base_inside_image"] == "pass"
     c = write(path, tmp_path / "c", **replay_kwargs(a))  # no estimation, parameters from the sidecar
     assert c["base"]["method"] == "given" and c["inversion"]["d_hi_source"] == "given"
     assert np.array_equal(tifffile.imread(tmp_path / "a/_DSF8948.tif"), tifffile.imread(tmp_path / "c/_DSF8948.tif"))
+
+
+@pytest.mark.parametrize("keep", [1_000_000, 25_000_000, -100])
+def test_truncated_raf_raises_decode_error(tmp_path, keep):
+    from filmcolor.rawpy_io import RawDecodeError
+
+    data = (SRC / "_DSF8948.RAF").read_bytes()
+    p = tmp_path / "trunc.RAF"
+    p.write_bytes(data[:keep])
+    with pytest.raises(RawDecodeError, match="trunc.RAF"):
+        load_raw(p)
+    with pytest.raises(RawDecodeError):
+        demosaic_linear(p)
+
+
+def test_pipeline_rejects_bad_region_before_rendering():
+    import time
+
+    from filmcolor.pipeline import convert
+
+    t0 = time.time()
+    with pytest.raises(ValueError):
+        convert(SRC / "_DSF8948.RAF", image_region=(4000, 0, 100, 100))
+    with pytest.raises(ValueError):
+        convert(SRC / "_DSF8948.RAF", image_region=(0, 0, 100))
+    with pytest.raises(ValueError):
+        convert(SRC / "_DSF8948.RAF", white_pct=0)
+    assert time.time() - t0 < 5  # the 11 s demosaic was never reached

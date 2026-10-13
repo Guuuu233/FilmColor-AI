@@ -18,7 +18,8 @@ import rawpy
 from .base import estimate_base_auto, estimate_base_manual
 from .export import DESCRIPTION, write_tiff16
 from .invert import base_from_regions, central_region, invert_negative, region_mask
-from .raw import linearize, saturation_mask
+from .qc import quality_checks
+from .raw import check_region, linearize, saturation_mask
 from .rawpy_io import demosaic_linear, load_raw
 
 SCHEMA = "filmcolor.sidecar/0.1"
@@ -50,8 +51,14 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields)."""
     if encoding not in DESCRIPTION:
         raise ValueError(f"encoding must be one of {tuple(DESCRIPTION)}")
+    if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
+        raise ValueError(f"invalid parameters: white_pct={white_pct} gamma={gamma} exposure={exposure}")
     path = Path(path)
     f = load_raw(path)
+    if image_region is not None:  # fail before the slow render step
+        if len(image_region) != 4:
+            raise ValueError(f"image region must be (top, left, height, width), got {image_region}")
+        check_region(tuple(int(x) for x in image_region), f.cfa.shape)
     lin, col, sat = linearize(f), f.colors, saturation_mask(f)
 
     if base_rgb is not None:
@@ -79,6 +86,12 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     res = invert_negative(rgb, base_rgb, mask=mask, white_pct=white_pct, gamma=gamma,
                           exposure=exposure, d_hi=d_hi)
     del rgb
+    inside = None
+    if regions is not None and base_info["method"] == "auto":
+        t, l, h, w = image_region
+        centres = [(r + rh / 2, c + rw / 2) for r, c, rh, rw in regions]
+        inside = float(np.mean([t <= y < t + h and l <= x < l + w for y, x in centres]))
+    qc = quality_checks(res.display, mask, res.report, base_inside_image=inside)
     if encoding == "srgb":
         out = res.display
     else:
@@ -97,6 +110,7 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         image_region=dict(region=list(image_region), source=region_source),
         inversion=dict(params=res.params.to_dict(), white_pct=white_pct, d_hi_source="given" if d_hi else "auto"),
         report=res.report,
+        qc=qc,
         output=dict(encoding=encoding, colorimetric_calibration="none",
                     icc_description=DESCRIPTION[encoding], bit_depth=16,
                     orientation="sensor (meta.flip not applied)"),
