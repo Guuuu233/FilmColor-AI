@@ -9,6 +9,7 @@ import numpy as np
 import pytest
 
 from filmcolor.base import estimate_base_auto, estimate_base_manual
+from filmcolor.invert import base_from_regions, central_region, invert_negative, region_mask
 from filmcolor.raw import linearize, saturation_mask, superpixel
 from filmcolor.rawpy_io import demosaic_linear, load_raw
 
@@ -79,13 +80,18 @@ def test_manual_base_agrees_with_auto(stem):
     assert all(manual.stats[c]["sat_frac"] == 0 for c in "RGB")
 
 
-def test_analysis_and_render_paths_agree():
-    """CFA block means (analysis path) vs demosaiced block means (render path), same pixels."""
+@pytest.fixture(scope="module")
+def rendered_9235():
     path = SRC / "_DSF9235.RAF"
+    return path, demosaic_linear(path)
+
+
+def test_analysis_and_render_paths_agree(rendered_9235):
+    """CFA block means (analysis path) vs demosaiced block means (render path), same pixels."""
+    path, dm = rendered_9235
     f, lin, col, sat = _prepare(path)
     block = 48
     sp, sp_sat = superpixel(lin, col, sat, f.pattern.shape[0], block)
-    dm = demosaic_linear(path)
     assert dm.shape[:2] == f.cfa.shape
     h, w = sp.shape[0] * block, sp.shape[1] * block
     bm = dm[:h, :w].reshape(sp.shape[0], block, sp.shape[1], block, 3).mean(axis=(1, 3))
@@ -94,3 +100,17 @@ def test_analysis_and_render_paths_agree():
     med = np.median(ratio, 0)
     assert np.all(np.abs(med - 1) < 0.01), med
     assert np.all(np.percentile(ratio, 1, 0) > 0.97) and np.all(np.percentile(ratio, 99, 0) < 1.03)
+
+
+def test_inversion_on_real_negative(rendered_9235):
+    path, rgb = rendered_9235
+    f, lin, col, sat, auto = _auto(path)
+    base = base_from_regions(rgb, auto.regions)
+    mask = ~sat & region_mask(sat.shape, central_region(sat.shape))
+    res = invert_negative(rgb, base["rgb"], mask=mask)
+    np.testing.assert_allclose(res.params.d_hi, (0.570, 0.668, 0.848), atol=0.02)
+    for c in "RGB":
+        assert abs(res.report["range"][c]["clip_high"] - 0.001) < 0.0005  # 99.9th percentile
+    assert min(res.report["full_image_above_white"]) > 0.25  # holder mask flagged
+    assert np.all(np.isfinite(res.positive))
+    assert res.display.dtype == np.float32 and res.display.min() >= 0 and res.display.max() <= 1
