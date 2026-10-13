@@ -1,0 +1,15 @@
+data/raw/
+experiments/**/outputs/
+*.tif
+*.tiff
+__pycache__/
+.venv/
+.DS_Store
+*.zip
+*.RAF
+*.ARW
+*.NEF
+*.DNG
+# images derived from dev-test-only data (licence unclear) stay out of git
+experiments/**/*.jpg
+experiments/**/*.png
