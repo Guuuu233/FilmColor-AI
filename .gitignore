@@ -13,3 +13,4 @@ __pycache__/
 # images derived from dev-test-only data (licence unclear) stay out of git
 experiments/**/*.jpg
 experiments/**/*.png
+*.npy

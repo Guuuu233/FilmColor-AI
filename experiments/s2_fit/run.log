@@ -1,0 +1,12 @@
+_DSF8434 default 12.9 6:3.67/near5/bound1 7:3.67/near3/bound1 7reg:3.95/near5/bound1 cos(ev,mid) default 0.65 fit7 0.93
+_DSF8948 default 7.7 6:5.75/near4/bound1 7:5.67/near5/bound0 7reg:5.42/near5/bound1 cos(ev,mid) default 0.85 fit7 0.98
+_DSF8951 default 15.4 6:6.84/near5/bound1 7:7.07/near5/bound1 7reg:6.95/near5/bound0 cos(ev,mid) default 0.86 fit7 0.96
+_DSF8983 default 24.2 6:8.09/near5/bound2 7:4.48/near5/bound1 7reg:4.89/near5/bound0 cos(ev,mid) default 0.88 fit7 0.91
+_DSF9228 default 6.9 6:0.99/near4/bound1 7:0.96/near2/bound0 7reg:1.20/near5/bound0 cos(ev,mid) default 0.68 fit7 0.91
+_DSF9229 default 12.0 6:5.59/near5/bound1 7:5.10/near5/bound0 7reg:5.82/near5/bound0 cos(ev,mid) default 0.84 fit7 0.96
+_DSF9231 default 11.8 6:3.70/near5/bound1 7:3.59/near4/bound0 7reg:3.73/near5/bound0 cos(ev,mid) default 0.80 fit7 0.94
+_DSF9235 default 9.5 6:1.65/near5/bound0 7:1.65/near5/bound0 7reg:1.67/near5/bound0 cos(ev,mid) default 0.70 fit7 0.90
+_DSF9237 default 13.2 6:4.65/near5/bound2 7:4.05/near1/bound1 7reg:4.30/near5/bound1 cos(ev,mid) default 0.71 fit7 0.81
+_DSF9238 default 13.2 6:2.67/near5/bound1 7:2.38/near5/bound0 7reg:2.55/near5/bound0 cos(ev,mid) default 0.82 fit7 0.94
+_DSF9239 default 5.6 6:2.54/near5/bound1 7:2.39/near5/bound0 7reg:2.49/near5/bound0 cos(ev,mid) default 0.85 fit7 0.95
+_DSF9243 default 10.5 6:3.90/near5/bound1 7:3.53/near4/bound0 7reg:3.72/near5/bound0 cos(ev,mid) default 0.80 fit7 0.93
