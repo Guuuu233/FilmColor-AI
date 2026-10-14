@@ -177,3 +177,81 @@ def estimate_base_auto(
     )
     return BaseEstimate(rgb=rgb, method="auto", regions=regions, stats=stats, params=params,
                         diagnostics=diagnostics, warnings=warnings)
+
+
+@dataclass
+class RollBase:
+    rgb_norm: tuple[float, float, float]       # base at the reference exposure time t_ref
+    t_ref: float
+    members: list[str]                          # frames whose interior minimum density forms the floor cluster
+    used: list[str]                             # most transparent members, averaged into rgb_norm
+    diagnostics: dict = field(default_factory=dict)
+    warnings: list[str] = field(default_factory=list)
+
+    def for_exposure(self, t: float) -> tuple[float, float, float]:
+        """Base in the raw signal of a frame captured with exposure time ``t``."""
+        if not (np.isfinite(t) and t > 0):
+            raise ValueError(f"exposure time must be positive, got {t}")
+        return tuple(float(x * t / self.t_ref) for x in self.rgb_norm)
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+
+def estimate_base_roll(candidates: dict, exposures: dict, *, t_ref: float | None = None,
+                       level_window: float = 0.1, chroma_tol: float = 0.05, n_use: int = 3,
+                       min_members: int = 3) -> RollBase:
+    """Film base for a roll scanned without film border, from per-frame interior candidates.
+
+    ``candidates``: frame -> linear RGB of the frame's most transparent uniform area (e.g.
+    ``estimate_base_auto(...).rgb``); ``exposures``: frame -> exposure time of the scan. All frames
+    must share ISO, aperture, lens and light source; only exposure time is normalised (to ``t_ref``,
+    default the median exposure).
+
+    A frame's interior minimum is base only where the scene left the film unexposed; elsewhere it is
+    denser and usually coloured. Areas below the film's toe converge to the colour of base + fog, so:
+    1. frames within ``level_window`` (density, G channel) of the most transparent frame, and
+    2. within ``chroma_tol`` (log2 R/G, B/G) of their median chromaticity, form the floor cluster;
+    3. base = per-channel median of the ``n_use`` most transparent cluster members.
+    The result is the least dense film observed on the roll: an upper bound on the base density, equal
+    to it only if some frame reached the floor. Fewer than ``min_members`` cluster frames -> warning.
+    """
+    names = sorted(candidates)
+    if not names:
+        raise ValueError("no frames")
+    if set(names) != set(exposures):
+        raise ValueError("candidates and exposures must cover the same frames")
+    rgb = np.array([candidates[n] for n in names], np.float64)
+    t = np.array([exposures[n] for n in names], np.float64)
+    if rgb.shape[1:] != (3,) or not np.all(np.isfinite(rgb)) or np.any(rgb <= 0):
+        raise ValueError("candidate RGB values must be finite and positive")
+    if not np.all(np.isfinite(t)) or np.any(t <= 0):
+        raise ValueError("exposure times must be finite and positive")
+    t_ref = float(np.median(t)) if t_ref is None else float(t_ref)
+    norm = rgb * (t_ref / t)[:, None]
+    dG = np.log10(norm[:, 1].max() / norm[:, 1])          # density above the most transparent frame
+    chroma = np.log2(norm[:, [0, 2]] / norm[:, [1]])
+    near = dG <= level_window
+    centre = np.median(chroma[near], 0)
+    member = near & np.all(np.abs(chroma - centre) <= chroma_tol, -1)
+    if not member.any():
+        raise ValueError("no frames form a consistent minimum-density cluster; specify the base manually")
+    centre = np.median(chroma[member], 0)
+    order = [i for i in np.argsort(dG) if member[i]]
+    use = order[:n_use]
+    base = tuple(float(x) for x in np.median(norm[use], 0))
+    warnings = []
+    if member.sum() < min_members:
+        warnings.append(f"only {int(member.sum())} frame(s) reach the minimum-density cluster; the roll may "
+                        "never reach the film base, so the estimate may be a scene shadow")
+    diagnostics = dict(
+        level_window=level_window, chroma_tol=chroma_tol, n_use=n_use,
+        cluster_chroma_log2_RG_BG=[float(x) for x in centre],
+        cluster_chroma_spread=[float(x) for x in chroma[member].max(0) - chroma[member].min(0)],
+        cluster_density_spread_G=float(dG[member].max()),
+        frames={n: dict(density_above_floor=[float(x) for x in np.log10(np.array(base) / norm[i])],
+                        chroma_offset=[float(x) for x in chroma[i] - centre], member=bool(member[i]))
+                for i, n in enumerate(names)},
+    )
+    return RollBase(rgb_norm=base, t_ref=t_ref, members=[names[i] for i in order],
+                    used=[names[i] for i in use], diagnostics=diagnostics, warnings=warnings)
