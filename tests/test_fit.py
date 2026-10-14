@@ -103,3 +103,51 @@ def test_scale_override_changes_penalty_and_is_recorded():
 def test_conditioning_reports_scaled_singular_values():
     c = param_conditioning(scene(), RenderParams(**TRUE6))
     assert len(c["sv_scaled"]) == 7 and all(v >= 0 for v in c["sv_scaled"])
+
+
+def test_highlight_penalty_zero_below_white_and_masked_where_reference_white():
+    from filmcolor.fit import highlight_penalty
+
+    assert highlight_penalty(np.full((10, 3), 0.99)) == 0
+    over = np.full((10, 3), 2.0)  # one stop past white in every channel
+    p1 = highlight_penalty(over)
+    assert p1 == pytest.approx(3 * (np.sqrt(1 + 0.05 ** 2) - 0.05))
+    assert highlight_penalty(np.full((10, 3), 4.0)) > p1
+    allowed = np.zeros((10, 3), bool)
+    allowed[:5] = True
+    assert highlight_penalty(over, allowed) == pytest.approx(p1 / 2)
+    allowed[:, 0] = True  # one clipped channel allowed everywhere
+    assert highlight_penalty(over, allowed) == pytest.approx(p1 / 2 * 2 / 3)
+
+
+def test_highlight_constraint_trades_midtone_match_for_less_clipping():
+    from filmcolor.render import experimental_bounds
+
+    P = scene(3000)
+    ref, _ = render_lab(P[None], RenderParams(ev=1.5, shoulder=1.0))  # bright, highlights compressed, not white
+    # without shoulder and midtone the fitter can only brighten with exposure, which clips highlights
+    with experimental_bounds(shoulder=(0.0, 0.0), midtone=(0.18, 0.18)):
+        off = fit_reference(P, ref[0], "7", n_starts=2, highlight_weight=0.0)
+        on = fit_reference(P, ref[0], "7", n_starts=2)
+    assert on["highlight"]["weight"] == 10.0 and off["highlight"]["ref_clipped_frac"] == 0
+    assert off["highlight"]["clipped_frac"] > 0.3
+    assert on["highlight"]["clipped_frac"] < 0.75 * off["highlight"]["clipped_frac"]
+    assert on["params"]["ev"] < off["params"]["ev"]
+    assert on["de2000_median"] > off["de2000_median"]  # the trade is paid in average colour match
+
+
+def test_clipping_allowed_where_reference_clips():
+    from filmcolor.fit import highlight_penalty, reference_clipped
+
+    P = scene(3000)
+    # grey ramp above 0.5 white, and single channels of bright colours clipped, in the reference
+    ref, _, pre = render_lab(P[None], RenderParams(ev=1.0), with_pre_clip=True)
+    assert highlight_penalty(pre[0], reference_clipped(ref[0])) == 0  # the truth is not penalised
+    r = fit_reference(P, ref[0], "7", n_starts=2)
+    assert r["highlight"]["ref_clipped_frac"] > 0.05
+    assert abs(r["params"]["ev"] - 1.0) < 0.05 and r["de2000_median"] < 0.1
+
+
+def test_highlight_weight_must_be_non_negative():
+    with pytest.raises(ValueError):
+        fit_reference(scene(100), np.zeros((100, 3)), "7", highlight_weight=-1)

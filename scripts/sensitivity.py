@@ -1,7 +1,11 @@
-"""Sensitivity of the reference fitter (research tool): penalty strength, parameter scales, contrast
-bound and input sub-windows, on the 12 NLP samples. Needs the P4 caches written by fit_nlp.py.
+"""Sensitivity of the reference fitter (research tool) on the 12 NLP samples. Needs the P4 caches written
+by fit_nlp.py.
 
-  sensitivity.py FIT_DIR COMPARE_JSON OUT_DIR
+  sensitivity.py FIT_DIR COMPARE_JSON OUT_DIR [SET]
+
+SET s2-3 (default): penalty strength, parameter scales, contrast bound and sub-windows, without the
+highlight constraint (as run in S2-3). SET s2-6: penalty strength with the highlight constraint, and the
+highlight weight itself.
 """
 import os
 
@@ -23,9 +27,21 @@ MARGIN = 0.03
 LAMBDAS = (0.0, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2)
 BASE_LAM = 0.05
 WINDOW = 0.85
+HIGHLIGHT_WEIGHTS = (0.0, 3.0, 10.0, 30.0)
 
 
-def configs():
+def configs(which="s2-3"):
+    if which == "s2-6":
+        c = {f"lam={lam} hw=10.0": dict(lam=lam, highlight_weight=10.0) for lam in LAMBDAS}
+        c.update({f"lam={BASE_LAM} hw={hw}": dict(lam=BASE_LAM, highlight_weight=hw) for hw in HIGHLIGHT_WEIGHTS
+                  if hw != 10.0})
+        return c
+    if which != "s2-3":
+        raise ValueError(f"unknown config set {which!r}")
+    return {name: cfg | dict(highlight_weight=0.0) for name, cfg in _configs_s2_3().items()}
+
+
+def _configs_s2_3():
     c = {f"lam={lam}": dict(lam=lam) for lam in LAMBDAS}
     for k in ("ev", "midtone", "contrast"):
         for f in (0.5, 2.0):
@@ -58,13 +74,13 @@ def task(args):
         window = [y, x, wh, ww]
     with experimental_bounds(**cfg.get("bounds", {})):
         r = fit_reference(P.reshape(-1, 3), R.reshape(-1, 3), "7", lam=cfg["lam"], scales=cfg.get("scales"),
-                          n_starts=cfg.get("n_starts", 5))
+                          n_starts=cfg.get("n_starts", 5), highlight_weight=cfg["highlight_weight"])
         cond = param_conditioning(P.reshape(-1, 3), RenderParams(**r["params"])) if name.startswith("lam=") else None
     r.pop("runs")
     return dict(stem=stem, config=name, cfg={k: v for k, v in cfg.items()}, window=window, fit=r, conditioning=cond)
 
 
-def main(fit_dir, compare_json, out_dir):
+def main(fit_dir, compare_json, out_dir, which="s2-3"):
     fit_dir, out_dir = Path(fit_dir), Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     cache = fit_dir / "cache"
@@ -76,7 +92,7 @@ def main(fit_dir, compare_json, out_dir):
                                   Alignment(**comp[stem]["alignment"]))
             np.save(cache / f"{stem}_P8.npy", margin_crop(P8).astype(np.float32))
             np.save(cache / f"{stem}_R8.npy", margin_crop(R8))
-    jobs = [(stem, name, cfg, cache) for name, cfg in configs().items() for stem in stems]
+    jobs = [(stem, name, cfg, cache) for name, cfg in configs(which).items() for stem in stems]
     workers = max(1, min(8, (os.cpu_count() or 2) - 2))
     print(len(jobs), "fits on", workers, "workers", flush=True)
     results = []
@@ -89,4 +105,4 @@ def main(fit_dir, compare_json, out_dir):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:5])

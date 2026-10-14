@@ -116,6 +116,18 @@ def srgb_eotf(e):
 def render(P, p: RenderParams, mask=None):
     """Return (sRGB-encoded float32 image in [0, 1], diagnostics). Diagnostics are computed over
     ``mask`` (image-region pixels) when given; borders, rebate and holder would otherwise dominate."""
+    e, diagnostics, _ = render_full(P, p, mask)
+    return e, diagnostics
+
+
+def overexposure_stops(v):
+    """Per-channel stops above output white of display-linear values before the white clip (0 below white)."""
+    return np.log2(np.maximum(v, 1.0))
+
+
+def render_full(P, p: RenderParams, mask=None):
+    """``render`` plus the display-linear values after the shoulder and before the white clip (for
+    measuring how far highlights are pushed past white; values > 1 are clipped in the output)."""
     x = np.asarray(P, np.float32)
     if not np.all(np.isfinite(x)):
         raise ValueError("input contains NaN or infinite values")
@@ -130,9 +142,9 @@ def render(P, p: RenderParams, mask=None):
         x = y + np.float32(p.sat) * (x - y)
     below_zero = float(np.mean((x < 0)[mask] if mask is not None else x < 0))
     x = np.maximum(x, 0)
-    v = shoulder_curve(x, p.shoulder)
-    above_white = float(np.mean((v > 1)[mask] if mask is not None else v > 1))
-    v = np.minimum(v, 1)
+    pre_clip = shoulder_curve(x, p.shoulder)
+    above_white = float(np.mean((pre_clip > 1)[mask] if mask is not None else pre_clip > 1))
+    v = np.minimum(pre_clip, 1)
     if p.shoulder or p.midtone != MID_GREY:
         g = np.log(p.midtone) / np.log(float(shoulder_curve(np.float32(MID_GREY), p.shoulder)))
         v = np.power(v, np.float32(g))
@@ -142,4 +154,4 @@ def render(P, p: RenderParams, mask=None):
         e = np.where(e <= pv, pv * np.power(e / pv, c),
                      1 - (1 - pv) * np.power(np.maximum(1 - e, 0) / (1 - pv), c)).astype(np.float32)
     diagnostics = dict(below_zero_after_colour=below_zero, above_white=above_white)
-    return e, diagnostics
+    return e, diagnostics, pre_clip
