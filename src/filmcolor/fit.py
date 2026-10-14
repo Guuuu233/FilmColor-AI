@@ -39,8 +39,10 @@ def render_lab(P, params: RenderParams, mask=None):
 
 
 def fit_reference(P, ref_lab, mode: str = "7", *, n_starts: int = 5, seed: int = 0,
-                  n_sample: int = 20000, lam: float | None = None) -> dict:
-    """``P``: scene-linear positive pixels (..., 3); ``ref_lab``: reference Lab on the same pixels."""
+                  n_sample: int = 20000, lam: float | None = None, scales: dict | None = None) -> dict:
+    """``P``: scene-linear positive pixels (..., 3); ``ref_lab``: reference Lab on the same pixels.
+    ``lam`` / ``scales`` override the mode's penalty strength and the parameter scales."""
+    scales = SCALES | (scales or {})
     cfg = MODES[mode]
     free, lam = list(cfg["free"]), cfg["lam"] if lam is None else lam
     P2, R2 = np.asarray(P, np.float32).reshape(-1, 3), np.asarray(ref_lab, np.float64).reshape(-1, 3)
@@ -50,7 +52,7 @@ def fit_reference(P, ref_lab, mode: str = "7", *, n_starts: int = 5, seed: int =
     idx = np.sort(rng.choice(len(P2), min(n_sample, len(P2)), replace=False))
     Ps, Rs = P2[idx][None], R2[idx]
     d0 = np.array([DEFAULTS[k] for k in free])
-    sc = np.array([SCALES[k] for k in free])
+    sc = np.array([scales[k] for k in free])
     blo, bhi = np.array([BOUNDS[k][0] for k in free]), np.array([BOUNDS[k][1] for k in free])
     lo, hi = (blo - d0) / sc, (bhi - d0) / sc
 
@@ -79,7 +81,7 @@ def fit_reference(P, ref_lab, mode: str = "7", *, n_starts: int = 5, seed: int =
     rng_u = hi - lo
     at_bound = [k for k, u, l, h, w in zip(free, best["u"], lo, hi, rng_u) if min(u - l, h - u) <= 0.01 * w]
     return dict(
-        mode=mode, free=free, lam=lam, params=p.to_dict(),
+        mode=mode, free=free, lam=lam, scales={k: scales[k] for k in free}, params=p.to_dict(),
         de2000_mean=float(de.mean()), de2000_median=float(np.median(de)), de2000_p90=float(np.percentile(de, 90)),
         objective=best["objective"], diagnostics=diag, at_bound=at_bound,
         n_near_optimal=len(near),
@@ -89,8 +91,9 @@ def fit_reference(P, ref_lab, mode: str = "7", *, n_starts: int = 5, seed: int =
 
 
 def param_conditioning(P, params: RenderParams, names=PER_IMAGE, n_sample: int = 20000, seed: int = 0) -> dict:
-    """Column-normalised Jacobian of the rendered Lab w.r.t. scaled parameters at ``params``:
-    min/max singular value ratio and pairwise |cosine| between parameter effects."""
+    """Jacobian of the rendered Lab w.r.t. scaled parameters at ``params``: singular values of the
+    scaled Jacobian (RMS Lab change per pixel per scale unit), and of its column-normalised form
+    (min/max ratio: collinearity) with pairwise |cosine| between parameter effects."""
     P2 = np.asarray(P, np.float32).reshape(-1, 3)
     idx = np.sort(np.random.default_rng(seed).choice(len(P2), min(n_sample, len(P2)), replace=False))
     Ps = P2[idx][None]
@@ -103,9 +106,10 @@ def param_conditioning(P, params: RenderParams, names=PER_IMAGE, n_sample: int =
         out, _ = render_lab(Ps, RenderParams(**(params.to_dict() | {k: v2})))
         cols.append(((out - base) / (v2 - v) * SCALES[k]).ravel())
     J = np.stack(cols, 1)
+    sv_scaled = np.linalg.svd(J / np.sqrt(len(idx)), compute_uv=False)
     norms = np.linalg.norm(J, axis=0)
     Jn = J / np.where(norms > 0, norms, 1)
     s = np.linalg.svd(Jn, compute_uv=False)
     C = np.abs(Jn.T @ Jn)
-    return dict(sv_ratio=float(s.min() / s.max()),
+    return dict(sv_ratio=float(s.min() / s.max()), sv_scaled=[float(x) for x in sv_scaled],
                 cosine={f"{names[i]}/{names[j]}": float(C[i, j]) for i in range(len(names)) for j in range(i + 1, len(names))})

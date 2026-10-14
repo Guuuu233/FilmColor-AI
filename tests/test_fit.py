@@ -71,3 +71,35 @@ def test_param_conditioning_flags_correlated_parameters():
     c = param_conditioning(scene(), RenderParams(**TRUE6))
     assert 0 < c["sv_ratio"] < 1
     assert c["cosine"]["ev/midtone"] > c["cosine"]["temp/sat"]
+
+
+def test_experimental_bounds_are_temporary_and_used_by_the_fitter():
+    from filmcolor.render import BOUNDS, experimental_bounds
+
+    P = scene()
+    ref, _ = render_lab(P[None], RenderParams(contrast=2.0))
+    with experimental_bounds(contrast=(0.5, 3.0)):
+        assert BOUNDS["contrast"] == (0.5, 3.0)
+        RenderParams(contrast=2.8)
+        r = fit_reference(P, ref[0], "6", n_starts=1)
+        assert "contrast" not in r["at_bound"]
+    assert BOUNDS["contrast"] == (0.5, 2.0)
+    with pytest.raises(ValueError):
+        RenderParams(contrast=2.8)
+    with pytest.raises(ValueError):
+        with experimental_bounds(exposure=(0, 1)):
+            pass
+
+
+def test_scale_override_changes_penalty_and_is_recorded():
+    P = scene(3000)
+    ref, _ = render_lab(P[None], RenderParams(**TRUE6))
+    a = fit_reference(P, ref[0], "7reg", n_starts=1)
+    b = fit_reference(P, ref[0], "7reg", n_starts=1, scales=dict(midtone=0.01))
+    assert b["scales"]["midtone"] == 0.01 and a["scales"]["midtone"] == SCALES["midtone"]
+    assert abs(b["params"]["midtone"] - 0.18) < abs(a["params"]["midtone"] - 0.18)  # tighter scale, stronger pull
+
+
+def test_conditioning_reports_scaled_singular_values():
+    c = param_conditioning(scene(), RenderParams(**TRUE6))
+    assert len(c["sv_scaled"]) == 7 and all(v >= 0 for v in c["sv_scaled"])

@@ -10,6 +10,7 @@ weights). With all defaults the output equals the Sprint 1 display encoding, srg
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass, fields
 
 import numpy as np
@@ -22,6 +23,24 @@ IDENTITY = ((1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0))
 PER_IMAGE = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BOUNDS = dict(ev=(-3.0, 3.0), temp=(-1.0, 1.0), tint=(-1.0, 1.0), sat=(0.0, 2.0),
               contrast=(0.5, 2.0), midtone=(0.05, 0.5), shoulder=(0.0, 1.0))
+
+
+@contextmanager
+def experimental_bounds(**overrides):
+    """Temporarily change parameter bounds, for experiments only (results must record the change).
+    The official bounds and defaults are untouched outside the ``with`` block."""
+    unknown = set(overrides) - set(BOUNDS)
+    if unknown:
+        raise ValueError(f"unknown parameters: {sorted(unknown)}")
+    saved = dict(BOUNDS)
+    BOUNDS.update({k: tuple(map(float, v)) for k, v in overrides.items()})
+    try:
+        yield
+    finally:
+        BOUNDS.clear()
+        BOUNDS.update(saved)
+
+
 MATRIX_DIAG = (0.5, 2.0)
 MATRIX_OFF_DIAG = (-0.8, 0.8)
 MATRIX_MAX_COND = 10.0
