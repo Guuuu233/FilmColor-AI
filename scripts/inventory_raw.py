@@ -1,5 +1,8 @@
-"""Inventory RAW files: checksum, EXIF, sensor metadata, clipping stats; writes CSV manifest + contact sheet."""
-import csv, hashlib, io, json, sys
+"""Inventory RAW files: checksum, EXIF, sensor metadata, clipping stats; writes CSV manifest + contact sheet.
+
+  inventory_raw.py SRC_DIR SOURCE_ID [--license L] [--film-stock F] [--roll-id R] [--has-film-border B]
+"""
+import argparse, csv, hashlib, io, json
 from pathlib import Path
 
 import exifread
@@ -7,8 +10,13 @@ import numpy as np
 import rawpy
 import tifffile
 
-src = Path(sys.argv[1]).resolve()
-source_id = sys.argv[2]
+ap = argparse.ArgumentParser()
+ap.add_argument("src"); ap.add_argument("source_id")
+ap.add_argument("--license", default="dev-test-only"); ap.add_argument("--film-stock", default="unknown")
+ap.add_argument("--roll-id", default=""); ap.add_argument("--has-film-border", default="")
+args = ap.parse_args()
+src = Path(args.src).resolve()
+source_id = args.source_id
 root = Path(__file__).resolve().parents[1]
 raw_root = root / "data" / "raw"
 out_csv = root / "data" / "manifests" / f"{source_id}.csv"
@@ -17,17 +25,20 @@ sheet_path = root / "experiments" / "inventory" / f"{source_id}_contact.tif"
 sheet_path.parent.mkdir(parents=True, exist_ok=True)
 
 rows, sensor, thumbs = [], {}, []
-for f in sorted(src.glob("*.RAF")) + sorted(src.glob("*.ARW")) + sorted(src.glob("*.DNG")):
+for f in sorted(src.glob("*.RAF")) + sorted(src.glob("*.ARW")) + sorted(src.glob("*.DNG")) + sorted(src.glob("*.NEF")):
     sha = hashlib.sha256(f.read_bytes()).hexdigest()
     with rawpy.imread(str(f)) as r:
-        # RAF is not parsed by exifread directly; read EXIF from the embedded JPEG preview
-        tags = {}
-        try:
-            th_ = r.extract_thumb()
-            if th_.format == rawpy.ThumbFormat.JPEG:
-                tags = exifread.process_file(io.BytesIO(th_.data), details=False)
-        except rawpy.LibRawError:
-            pass
+        # TIFF-based RAWs (NEF, ARW, DNG) carry EXIF directly; RAF is not parsed by exifread, so fall back to
+        # the embedded JPEG preview
+        with f.open("rb") as fh:
+            tags = exifread.process_file(fh, details=False)
+        if "Image Model" not in tags:
+            try:
+                th_ = r.extract_thumb()
+                if th_.format == rawpy.ThumbFormat.JPEG:
+                    tags = exifread.process_file(io.BytesIO(th_.data), details=False)
+            except rawpy.LibRawError:
+                pass
         g = lambda k: str(tags.get(k, ""))
         raw = r.raw_image_visible
         white = int(r.white_level)
@@ -58,8 +69,8 @@ for f in sorted(src.glob("*.RAF")) + sorted(src.glob("*.ARW")) + sorted(src.glob
         datetime=g("EXIF DateTimeOriginal"), lens=g("EXIF LensModel"),
         exposure=g("EXIF ExposureTime"), fnumber=g("EXIF FNumber"), iso=g("EXIF ISOSpeedRatings"),
         width=raw.shape[1], height=raw.shape[0], bit_depth=int(np.ceil(np.log2(white + 1))),
-        film_stock="unknown", roll_id="", has_film_border="", reference_files="",
-        license="dev-test-only", notes="",
+        film_stock=args.film_stock, roll_id=args.roll_id, has_film_border=args.has_film_border, reference_files="",
+        license=args.license, notes="",
     ))
     print(f.name, rows[-1]["camera_model"], raw.shape, "black", black, "white", white, "clip%", clip)
 

@@ -5,7 +5,9 @@
 ```text
 data/raw/<source_kind>/<source_id>/      原始文件，只读，不修改
   source_kind: public | own | nlp_output | lab_scan
+data/reference/<ref_id>/                 参考正片（NLP 输出、冲扫店校色等），只读，不进 git
 data/manifests/<source_id>.csv           每个来源一份清单
+data/manifests/<ref_id>_reference.json   参考正片的校验和、配对关系与生成设置
 data/manifests/SOURCES.md                来源、许可与可用范围总表
 ```
 

@@ -14,3 +14,5 @@ __pycache__/
 experiments/**/*.jpg
 experiments/**/*.png
 *.npy
+# reference renderings (NLP, shop) are image data
+data/reference/
