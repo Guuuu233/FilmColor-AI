@@ -20,9 +20,10 @@ from .export import DESCRIPTION, write_tiff16
 from .invert import base_from_regions, central_region, invert_negative, region_mask
 from .qc import quality_checks
 from .raw import check_region, linearize, saturation_mask
+from .render import RenderParams, render as render_image, srgb_eotf
 from .rawpy_io import demosaic_linear, load_raw
 
-SCHEMA = "filmcolor.sidecar/0.1"
+SCHEMA = "filmcolor.sidecar/0.2"  # 0.2: render section (Sprint 2 parameters)
 
 
 def sha256(path) -> str:
@@ -47,8 +48,13 @@ def software_info() -> dict:
 
 
 def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
-            white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb"):
-    """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields)."""
+            white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
+            render_params=None):
+    """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
+
+    ``render_params``: RenderParams or its dict (Sprint 2 colour parameters); None = defaults,
+    which reproduce the Sprint 1 output."""
+    rp = render_params if isinstance(render_params, RenderParams) else RenderParams.from_dict(render_params or {})
     if encoding not in DESCRIPTION:
         raise ValueError(f"encoding must be one of {tuple(DESCRIPTION)}")
     if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
@@ -91,11 +97,9 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         t, l, h, w = image_region
         centres = [(r + rh / 2, c + rw / 2) for r, c, rh, rw in regions]
         inside = float(np.mean([t <= y < t + h and l <= x < l + w for y, x in centres]))
-    qc = quality_checks(res.display, mask, res.report, base_inside_image=inside)
-    if encoding == "srgb":
-        out = res.display
-    else:
-        out = np.clip(res.positive * np.float32(res.params.exposure), 0, 1)
+    display, render_diag = render_image(res.positive * np.float32(res.params.exposure), rp, mask)
+    qc = quality_checks(display, mask, res.report, base_inside_image=inside)
+    out = display if encoding == "srgb" else srgb_eotf(display).astype(np.float32)
 
     sidecar = dict(
         schema=SCHEMA,
@@ -109,6 +113,7 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         base=base_info,
         image_region=dict(region=list(image_region), source=region_source),
         inversion=dict(params=res.params.to_dict(), white_pct=white_pct, d_hi_source="given" if d_hi else "auto"),
+        render=dict(params=rp.to_dict(), diagnostics=render_diag, definition="docs/SPRINT2_PARAMS.md"),
         report=res.report,
         qc=qc,
         output=dict(encoding=encoding, colorimetric_calibration="none",
@@ -135,4 +140,4 @@ def replay_kwargs(sidecar: dict) -> dict:
     p = sidecar["inversion"]["params"]
     return dict(base_rgb=p["base"], d_hi=p["d_hi"], image_region=sidecar["image_region"]["region"],
                 white_pct=sidecar["inversion"]["white_pct"], gamma=p["gamma"], exposure=p["exposure"],
-                encoding=sidecar["output"]["encoding"])
+                encoding=sidecar["output"]["encoding"], render_params=sidecar.get("render", {}).get("params"))

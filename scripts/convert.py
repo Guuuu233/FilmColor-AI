@@ -1,6 +1,7 @@
 """Convert RAW negatives to 16-bit TIFF + sidecar JSON.
 
   convert.py OUT_DIR RAW... [--encoding srgb|linear] [--image-region T,L,H,W] [--base-region T,L,H,W ...]
+                            [--render PARAMS.json]
   convert.py OUT_DIR RAW --replay SIDECAR.json
 """
 import argparse
@@ -19,6 +20,7 @@ ap.add_argument("raw", nargs="+")
 ap.add_argument("--encoding", default="srgb", choices=["srgb", "linear"])
 ap.add_argument("--image-region", type=region)
 ap.add_argument("--base-region", type=region, action="append")
+ap.add_argument("--render", help="JSON file with render parameters (docs/SPRINT2_PARAMS.md)")
 ap.add_argument("--replay")
 a = ap.parse_args()
 if a.replay:
@@ -26,7 +28,8 @@ if a.replay:
         ap.error("--replay takes exactly one RAW")
     kw = replay_kwargs(json.load(open(a.replay)))
 else:
-    kw = dict(encoding=a.encoding, image_region=a.image_region, base_regions=a.base_region)
+    kw = dict(encoding=a.encoding, image_region=a.image_region, base_regions=a.base_region,
+              render_params=json.load(open(a.render)) if a.render else None)
 for p in a.raw:
     sc = write(p, a.out_dir, **kw)
     r = sc["report"]["range"]

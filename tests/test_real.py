@@ -131,6 +131,7 @@ def test_pipeline_output_reproducible_and_replayable(tmp_path):
     assert a["output"]["colorimetric_calibration"] == "none"
     assert a["qc"]["status"] in ("pass", "warn") and a["qc"]["provisional"]
     assert {c["name"]: c["status"] for c in a["qc"]["checks"]}["base_inside_image"] == "pass"
+    assert a["render"]["params"]["ev"] == 0 and a["schema"].endswith("0.2")
     c = write(path, tmp_path / "c", **replay_kwargs(a))  # no estimation, parameters from the sidecar
     assert c["base"]["method"] == "given" and c["inversion"]["d_hi_source"] == "given"
     assert np.array_equal(tifffile.imread(tmp_path / "a/_DSF8948.tif"), tifffile.imread(tmp_path / "c/_DSF8948.tif"))
@@ -162,3 +163,27 @@ def test_pipeline_rejects_bad_region_before_rendering():
     with pytest.raises(ValueError):
         convert(SRC / "_DSF8948.RAF", white_pct=0)
     assert time.time() - t0 < 5  # the 11 s demosaic was never reached
+
+
+
+def test_pipeline_render_params_are_recorded_and_replayed(tmp_path):
+    import tifffile
+
+    from filmcolor.pipeline import replay_kwargs, write
+
+    path = SRC / "_DSF9235.RAF"
+    rp = dict(ev=0.3, temp=0.2, tint=-0.1, sat=1.3, contrast=1.2, midtone=0.22, shoulder=0.3)
+    a = write(path, tmp_path / "a", render_params=rp)
+    assert {k: a["render"]["params"][k] for k in rp} == rp
+    b = write(path, tmp_path / "b", **replay_kwargs(a))
+    assert np.array_equal(tifffile.imread(tmp_path / "a/_DSF9235.tif"), tifffile.imread(tmp_path / "b/_DSF9235.tif"))
+    with pytest.raises(ValueError):
+        write(path, tmp_path / "c", render_params=dict(sat=5))  # rejected before decoding
+
+
+def test_default_render_reproduces_sprint1_output_bytes(tmp_path):
+    """Default render parameters must give the TIFF recorded by the Sprint 1 run (52a4acc)."""
+    from filmcolor.pipeline import write
+
+    a = write(SRC / "_DSF8948.RAF", tmp_path)
+    assert a["output"]["sha256"] == "ed6516673a19abe372d2c53f2488527699226c3e49a451cbe6c0d0d92b30abae"
