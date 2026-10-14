@@ -1,0 +1,100 @@
+{
+ "reference_id": "nlp_default",
+ "created": "2026-10-14",
+ "produced_by": "user, Lightroom Classic + Negative Lab Pro (user-licensed)",
+ "software": {
+  "lightroom_classic": "15.2.1 [202603161217-0bf813d9]",
+  "camera_raw": "18.2.2 [2512]",
+  "macos": "27.0.1",
+  "negative_lab_pro": "3.1.1",
+  "nlp_engine": "v3.1+"
+ },
+ "pre_conversion": {
+  "white_balance": "LR eyedropper on film border, per frame (e.g. _DSF8434 2500/-16, _DSF8948 2400/-18)",
+  "crop": "cropped to image area by user; rotation not stated (alignment tool checks)"
+ },
+ "convert": {
+  "type": "Negative",
+  "source": "Digital Camera",
+  "color_model": "Basic",
+  "pre_saturation": "3 - Default",
+  "border_buffer_pct": 1,
+  "roll_analysis": true
+ },
+ "edit": {
+  "settings": "NLP Standard",
+  "tone_profile": "LAB - Standard",
+  "sliders": "all 0",
+  "wb": "Auto-Neutral",
+  "hsl": "Lab, amount 100, sat 5",
+  "lr_profile_shown": "Negative Lab v2.3 - Frontier (differs from color model Basic; unexplained)"
+ },
+ "advanced": {
+  "curve_points": "Auto",
+  "color_process": "Refined",
+  "process_order": "Color First",
+  "color_density": "Add Density",
+  "color_method": "Shadow Weighted",
+  "toning_method": "Standard Toning",
+  "clip_method": "Protect Color Balance"
+ },
+ "export": {
+  "format": "TIFF 16-bit, Adobe Deflate",
+  "icc": "ProPhoto RGB (verified in files)",
+  "note": "NLP positive-copy panel showed sRGB; files are ProPhoto, so exported via another path"
+ },
+ "caveats": [
+  "Roll Analysis was on: the 12 frames (>=4 scan sessions, mixed stocks incl. a likely B&W frame) were analysed as one roll"
+ ],
+ "license": "derived from dev-test-only samples; dev-test-only",
+ "files": {
+  "_DSF8434-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF8434.RAF",
+   "sha256": "6ad6803808d4f3af1223bc44e0c60d5667f5c28a86d40bfd2fff20ffa7ae5a48"
+  },
+  "_DSF8948-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF8948.RAF",
+   "sha256": "48b00b10e45006f1a3402ab60ac2e183fb762fd96eec1c20698d4242d905d626"
+  },
+  "_DSF8951-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF8951.RAF",
+   "sha256": "d33f2a2f05fe2567703c2d8a282e946ae7577bc730ad0dd67c07c8e1abc6dc54"
+  },
+  "_DSF8983-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF8983.RAF",
+   "sha256": "fa5b5609f6321dd4892457712836360cb630677dd845ac259bf0737747e940b6"
+  },
+  "_DSF9228-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF9228.RAF",
+   "sha256": "611b6f4b382fabf01efa823ce1eec4981de16c49d04fa3358ab550f491b559b7"
+  },
+  "_DSF9229-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF9229.RAF",
+   "sha256": "2b09e08aae4b5130bdae489cc2b49ac00a70960aa41eca3fbd32808896f1b896"
+  },
+  "_DSF9231-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF9231.RAF",
+   "sha256": "0b1cce825e6b5c26981fc238e62056da47221ab4456c92c63b9510b4bde557b3"
+  },
+  "_DSF9235-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF9235.RAF",
+   "sha256": "4cc17fed8640012855a67fd73996cc17886072ae4d244a5cba6b4c919948eeb8"
+  },
+  "_DSF9237-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF9237.RAF",
+   "sha256": "b194ad568e8e7a7b6b5b26b28e7f3947188464e09cd67683833fc8026cf7daf4"
+  },
+  "_DSF9238-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF9238.RAF",
+   "sha256": "4b46bdfad240af517d51394d16c53327a67a006022b0d3a7d229ba633e1bd370"
+  },
+  "_DSF9239-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF9239.RAF",
+   "sha256": "8a07fafdb7181273a5928682f45232d68788cc046ac80d6945a2c7b37776a437"
+  },
+  "_DSF9243-positive.tif": {
+   "source_raw": "public/nlp_official/_DSF9243.RAF",
+   "sha256": "a6e845b508edb63986278c161ab5b9e701973d6edea0011a01f0ccb2a373cd67"
+  }
+ }
+}
