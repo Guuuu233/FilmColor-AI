@@ -1,6 +1,6 @@
 """Compare our outputs with NLP reference conversions.
 
-  compare_nlp.py OURS_DIR REF_DIR OUT_DIR   (ours: <stem>.tif, reference: <stem>-positive.tif or <stem>.tif)
+  compare_nlp.py OURS_DIR REF_DIR OUT_DIR   (ours: <stem>.tif, reference: <stem>-positive.tif, <stem>.tif or <stem>.jpg)
 """
 import json
 import sys
@@ -25,7 +25,8 @@ def main(ours_dir, ref_dir, out_dir):
     out_dir.mkdir(parents=True, exist_ok=True)
     results, pairs = {}, {}
     for ours in sorted(ours_dir.glob("*.tif")):
-        ref = next((p for p in (ref_dir / f"{ours.stem}-positive.tif", ref_dir / f"{ours.stem}.tif") if p.exists()), None)
+        ref = next((p for p in (ref_dir / f"{ours.stem}-positive.tif", ref_dir / f"{ours.stem}.tif",
+                                ref_dir / f"{ours.stem}.jpg") if p.exists()), None)
         if ref is None:
             continue
         a_lab, r_lab = load_lab(ours, LOAD_FACTOR), load_lab(ref, LOAD_FACTOR)

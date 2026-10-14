@@ -1,0 +1,8 @@
+DSC_3823 default 17.2 6:5.16/near5/bound2 7:2.98/near5/bound0 7reg:3.31/near5/bound0 cos(ev,mid) default 0.84 fit7 0.95
+DSC_3828 default 10.9 6:4.21/near5/bound2 7:3.94/near5/bound2 7reg:4.15/near5/bound0 cos(ev,mid) default 0.79 fit7 0.95
+DSC_3833 default 12.2 6:3.74/near5/bound2 7:3.75/near3/bound1 7reg:3.84/near5/bound1 cos(ev,mid) default 0.81 fit7 0.90
+DSC_3838 default 14.3 6:4.60/near5/bound1 7:3.98/near4/bound0 7reg:4.29/near5/bound0 cos(ev,mid) default 0.78 fit7 0.94
+DSC_3843 default 15.5 6:2.65/near5/bound0 7:2.64/near5/bound0 7reg:2.84/near5/bound0 cos(ev,mid) default 0.68 fit7 0.89
+DSC_3847 default 11.3 6:3.47/near5/bound1 7:3.34/near4/bound0 7reg:3.47/near5/bound0 cos(ev,mid) default 0.72 fit7 0.78
+DSC_3855 default 10.0 6:2.83/near5/bound1 7:2.62/near5/bound0 7reg:2.72/near5/bound0 cos(ev,mid) default 0.85 fit7 0.95
+DSC_3859 default 13.6 6:2.90/near5/bound0 7:2.90/near5/bound0 7reg:2.98/near5/bound0 cos(ev,mid) default 0.74 fit7 0.88

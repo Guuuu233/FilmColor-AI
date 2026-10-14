@@ -1,0 +1,260 @@
+{
+ "schema": "filmcolor.sidecar/0.2",
+ "input": {
+  "path": "data/raw/own/ultramax400_r01/DSC_3859.NEF",
+  "sha256": "cb6918c44f836a09e7381d86a3076cda0d152e7a187889a620c7f321135343e9",
+  "shape": [
+   5520,
+   8288
+  ],
+  "cfa_pattern": [
+   [
+    0,
+    1
+   ],
+   [
+    1,
+    2
+   ]
+  ],
+  "black": [
+   [
+    1008.0,
+    1008.0
+   ],
+   [
+    1008.0,
+    1008.0
+   ]
+  ],
+  "white": 16383.0,
+  "crop": [
+   8,
+   16,
+   5504,
+   8256
+  ],
+  "meta": {
+   "source": "data/raw/own/ultramax400_r01/DSC_3859.NEF",
+   "color_desc": "RGBG",
+   "camera_whitebalance": [
+    0.935546875,
+    1.0,
+    2.01953125,
+    1.0
+   ],
+   "rgb_xyz_matrix": [
+    [
+     1.3704999685287476,
+     -0.6003999710083008,
+     -0.14000000059604645
+    ],
+    [
+     -0.5464000105857849,
+     1.3567999601364136,
+     0.2062000036239624
+    ],
+    [
+     -0.09399999678134918,
+     0.17059999704360962,
+     0.7617999911308289
+    ]
+   ],
+   "flip": 0,
+   "margins": [
+    0,
+    0
+   ]
+  }
+ },
+ "software": {
+  "filmcolor": "0.0.1",
+  "git_commit": "107509b97dc3bf2a65290a5267d2c4a4f512fe65",
+  "src_dirty": false,
+  "rawpy": "0.27.1",
+  "libraw": "0.22.1",
+  "numpy": "2.5.4"
+ },
+ "decode": {
+  "analysis": "CFA-aware linearisation (filmcolor.raw)",
+  "render": "rawpy postprocess, default demosaic, raw colour, linear, no WB, no auto-bright, adjust_maximum_thr=0, highlight clip, no flip"
+ },
+ "base": {
+  "method": "given",
+  "rgb_render": [
+   0.11152176856994629,
+   0.11356730461120607,
+   0.0457091212272644
+  ]
+ },
+ "image_region": {
+  "region": [
+   1380,
+   2072,
+   2760,
+   4144
+  ],
+  "source": "central_default"
+ },
+ "inversion": {
+  "params": {
+   "base": [
+    0.11152176856994629,
+    0.11356730461120607,
+    0.0457091212272644
+   ],
+   "d_lo": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "d_hi": [
+    0.5002210140228271,
+    0.6876032948493958,
+    1.0081288814544678
+   ],
+   "gamma": 0.6,
+   "exposure": 1.0,
+   "log_range": 1.1460054914156597
+  },
+  "white_pct": 99.9,
+  "d_hi_source": "auto"
+ },
+ "render": {
+  "params": {
+   "ev": 0.0,
+   "temp": 0.0,
+   "tint": 0.0,
+   "sat": 1.0,
+   "contrast": 1.0,
+   "midtone": 0.18,
+   "shoulder": 0.0,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "diagnostics": {
+   "below_zero_after_colour": 0.0028087579038665995,
+   "above_white": 0.0009973094212224647
+  },
+  "definition": "docs/SPRINT2_PARAMS.md"
+ },
+ "report": {
+  "white_pct": 99.9,
+  "range": {
+   "R": {
+    "clip_high": 0.0009950653293044598,
+    "below_black": 0.004085704493313189,
+    "brighter_than_base": 0.004085704493313189,
+    "density_p01": -0.02090582251548767,
+    "density_p999": 0.5002210140228271
+   },
+   "G": {
+    "clip_high": 0.000997513429578647,
+    "below_black": 0.0012845531867270998,
+    "brighter_than_base": 0.0012845531867270998,
+    "density_p01": -0.004895300138741732,
+    "density_p999": 0.6876032948493958
+   },
+   "B": {
+    "clip_high": 0.0009993495047842874,
+    "below_black": 0.0030560160315595097,
+    "brighter_than_base": 0.0030560160315595097,
+    "density_p01": -0.026087479665875435,
+    "density_p999": 1.0081288814544678
+   }
+  },
+  "full_image_above_white": [
+   0.005190191161658553,
+   0.006595728589614459,
+   0.0012971434167086341
+  ]
+ },
+ "qc": {
+  "status": "pass",
+  "checks": [
+   {
+    "name": "finite",
+    "value": true,
+    "threshold": true,
+    "status": "pass"
+   },
+   {
+    "name": "value_range",
+    "value": [
+     0.0,
+     0.9999999403953552
+    ],
+    "threshold": [
+     0,
+     1
+    ],
+    "status": "pass"
+   },
+   {
+    "name": "median_luma",
+    "value": 0.4749189019203186,
+    "threshold": [
+     0.15,
+     0.85
+    ],
+    "status": "pass"
+   },
+   {
+    "name": "tonal_range",
+    "value": 0.7321251209080217,
+    "threshold": 0.35,
+    "status": "pass"
+   },
+   {
+    "name": "channel_mean_ratio",
+    "value": 1.1604313850402832,
+    "threshold": 1.5,
+    "status": "pass"
+   },
+   {
+    "name": "clip_high",
+    "value": 0.0009993495047842874,
+    "threshold": 0.005,
+    "status": "pass"
+   },
+   {
+    "name": "below_black",
+    "value": 0.004085704493313189,
+    "threshold": 0.1,
+    "status": "pass"
+   }
+  ],
+  "provisional": true,
+  "info": {
+   "full_image_above_white": [
+    0.005190191161658553,
+    0.006595728589614459,
+    0.0012971434167086341
+   ]
+  }
+ },
+ "output": {
+  "encoding": "srgb",
+  "colorimetric_calibration": "none",
+  "icc_description": "FilmColor uncalibrated camera RGB - sRGB primaries assumed, sRGB transfer",
+  "bit_depth": 16,
+  "orientation": "sensor (meta.flip not applied)",
+  "path": "experiments/s2_shop/out/DSC_3859.tif",
+  "sha256": "9d2c241cb3f85e6cb5987543994e599b66d41d5fb0d308f7f34cbc849905e6a9"
+ }
+}

@@ -1,8 +1,9 @@
 """Summarise the S2-6 sensitivity run (sensitivity.py s2-6; highlight constraint on) as Markdown.
 
-  summarize_sensitivity_hl.py S2_6_JSON [S2_3_JSON]
+  summarize_sensitivity_hl.py S2_6_JSON [S2_3_JSON [S2_6X_JSON]]
 
-With the S2-3 result, each λ row also shows the unconstrained median ΔE and worst unwanted clipping.
+With the S2-3 result, each λ row also shows the unconstrained median ΔE and worst unwanted clipping; with the
+s2-6x result, a 2 x 2 λ × highlight-weight table is added.
 """
 import json
 import statistics as st
@@ -34,7 +35,7 @@ def row(rs):
                 ev=st.median(abs(r["fit"]["params"]["ev"]) for r in rs))
 
 
-def main(path, old_path=None):
+def main(path, old_path=None, x_path=None):
     by = defaultdict(dict)
     for r in json.load(open(path)):
         by[r["config"]][r["stem"]] = r
@@ -68,6 +69,21 @@ def main(path, old_path=None):
         print(f"| {name.split('hw=')[1]} | {r['de']:.2f} | {100 * r['clip_max']:.1f} | {r['clip_frames']} | {r['spread_max']:.2f} | "
               f"{st.median(sh):.2f} / {max(sh):.2f} |")
 
+    if x_path:  # 2 x 2 cross check; the missing cell comes from sensitivity.py s2-6x
+        for r in json.load(open(x_path)):
+            by[r["config"]][r["stem"]] = r
+        print("\n## λ × 高光权重 交叉（参数变化相对 λ=0.05、hw=30 的解）\n")
+        print("| λ | hw | ΔE 中位数 | 近优解离散 中位 / 最大 | 5 起点全近优 | 碰边界 | 裁切% 最大 | 裁切 >2% 张数 | 参数变化 中位 / 最大 |")
+        print("|---|---|---|---|---|---|---|---|---|")
+        ref = "lam=0.05 hw=30.0"
+        for lam in ("0.02", "0.05"):
+            for hw in ("10.0", "30.0"):
+                name = f"lam={lam} hw={hw}"
+                r = row([by[name][s] for s in stems])
+                sh = [shift(by[name][s]["fit"]["params"], by[ref][s]["fit"]["params"]) for s in stems]
+                print(f"| {lam} | {hw[:-2]} | {r['de']:.2f} | {r['spread_med']:.2f} / {r['spread_max']:.2f} | {r['all5']} | "
+                      f"{r['bounds']} | {100 * r['clip_max']:.1f} | {r['clip_frames']} | {st.median(sh):.2f} / {max(sh):.2f} |")
+
     print("\n## 逐张：参考未裁处裁切%（λ=0.05）\n")
     print("| 帧 | " + " | ".join(f"hw={n.split('hw=')[1]}" for n in hws) + " |")
     print("|---|" + "---|" * len(hws))
@@ -76,4 +92,4 @@ def main(path, old_path=None):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:3])
+    main(*sys.argv[1:4])

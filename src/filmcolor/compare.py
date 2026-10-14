@@ -14,16 +14,30 @@ import tifffile
 from .colorimetry import MatrixTRCProfile, delta_e2000, xyz_to_lab
 
 
+def _read_rgb_icc(path):
+    """(image array, embedded ICC bytes) from a TIFF, or from a JPEG (reference images only; Pillow is
+    imported here so that the engine does not depend on it)."""
+    if str(path).lower().endswith((".jpg", ".jpeg")):
+        from PIL import Image
+
+        with Image.open(path) as im:
+            icc = im.info.get("icc_profile")
+            img = np.asarray(im.convert("RGB")) if icc else None
+    else:
+        with tifffile.TiffFile(path) as tf:
+            page = tf.pages[0]
+            tag = page.tags.get("InterColorProfile")
+            icc = bytes(tag.value) if tag is not None else None
+            img = page.asarray() if icc else None
+    if icc is None:
+        raise ValueError(f"{path}: no embedded ICC profile")
+    return img, icc
+
+
 def load_lab(path, factor: int = 1) -> np.ndarray:
-    """CIELAB (D50) from an RGB TIFF with an embedded matrix/TRC ICC profile, block-averaged by
+    """CIELAB (D50) from an RGB TIFF or JPEG with an embedded matrix/TRC ICC profile, block-averaged by
     ``factor`` in linear XYZ (physically meaningful averaging) before the Lab transform."""
-    with tifffile.TiffFile(path) as tf:
-        page = tf.pages[0]
-        tag = page.tags.get("InterColorProfile")
-        if tag is None:
-            raise ValueError(f"{path}: no embedded ICC profile")
-        icc = bytes(tag.value)
-        img = page.asarray()
+    img, icc = _read_rgb_icc(path)
     if img.ndim != 3 or img.shape[2] < 3:
         raise ValueError(f"{path}: expected an RGB image, got shape {img.shape}")
     scale = float(np.iinfo(img.dtype).max) if img.dtype.kind == "u" else 1.0

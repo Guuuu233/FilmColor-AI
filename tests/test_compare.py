@@ -68,6 +68,20 @@ def test_load_lab_reads_embedded_profile(tmp_path):
         load_lab(tmp_path / "noicc.tif")
 
 
+def test_load_lab_reads_jpeg_with_embedded_profile(tmp_path):
+    img = np.zeros((48, 16, 3), np.uint8)
+    img[:16], img[16:32] = 255, 128
+    icc = ImageCms.ImageCmsProfile(ImageCms.createProfile("sRGB")).tobytes()
+    Image.fromarray(img).save(tmp_path / "x.jpg", quality=100, subsampling=0, icc_profile=icc)
+    lab = load_lab(tmp_path / "x.jpg")
+    np.testing.assert_allclose(lab[8, 8], [100, 0, 0], atol=0.3)
+    np.testing.assert_allclose(lab[24, 8], [53.59, 0, 0], atol=0.3)  # sRGB 128 grey
+    np.testing.assert_allclose(lab[40, 8], [0, 0, 0], atol=0.3)
+    Image.fromarray(img).save(tmp_path / "noicc.jpg")
+    with pytest.raises(ValueError, match="ICC"):
+        load_lab(tmp_path / "noicc.jpg")
+
+
 def smooth_scene(h=480, w=720, seed=0):
     rng = np.random.default_rng(seed)
     small = rng.uniform(0, 100, (h // 24, w // 24))

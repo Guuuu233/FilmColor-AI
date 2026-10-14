@@ -1,0 +1,46 @@
+DSC_3822 rot 0 scale 1.000 ncc 0.985 dE00 med 21.7 p90 40.5 dL +27.3 da -5.1 db +3.0 chroma x0.64 L50 ours/ref 89.3 63.8 | per-image dE after tone/+ab 10.0 6.9
+DSC_3823 rot 0 scale 1.000 ncc 0.986 dE00 med 17.2 p90 23.5 dL -14.2 da +3.0 db +7.6 chroma x0.39 L50 ours/ref 41.4 63.4 | per-image dE after tone/+ab 8.3 4.3
+DSC_3825 rot 0 scale 1.000 ncc 0.975 dE00 med 12.5 p90 16.8 dL -4.9 da -2.3 db +2.8 chroma x0.46 L50 ours/ref 42.3 51.0 | per-image dE after tone/+ab 9.5 6.6
+DSC_3827 rot 0 scale 1.000 ncc 0.974 dE00 med 17.0 p90 21.0 dL +4.1 da -6.3 db -17.0 chroma x0.25 L50 ours/ref 57.1 56.9 | per-image dE after tone/+ab 15.1 4.6
+DSC_3828 rot 0 scale 1.000 ncc 0.958 dE00 med 10.9 p90 14.4 dL -3.4 da -3.1 db -7.9 chroma x0.41 L50 ours/ref 57.2 66.1 | per-image dE after tone/+ab 7.9 5.4
+DSC_3829 rot 0 scale 1.000 ncc 0.972 dE00 med 12.9 p90 16.7 dL +2.3 da -2.3 db +10.9 chroma x0.73 L50 ours/ref 54.0 56.9 | per-image dE after tone/+ab 11.1 5.1
+DSC_3831 rot 0 scale 1.000 ncc 0.972 dE00 med 16.1 p90 19.5 dL -11.1 da +0.1 db +5.4 chroma x0.74 L50 ours/ref 54.1 75.9 | per-image dE after tone/+ab 5.7 3.0
+DSC_3833 rot 0 scale 1.000 ncc 0.975 dE00 med 12.3 p90 17.0 dL -2.2 da -3.5 db +7.6 chroma x0.38 L50 ours/ref 69.4 77.9 | per-image dE after tone/+ab 10.3 3.9
+DSC_3835 rot 0 scale 1.000 ncc 0.957 dE00 med 10.7 p90 13.3 dL -4.6 da -2.0 db +7.0 chroma x0.64 L50 ours/ref 64.3 73.1 | per-image dE after tone/+ab 8.9 4.3
+DSC_3837 rot 0 scale 1.000 ncc 0.970 dE00 med 10.5 p90 13.3 dL -6.1 da -1.2 db +8.9 chroma x0.67 L50 ours/ref 64.3 73.4 | per-image dE after tone/+ab 8.7 3.2
+DSC_3838 rot 0 scale 1.000 ncc 0.978 dE00 med 14.3 p90 17.1 dL -9.6 da -1.2 db +8.9 chroma x0.42 L50 ours/ref 46.7 63.0 | per-image dE after tone/+ab 8.1 2.8
+DSC_3839 rot 0 scale 1.000 ncc 0.979 dE00 med 14.4 p90 17.0 dL -7.1 da -1.9 db +12.1 chroma x0.36 L50 ours/ref 53.6 68.0 | per-image dE after tone/+ab 11.0 2.8
+DSC_3840 rot 0 scale 1.000 ncc 0.962 dE00 med 13.4 p90 15.6 dL -7.7 da -1.5 db +6.5 chroma x0.44 L50 ours/ref 48.5 60.9 | per-image dE after tone/+ab 8.2 3.7
+DSC_3843 rot 0 scale 1.000 ncc 0.988 dE00 med 15.4 p90 19.0 dL -1.8 da -1.8 db +10.9 chroma x0.90 L50 ours/ref 76.0 79.8 | per-image dE after tone/+ab 15.1 4.6
+DSC_3844 rot 0 scale 1.000 ncc 0.986 dE00 med 12.3 p90 15.7 dL -7.9 da +0.2 db +5.5 chroma x0.55 L50 ours/ref 38.8 50.1 | per-image dE after tone/+ab 8.7 5.5
+DSC_3846 rot 0 scale 1.000 ncc 0.982 dE00 med 12.0 p90 15.4 dL -4.6 da -2.3 db +6.1 chroma x0.58 L50 ours/ref 44.8 55.2 | per-image dE after tone/+ab 9.1 5.2
+DSC_3847 rot 0 scale 1.000 ncc 0.994 dE00 med 11.2 p90 15.8 dL -6.5 da -1.7 db +6.5 chroma x0.62 L50 ours/ref 38.8 46.9 | per-image dE after tone/+ab 9.4 6.0
+DSC_3849 rot 0 scale 1.000 ncc 0.973 dE00 med 14.1 p90 17.1 dL -8.5 da -0.3 db +5.6 chroma x0.65 L50 ours/ref 44.4 59.1 | per-image dE after tone/+ab 10.1 6.0
+DSC_3853 rot 0 scale 1.000 ncc 0.963 dE00 med 10.9 p90 17.6 dL -9.4 da +3.1 db -6.0 chroma x0.57 L50 ours/ref 30.5 41.1 | per-image dE after tone/+ab 7.1 4.2
+DSC_3855 rot 0 scale 1.000 ncc 0.972 dE00 med 10.0 p90 14.3 dL -7.3 da -2.6 db -3.0 chroma x0.88 L50 ours/ref 47.9 57.4 | per-image dE after tone/+ab 4.3 3.1
+DSC_3856 rot 0 scale 1.000 ncc 0.976 dE00 med 7.4 p90 14.1 dL -0.2 da -4.5 db +2.3 chroma x0.82 L50 ours/ref 50.7 52.6 | per-image dE after tone/+ab 7.0 4.5
+DSC_3858 rot 0 scale 1.000 ncc 0.910 dE00 med 42.0 p90 56.1 dL +52.6 da +3.1 db +14.5 chroma x0.30 L50 ours/ref 56.0 2.0 | per-image dE after tone/+ab 12.0 2.9
+DSC_3859 rot 0 scale 1.000 ncc 0.978 dE00 med 13.6 p90 18.1 dL -2.5 da -4.8 db +10.8 chroma x0.85 L50 ours/ref 54.2 60.4 | per-image dE after tone/+ab 13.3 4.2
+DSC_3822 shared LOO dE after tone 23.2 +ab 22.2
+DSC_3823 shared LOO dE after tone 15.5 +ab 13.7
+DSC_3825 shared LOO dE after tone 11.4 +ab 12.3
+DSC_3827 shared LOO dE after tone 17.1 +ab 22.4
+DSC_3828 shared LOO dE after tone 9.4 +ab 11.3
+DSC_3829 shared LOO dE after tone 12.6 +ab 9.8
+DSC_3831 shared LOO dE after tone 13.7 +ab 12.0
+DSC_3833 shared LOO dE after tone 11.5 +ab 7.7
+DSC_3835 shared LOO dE after tone 9.6 +ab 6.8
+DSC_3837 shared LOO dE after tone 8.9 +ab 6.0
+DSC_3838 shared LOO dE after tone 13.6 +ab 11.3
+DSC_3839 shared LOO dE after tone 13.3 +ab 10.2
+DSC_3840 shared LOO dE after tone 11.2 +ab 8.8
+DSC_3843 shared LOO dE after tone 15.2 +ab 12.1
+DSC_3844 shared LOO dE after tone 13.2 +ab 11.0
+DSC_3846 shared LOO dE after tone 11.2 +ab 10.1
+DSC_3847 shared LOO dE after tone 12.2 +ab 9.9
+DSC_3849 shared LOO dE after tone 14.3 +ab 12.3
+DSC_3853 shared LOO dE after tone 14.8 +ab 15.6
+DSC_3855 shared LOO dE after tone 7.3 +ab 8.4
+DSC_3856 shared LOO dE after tone 7.4 +ab 6.1
+DSC_3858 shared LOO dE after tone 49.3 +ab 49.7
+DSC_3859 shared LOO dE after tone 13.3 +ab 9.0

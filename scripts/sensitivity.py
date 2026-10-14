@@ -5,7 +5,8 @@ by fit_nlp.py.
 
 SET s2-3 (default): penalty strength, parameter scales, contrast bound and sub-windows, without the
 highlight constraint (as run in S2-3). SET s2-6: penalty strength with the highlight constraint, and the
-highlight weight itself.
+highlight weight itself. SET s2-6x: the missing lambda=0.02, weight 30 cell. SET cross: all four cells of
+lambda in {0.02, 0.05} x weight in {10, 30} (for another reference set).
 """
 import os
 
@@ -31,6 +32,10 @@ HIGHLIGHT_WEIGHTS = (0.0, 3.0, 10.0, 30.0)
 
 
 def configs(which="s2-3"):
+    if which == "s2-6x":  # the one lambda x highlight-weight cell of the 2 x 2 cross check not run in s2-6
+        return {"lam=0.02 hw=30.0": dict(lam=0.02, highlight_weight=30.0)}
+    if which == "cross":  # the full 2 x 2 cross check, for a second reference set
+        return {f"lam={lam} hw={hw}": dict(lam=lam, highlight_weight=hw) for lam in (0.02, 0.05) for hw in (10.0, 30.0)}
     if which == "s2-6":
         c = {f"lam={lam} hw=10.0": dict(lam=lam, highlight_weight=10.0) for lam in LAMBDAS}
         c.update({f"lam={BASE_LAM} hw={hw}": dict(lam=BASE_LAM, highlight_weight=hw) for hw in HIGHLIGHT_WEIGHTS
