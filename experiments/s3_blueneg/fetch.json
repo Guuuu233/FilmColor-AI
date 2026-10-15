@@ -1,0 +1,425 @@
+{
+ "source": "https://huggingface.co/datasets/ttgroup/blueneg-release",
+ "files": [
+  {
+   "path": "negative-16bit/blue-intact/19941217A-15-tokyo.dng",
+   "size": 554422196,
+   "sha256": "a39c7ef8d34a48ad96a45b72903f97846b7897866c1382269c164bad421365f8",
+   "downloaded_sha256": "a39c7ef8d34a48ad96a45b72903f97846b7897866c1382269c164bad421365f8",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941217A-15-tokyo.tif",
+   "size": 36904630,
+   "sha256": "2fde12ccfd8dd22f3d995446d25ba13788a98a1945e8aaae857bdfe8b003f60b",
+   "downloaded_sha256": "2fde12ccfd8dd22f3d995446d25ba13788a98a1945e8aaae857bdfe8b003f60b",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941217B-08-tokyo.dng",
+   "size": 557666362,
+   "sha256": "92d2b4026a7513880cb80608617587b5cffebf01a3b2f13aa1792867d1517c3f",
+   "downloaded_sha256": "92d2b4026a7513880cb80608617587b5cffebf01a3b2f13aa1792867d1517c3f",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941217B-08-tokyo.tif",
+   "size": 36452020,
+   "sha256": "0c9bfc6dedd1f42c83560c12903fadea43718ef44706ceed294907fae388aa0c",
+   "downloaded_sha256": "0c9bfc6dedd1f42c83560c12903fadea43718ef44706ceed294907fae388aa0c",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941218B-23-tokyo.dng",
+   "size": 557666362,
+   "sha256": "1868853390518a7f151e9fa25fccbedaf4e4523c9bbed4245e63648f30cfad10",
+   "downloaded_sha256": "1868853390518a7f151e9fa25fccbedaf4e4523c9bbed4245e63648f30cfad10",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941218B-23-tokyo.tif",
+   "size": 35880070,
+   "sha256": "6d04bc5a760bb61e17fafc30da9029e68b1478b165f290e4532efbc68cb9bcfe",
+   "downloaded_sha256": "6d04bc5a760bb61e17fafc30da9029e68b1478b165f290e4532efbc68cb9bcfe",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941218C-05-tokyo.dng",
+   "size": 555723186,
+   "sha256": "6ad90c77d2915e578445d88295700253749bda436218304d9a794e91d92645b0",
+   "downloaded_sha256": "6ad90c77d2915e578445d88295700253749bda436218304d9a794e91d92645b0",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941218C-05-tokyo.tif",
+   "size": 36629920,
+   "sha256": "e464644f4d4559137b736d542aa6ee67197664f0b06725cd0dc910fb678e2f30",
+   "downloaded_sha256": "e464644f4d4559137b736d542aa6ee67197664f0b06725cd0dc910fb678e2f30",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941220D-20-kamakura.dng",
+   "size": 565484812,
+   "sha256": "06c29286393a623723a5740257da03e7c921708f6d684d3a2f82d0a1ee0a44cd",
+   "downloaded_sha256": "06c29286393a623723a5740257da03e7c921708f6d684d3a2f82d0a1ee0a44cd",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941220D-20-kamakura.tif",
+   "size": 36838624,
+   "sha256": "d20359d2689d768db66681e5fc8356e98640bbae51b3655e96e92efb55bc3ead",
+   "downloaded_sha256": "d20359d2689d768db66681e5fc8356e98640bbae51b3655e96e92efb55bc3ead",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941221D-25-kyoto.dng",
+   "size": 564177778,
+   "sha256": "158b317edef93cd90e27a13d30fae7c00dc033d5c80498be974588eca1593a04",
+   "downloaded_sha256": "158b317edef93cd90e27a13d30fae7c00dc033d5c80498be974588eca1593a04",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941221D-25-kyoto.tif",
+   "size": 36868870,
+   "sha256": "9144cb9771f247e31aaa02eff48d36e9f3d9b1cca696d77d9202ce19f3593b75",
+   "downloaded_sha256": "9144cb9771f247e31aaa02eff48d36e9f3d9b1cca696d77d9202ce19f3593b75",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941222D-32-kyoto.dng",
+   "size": 564177780,
+   "sha256": "4033157f7ccd0ae3705542024cecb60cab050a21715932ecf8a70794ce2f4ebe",
+   "downloaded_sha256": "4033157f7ccd0ae3705542024cecb60cab050a21715932ecf8a70794ce2f4ebe",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941222D-32-kyoto.tif",
+   "size": 36842710,
+   "sha256": "544450404d30e00b4f52d28d0c65a33804ba8cdb684448497da3cecac59b997d",
+   "downloaded_sha256": "544450404d30e00b4f52d28d0c65a33804ba8cdb684448497da3cecac59b997d",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941222E-04-nara.dng",
+   "size": 562217386,
+   "sha256": "04bbb7ba9f211a8278dc1bfc48af851f5f9440b11fe83ae80bd46c2ea7591f3a",
+   "downloaded_sha256": "04bbb7ba9f211a8278dc1bfc48af851f5f9440b11fe83ae80bd46c2ea7591f3a",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941222E-04-nara.tif",
+   "size": 36542326,
+   "sha256": "2bbbff2a43afc5e60e55963e019b11032a7f129fd38bb98bbe6d1ab471aa716a",
+   "downloaded_sha256": "2bbbff2a43afc5e60e55963e019b11032a7f129fd38bb98bbe6d1ab471aa716a",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941223E-17-osaka.dng",
+   "size": 562217384,
+   "sha256": "02c15bda496622cb1d15e169872c9d958970e2c6d016a595fba0e849893a7847",
+   "downloaded_sha256": "02c15bda496622cb1d15e169872c9d958970e2c6d016a595fba0e849893a7847",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941223E-17-osaka.tif",
+   "size": 36691690,
+   "sha256": "9977554012c8cc6987b75a6f5f883129cf1e20c1a1d8841a55662df1bd11113e",
+   "downloaded_sha256": "9977554012c8cc6987b75a6f5f883129cf1e20c1a1d8841a55662df1bd11113e",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941224E-23-nagasaki.dng",
+   "size": 566144114,
+   "sha256": "ad7f13b45e281b62ad8125769758f2db4a88ba88b62129d069c49f49c689ed63",
+   "downloaded_sha256": "ad7f13b45e281b62ad8125769758f2db4a88ba88b62129d069c49f49c689ed63",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941224E-23-nagasaki.tif",
+   "size": 36753460,
+   "sha256": "9bf863f0514445310a202f47a65c5bf3daabd20648c12de2fbe56fa0051b18f4",
+   "downloaded_sha256": "9bf863f0514445310a202f47a65c5bf3daabd20648c12de2fbe56fa0051b18f4",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941225E-34-nagasaki.dng",
+   "size": 564177782,
+   "sha256": "19de98f9a1be8361a143c36a366b3701bb2eff6365b25468037525e28fef7714",
+   "downloaded_sha256": "19de98f9a1be8361a143c36a366b3701bb2eff6365b25468037525e28fef7714",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941225E-34-nagasaki.tif",
+   "size": 36396460,
+   "sha256": "8febd69ce2b08339639bc9eed5d434e6bf76b4637f2d2b8112e6aff177657d65",
+   "downloaded_sha256": "8febd69ce2b08339639bc9eed5d434e6bf76b4637f2d2b8112e6aff177657d65",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941225F-03-nagasaki.dng",
+   "size": 561571196,
+   "sha256": "84fd336eee658aab655b15a2fa9be083ee6196df4e9804610d1b152e7b43579a",
+   "downloaded_sha256": "84fd336eee658aab655b15a2fa9be083ee6196df4e9804610d1b152e7b43579a",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941225F-03-nagasaki.tif",
+   "size": 36753460,
+   "sha256": "ac708a1f8d237c795b8aba758bb8800b16c9fc12fc5ed186a0f546cdd3980f3a",
+   "downloaded_sha256": "ac708a1f8d237c795b8aba758bb8800b16c9fc12fc5ed186a0f546cdd3980f3a",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19941228F-12-tokyo.dng",
+   "size": 560258460,
+   "sha256": "18ede98a70accc526719c00c2f50da6f04b7062de77d7a32994509b50a3e147b",
+   "downloaded_sha256": "18ede98a70accc526719c00c2f50da6f04b7062de77d7a32994509b50a3e147b",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19941228F-12-tokyo.tif",
+   "size": 36335290,
+   "sha256": "d2bccdcd12e5ca4984bb1c8bcb25f7d75766787b493aad019199be75058d5817",
+   "downloaded_sha256": "d2bccdcd12e5ca4984bb1c8bcb25f7d75766787b493aad019199be75058d5817",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19960808B-03-new-orleans-siggraph96.dng",
+   "size": 562208420,
+   "sha256": "07e82ab47c72a8a46117a8a7c43b52583bc7a0810e0a9a80bd0262f10fdf4e17",
+   "status": "present, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19960808B-03-new-orleans-siggraph96.tif",
+   "size": 36595030,
+   "sha256": "ee976f9b10ddb455e3007ca57a795a2ad05678886a7c162d10284a70fad3f8d1",
+   "status": "present, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19960809B-14-new-orleans-siggraph96.dng",
+   "size": 554994276,
+   "sha256": "65f10dc706a85a935401f0164b7f917d95defdd009db57807ebd54bbf882b251",
+   "downloaded_sha256": "65f10dc706a85a935401f0164b7f917d95defdd009db57807ebd54bbf882b251",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19960809B-14-new-orleans-siggraph96.tif",
+   "size": 36691690,
+   "sha256": "6e09baf919bbef7657897a7c1cccac9890f654c696fbacd97f7448e9f44d72f0",
+   "downloaded_sha256": "6e09baf919bbef7657897a7c1cccac9890f654c696fbacd97f7448e9f44d72f0",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19960811B-28-arizona-london-bridge.dng",
+   "size": 560904812,
+   "sha256": "8d8dbc7b57798b561b6bd154127fd991f4e13705b5463d7266cbdaf9b1eac20d",
+   "downloaded_sha256": "8d8dbc7b57798b561b6bd154127fd991f4e13705b5463d7266cbdaf9b1eac20d",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19960811B-28-arizona-london-bridge.tif",
+   "size": 36246190,
+   "sha256": "0897e634c438451ca8b5c94b97e7b6b90594ab710ee09b5978ace64b06835208",
+   "downloaded_sha256": "0897e634c438451ca8b5c94b97e7b6b90594ab710ee09b5978ace64b06835208",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19960812D-17-las-vegas.dng",
+   "size": 562214838,
+   "sha256": "37acde40e10cb6cc3d5b704afd4a0501bbf0721532f1ecb1b81d11d095a07579",
+   "downloaded_sha256": "37acde40e10cb6cc3d5b704afd4a0501bbf0721532f1ecb1b81d11d095a07579",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19960812D-17-las-vegas.tif",
+   "size": 36096220,
+   "sha256": "f34781bb73a7a517423fb99fdbd6a0f54b7fd4c3a27eb34b65795011b0ff041a",
+   "downloaded_sha256": "f34781bb73a7a517423fb99fdbd6a0f54b7fd4c3a27eb34b65795011b0ff041a",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19970619A-14-white-chapel.dng",
+   "size": 556359206,
+   "sha256": "8e63c3d0d68fabbc4948d55c89edc26877bf204878576416b691a496ea06c385",
+   "downloaded_sha256": "8e63c3d0d68fabbc4948d55c89edc26877bf204878576416b691a496ea06c385",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19970619A-14-white-chapel.tif",
+   "size": 34099510,
+   "sha256": "36071aa399ded1b5f0ae378606265523b984913195cb8e70d75cedcf81cf89d7",
+   "downloaded_sha256": "36071aa399ded1b5f0ae378606265523b984913195cb8e70d75cedcf81cf89d7",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19970619B-09-notre-dame.dng",
+   "size": 556359222,
+   "sha256": "5acf821b8a30ae72566820a0a99849f22fe09249e1757467a8d7c4acccb8e55a",
+   "downloaded_sha256": "5acf821b8a30ae72566820a0a99849f22fe09249e1757467a8d7c4acccb8e55a",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19970619B-09-notre-dame.tif",
+   "size": 36409270,
+   "sha256": "e4d55d345580a602877b862a0379c2dbd76e40d5695166758427aca107644731",
+   "downloaded_sha256": "e4d55d345580a602877b862a0379c2dbd76e40d5695166758427aca107644731",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19970620C-10-st-michel.dng",
+   "size": 555723226,
+   "sha256": "7a86ca16cbfcb4fc657e33278ba5ab41b9cb53ed74a9c4f475f774926623c3f5",
+   "downloaded_sha256": "7a86ca16cbfcb4fc657e33278ba5ab41b9cb53ed74a9c4f475f774926623c3f5",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19970620C-10-st-michel.tif",
+   "size": 36106390,
+   "sha256": "070808fd9c096235240d1ae5e54755e0162000bad5c28190ad9210a189e5a0f9",
+   "downloaded_sha256": "070808fd9c096235240d1ae5e54755e0162000bad5c28190ad9210a189e5a0f9",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/199807A-06-hk.dng",
+   "size": 557673516,
+   "sha256": "37d51aa20dab6745cf5bd73991d566e6d19274a5afaccf5026e7bb4731cd6366",
+   "status": "present, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/199807A-06-hk.tif",
+   "size": 34667830,
+   "sha256": "99116fccd291abac033c4d7db33f85e107a7587f509ddaf3217e9e8121299a39",
+   "status": "present, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/199807B-10-orlando-seaworld.dng",
+   "size": 562217432,
+   "sha256": "73333f9cd6081939d3404ec780f2a94fd5c75be385bfeec72123777d8234e937",
+   "downloaded_sha256": "73333f9cd6081939d3404ec780f2a94fd5c75be385bfeec72123777d8234e937",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/199807B-10-orlando-seaworld.tif",
+   "size": 34525750,
+   "sha256": "1dea2ddac913ccc687726903a2e95c93b72aee094ba21eb0bf8df5c74ab1c469",
+   "downloaded_sha256": "1dea2ddac913ccc687726903a2e95c93b72aee094ba21eb0bf8df5c74ab1c469",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/199910-01-korea.dng",
+   "size": 553125662,
+   "sha256": "60941f5f333041c208d0019bb6dd50e859903fe83dfb69c5a6575a06ce5ed5b3",
+   "status": "present, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/199910-01-korea.tif",
+   "size": 36007270,
+   "sha256": "ead9581c18da22d6500f16184d4193eb1e6e67ae04ec1b414154ac9c624c32ca",
+   "status": "present, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/19960812D-09-las-vegas.dng",
+   "size": 558035566,
+   "sha256": "f64940688111501c91a5401d4eaa61b1aa87d7aeaba6eb5177c0ee57a5811c27",
+   "downloaded_sha256": "f64940688111501c91a5401d4eaa61b1aa87d7aeaba6eb5177c0ee57a5811c27",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/19960812D-09-las-vegas.tif",
+   "size": 35880070,
+   "sha256": "ed20ab0d2ab3c5f9c33297ae34f4007029d08b402feda5894858c3c1c9c52df7",
+   "downloaded_sha256": "ed20ab0d2ab3c5f9c33297ae34f4007029d08b402feda5894858c3c1c9c52df7",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/199807A-09-orlando-siggraph.dng",
+   "size": 561571226,
+   "sha256": "bfb78f633043ba12b56fd896287a167fe74fb82decd5c6083f462d0fdd5346dc",
+   "downloaded_sha256": "bfb78f633043ba12b56fd896287a167fe74fb82decd5c6083f462d0fdd5346dc",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/199807A-09-orlando-siggraph.tif",
+   "size": 36132790,
+   "sha256": "649e697a26010555b5a7a9abc2ecc6d60a13448bbf11b974c2ccca0f24ce9336",
+   "downloaded_sha256": "649e697a26010555b5a7a9abc2ecc6d60a13448bbf11b974c2ccca0f24ce9336",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/199807B-16-seattle.dng",
+   "size": 564177826,
+   "sha256": "443ddf61b5f8131f0f72ccc49e89bf481b02d5560660cce2e8fdc1fbb939d647",
+   "downloaded_sha256": "443ddf61b5f8131f0f72ccc49e89bf481b02d5560660cce2e8fdc1fbb939d647",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/199807B-16-seattle.tif",
+   "size": 36230710,
+   "sha256": "853ad73538aa4a6cad8e1e3ef34006922e8d3c694c0ed438f2e1dec3b27380a2",
+   "downloaded_sha256": "853ad73538aa4a6cad8e1e3ef34006922e8d3c694c0ed438f2e1dec3b27380a2",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "negative-16bit/blue-intact/199910-08-korea.dng",
+   "size": 555723156,
+   "sha256": "db2b3bffeb9b81e1a3a22eb164e2901f033f6fd9e54ba45ae0ae1e10383a51ac",
+   "downloaded_sha256": "db2b3bffeb9b81e1a3a22eb164e2901f033f6fd9e54ba45ae0ae1e10383a51ac",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  },
+  {
+   "path": "printed-16bit/blue-intact/199910-08-korea.tif",
+   "size": 36228370,
+   "sha256": "eb84f90c12977276a0c2150c8641c551b43145a5fb9c6547ab150c798acb0d73",
+   "downloaded_sha256": "eb84f90c12977276a0c2150c8641c551b43145a5fb9c6547ab150c798acb0d73",
+   "curl_rc": 0,
+   "status": "downloaded, verified"
+  }
+ ]
+}

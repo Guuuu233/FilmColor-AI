@@ -1,0 +1,627 @@
+{
+ "rule": "Deterministic BlueNeg cross-device sample (S3-3), fixed before any frame was viewed.\n\nRule: blue-intact frames that have a printed photo. (1) One frame per roll: the frame with the\nmedian number_in_roll (lower median), except rolls already sampled in blueneg_sample3, which keep\nthat frame. (2) For the EXTRA_ROLLS largest rolls, one more frame whose scene class\n(indoor/outdoor x day/night from meta.json) is not yet covered in that roll, preferring night, then\nindoor; ties by number_in_roll.",
+ "n": 27,
+ "frames": [
+  {
+   "filename": "19941217A-15-tokyo",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941217",
+   "roll_id": "19941217A",
+   "number_in_roll": "15",
+   "location": "tokyo",
+   "geo_location": [
+    35.6821936,
+    139.762221
+   ],
+   "film_type": "Fuji 100",
+   "negative_path": "negative-16bit/blue-intact/19941217A-15-tokyo.dng",
+   "printed_path": "printed-16bit/blue-intact/19941217A-15-tokyo.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941217A-15-tokyo.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941217A-15-tokyo.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941217B-08-tokyo",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941217",
+   "roll_id": "19941217B",
+   "number_in_roll": "08",
+   "location": "tokyo",
+   "geo_location": [
+    35.6821936,
+    139.762221
+   ],
+   "film_type": "Konica Super XG 100",
+   "negative_path": "negative-16bit/blue-intact/19941217B-08-tokyo.dng",
+   "printed_path": "printed-16bit/blue-intact/19941217B-08-tokyo.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941217B-08-tokyo.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941217B-08-tokyo.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941218B-23-tokyo",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941218",
+   "roll_id": "19941218B",
+   "number_in_roll": "23",
+   "location": "tokyo",
+   "geo_location": [
+    35.6821936,
+    139.762221
+   ],
+   "film_type": "Konica Super XG 100",
+   "negative_path": "negative-16bit/blue-intact/19941218B-23-tokyo.dng",
+   "printed_path": "printed-16bit/blue-intact/19941218B-23-tokyo.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941218B-23-tokyo.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941218B-23-tokyo.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941218C-05-tokyo",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941218",
+   "roll_id": "19941218C",
+   "number_in_roll": "05",
+   "location": "tokyo",
+   "geo_location": [
+    35.6821936,
+    139.762221
+   ],
+   "film_type": "Kodak Gold 100",
+   "negative_path": "negative-16bit/blue-intact/19941218C-05-tokyo.dng",
+   "printed_path": "printed-16bit/blue-intact/19941218C-05-tokyo.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941218C-05-tokyo.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941218C-05-tokyo.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941220D-20-kamakura",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941220",
+   "roll_id": "19941220D",
+   "number_in_roll": "20",
+   "location": "kamakura",
+   "geo_location": [
+    35.329564,
+    139.54442
+   ],
+   "film_type": "Fuji 100",
+   "negative_path": "negative-16bit/blue-intact/19941220D-20-kamakura.dng",
+   "printed_path": "printed-16bit/blue-intact/19941220D-20-kamakura.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941220D-20-kamakura.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941220D-20-kamakura.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941221D-25-kyoto",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941221",
+   "roll_id": "19941221D",
+   "number_in_roll": "25",
+   "location": "kyoto",
+   "geo_location": [
+    35.021041,
+    135.7556075
+   ],
+   "film_type": "Fuji 100",
+   "negative_path": "negative-16bit/blue-intact/19941221D-25-kyoto.dng",
+   "printed_path": "printed-16bit/blue-intact/19941221D-25-kyoto.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941221D-25-kyoto.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941221D-25-kyoto.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941222D-32-kyoto",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941222",
+   "roll_id": "19941222D",
+   "number_in_roll": "32",
+   "location": "kyoto",
+   "geo_location": [
+    35.021041,
+    135.7556075
+   ],
+   "film_type": "Fuji 100",
+   "negative_path": "negative-16bit/blue-intact/19941222D-32-kyoto.dng",
+   "printed_path": "printed-16bit/blue-intact/19941222D-32-kyoto.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941222D-32-kyoto.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941222D-32-kyoto.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941222E-04-nara",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941222",
+   "roll_id": "19941222E",
+   "number_in_roll": "04",
+   "location": "nara",
+   "geo_location": [
+    -0.5252306,
+    166.9324426
+   ],
+   "film_type": "Konica Super XG 100",
+   "negative_path": "negative-16bit/blue-intact/19941222E-04-nara.dng",
+   "printed_path": "printed-16bit/blue-intact/19941222E-04-nara.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941222E-04-nara.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941222E-04-nara.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941223E-17-osaka",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941223",
+   "roll_id": "19941223E",
+   "number_in_roll": "17",
+   "location": "osaka",
+   "geo_location": [
+    34.7021912,
+    135.4955866
+   ],
+   "film_type": "Konica Super XG 100",
+   "negative_path": "negative-16bit/blue-intact/19941223E-17-osaka.dng",
+   "printed_path": "printed-16bit/blue-intact/19941223E-17-osaka.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941223E-17-osaka.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941223E-17-osaka.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941224E-23-nagasaki",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941224",
+   "roll_id": "19941224E",
+   "number_in_roll": "23",
+   "location": "nagasaki",
+   "geo_location": [
+    33.1154683,
+    129.7874339
+   ],
+   "film_type": "Konica Super XG 100",
+   "negative_path": "negative-16bit/blue-intact/19941224E-23-nagasaki.dng",
+   "printed_path": "printed-16bit/blue-intact/19941224E-23-nagasaki.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941224E-23-nagasaki.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941224E-23-nagasaki.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941225E-34-nagasaki",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941225",
+   "roll_id": "19941225E",
+   "number_in_roll": "34",
+   "location": "nagasaki",
+   "geo_location": [
+    33.1154683,
+    129.7874339
+   ],
+   "film_type": "Konica Super XG 100",
+   "negative_path": "negative-16bit/blue-intact/19941225E-34-nagasaki.dng",
+   "printed_path": "printed-16bit/blue-intact/19941225E-34-nagasaki.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941225E-34-nagasaki.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941225E-34-nagasaki.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941225F-03-nagasaki",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941225",
+   "roll_id": "19941225F",
+   "number_in_roll": "03",
+   "location": "nagasaki",
+   "geo_location": [
+    33.1154683,
+    129.7874339
+   ],
+   "film_type": "Konica Super XG 100",
+   "negative_path": "negative-16bit/blue-intact/19941225F-03-nagasaki.dng",
+   "printed_path": "printed-16bit/blue-intact/19941225F-03-nagasaki.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941225F-03-nagasaki.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941225F-03-nagasaki.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19941228F-12-tokyo",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19941228",
+   "roll_id": "19941228F",
+   "number_in_roll": "12",
+   "location": "tokyo",
+   "geo_location": [
+    35.6821936,
+    139.762221
+   ],
+   "film_type": "Konica Super XG 100",
+   "negative_path": "negative-16bit/blue-intact/19941228F-12-tokyo.dng",
+   "printed_path": "printed-16bit/blue-intact/19941228F-12-tokyo.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19941228F-12-tokyo.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19941228F-12-tokyo.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19960808B-03-new-orleans-siggraph96",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19960808",
+   "roll_id": "19960808B",
+   "number_in_roll": "03",
+   "location": "new orleans",
+   "geo_location": [
+    29.9759983,
+    -90.0782127
+   ],
+   "film_type": "Fuji NPH400",
+   "negative_path": "negative-16bit/blue-intact/19960808B-03-new-orleans-siggraph96.dng",
+   "printed_path": "printed-16bit/blue-intact/19960808B-03-new-orleans-siggraph96.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19960808B-03-new-orleans-siggraph96.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19960808B-03-new-orleans-siggraph96.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "indoor",
+    "is_daytime": "unknown"
+   },
+   "pick": "already_downloaded"
+  },
+  {
+   "filename": "19960809B-14-new-orleans-siggraph96",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19960809",
+   "roll_id": "19960809B",
+   "number_in_roll": "14",
+   "location": "new orleans",
+   "geo_location": [
+    29.9759983,
+    -90.0782127
+   ],
+   "film_type": "Fuji NPH400",
+   "negative_path": "negative-16bit/blue-intact/19960809B-14-new-orleans-siggraph96.dng",
+   "printed_path": "printed-16bit/blue-intact/19960809B-14-new-orleans-siggraph96.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19960809B-14-new-orleans-siggraph96.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19960809B-14-new-orleans-siggraph96.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "indoor",
+    "is_daytime": "unknown"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19960811B-28-arizona-london-bridge",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19960811",
+   "roll_id": "19960811B",
+   "number_in_roll": "28",
+   "location": "arizona london bridge",
+   "geo_location": [
+    34.4715578,
+    -114.34763427854666
+   ],
+   "film_type": "Fuji NPH400",
+   "negative_path": "negative-16bit/blue-intact/19960811B-28-arizona-london-bridge.dng",
+   "printed_path": "printed-16bit/blue-intact/19960811B-28-arizona-london-bridge.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19960811B-28-arizona-london-bridge.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19960811B-28-arizona-london-bridge.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19960812D-17-las-vegas",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19960812",
+   "roll_id": "19960812D",
+   "number_in_roll": "17",
+   "location": "las vegas",
+   "geo_location": [
+    36.1672559,
+    -115.148516
+   ],
+   "film_type": "Fuji NPH400",
+   "negative_path": "negative-16bit/blue-intact/19960812D-17-las-vegas.dng",
+   "printed_path": "printed-16bit/blue-intact/19960812D-17-las-vegas.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19960812D-17-las-vegas.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19960812D-17-las-vegas.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "night"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19970619A-14-white-chapel",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19970619",
+   "roll_id": "19970619A",
+   "number_in_roll": "14",
+   "location": "white chapel",
+   "geo_location": [
+    35.0495369,
+    -90.1173153
+   ],
+   "film_type": "Kodak Gold 400-5",
+   "negative_path": "negative-16bit/blue-intact/19970619A-14-white-chapel.dng",
+   "printed_path": "printed-16bit/blue-intact/19970619A-14-white-chapel.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19970619A-14-white-chapel.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19970619A-14-white-chapel.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19970619B-09-notre-dame",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19970619",
+   "roll_id": "19970619B",
+   "number_in_roll": "09",
+   "location": "notre dame",
+   "geo_location": [
+    41.704567749999995,
+    -86.23822026017265
+   ],
+   "film_type": "Kodak Gold 100-5",
+   "negative_path": "negative-16bit/blue-intact/19970619B-09-notre-dame.dng",
+   "printed_path": "printed-16bit/blue-intact/19970619B-09-notre-dame.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19970619B-09-notre-dame.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19970619B-09-notre-dame.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "indoor",
+    "is_daytime": "unknown"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "19970620C-10-st-michel",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19970620",
+   "roll_id": "19970620C",
+   "number_in_roll": "10",
+   "location": "st michel",
+   "geo_location": [
+    49.9186556,
+    4.1340444
+   ],
+   "film_type": "Kodak Gold 100-5",
+   "negative_path": "negative-16bit/blue-intact/19970620C-10-st-michel.dng",
+   "printed_path": "printed-16bit/blue-intact/19970620C-10-st-michel.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19970620C-10-st-michel.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19970620C-10-st-michel.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "199807A-06-hk",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "199807A-",
+   "roll_id": "199807A",
+   "number_in_roll": "06",
+   "location": "hong kong",
+   "geo_location": [
+    22.350627,
+    114.1849161
+   ],
+   "film_type": "Fuji 400",
+   "negative_path": "negative-16bit/blue-intact/199807A-06-hk.dng",
+   "printed_path": "printed-16bit/blue-intact/199807A-06-hk.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/199807A-06-hk.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/199807A-06-hk.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "already_downloaded"
+  },
+  {
+   "filename": "199807B-10-orlando-seaworld",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "199807B-",
+   "roll_id": "199807B",
+   "number_in_roll": "10",
+   "location": "orlando",
+   "geo_location": [
+    28.5421109,
+    -81.3790304
+   ],
+   "film_type": "Fuji 400",
+   "negative_path": "negative-16bit/blue-intact/199807B-10-orlando-seaworld.dng",
+   "printed_path": "printed-16bit/blue-intact/199807B-10-orlando-seaworld.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/199807B-10-orlando-seaworld.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/199807B-10-orlando-seaworld.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "day"
+   },
+   "pick": "roll_median"
+  },
+  {
+   "filename": "199910-01-korea",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "199910-0",
+   "roll_id": "199910",
+   "number_in_roll": "01",
+   "location": "korea",
+   "geo_location": [
+    36.638392,
+    127.6961188
+   ],
+   "film_type": "Kodak Gold 400",
+   "negative_path": "negative-16bit/blue-intact/199910-01-korea.dng",
+   "printed_path": "printed-16bit/blue-intact/199910-01-korea.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/199910-01-korea.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/199910-01-korea.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "outdoor",
+    "is_daytime": "night"
+   },
+   "pick": "already_downloaded"
+  },
+  {
+   "filename": "19960812D-09-las-vegas",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "19960812",
+   "roll_id": "19960812D",
+   "number_in_roll": "09",
+   "location": "las vegas",
+   "geo_location": [
+    36.1672559,
+    -115.148516
+   ],
+   "film_type": "Fuji NPH400",
+   "negative_path": "negative-16bit/blue-intact/19960812D-09-las-vegas.dng",
+   "printed_path": "printed-16bit/blue-intact/19960812D-09-las-vegas.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/19960812D-09-las-vegas.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/19960812D-09-las-vegas.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "indoor",
+    "is_daytime": "unknown"
+   },
+   "pick": "extra_scene"
+  },
+  {
+   "filename": "199807A-09-orlando-siggraph",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "199807A-",
+   "roll_id": "199807A",
+   "number_in_roll": "09",
+   "location": "orlando",
+   "geo_location": [
+    28.5421109,
+    -81.3790304
+   ],
+   "film_type": "Fuji 400",
+   "negative_path": "negative-16bit/blue-intact/199807A-09-orlando-siggraph.dng",
+   "printed_path": "printed-16bit/blue-intact/199807A-09-orlando-siggraph.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/199807A-09-orlando-siggraph.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/199807A-09-orlando-siggraph.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "unknown",
+    "is_daytime": "night"
+   },
+   "pick": "extra_scene"
+  },
+  {
+   "filename": "199807B-16-seattle",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "199807B-",
+   "roll_id": "199807B",
+   "number_in_roll": "16",
+   "location": "seattle",
+   "geo_location": [
+    47.6038321,
+    -122.330062
+   ],
+   "film_type": "Fuji 400",
+   "negative_path": "negative-16bit/blue-intact/199807B-16-seattle.dng",
+   "printed_path": "printed-16bit/blue-intact/199807B-16-seattle.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/199807B-16-seattle.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/199807B-16-seattle.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "indoor",
+    "is_daytime": "night"
+   },
+   "pick": "extra_scene"
+  },
+  {
+   "filename": "199910-08-korea",
+   "partition": "blue-intact",
+   "is_testset": false,
+   "date": "199910-0",
+   "roll_id": "199910",
+   "number_in_roll": "08",
+   "location": "korea",
+   "geo_location": [
+    36.638392,
+    127.6961188
+   ],
+   "film_type": "Kodak Gold 400",
+   "negative_path": "negative-16bit/blue-intact/199910-08-korea.dng",
+   "printed_path": "printed-16bit/blue-intact/199910-08-korea.tif",
+   "preview_path": "negative-preview-8bit/blue-intact/199910-08-korea.preview.png",
+   "pseudogt_path": "pseudogt-8bit/blue-intact/199910-08-korea.pseudogt.png",
+   "scene_property": {
+    "is_indoor": "indoor",
+    "is_daytime": "night"
+   },
+   "pick": "extra_scene"
+  }
+ ]
+}

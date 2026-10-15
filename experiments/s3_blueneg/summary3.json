@@ -1,0 +1,880 @@
+{
+ "n_frames": 27,
+ "n_registered": 27,
+ "ncc_min": 0.7,
+ "excluded": [],
+ "dev": {
+  "default": {
+   "nlp": 11.89,
+   "shop": 12.51
+  },
+  "global_look_v1": {
+   "nlp": 6.37,
+   "shop": 6.66,
+   "nlp_cross": 6.91,
+   "shop_cross": 7.4
+  }
+ },
+ "variants": [
+  "default",
+  "auto",
+  "look_tone_only"
+ ],
+ "default": {
+  "de2000_median": 11.731917130035722,
+  "mean_dL": -4.4939035013983455,
+  "mean_da": -4.94489537426181,
+  "mean_db": -2.3675388985406474,
+  "chroma_ratio": 0.5438999123947593,
+  "upper_tone": 8.956866830531972,
+  "upper_tone_ab": 4.430399874586559,
+  "qc": {
+   "pass": 22,
+   "warn": 5,
+   "fail": 0
+  }
+ },
+ "auto": {
+  "de2000_median": 11.068377656750208,
+  "mean_dL": 0.24802328814466756,
+  "mean_da": -2.2767659271376526,
+  "mean_db": -6.572531316078786,
+  "chroma_ratio": 0.9483015895344828,
+  "upper_tone": 8.098950117515553,
+  "upper_tone_ab": 4.608049797826661,
+  "qc": {
+   "pass": 18,
+   "warn": 9,
+   "fail": 0
+  }
+ },
+ "look_tone_only": {
+  "de2000_median": 11.598088290057015,
+  "mean_dL": 0.196072213389153,
+  "mean_da": -4.95780745327139,
+  "mean_db": -2.3688311086614053,
+  "chroma_ratio": 0.7335892072519459,
+  "upper_tone": 8.864055850841158,
+  "upper_tone_ab": 4.462858266283405,
+  "qc": {
+   "pass": 19,
+   "warn": 8,
+   "fail": 0
+  }
+ },
+ "better_than_default_frames": {
+  "auto": 13,
+  "look_tone_only": 9
+ },
+ "auto_statuses": {
+  "ok": 27
+ },
+ "by_film": {
+  "Fuji 100": {
+   "n": 4,
+   "default": 11.427721201643678,
+   "auto": 10.980441278409605,
+   "look_tone_only": 11.041548306768771
+  },
+  "Fuji 400": {
+   "n": 4,
+   "default": 13.724781705888576,
+   "auto": 14.495264826399682,
+   "look_tone_only": 14.647752773187285
+  },
+  "Fuji NPH400": {
+   "n": 5,
+   "default": 8.516093584332705,
+   "auto": 10.221981358442111,
+   "look_tone_only": 9.254418324833651
+  },
+  "Kodak Gold 100": {
+   "n": 1,
+   "default": 17.194732963344695,
+   "auto": 15.97630738119874,
+   "look_tone_only": 16.066956062703376
+  },
+  "Kodak Gold 100-5": {
+   "n": 2,
+   "default": 18.964452718761457,
+   "auto": 17.871001459131577,
+   "look_tone_only": 18.64746926432526
+  },
+  "Kodak Gold 400": {
+   "n": 2,
+   "default": 11.95115004822777,
+   "auto": 12.596708841089157,
+   "look_tone_only": 11.30672917609369
+  },
+  "Kodak Gold 400-5": {
+   "n": 1,
+   "default": 9.849009782532676,
+   "auto": 14.546102751180143,
+   "look_tone_only": 12.592601876664164
+  },
+  "Konica Super XG 100": {
+   "n": 8,
+   "default": 12.281327492213396,
+   "auto": 9.71886383055158,
+   "look_tone_only": 13.611215937048136
+  }
+ },
+ "per_frame": [
+  {
+   "frame": "19941217A-15-tokyo",
+   "film": "Fuji 100",
+   "ncc": 0.965,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 13.47,
+    "dL": -5.1,
+    "da": -6.4,
+    "db": -4.0,
+    "upper_tone_ab": 5.93
+   },
+   "auto": {
+    "dE": 13.31,
+    "dL": 0.8,
+    "da": -3.0,
+    "db": -12.1,
+    "upper_tone_ab": 5.26
+   },
+   "look_tone_only": {
+    "dE": 11.6,
+    "dL": 0.8,
+    "da": -6.3,
+    "db": -5.2,
+    "upper_tone_ab": 4.58
+   }
+  },
+  {
+   "frame": "19941217B-08-tokyo",
+   "film": "Konica Super XG 100",
+   "ncc": 0.933,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 11.05,
+    "dL": 2.6,
+    "da": -6.1,
+    "db": 2.5,
+    "upper_tone_ab": 4.8
+   },
+   "auto": {
+    "dE": 9.91,
+    "dL": 5.4,
+    "da": -3.0,
+    "db": -6.3,
+    "upper_tone_ab": 4.5
+   },
+   "look_tone_only": {
+    "dE": 10.87,
+    "dL": 5.4,
+    "da": -6.4,
+    "db": 0.6,
+    "upper_tone_ab": 4.39
+   }
+  },
+  {
+   "frame": "19941218B-23-tokyo",
+   "film": "Konica Super XG 100",
+   "ncc": 0.95,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 12.16,
+    "dL": -6.5,
+    "da": -6.8,
+    "db": 3.3,
+    "upper_tone_ab": 4.85
+   },
+   "auto": {
+    "dE": 9.53,
+    "dL": -4.5,
+    "da": -4.7,
+    "db": -0.2,
+    "upper_tone_ab": 6.3
+   },
+   "look_tone_only": {
+    "dE": 10.96,
+    "dL": -4.5,
+    "da": -6.6,
+    "db": 4.2,
+    "upper_tone_ab": 4.23
+   }
+  },
+  {
+   "frame": "19941218C-05-tokyo",
+   "film": "Kodak Gold 100",
+   "ncc": 0.893,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 17.19,
+    "dL": -9.0,
+    "da": -8.9,
+    "db": -3.3,
+    "upper_tone_ab": 6.63
+   },
+   "auto": {
+    "dE": 15.98,
+    "dL": -5.5,
+    "da": -5.3,
+    "db": -12.4,
+    "upper_tone_ab": 6.82
+   },
+   "look_tone_only": {
+    "dE": 16.07,
+    "dL": -5.5,
+    "da": -8.7,
+    "db": -5.4,
+    "upper_tone_ab": 6.27
+   }
+  },
+  {
+   "frame": "19941220D-20-kamakura",
+   "film": "Fuji 100",
+   "ncc": 0.966,
+   "rot90": 3,
+   "mirror": false,
+   "default": {
+    "dE": 8.21,
+    "dL": -2.7,
+    "da": -3.6,
+    "db": -2.4,
+    "upper_tone_ab": 4.43
+   },
+   "auto": {
+    "dE": 10.86,
+    "dL": 0.2,
+    "da": 0.6,
+    "db": -11.0,
+    "upper_tone_ab": 3.97
+   },
+   "look_tone_only": {
+    "dE": 9.13,
+    "dL": 0.2,
+    "da": -2.6,
+    "db": -4.7,
+    "upper_tone_ab": 4.5
+   }
+  },
+  {
+   "frame": "19941221D-25-kyoto",
+   "film": "Fuji 100",
+   "ncc": 0.969,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 11.12,
+    "dL": -8.6,
+    "da": -6.1,
+    "db": 0.8,
+    "upper_tone_ab": 3.16
+   },
+   "auto": {
+    "dE": 11.1,
+    "dL": -7.2,
+    "da": -3.4,
+    "db": -4.5,
+    "upper_tone_ab": 5.41
+   },
+   "look_tone_only": {
+    "dE": 11.27,
+    "dL": -7.2,
+    "da": -5.5,
+    "db": -0.2,
+    "upper_tone_ab": 3.91
+   }
+  },
+  {
+   "frame": "19941222D-32-kyoto",
+   "film": "Fuji 100",
+   "ncc": 0.964,
+   "rot90": 3,
+   "mirror": false,
+   "default": {
+    "dE": 11.73,
+    "dL": -5.2,
+    "da": -6.2,
+    "db": -0.1,
+    "upper_tone_ab": 5.75
+   },
+   "auto": {
+    "dE": 10.4,
+    "dL": -0.6,
+    "da": -3.3,
+    "db": -9.3,
+    "upper_tone_ab": 5.69
+   },
+   "look_tone_only": {
+    "dE": 10.82,
+    "dL": -0.6,
+    "da": -6.8,
+    "db": -2.4,
+    "upper_tone_ab": 5.16
+   }
+  },
+  {
+   "frame": "19941222E-04-nara",
+   "film": "Konica Super XG 100",
+   "ncc": 0.858,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 11.24,
+    "dL": 5.6,
+    "da": -4.9,
+    "db": 4.4,
+    "upper_tone_ab": 4.98
+   },
+   "auto": {
+    "dE": 13.43,
+    "dL": 12.6,
+    "da": -3.2,
+    "db": -1.9,
+    "upper_tone_ab": 4.83
+   },
+   "look_tone_only": {
+    "dE": 14.98,
+    "dL": 12.7,
+    "da": -6.4,
+    "db": 5.1,
+    "upper_tone_ab": 4.76
+   }
+  },
+  {
+   "frame": "19941223E-17-osaka",
+   "film": "Konica Super XG 100",
+   "ncc": 0.921,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 11.67,
+    "dL": -3.9,
+    "da": -5.3,
+    "db": 0.5,
+    "upper_tone_ab": 5.97
+   },
+   "auto": {
+    "dE": 10.04,
+    "dL": 0.9,
+    "da": -1.8,
+    "db": -6.6,
+    "upper_tone_ab": 5.81
+   },
+   "look_tone_only": {
+    "dE": 9.84,
+    "dL": 1.0,
+    "da": -5.0,
+    "db": 0.5,
+    "upper_tone_ab": 5.7
+   }
+  },
+  {
+   "frame": "19941224E-23-nagasaki",
+   "film": "Konica Super XG 100",
+   "ncc": 0.966,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 13.59,
+    "dL": 0.9,
+    "da": -6.2,
+    "db": 13.1,
+    "upper_tone_ab": 2.68
+   },
+   "auto": {
+    "dE": 9.46,
+    "dL": 4.8,
+    "da": -4.1,
+    "db": 7.5,
+    "upper_tone_ab": 5.12
+   },
+   "look_tone_only": {
+    "dE": 14.0,
+    "dL": 4.9,
+    "da": -6.6,
+    "db": 13.7,
+    "upper_tone_ab": 4.99
+   }
+  },
+  {
+   "frame": "19941225E-34-nagasaki",
+   "film": "Konica Super XG 100",
+   "ncc": 0.873,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 12.98,
+    "dL": 11.7,
+    "da": -3.7,
+    "db": 4.9,
+    "upper_tone_ab": 3.96
+   },
+   "auto": {
+    "dE": 18.15,
+    "dL": 19.2,
+    "da": 0.5,
+    "db": -2.9,
+    "upper_tone_ab": 3.96
+   },
+   "look_tone_only": {
+    "dE": 19.0,
+    "dL": 19.3,
+    "da": -3.1,
+    "db": 5.1,
+    "upper_tone_ab": 3.92
+   }
+  },
+  {
+   "frame": "19941225F-03-nagasaki",
+   "film": "Konica Super XG 100",
+   "ncc": 0.95,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 13.4,
+    "dL": 3.8,
+    "da": -4.9,
+    "db": 12.7,
+    "upper_tone_ab": 3.15
+   },
+   "auto": {
+    "dE": 9.42,
+    "dL": 10.7,
+    "da": -2.3,
+    "db": 4.6,
+    "upper_tone_ab": 3.19
+   },
+   "look_tone_only": {
+    "dE": 14.8,
+    "dL": 10.8,
+    "da": -5.4,
+    "db": 12.3,
+    "upper_tone_ab": 3.97
+   }
+  },
+  {
+   "frame": "19941228F-12-tokyo",
+   "film": "Konica Super XG 100",
+   "ncc": 0.871,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 12.4,
+    "dL": -2.6,
+    "da": -5.4,
+    "db": 7.5,
+    "upper_tone_ab": 4.28
+   },
+   "auto": {
+    "dE": 8.79,
+    "dL": 2.4,
+    "da": -2.9,
+    "db": 2.5,
+    "upper_tone_ab": 4.61
+   },
+   "look_tone_only": {
+    "dE": 13.22,
+    "dL": 2.5,
+    "da": -5.5,
+    "db": 9.1,
+    "upper_tone_ab": 4.46
+   }
+  },
+  {
+   "frame": "19960808B-03-new-orleans-siggraph96",
+   "film": "Fuji NPH400",
+   "ncc": 0.962,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 6.31,
+    "dL": -3.1,
+    "da": -2.9,
+    "db": -4.4,
+    "upper_tone_ab": 7.22
+   },
+   "auto": {
+    "dE": 6.33,
+    "dL": -2.4,
+    "da": -0.8,
+    "db": -7.4,
+    "upper_tone_ab": 3.99
+   },
+   "look_tone_only": {
+    "dE": 6.4,
+    "dL": -2.4,
+    "da": -2.1,
+    "db": -4.3,
+    "upper_tone_ab": 6.13
+   }
+  },
+  {
+   "frame": "19960809B-14-new-orleans-siggraph96",
+   "film": "Fuji NPH400",
+   "ncc": 0.978,
+   "rot90": 3,
+   "mirror": false,
+   "default": {
+    "dE": 21.15,
+    "dL": -4.5,
+    "da": -5.9,
+    "db": -22.3,
+    "upper_tone_ab": 2.85
+   },
+   "auto": {
+    "dE": 25.28,
+    "dL": 0.3,
+    "da": 0.2,
+    "db": -30.3,
+    "upper_tone_ab": 2.9
+   },
+   "look_tone_only": {
+    "dE": 21.75,
+    "dL": 0.2,
+    "da": -2.9,
+    "db": -23.7,
+    "upper_tone_ab": 2.94
+   }
+  },
+  {
+   "frame": "19960811B-28-arizona-london-bridge",
+   "film": "Fuji NPH400",
+   "ncc": 0.97,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 8.52,
+    "dL": 8.1,
+    "da": 0.1,
+    "db": 2.9,
+    "upper_tone_ab": 3.08
+   },
+   "auto": {
+    "dE": 13.46,
+    "dL": 14.1,
+    "da": 3.7,
+    "db": -3.7,
+    "upper_tone_ab": 3.62
+   },
+   "look_tone_only": {
+    "dE": 12.54,
+    "dL": 14.1,
+    "da": 0.9,
+    "db": 2.7,
+    "upper_tone_ab": 3.28
+   }
+  },
+  {
+   "frame": "19960812D-17-las-vegas",
+   "film": "Fuji NPH400",
+   "ncc": 0.947,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 6.09,
+    "dL": -10.9,
+    "da": -2.5,
+    "db": -8.5,
+    "upper_tone_ab": 3.66
+   },
+   "auto": {
+    "dE": 6.16,
+    "dL": -10.1,
+    "da": -0.6,
+    "db": -12.8,
+    "upper_tone_ab": 2.89
+   },
+   "look_tone_only": {
+    "dE": 6.2,
+    "dL": -10.1,
+    "da": -2.1,
+    "db": -9.8,
+    "upper_tone_ab": 3.49
+   }
+  },
+  {
+   "frame": "19970619A-14-white-chapel",
+   "film": "Kodak Gold 400-5",
+   "ncc": 0.952,
+   "rot90": 3,
+   "mirror": false,
+   "default": {
+    "dE": 9.85,
+    "dL": 0.4,
+    "da": -2.9,
+    "db": -5.8,
+    "upper_tone_ab": 4.39
+   },
+   "auto": {
+    "dE": 14.55,
+    "dL": 5.4,
+    "da": 0.2,
+    "db": -14.5,
+    "upper_tone_ab": 4.19
+   },
+   "look_tone_only": {
+    "dE": 12.59,
+    "dL": 5.4,
+    "da": -2.9,
+    "db": -7.8,
+    "upper_tone_ab": 4.12
+   }
+  },
+  {
+   "frame": "19970619B-09-notre-dame",
+   "film": "Kodak Gold 100-5",
+   "ncc": 0.977,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 12.01,
+    "dL": -4.5,
+    "da": -10.3,
+    "db": -2.7,
+    "upper_tone_ab": 6.95
+   },
+   "auto": {
+    "dE": 9.59,
+    "dL": -3.6,
+    "da": -8.2,
+    "db": -4.5,
+    "upper_tone_ab": 7.3
+   },
+   "look_tone_only": {
+    "dE": 10.9,
+    "dL": -3.5,
+    "da": -9.8,
+    "db": -0.5,
+    "upper_tone_ab": 5.78
+   }
+  },
+  {
+   "frame": "19970620C-10-st-michel",
+   "film": "Kodak Gold 100-5",
+   "ncc": 0.812,
+   "rot90": 3,
+   "mirror": false,
+   "default": {
+    "dE": 25.92,
+    "dL": -25.3,
+    "da": -7.6,
+    "db": -2.2,
+    "upper_tone_ab": 5.29
+   },
+   "auto": {
+    "dE": 26.15,
+    "dL": -25.4,
+    "da": -6.3,
+    "db": -6.4,
+    "upper_tone_ab": 6.09
+   },
+   "look_tone_only": {
+    "dE": 26.39,
+    "dL": -25.4,
+    "da": -8.4,
+    "db": -1.8,
+    "upper_tone_ab": 5.78
+   }
+  },
+  {
+   "frame": "199807A-06-hk",
+   "film": "Fuji 400",
+   "ncc": 0.982,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 9.11,
+    "dL": 0.6,
+    "da": -2.7,
+    "db": 1.2,
+    "upper_tone_ab": 3.4
+   },
+   "auto": {
+    "dE": 10.84,
+    "dL": 5.7,
+    "da": 1.2,
+    "db": -4.5,
+    "upper_tone_ab": 3.51
+   },
+   "look_tone_only": {
+    "dE": 11.38,
+    "dL": 5.7,
+    "da": -1.4,
+    "db": 1.3,
+    "upper_tone_ab": 3.36
+   }
+  },
+  {
+   "frame": "199807B-10-orlando-seaworld",
+   "film": "Fuji 400",
+   "ncc": 0.901,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 22.23,
+    "dL": -26.0,
+    "da": -2.6,
+    "db": -4.4,
+    "upper_tone_ab": 4.38
+   },
+   "auto": {
+    "dE": 19.99,
+    "dL": -21.4,
+    "da": -0.5,
+    "db": -13.8,
+    "upper_tone_ab": 4.44
+   },
+   "look_tone_only": {
+    "dE": 19.38,
+    "dL": -21.4,
+    "da": -4.0,
+    "db": -7.2,
+    "upper_tone_ab": 4.38
+   }
+  },
+  {
+   "frame": "199910-01-korea",
+   "film": "Kodak Gold 400",
+   "ncc": 0.928,
+   "rot90": 3,
+   "mirror": false,
+   "default": {
+    "dE": 10.95,
+    "dL": -12.1,
+    "da": -6.3,
+    "db": -11.8,
+    "upper_tone_ab": 9.92
+   },
+   "auto": {
+    "dE": 12.9,
+    "dL": -12.3,
+    "da": -4.3,
+    "db": -17.0,
+    "upper_tone_ab": 8.97
+   },
+   "look_tone_only": {
+    "dE": 11.78,
+    "dL": -12.3,
+    "da": -6.3,
+    "db": -13.1,
+    "upper_tone_ab": 10.11
+   }
+  },
+  {
+   "frame": "19960812D-09-las-vegas",
+   "film": "Fuji NPH400",
+   "ncc": 0.835,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 8.9,
+    "dL": 5.5,
+    "da": -0.0,
+    "db": -2.5,
+    "upper_tone_ab": 5.21
+   },
+   "auto": {
+    "dE": 10.22,
+    "dL": 5.7,
+    "da": 4.1,
+    "db": -7.0,
+    "upper_tone_ab": 4.74
+   },
+   "look_tone_only": {
+    "dE": 9.25,
+    "dL": 5.6,
+    "da": 2.3,
+    "db": -2.7,
+    "upper_tone_ab": 4.54
+   }
+  },
+  {
+   "frame": "199807A-09-orlando-siggraph",
+   "film": "Fuji 400",
+   "ncc": 0.933,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 17.75,
+    "dL": -31.6,
+    "da": -0.4,
+    "db": -3.4,
+    "upper_tone_ab": 3.05
+   },
+   "auto": {
+    "dE": 17.92,
+    "dL": -31.9,
+    "da": 1.4,
+    "db": -5.8,
+    "upper_tone_ab": 3.73
+   },
+   "look_tone_only": {
+    "dE": 17.92,
+    "dL": -31.9,
+    "da": 0.6,
+    "db": -3.9,
+    "upper_tone_ab": 3.73
+   }
+  },
+  {
+   "frame": "199807B-16-seattle",
+   "film": "Fuji 400",
+   "ncc": 0.86,
+   "rot90": 0,
+   "mirror": false,
+   "default": {
+    "dE": 9.7,
+    "dL": -14.7,
+    "da": -4.0,
+    "db": -5.8,
+    "upper_tone_ab": 3.87
+   },
+   "auto": {
+    "dE": 11.07,
+    "dL": -16.3,
+    "da": -2.5,
+    "db": -9.1,
+    "upper_tone_ab": 3.05
+   },
+   "look_tone_only": {
+    "dE": 10.56,
+    "dL": -16.3,
+    "da": -3.8,
+    "db": -6.3,
+    "upper_tone_ab": 3.64
+   }
+  },
+  {
+   "frame": "199910-08-korea",
+   "film": "Kodak Gold 400",
+   "ncc": 0.956,
+   "rot90": 3,
+   "mirror": false,
+   "default": {
+    "dE": 12.95,
+    "dL": -9.7,
+    "da": -3.7,
+    "db": -5.2,
+    "upper_tone_ab": 5.82
+   },
+   "auto": {
+    "dE": 12.29,
+    "dL": -6.2,
+    "da": -1.4,
+    "db": -10.3,
+    "upper_tone_ab": 5.53
+   },
+   "look_tone_only": {
+    "dE": 10.84,
+    "dL": -6.1,
+    "da": -3.8,
+    "db": -4.7,
+    "upper_tone_ab": 5.73
+   }
+  }
+ ]
+}
