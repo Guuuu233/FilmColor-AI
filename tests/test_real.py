@@ -181,6 +181,24 @@ def test_pipeline_render_params_are_recorded_and_replayed(tmp_path):
         write(path, tmp_path / "c", render_params=dict(sat=5))  # rejected before decoding
 
 
+def test_pipeline_auto_records_estimate_and_replays(tmp_path):
+    import tifffile
+
+    from filmcolor.noref import NOREF_V2, load_look
+    from filmcolor.pipeline import replay_kwargs, write
+
+    path = SRC / "_DSF9235.RAF"
+    a = write(path, tmp_path / "a", auto=NOREF_V2)
+    au = a["auto"]
+    assert (au["config"], au["look"], au["status"]) == ("noref_v2", "global_look_v1", "ok")
+    assert len(au["look_file"]["sha256"]) == 64 and a["render"]["params"] == au["params"] == load_look()["params"]
+    b = write(path, tmp_path / "b", **replay_kwargs(a))  # replay reads the recorded parameters, no estimation
+    assert "auto" not in b
+    assert np.array_equal(tifffile.imread(tmp_path / "a/_DSF9235.tif"), tifffile.imread(tmp_path / "b/_DSF9235.tif"))
+    with pytest.raises(ValueError, match="mutually exclusive"):
+        write(path, tmp_path / "c", auto=NOREF_V2, render_params=dict(ev=0.1))
+
+
 def test_default_render_reproduces_sprint1_output_bytes(tmp_path):
     """Default render parameters must give the TIFF recorded by the Sprint 1 run (52a4acc)."""
     from filmcolor.pipeline import write

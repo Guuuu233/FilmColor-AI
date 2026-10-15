@@ -1,0 +1,61 @@
+{
+ "id": "global_look_v1",
+ "params": {
+  "ev": -0.047668706328979286,
+  "temp": -0.24279052374617133,
+  "tint": 0.1795540583562999,
+  "sat": 1.0969133294792859,
+  "contrast": 2.0,
+  "midtone": 0.2682044325765529,
+  "shoulder": 0.10837665455438666,
+  "matrix": [
+   [
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ },
+ "nature": "Fixed look fitted to the development references (supervised origin: NLP default conversions and shop_r01 colourist JPEGs). Per-frame inference reads only these constants, never a reference image. Not a calibration of any scanner, light or film; not part of the engine defaults (Sprint 1 output unchanged).",
+ "fit": {
+  "script": "scripts/noref_global.py",
+  "result": "experiments/s2_noref/global_look.json",
+  "fit_code_commit": "3a65d51",
+  "train": "nlp_official (12 frames) + shop_r01 (21 paired frames, DSC_3822 and DSC_3858 excluded)",
+  "pixels_per_frame": 3000,
+  "seed": 0,
+  "mode": "7",
+  "lam": 0.0,
+  "highlight_weight": 30.0,
+  "area_weight": 10.0
+ },
+ "dev_scores_de2000_median": {
+  "default": {
+   "nlp": 11.89,
+   "shop": 12.51
+  },
+  "fit_on_both_in_sample": {
+   "nlp": 6.37,
+   "shop": 6.66
+  },
+  "fit_on_nlp_eval_shop": 7.4,
+  "fit_on_shop_eval_nlp": 6.91
+ },
+ "caveats": [
+  "contrast sits at its upper bound (2.0) in every fit; bounds were not widened (decision S2-6/S2-7)",
+  "shoulder differs strongly between the references (fit on nlp 0.90, on shop 0.08): a style difference, the pooled value follows the shop roll",
+  "frames weighted equally, so the 21 shop frames outweigh the 12 NLP frames",
+  "only two scanner set-ups (Fuji X-T2 X-Trans, Nikon Z 7II Bayer) and few films: may encode scanner bias rather than a general look",
+  "development-set scores only; not evidence of generalisation"
+ ]
+}

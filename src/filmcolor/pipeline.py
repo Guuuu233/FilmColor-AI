@@ -20,6 +20,7 @@ from .export import DESCRIPTION, write_tiff16
 from .invert import base_from_regions, central_region, invert_negative, region_mask
 from .qc import quality_checks
 from .raw import check_region, linearize, saturation_mask
+from .noref import CONFIG_DIR, estimate_params_v2, estimation_input
 from .render import RenderParams, render as render_image, srgb_eotf
 from .rawpy_io import demosaic_linear, load_raw
 
@@ -49,11 +50,14 @@ def software_info() -> dict:
 
 def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
-            render_params=None):
+            render_params=None, auto=None):
     """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
 
     ``render_params``: RenderParams or its dict (Sprint 2 colour parameters); None = defaults,
-    which reproduce the Sprint 1 output."""
+    which reproduce the Sprint 1 output. ``auto``: a reference-free estimator config (``noref.NOREF_V2``)
+    that sets the render parameters from the frame itself; excludes ``render_params``."""
+    if auto is not None and render_params is not None:
+        raise ValueError("auto and render_params are mutually exclusive")
     rp = render_params if isinstance(render_params, RenderParams) else RenderParams.from_dict(render_params or {})
     if encoding not in DESCRIPTION:
         raise ValueError(f"encoding must be one of {tuple(DESCRIPTION)}")
@@ -97,6 +101,13 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         t, l, h, w = image_region
         centres = [(r + rh / 2, c + rw / 2) for r, c, rh, rw in regions]
         inside = float(np.mean([t <= y < t + h and l <= x < l + w for y, x in centres]))
+    auto_info = None
+    if auto is not None:  # estimated from this frame's positive only (no reference, no roll context)
+        est = estimate_params_v2(*estimation_input(res.positive * np.float32(res.params.exposure), image_region), auto)
+        rp = RenderParams.from_dict(est["params"])
+        look_file = CONFIG_DIR / f"{est['look']}.json"
+        auto_info = dict(est, look_file=dict(name=look_file.name, sha256=sha256(look_file)),
+                         input="positive x inversion exposure, 4x4 block mean, image region")
     display, render_diag = render_image(res.positive * np.float32(res.params.exposure), rp, mask)
     qc = quality_checks(display, mask, res.report, base_inside_image=inside)
     out = display if encoding == "srgb" else srgb_eotf(display).astype(np.float32)
@@ -120,6 +131,8 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
                     icc_description=DESCRIPTION[encoding], bit_depth=16,
                     orientation="sensor (meta.flip not applied)"),
     )
+    if auto_info is not None:
+        sidecar["auto"] = auto_info
     return out, sidecar
 
 
