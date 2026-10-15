@@ -1,0 +1,116 @@
+{
+ "input": "data/raw/public/blueneg/negative-16bit/blue-intact/199807A-06-hk.dng",
+ "auto": true,
+ "traced_peak_gib": 0.77,
+ "maxrss_gib": 5.519,
+ "stages": [
+  {
+   "stage": "load_scanner",
+   "seconds": 1.19,
+   "start_gib": 0.001,
+   "peak_gib": 1.222,
+   "stage_extra_gib": 1.221,
+   "end_gib": 0.831,
+   "maxrss_gib": 1.527
+  },
+  {
+   "stage": "estimate_base_scanner",
+   "seconds": 0.59,
+   "start_gib": 0.831,
+   "peak_gib": 0.861,
+   "stage_extra_gib": 0.03,
+   "end_gib": 0.831,
+   "maxrss_gib": 1.56
+  },
+  {
+   "stage": "base_from_regions",
+   "seconds": 0.17,
+   "start_gib": 0.831,
+   "peak_gib": 0.904,
+   "stage_extra_gib": 0.073,
+   "end_gib": 0.831,
+   "maxrss_gib": 1.634
+  },
+  {
+   "stage": "invert_negative",
+   "seconds": 9.14,
+   "start_gib": 0.894,
+   "peak_gib": 5.677,
+   "stage_extra_gib": 4.782,
+   "end_gib": 2.425,
+   "maxrss_gib": 4.422
+  },
+  {
+   "stage": "estimation_input",
+   "seconds": 0.77,
+   "start_gib": 2.425,
+   "peak_gib": 2.52,
+   "stage_extra_gib": 0.096,
+   "end_gib": 2.477,
+   "maxrss_gib": 5.391
+  },
+  {
+   "stage": "estimate_params_v2",
+   "seconds": 0.12,
+   "start_gib": 1.711,
+   "peak_gib": 1.74,
+   "stage_extra_gib": 0.029,
+   "end_gib": 1.712,
+   "maxrss_gib": 5.391
+  },
+  {
+   "stage": "sha256",
+   "seconds": 0.0,
+   "start_gib": 1.66,
+   "peak_gib": 1.661,
+   "stage_extra_gib": 0.001,
+   "end_gib": 1.66,
+   "maxrss_gib": 5.391
+  },
+  {
+   "stage": "render_image",
+   "seconds": 7.67,
+   "start_gib": 2.425,
+   "peak_gib": 8.228,
+   "stage_extra_gib": 5.802,
+   "end_gib": 3.191,
+   "maxrss_gib": 5.519
+  },
+  {
+   "stage": "quality_checks",
+   "seconds": 0.97,
+   "start_gib": 2.425,
+   "peak_gib": 2.872,
+   "stage_extra_gib": 0.446,
+   "end_gib": 2.425,
+   "maxrss_gib": 5.519
+  },
+  {
+   "stage": "sha256",
+   "seconds": 0.33,
+   "start_gib": 2.425,
+   "peak_gib": 2.427,
+   "stage_extra_gib": 0.002,
+   "end_gib": 2.425,
+   "maxrss_gib": 5.519
+  },
+  {
+   "stage": "write_tiff16",
+   "seconds": 2.59,
+   "start_gib": 0.768,
+   "peak_gib": 2.298,
+   "stage_extra_gib": 1.53,
+   "end_gib": 0.768,
+   "maxrss_gib": 5.519
+  },
+  {
+   "stage": "sha256",
+   "seconds": 0.17,
+   "start_gib": 0.768,
+   "peak_gib": 0.77,
+   "stage_extra_gib": 0.002,
+   "end_gib": 0.768,
+   "maxrss_gib": 5.519
+  }
+ ]
+}

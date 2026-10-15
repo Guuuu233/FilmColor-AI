@@ -22,6 +22,7 @@ import numpy as np
 from .raw import CHANNELS, check_region
 
 EPS = 1e-6  # floor for transmittance before log10 (render path clips below-black to 0)
+CHUNK_ROWS = 256  # rows per block when inverting a full image; density and inversion are per pixel
 
 
 @dataclass
@@ -147,9 +148,13 @@ def range_report(D, P, p: InversionParams, mask=None) -> dict:
 @dataclass
 class InversionResult:
     positive: np.ndarray        # P, linear
-    display: np.ndarray         # O, sRGB-encoded for viewing
     params: InversionParams
     report: dict = field(default_factory=dict)
+
+    @property
+    def display(self) -> np.ndarray:
+        """O, sRGB-encoded for viewing; computed on access (the pipeline renders P instead)."""
+        return tone_map(self.positive, self.params)
 
 
 def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: float = 0.6,
@@ -160,9 +165,11 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
         raise ValueError("input image contains NaN or infinite values")
     if not np.all(np.isfinite(base)) or np.any(np.asarray(base) <= 0):
         raise ValueError(f"film base must be positive and finite, got {tuple(base)}")
-    D = density(rgb, base)
+    # global statistics only need the masked pixels; their density is computed once on that
+    # selection (same values, same order as density(rgb)[mask]) and the full image in row blocks
+    Dm = density(rgb[mask] if mask is not None else rgb.reshape(-1, 3), base)
     if d_hi is None:
-        d_hi = estimate_white_point(D, mask, white_pct)
+        d_hi = estimate_white_point(Dm, None, white_pct)
         lo = d_lo or (0.0, 0.0, 0.0)
         flat = [c for c, hi, l in zip("RGB", d_hi, lo) if hi <= l]
         if flat:
@@ -170,10 +177,21 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
                              "region: blank or unexposed frame, or wrong image region / film base")
     p = InversionParams(base=tuple(float(x) for x in base), d_lo=tuple(d_lo or (0.0, 0.0, 0.0)),
                         d_hi=tuple(float(x) for x in d_hi), gamma=gamma, exposure=exposure)
-    P = invert(D, p)
     # share of the whole image denser than the white point: large values flag opaque areas
     # (holder mask) or highlights outside the region used for the white point
-    above_white = [float(np.mean(D[..., c] > p.d_hi[c])) for c in range(3)]
-    return InversionResult(positive=P, display=tone_map(P, p), params=p,
-                           report=dict(white_pct=white_pct, range=range_report(D, P, p, mask),
+    hi = np.asarray(p.d_hi, np.float32)
+    if rgb.ndim == 3:
+        P = np.empty(rgb.shape, np.float32)
+        n_above = np.zeros(3, np.int64)
+        for r0 in range(0, rgb.shape[0], CHUNK_ROWS):
+            D = density(rgb[r0 : r0 + CHUNK_ROWS], base)
+            P[r0 : r0 + CHUNK_ROWS] = invert(D, p)
+            n_above += np.count_nonzero(D > hi, axis=(0, 1))
+        above_white = [float(k / (rgb.shape[0] * rgb.shape[1])) for k in n_above]
+    else:
+        D = density(rgb, base)
+        P = invert(D, p)
+        above_white = [float(np.mean(D[..., c] > p.d_hi[c])) for c in range(3)]
+    return InversionResult(positive=P, params=p,
+                           report=dict(white_pct=white_pct, range=range_report(Dm, invert(Dm, p), p),
                                        full_image_above_white=above_white))

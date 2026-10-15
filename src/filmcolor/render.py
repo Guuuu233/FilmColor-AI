@@ -113,11 +113,35 @@ def srgb_eotf(e):
     return np.where(e <= 0.04045, e / 12.92, np.power((e + 0.055) / 1.055, 2.4))
 
 
-def render(P, p: RenderParams, mask=None):
+CHUNK_ROWS = 256  # rows per block in ``render``; every step is per pixel, so blocks do not interact
+
+
+def render(P, p: RenderParams, mask=None, *, chunk_rows: int = CHUNK_ROWS):
     """Return (sRGB-encoded float32 image in [0, 1], diagnostics). Diagnostics are computed over
-    ``mask`` (image-region pixels) when given; borders, rebate and holder would otherwise dominate."""
-    e, diagnostics, _ = render_full(P, p, mask)
-    return e, diagnostics
+    ``mask`` (image-region pixels) when given; borders, rebate and holder would otherwise dominate.
+
+    Images taller than ``chunk_rows`` are rendered in row blocks into one output array (same
+    pixels as ``render_full``; peak memory is the output plus one block of temporaries)."""
+    x = np.asarray(P, np.float32)
+    if x.ndim != 3 or x.shape[0] <= chunk_rows:
+        e, diagnostics, _ = render_full(x, p, mask)
+        return e, diagnostics
+    out = np.empty(x.shape, np.float32)
+    n_neg = n_over = n = 0
+    for r0 in range(0, x.shape[0], chunk_rows):
+        xc = x[r0 : r0 + chunk_rows]
+        if not np.all(np.isfinite(xc)):
+            raise ValueError("input contains NaN or infinite values")
+        e, neg, over, _ = _render_core(xc, p)
+        out[r0 : r0 + chunk_rows] = e
+        if mask is not None:
+            m = mask[r0 : r0 + chunk_rows]
+            neg, over = neg[m], over[m]
+        n_neg += int(np.count_nonzero(neg))
+        n_over += int(np.count_nonzero(over))
+        n += neg.size
+    frac = (lambda k: k / n) if n else (lambda k: float("nan"))
+    return out, dict(below_zero_after_colour=frac(n_neg), above_white=frac(n_over))
 
 
 def overexposure_stops(v):
@@ -131,6 +155,16 @@ def render_full(P, p: RenderParams, mask=None):
     x = np.asarray(P, np.float32)
     if not np.all(np.isfinite(x)):
         raise ValueError("input contains NaN or infinite values")
+    e, neg, over, pre_clip = _render_core(x, p)
+    below_zero = float(np.mean(neg[mask] if mask is not None else neg))
+    above_white = float(np.mean(over[mask] if mask is not None else over))
+    diagnostics = dict(below_zero_after_colour=below_zero, above_white=above_white)
+    return e, diagnostics, pre_clip
+
+
+def _render_core(x, p: RenderParams):
+    """Per-pixel steps on float32 ``x`` (..., 3): (encoded output, below-zero flags after colour,
+    above-white flags after the shoulder, display-linear values before the white clip)."""
     if p.ev:
         x = x * np.float32(2.0 ** p.ev)
     if p.temp or p.tint:
@@ -140,10 +174,10 @@ def render_full(P, p: RenderParams, mask=None):
     if p.sat != 1:
         y = (x @ LUMA.astype(np.float32))[..., None]
         x = y + np.float32(p.sat) * (x - y)
-    below_zero = float(np.mean((x < 0)[mask] if mask is not None else x < 0))
+    neg = x < 0
     x = np.maximum(x, 0)
     pre_clip = shoulder_curve(x, p.shoulder)
-    above_white = float(np.mean((pre_clip > 1)[mask] if mask is not None else pre_clip > 1))
+    over = pre_clip > 1
     v = np.minimum(pre_clip, 1)
     if p.shoulder or p.midtone != MID_GREY:
         g = np.log(p.midtone) / np.log(float(shoulder_curve(np.float32(MID_GREY), p.shoulder)))
@@ -153,5 +187,4 @@ def render_full(P, p: RenderParams, mask=None):
         pv, c = np.float32(srgb_oetf(p.midtone)), np.float32(p.contrast)
         e = np.where(e <= pv, pv * np.power(e / pv, c),
                      1 - (1 - pv) * np.power(np.maximum(1 - e, 0) / (1 - pv), c)).astype(np.float32)
-    diagnostics = dict(below_zero_after_colour=below_zero, above_white=above_white)
-    return e, diagnostics, pre_clip
+    return e, neg, over, pre_clip

@@ -1,0 +1,5 @@
+case	seconds	max_rss_bytes	peak_footprint_bytes
+blueneg_auto	23.25	6204506112	9549470944
+nef_auto	13.38	7076429824	7064180232
+nef_default	9.94	6509330432	6498063472
+raf_all_branches	13.92	3874635776	3862056200

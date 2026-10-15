@@ -152,13 +152,17 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         centres = [(r + rh / 2, c + rw / 2) for r, c, rh, rw in regions]
         inside = float(np.mean([t <= y < t + h and l <= x < l + w for y, x in centres]))
     auto_info = None
+    # positive x inversion exposure, once (x 1.0 is exact, so the default reuses the array)
+    pos = res.positive if res.params.exposure == 1 else res.positive * np.float32(res.params.exposure)
+    res.positive = None
     if auto is not None:  # estimated from this frame's positive only (no reference, no roll context)
-        est = estimate_params_v2(*estimation_input(res.positive * np.float32(res.params.exposure), image_region), auto)
+        est = estimate_params_v2(*estimation_input(pos, image_region), auto)
         rp = RenderParams.from_dict(est["params"])
         look_file = CONFIG_DIR / f"{est['look']}.json"
         auto_info = dict(est, look_file=dict(name=look_file.name, sha256=sha256(look_file)),
                          input="positive x inversion exposure, 4x4 block mean, image region")
-    display, render_diag = render_image(res.positive * np.float32(res.params.exposure), rp, mask)
+    display, render_diag = render_image(pos, rp, mask)
+    del pos
     qc = quality_checks(display, mask, res.report, base_inside_image=inside)
     out = display if encoding == "srgb" else srgb_eotf(display).astype(np.float32)
 
