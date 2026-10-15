@@ -1,0 +1,12 @@
+A () {'nlp': 6.371, 'shop': 6.656, 'max_clip_not_ref': 0.005}
+B1 ('brightness',) {'nlp': 8.058, 'shop': 6.656, 'max_clip_not_ref': 0.021}
+   B1 {'median_lower_both': False, 'more_better_than_worse': False, 'clip_ok': False} better 4 worse 7
+B2 ('brightness',) {'nlp': 8.058, 'shop': 6.656, 'max_clip_not_ref': 0.021}
+   B2 {'median_lower_both': False, 'more_better_than_worse': True, 'clip_ok': False} better 4 worse 2
+C ('wb',) {'nlp': 7.387, 'shop': 7.48, 'max_clip_not_ref': 0.01}
+   C {'median_lower_both': False, 'more_better_than_worse': False, 'clip_ok': True} better 3 worse 15
+D ('tone',) {'nlp': 6.371, 'shop': 6.652, 'max_clip_not_ref': 0.005}
+   D {'median_lower_both': False, 'more_better_than_worse': False, 'clip_ok': True} better 1 worse 1
+E ('sat',) {'nlp': 6.371, 'shop': 6.702, 'max_clip_not_ref': 0.005}
+   E {'median_lower_both': False, 'more_better_than_worse': False, 'clip_ok': True} better 0 worse 0
+kept: ['A']

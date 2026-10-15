@@ -1,0 +1,41 @@
+## stages (median dE2000, anomalous frames excluded)
+
+| stage | groups | NLP | shop | better / worse vs kept | max clip_not_ref | kept |
+|---|---|---|---|---|---|---|
+| A | look only | 6.37 | 6.66 | - | 0.005 | yes |
+| B1 | brightness | 8.06 | 6.66 | 4 / 7 | 0.021 | no |
+| B2 | brightness (brighten only) | 8.06 | 6.66 | 4 / 2 | 0.021 | no |
+| C | wb | 7.39 | 7.48 | 3 / 15 | 0.010 | no |
+| D | tone | 6.37 | 6.65 | 1 / 1 | 0.005 | no |
+| E | sat | 6.37 | 6.70 | 0 / 0 | 0.005 | no |
+
+spread band for D: {'stage': 'A', 'n_frames': 47, 'percentiles': [10, 90], 'band': [0.5923735345602035, 0.877335072743706]}
+
+## per-group oracle (median dE2000, anomalous frames excluded)
+
+| set | look | brightness | wb | tone | sat | all |
+|---|---|---|---|---|---|---|
+| nlp (12) | 6.37 | 5.93 | 5.78 | 7.07 | 5.78 | 3.63 |
+| shop (21) | 6.66 | 5.26 | 5.43 | 6.39 | 6.64 | 3.53 |
+
+largest single-group gain (frames): {'wb': 13, 'brightness': 19, 'sat': 1}
+
+## does the estimator see what the oracle needs (anomalous frames excluded)
+
+| quantity | needed p10 .. p90 | Spearman (needed, estimated) |
+|---|---|---|
+| brightness of the median pixel, stops (B2) | -0.44 .. +0.73 | +0.27 (p = 0.13) |
+| temp (C) | -0.29 .. +0.42 | +0.19 (p = 0.29) |
+| tint (C) | -0.12 .. +0.14 | +0.04 (p = 0.84) |
+
+exposure confidence (B1) vs |brightness error|: Spearman -0.28 (p = 0.11); median error at confidence < 1: 0.55 stops (n = 3), at confidence 1: 0.26 stops (n = 30)
+
+## input-quality gate (stage A estimates)
+
+- DSC_3822: manual_review_required ['low_information: tonal range 2.12 stops']
+- DSC_3826: ok ['white_point_unrepresentative']
+- DSC_3827: ok ['white_point_unrepresentative']
+- DSC_3829: ok ['white_point_unrepresentative']
+- DSC_3830: ok ['white_point_unrepresentative']
+- DSC_3850: ok ['white_point_unrepresentative']
+- DSC_3858: manual_review_required ['white_point_invalid: p99 2.06 stops past the inversion white point']
