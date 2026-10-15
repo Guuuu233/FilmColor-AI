@@ -151,3 +151,45 @@ def test_clipping_allowed_where_reference_clips():
 def test_highlight_weight_must_be_non_negative():
     with pytest.raises(ValueError):
         fit_reference(scene(100), np.zeros((100, 3)), "7", highlight_weight=-1)
+
+
+def test_clip_area_counts_shallow_wide_clipping_that_the_depth_penalty_misses():
+    from filmcolor.fit import clip_area, highlight_penalty
+
+    below = np.full((100, 3), 0.999)
+    assert clip_area(below) == 0
+    shallow = np.full((100, 3), 2 ** 0.06)  # every pixel just past the 0.05-stop ramp
+    assert clip_area(shallow) == pytest.approx(1.0)
+    assert highlight_penalty(shallow) < 0.1  # the depth penalty barely sees it
+    half = shallow.copy()
+    half[50:] = 0.5
+    assert clip_area(half) == pytest.approx(0.5)
+    allowed = np.zeros((100, 3), bool)
+    allowed[:25] = True
+    assert clip_area(half, allowed) == pytest.approx(0.25)
+    one = np.full((100, 3), 0.5)
+    one[:, 2] = 2 ** 0.025  # half way up the ramp in one channel: smoothstep(0.5) = 0.5
+    assert clip_area(one) == pytest.approx(0.5)
+
+
+def test_area_weight_must_be_non_negative():
+    with pytest.raises(ValueError):
+        fit_reference(scene(100), np.zeros((100, 3)), "7", area_weight=-1)
+
+
+def test_fit_config_v1_is_frozen_and_guarded():
+    from filmcolor.fit import FIT_CONFIG_V1, fit_reference_v1
+    from filmcolor.render import experimental_bounds
+
+    c = FIT_CONFIG_V1
+    assert (c["mode"], c["lam"], c["highlight_weight"], c["area_weight"]) == ("7reg", 0.05, 30.0, 10.0)
+    assert c["scales"] == SCALES
+    P = scene(3000)
+    ref, _ = render_lab(P[None], RenderParams(**TRUE6))
+    r = fit_reference_v1(P, ref[0])
+    assert r["fit_config"] == "fit_config_v1" and r["lam"] == 0.05
+    assert r["highlight"]["weight"] == 30.0 and r["highlight"]["area_weight"] == 10.0
+    assert r["de2000_median"] < 1.0
+    with experimental_bounds(contrast=(0.5, 3.0)):
+        with pytest.raises(RuntimeError, match="bounds"):
+            fit_reference_v1(P, ref[0])

@@ -49,6 +49,40 @@ def load_lab(path, factor: int = 1) -> np.ndarray:
     return xyz_to_lab(np.concatenate(chunks))
 
 
+def _box_mean(a, size: int):
+    """Mean of the size x size box around each pixel (edges padded by replication)."""
+    r = size // 2
+    p = np.pad(np.asarray(a, np.float64), r, mode="edge")
+    c = np.pad(p.cumsum(0).cumsum(1), ((1, 0), (1, 0)))
+    return (c[size:, size:] - c[:-size, size:] - c[size:, :-size] + c[:-size, :-size]) / size ** 2
+
+
+def _local_detail(L, size: int):
+    """|L - mean of the size x size box around each pixel|."""
+    return np.abs(L - _box_mean(L, size))
+
+
+def highlight_texture(ours_lab, ref_lab, ref_clipped=None, l_min: float = 80.0, size: int = 5,
+                      min_pixels: int = 50) -> dict:
+    """Local tonal detail in the reference's highlights: mean |L* - local mean| of ours over that of the
+    reference, on pixels with reference L* >= ``l_min`` and (if given, (H, W, 3) bool) not clipped in the
+    reference. ~1 = detail kept; towards 0 = flattened, whether by clipping or by compression below white.
+    ``ratio`` is None when fewer than ``min_pixels`` pixels qualify."""
+    mask = np.asarray(ref_lab)[..., 0] >= l_min
+    if ref_clipped is not None:
+        mask &= ~np.asarray(ref_clipped).any(-1)
+    # keep only pixels whose whole box lies in the mask, so edges against darker areas (sky / mountain) do
+    # not dominate the measure
+    mask = _box_mean(mask, size) > 1 - 1e-9
+    r = size // 2
+    mask[:r], mask[-r:], mask[:, :r], mask[:, -r:] = False, False, False, False
+    n = int(mask.sum())
+    if n < min_pixels:
+        return dict(ratio=None, n=n, share=float(mask.mean()))
+    do, dr = _local_detail(ours_lab[..., 0], size)[mask].mean(), _local_detail(ref_lab[..., 0], size)[mask].mean()
+    return dict(ratio=float(do / dr) if dr > 0 else None, ours=float(do), ref=float(dr), n=n, share=float(mask.mean()))
+
+
 def block_mean(img, f: int):
     h, w = (img.shape[0] // f) * f, (img.shape[1] // f) * f
     return img[:h, :w].reshape(h // f, f, w // f, f, *img.shape[2:]).mean(axis=(1, 3))

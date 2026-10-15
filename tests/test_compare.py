@@ -9,7 +9,7 @@ from PIL import Image, ImageCms
 from filmcolor.colorimetry import (MatrixTRCProfile, delta_e2000, lab_to_xyz, xyz_to_lab,
                                    xyz_to_srgb_preview)
 from filmcolor.compare import (align, aligned_pair, apply_ab_affine, block_mean, decompose, fit_ab_affine,
-                               load_lab, match_tone, metrics, ncc_map, resize_bilinear)
+                               highlight_texture, load_lab, match_tone, metrics, ncc_map, resize_bilinear)
 from filmcolor.export import icc_profile, write_tiff16
 
 NLP_REF = Path(__file__).resolve().parents[1] / "data/reference/nlp_default/_DSF8948-positive.tif"
@@ -157,3 +157,20 @@ def test_decompose_explains_global_differences():
     ours[..., 1:] = 0.5 * ref[..., 1:] + np.array([3.0, -4.0])         # desaturated, cast
     d = decompose(ours, ref)
     assert d["none"] > 5 and d["tone"] < d["none"] and d["tone_ab"] < 0.5
+
+
+def test_highlight_texture_ratio_tracks_lost_detail():
+    rng = np.random.default_rng(0)
+    ref = np.zeros((40, 40, 3))
+    ref[..., 0] = 90 + rng.normal(0, 2, (40, 40))  # a textured highlight
+    ref[:20, :, 0] = 40  # and a dark half outside the highlight mask
+    assert highlight_texture(ref, ref)["ratio"] == pytest.approx(1.0)
+    half = ref.copy()
+    half[20:, :, 0] = 90 + (ref[20:, :, 0] - 90) / 2
+    assert highlight_texture(half, ref)["ratio"] == pytest.approx(0.5, abs=0.02)
+    flat = ref.copy()
+    flat[20:, :, 0] = 100
+    assert highlight_texture(flat, ref)["ratio"] < 0.01
+    clipped = np.zeros((40, 40, 3), bool)
+    clipped[20:] = True  # reference itself clipped there: nothing left to compare
+    assert highlight_texture(flat, ref, clipped)["ratio"] is None

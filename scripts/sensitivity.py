@@ -6,7 +6,8 @@ by fit_nlp.py.
 SET s2-3 (default): penalty strength, parameter scales, contrast bound and sub-windows, without the
 highlight constraint (as run in S2-3). SET s2-6: penalty strength with the highlight constraint, and the
 highlight weight itself. SET s2-6x: the missing lambda=0.02, weight 30 cell. SET cross: all four cells of
-lambda in {0.02, 0.05} x weight in {10, 30} (for another reference set).
+lambda in {0.02, 0.05} x weight in {10, 30} (for another reference set). SET area: lambda=0.05,
+weight 30, clipped-area weight in AREA_WEIGHTS. Every fit also records the highlight-texture ratio.
 """
 import os
 
@@ -20,8 +21,8 @@ from pathlib import Path  # noqa: E402
 
 import numpy as np  # noqa: E402
 
-from filmcolor.compare import Alignment, aligned_pair, load_lab  # noqa: E402
-from filmcolor.fit import SCALES, fit_reference, param_conditioning  # noqa: E402
+from filmcolor.compare import Alignment, aligned_pair, highlight_texture, load_lab  # noqa: E402
+from filmcolor.fit import SCALES, fit_reference, param_conditioning, reference_clipped, render_lab  # noqa: E402
 from filmcolor.render import RenderParams, experimental_bounds  # noqa: E402
 
 MARGIN = 0.03
@@ -29,11 +30,14 @@ LAMBDAS = (0.0, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2)
 BASE_LAM = 0.05
 WINDOW = 0.85
 HIGHLIGHT_WEIGHTS = (0.0, 3.0, 10.0, 30.0)
+AREA_WEIGHTS = (0.0, 10.0, 30.0)
 
 
 def configs(which="s2-3"):
     if which == "s2-6x":  # the one lambda x highlight-weight cell of the 2 x 2 cross check not run in s2-6
         return {"lam=0.02 hw=30.0": dict(lam=0.02, highlight_weight=30.0)}
+    if which == "area":  # S2-6c: clipped-area constraint on top of the lambda=0.05, weight 30 candidate
+        return {f"lam=0.05 hw=30.0 area={a}": dict(lam=0.05, highlight_weight=30.0, area_weight=a) for a in AREA_WEIGHTS}
     if which == "cross":  # the full 2 x 2 cross check, for a second reference set
         return {f"lam={lam} hw={hw}": dict(lam=lam, highlight_weight=hw) for lam in (0.02, 0.05) for hw in (10.0, 30.0)}
     if which == "s2-6":
@@ -79,7 +83,10 @@ def task(args):
         window = [y, x, wh, ww]
     with experimental_bounds(**cfg.get("bounds", {})):
         r = fit_reference(P.reshape(-1, 3), R.reshape(-1, 3), "7", lam=cfg["lam"], scales=cfg.get("scales"),
-                          n_starts=cfg.get("n_starts", 5), highlight_weight=cfg["highlight_weight"])
+                          n_starts=cfg.get("n_starts", 5), highlight_weight=cfg["highlight_weight"],
+                          area_weight=cfg.get("area_weight", 0.0))
+        lab2, _ = render_lab(P, RenderParams(**r["params"]))
+        r["texture"] = highlight_texture(lab2, R, reference_clipped(R).reshape(R.shape))
         cond = param_conditioning(P.reshape(-1, 3), RenderParams(**r["params"])) if name.startswith("lam=") else None
     r.pop("runs")
     return dict(stem=stem, config=name, cfg={k: v for k, v in cfg.items()}, window=window, fit=r, conditioning=cond)
