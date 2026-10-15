@@ -99,6 +99,20 @@ def density(rgb, base) -> np.ndarray:
     return -np.log10(np.maximum(t, EPS))
 
 
+def neutral_transmission(rgb, base) -> np.ndarray:
+    """Black-and-white negatives: one transmittance per pixel, the geometric mean of the
+    base-normalised channel transmittances (so its density is the mean channel density), copied to
+    all three channels. Invert it with base (1, 1, 1); the positive is then neutral by construction.
+    Silver density is assumed spectrally flat enough that channel differences are noise and light
+    or sensor imbalance, not image content."""
+    b = np.asarray(base, np.float32)
+    out = np.empty(rgb.shape, np.float32)
+    for r0 in range(0, rgb.shape[0], CHUNK_ROWS):
+        t = np.maximum(rgb[r0 : r0 + CHUNK_ROWS] / b, EPS)
+        out[r0 : r0 + CHUNK_ROWS] = np.cbrt(t.prod(-1))[..., None]
+    return out
+
+
 def estimate_white_point(D, mask=None, pct: float = 99.9) -> tuple[float, float, float]:
     """Per-channel high percentile of density over ``mask`` (default all pixels).
 

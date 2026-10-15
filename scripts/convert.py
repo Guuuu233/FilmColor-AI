@@ -1,7 +1,7 @@
 """Convert RAW negatives to 16-bit TIFF + sidecar JSON.
 
   convert.py OUT_DIR RAW... [--encoding srgb|linear] [--image-region T,L,H,W] [--base-region T,L,H,W ...]
-                            [--render PARAMS.json | --auto] [--roll-base ROLL_BASE.json]
+                            [--render PARAMS.json | --auto] [--roll-base ROLL_BASE.json] [--film color|bw]
   convert.py OUT_DIR RAW --replay SIDECAR.json
 """
 import argparse
@@ -25,6 +25,8 @@ ap.add_argument("--base-region", type=region, action="append")
 ap.add_argument("--render", help="JSON file with render parameters (docs/SPRINT2_PARAMS.md)")
 ap.add_argument("--roll-base", help="roll_base.json from scripts/roll_base.py (per-frame base_rgb)")
 ap.add_argument("--auto", action="store_true", help="reference-free render parameters (noref_v2, global_look_v1)")
+ap.add_argument("--film", default="color", choices=["color", "bw"],
+                help="film type, given explicitly (no detection); bw = neutral inversion, no colour look")
 ap.add_argument("--replay")
 a = ap.parse_args()
 if a.roll_base and (a.base_region or a.replay):
@@ -38,7 +40,8 @@ if a.replay:
     kw = replay_kwargs(json.load(open(a.replay)))
 else:
     kw = dict(encoding=a.encoding, image_region=a.image_region, base_regions=a.base_region,
-              render_params=json.load(open(a.render)) if a.render else None, auto=NOREF_V2 if a.auto else None)
+              render_params=json.load(open(a.render)) if a.render else None, auto=NOREF_V2 if a.auto else None,
+              film=a.film)
 for p in a.raw:
     if roll is not None:
         kw["base_rgb"] = roll[Path(p).name]["base_rgb"]

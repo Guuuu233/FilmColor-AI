@@ -19,14 +19,16 @@ import tifffile
 from .base import estimate_base_auto, estimate_base_manual
 from .scanner import estimate_base_scanner, is_scanner_dng, load_scanner
 from .export import DESCRIPTION, write_tiff16
-from .invert import base_from_regions, central_region, invert_negative, region_mask
+from .invert import base_from_regions, central_region, invert_negative, neutral_transmission, region_mask
 from .qc import quality_checks
 from .raw import check_region, linearize, saturation_mask
 from .noref import CONFIG_DIR, estimate_params_v2, estimation_input
-from .render import RenderParams, render as render_image, srgb_eotf
+from .render import IDENTITY, RenderParams, render as render_image, srgb_eotf
 from .rawpy_io import demosaic_linear, load_raw
 
 SCHEMA = "filmcolor.sidecar/0.2"  # 0.2: render section (Sprint 2 parameters)
+FILM_MODES = ("color", "bw")
+BW_NEUTRAL = dict(temp=0.0, tint=0.0, sat=1.0, matrix=IDENTITY)  # look parts not applied to B&W film
 
 
 def sha256(path) -> str:
@@ -120,12 +122,18 @@ def _scanner_input(path, *, base_regions, base_rgb, image_region):
 
 def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
-            render_params=None, auto=None):
+            render_params=None, auto=None, film: str = "color"):
     """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
 
     ``render_params``: RenderParams or its dict (Sprint 2 colour parameters); None = defaults,
     which reproduce the Sprint 1 output. ``auto``: a reference-free estimator config (``noref.NOREF_V2``)
-    that sets the render parameters from the frame itself; excludes ``render_params``."""
+    that sets the render parameters from the frame itself; excludes ``render_params``.
+    ``film``: "color" (default, unchanged behaviour) or "bw", given explicitly (no automatic
+    detection): neutral inversion (``invert.neutral_transmission``), and with ``auto`` only the tonal
+    parameters are taken; temp, tint, saturation and matrix stay neutral (the look was fitted on
+    colour negatives). Explicit ``render_params`` are applied as given in either mode."""
+    if film not in FILM_MODES:
+        raise ValueError(f"film must be one of {FILM_MODES}, got {film!r}")
     if auto is not None and render_params is not None:
         raise ValueError("auto and render_params are mutually exclusive")
     rp = render_params if isinstance(render_params, RenderParams) else RenderParams.from_dict(render_params or {})
@@ -143,7 +151,10 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     region_source = "manual" if image_region else "central_default"
     image_region = tuple(int(x) for x in (image_region or central_region(sat.shape)))
     mask = ~sat & region_mask(sat.shape, image_region)
-    res = invert_negative(rgb, base_rgb, mask=mask, white_pct=white_pct, gamma=gamma,
+    inv_base = base_rgb
+    if film == "bw":
+        rgb, inv_base = neutral_transmission(rgb, base_rgb), (1.0, 1.0, 1.0)
+    res = invert_negative(rgb, inv_base, mask=mask, white_pct=white_pct, gamma=gamma,
                           exposure=exposure, d_hi=d_hi)
     del rgb
     inside = None
@@ -157,6 +168,8 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     res.positive = None
     if auto is not None:  # estimated from this frame's positive only (no reference, no roll context)
         est = estimate_params_v2(*estimation_input(pos, image_region), auto)
+        if film == "bw":  # colour parts of the look were fitted on colour negatives
+            est = dict(est, params=dict(est["params"], **BW_NEUTRAL), bw_neutralised=sorted(BW_NEUTRAL))
         rp = RenderParams.from_dict(est["params"])
         look_file = CONFIG_DIR / f"{est['look']}.json"
         auto_info = dict(est, look_file=dict(name=look_file.name, sha256=sha256(look_file)),
@@ -183,6 +196,10 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     )
     if auto_info is not None:
         sidecar["auto"] = auto_info
+    if film == "bw":  # colour sidecars keep their previous field set
+        sidecar["film"] = dict(mode="bw", source="given",
+                               inversion="neutral_transmission: geometric mean of base-normalised channel "
+                                         "transmittances, inverted with base (1, 1, 1); film base in base.rgb_render")
     return out, sidecar
 
 
@@ -201,6 +218,9 @@ def write(path, out_dir, **kwargs) -> dict:
 def replay_kwargs(sidecar: dict) -> dict:
     """Arguments that reproduce a sidecar's output without re-estimating anything."""
     p = sidecar["inversion"]["params"]
-    return dict(base_rgb=p["base"], d_hi=p["d_hi"], image_region=sidecar["image_region"]["region"],
-                white_pct=sidecar["inversion"]["white_pct"], gamma=p["gamma"], exposure=p["exposure"],
-                encoding=sidecar["output"]["encoding"], render_params=sidecar.get("render", {}).get("params"))
+    kw = dict(base_rgb=p["base"], d_hi=p["d_hi"], image_region=sidecar["image_region"]["region"],
+              white_pct=sidecar["inversion"]["white_pct"], gamma=p["gamma"], exposure=p["exposure"],
+              encoding=sidecar["output"]["encoding"], render_params=sidecar.get("render", {}).get("params"))
+    if sidecar.get("film", {}).get("mode") == "bw":
+        kw.update(film="bw", base_rgb=sidecar["base"]["rgb_render"])
+    return kw
