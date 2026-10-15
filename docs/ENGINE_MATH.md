@@ -45,6 +45,18 @@
 
 **色彩空间。** `P` 和 `O` 都是**未经色度校准的相机 RGB**（翻拍相机 × 胶片染料），未套用任何色彩矩阵。`O` 只套了 sRGB 传递函数便于观看，原色并不是 sRGB。S1-6 导出时必须如实标注。
 
+### 3a. 扫描仪线性 RGB 输入（S3-1，`scanner.py`）
+
+胶片扫描仪 DNG（主图 `LinearRaw`、3 通道，例如 BlueNeg 的 SilverFast 文件）不经过 CFA 和反马赛克：`T = (v - BlackLevel) / (WhiteLevel - BlackLevel)`，标签缺失时按 DNG 默认取 0 和 `2^bits - 1`。分析路径和渲染路径是同一张图，片基块选择和相机路径共用 `estimate_base_blocks`。红外层只记录统计量，不参与计算。文件里声明的色彩矩阵只是名义标注，`T` 仍按“未校准的设备 RGB”对待。
+
+### 3b. 黑白负片模式（S3-4，`--film bw`，必须显式指定）
+
+`t = cbrt(Π_c max(T_c / b_c, 1e-6))`，复制到三个通道，再以片基 `(1, 1, 1)` 走上表的反转流程。由此得到的密度是三个通道密度的平均，三个通道的白点相同，输出严格中性。假设：银盐密度在光谱上足够平坦，通道之间的差异来自噪声和光源、传感器的不平衡，不是画面内容。`--auto` 时只沿用固定观感里的影调参数（ev、contrast、midtone、shoulder），色温、色调、饱和度和色彩矩阵保持中性，因为固定观感是在彩色负片上拟合的。不做自动识别：默认仍按彩色负片处理。
+
+### 3c. 分块计算（S3-2）
+
+密度、反转和参数化渲染都是逐像素运算，全图按 256 行分块计算；白点分位数和范围报告等全局统计，先在画面区域内的像素上算好，再分块计算。输出和整图计算逐位相同（`tests/test_chunked.py`；真实大图前后 TIFF 逐字节相同，见 `experiments/s3_memory/REPORT.md`）。
+
 ## 4. 诊断（`range_report`）
 
 每通道：`clip_high`（画面区域高于输出白的比例）、`below_black`（低于黑点）、`brighter_than_base`（比片基更透）、密度 0.1% / 99.9% 分位；以及 `full_image_above_white`。全部参数由 `InversionParams.to_dict()` 输出，可写入 sidecar。

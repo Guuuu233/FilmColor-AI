@@ -1,4 +1,6 @@
 """Explicit black-and-white negative mode (S3-4)."""
+from pathlib import Path
+
 import numpy as np
 import pytest
 import tifffile
@@ -68,6 +70,20 @@ def test_bw_auto_keeps_tone_and_drops_colour_look(tmp_path):
     _, sc_c = convert(p, image_region=(20, 120, 200, 220), auto=NOREF_V2)
     for k in ("ev", "contrast", "midtone", "shoulder"):  # tonal parameters come from the same look
         assert rp[k] == sc_c["render"]["params"][k]
+
+
+ROOT = Path(__file__).resolve().parents[1] / "data/raw/public"
+BW_REAL = [ROOT / "nlp_official/_DSF9228.RAF", ROOT / "nlp_forum_9652/DSC03060.ARW"]  # registered B&W frames
+
+
+@pytest.mark.parametrize("path", BW_REAL, ids=lambda p: p.name)
+def test_real_bw_negatives_neutral_in_bw_mode(path):
+    if not path.exists():
+        pytest.skip(f"{path.name} not present")
+    out, sc = convert(path, film="bw", auto=NOREF_V2)
+    assert np.array_equal(out[..., 0], out[..., 1]) and np.array_equal(out[..., 1], out[..., 2])
+    assert len(set(sc["inversion"]["params"]["d_hi"])) == 1
+    assert sc["qc"]["status"] != "fail"
 
 
 def test_film_mode_validated(tmp_path):
