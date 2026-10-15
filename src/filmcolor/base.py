@@ -117,9 +117,20 @@ def estimate_base_auto(
     candidates would be taken as base. A wider candidate pool was tried and rejected because large
     bright image areas then dominated the consensus (_DSF9235). Use manual regions in that case.
     """
+    sp, sp_sat = superpixel(linear, colors, sat, pattern_size, block)
+    return estimate_base_blocks(sp, sp_sat, block=block, top_frac=top_frac, max_rel_std=max_rel_std,
+                                chroma_tol=chroma_tol, crop=crop)
+
+
+def estimate_base_blocks(
+    sp, sp_sat, *, block: int, top_frac: float = 0.01, max_rel_std: float = 0.03,
+    chroma_tol: float = 0.05, crop: tuple[int, int, int, int] | None = None,
+) -> BaseEstimate:
+    """Steps 2-5 of ``estimate_base_auto`` on precomputed (hb, wb, 3) block means ``sp`` and
+    block saturation flags ``sp_sat``; ``block`` is the block size in input pixels. Shared by the
+    camera path (CFA-aware blocks) and the scanner path (blocks of a full RGB image)."""
     params = dict(block=block, top_frac=top_frac, max_rel_std=max_rel_std,
                   chroma_tol=chroma_tol, crop=crop)
-    sp, sp_sat = superpixel(linear, colors, sat, pattern_size, block)
     hb, wb, _ = sp.shape
     valid = ~sp_sat & np.all(sp > 0, -1)
     if crop is not None:

@@ -1,0 +1,689 @@
+{
+ "schema": "filmcolor.sidecar/0.2",
+ "input": {
+  "path": "data/raw/public/nlp_forum_2023/DSC_5889.NEF",
+  "sha256": "8c696fdfaa6c7bcfcaeec5a5c522d8f4ba0400798e4484d38694773bd9eeeba0",
+  "shape": [
+   4032,
+   6032
+  ],
+  "cfa_pattern": [
+   [
+    0,
+    1
+   ],
+   [
+    1,
+    2
+   ]
+  ],
+  "black": [
+   [
+    600.0,
+    600.0
+   ],
+   [
+    600.0,
+    600.0
+   ]
+  ],
+  "white": 16383.0,
+  "crop": null,
+  "meta": {
+   "source": "data/raw/public/nlp_forum_2023/DSC_5889.NEF",
+   "color_desc": "RGBG",
+   "camera_whitebalance": [
+    2.390625,
+    1.0,
+    1.046875,
+    1.0
+   ],
+   "rgb_xyz_matrix": [
+    [
+     0.9020000100135803,
+     -0.289000004529953,
+     -0.07150000333786011
+    ],
+    [
+     -0.45350000262260437,
+     1.2436000108718872,
+     0.23479999601840973
+    ],
+    [
+     -0.0934000015258789,
+     0.19189999997615814,
+     0.7085999846458435
+    ]
+   ],
+   "flip": 0,
+   "margins": [
+    0,
+    0
+   ]
+  }
+ },
+ "software": {
+  "filmcolor": "0.0.1",
+  "git_commit": "c60052e698e8ed41651aec2694ffb0b7f553b2b2",
+  "src_dirty": false,
+  "rawpy": "0.27.1",
+  "libraw": "0.22.1",
+  "numpy": "2.5.4"
+ },
+ "decode": {
+  "analysis": "CFA-aware linearisation (filmcolor.raw)",
+  "render": "rawpy postprocess, default demosaic, raw colour, linear, no WB, no auto-bright, adjust_maximum_thr=0, highlight clip, no flip"
+ },
+ "base": {
+  "method": "auto",
+  "estimate": {
+   "rgb": [
+    0.6430556774139404,
+    0.9258612394332886,
+    0.5871790647506714
+   ],
+   "method": "auto",
+   "regions": [
+    [
+     576,
+     624,
+     24,
+     24
+    ],
+    [
+     3072,
+     600,
+     24,
+     24
+    ],
+    [
+     3120,
+     600,
+     24,
+     24
+    ],
+    [
+     3216,
+     600,
+     24,
+     24
+    ],
+    [
+     3240,
+     600,
+     24,
+     24
+    ],
+    [
+     3264,
+     600,
+     24,
+     24
+    ],
+    [
+     3288,
+     600,
+     24,
+     24
+    ],
+    [
+     3312,
+     600,
+     24,
+     24
+    ],
+    [
+     3336,
+     600,
+     24,
+     24
+    ],
+    [
+     3360,
+     600,
+     24,
+     24
+    ],
+    [
+     3384,
+     600,
+     24,
+     24
+    ],
+    [
+     3408,
+     600,
+     24,
+     24
+    ],
+    [
+     3432,
+     600,
+     24,
+     24
+    ],
+    [
+     3456,
+     600,
+     24,
+     24
+    ],
+    [
+     3480,
+     600,
+     24,
+     24
+    ],
+    [
+     3504,
+     600,
+     24,
+     24
+    ],
+    [
+     3528,
+     600,
+     24,
+     24
+    ],
+    [
+     3552,
+     600,
+     24,
+     24
+    ],
+    [
+     3576,
+     600,
+     24,
+     24
+    ],
+    [
+     3600,
+     600,
+     24,
+     24
+    ],
+    [
+     3624,
+     600,
+     24,
+     24
+    ],
+    [
+     3648,
+     600,
+     24,
+     24
+    ],
+    [
+     3672,
+     600,
+     24,
+     24
+    ],
+    [
+     3744,
+     576,
+     24,
+     24
+    ],
+    [
+     3768,
+     576,
+     24,
+     24
+    ],
+    [
+     3768,
+     600,
+     24,
+     24
+    ],
+    [
+     3792,
+     576,
+     24,
+     24
+    ],
+    [
+     3792,
+     600,
+     24,
+     24
+    ],
+    [
+     3816,
+     576,
+     24,
+     24
+    ],
+    [
+     3816,
+     600,
+     24,
+     24
+    ],
+    [
+     3840,
+     576,
+     24,
+     24
+    ],
+    [
+     3840,
+     600,
+     24,
+     24
+    ],
+    [
+     3864,
+     576,
+     24,
+     24
+    ],
+    [
+     3864,
+     600,
+     24,
+     24
+    ],
+    [
+     3888,
+     576,
+     24,
+     24
+    ],
+    [
+     3888,
+     600,
+     24,
+     24
+    ],
+    [
+     3912,
+     576,
+     24,
+     24
+    ],
+    [
+     3912,
+     600,
+     24,
+     24
+    ],
+    [
+     3936,
+     816,
+     24,
+     24
+    ],
+    [
+     3936,
+     840,
+     24,
+     24
+    ],
+    [
+     3936,
+     864,
+     24,
+     24
+    ],
+    [
+     3936,
+     888,
+     24,
+     24
+    ],
+    [
+     3936,
+     912,
+     24,
+     24
+    ],
+    [
+     3936,
+     1008,
+     24,
+     24
+    ],
+    [
+     3936,
+     1032,
+     24,
+     24
+    ],
+    [
+     3936,
+     1056,
+     24,
+     24
+    ],
+    [
+     3936,
+     1080,
+     24,
+     24
+    ],
+    [
+     3936,
+     1104,
+     24,
+     24
+    ]
+   ],
+   "stats": {
+    "R": {
+     "n_blocks": 48,
+     "median": 0.6430556774139404,
+     "p05": 0.6165316939353943,
+     "p95": 0.6638394236564636,
+     "rel_spread": 0.07356708195364699
+    },
+    "G": {
+     "n_blocks": 48,
+     "median": 0.9258612394332886,
+     "p05": 0.8859880298376084,
+     "p95": 0.9604587405920029,
+     "rel_spread": 0.08043398684664382
+    },
+    "B": {
+     "n_blocks": 48,
+     "median": 0.5871790647506714,
+     "p05": 0.5602980822324752,
+     "p95": 0.6155536472797394,
+     "rel_spread": 0.09410343175420742
+    }
+   },
+   "params": {
+    "block": 24,
+    "top_frac": 0.01,
+    "max_rel_std": 0.03,
+    "chroma_tol": 0.05,
+    "crop": null
+   },
+   "diagnostics": {
+    "n_blocks": 42168,
+    "n_saturated_blocks": 6513,
+    "n_uniform": 6075,
+    "n_candidates": 61,
+    "n_kept": 48,
+    "chroma_outlier_frac": 0.21311475409836067,
+    "chroma_centre_log2_RG_BG": [
+     -0.5283791422843933,
+     -0.6535136103630066
+    ],
+    "rejected_mean_rgb": [
+     0.4790933430194855,
+     0.6188889741897583,
+     0.4628092348575592
+    ],
+    "kept_bbox": [
+     576,
+     576,
+     3960,
+     1128
+    ],
+    "brightness_threshold": 0.48958465456962585
+   },
+   "warnings": [
+    "21% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "6513 blocks contain saturated samples (excluded)"
+   ]
+  },
+  "rgb_render": [
+   0.6422064304351807,
+   0.9251850247383118,
+   0.5876706838607788
+  ],
+  "render_stats": {
+   "rgb": [
+    0.6422064304351807,
+    0.9251850247383118,
+    0.5876706838607788
+   ],
+   "n": 27648,
+   "rel_spread": [
+    0.09767861630993957,
+    0.10142003986721058,
+    0.12777502013798298
+   ]
+  }
+ },
+ "image_region": {
+  "region": [
+   1008,
+   1508,
+   2016,
+   3016
+  ],
+  "source": "central_default"
+ },
+ "inversion": {
+  "params": {
+   "base": [
+    0.6422064304351807,
+    0.9251850247383118,
+    0.5876706838607788
+   ],
+   "d_lo": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "d_hi": [
+    0.7636302709579468,
+    0.9139986634254456,
+    0.9955461025238037
+   ],
+   "gamma": 0.6,
+   "exposure": 1.0,
+   "log_range": 1.523331105709076
+  },
+  "white_pct": 99.9,
+  "d_hi_source": "auto"
+ },
+ "render": {
+  "params": {
+   "ev": -0.047668706328979286,
+   "temp": -0.24279052374617133,
+   "tint": 0.1795540583562999,
+   "sat": 1.0969133294792859,
+   "contrast": 2.0,
+   "midtone": 0.2682044325765529,
+   "shoulder": 0.10837665455438666,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "diagnostics": {
+   "below_zero_after_colour": 0.0001680854426658417,
+   "above_white": 2.9055865822862395e-06
+  },
+  "definition": "docs/SPRINT2_PARAMS.md"
+ },
+ "report": {
+  "white_pct": 99.9,
+  "range": {
+   "R": {
+    "clip_high": 0.0009993024947530862,
+    "below_black": 6.644473467416835e-05,
+    "brighter_than_base": 6.628026750913328e-05,
+    "density_p01": 0.06774894893169403,
+    "density_p999": 0.7636302709579468
+   },
+   "G": {
+    "clip_high": 0.000998480158927911,
+    "below_black": 2.7137082230786577e-05,
+    "brighter_than_base": 2.7137082230786577e-05,
+    "density_p01": 0.07478681951761246,
+    "density_p999": 0.9139986634254456
+   },
+   "B": {
+    "clip_high": 0.000998809093257981,
+    "below_black": 0.0003073891314505461,
+    "brighter_than_base": 0.0003072246642855111,
+    "density_p01": 0.026350105181336403,
+    "density_p999": 0.9955461025238037
+   }
+  },
+  "full_image_above_white": [
+   0.164617904246137,
+   0.1602158692002442,
+   0.154741099716854
+  ]
+ },
+ "qc": {
+  "status": "pass",
+  "checks": [
+   {
+    "name": "finite",
+    "value": true,
+    "threshold": true,
+    "status": "pass"
+   },
+   {
+    "name": "value_range",
+    "value": [
+     0.0,
+     1.0
+    ],
+    "threshold": [
+     0,
+     1
+    ],
+    "status": "pass"
+   },
+   {
+    "name": "median_luma",
+    "value": 0.602566659450531,
+    "threshold": [
+     0.15,
+     0.85
+    ],
+    "status": "pass"
+   },
+   {
+    "name": "tonal_range",
+    "value": 0.7300716549158095,
+    "threshold": 0.35,
+    "status": "pass"
+   },
+   {
+    "name": "channel_mean_ratio",
+    "value": 1.062233805656433,
+    "threshold": 1.5,
+    "status": "pass"
+   },
+   {
+    "name": "clip_high",
+    "value": 0.0009993024947530862,
+    "threshold": 0.005,
+    "status": "pass"
+   },
+   {
+    "name": "below_black",
+    "value": 0.0003073891314505461,
+    "threshold": 0.1,
+    "status": "pass"
+   },
+   {
+    "name": "base_inside_image",
+    "value": 0.0,
+    "threshold": 0.5,
+    "status": "pass"
+   }
+  ],
+  "provisional": true,
+  "info": {
+   "full_image_above_white": [
+    0.164617904246137,
+    0.1602158692002442,
+    0.154741099716854
+   ]
+  }
+ },
+ "output": {
+  "encoding": "srgb",
+  "colorimetric_calibration": "none",
+  "icc_description": "FilmColor uncalibrated camera RGB - sRGB primaries assumed, sRGB transfer",
+  "bit_depth": 16,
+  "orientation": "sensor (meta.flip not applied)",
+  "path": "experiments/s3_intake/camera/DSC_5889.tif",
+  "sha256": "b3ddfbdf2d02b10d6a0056b5d5089275559f1d419db533db3d3dfbe0793b76c2"
+ },
+ "auto": {
+  "config": "noref_v2",
+  "look": "global_look_v1",
+  "groups": [],
+  "stats": {
+   "median": 0.2171757072210312,
+   "p1": 0.035700949281454085,
+   "p99": 0.7188936144113524,
+   "p995": 0.7881130993366237,
+   "range_stops": 4.331743948135694,
+   "above_white": 0.00175,
+   "dark_share": 2e-05,
+   "wb_chroma": [
+    -0.1897529661655426,
+    -0.15277285873889923
+   ],
+   "wb_share": 0.15978,
+   "wb_mad": 0.09119253605604172
+  },
+  "diagnostics": {
+   "clip_share": 2e-05
+  },
+  "status": "ok",
+  "params": {
+   "ev": -0.047668706328979286,
+   "temp": -0.24279052374617133,
+   "tint": 0.1795540583562999,
+   "sat": 1.0969133294792859,
+   "contrast": 2.0,
+   "midtone": 0.2682044325765529,
+   "shoulder": 0.10837665455438666,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "flags": [],
+  "confidence": {
+   "overall": 1.0
+  },
+  "look_file": {
+   "name": "global_look_v1.json",
+   "sha256": "120a1336c6909b273d14578a1300965cc3c5ccaf3845e3c363e7b15625f97674"
+  },
+  "input": "positive x inversion exposure, 4x4 block mean, image region"
+ }
+}

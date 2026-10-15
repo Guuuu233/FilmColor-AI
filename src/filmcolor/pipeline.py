@@ -14,8 +14,10 @@ from pathlib import Path
 
 import numpy as np
 import rawpy
+import tifffile
 
 from .base import estimate_base_auto, estimate_base_manual
+from .scanner import estimate_base_scanner, is_scanner_dng, load_scanner
 from .export import DESCRIPTION, write_tiff16
 from .invert import base_from_regions, central_region, invert_negative, region_mask
 from .qc import quality_checks
@@ -48,6 +50,74 @@ def software_info() -> dict:
                 rawpy=rawpy.__version__, libraw=".".join(map(str, rawpy.libraw_version)), numpy=np.__version__)
 
 
+def _base_info_from(est):
+    return dict(method=est.method, estimate=est.to_dict())
+
+
+def _camera_input(path, *, base_regions, base_rgb, image_region):
+    """Camera RAW: CFA-aware base estimate on the analysis path, demosaiced linear render path."""
+    f = load_raw(path)
+    if image_region is not None:  # fail before the slow render step
+        check_region(tuple(int(x) for x in image_region), f.cfa.shape)
+    lin, col, sat = linearize(f), f.colors, saturation_mask(f)
+
+    if base_rgb is not None:
+        base_info = dict(method="given", rgb_render=[float(x) for x in base_rgb])
+        regions = None
+    else:
+        if base_regions:
+            est = estimate_base_manual(lin, col, sat, base_regions)
+        else:
+            est = estimate_base_auto(lin, col, sat, f.pattern.shape[0], crop=f.crop)
+        regions = est.regions
+        base_info = _base_info_from(est)
+    del lin, col
+
+    rgb = demosaic_linear(path)
+    if base_rgb is None:
+        rb = base_from_regions(rgb, regions)  # base on the same signal that is inverted
+        base_rgb = rb["rgb"]
+        base_info["rgb_render"] = list(rb["rgb"])
+        base_info["render_stats"] = rb
+    input_info = dict(shape=list(f.cfa.shape), cfa_pattern=f.pattern.tolist(), black=f.black.tolist(),
+                      white=f.white, crop=list(f.crop) if f.crop else None, meta=f.meta)
+    decode_info = dict(analysis="CFA-aware linearisation (filmcolor.raw)",
+                       render="rawpy postprocess, default demosaic, raw colour, linear, no WB, "
+                              "no auto-bright, adjust_maximum_thr=0, highlight clip, no flip")
+    return rgb, sat, base_rgb, base_info, regions, input_info, decode_info
+
+
+def _scanner_input(path, *, base_regions, base_rgb, image_region):
+    """Linear RGB scanner DNG: analysis and render path are the same image (no CFA)."""
+    fr = load_scanner(path)
+    if image_region is not None:
+        check_region(tuple(int(x) for x in image_region), fr.sat.shape)
+    rgb, sat = fr.rgb, fr.sat
+    if base_rgb is not None:
+        base_info = dict(method="given", rgb_render=[float(x) for x in base_rgb])
+        regions = None
+    else:
+        if base_regions:
+            regions = [tuple(int(x) for x in r) for r in base_regions]
+            rb = base_from_regions(rgb, regions)
+            sat_frac = float(np.mean([sat[t:t + h, l:l + w].mean() for t, l, h, w in regions]))
+            base_info = dict(method="manual", estimate=dict(regions=regions, sat_frac=sat_frac))
+        else:
+            est = estimate_base_scanner(fr)
+            regions = est.regions
+            base_info = _base_info_from(est)
+            rb = base_from_regions(rgb, regions)
+        base_rgb = rb["rgb"]
+        base_info["rgb_render"] = list(rb["rgb"])
+        base_info["render_stats"] = rb
+    input_info = dict(kind="scanner_linear_dng", shape=list(sat.shape), black=fr.black, white=fr.white,
+                      meta=fr.meta)
+    decode_info = dict(analysis="same as render (no CFA)",
+                       render="tifffile %s, LinearRaw main image, (v - black) / (white - black), "
+                              "infrared layer excluded" % tifffile.__version__)
+    return rgb, sat, base_rgb, base_info, regions, input_info, decode_info
+
+
 def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
             render_params=None, auto=None):
@@ -64,31 +134,11 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
         raise ValueError(f"invalid parameters: white_pct={white_pct} gamma={gamma} exposure={exposure}")
     path = Path(path)
-    f = load_raw(path)
-    if image_region is not None:  # fail before the slow render step
-        if len(image_region) != 4:
-            raise ValueError(f"image region must be (top, left, height, width), got {image_region}")
-        check_region(tuple(int(x) for x in image_region), f.cfa.shape)
-    lin, col, sat = linearize(f), f.colors, saturation_mask(f)
-
-    if base_rgb is not None:
-        base_info = dict(method="given", rgb_render=[float(x) for x in base_rgb])
-        regions = None
-    else:
-        if base_regions:
-            est = estimate_base_manual(lin, col, sat, base_regions)
-        else:
-            est = estimate_base_auto(lin, col, sat, f.pattern.shape[0], crop=f.crop)
-        regions = est.regions
-        base_info = dict(method=est.method, estimate=est.to_dict())
-    del lin, col
-
-    rgb = demosaic_linear(path)
-    if base_rgb is None:
-        rb = base_from_regions(rgb, regions)  # base on the same signal that is inverted
-        base_rgb = rb["rgb"]
-        base_info["rgb_render"] = list(rb["rgb"])
-        base_info["render_stats"] = rb
+    if image_region is not None and len(image_region) != 4:
+        raise ValueError(f"image region must be (top, left, height, width), got {image_region}")
+    load = _scanner_input if is_scanner_dng(path) else _camera_input
+    rgb, sat, base_rgb, base_info, regions, input_info, decode_info = load(
+        path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region)
 
     region_source = "manual" if image_region else "central_default"
     image_region = tuple(int(x) for x in (image_region or central_region(sat.shape)))
@@ -114,13 +164,9 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
 
     sidecar = dict(
         schema=SCHEMA,
-        input=dict(path=str(path), sha256=sha256(path), shape=list(f.cfa.shape),
-                   cfa_pattern=f.pattern.tolist(), black=f.black.tolist(), white=f.white,
-                   crop=list(f.crop) if f.crop else None, meta=f.meta),
+        input=dict(path=str(path), sha256=sha256(path), **input_info),
         software=software_info(),
-        decode=dict(analysis="CFA-aware linearisation (filmcolor.raw)",
-                    render="rawpy postprocess, default demosaic, raw colour, linear, no WB, "
-                           "no auto-bright, adjust_maximum_thr=0, highlight clip, no flip"),
+        decode=decode_info,
         base=base_info,
         image_region=dict(region=list(image_region), source=region_source),
         inversion=dict(params=res.params.to_dict(), white_pct=white_pct, d_hi_source="given" if d_hi else "auto"),
