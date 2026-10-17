@@ -1,0 +1,128 @@
+nlp:_DSF8434 ncc 0.935 rot 0 scale 0.980 P8 [409, 409, 3] base warnings ['57 blocks contain saturated samples (excluded)'] 15.7 s
+nlp:_DSF8948 ncc 0.974 rot 0 scale 0.990 P8 [417, 412, 3] base warnings [] 15.9 s
+nlp:_DSF8951 ncc 0.909 rot 0 scale 0.985 P8 [415, 410, 3] base warnings ['126 blocks contain saturated samples (excluded)'] 15.2 s
+nlp:_DSF8983 ncc 0.887 rot 0 scale 0.990 P8 [416, 412, 3] base warnings [] 16.6 s
+nlp:_DSF9229 ncc 0.900 rot 0 scale 0.985 P8 [428, 421, 3] base warnings [] 16.2 s
+nlp:_DSF9231 ncc 0.962 rot 0 scale 0.990 P8 [429, 432, 3] base warnings [] 15.0 s
+nlp:_DSF9235 ncc 0.991 rot 0 scale 0.990 P8 [428, 430, 3] base warnings [] 15.0 s
+nlp:_DSF9237 ncc 0.953 rot 0 scale 0.990 P8 [430, 436, 3] base warnings [] 15.2 s
+nlp:_DSF9238 ncc 0.980 rot 0 scale 0.990 P8 [432, 435, 3] base warnings [] 15.3 s
+nlp:_DSF9239 ncc 0.988 rot 0 scale 0.990 P8 [433, 435, 3] base warnings [] 15.4 s
+nlp:_DSF9243 ncc 0.979 rot 0 scale 0.990 P8 [428, 429, 3] base warnings [] 15.4 s
+shop:DSC_3823 ncc 0.986 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.3 s
+shop:DSC_3825 ncc 0.980 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['B base blocks spread 10.8% (p05-p95)'] 19.0 s
+shop:DSC_3827 ncc 0.983 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['30% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 19.4 s
+shop:DSC_3828 ncc 0.983 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['50% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 19.1 s
+shop:DSC_3829 ncc 0.988 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['26% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'B base blocks spread 11.1% (p05-p95)'] 22.0 s
+shop:DSC_3831 ncc 0.983 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 21.3 s
+shop:DSC_3833 ncc 0.991 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['20% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 18.7 s
+shop:DSC_3835 ncc 0.977 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['23% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 10.2% (p05-p95)', 'G base blocks spread 14.2% (p05-p95)', 'B base blocks spread 14.4% (p05-p95)'] 18.2 s
+shop:DSC_3837 ncc 0.986 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['B base blocks spread 11.4% (p05-p95)'] 17.3 s
+shop:DSC_3838 ncc 0.989 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['28% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 11.1% (p05-p95)', 'B base blocks spread 13.3% (p05-p95)'] 17.2 s
+shop:DSC_3839 ncc 0.991 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['32% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 17.2 s
+shop:DSC_3840 ncc 0.985 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['34% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 10.4% (p05-p95)', 'B base blocks spread 11.9% (p05-p95)'] 17.6 s
+shop:DSC_3843 ncc 0.990 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 17.9 s
+shop:DSC_3844 ncc 0.987 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 17.2 s
+shop:DSC_3846 ncc 0.992 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['70% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 13.3% (p05-p95)', 'G base blocks spread 17.5% (p05-p95)', 'B base blocks spread 20.4% (p05-p95)'] 17.4 s
+shop:DSC_3847 ncc 0.993 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 17.0 s
+shop:DSC_3849 ncc 0.977 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 17.6 s
+shop:DSC_3853 ncc 0.964 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.4 s
+shop:DSC_3855 ncc 0.985 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['60% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 19.7 s
+shop:DSC_3856 ncc 0.979 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.1 s
+shop:DSC_3859 ncc 0.983 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['71% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 17.9 s
+blueneg:19941217A-15-tokyo ncc 0.965 rot 0 scale 0.766 P8 [745, 1073, 3] base warnings [] 11.7 s
+blueneg:19941217B-08-tokyo ncc 0.933 rot 0 scale 0.766 P8 [738, 1067, 3] base warnings [] 11.6 s
+blueneg:19941218B-23-tokyo ncc 0.950 rot 0 scale 0.766 P8 [733, 1060, 3] base warnings [] 12.5 s
+blueneg:19941218C-05-tokyo ncc 0.892 rot 0 scale 0.766 P8 [742, 1067, 3] base warnings [] 12.0 s
+blueneg:19941220D-20-kamakura ncc 0.966 rot 3 scale 0.770 P8 [747, 1079, 3] base warnings [] 11.8 s
+blueneg:19941221D-25-kyoto ncc 0.969 rot 0 scale 0.770 P8 [748, 1079, 3] base warnings [] 12.0 s
+blueneg:19941222D-32-kyoto ncc 0.964 rot 3 scale 0.770 P8 [749, 1077, 3] base warnings ['52% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 10.4% (p05-p95)'] 11.5 s
+blueneg:19941222E-04-nara ncc 0.857 rot 0 scale 0.770 P8 [744, 1075, 3] base warnings ['43% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 10.1% (p05-p95)'] 12.7 s
+blueneg:19941223E-17-osaka ncc 0.921 rot 0 scale 0.766 P8 [742, 1070, 3] base warnings ['38% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 12.1 s
+blueneg:19941224E-23-nagasaki ncc 0.966 rot 0 scale 0.766 P8 [742, 1071, 3] base warnings [] 11.8 s
+blueneg:19941225E-34-nagasaki ncc 0.872 rot 0 scale 0.766 P8 [735, 1071, 3] base warnings ['86% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 11.5 s
+blueneg:19941225F-03-nagasaki ncc 0.950 rot 0 scale 0.766 P8 [742, 1071, 3] base warnings [] 11.5 s
+blueneg:19941228F-12-tokyo ncc 0.871 rot 0 scale 0.770 P8 [739, 1075, 3] base warnings ['32% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 11.9 s
+blueneg:19960808B-03-new-orleans-siggraph96 ncc 0.961 rot 0 scale 0.734 P8 [713, 1020, 3] base warnings [] 11.1 s
+blueneg:19960809B-14-new-orleans-siggraph96 ncc 0.978 rot 3 scale 0.734 P8 [711, 1026, 3] base warnings ['87% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 10.9 s
+blueneg:19960811B-28-arizona-london-bridge ncc 0.970 rot 0 scale 0.734 P8 [702, 1026, 3] base warnings [] 11.7 s
+blueneg:19960812D-17-las-vegas ncc 0.947 rot 0 scale 0.734 P8 [700, 1024, 3] base warnings [] 11.5 s
+blueneg:19970619A-14-white-chapel ncc 0.952 rot 3 scale 0.754 P8 [682, 1050, 3] base warnings [] 11.6 s
+blueneg:19970619B-09-notre-dame ncc 0.977 rot 0 scale 0.754 P8 [732, 1042, 3] base warnings [] 11.8 s
+blueneg:19970620C-10-st-michel ncc 0.811 rot 3 scale 0.758 P8 [724, 1056, 3] base warnings [] 11.8 s
+blueneg:199807A-06-hk ncc 0.981 rot 0 scale 0.754 P8 [692, 1050, 3] base warnings ['35% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 10.0% (p05-p95)'] 12.0 s
+blueneg:199807B-10-orlando-seaworld ncc 0.901 rot 0 scale 0.754 P8 [691, 1050, 3] base warnings [] 12.5 s
+blueneg:199910-01-korea ncc 0.928 rot 3 scale 0.758 P8 [721, 1057, 3] base warnings [] 11.3 s
+blueneg:19960812D-09-las-vegas ncc 0.832 rot 0 scale 0.734 P8 [702, 1015, 3] base warnings [] 11.2 s
+blueneg:199807A-09-orlando-siggraph ncc 0.933 rot 0 scale 0.754 P8 [723, 1047, 3] base warnings [] 10.8 s
+blueneg:199807B-16-seattle ncc 0.860 rot 0 scale 0.754 P8 [723, 1050, 3] base warnings [] 11.0 s
+blueneg:199910-08-korea ncc 0.956 rot 3 scale 0.762 P8 [728, 1066, 3] base warnings ['22% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 10.6 s
+ext:A113 ncc 0.987 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.5 s
+ext:A002 ncc 0.946 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.8 s
+ext:A114 ncc 0.970 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 18.9 s
+ext:A075 ncc 0.935 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 18.6 s
+ext:A003 ncc 0.977 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 18.8 s
+ext:A115 ncc 0.968 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['74% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 16.3% (p05-p95)', 'G base blocks spread 19.1% (p05-p95)', 'B base blocks spread 17.7% (p05-p95)'] 19.7 s
+ext:A004 ncc 0.961 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.8 s
+ext:A116 ncc 0.939 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 20.3 s
+ext:A005 ncc 0.966 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['G base blocks spread 11.5% (p05-p95)', 'B base blocks spread 13.9% (p05-p95)'] 19.3 s
+ext:A117 ncc 0.989 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['G base blocks spread 11.0% (p05-p95)', 'B base blocks spread 14.6% (p05-p95)'] 20.0 s
+ext:A078 ncc 0.924 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.3 s
+ext:A006 ncc 0.955 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.0 s
+ext:A118 ncc 0.983 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['34% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 12.8% (p05-p95)', 'B base blocks spread 13.7% (p05-p95)'] 18.3 s
+ext:A007 ncc 0.935 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 18.5 s
+ext:A119 ncc 0.989 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 18.6 s
+ext:A080 ncc 0.958 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.5 s
+ext:A008 ncc 0.969 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['37% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 20.2 s
+ext:A120 ncc 0.983 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.1 s
+ext:A081 ncc 0.947 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.9 s
+ext:A009 ncc 0.981 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 20.4 s
+ext:A121 ncc 0.961 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.7 s
+ext:A010 ncc 0.989 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 20.3 s
+ext:A122 ncc 0.962 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 20.0 s
+ext:A011 ncc 0.961 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 24.6 s
+ext:A123 ncc 0.942 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.6 s
+ext:A084 ncc 0.954 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.4 s
+ext:A012 ncc 0.955 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['51% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 11.9% (p05-p95)', 'B base blocks spread 12.9% (p05-p95)'] 19.3 s
+ext:A124 ncc 0.963 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['41% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 13.8% (p05-p95)', 'G base blocks spread 18.0% (p05-p95)', 'B base blocks spread 16.6% (p05-p95)'] 18.5 s
+ext:A013 ncc 0.941 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.0 s
+ext:A125 ncc 0.967 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['93% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'B base blocks spread 10.4% (p05-p95)'] 18.6 s
+ext:A086 ncc 0.949 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 18.4 s
+ext:A014 ncc 0.983 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.1 s
+ext:A126 ncc 0.988 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['55% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 12.3% (p05-p95)', 'G base blocks spread 17.7% (p05-p95)', 'B base blocks spread 18.0% (p05-p95)'] 17.9 s
+ext:A087 ncc 0.935 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['40% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 18.9 s
+ext:A015 ncc 0.992 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['G base blocks spread 10.7% (p05-p95)', 'B base blocks spread 12.6% (p05-p95)'] 18.2 s
+ext:A127 ncc 0.988 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['44% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 11.5% (p05-p95)', 'B base blocks spread 13.2% (p05-p95)'] 17.3 s
+Traceback (most recent call last):
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 102, in <module>
+    main(*sys.argv[1:])
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 94, in main
+    rec = build(f, data_dir("s3_ml", "cache", f["domain"]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 65, in build
+    ref4 = load_lab(f["ref"], LOAD_FACTOR)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/src/filmcolor/compare.py", line 40, in load_lab
+    img, icc = _read_rgb_icc(path)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/src/filmcolor/compare.py", line 33, in _read_rgb_icc
+    raise ValueError(f"{path}: no embedded ICC profile")
+ValueError: /Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R052.jpg: no embedded ICC profile
+     1582.22 real      1339.39 user        67.29 sys
+          4210769920  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            23655592  page reclaims
+                 467  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+               15195  voluntary context switches
+             1593999  involuntary context switches
+      19212261400280  instructions retired
+       4999210278207  cycles elapsed
+          5271982568  peak memory footprint

@@ -1,0 +1,24 @@
+ext:A016 ncc 0.991 rot 0 scale 0.995 P8 [645, 967, 3] base warnings [] 19.8 s
+ext:A018 ncc 0.991 rot 0 scale 0.995 P8 [645, 967, 3] base warnings [] 19.9 s
+ext:A025 ncc 0.985 rot 0 scale 0.995 P8 [645, 967, 3] base warnings [] 21.0 s
+ext:A026 ncc 0.989 rot 0 scale 0.990 P8 [641, 962, 3] base warnings [] 21.1 s
+ext:A027 ncc 0.872 rot 0 scale 0.970 P8 [627, 941, 3] base warnings [] 20.0 s
+ext:A028 ncc 0.948 rot 0 scale 0.990 P8 [641, 962, 3] base warnings [] 18.7 s
+      121.39 real        85.26 user         5.36 sys
+          3897524224  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1150850  page reclaims
+                1069  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1799  voluntary context switches
+              194298  involuntary context switches
+       1163887549695  instructions retired
+        288833089933  cycles elapsed
+          4026060136  peak memory footprint

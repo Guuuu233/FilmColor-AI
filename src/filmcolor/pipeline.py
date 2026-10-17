@@ -120,25 +120,15 @@ def _scanner_input(path, *, base_regions, base_rgb, image_region):
     return rgb, sat, base_rgb, base_info, regions, input_info, decode_info
 
 
-def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
-            white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
-            render_params=None, auto=None, film: str = "color"):
-    """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
-
-    ``render_params``: RenderParams or its dict (Sprint 2 colour parameters); None = defaults,
-    which reproduce the Sprint 1 output. ``auto``: a reference-free estimator config (``noref.NOREF_V2``)
-    that sets the render parameters from the frame itself; excludes ``render_params``.
-    ``film``: "color" (default, unchanged behaviour) or "bw", given explicitly (no automatic
-    detection): neutral inversion (``invert.neutral_transmission``), and with ``auto`` only the tonal
-    parameters are taken; temp, tint, saturation and matrix stay neutral (the look was fitted on
-    colour negatives). Explicit ``render_params`` are applied as given in either mode."""
+def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
+             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, film: str = "color") -> dict:
+    """The scene-linear positive of one negative before any render parameter: decode, film base, inversion,
+    times the inversion exposure (``convert`` renders exactly this). Returns ``positive`` (H, W, 3 float32),
+    ``mask`` (unsaturated pixels in the image region), ``image_region``, ``region_source``, ``inversion``
+    (InversionResult without its positive array), ``base_info``, ``input_info``, ``decode_info`` and
+    ``base_inside_image`` (share of auto base blocks inside the image region, or None)."""
     if film not in FILM_MODES:
         raise ValueError(f"film must be one of {FILM_MODES}, got {film!r}")
-    if auto is not None and render_params is not None:
-        raise ValueError("auto and render_params are mutually exclusive")
-    rp = render_params if isinstance(render_params, RenderParams) else RenderParams.from_dict(render_params or {})
-    if encoding not in DESCRIPTION:
-        raise ValueError(f"encoding must be one of {tuple(DESCRIPTION)}")
     if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
         raise ValueError(f"invalid parameters: white_pct={white_pct} gamma={gamma} exposure={exposure}")
     path = Path(path)
@@ -162,10 +152,42 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         t, l, h, w = image_region
         centres = [(r + rh / 2, c + rw / 2) for r, c, rh, rw in regions]
         inside = float(np.mean([t <= y < t + h and l <= x < l + w for y, x in centres]))
-    auto_info = None
     # positive x inversion exposure, once (x 1.0 is exact, so the default reuses the array)
     pos = res.positive if res.params.exposure == 1 else res.positive * np.float32(res.params.exposure)
     res.positive = None
+    return dict(positive=pos, mask=mask, image_region=image_region, region_source=region_source, inversion=res,
+                base_info=base_info, input_info=input_info, decode_info=decode_info, base_inside_image=inside)
+
+
+def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
+            white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
+            render_params=None, auto=None, film: str = "color"):
+    """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
+
+    ``render_params``: RenderParams or its dict (Sprint 2 colour parameters); None = defaults,
+    which reproduce the Sprint 1 output. ``auto``: a reference-free estimator config (``noref.NOREF_V2``)
+    that sets the render parameters from the frame itself; excludes ``render_params``.
+    ``film``: "color" (default, unchanged behaviour) or "bw", given explicitly (no automatic
+    detection): neutral inversion (``invert.neutral_transmission``), and with ``auto`` only the tonal
+    parameters are taken; temp, tint, saturation and matrix stay neutral (the look was fitted on
+    colour negatives). Explicit ``render_params`` are applied as given in either mode."""
+    if film not in FILM_MODES:
+        raise ValueError(f"film must be one of {FILM_MODES}, got {film!r}")
+    if auto is not None and render_params is not None:
+        raise ValueError("auto and render_params are mutually exclusive")
+    rp = render_params if isinstance(render_params, RenderParams) else RenderParams.from_dict(render_params or {})
+    if encoding not in DESCRIPTION:
+        raise ValueError(f"encoding must be one of {tuple(DESCRIPTION)}")
+    if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
+        raise ValueError(f"invalid parameters: white_pct={white_pct} gamma={gamma} exposure={exposure}")
+    path = Path(path)
+    p = positive(path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region, d_hi=d_hi,
+                 white_pct=white_pct, gamma=gamma, exposure=exposure, film=film)
+    pos, mask, image_region, res = p["positive"], p["mask"], p["image_region"], p["inversion"]
+    base_info, input_info, decode_info = p["base_info"], p["input_info"], p["decode_info"]
+    region_source, inside = p["region_source"], p["base_inside_image"]
+    del p
+    auto_info = None
     if auto is not None:  # estimated from this frame's positive only (no reference, no roll context)
         est = estimate_params_v2(*estimation_input(pos, image_region), auto)
         if film == "bw":  # colour parts of the look were fitted on colour negatives

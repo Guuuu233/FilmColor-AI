@@ -1,0 +1,39 @@
+ext:A104 FAILED film base: no chromatically consistent base candidates; specify region manually
+ext:A033 ncc 0.966 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['90% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 16.6% (p05-p95)', 'G base blocks spread 18.9% (p05-p95)', 'B base blocks spread 21.2% (p05-p95)'] 27.8 s
+ext:A146 ncc 0.933 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['G base blocks spread 10.8% (p05-p95)', 'B base blocks spread 13.2% (p05-p95)'] 30.3 s
+ext:A037 ncc 0.956 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['30% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 11.1% (p05-p95)', 'B base blocks spread 11.7% (p05-p95)'] 28.6 s
+ext:A150 ncc 0.970 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['70% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 27.3 s
+ext:A195 ncc 0.994 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 29.5 s
+ext:A198 FAILED film base: no chromatically consistent base candidates; specify region manually
+ext:A200 ncc 0.993 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 27.9 s
+ext:A202 ncc 0.952 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['90% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 27.7 s
+ext:A204 ncc 0.994 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 28.8 s
+ext:A206 ncc 0.993 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 28.1 s
+ext:A208 ncc 0.994 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 28.9 s
+ext:A211 ncc 0.993 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 31.9 s
+ext:A213 ncc 0.992 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 27.0 s
+ext:A215 ncc 0.994 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 26.9 s
+ext:A217 ncc 0.989 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 30.1 s
+ext:A219 ncc 0.984 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 27.3 s
+ext:A221 ncc 0.984 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 29.6 s
+ext:A223 ncc 0.994 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 27.9 s
+ext:A225 ncc 0.978 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 29.0 s
+ext:A227 ncc 0.990 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 27.1 s
+      552.67 real       391.35 user        27.40 sys
+          2972205056  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             7162563  page reclaims
+                 555  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3187  voluntary context switches
+             1158659  involuntary context switches
+       4235727536048  instructions retired
+       1321076087842  cycles elapsed
+          3756936408  peak memory footprint

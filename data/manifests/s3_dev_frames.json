@@ -1,0 +1,3149 @@
+{
+ "design": "docs/S3_ML_DESIGN.md v2.1",
+ "counts": {
+  "nlp": 11,
+  "shop": 21,
+  "blueneg": 27,
+  "ext_own": 132
+ },
+ "rolls": {
+  "nlp": 4,
+  "shop": 1,
+  "blueneg": 23,
+  "ext_own": 4
+ },
+ "excluded": {
+  "nlp": [
+   "_DSF9228"
+  ],
+  "shop": [
+   "DSC_3822",
+   "DSC_3858"
+  ],
+  "ext_own": [
+   "A148",
+   "A210"
+  ]
+ },
+ "frozen_check": "no file of this list is in data/manifests/frozen_test_*.json (checked when built)",
+ "frames": [
+  {
+   "id": "nlp:_DSF8434",
+   "domain": "nlp",
+   "stem": "_DSF8434",
+   "roll": "nlp-20180518",
+   "raw": "data/raw/public/nlp_official/_DSF8434.RAF",
+   "ref": "data/reference/nlp_default/_DSF8434-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "50c5bf7bf26d0cc536af69ddf8a0120a2a4ad9d3b852d1d181ff55b7c08bb444",
+   "ref_sha256": "6ad6803808d4f3af1223bc44e0c60d5667f5c28a86d40bfd2fff20ffa7ae5a48"
+  },
+  {
+   "id": "nlp:_DSF8948",
+   "domain": "nlp",
+   "stem": "_DSF8948",
+   "roll": "nlp-20180613",
+   "raw": "data/raw/public/nlp_official/_DSF8948.RAF",
+   "ref": "data/reference/nlp_default/_DSF8948-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "644375ef0652998341a34ba0ddc904901a4b13ea5232aeca119c822201754326",
+   "ref_sha256": "48b00b10e45006f1a3402ab60ac2e183fb762fd96eec1c20698d4242d905d626"
+  },
+  {
+   "id": "nlp:_DSF8951",
+   "domain": "nlp",
+   "stem": "_DSF8951",
+   "roll": "nlp-20180613",
+   "raw": "data/raw/public/nlp_official/_DSF8951.RAF",
+   "ref": "data/reference/nlp_default/_DSF8951-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "d52ce3a32f13ae3b0e6f9917b438f6c00ffc580a5398f1522bbf76b4001e0f99",
+   "ref_sha256": "d33f2a2f05fe2567703c2d8a282e946ae7577bc730ad0dd67c07c8e1abc6dc54"
+  },
+  {
+   "id": "nlp:_DSF8983",
+   "domain": "nlp",
+   "stem": "_DSF8983",
+   "roll": "nlp-20180613",
+   "raw": "data/raw/public/nlp_official/_DSF8983.RAF",
+   "ref": "data/reference/nlp_default/_DSF8983-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "9d96173891843d780cbd0abcad40be5c613dfdcd9de3334faccfceb94aee2d53",
+   "ref_sha256": "fa5b5609f6321dd4892457712836360cb630677dd845ac259bf0737747e940b6"
+  },
+  {
+   "id": "nlp:_DSF9229",
+   "domain": "nlp",
+   "stem": "_DSF9229",
+   "roll": "nlp-20180728",
+   "raw": "data/raw/public/nlp_official/_DSF9229.RAF",
+   "ref": "data/reference/nlp_default/_DSF9229-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "43bfc84fa67b2c9457aba48515245f2aaae5a6fd50c8dd4923a8c2840f1ee783",
+   "ref_sha256": "2b09e08aae4b5130bdae489cc2b49ac00a70960aa41eca3fbd32808896f1b896"
+  },
+  {
+   "id": "nlp:_DSF9231",
+   "domain": "nlp",
+   "stem": "_DSF9231",
+   "roll": "nlp-20180728",
+   "raw": "data/raw/public/nlp_official/_DSF9231.RAF",
+   "ref": "data/reference/nlp_default/_DSF9231-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "cd2575f8f65ebf4f8c2e2850bebb6c73ff8b47dc86eb97313e5625c5ae7858c5",
+   "ref_sha256": "0b1cce825e6b5c26981fc238e62056da47221ab4456c92c63b9510b4bde557b3"
+  },
+  {
+   "id": "nlp:_DSF9235",
+   "domain": "nlp",
+   "stem": "_DSF9235",
+   "roll": "nlp-20180729",
+   "raw": "data/raw/public/nlp_official/_DSF9235.RAF",
+   "ref": "data/reference/nlp_default/_DSF9235-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "ae289e8118ffc91321b19c145c5e815b3562fe4b47fda5c2eae5517439ab0094",
+   "ref_sha256": "4cc17fed8640012855a67fd73996cc17886072ae4d244a5cba6b4c919948eeb8"
+  },
+  {
+   "id": "nlp:_DSF9237",
+   "domain": "nlp",
+   "stem": "_DSF9237",
+   "roll": "nlp-20180729",
+   "raw": "data/raw/public/nlp_official/_DSF9237.RAF",
+   "ref": "data/reference/nlp_default/_DSF9237-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "37df5503bc615791d60e946553847de1e56c5fa188c24022a525d44893527fce",
+   "ref_sha256": "b194ad568e8e7a7b6b5b26b28e7f3947188464e09cd67683833fc8026cf7daf4"
+  },
+  {
+   "id": "nlp:_DSF9238",
+   "domain": "nlp",
+   "stem": "_DSF9238",
+   "roll": "nlp-20180729",
+   "raw": "data/raw/public/nlp_official/_DSF9238.RAF",
+   "ref": "data/reference/nlp_default/_DSF9238-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "be99fa6a39acb700a08686b07a5231658f5b4f037e4b8bf41e6b6a3281e182e2",
+   "ref_sha256": "4b46bdfad240af517d51394d16c53327a67a006022b0d3a7d229ba633e1bd370"
+  },
+  {
+   "id": "nlp:_DSF9239",
+   "domain": "nlp",
+   "stem": "_DSF9239",
+   "roll": "nlp-20180729",
+   "raw": "data/raw/public/nlp_official/_DSF9239.RAF",
+   "ref": "data/reference/nlp_default/_DSF9239-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "62426373bbbf4240113c6dc5a750758d2745aa1f8f9d2de80fbe542e9433e3f7",
+   "ref_sha256": "8a07fafdb7181273a5928682f45232d68788cc046ac80d6945a2c7b37776a437"
+  },
+  {
+   "id": "nlp:_DSF9243",
+   "domain": "nlp",
+   "stem": "_DSF9243",
+   "roll": "nlp-20180729",
+   "raw": "data/raw/public/nlp_official/_DSF9243.RAF",
+   "ref": "data/reference/nlp_default/_DSF9243-positive.tif",
+   "ref_kind": "icc",
+   "experiments": [
+    "A"
+   ],
+   "raw_sha256": "1aa2cad3bbbb315de5ff03c9ff8e284af4657d4ccd89b21a14b47314d132fdc0",
+   "ref_sha256": "a6e845b508edb63986278c161ab5b9e701973d6edea0011a01f0ccb2a373cd67"
+  },
+  {
+   "id": "shop:DSC_3823",
+   "domain": "shop",
+   "stem": "DSC_3823",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3823.NEF",
+   "ref": "data/reference/shop_r01/1 (2).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "f8d2957ecc6bd6c398e0eead5828e3f355492a63da2445cf62f50b3419d471ab",
+   "ref_sha256": "1d99e25461cd77de1902ff2c2c2296a1cfe85b66c9dfa87f0e5cc3722ce9ab9c"
+  },
+  {
+   "id": "shop:DSC_3825",
+   "domain": "shop",
+   "stem": "DSC_3825",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3825.NEF",
+   "ref": "data/reference/shop_r01/1 (4).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "f37fa6738b3acfef27e89ec2ea542fb2a0240d67450e1a519ed5562a56d16b80",
+   "ref_sha256": "6346c5baa1fe09b5bad78bdbd1366ed09a0c469cb447b98ebcbee0d55953fa28"
+  },
+  {
+   "id": "shop:DSC_3827",
+   "domain": "shop",
+   "stem": "DSC_3827",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3827.NEF",
+   "ref": "data/reference/shop_r01/1 (6).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "1f6ffa153247f1e0007db6478de9b0b487ebb9cb32645e47cc4d91c6702b1a57",
+   "ref_sha256": "f1436d4ce39ba838fa4edd3202b55f70fad16bc51afd049077e345ef4aa750c0"
+  },
+  {
+   "id": "shop:DSC_3828",
+   "domain": "shop",
+   "stem": "DSC_3828",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3828.NEF",
+   "ref": "data/reference/shop_r01/1 (7).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "5a37756f044090fc93b2b93338edf450314bf87a3f98ed330495fce280e3436d",
+   "ref_sha256": "414dad4500bb37ce172a01a1135c91679cd90d3e0ec155284da891effc77f344"
+  },
+  {
+   "id": "shop:DSC_3829",
+   "domain": "shop",
+   "stem": "DSC_3829",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3829.NEF",
+   "ref": "data/reference/shop_r01/1 (8).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "4fb167dac6a6ebf47002fd2d38a46ba96a35a7c9e1837d0d00d19b34b0d90f13",
+   "ref_sha256": "3c93ef3f2c4cca780d44e552998983dfd7fa79138cac97d9dfa215261b11ef52"
+  },
+  {
+   "id": "shop:DSC_3831",
+   "domain": "shop",
+   "stem": "DSC_3831",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3831.NEF",
+   "ref": "data/reference/shop_r01/1 (10).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "efb520df11c91ac904a8f7743cc7eae5ed7a68ae1b3fcd04fd3b3667fc61377d",
+   "ref_sha256": "ffa37e5ae46db750c9b7585d7e7ed40cb2a991e5db1468b8e589b09e2b735b78"
+  },
+  {
+   "id": "shop:DSC_3833",
+   "domain": "shop",
+   "stem": "DSC_3833",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3833.NEF",
+   "ref": "data/reference/shop_r01/1 (12).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "0a94511a6f09340f633fe6be1c42657d75c6c5268fcf7f40d98b5ace435cbb62",
+   "ref_sha256": "d9b1ee8860c5ed1e43a039794831e91eccfc332d79898571ecc8df4aa9b0a443"
+  },
+  {
+   "id": "shop:DSC_3835",
+   "domain": "shop",
+   "stem": "DSC_3835",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3835.NEF",
+   "ref": "data/reference/shop_r01/1 (14).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "b578d161d57559b6c7e3fa0abf7d226ffaf1564d08d1007c22a36387c90c6a72",
+   "ref_sha256": "1f5869181c7fa818157d36c1292444b70df07984a755215879ee2805b2e17154"
+  },
+  {
+   "id": "shop:DSC_3837",
+   "domain": "shop",
+   "stem": "DSC_3837",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3837.NEF",
+   "ref": "data/reference/shop_r01/1 (16).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "15bd42c845a153e94aaa7ea3974d6c26add065498af836afb24b13dfe30a5dce",
+   "ref_sha256": "b23588008633a203810bbaeef1025ecc926c639640c6211ba7c0ab5c034f3e78"
+  },
+  {
+   "id": "shop:DSC_3838",
+   "domain": "shop",
+   "stem": "DSC_3838",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3838.NEF",
+   "ref": "data/reference/shop_r01/1 (17).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "6ce64cc90927393bbebc3a6f6c64f0d49862d7d7d6592b40a9ec339311c17227",
+   "ref_sha256": "7440026590b4c3e82f4c78f3ad4c467558a58b83f4fbb694e1e2d5f1f270d5fe"
+  },
+  {
+   "id": "shop:DSC_3839",
+   "domain": "shop",
+   "stem": "DSC_3839",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3839.NEF",
+   "ref": "data/reference/shop_r01/1 (18).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "738ad1007a5c7899c4adf91512a7b6b83dc48a4e1df2f0f2fba349441e5d1445",
+   "ref_sha256": "fdd4309350d2adda71389903c9200a4e1f3f15c93a036859f6bc84ff2ad0ab93"
+  },
+  {
+   "id": "shop:DSC_3840",
+   "domain": "shop",
+   "stem": "DSC_3840",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3840.NEF",
+   "ref": "data/reference/shop_r01/1 (19).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "8cb0b6dec72c9d12cbc8955f4a2e43034ad4d7b144ab15196fab1a66fdc3923f",
+   "ref_sha256": "21082dc50b00422c190bc41c5408172376bc76b7af0ee3395eeccb60790cf577"
+  },
+  {
+   "id": "shop:DSC_3843",
+   "domain": "shop",
+   "stem": "DSC_3843",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3843.NEF",
+   "ref": "data/reference/shop_r01/1 (22).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "49b253b20aede912853274b89e84a8b6e585ce1e2552fbc5798f8f07a6b20f95",
+   "ref_sha256": "39ec44e8cf85fd832ad005693be31797756ffef17822b0f67cec69b2083094f1"
+  },
+  {
+   "id": "shop:DSC_3844",
+   "domain": "shop",
+   "stem": "DSC_3844",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3844.NEF",
+   "ref": "data/reference/shop_r01/1 (23).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "5371e000df32ca6d8bca55c6f69355fd3603dfcb8e9a0a8b0b08b7f23deb844b",
+   "ref_sha256": "6768740ff47514c18d3ed45fec686750aa84b0cc821e2363774ceeab70f52f6b"
+  },
+  {
+   "id": "shop:DSC_3846",
+   "domain": "shop",
+   "stem": "DSC_3846",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3846.NEF",
+   "ref": "data/reference/shop_r01/1 (25).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "3904ed0e49e41cbec519cb1373e9d80f0d7b0adba807e864cc544958a627ebe3",
+   "ref_sha256": "5b76cbcaf7ff83552e1c2fc0e2147f4dfbac1bdad3d4d19eccd27868cb1a2dec"
+  },
+  {
+   "id": "shop:DSC_3847",
+   "domain": "shop",
+   "stem": "DSC_3847",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3847.NEF",
+   "ref": "data/reference/shop_r01/1 (26).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "9ef3761d0abc4c47f5289a13491f7989f9d2394f416a270c0e8ae1f116ea5a3b",
+   "ref_sha256": "546570936c8ced13e3f7a959b59af351bb09f62865925d4e7273023be572ba18"
+  },
+  {
+   "id": "shop:DSC_3849",
+   "domain": "shop",
+   "stem": "DSC_3849",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3849.NEF",
+   "ref": "data/reference/shop_r01/1 (28).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "11f036cc768d0d8535dffd32126a0365f625ec0ab7428e043757dd39c6731429",
+   "ref_sha256": "50b961acf4e5a067fa9d51bbe46fffe822e8ce2dcaa9b5f06d5505aa58760f70"
+  },
+  {
+   "id": "shop:DSC_3853",
+   "domain": "shop",
+   "stem": "DSC_3853",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3853.NEF",
+   "ref": "data/reference/shop_r01/1 (31).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "65525786b97b1cb428bd83e5d72bdeddc5bde779d2d7170209f595a2b0745275",
+   "ref_sha256": "eb9070ff6ea56a8ad88a0f9155d74bda48e217746c04ab74749d4c273800b844"
+  },
+  {
+   "id": "shop:DSC_3855",
+   "domain": "shop",
+   "stem": "DSC_3855",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3855.NEF",
+   "ref": "data/reference/shop_r01/1 (33).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "4903b29228477f17576c6599ccfd8007bd991b09b214734b72fcc72fd3615df2",
+   "ref_sha256": "511f63bc4be657458c0d2a1cafab05a841634355fc13a9d97f46bfdfbde696a8"
+  },
+  {
+   "id": "shop:DSC_3856",
+   "domain": "shop",
+   "stem": "DSC_3856",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3856.NEF",
+   "ref": "data/reference/shop_r01/1 (34).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "4c3454ee80bcde65d95c0d2febf2f68ad4de1be9ddcd2e68da90a78628632f88",
+   "ref_sha256": "667ab0964279c06278d9d58b02f2a004c60c8d95a462a7503f0dff61e30c5882"
+  },
+  {
+   "id": "shop:DSC_3859",
+   "domain": "shop",
+   "stem": "DSC_3859",
+   "roll": "shop_r01",
+   "raw": "data/raw/own/ultramax400_r01/DSC_3859.NEF",
+   "ref": "data/reference/shop_r01/1 (37).jpg",
+   "ref_kind": "icc",
+   "experiments": [
+    "A",
+    "B"
+   ],
+   "raw_sha256": "cb6918c44f836a09e7381d86a3076cda0d152e7a187889a620c7f321135343e9",
+   "ref_sha256": "571c1687bff3b8e62adb51a818603f030bdc17aedb11f5d8a18c28a90d7b3097"
+  },
+  {
+   "id": "blueneg:19941217A-15-tokyo",
+   "domain": "blueneg",
+   "stem": "19941217A-15-tokyo",
+   "roll": "19941217A",
+   "film": "Fuji 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941217A-15-tokyo.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941217A-15-tokyo.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "a39c7ef8d34a48ad96a45b72903f97846b7897866c1382269c164bad421365f8",
+   "ref_sha256": "2fde12ccfd8dd22f3d995446d25ba13788a98a1945e8aaae857bdfe8b003f60b",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941217B-08-tokyo",
+   "domain": "blueneg",
+   "stem": "19941217B-08-tokyo",
+   "roll": "19941217B",
+   "film": "Konica Super XG 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941217B-08-tokyo.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941217B-08-tokyo.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "92d2b4026a7513880cb80608617587b5cffebf01a3b2f13aa1792867d1517c3f",
+   "ref_sha256": "0c9bfc6dedd1f42c83560c12903fadea43718ef44706ceed294907fae388aa0c",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941218B-23-tokyo",
+   "domain": "blueneg",
+   "stem": "19941218B-23-tokyo",
+   "roll": "19941218B",
+   "film": "Konica Super XG 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941218B-23-tokyo.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941218B-23-tokyo.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "1868853390518a7f151e9fa25fccbedaf4e4523c9bbed4245e63648f30cfad10",
+   "ref_sha256": "6d04bc5a760bb61e17fafc30da9029e68b1478b165f290e4532efbc68cb9bcfe",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941218C-05-tokyo",
+   "domain": "blueneg",
+   "stem": "19941218C-05-tokyo",
+   "roll": "19941218C",
+   "film": "Kodak Gold 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941218C-05-tokyo.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941218C-05-tokyo.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "6ad90c77d2915e578445d88295700253749bda436218304d9a794e91d92645b0",
+   "ref_sha256": "e464644f4d4559137b736d542aa6ee67197664f0b06725cd0dc910fb678e2f30",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941220D-20-kamakura",
+   "domain": "blueneg",
+   "stem": "19941220D-20-kamakura",
+   "roll": "19941220D",
+   "film": "Fuji 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941220D-20-kamakura.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941220D-20-kamakura.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "06c29286393a623723a5740257da03e7c921708f6d684d3a2f82d0a1ee0a44cd",
+   "ref_sha256": "d20359d2689d768db66681e5fc8356e98640bbae51b3655e96e92efb55bc3ead",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941221D-25-kyoto",
+   "domain": "blueneg",
+   "stem": "19941221D-25-kyoto",
+   "roll": "19941221D",
+   "film": "Fuji 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941221D-25-kyoto.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941221D-25-kyoto.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "158b317edef93cd90e27a13d30fae7c00dc033d5c80498be974588eca1593a04",
+   "ref_sha256": "9144cb9771f247e31aaa02eff48d36e9f3d9b1cca696d77d9202ce19f3593b75",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941222D-32-kyoto",
+   "domain": "blueneg",
+   "stem": "19941222D-32-kyoto",
+   "roll": "19941222D",
+   "film": "Fuji 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941222D-32-kyoto.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941222D-32-kyoto.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "4033157f7ccd0ae3705542024cecb60cab050a21715932ecf8a70794ce2f4ebe",
+   "ref_sha256": "544450404d30e00b4f52d28d0c65a33804ba8cdb684448497da3cecac59b997d",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941222E-04-nara",
+   "domain": "blueneg",
+   "stem": "19941222E-04-nara",
+   "roll": "19941222E",
+   "film": "Konica Super XG 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941222E-04-nara.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941222E-04-nara.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "04bbb7ba9f211a8278dc1bfc48af851f5f9440b11fe83ae80bd46c2ea7591f3a",
+   "ref_sha256": "2bbbff2a43afc5e60e55963e019b11032a7f129fd38bb98bbe6d1ab471aa716a",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941223E-17-osaka",
+   "domain": "blueneg",
+   "stem": "19941223E-17-osaka",
+   "roll": "19941223E",
+   "film": "Konica Super XG 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941223E-17-osaka.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941223E-17-osaka.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "02c15bda496622cb1d15e169872c9d958970e2c6d016a595fba0e849893a7847",
+   "ref_sha256": "9977554012c8cc6987b75a6f5f883129cf1e20c1a1d8841a55662df1bd11113e",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941224E-23-nagasaki",
+   "domain": "blueneg",
+   "stem": "19941224E-23-nagasaki",
+   "roll": "19941224E",
+   "film": "Konica Super XG 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941224E-23-nagasaki.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941224E-23-nagasaki.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "ad7f13b45e281b62ad8125769758f2db4a88ba88b62129d069c49f49c689ed63",
+   "ref_sha256": "9bf863f0514445310a202f47a65c5bf3daabd20648c12de2fbe56fa0051b18f4",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941225E-34-nagasaki",
+   "domain": "blueneg",
+   "stem": "19941225E-34-nagasaki",
+   "roll": "19941225E",
+   "film": "Konica Super XG 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941225E-34-nagasaki.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941225E-34-nagasaki.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "19de98f9a1be8361a143c36a366b3701bb2eff6365b25468037525e28fef7714",
+   "ref_sha256": "8febd69ce2b08339639bc9eed5d434e6bf76b4637f2d2b8112e6aff177657d65",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941225F-03-nagasaki",
+   "domain": "blueneg",
+   "stem": "19941225F-03-nagasaki",
+   "roll": "19941225F",
+   "film": "Konica Super XG 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941225F-03-nagasaki.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941225F-03-nagasaki.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "84fd336eee658aab655b15a2fa9be083ee6196df4e9804610d1b152e7b43579a",
+   "ref_sha256": "ac708a1f8d237c795b8aba758bb8800b16c9fc12fc5ed186a0f546cdd3980f3a",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19941228F-12-tokyo",
+   "domain": "blueneg",
+   "stem": "19941228F-12-tokyo",
+   "roll": "19941228F",
+   "film": "Konica Super XG 100",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19941228F-12-tokyo.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19941228F-12-tokyo.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "18ede98a70accc526719c00c2f50da6f04b7062de77d7a32994509b50a3e147b",
+   "ref_sha256": "d2bccdcd12e5ca4984bb1c8bcb25f7d75766787b493aad019199be75058d5817",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19960808B-03-new-orleans-siggraph96",
+   "domain": "blueneg",
+   "stem": "19960808B-03-new-orleans-siggraph96",
+   "roll": "19960808B",
+   "film": "Fuji NPH400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19960808B-03-new-orleans-siggraph96.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19960808B-03-new-orleans-siggraph96.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "07e82ab47c72a8a46117a8a7c43b52583bc7a0810e0a9a80bd0262f10fdf4e17",
+   "ref_sha256": "ee976f9b10ddb455e3007ca57a795a2ad05678886a7c162d10284a70fad3f8d1",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19960809B-14-new-orleans-siggraph96",
+   "domain": "blueneg",
+   "stem": "19960809B-14-new-orleans-siggraph96",
+   "roll": "19960809B",
+   "film": "Fuji NPH400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19960809B-14-new-orleans-siggraph96.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19960809B-14-new-orleans-siggraph96.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "65f10dc706a85a935401f0164b7f917d95defdd009db57807ebd54bbf882b251",
+   "ref_sha256": "6e09baf919bbef7657897a7c1cccac9890f654c696fbacd97f7448e9f44d72f0",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19960811B-28-arizona-london-bridge",
+   "domain": "blueneg",
+   "stem": "19960811B-28-arizona-london-bridge",
+   "roll": "19960811B",
+   "film": "Fuji NPH400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19960811B-28-arizona-london-bridge.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19960811B-28-arizona-london-bridge.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "8d8dbc7b57798b561b6bd154127fd991f4e13705b5463d7266cbdaf9b1eac20d",
+   "ref_sha256": "0897e634c438451ca8b5c94b97e7b6b90594ab710ee09b5978ace64b06835208",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19960812D-17-las-vegas",
+   "domain": "blueneg",
+   "stem": "19960812D-17-las-vegas",
+   "roll": "19960812D",
+   "film": "Fuji NPH400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19960812D-17-las-vegas.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19960812D-17-las-vegas.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "37acde40e10cb6cc3d5b704afd4a0501bbf0721532f1ecb1b81d11d095a07579",
+   "ref_sha256": "f34781bb73a7a517423fb99fdbd6a0f54b7fd4c3a27eb34b65795011b0ff041a",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19970619A-14-white-chapel",
+   "domain": "blueneg",
+   "stem": "19970619A-14-white-chapel",
+   "roll": "19970619A",
+   "film": "Kodak Gold 400-5",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19970619A-14-white-chapel.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19970619A-14-white-chapel.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "8e63c3d0d68fabbc4948d55c89edc26877bf204878576416b691a496ea06c385",
+   "ref_sha256": "36071aa399ded1b5f0ae378606265523b984913195cb8e70d75cedcf81cf89d7",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19970619B-09-notre-dame",
+   "domain": "blueneg",
+   "stem": "19970619B-09-notre-dame",
+   "roll": "19970619B",
+   "film": "Kodak Gold 100-5",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19970619B-09-notre-dame.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19970619B-09-notre-dame.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "5acf821b8a30ae72566820a0a99849f22fe09249e1757467a8d7c4acccb8e55a",
+   "ref_sha256": "e4d55d345580a602877b862a0379c2dbd76e40d5695166758427aca107644731",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19970620C-10-st-michel",
+   "domain": "blueneg",
+   "stem": "19970620C-10-st-michel",
+   "roll": "19970620C",
+   "film": "Kodak Gold 100-5",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19970620C-10-st-michel.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19970620C-10-st-michel.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "7a86ca16cbfcb4fc657e33278ba5ab41b9cb53ed74a9c4f475f774926623c3f5",
+   "ref_sha256": "070808fd9c096235240d1ae5e54755e0162000bad5c28190ad9210a189e5a0f9",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:199807A-06-hk",
+   "domain": "blueneg",
+   "stem": "199807A-06-hk",
+   "roll": "199807A",
+   "film": "Fuji 400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/199807A-06-hk.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/199807A-06-hk.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "37d51aa20dab6745cf5bd73991d566e6d19274a5afaccf5026e7bb4731cd6366",
+   "ref_sha256": "99116fccd291abac033c4d7db33f85e107a7587f509ddaf3217e9e8121299a39",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:199807B-10-orlando-seaworld",
+   "domain": "blueneg",
+   "stem": "199807B-10-orlando-seaworld",
+   "roll": "199807B",
+   "film": "Fuji 400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/199807B-10-orlando-seaworld.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/199807B-10-orlando-seaworld.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "73333f9cd6081939d3404ec780f2a94fd5c75be385bfeec72123777d8234e937",
+   "ref_sha256": "1dea2ddac913ccc687726903a2e95c93b72aee094ba21eb0bf8df5c74ab1c469",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:199910-01-korea",
+   "domain": "blueneg",
+   "stem": "199910-01-korea",
+   "roll": "199910",
+   "film": "Kodak Gold 400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/199910-01-korea.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/199910-01-korea.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "60941f5f333041c208d0019bb6dd50e859903fe83dfb69c5a6575a06ce5ed5b3",
+   "ref_sha256": "ead9581c18da22d6500f16184d4193eb1e6e67ae04ec1b414154ac9c624c32ca",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:19960812D-09-las-vegas",
+   "domain": "blueneg",
+   "stem": "19960812D-09-las-vegas",
+   "roll": "19960812D",
+   "film": "Fuji NPH400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/19960812D-09-las-vegas.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/19960812D-09-las-vegas.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "f64940688111501c91a5401d4eaa61b1aa87d7aeaba6eb5177c0ee57a5811c27",
+   "ref_sha256": "ed20ab0d2ab3c5f9c33297ae34f4007029d08b402feda5894858c3c1c9c52df7",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:199807A-09-orlando-siggraph",
+   "domain": "blueneg",
+   "stem": "199807A-09-orlando-siggraph",
+   "roll": "199807A",
+   "film": "Fuji 400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/199807A-09-orlando-siggraph.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/199807A-09-orlando-siggraph.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "bfb78f633043ba12b56fd896287a167fe74fb82decd5c6083f462d0fdd5346dc",
+   "ref_sha256": "649e697a26010555b5a7a9abc2ecc6d60a13448bbf11b974c2ccca0f24ce9336",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:199807B-16-seattle",
+   "domain": "blueneg",
+   "stem": "199807B-16-seattle",
+   "roll": "199807B",
+   "film": "Fuji 400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/199807B-16-seattle.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/199807B-16-seattle.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "443ddf61b5f8131f0f72ccc49e89bf481b02d5560660cce2e8fdc1fbb939d647",
+   "ref_sha256": "853ad73538aa4a6cad8e1e3ef34006922e8d3c694c0ed438f2e1dec3b27380a2",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "blueneg:199910-08-korea",
+   "domain": "blueneg",
+   "stem": "199910-08-korea",
+   "roll": "199910",
+   "film": "Kodak Gold 400",
+   "raw": "data/raw/public/blueneg/negative-16bit/blue-intact/199910-08-korea.dng",
+   "ref": "data/raw/public/blueneg/printed-16bit/blue-intact/199910-08-korea.tif",
+   "ref_kind": "srgb_no_icc",
+   "raw_sha256": "db2b3bffeb9b81e1a3a22eb164e2901f033f6fd9e54ba45ae0ae1e10383a51ac",
+   "ref_sha256": "eb84f90c12977276a0c2150c8641c551b43145a5fb9c6547ab150c798acb0d73",
+   "experiments": [
+    "A"
+   ]
+  },
+  {
+   "id": "ext:A113",
+   "domain": "ext_own",
+   "stem": "A113",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A113.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R001.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "b23e69b4aa6048a4f2761d86930122de003bc4cad106dff8758ff28819d6b8cb",
+   "ref_sha256": "0411bfe0bacce3036176b6b4a04dd1791b14471a398e5336b94973ce8cd647fc",
+   "orig_name": "DSC_8243.NEF",
+   "ref_id": "R001",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A002",
+   "domain": "ext_own",
+   "stem": "A002",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A002.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R003.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "7bffe0d6417dbfcd4e72006f17ce76a5f210e65c258b771575e36862b0474ae7",
+   "ref_sha256": "c2c31c2b562755e385b2e0a214531695edea09f3caefb04d282559311dd8c1bb",
+   "orig_name": "DSC_6162.NEF",
+   "ref_id": "R003",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A114",
+   "domain": "ext_own",
+   "stem": "A114",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A114.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R004.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "b6cad3565721b1af4497b82882b332febbf151b97c9a6c09822b7d73a686b81f",
+   "ref_sha256": "48d5a5b45ea60a0101e033fc2d67c5b55bfd5c285354b794db70a109347a9512",
+   "orig_name": "DSC_8244.NEF",
+   "ref_id": "R004",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A075",
+   "domain": "ext_own",
+   "stem": "A075",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A075.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R005.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "1e49a8fa32a86a2ae4a8c919aeb50b88aec59fdfb931f9ed497b884f19590c14",
+   "ref_sha256": "f67dd19d91ad3b7f85162bffbce1133fda5dd29f6e196d3c4967d35190c6f2e9",
+   "orig_name": "DSC_6235.NEF",
+   "ref_id": "R005",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A003",
+   "domain": "ext_own",
+   "stem": "A003",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A003.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R007.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "1b77cc7e4187583c61ae6b3e69d9c0d90de8562c5839416386c363e00f16eda8",
+   "ref_sha256": "d31bdbcfd240f56b060c8a6810e32076aaa46bf2537d1d84cee8262d1fc36db7",
+   "orig_name": "DSC_6163.NEF",
+   "ref_id": "R007",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A115",
+   "domain": "ext_own",
+   "stem": "A115",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A115.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R008.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "4b967324a389aa88f5467afcfc4d367beb74f1a15ec596313ae45f746f3c129e",
+   "ref_sha256": "753061dc03de1d505bd5700b2ecc51f49b4e76715803f3a5802e8730bb9bb284",
+   "orig_name": "DSC_8245.NEF",
+   "ref_id": "R008",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A004",
+   "domain": "ext_own",
+   "stem": "A004",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A004.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R010.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "fa0d2a181f623aa0c6811527405b8d2b24f7b77dbbd404666f7fddd4dd2f0cdf",
+   "ref_sha256": "b011db4cbef1e1b1f943d300341f433ef13b2f45305be027dd726d02d860e3c3",
+   "orig_name": "DSC_6164.NEF",
+   "ref_id": "R010",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A116",
+   "domain": "ext_own",
+   "stem": "A116",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A116.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R011.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "0954159fee444c5ee1f48c74b1a44c4f4a49bf94a687425232c2a23ca181141f",
+   "ref_sha256": "64ba88f42027cae7f45620c30c6fb8b5abecc8233eb3a389470f0d1c68804ee2",
+   "orig_name": "DSC_8246.NEF",
+   "ref_id": "R011",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A005",
+   "domain": "ext_own",
+   "stem": "A005",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A005.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R013.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "54de702dea2055fe6c27fd3e66e5d43ed546d6a7eec6324d4edd8053641e514c",
+   "ref_sha256": "20b88e5ee01c713ed54565d6163d45764fc2b67a27955630995cff910dc59a58",
+   "orig_name": "DSC_6165.NEF",
+   "ref_id": "R013",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A117",
+   "domain": "ext_own",
+   "stem": "A117",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A117.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R014.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "9de7d0a83048149837ef6d561f6b416b15458fcccbb85101cb71e6fc4cc595a0",
+   "ref_sha256": "47f58c9d3fa79c0dc8ca598d696caf83dbbb21f4676f3c3512a0d3589b387e73",
+   "orig_name": "DSC_8247.NEF",
+   "ref_id": "R014",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A078",
+   "domain": "ext_own",
+   "stem": "A078",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A078.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R015.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "6b373a7e41a3ccca756ba82328888ccca9a2038cd47bdcdd360967ea1d88fe4c",
+   "ref_sha256": "3386485274363c098e3ebe14ee1efee2e76c25d76d56bee2a19b0e43235ddd44",
+   "orig_name": "DSC_6238.NEF",
+   "ref_id": "R015",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A006",
+   "domain": "ext_own",
+   "stem": "A006",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A006.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R017.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "b160dd6c555073fe48ac8eb79b267d30b771fbf8327f338d3860b0aec9e8483c",
+   "ref_sha256": "5759e47731425653eefba725b17e326263f882e7a1cc5bd35dff3c65aea83253",
+   "orig_name": "DSC_6166.NEF",
+   "ref_id": "R017",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A118",
+   "domain": "ext_own",
+   "stem": "A118",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A118.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R018.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "0007069e817197253d5401226fa9af1eaac7e69b14d8e0d1dc51bb9fb2553ad3",
+   "ref_sha256": "df08b73891bb45d756056235d630988298586d9cdf8fbee1d812d14195cdb2db",
+   "orig_name": "DSC_8248.NEF",
+   "ref_id": "R018",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A007",
+   "domain": "ext_own",
+   "stem": "A007",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A007.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R020.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "2cc8f6dd384dc6338ca50d706206add76415b4ab02a88ec827fedb4c6f905020",
+   "ref_sha256": "76a69670d5ff072a0b43fad5bb3fd848f29ceaabf2b7c023bcd5a606f304eda0",
+   "orig_name": "DSC_6167.NEF",
+   "ref_id": "R020",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A119",
+   "domain": "ext_own",
+   "stem": "A119",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A119.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R021.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "b09d5ef541dad22013f610afa8dd87582ae2410ecb510ca271d521cce9629da6",
+   "ref_sha256": "840deba999610159f36b917fdfbaf47621eba4ca964b22a8cabf4aa6a44c125b",
+   "orig_name": "DSC_8249.NEF",
+   "ref_id": "R021",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A080",
+   "domain": "ext_own",
+   "stem": "A080",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A080.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R022.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "068809043c3c7516be233a9c840b3c48d6eff8245ca7cfb4332fbc94adf4d7bf",
+   "ref_sha256": "9209f4aa3bfd01ac50f0969f828c2a51e58561ec09c6a62584a4f39de30e0d40",
+   "orig_name": "DSC_6240.NEF",
+   "ref_id": "R022",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A008",
+   "domain": "ext_own",
+   "stem": "A008",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A008.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R024.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "31576188b752f003d6aaba8bf6b6515da6ac917fc516c0d34992bc3c21fbdbbe",
+   "ref_sha256": "7f100575841f9420b8999c14bf80be04910e9336d5f7271f260f60642e805c18",
+   "orig_name": "DSC_6168.NEF",
+   "ref_id": "R024",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A120",
+   "domain": "ext_own",
+   "stem": "A120",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A120.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R025.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "dd768878dac1b0a0fa6ed42625a7c4f013dbb121db7277ab8a974c166cd30108",
+   "ref_sha256": "29ef07eb3bcf2e0296b3e0aea3c970b074e400a485b84a01c02272d19bc88bc2",
+   "orig_name": "DSC_8250.NEF",
+   "ref_id": "R025",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A081",
+   "domain": "ext_own",
+   "stem": "A081",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A081.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R026.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "24adc1a7d67f3996ad73713cf9f629a35426d0281e6af1191467811f1741f8c3",
+   "ref_sha256": "dfb103b96e89045251b203e1f4d6308d7912ec3415a43d8a2f06ca509659e35d",
+   "orig_name": "DSC_6241.NEF",
+   "ref_id": "R026",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A009",
+   "domain": "ext_own",
+   "stem": "A009",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A009.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R028.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f088415fb473eecba71f387fc16b8f3de70e2b5a534e4cb4875c52b449b37523",
+   "ref_sha256": "70b7695c1caab52a46ec04d4a25159e71e153262f38650cdc03f970ea2f08869",
+   "orig_name": "DSC_6169.NEF",
+   "ref_id": "R028",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A121",
+   "domain": "ext_own",
+   "stem": "A121",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A121.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R029.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "195cdc699ace49e2b5a71065b59b25780330dd1a1e661ef9f6d386866498e927",
+   "ref_sha256": "310c55008520953761b81f0339815ae5672a494089915781e568187ebec4cd93",
+   "orig_name": "DSC_8251.NEF",
+   "ref_id": "R029",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A010",
+   "domain": "ext_own",
+   "stem": "A010",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A010.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R031.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "17583c35b0c678c47feddb8014f18eaff1b93180e6665d079866d63bbb51fc27",
+   "ref_sha256": "d4d6d9aac941dd15ca79f53936a50bac34bf3868c3fb6be91d4e37fb65793d2d",
+   "orig_name": "DSC_6170.NEF",
+   "ref_id": "R031",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A122",
+   "domain": "ext_own",
+   "stem": "A122",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A122.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R032.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "2878e689ce5842e7106a02a3dd14c2dd8456fc478a00ae37199a761ed44a5598",
+   "ref_sha256": "813cbcc8f6d73e0d144de434451dc275e377ebd968c13a58de20492082cfec25",
+   "orig_name": "DSC_8252.NEF",
+   "ref_id": "R032",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A011",
+   "domain": "ext_own",
+   "stem": "A011",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A011.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R034.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "41b1423117fddb48d76ebab24fc190e886e1c70257f4fdc7fe78526868121bbf",
+   "ref_sha256": "a630dd90ec395e6b31f4a28b04e240ae08a7ea948466d384296997247a909fa4",
+   "orig_name": "DSC_6171.NEF",
+   "ref_id": "R034",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A123",
+   "domain": "ext_own",
+   "stem": "A123",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A123.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R035.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "62f456e52481f3c861f0c55e9137e50b2a4e30dd7efe204d19e3c2df633e6d50",
+   "ref_sha256": "991f5435c901c41979a9031ea149de0a30e711ed52d2c48c27570992b8643b3e",
+   "orig_name": "DSC_8253.NEF",
+   "ref_id": "R035",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A084",
+   "domain": "ext_own",
+   "stem": "A084",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A084.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R036.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "133fedf059df8f12838055a3a49b4a67d7a8181f2a6ad9a05fb7a93566b23fee",
+   "ref_sha256": "244beb8140d1f0cd14f10e1bffc505aefe708d8a7c27a86cd9d774fa5bd59ec1",
+   "orig_name": "DSC_6244.NEF",
+   "ref_id": "R036",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A012",
+   "domain": "ext_own",
+   "stem": "A012",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A012.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R038.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "415a731b9a1a7b11377362c7f6c60084d78981f5462143e411128593f0d95751",
+   "ref_sha256": "6c0484b7697908987c51337b8ee0a39ebd6e5e6b828be836ca64f1d10491f58e",
+   "orig_name": "DSC_6172.NEF",
+   "ref_id": "R038",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A124",
+   "domain": "ext_own",
+   "stem": "A124",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A124.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R039.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a8feee71e812206c4a582c496e70d503d3bdd5cb54f0196fc7f75dda58cada46",
+   "ref_sha256": "df3923bdbe122c81fa186d90e3423fd7eb72c34e4fbb6bf76430b1458c70f5b3",
+   "orig_name": "DSC_8254.NEF",
+   "ref_id": "R039",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A013",
+   "domain": "ext_own",
+   "stem": "A013",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A013.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R041.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "c3b201b140ec70c8878e9567c077a09cea0f1173028c330f5806c57f38a35137",
+   "ref_sha256": "cea16a4d8edc414edfade4676c07349573d7cb9e95719a8f2c20fa53f73a25cd",
+   "orig_name": "DSC_6173.NEF",
+   "ref_id": "R041",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A125",
+   "domain": "ext_own",
+   "stem": "A125",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A125.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R042.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "5c650096a31a80f1890c3e06f39349759da67195723174e68404323ccd22c44f",
+   "ref_sha256": "73fc289e6fd76e3b6e5d5056acf004733fe6e1fdd04ec2923099cfe35cec4379",
+   "orig_name": "DSC_8255.NEF",
+   "ref_id": "R042",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A086",
+   "domain": "ext_own",
+   "stem": "A086",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A086.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R043.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "ed8cf6d1460f906ad3f65cbc7ea7d8a2e30d35fe337475a00a9a8b86bf0c34c4",
+   "ref_sha256": "292fa5f893d782793d8a85bd5f13be46c43b2623961b667e9daa8db316f62c07",
+   "orig_name": "DSC_6246.NEF",
+   "ref_id": "R043",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A014",
+   "domain": "ext_own",
+   "stem": "A014",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A014.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R045.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f1a5dfd850a5567b9051800927e03e4bc5931d057942821b9347dbc2e388beab",
+   "ref_sha256": "5f51d74c7e429bd3f81876f1f975068c4199382dc22cefeb0394862050323ffd",
+   "orig_name": "DSC_6174.NEF",
+   "ref_id": "R045",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A126",
+   "domain": "ext_own",
+   "stem": "A126",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A126.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R046.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "4ca79092b62637252a94aec6b1ee43dcd07b1559fbb51533ead37ba7c4ae965d",
+   "ref_sha256": "7ed224dcc220a01ee22d2223e868eef01195d27190a57b8e43584ccc3318c8d6",
+   "orig_name": "DSC_8256.NEF",
+   "ref_id": "R046",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A087",
+   "domain": "ext_own",
+   "stem": "A087",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A087.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R047.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "2106662df9b0043b9ee1d33af18209822608df3880daf9ddb4044832c2fcf2b4",
+   "ref_sha256": "fa1a1e47f1c1504bbd3f63178c0bbe54af2e65fef7057d004f1396fb8c7c68f7",
+   "orig_name": "DSC_6247.NEF",
+   "ref_id": "R047",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A015",
+   "domain": "ext_own",
+   "stem": "A015",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A015.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R049.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a94cf84de7319864806232389d5b095d216841206249fd0bcd41a1f0e7c378da",
+   "ref_sha256": "b4d10b0fcd839df6d3a197c934c967f13e6edb540a9d31e253611968403dd517",
+   "orig_name": "DSC_6175.NEF",
+   "ref_id": "R049",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A127",
+   "domain": "ext_own",
+   "stem": "A127",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A127.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R050.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "9e779d0ce951cfa7de4ba657b8ee9a3020557c8e28056af65f4397fb5d861354",
+   "ref_sha256": "afcc3c5c85eb7a70789c084a33d5bb97775f83e8898a32c0d6d68d86d7ce8e67",
+   "orig_name": "DSC_8257.NEF",
+   "ref_id": "R050",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A016",
+   "domain": "ext_own",
+   "stem": "A016",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A016.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R052.jpg",
+   "ref_kind": "srgb_assumed",
+   "raw_sha256": "113a11d0297b1f1adefb1b8ae4050c9479ab59be328a73bbdff74174329aa618",
+   "ref_sha256": "55eb257a03054057d382a7c6dd53372e3fee675e9dfdd900372d99f739c926c0",
+   "orig_name": "DSC_6176.NEF",
+   "ref_id": "R052",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A128",
+   "domain": "ext_own",
+   "stem": "A128",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A128.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R053.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "c462809f343bc8e17e470aa68d39cc7adaeb2a02becee8b36c4b258920343c0f",
+   "ref_sha256": "002723be8431830878dfedba23c847abfc2ec259401f7a9fe63a51ec1c996037",
+   "orig_name": "DSC_8258.NEF",
+   "ref_id": "R053",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A017",
+   "domain": "ext_own",
+   "stem": "A017",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A017.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R055.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "19f925ea90a2b992b34c97326d14ff7c5d6ef1acf1724475a855b8a0d0aa727c",
+   "ref_sha256": "4c52a8121a5f90ecfa8f049d9878881dfc2a42f108b47eafb0b819390a1bcacf",
+   "orig_name": "DSC_6177.NEF",
+   "ref_id": "R055",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A129",
+   "domain": "ext_own",
+   "stem": "A129",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A129.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R056.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "15fcb5db490e428bc2b6b4e641adb6e88217c3156483e9cc29d570b247c26004",
+   "ref_sha256": "211d94a25e6d726d03e8f69f0b05823a7c4d54a0fe04457810b59986d9d12e70",
+   "orig_name": "DSC_8259.NEF",
+   "ref_id": "R056",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A018",
+   "domain": "ext_own",
+   "stem": "A018",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A018.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R058.jpg",
+   "ref_kind": "srgb_assumed",
+   "raw_sha256": "c04828916a6bd2f5fb165778456e0cdf19dd159713fae3208fa72d6e1684d538",
+   "ref_sha256": "e6cb1425be367c2351f2c011d06c4d3db1f1294c8f62b454849d2f959622f0b0",
+   "orig_name": "DSC_6178.NEF",
+   "ref_id": "R058",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A130",
+   "domain": "ext_own",
+   "stem": "A130",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A130.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R059.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "b30ae2674a52f5b0a47b25c0b23e1154f12171870fd43343476904cabcdaf38c",
+   "ref_sha256": "2b3e7fcc33a74d0bda86e036a4aaca7b35dd572ff26d58e8fe967217266d77ed",
+   "orig_name": "DSC_8260.NEF",
+   "ref_id": "R059",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A091",
+   "domain": "ext_own",
+   "stem": "A091",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A091.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R060.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "63fcdb42f27205efd106f2864139128196d6f08eb5ea978660271c6ff0826060",
+   "ref_sha256": "99d969e400f254e4386b8ddc166388e5e642b48efd08d6fdca5d112a3cddd936",
+   "orig_name": "DSC_6251.NEF",
+   "ref_id": "R060",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A019",
+   "domain": "ext_own",
+   "stem": "A019",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A019.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R062.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "9ae5b97400f13c6a154d1ea997a2b70f710e65e7f9712d59bdee1d1b1ec3ae33",
+   "ref_sha256": "38fe4fa362f4efbc472724594909f4f963e40f2b580764ff1f0100af9ce7902d",
+   "orig_name": "DSC_6179.NEF",
+   "ref_id": "R062",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A131",
+   "domain": "ext_own",
+   "stem": "A131",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A131.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R063.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f9315b12b3e9e73eb0b113df35600aad618d5735431a0d0824692ebf962d50b0",
+   "ref_sha256": "de1599deb70d63e167eff66329cc973fa04dbe4c08236992ba3742e998a88f93",
+   "orig_name": "DSC_8261.NEF",
+   "ref_id": "R063",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A092",
+   "domain": "ext_own",
+   "stem": "A092",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A092.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R064.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "bd1b0d988d9ab10a6960d43a1f9b779b763c5678be126f6110fdcec23f1f63eb",
+   "ref_sha256": "740c95641df6e8475e34e463d53085a706c3f6f392aa1cb7132e552ad9d267ef",
+   "orig_name": "DSC_6252.NEF",
+   "ref_id": "R064",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A020",
+   "domain": "ext_own",
+   "stem": "A020",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A020.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R066.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a027dcac0ab4c40897ddbe3d184c022410677b3dcf6db2e39b4ad423e1b42420",
+   "ref_sha256": "bce45c82fb160d11ba79917196f2ae6c7e1a3cc49665894ff6d34b296b96fefe",
+   "orig_name": "DSC_6180.NEF",
+   "ref_id": "R066",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A132",
+   "domain": "ext_own",
+   "stem": "A132",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A132.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R067.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "fb5bbd68d29990403970eeb6b2e09031ffc158365ff556fe040c4c189c2ff9dd",
+   "ref_sha256": "43bec3e0b81f0103a2fed41cfe67ec9619e2d00582e360835ad2233cb83c8364",
+   "orig_name": "DSC_8262.NEF",
+   "ref_id": "R067",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A093",
+   "domain": "ext_own",
+   "stem": "A093",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A093.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R068.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "2d41dc195161cb470f9ec4c0a6e3f9772e0d1107f1ba1b50a6b0e65538be53a7",
+   "ref_sha256": "47d1f39b699798ae9e2cbe1463d519c3b2ec752e1ecba734e987e2c379bb3f23",
+   "orig_name": "DSC_6253.NEF",
+   "ref_id": "R068",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A021",
+   "domain": "ext_own",
+   "stem": "A021",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A021.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R070.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "7585862b8599dc3deb67b8ed3463b398323c9ad3a24042c84cc18fea060aa8ab",
+   "ref_sha256": "499ae6685aa57fd6abdbb1a571a382bdae3cca960ca81128db071ca54fa7d798",
+   "orig_name": "DSC_6181.NEF",
+   "ref_id": "R070",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A133",
+   "domain": "ext_own",
+   "stem": "A133",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A133.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R071.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "892fbfefcccb9bf2abae3ad3306fd35499ecef8cd04f4b7d9593c1acc7651194",
+   "ref_sha256": "5e17a2ae7501811445570b0d0172c697cfd4b5d6b96bc4d0da6e3b66f40e6d68",
+   "orig_name": "DSC_8263.NEF",
+   "ref_id": "R071",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A094",
+   "domain": "ext_own",
+   "stem": "A094",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A094.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R072.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a7a14c006e89330f827615cc4189e4ad1c6fdd1b514fc21b1a8b30f11892359d",
+   "ref_sha256": "16e05133fd8c67e68d37e6535117f0d3631c664ac6daf4f8bd23e8a12efcd2dd",
+   "orig_name": "DSC_6254.NEF",
+   "ref_id": "R072",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A022",
+   "domain": "ext_own",
+   "stem": "A022",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A022.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R074.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "999d69ed0c415719de9ddb9d1219c2f7425d1a0b76aef9c5829c366e3616077e",
+   "ref_sha256": "9103b51168e069bf78e1e21be2605584afd4a7a32cc9735fae827e51b94e89e5",
+   "orig_name": "DSC_6182.NEF",
+   "ref_id": "R074",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A134",
+   "domain": "ext_own",
+   "stem": "A134",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A134.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R075.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f71fdf7bb538d839b1de701a48b5165dc52d31aa35fb38dd13af484aabfd2204",
+   "ref_sha256": "28cad9e9cc422dddbd45e138973e67985c85b3bb0163e7ff8df16110ed7e09f8",
+   "orig_name": "DSC_8264.NEF",
+   "ref_id": "R075",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A095",
+   "domain": "ext_own",
+   "stem": "A095",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A095.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R076.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "67179a01a3a35364d870308555240cc8ef11525da0d0544ac0562c0c15263523",
+   "ref_sha256": "325aa4ba021afac738d3be35faf94637cfb73ed32073ded1d867cfd603eccb0d",
+   "orig_name": "DSC_6255.NEF",
+   "ref_id": "R076",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A023",
+   "domain": "ext_own",
+   "stem": "A023",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A023.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R078.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "05f6746b60df9e06073304739e04c078f2205be6234b39b3e60b1ccd15ea05e4",
+   "ref_sha256": "f22e7e57bc43a551eb1dbc3a408bdb06d1f225ce2c2d5f7738481f1124964413",
+   "orig_name": "DSC_6183.NEF",
+   "ref_id": "R078",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A135",
+   "domain": "ext_own",
+   "stem": "A135",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A135.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R079.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a3f681fa3c562c923f6ccde7f9ea7190bd2a2043e20d8d6fe9f343cf71114350",
+   "ref_sha256": "e8678e3a95952a735631a5da45bcf85bd14bd9bed7d0532a26c2caa962cf5707",
+   "orig_name": "DSC_8265.NEF",
+   "ref_id": "R079",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A024",
+   "domain": "ext_own",
+   "stem": "A024",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A024.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R081.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "66d7f8cfccfb825de120efd425967620ae0e4a6ab1fe57c4c7656f62ef07e058",
+   "ref_sha256": "cb01ce093db2bb8caa7d4997ad195dc6f19e59f06884c032a4b71f3318b7cf98",
+   "orig_name": "DSC_6184.NEF",
+   "ref_id": "R081",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A136",
+   "domain": "ext_own",
+   "stem": "A136",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A136.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R082.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a538d5ed0026f88a7e6b04dcce7ecb73529b954a5d5f1b19e48b310f1dbb4520",
+   "ref_sha256": "f6afc3a641bb44eb5dceeaae584917a6a3cb52425267d4dd655a498f5ad052d4",
+   "orig_name": "DSC_8266.NEF",
+   "ref_id": "R082",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A097",
+   "domain": "ext_own",
+   "stem": "A097",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A097.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R083.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "1e10c89a7e9893fa52c2a9dc9781d08b2056feed0ecacf7bbceb7f2b97fc5aee",
+   "ref_sha256": "951a14087dd6152919a2c00ca78ddee411aa65c6952957c32bb116529a8cd52d",
+   "orig_name": "DSC_6257.NEF",
+   "ref_id": "R083",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A025",
+   "domain": "ext_own",
+   "stem": "A025",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A025.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R085.jpg",
+   "ref_kind": "srgb_assumed",
+   "raw_sha256": "f8ab157dc27b9b389fafd1443ea5b5ae4b8a66deb28a7f8b553eb61a98cdd3a7",
+   "ref_sha256": "5b776378607d9c0340305d02d9e29f65502cca2cc87b2d9d8cd36d4d819570d7",
+   "orig_name": "DSC_6185.NEF",
+   "ref_id": "R085",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A137",
+   "domain": "ext_own",
+   "stem": "A137",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A137.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R086.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f495fafbf57978e2fd3c5738ad71cd49f890207c8129a1e6275dc38602f28c66",
+   "ref_sha256": "0ba1ea32d4eeb40750e667699d795b6b2788c4d382d0b8fa75747beaf98bf090",
+   "orig_name": "DSC_8267.NEF",
+   "ref_id": "R086",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A098",
+   "domain": "ext_own",
+   "stem": "A098",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A098.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R087.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "8360f7976f62a36d0e0e85d53bd8438265b6644bf813f228f3175e01aa60d0a7",
+   "ref_sha256": "e51ca8542b2272a64d7e82b47eea312211006f350c87cf5409b0a4f7f9fa2b41",
+   "orig_name": "DSC_6258.NEF",
+   "ref_id": "R087",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A026",
+   "domain": "ext_own",
+   "stem": "A026",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A026.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R089.jpg",
+   "ref_kind": "srgb_assumed",
+   "raw_sha256": "24724125a27ab0433c0f020f37f2a1c8ce31cdad4bf7ce8544f5726dac845ea1",
+   "ref_sha256": "ce744dbc257acc9c1e1410794260512ec242cd1ecec7916e6cfe126e4f1ac053",
+   "orig_name": "DSC_6186.NEF",
+   "ref_id": "R089",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A138",
+   "domain": "ext_own",
+   "stem": "A138",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A138.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R090.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "cf6b1df0c8798dfe904f778a07e0ff843214cb68269494680f3f0ec7a956e5f4",
+   "ref_sha256": "1796b15a3bc257b0be5e4d83ce1f738163d1ed4e764b2dea13d02fcd797f78ac",
+   "orig_name": "DSC_8268.NEF",
+   "ref_id": "R090",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A027",
+   "domain": "ext_own",
+   "stem": "A027",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A027.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R092.jpg",
+   "ref_kind": "srgb_assumed",
+   "raw_sha256": "c57632ef8b0f116a6c9fa1561027e196059497e1cd95918d7aa8abae440e735a",
+   "ref_sha256": "89d483555d4be2765684c28c86d5119c32cbce8c93a6a6a065fe9407af42bda0",
+   "orig_name": "DSC_6187.NEF",
+   "ref_id": "R092",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A139",
+   "domain": "ext_own",
+   "stem": "A139",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A139.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R093.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "71e13cadee5988061b5801813b5e28dbd40365f204134523dbd7da1d1db39927",
+   "ref_sha256": "b9fee5c938cc2f3e944dfb0cbc59baa08e0b4a87afc21b37d535688f35b33478",
+   "orig_name": "DSC_8269.NEF",
+   "ref_id": "R093",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A100",
+   "domain": "ext_own",
+   "stem": "A100",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A100.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R094.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "e1db8f734597e608f222b0eea4b75c6363881eb0be73a9446b805c7b53e0164b",
+   "ref_sha256": "bc41191a6fd04c38e5c40e157eefd376fc6eb4258d4b26bb2e73ced05f000118",
+   "orig_name": "DSC_6260.NEF",
+   "ref_id": "R094",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A028",
+   "domain": "ext_own",
+   "stem": "A028",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A028.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R096.jpg",
+   "ref_kind": "srgb_assumed",
+   "raw_sha256": "d35ac3f5c30379f03336e93a5fad1ba61a0fcd109855b428ad438de15f641f5b",
+   "ref_sha256": "a51730ec2644bf6069c9bf26e82535efb6a53db561095854a9343aafd6e101df",
+   "orig_name": "DSC_6188.NEF",
+   "ref_id": "R096",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A140",
+   "domain": "ext_own",
+   "stem": "A140",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A140.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R097.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "7471e7996cbff6a8a510bcd7a966abad6d6ea8124156bf8ef025c4c622abd203",
+   "ref_sha256": "49eea35d2044b967839fcdea924f72f6d6b302dc8af5da3c1fdb83cb3f155429",
+   "orig_name": "DSC_8270.NEF",
+   "ref_id": "R097",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A101",
+   "domain": "ext_own",
+   "stem": "A101",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A101.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R098.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "3b765474ce918dc922879cb4e5fc472b552a7c587e556db11e5787391b49413b",
+   "ref_sha256": "9b919ef17e32bbade55d91bae22bdf020fb628556cdf1f49b1d042827f800780",
+   "orig_name": "DSC_6261.NEF",
+   "ref_id": "R098",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A029",
+   "domain": "ext_own",
+   "stem": "A029",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A029.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R100.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "d6948e69e2978a77af8cc0113c564cc964204dfe50f39c6184f1c87c4d1c1308",
+   "ref_sha256": "9d80f3b707d4fab86f9b8fe0391927208c06a6ab151af801b1d644080cad4ac8",
+   "orig_name": "DSC_6189.NEF",
+   "ref_id": "R100",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A141",
+   "domain": "ext_own",
+   "stem": "A141",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A141.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R101.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "172da1492f1d24eb5ec523ee6b9f0153c7682a8ac1a7f9583c0722638a9155f2",
+   "ref_sha256": "2f9af34d04c0d962ccc745e85d6e5cad6cc254a08e11f7887f5f2a2c1128a41a",
+   "orig_name": "DSC_8271.NEF",
+   "ref_id": "R101",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A102",
+   "domain": "ext_own",
+   "stem": "A102",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A102.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R102.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "ca75c5ff018b71885a6e6c59922e06fe730aaef483dbc37c36750c84c73691f9",
+   "ref_sha256": "385ea9cb7aef154968345e6c7a5509684514eac784b8f80e84085c3bf8a471d7",
+   "orig_name": "DSC_6262.NEF",
+   "ref_id": "R102",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A030",
+   "domain": "ext_own",
+   "stem": "A030",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A030.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R104.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "4677e8ebb88a05a8f5dc3a44458af8c00b2a3cfee6d6794d49707d621d910611",
+   "ref_sha256": "02e658bbd4bb7c5fea55f2abd7297ad9b87b1450cdc14c24fb1f05895ab720fa",
+   "orig_name": "DSC_6190.NEF",
+   "ref_id": "R104",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A142",
+   "domain": "ext_own",
+   "stem": "A142",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A142.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R105.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "8f92c0e8bb55d62bc5e7096c847c3aa51e236fced7212a2a8e0744c411ef7318",
+   "ref_sha256": "7899fbe4df96116d2390a972c38b86f02274ad74e7734675dd56b38859d89800",
+   "orig_name": "DSC_8272.NEF",
+   "ref_id": "R105",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A103",
+   "domain": "ext_own",
+   "stem": "A103",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A103.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R106.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "317ce4228b212bcf1ff525aafc1ad432497577a2b65aa79f2a4a7a25a5576358",
+   "ref_sha256": "73654e66c81a372223342594f028783dd8c4c15c0147d7e22ac5b5a8f8c432c3",
+   "orig_name": "DSC_6263.NEF",
+   "ref_id": "R106",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A031",
+   "domain": "ext_own",
+   "stem": "A031",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A031.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R108.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "d25d4a8463d88efe5653ae826cf30273e8b3eb3b7a91185bf108e1f40491b1f9",
+   "ref_sha256": "4c236aa1adad457ea0f894b1313c2d2e93ad144a5a2aeb0420c9945f5f77a06d",
+   "orig_name": "DSC_6191.NEF",
+   "ref_id": "R108",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A143",
+   "domain": "ext_own",
+   "stem": "A143",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A143.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R109.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "05d49c2aa6f927b3c908a07df96032b5d2203199778beea1d307e462b9888c61",
+   "ref_sha256": "d212f53b586a121cef2f99771bb2754fb75598e46d6e1ba18d932c99980cd9ce",
+   "orig_name": "DSC_8273.NEF",
+   "ref_id": "R109",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A104",
+   "domain": "ext_own",
+   "stem": "A104",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A104.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R110.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "da412e3ea8d33f4de36a6fe9efd18f36d4bcc8499f2ddb9cc00577c2862b0661",
+   "ref_sha256": "af19dc7283e9afc60a374d7c0c7c067e8d7e201b48354773e232dcd17701fed2",
+   "orig_name": "DSC_6264.NEF",
+   "ref_id": "R110",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A032",
+   "domain": "ext_own",
+   "stem": "A032",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A032.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R112.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "0076c71e75291b5a09cfd09835b0aee47197243a52268f033e39641e08790b27",
+   "ref_sha256": "d675f64d624fc153b92264cc22755db4356f6e39ae32973d32c0738c5adebab8",
+   "orig_name": "DSC_6192.NEF",
+   "ref_id": "R112",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A144",
+   "domain": "ext_own",
+   "stem": "A144",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A144.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R113.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "fc9c50366d903997ce5684d9e5e41f257984cf651acd16235d618390259ea9a7",
+   "ref_sha256": "20409bc797d90e21777fe3cc729cc424c6fa84ccfe2f25fcca76ccfa0ef7dcff",
+   "orig_name": "DSC_8274.NEF",
+   "ref_id": "R113",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A105",
+   "domain": "ext_own",
+   "stem": "A105",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A105.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R114.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "1dda5a87b44be3e5f8c16840bfa44edeaaf9e62e81ea1b2e5707e1c7f24b6d95",
+   "ref_sha256": "f7235105263dc2e2f968531af629f01ac247ed9292f7ea9bbe7ae9f828521f42",
+   "orig_name": "DSC_6265.NEF",
+   "ref_id": "R114",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A033",
+   "domain": "ext_own",
+   "stem": "A033",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A033.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R116.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "76221b37d9ea063a40d77b2bc8f65c5eb2b9bd0011d5734c07287ef3620c1566",
+   "ref_sha256": "ca37b26103de05d22ae17602871eeac0657ad539e89c63a87a4a8b8c919cfcc8",
+   "orig_name": "DSC_6193.NEF",
+   "ref_id": "R116",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A145",
+   "domain": "ext_own",
+   "stem": "A145",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A145.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R117.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a14036bea30dc22c8820ce1b307522f891ad126956de1dfaca2ac223c584b49f",
+   "ref_sha256": "0032da5f2047cf40f5aa1aeac551cb67fe89be5212521b1375dfb18a521aac8c",
+   "orig_name": "DSC_8275.NEF",
+   "ref_id": "R117",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A106",
+   "domain": "ext_own",
+   "stem": "A106",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A106.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R118.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "2d9476209fbb8d4db701d8e8644769ff93c7daa9415c00d7b95b4396f8d927aa",
+   "ref_sha256": "6eeba14546c9588d45a9e409651c0a1884b9f3b457e528e8892e496d2cd363a8",
+   "orig_name": "DSC_6266.NEF",
+   "ref_id": "R118",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A034",
+   "domain": "ext_own",
+   "stem": "A034",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A034.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R120.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "47016d6178212f1a00a2359591d4cf0fa7ab6e240bdc0d81415fd9f84be28fc9",
+   "ref_sha256": "28b9a5a695ca269b2ce394571118cce5bdb9924d2702bfff7f116134697ebf33",
+   "orig_name": "DSC_6194.NEF",
+   "ref_id": "R120",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A146",
+   "domain": "ext_own",
+   "stem": "A146",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A146.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R121.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "2cd4c1f1a3473b349d6f8bc90d2d937b5e99ff2e221af451efee86d01db99669",
+   "ref_sha256": "fa2d09741c0539804be0feb359340e7f197243953e85656e8331253c60e839c3",
+   "orig_name": "DSC_8276.NEF",
+   "ref_id": "R121",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A035",
+   "domain": "ext_own",
+   "stem": "A035",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A035.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R122.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "6c0c3e52e138bf44af066a262642cc4307e2da04d74193bd67052a8477f5e879",
+   "ref_sha256": "520d0ce14a0879be883a25be3db91778391d45c48c95e034b1f79568b7a13dde",
+   "orig_name": "DSC_6195.NEF",
+   "ref_id": "R122",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A147",
+   "domain": "ext_own",
+   "stem": "A147",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A147.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R123.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "344ae789bc8e4fca0a488a6694a23f1489a4ba84e052b0f2391e63ea63b9f31a",
+   "ref_sha256": "be2912d0c90d5811b703638ee2bdeb9c2e07a02fb9d42359fc2b5314b49684dd",
+   "orig_name": "DSC_8277.NEF",
+   "ref_id": "R123",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A036",
+   "domain": "ext_own",
+   "stem": "A036",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A036.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R124.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "16ed2ed7320e1e0f6585419f557fd3bc83da8de06fe2d76492f0d4b71b4b6c9e",
+   "ref_sha256": "040bebeae5a316cd0028181ffe21f1cbfc382c8a90dcfb478ad107a74a988550",
+   "orig_name": "DSC_6196.NEF",
+   "ref_id": "R124",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A037",
+   "domain": "ext_own",
+   "stem": "A037",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A037.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R126.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "56c9270fb05c77edef261682f0a91151b71fa129a9efb95172c1d887f24a8222",
+   "ref_sha256": "e89ea9460c4132bc8a985a44a74efd45ac010b49451a06b2069d3e0a4f439a76",
+   "orig_name": "DSC_6197.NEF",
+   "ref_id": "R126",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A149",
+   "domain": "ext_own",
+   "stem": "A149",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A149.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R127.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "d6456f9702a2aaff2e618f22bb9e49ee5d35f3ccab86d250bf6d65db968eaa4f",
+   "ref_sha256": "1c56a66f8d42c3c7e86f3d77d5524444ee4177f77902936e576ac073cb00b8b3",
+   "orig_name": "DSC_8279.NEF",
+   "ref_id": "R127",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A110",
+   "domain": "ext_own",
+   "stem": "A110",
+   "roll": "own-e5207-20240401-dsc6233",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A110.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R128.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a0be4fc6a25c6246148f0b44392c6adb7d7e98ad1dbd6706b1be744e244464fb",
+   "ref_sha256": "9c66374a3641b602dcf995127124a5a0de9c06be65c7f949bb340477a1716f73",
+   "orig_name": "DSC_6270.NEF",
+   "ref_id": "R128",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A038",
+   "domain": "ext_own",
+   "stem": "A038",
+   "roll": "own-e5207-20240401-dsc6161",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A038.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R129.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f1bcd950edf4214faeeb6853bfb09711415b28ea2690ff230fc3f88d82eb676e",
+   "ref_sha256": "0cc21f6f382358a75bf317f17b872d059ce404649b5de9420fcca9731f8c78cc",
+   "orig_name": "DSC_6198.NEF",
+   "ref_id": "R129",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A150",
+   "domain": "ext_own",
+   "stem": "A150",
+   "roll": "own-e5207-20240323-dsc8242",
+   "film": "Eastman 5207",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A150.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R130.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "8c27036fa5c4d723acc70436c13893d71b1297fdd3a96b99057b388364c72809",
+   "ref_sha256": "d73a28498233f2b7180bdb49a532abba505fa92618cf4a271cb996716cde6de1",
+   "orig_name": "DSC_8280.NEF",
+   "ref_id": "R130",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A192",
+   "domain": "ext_own",
+   "stem": "A192",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A192.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R184.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "4ad09c0ee6cfb8cc1f03b1c08a47e80557f8cceced52d789f463feb99c0b5c44",
+   "ref_sha256": "93dc093b9d4703f5ebd6484d3c64c6d96f8646ce70b5db2b6ba875bb2dceb4ae",
+   "orig_name": "DSC_4890.NEF",
+   "ref_id": "R184",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A193",
+   "domain": "ext_own",
+   "stem": "A193",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A193.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R185.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "5e03a29835e45a9d64b1c05b8270732c47f79e71735d81e31a28d7827996a222",
+   "ref_sha256": "bc0d0cea9d5791e6e496ce3f8da9355ca4b4ee1f607bd57fb8f39c4d79e57b72",
+   "orig_name": "DSC_4891.NEF",
+   "ref_id": "R185",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A194",
+   "domain": "ext_own",
+   "stem": "A194",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A194.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R186.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "d7021ee9303147b8a9c114e9c76b5fd26c0f225908694dc790b84aac0df1fb83",
+   "ref_sha256": "f9e780a6db1e4dfa3ce8e80ad9132842e7bf2518785d2436ef2c1f45199b57d9",
+   "orig_name": "DSC_4892.NEF",
+   "ref_id": "R186",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A195",
+   "domain": "ext_own",
+   "stem": "A195",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A195.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R187.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "083de9295ed89ebc65f2847ee8d9912b9b6f9fd69628a0d98eea477caa7f6b93",
+   "ref_sha256": "da9da79e7265d55ca980f22198357408327bce9c32b74c9c8beeba415e81e15f",
+   "orig_name": "DSC_4893.NEF",
+   "ref_id": "R187",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A196",
+   "domain": "ext_own",
+   "stem": "A196",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A196.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R188.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "2dccd39f5067c23356ce3d2e02089ca6e0bf88de1e481a7422b4576bca17b05f",
+   "ref_sha256": "95ef1097165f092b6ecd0ba850069f4b6956b4cf2c1ff4a40edfc7e2f5f49c01",
+   "orig_name": "DSC_4894.NEF",
+   "ref_id": "R188",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A197",
+   "domain": "ext_own",
+   "stem": "A197",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A197.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R189.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "6db7b46ff8beb86d6f1c84a0fcc4cd81ec90e03b0eade8ce6a6cced5b0df6ad0",
+   "ref_sha256": "4eafb84dfb9add737cb8f0736d818143a20347ff930d003f9b96ec9733f603b2",
+   "orig_name": "DSC_4895.NEF",
+   "ref_id": "R189",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A198",
+   "domain": "ext_own",
+   "stem": "A198",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A198.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R190.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "66a6e134d10973ec4d9a7e38d2297a35fdb3b06c24677e21adf61289b68d2cc7",
+   "ref_sha256": "63ca11197e5e9faf780ee0499b6fe26ae6dd08d095c0a68e74c38d75c56ecf75",
+   "orig_name": "DSC_4896.NEF",
+   "ref_id": "R190",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A199",
+   "domain": "ext_own",
+   "stem": "A199",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A199.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R191.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "e4668e11b624e521c2691c4f4f179cf85f72217135771578efafd0ae5abba0f3",
+   "ref_sha256": "50905b876de686c48f30c66283c6bf304b2b897201df719bdbd9fa888ad601e7",
+   "orig_name": "DSC_4897.NEF",
+   "ref_id": "R191",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A200",
+   "domain": "ext_own",
+   "stem": "A200",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A200.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R192.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "da679c3cb4bee9c4e43355e4916a27974f414c951cb09a99123622cdf5ce714f",
+   "ref_sha256": "da813e1bdff5e0945591c4ddd1c138fbbd285aa036f0fa14163c3e8f15e4ac28",
+   "orig_name": "DSC_4898.NEF",
+   "ref_id": "R192",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A201",
+   "domain": "ext_own",
+   "stem": "A201",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A201.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R193.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "0476c5bccf64ccc208fd9a2b0ef3aa5ee684e9826211165d99e7046caaed6a14",
+   "ref_sha256": "ac6bb9349d215f59088b231b44d93e9387a13418fc4102913cc00ba79ef6ef3d",
+   "orig_name": "DSC_4899.NEF",
+   "ref_id": "R193",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A202",
+   "domain": "ext_own",
+   "stem": "A202",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A202.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R194.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f1a81eab1393ebb6379bc7ef4a45dfc4c7d1b7675cfae32a5493da5c3b305d7f",
+   "ref_sha256": "8c56d53d5284e6016ae1bd7191c71c9b172ca6da56b56b74bd40f89e7951823e",
+   "orig_name": "DSC_4900.NEF",
+   "ref_id": "R194",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A203",
+   "domain": "ext_own",
+   "stem": "A203",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A203.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R195.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "e3640d7e3840ac68412513e660ab8e81bc15733c8fecfcce237311e6e59e536d",
+   "ref_sha256": "ba6fd3cfeb4e0b1846c72d15d15574c055e521bc3877607457dcaf1a540095af",
+   "orig_name": "DSC_4901.NEF",
+   "ref_id": "R195",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A204",
+   "domain": "ext_own",
+   "stem": "A204",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A204.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R196.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "163e46aa47a1a7c01b6129cc0f2e96e7caf814fb26af074490d402ebd96bd126",
+   "ref_sha256": "1f2159e7e4246a3ecdd1f8ebf08c9c5a342a790981476bbdd828fe1c3f32860c",
+   "orig_name": "DSC_4902.NEF",
+   "ref_id": "R196",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A205",
+   "domain": "ext_own",
+   "stem": "A205",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A205.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R197.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "1bba26750c01ac10a907d7fbd93b192f44b170a38f1763640e5f1ff95a7759bd",
+   "ref_sha256": "895dfeeff1e6c4d1e5cd757ce4abb44cd1be34f06c1530cf7c7cc9ffceece883",
+   "orig_name": "DSC_4903.NEF",
+   "ref_id": "R197",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A206",
+   "domain": "ext_own",
+   "stem": "A206",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A206.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R198.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "e21cab3854733aec4328e8aa292576500ba85b0353fe6738b89c1ea0162082bf",
+   "ref_sha256": "65f968df2c60337d008613c704c2ffcb6ac676bdb6c8b86c960859d37a77deec",
+   "orig_name": "DSC_4904.NEF",
+   "ref_id": "R198",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A207",
+   "domain": "ext_own",
+   "stem": "A207",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A207.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R199.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "282f6df29eb7c984f14cdd4ae9a241bc6e036125711746fc92d38721308cf98a",
+   "ref_sha256": "3e1a635468f66a513894c9d5b2cc8984140b1ebcff4fb3c644c2d938365f9c16",
+   "orig_name": "DSC_4905.NEF",
+   "ref_id": "R199",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A208",
+   "domain": "ext_own",
+   "stem": "A208",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A208.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R200.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "22112b32e0e8970a46f2a819b12d7b39fe80ba8fb10507e27ed7c0bc190728ba",
+   "ref_sha256": "c521fbd25ef7fa5a948ac88119ce7a66a40025ae0623b5a74c0415ac630feab3",
+   "orig_name": "DSC_4906.NEF",
+   "ref_id": "R200",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A209",
+   "domain": "ext_own",
+   "stem": "A209",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A209.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R201.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "4d647cc2d3a9d10931777a032329b0216cbe6f713ced08abede54cde53e162d1",
+   "ref_sha256": "dc50d8c724dc6af536205d9083649ec09609a490a90ed378dc45bbe7640e6e44",
+   "orig_name": "DSC_4907.NEF",
+   "ref_id": "R201",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A211",
+   "domain": "ext_own",
+   "stem": "A211",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A211.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R203.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "e700cf2509e02f0321c48cfd41a13e099d3be948cadf803d105696ce90122bf6",
+   "ref_sha256": "c740c16fb78691beca7b920078e03193ac4334843321e24f08685d76d5a30157",
+   "orig_name": "DSC_4909.NEF",
+   "ref_id": "R203",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A212",
+   "domain": "ext_own",
+   "stem": "A212",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A212.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R204.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "c78211650b2e4cfde070951f480eb90d874c58a75e03fc57d230d7ac021455f0",
+   "ref_sha256": "760175773a3357eff37cc6eff55d8d212fbb2e4a88b4b4723efdcb915d177287",
+   "orig_name": "DSC_4910.NEF",
+   "ref_id": "R204",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A213",
+   "domain": "ext_own",
+   "stem": "A213",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A213.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R205.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "966fb8126e80f119426903eb238abc7ac6473b450bef88e154bb193131d3f411",
+   "ref_sha256": "4eb14149210d96a139e104933d6ad93a82636fdd422627354ee5e12d80bbe16b",
+   "orig_name": "DSC_4911.NEF",
+   "ref_id": "R205",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A214",
+   "domain": "ext_own",
+   "stem": "A214",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A214.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R206.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "b31b625c137b0714b0be3e182f07599b670baf692ef70f38be15d08487c35004",
+   "ref_sha256": "d72ce88b79e967c696d639673cb1231d182564bc39d78817b9190669d342809c",
+   "orig_name": "DSC_4912.NEF",
+   "ref_id": "R206",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A215",
+   "domain": "ext_own",
+   "stem": "A215",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A215.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R207.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "7f7ebcddb8a09881c7e4da23bd875cfeb48b505734fcdab05f7cc43675d5dd8d",
+   "ref_sha256": "1c00b231b663324ae2abe71552452b1a8cb850d82fa764c02e9e02ab85528c3d",
+   "orig_name": "DSC_4913.NEF",
+   "ref_id": "R207",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A216",
+   "domain": "ext_own",
+   "stem": "A216",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A216.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R208.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "44bcf10046fb6c59c0001bd82c32711a4d2df9db664fe937026f7864583b08aa",
+   "ref_sha256": "0e2fe76165d68eae9d0346edbca1163255c8f9fc5547108e126a08adafbe304e",
+   "orig_name": "DSC_4914.NEF",
+   "ref_id": "R208",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A217",
+   "domain": "ext_own",
+   "stem": "A217",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A217.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R209.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "823d9fd91953225051a97b21bffe3e61beb448351225218b275871ca2be76bbf",
+   "ref_sha256": "fa8fad1aa153d63c02e354536341d47049076736ee4817b4a24b93e3c40bf284",
+   "orig_name": "DSC_4915.NEF",
+   "ref_id": "R209",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A218",
+   "domain": "ext_own",
+   "stem": "A218",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A218.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R210.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "25eaaa3766e6f1435d674a27559d9d0e6cb2350ef014e1e90da5fbb266c6c9b6",
+   "ref_sha256": "d90e3814e9988500bbdb8f9e3e5fffa05f9f7d6a956151ee2550faa9226d36b9",
+   "orig_name": "DSC_4916.NEF",
+   "ref_id": "R210",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A219",
+   "domain": "ext_own",
+   "stem": "A219",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A219.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R211.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "a61665049099c9f52be25051d0910cb83baa2c0a3df10675654936acad14a0a5",
+   "ref_sha256": "e4753cc6f69b07d5491e4277b6f5fc40f46b40f726873f962b6d550ff40135c6",
+   "orig_name": "DSC_4917.NEF",
+   "ref_id": "R211",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A220",
+   "domain": "ext_own",
+   "stem": "A220",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A220.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R212.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f8fbf3fc1a337d94da6fb12df0af7fe801cd399b15233438f64b0843bea5492f",
+   "ref_sha256": "dd443a8edbcddb17d58ae5f337f3a476e7b08130dc9c3bdae29bc5a53c3a6aed",
+   "orig_name": "DSC_4918.NEF",
+   "ref_id": "R212",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A221",
+   "domain": "ext_own",
+   "stem": "A221",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A221.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R213.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "256c157b2c510d33f308b1d4aee40b1e76fb16fc176980ac7faee14a568c5822",
+   "ref_sha256": "4aca6403a85e392fd2d2adf585936e5040f99386e578bbd2749116484166ce2b",
+   "orig_name": "DSC_4919.NEF",
+   "ref_id": "R213",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A222",
+   "domain": "ext_own",
+   "stem": "A222",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A222.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R214.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "7839a8eff1932968909152da1ea8df7d347b55916f640f20e342a8b855d2cc48",
+   "ref_sha256": "b174da04981c99d593cf465759ccde7b41d5cf489384f1699fbbb89fe940ad3a",
+   "orig_name": "DSC_4920.NEF",
+   "ref_id": "R214",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A223",
+   "domain": "ext_own",
+   "stem": "A223",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A223.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R215.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "adbefb0c15d3a9ab0763ce43408e94f734e9d9aa235c75c2303d8551d8a9dd59",
+   "ref_sha256": "8336b3978f8278ce1406411deaab60be69092a02bf9911ece6d13fbd65d243dc",
+   "orig_name": "DSC_4921.NEF",
+   "ref_id": "R215",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A224",
+   "domain": "ext_own",
+   "stem": "A224",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A224.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R216.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "f502aba10610bfc149b1b87eca3d6486c1f7131a9abf77dc63bfd320fc1e4728",
+   "ref_sha256": "f0a2f508d0addaadb493ca359b7e0f9f018422ee670054d2a127c5fc1bb55a44",
+   "orig_name": "DSC_4922.NEF",
+   "ref_id": "R216",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A225",
+   "domain": "ext_own",
+   "stem": "A225",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A225.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R217.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "60a0401feee3be9a223c1c29c4889a2d060fd65aa2dd59f41261e6409baff02f",
+   "ref_sha256": "519f9c2216d113403cb89d537d2f625f81ebcf6d394e6eb4f02167b973a2880c",
+   "orig_name": "DSC_4923.NEF",
+   "ref_id": "R217",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A226",
+   "domain": "ext_own",
+   "stem": "A226",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A226.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R218.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "56c85909c03cf4322b9a498d26d1f3a77f17dfc0655d3db8f3bbbbd3e8d1d220",
+   "ref_sha256": "dbbc03df939ebe4a73227c547211f8fbb9cb9ba3b7a47d7b0821ac3dffb5d44f",
+   "orig_name": "DSC_4924.NEF",
+   "ref_id": "R218",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A227",
+   "domain": "ext_own",
+   "stem": "A227",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A227.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R219.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "99de55b46db48ede08a4dae2c6d59e053397cd1e0651ed82c32fa7f48b01c99f",
+   "ref_sha256": "adf0520b1310f85bbbf47e1eb559e477730d8f0e1af22c5c1735179fe96a978c",
+   "orig_name": "DSC_4925.NEF",
+   "ref_id": "R219",
+   "experiments": [
+    "B"
+   ]
+  },
+  {
+   "id": "ext:A228",
+   "domain": "ext_own",
+   "stem": "A228",
+   "roll": "own-g200-20240320-dsc4889",
+   "film": "Kodak G200",
+   "raw": "/Volumes/waizhiyingpan/胶片负片素材/01_彩色负片_未反相/A228.NEF",
+   "ref": "/Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R220.jpg",
+   "ref_kind": "icc",
+   "raw_sha256": "d7f498180ead09c1aae35f81994219e881fe994cb50faab87d733ff23bb10f5c",
+   "ref_sha256": "75a1d8cf656ede257fcff86b2c955582007bd0b80d545bd86d49368acb7fe524",
+   "orig_name": "DSC_4926.NEF",
+   "ref_id": "R220",
+   "experiments": [
+    "B"
+   ]
+  }
+ ]
+}

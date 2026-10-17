@@ -1,0 +1,53 @@
+ext:A016 ncc 0.991 rot 0 scale 0.995 P8 [645, 967, 3] base warnings [] 21.9 s
+ext:A017 ncc 0.992 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 30.2 s
+ext:A018 ncc 0.991 rot 0 scale 0.995 P8 [645, 967, 3] base warnings [] 26.9 s
+ext:A091 ncc 0.940 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 26.8 s
+ext:A131 ncc 0.979 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['73% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 16.6% (p05-p95)', 'G base blocks spread 20.3% (p05-p95)', 'B base blocks spread 21.5% (p05-p95)'] 26.9 s
+ext:A137 ncc 0.988 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['48% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 13.3% (p05-p95)', 'G base blocks spread 17.9% (p05-p95)', 'B base blocks spread 17.1% (p05-p95)'] 28.9 s
+ext:A026 ncc 0.989 rot 0 scale 0.990 P8 [641, 962, 3] base warnings [] 26.7 s
+ext:A027 ncc 0.872 rot 0 scale 0.970 P8 [627, 941, 3] base warnings [] 23.7 s
+ext:A100 ncc 0.987 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 28.0 s
+ext:A140 ncc 0.863 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['25% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 26.9 s
+ext:A029 ncc 0.994 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 26.8 s
+ext:A102 ncc 0.946 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['40% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 19.2% (p05-p95)', 'G base blocks spread 15.2% (p05-p95)', 'B base blocks spread 19.1% (p05-p95)'] 25.8 s
+ext:A142 ncc 0.964 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 25.7 s
+ext:A031 ncc 0.968 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 26.1 s
+Traceback (most recent call last):
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 114, in <module>
+    main(*sys.argv[1:])
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 106, in main
+    rec = build(f, data_dir("s3_ml", "cache", f["domain"]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 64, in build
+    p = positive(f["raw"])
+        ^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/src/filmcolor/pipeline.py", line 138, in positive
+    rgb, sat, base_rgb, base_info, regions, input_info, decode_info = load(
+                                                                      ^^^^^
+  File "/Users/davidliu/FilmColor-AI/src/filmcolor/pipeline.py", line 73, in _camera_input
+    est = estimate_base_auto(lin, col, sat, f.pattern.shape[0], crop=f.crop)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/src/filmcolor/base.py", line 121, in estimate_base_auto
+    return estimate_base_blocks(sp, sp_sat, block=block, top_frac=top_frac, max_rel_std=max_rel_std,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/src/filmcolor/base.py", line 159, in estimate_base_blocks
+    raise ValueError("no chromatically consistent base candidates; specify region manually")
+ValueError: no chromatically consistent base candidates; specify region manually
+      376.25 real       264.89 user        24.54 sys
+          3817701376  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             7672192  page reclaims
+                1075  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                7907  voluntary context switches
+              686462  involuntary context switches
+       3059295029688  instructions retired
+        906307469309  cycles elapsed
+          7066801744  peak memory footprint

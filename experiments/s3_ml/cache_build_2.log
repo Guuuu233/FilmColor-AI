@@ -1,0 +1,48 @@
+ext:A092 ncc 0.947 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 20.4 s
+ext:A020 ncc 0.988 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['26% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 12.4% (p05-p95)'] 21.4 s
+ext:A132 ncc 0.935 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['77% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 10.6% (p05-p95)', 'G base blocks spread 14.1% (p05-p95)', 'B base blocks spread 13.3% (p05-p95)'] 21.6 s
+ext:A093 ncc 0.900 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.7 s
+ext:A021 ncc 0.934 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 19.5 s
+ext:A133 ncc 0.973 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['52% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 11.2% (p05-p95)', 'G base blocks spread 15.1% (p05-p95)', 'B base blocks spread 17.9% (p05-p95)'] 18.9 s
+ext:A094 ncc 0.951 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 20.0 s
+ext:A022 ncc 0.936 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['60% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 10.2% (p05-p95)'] 19.5 s
+ext:A134 ncc 0.942 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['68% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 19.8% (p05-p95)', 'G base blocks spread 25.0% (p05-p95)', 'B base blocks spread 24.3% (p05-p95)'] 20.6 s
+ext:A095 ncc 0.949 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 21.2 s
+ext:A023 ncc 0.937 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['29% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 20.5 s
+ext:A135 ncc 0.918 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['46% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 10.6% (p05-p95)', 'B base blocks spread 12.7% (p05-p95)'] 20.7 s
+ext:A024 ncc 0.968 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 23.2 s
+ext:A136 ncc 0.991 rot 0 scale 1.000 P8 [624, 936, 3] base warnings ['54% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 21.5% (p05-p95)', 'G base blocks spread 23.2% (p05-p95)', 'B base blocks spread 22.2% (p05-p95)'] 22.9 s
+ext:A097 ncc 0.963 rot 0 scale 1.000 P8 [624, 936, 3] base warnings [] 21.2 s
+Traceback (most recent call last):
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 102, in <module>
+    main(*sys.argv[1:])
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 94, in main
+    rec = build(f, data_dir("s3_ml", "cache", f["domain"]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/scripts/s3_build_cache.py", line 65, in build
+    ref4 = load_lab(f["ref"], LOAD_FACTOR)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/src/filmcolor/compare.py", line 40, in load_lab
+    img, icc = _read_rgb_icc(path)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/davidliu/FilmColor-AI/src/filmcolor/compare.py", line 33, in _read_rgb_icc
+    raise ValueError(f"{path}: no embedded ICC profile")
+ValueError: /Volumes/waizhiyingpan/胶片负片素材/04_已反转成品_对照答案/R085.jpg: no embedded ICC profile
+      322.89 real       252.21 user        15.83 sys
+          3433578496  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             5198385  page reclaims
+                 123  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3227  voluntary context switches
+              477515  involuntary context switches
+       3415241179413  instructions retired
+        944534363443  cycles elapsed
+          3929705952  peak memory footprint
