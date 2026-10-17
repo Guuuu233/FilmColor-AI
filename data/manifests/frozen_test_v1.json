@@ -1,0 +1,2858 @@
+{
+ "id": "frozen_test_v1",
+ "created": "2026-10-17",
+ "decision": "user 2026-10-17: freeze Eastman 5219 (37 pairs) and the Eastman 5207 roll with 32 pairs",
+ "rule": "Held-out test set. These files (and any other file with one of these sha256) must not be used for training, tuning, model selection, fixed-look fitting, failure analysis or label-config choices. Opened once per pre-registered experiment, after the model is frozen, and the opening is recorded with the commit of the frozen model.",
+ "inventory": "inventory.json",
+ "inventory_sha256": "a32517128f8af1ea1ef3b46672197e58c851723e4b59486b93b03af945ea3580",
+ "pairing": "pairing.json",
+ "pairing_sha256": "685c833725b7ac049846e5b11ec742f03ffae65b96e3a4ffdd45f96a76a56f19",
+ "eye_check": "2026-10-17: every print of both rolls checked against its negative on contact sheets (experiments/s3_data_audit/outputs/sheets/frozen_*.jpg); all automatic pairs confirmed",
+ "rolls": [
+  {
+   "roll_id": "own-e5219-20240323-dsc8202",
+   "film": "Eastman 5219",
+   "source_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "camera": "Nikon Z 7_2 (lab digitisation)",
+   "file_numbers": [
+    8202,
+    8241
+   ],
+   "captured": [
+    "2024:03:23 14:32:04",
+    "2024:03:23 14:34:32"
+   ],
+   "label_frame": [
+    "A151"
+   ],
+   "negatives": 40,
+   "prints": 37,
+   "pairs": 37,
+   "scored_pairs": 37,
+   "negatives_without_print": [
+    "A151",
+    "A161",
+    "A180"
+   ],
+   "other_files": 0
+  },
+  {
+   "roll_id": "own-e5207-20240401-dsc6199",
+   "film": "Eastman 5207",
+   "source_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "camera": "Nikon Z 7_2 (lab digitisation)",
+   "file_numbers": [
+    6199,
+    6232
+   ],
+   "captured": [
+    "2024:04:01 19:16:52",
+    "2024:04:01 19:18:32"
+   ],
+   "label_frame": [
+    "A039"
+   ],
+   "negatives": 34,
+   "prints": 33,
+   "pairs": 33,
+   "scored_pairs": 32,
+   "negatives_without_print": [
+    "A039"
+   ],
+   "other_files": 0
+  }
+ ],
+ "files": [
+  {
+   "id": "A039",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A039.JPG",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6199.JPG",
+   "bytes": 1711407,
+   "sha256": "27abc101ab07103fd6e747993e61b934c4a8667f5f6ec7e3767738e5f19f3b87",
+   "captured": "2024:04:01 19:16:52",
+   "index_pair": "",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A040",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A040.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6200.NEF",
+   "bytes": 55583938,
+   "sha256": "1eb643d54682553bcd93d69f71aec7845b17524eaf6e53fdedc8d0c085361f02",
+   "captured": "2024:04:01 19:17:38",
+   "index_pair": "R002",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A041",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A041.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6201.NEF",
+   "bytes": 54553426,
+   "sha256": "67db67038589eff473cf88496cfc03360c1a2bb6cad60fcee2ee283f6eb90d35",
+   "captured": "2024:04:01 19:17:40",
+   "index_pair": "R006",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A042",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A042.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6202.NEF",
+   "bytes": 57244758,
+   "sha256": "380125bde45a8a5ba4164abd3fcb32d0fc965d6eca46a1bf7b67f76139fa8044",
+   "captured": "2024:04:01 19:17:41",
+   "index_pair": "R009",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A043",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A043.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6203.NEF",
+   "bytes": 58403974,
+   "sha256": "a694f7cf5a6543f6d8a0447bca1712228fbbb9c11ee641ef805d7beb09d4d208",
+   "captured": "2024:04:01 19:17:42",
+   "index_pair": "R012",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A044",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A044.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6204.NEF",
+   "bytes": 55614808,
+   "sha256": "cbb32f7aeaeacd3fe603ce705572f7cb3be02aaf33be27402484006dd488fe56",
+   "captured": "2024:04:01 19:17:44",
+   "index_pair": "R016",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A045",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A045.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6205.NEF",
+   "bytes": 56930106,
+   "sha256": "272c92cdab53e2447f465c60c9935ee4f57a34ceb7279a05883138b25c3b1811",
+   "captured": "2024:04:01 19:17:45",
+   "index_pair": "R019",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A046",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A046.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6206.NEF",
+   "bytes": 57101554,
+   "sha256": "1bb3b957aab3a950f3d0f3ade17483d7f964f261d17bd9225d749e8f553e14c8",
+   "captured": "2024:04:01 19:17:46",
+   "index_pair": "R023",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A047",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A047.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6207.NEF",
+   "bytes": 58218272,
+   "sha256": "7cc98b429ac4b1561bc6be910c054dfeaa2777e10074e0f4f56971bd95d59eb0",
+   "captured": "2024:04:01 19:17:47",
+   "index_pair": "R027",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A048",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A048.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6208.NEF",
+   "bytes": 58540314,
+   "sha256": "1dd1d3987efa323b6653471e46b023da4b3c8b42cf2fcd0cfccf1bfad11cef45",
+   "captured": "2024:04:01 19:17:48",
+   "index_pair": "R030",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A049",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A049.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6209.NEF",
+   "bytes": 55988890,
+   "sha256": "742b90ba6bc87d310cb6ccd2e3e6e85d689fb4443e5165689025f4aa51ef2dff",
+   "captured": "2024:04:01 19:17:49",
+   "index_pair": "R033",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A050",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A050.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6210.NEF",
+   "bytes": 56435876,
+   "sha256": "e002849da1beac5c6823394f370315ad070e5139038207971580d60b61732ffb",
+   "captured": "2024:04:01 19:17:50",
+   "index_pair": "R037",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A051",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A051.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6211.NEF",
+   "bytes": 57297190,
+   "sha256": "3ede2e1626c9a1a93d98ded85f5653db47d7e9d12f01ffd69ac348517fbd5847",
+   "captured": "2024:04:01 19:17:52",
+   "index_pair": "R040",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A052",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A052.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6212.NEF",
+   "bytes": 57546452,
+   "sha256": "bfb47763326c68d198dbebd61fb640950444a0d801e6636cbc9bad9ee35e5d4b",
+   "captured": "2024:04:01 19:17:53",
+   "index_pair": "R044",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A053",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A053.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6213.NEF",
+   "bytes": 52725608,
+   "sha256": "43bdec6bc0ef4aa6d2b11bf94e2e609e47cc6766aec360e7bb57b9b138122b12",
+   "captured": "2024:04:01 19:17:54",
+   "index_pair": "R048",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A054",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A054.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6214.NEF",
+   "bytes": 53878886,
+   "sha256": "c28fbdc73f65b6e7e75c72e228b5c671928358f087027183add0da1eb7f64ba9",
+   "captured": "2024:04:01 19:18:01",
+   "index_pair": "R051",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A055",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A055.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6215.NEF",
+   "bytes": 55495474,
+   "sha256": "11d988ae570e5909bc60dd66abe543163415fc8ba9260afdc45263e416b6db5e",
+   "captured": "2024:04:01 19:18:03",
+   "index_pair": "R054",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A056",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A056.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6216.NEF",
+   "bytes": 56149898,
+   "sha256": "a94af3d6891689fffb0f7b977946bc91761e996d297306ccd42f873f73d40cb6",
+   "captured": "2024:04:01 19:18:04",
+   "index_pair": "R057",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A057",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A057.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6217.NEF",
+   "bytes": 56263560,
+   "sha256": "8d06e7f315deb45498822eb7847fd28a02db973d8bbd80b2c055af8d769c39e3",
+   "captured": "2024:04:01 19:18:05",
+   "index_pair": "R061",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A058",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A058.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6218.NEF",
+   "bytes": 56331708,
+   "sha256": "b2b27ab17b6eb66c2d40da3fd29383f0f92a4deec975a8d1460e561a4c8283b8",
+   "captured": "2024:04:01 19:18:06",
+   "index_pair": "R065",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A059",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A059.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6219.NEF",
+   "bytes": 54897590,
+   "sha256": "d058823eaf226c6a3e837faaba4392280f63efb41b4b8d8aba7d8b4a2c6df61c",
+   "captured": "2024:04:01 19:18:08",
+   "index_pair": "R069",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A060",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A060.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6220.NEF",
+   "bytes": 55470360,
+   "sha256": "3ab29cc0ba5d6f4f26e0710f6d9e92ee89fc233e088f7632a894251877466d22",
+   "captured": "2024:04:01 19:18:09",
+   "index_pair": "R073",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A061",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A061.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6221.NEF",
+   "bytes": 56550022,
+   "sha256": "2a2731afc462a1d93b1ebab93b6630ccd58722e3ad7c3f18dde63bab03744527",
+   "captured": "2024:04:01 19:18:10",
+   "index_pair": "R077",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A062",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A062.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6222.NEF",
+   "bytes": 55712204,
+   "sha256": "07c882994a2ceefd51b91a8d1fd57ab8fa16da3959679eadd2fe6a823fafbf0b",
+   "captured": "2024:04:01 19:18:11",
+   "index_pair": "R080",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A063",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A063.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6223.NEF",
+   "bytes": 53820528,
+   "sha256": "43d4fa7f4cc1f8f9b3aa699dd50f65450abb79e4d5279ec8fec21ee0e0e1ae40",
+   "captured": "2024:04:01 19:18:12",
+   "index_pair": "R084",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A064",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A064.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6224.NEF",
+   "bytes": 56936532,
+   "sha256": "41303bdf2d200145f4168ce03045834d101688ef0c84ec4995c7d85ba10c928c",
+   "captured": "2024:04:01 19:18:13",
+   "index_pair": "R088",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A065",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A065.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6225.NEF",
+   "bytes": 56101734,
+   "sha256": "a00bf19fd69f56d2b65965ad2ac6f04b3b47a71025effbefa729e125692c64bc",
+   "captured": "2024:04:01 19:18:14",
+   "index_pair": "R091",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A066",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A066.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6226.NEF",
+   "bytes": 56816002,
+   "sha256": "8dd2ebf92426bffd1100a2c819c692afe26dd8b67fdf9e272240f13a418b691b",
+   "captured": "2024:04:01 19:18:15",
+   "index_pair": "R095",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A067",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A067.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6227.NEF",
+   "bytes": 55813056,
+   "sha256": "cda8b21f8510ea67cf05aeca7eb8d37d856171786fed5bb87e91110742222212",
+   "captured": "2024:04:01 19:18:17",
+   "index_pair": "R099",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A068",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A068.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6228.NEF",
+   "bytes": 54287186,
+   "sha256": "9df8edba02bc28c26ba0f53e545eee7997fd19fc7390a3404482e4d7a301b6c0",
+   "captured": "2024:04:01 19:18:18",
+   "index_pair": "R103",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A069",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A069.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6229.NEF",
+   "bytes": 54740490,
+   "sha256": "0b1b0074f2aa16418c205e40fcbd22e9c20402867e73c7338afa9fb41ed914d5",
+   "captured": "2024:04:01 19:18:19",
+   "index_pair": "R107",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A070",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A070.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6230.NEF",
+   "bytes": 56176786,
+   "sha256": "d039f87ec0beca22284bed1146f01215d47d8fb10bfa16c69adf5121fee9a846",
+   "captured": "2024:04:01 19:18:20",
+   "index_pair": "R111",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A071",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A071.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6231.NEF",
+   "bytes": 55219094,
+   "sha256": "573c404da0ce2d563db5b44edbc6df10f15c8c75bb93d6c46716d45c0a3e86e6",
+   "captured": "2024:04:01 19:18:21",
+   "index_pair": "R115",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A072",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A072.NEF",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "DSC_6232.NEF",
+   "bytes": 51174988,
+   "sha256": "e1e2b57a893315329d496a6f1e8b22acf2fd7a07dd176119d57a55802741eaa8",
+   "captured": "2024:04:01 19:18:32",
+   "index_pair": "",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A151",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A151.JPG",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8202.JPG",
+   "bytes": 2285102,
+   "sha256": "befac92fbe782f06eb9b33b137256d87acb913d01cea1eba7d4d78ce26f38663",
+   "captured": "2024:03:23 14:32:04",
+   "index_pair": "",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A152",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A152.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8203.NEF",
+   "bytes": 50399300,
+   "sha256": "d6fe8a8eed8303fd6b373b7b8de7e17307a30f06061bb4a48a6e794beb397450",
+   "captured": "2024:03:23 14:33:33",
+   "index_pair": "R131",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A153",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A153.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8204.NEF",
+   "bytes": 56302088,
+   "sha256": "8d7cc720d867a2ecf20c7841a60e4ef600238fab371f366024086f999be7f453",
+   "captured": "2024:03:23 14:33:42",
+   "index_pair": "R132",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A154",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A154.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8205.NEF",
+   "bytes": 57637148,
+   "sha256": "d5a6fd5df097fe1ebddf9aac2d03b2caad656d3ff627129ecce8c843cdddb265",
+   "captured": "2024:03:23 14:33:44",
+   "index_pair": "R133",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A155",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A155.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8206.NEF",
+   "bytes": 58672368,
+   "sha256": "e047f527bf0796568951120a06c8c78974288b5b06a28313c05616205aab7603",
+   "captured": "2024:03:23 14:33:47",
+   "index_pair": "R134",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A156",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A156.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8207.NEF",
+   "bytes": 52691972,
+   "sha256": "cebaeeced110ce92112f8941592f34a3c4c26da2b07aceae47d00d68adf777e5",
+   "captured": "2024:03:23 14:33:48",
+   "index_pair": "R135",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A157",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A157.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8208.NEF",
+   "bytes": 51976784,
+   "sha256": "62c7732e0079a0184646d0553b047779a4123f9cf6bce540ed4540e5393cb58c",
+   "captured": "2024:03:23 14:33:49",
+   "index_pair": "R136",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A158",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A158.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8209.NEF",
+   "bytes": 54684304,
+   "sha256": "86395ba0a64aa9fc2420e6bf8ac500bc37fda7c7560899585418399c46d54c87",
+   "captured": "2024:03:23 14:33:50",
+   "index_pair": "R137",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A159",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A159.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8210.NEF",
+   "bytes": 57767196,
+   "sha256": "4eee36d1c9171a15bbb7407062f7425b527133b986f1378b7ea059b99bdcb9d2",
+   "captured": "2024:03:23 14:33:52",
+   "index_pair": "R138",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A160",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A160.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8211.NEF",
+   "bytes": 57272570,
+   "sha256": "5ac4bd3c03c966d5248a88ad0dcedaa8cc7ca3a966c77444d216efed894fafd1",
+   "captured": "2024:03:23 14:33:53",
+   "index_pair": "R139",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A161",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A161.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8212.NEF",
+   "bytes": 52181190,
+   "sha256": "b726edc888afc2ac9d2278d437029276f0788dcb6e28adc86fc15cddec779ae9",
+   "captured": "2024:03:23 14:33:54",
+   "index_pair": "",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A162",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A162.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8213.NEF",
+   "bytes": 52399940,
+   "sha256": "90ab30e10c08912feffdffedee89e3188859d2be1f7f03e5e5333df6c9008da0",
+   "captured": "2024:03:23 14:33:55",
+   "index_pair": "R140",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A163",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A163.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8214.NEF",
+   "bytes": 54236374,
+   "sha256": "c78465bb37a09522cbfe5032016a5aad6c6e4deb0875119745e3b1be8a872819",
+   "captured": "2024:03:23 14:33:56",
+   "index_pair": "R141",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A164",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A164.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8215.NEF",
+   "bytes": 53558236,
+   "sha256": "46f56ad200451f48ba76b0c27895caf37ac29f3df9faa096b97a9219eeff7378",
+   "captured": "2024:03:23 14:33:57",
+   "index_pair": "R142",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A165",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A165.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8216.NEF",
+   "bytes": 51891974,
+   "sha256": "2c0bb3fa4e933716de40e9ae76adc179d3d357b8058e65c07a36f50e0fdf9563",
+   "captured": "2024:03:23 14:33:59",
+   "index_pair": "R143",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A166",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A166.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8217.NEF",
+   "bytes": 51952296,
+   "sha256": "ddf464c1c50ae83c0c9f93534d33acefc6a2eaf0198ee76c5947916b92ba22b4",
+   "captured": "2024:03:23 14:34:00",
+   "index_pair": "R144",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A167",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A167.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8218.NEF",
+   "bytes": 56393928,
+   "sha256": "237a7cf3d5462d521d5daf7a521564156ca89e429885b3da71ef7c4a381156e1",
+   "captured": "2024:03:23 14:34:01",
+   "index_pair": "R145",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A168",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A168.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8219.NEF",
+   "bytes": 56193640,
+   "sha256": "e8c4cd90897bf1875f12364520ae31ff89b7a025d83945669c36b31e3c6318c2",
+   "captured": "2024:03:23 14:34:03",
+   "index_pair": "R146",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A169",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A169.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8220.NEF",
+   "bytes": 55207102,
+   "sha256": "5e5187573158523ace076ce66db98bd15844554d9a97250b9ff53647ae7a99fb",
+   "captured": "2024:03:23 14:34:04",
+   "index_pair": "R147",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A170",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A170.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8221.NEF",
+   "bytes": 54407482,
+   "sha256": "3520c24b2f9246de6e09e65f3bd4d77bbe8d4cf06c29658e947b680a40c13a77",
+   "captured": "2024:03:23 14:34:05",
+   "index_pair": "R148",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A171",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A171.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8222.NEF",
+   "bytes": 53818542,
+   "sha256": "d83b8ee57ea2a510fb3be9540b847474ea5312a5d77236f4276465b6a74a003b",
+   "captured": "2024:03:23 14:34:06",
+   "index_pair": "R149",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A172",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A172.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8223.NEF",
+   "bytes": 53484988,
+   "sha256": "c22fe662b834770c9d014d62ecd738e5fd5f178997a22809aea48d2e6bf5ae6d",
+   "captured": "2024:03:23 14:34:08",
+   "index_pair": "R150",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A173",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A173.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8224.NEF",
+   "bytes": 55001278,
+   "sha256": "97cb872ffdaef8f9c15d7b183453e7a913fde456436f33c16ae0850ef275d567",
+   "captured": "2024:03:23 14:34:09",
+   "index_pair": "R151",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A174",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A174.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8225.NEF",
+   "bytes": 52308580,
+   "sha256": "0d8ae45bbf4cb37ff8829859b616d923754c1bac8b2656e0e6ce9a0d393d9c4d",
+   "captured": "2024:03:23 14:34:10",
+   "index_pair": "R152",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A175",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A175.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8226.NEF",
+   "bytes": 53573230,
+   "sha256": "a4291fdb4f228882f47d6e2516af6bba41e3bb0c7ebdb8c67fd97b6325188c06",
+   "captured": "2024:03:23 14:34:11",
+   "index_pair": "R153",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A176",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A176.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8227.NEF",
+   "bytes": 50006212,
+   "sha256": "7cdfcda5895d7a6153ced6097f3886b41937eb57a5ee73727f4dee62e9b1a7ee",
+   "captured": "2024:03:23 14:34:13",
+   "index_pair": "R154",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A177",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A177.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8228.NEF",
+   "bytes": 54762210,
+   "sha256": "7ef7e5b6d5dbd6e740873ddf6bc9ab030a33216533d7dc763ca186e482a82e19",
+   "captured": "2024:03:23 14:34:14",
+   "index_pair": "R155",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A178",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A178.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8229.NEF",
+   "bytes": 51913334,
+   "sha256": "7479024ae59e72784f58ec4c0685c05b767ce8d58854676248e7f0c885922403",
+   "captured": "2024:03:23 14:34:16",
+   "index_pair": "R156",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A179",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A179.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8230.NEF",
+   "bytes": 55963464,
+   "sha256": "a69020f888e8eac2471f1a6c7bc116080207a731df246959295b91530d81e7f8",
+   "captured": "2024:03:23 14:34:17",
+   "index_pair": "R157",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A180",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A180.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8231.NEF",
+   "bytes": 53635782,
+   "sha256": "3ff96625699c2526d4abb2af3ca3271d8b1a7c0c73c4c566d7439cbe124eddef",
+   "captured": "2024:03:23 14:34:19",
+   "index_pair": "",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A181",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A181.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8232.NEF",
+   "bytes": 54703116,
+   "sha256": "f9b6d49284a4f039eb89ccf4ad16bf0c2b45550b641556e45977250d5d074bbc",
+   "captured": "2024:03:23 14:34:20",
+   "index_pair": "R158",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A182",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A182.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8233.NEF",
+   "bytes": 54428636,
+   "sha256": "6ce5c04e62338454c08a643896f55001393da6676231fe1961bf593b3e49a032",
+   "captured": "2024:03:23 14:34:21",
+   "index_pair": "R159",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A183",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A183.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8234.NEF",
+   "bytes": 52485612,
+   "sha256": "61993d146e9d09fe858cfcb5d4e7f67030e2c4b54aef583a0a526d8a47d71878",
+   "captured": "2024:03:23 14:34:22",
+   "index_pair": "R160",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A184",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A184.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8235.NEF",
+   "bytes": 55284268,
+   "sha256": "101a9796ce759afd3ef4751349f8e28e4616fe1336fe5ec90cc8ae041bb4af25",
+   "captured": "2024:03:23 14:34:23",
+   "index_pair": "R161",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A185",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A185.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8236.NEF",
+   "bytes": 52341130,
+   "sha256": "f3fad8ffb42509072a93c41360f1345be41642316c76f75abf25ffd718ecd71c",
+   "captured": "2024:03:23 14:34:24",
+   "index_pair": "R162",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A186",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A186.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8237.NEF",
+   "bytes": 55742004,
+   "sha256": "f6ae33e2d3947ff0e9a7af7f0358c563985fadac2e87d11e62b4dd8369a3a199",
+   "captured": "2024:03:23 14:34:26",
+   "index_pair": "R163",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A187",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A187.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8238.NEF",
+   "bytes": 54513278,
+   "sha256": "4d5e02c113184df96c6bea19c5bccce9670357f01feecaea118feab1bdf5701a",
+   "captured": "2024:03:23 14:34:27",
+   "index_pair": "R164",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A188",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A188.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8239.NEF",
+   "bytes": 56524942,
+   "sha256": "890e0060b57d1cdc089975f60674c9fb7a9958534b9c474a8b49634a3af3311f",
+   "captured": "2024:03:23 14:34:29",
+   "index_pair": "R165",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A189",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A189.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8240.NEF",
+   "bytes": 55237984,
+   "sha256": "80e02325a7c9748972ff99797a421b8e6691fff9564e9812c44b473a9ca6ce4f",
+   "captured": "2024:03:23 14:34:30",
+   "index_pair": "R166",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "A190",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "A",
+   "rel": "01_彩色负片_未反相/A190.NEF",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "DSC_8241.NEF",
+   "bytes": 53362368,
+   "sha256": "bd00375b0d75967e68bd598a300ca6310f82ec1f74583407da57506910b0fc78",
+   "captured": "2024:03:23 14:34:32",
+   "index_pair": "R167",
+   "thumbnail_check": null,
+   "pair": null
+  },
+  {
+   "id": "R002",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R002.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (1).jpg",
+   "bytes": 23818302,
+   "sha256": "eeb4964ce6863e96c8efa31cb6c247f624056f4526a2bdf0183ef12658dce067",
+   "captured": "",
+   "index_pair": "A040",
+   "thumbnail_check": {
+    "negative": "A040",
+    "r": 0.9595,
+    "margin": 0.2805,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A040",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R006",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R006.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (2).jpg",
+   "bytes": 35010769,
+   "sha256": "787d3bba24595812aff2843e7bce9604394cf108ba78c9b1fe7299d059f26963",
+   "captured": "",
+   "index_pair": "A041",
+   "thumbnail_check": {
+    "negative": "A041",
+    "r": 0.9249,
+    "margin": 0.1933,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A041",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R009",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R009.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (3).jpg",
+   "bytes": 23439414,
+   "sha256": "1a6760444adc27b98437922a61fe916386af57d28162afde23e9255ac2e7b092",
+   "captured": "",
+   "index_pair": "A042",
+   "thumbnail_check": {
+    "negative": "A042",
+    "r": 0.934,
+    "margin": 0.2725,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A042",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R012",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R012.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (4).jpg",
+   "bytes": 19833501,
+   "sha256": "91fa6abc6418041582dcbf25a0bf2bc5a376b6b80a30a560c22c08b86fd8bc87",
+   "captured": "",
+   "index_pair": "A043",
+   "thumbnail_check": {
+    "negative": "A043",
+    "r": 0.8692,
+    "margin": 0.4414,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A043",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R016",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R016.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (5).jpg",
+   "bytes": 21612752,
+   "sha256": "091878b7f1dd5b4046e4d9138d4e2ce5d8a815630e63b51cf1dee20e977f0a40",
+   "captured": "",
+   "index_pair": "A044",
+   "thumbnail_check": {
+    "negative": "A044",
+    "r": 0.9409,
+    "margin": 0.2862,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A044",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R019",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R019.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (6).jpg",
+   "bytes": 20468534,
+   "sha256": "6182f7ecdf380e7fcdd618e127d6a26e4ee0b94e48961845ccd26171c547d475",
+   "captured": "",
+   "index_pair": "A045",
+   "thumbnail_check": {
+    "negative": "A045",
+    "r": 0.9136,
+    "margin": 0.6562,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A045",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R023",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R023.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (7).jpg",
+   "bytes": 21296323,
+   "sha256": "4771045f5a6fc499efecd2409964b8a9ef809dc57fa6608e7ddb3334962fd448",
+   "captured": "",
+   "index_pair": "A046",
+   "thumbnail_check": {
+    "negative": "A046",
+    "r": 0.9028,
+    "margin": 0.4993,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A046",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R027",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R027.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (8).jpg",
+   "bytes": 20823078,
+   "sha256": "66fb927ee180f9d77ac9420ba1d61fb5f12f1f7799d87a8cc10dfa22e6fe6d2e",
+   "captured": "",
+   "index_pair": "A047",
+   "thumbnail_check": {
+    "negative": "A047",
+    "r": 0.9028,
+    "margin": 0.5465,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A047",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R030",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R030.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (9).jpg",
+   "bytes": 25481476,
+   "sha256": "3d63d440bfcd8c6767d572f6cefc075bb7d19b25885359bf33554834c286ddea",
+   "captured": "",
+   "index_pair": "A048",
+   "thumbnail_check": {
+    "negative": "A048",
+    "r": 0.9367,
+    "margin": 0.2779,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A048",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R033",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R033.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (10).jpg",
+   "bytes": 20259084,
+   "sha256": "cf63aa61132a0471a627915b48da66dc0c53e533d3c0bcdf297e8c035cce34a1",
+   "captured": "",
+   "index_pair": "A049",
+   "thumbnail_check": {
+    "negative": "A049",
+    "r": 0.9375,
+    "margin": 0.2277,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A049",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R037",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R037.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (11).jpg",
+   "bytes": 19992866,
+   "sha256": "4fa1acf0a29dd15d1edd2c7c218c8df70b40d76bde3449d59e0d30870e0f049f",
+   "captured": "",
+   "index_pair": "A050",
+   "thumbnail_check": {
+    "negative": "A050",
+    "r": 0.8831,
+    "margin": 0.3958,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A050",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R040",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R040.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (12).jpg",
+   "bytes": 23261955,
+   "sha256": "6584cc067f991e728bdba9c6631fcaecccfac11e9db04cf8cd2a9ce930dab9ae",
+   "captured": "",
+   "index_pair": "A051",
+   "thumbnail_check": {
+    "negative": "A051",
+    "r": 0.9434,
+    "margin": 0.2773,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A051",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R044",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R044.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (13).jpg",
+   "bytes": 19158186,
+   "sha256": "53d3b787c52eed76b0664a6e781412063c929cecf2f663fbde0c6e6e594071fb",
+   "captured": "",
+   "index_pair": "A052",
+   "thumbnail_check": {
+    "negative": "A052",
+    "r": 0.8514,
+    "margin": 0.2938,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A052",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R048",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R048.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (14).jpg",
+   "bytes": 20242228,
+   "sha256": "e52fa9228a6d1ee7d7efb05f3d89b3d18a66c77ad2a30e5d448109ea37483536",
+   "captured": "",
+   "index_pair": "A053",
+   "thumbnail_check": {
+    "negative": "A053",
+    "r": 0.9289,
+    "margin": 0.4256,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A053",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R051",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R051.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (15).jpg",
+   "bytes": 20847829,
+   "sha256": "6923c5f4e0cae0ce7a4031eb745d3d4ed1e6761a6cd67ece05556cea0c90b365",
+   "captured": "",
+   "index_pair": "A054",
+   "thumbnail_check": {
+    "negative": "A054",
+    "r": 0.9829,
+    "margin": 0.1846,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A054",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R054",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R054.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (16).jpg",
+   "bytes": 23116572,
+   "sha256": "99cc72503c8ecfdc1fead88ee57516a879795b50fad94be79f0839f0f6dec5dd",
+   "captured": "",
+   "index_pair": "A055",
+   "thumbnail_check": {
+    "negative": "A055",
+    "r": 0.9746,
+    "margin": 0.0793,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A055",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R057",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R057.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (17).jpg",
+   "bytes": 28480591,
+   "sha256": "44d09fd62cb05a56e39700a0e9a52b5706535d9e41c1c17f4291228f8e3325a9",
+   "captured": "",
+   "index_pair": "A056",
+   "thumbnail_check": {
+    "negative": "A056",
+    "r": 0.9891,
+    "margin": 0.0421,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A056",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R061",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R061.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (18).jpg",
+   "bytes": 32625295,
+   "sha256": "3311a2468d09bdef1d38a08f552dfd2c5813fbe1d109b4a6a422c9dc1afe56e6",
+   "captured": "",
+   "index_pair": "A057",
+   "thumbnail_check": {
+    "negative": "A057",
+    "r": 0.9803,
+    "margin": 0.3173,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A057",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R065",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R065.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (19).jpg",
+   "bytes": 20298206,
+   "sha256": "5137fbaa4b5ac126835b103fee8b9a18dd090e4776b235a0fd9e1d43876fd7d0",
+   "captured": "",
+   "index_pair": "A058",
+   "thumbnail_check": {
+    "negative": "A058",
+    "r": 0.9408,
+    "margin": 0.3731,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A058",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R069",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R069.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (20).jpg",
+   "bytes": 22309622,
+   "sha256": "25c059fe3cd0ce44cfb1848e6a0dabeba395d499ac5d9e8a7319c3be23841d7a",
+   "captured": "",
+   "index_pair": "A059",
+   "thumbnail_check": {
+    "negative": "A059",
+    "r": 0.9761,
+    "margin": 0.1789,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A059",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R073",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R073.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (21).jpg",
+   "bytes": 20283811,
+   "sha256": "692cddc52adfcbd61ab6b89da89da1be5579d430e149a74d1a149ac145698d0b",
+   "captured": "",
+   "index_pair": "A060",
+   "thumbnail_check": {
+    "negative": "A060",
+    "r": 0.9079,
+    "margin": 0.4732,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A060",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R077",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R077.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (22).jpg",
+   "bytes": 20723600,
+   "sha256": "7fd4d47b426bc8ce2d8ef558bacd51d628d5e0803f12eda5ebcc1ac4fc4d26a5",
+   "captured": "",
+   "index_pair": "A061",
+   "thumbnail_check": {
+    "negative": "A061",
+    "r": 0.9225,
+    "margin": 0.2782,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A061",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R080",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R080.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (23).jpg",
+   "bytes": 23306675,
+   "sha256": "db947873103f34573364a5d070d60a68b7c39625b9b49226c1b41c3c5fbb85a1",
+   "captured": "",
+   "index_pair": "A062",
+   "thumbnail_check": {
+    "negative": "A062",
+    "r": 0.9862,
+    "margin": 0.1415,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A062",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R084",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R084.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (24).jpg",
+   "bytes": 21787369,
+   "sha256": "9c6f82e54515f8bfcf092e197694bba85b7b604f4b9b323defb00c944812810e",
+   "captured": "",
+   "index_pair": "A063",
+   "thumbnail_check": {
+    "negative": "A063",
+    "r": 0.984,
+    "margin": 0.1636,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A063",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R088",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R088.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (25).jpg",
+   "bytes": 23340012,
+   "sha256": "6ef9b9d7f9c4e98c842e89f970b8bcd4bf14a2b6597de27e2bda54a1266f2359",
+   "captured": "",
+   "index_pair": "A064",
+   "thumbnail_check": {
+    "negative": "A064",
+    "r": 0.9689,
+    "margin": 0.1382,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A064",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R091",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R091.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (26).jpg",
+   "bytes": 23380010,
+   "sha256": "10a754fc62d5dd3899c1578002da6be7b530717fe6b69ba1ffc2a80ce3c80537",
+   "captured": "",
+   "index_pair": "A065",
+   "thumbnail_check": {
+    "negative": "A065",
+    "r": 0.9883,
+    "margin": 0.0955,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A065",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R095",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R095.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (27).jpg",
+   "bytes": 26194995,
+   "sha256": "cc868e54d38b5395d48a311590654a23e54bf65ac82b2045f291beeb4326e224",
+   "captured": "",
+   "index_pair": "A066",
+   "thumbnail_check": {
+    "negative": "A066",
+    "r": 0.9632,
+    "margin": 0.1132,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A066",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R099",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R099.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (28).jpg",
+   "bytes": 27207398,
+   "sha256": "b95021012c2baf89615923bebd1a660caf7698558a45616ecf44912f0e3f9308",
+   "captured": "",
+   "index_pair": "A067",
+   "thumbnail_check": {
+    "negative": "A067",
+    "r": 0.9472,
+    "margin": 0.1452,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A067",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R103",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R103.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (29).jpg",
+   "bytes": 26544230,
+   "sha256": "12d90f72cd12c441816ef1b86ef9dff97b590399b54caf140b44447401aef316",
+   "captured": "",
+   "index_pair": "A068",
+   "thumbnail_check": {
+    "negative": "A068",
+    "r": 0.9419,
+    "margin": 0.3158,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A068",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R107",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R107.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (30).jpg",
+   "bytes": 25423655,
+   "sha256": "0a3cf57cee9e5f14147519fe837a3e47aa3c5e02f2ea3d7f29132372058a52b0",
+   "captured": "",
+   "index_pair": "A069",
+   "thumbnail_check": {
+    "negative": "A069",
+    "r": 0.9557,
+    "margin": 0.36,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A069",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R111",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R111.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (31).jpg",
+   "bytes": 24712982,
+   "sha256": "cdc2b016bbae723797bdb36f4aa046e88af7b70e8f8ccd0049143e9ef55a1c39",
+   "captured": "",
+   "index_pair": "A070",
+   "thumbnail_check": {
+    "negative": "A070",
+    "r": 0.925,
+    "margin": 0.3608,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A070",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R115",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R115.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (32).jpg",
+   "bytes": 25921006,
+   "sha256": "c4f8b52473486e11a5a88ae7a5e2c95b16b04acbc5c0a0ad6a5d66ff7a3023e3",
+   "captured": "",
+   "index_pair": "A071",
+   "thumbnail_check": {
+    "negative": "A071",
+    "r": 0.9542,
+    "margin": 0.4182,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A071",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R119",
+   "roll": "own-e5207-20240401-dsc6199",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R119.jpg",
+   "orig_dir": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "orig_name": "1 (33).jpg",
+   "bytes": 7254770,
+   "sha256": "a01ede8f71b365b8b96fa9066dc2cd3eb8b15b75da0452d149c1b9764a7fd3e5",
+   "captured": "",
+   "index_pair": "A066",
+   "thumbnail_check": {
+    "negative": "A226",
+    "r": 0.734,
+    "margin": 0.0435,
+    "mutual": false
+   },
+   "pair": {
+    "negative": "A072",
+    "how": "eye",
+    "scored": false,
+    "note": "last frame of the roll runs into the leader; the print is a 4236x5300 portrait crop of its left part. Confirmed by eye 2026-10-17. The index pair A066 is wrong (A066 -> R095)"
+   }
+  },
+  {
+   "id": "R131",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R131.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (1).jpg",
+   "bytes": 15910017,
+   "sha256": "0fdaa2781bd988368113694b48031615e7b93b08bd68ef9521bdd717cc31f282",
+   "captured": "",
+   "index_pair": "A152",
+   "thumbnail_check": {
+    "negative": "A152",
+    "r": 0.9137,
+    "margin": 0.4037,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A152",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R132",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R132.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (2).jpg",
+   "bytes": 24759490,
+   "sha256": "ab1109b8602ec744f5b124e721651487da07d68b7c27b730407e92f2170f83f9",
+   "captured": "",
+   "index_pair": "A153",
+   "thumbnail_check": {
+    "negative": "A153",
+    "r": 0.8966,
+    "margin": 0.4635,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A153",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R133",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R133.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (3).jpg",
+   "bytes": 20551061,
+   "sha256": "dcdab6e1dff22cb57ed4ae374bdbaad249450f976b2a9e9cef27866c9a2b5bc9",
+   "captured": "",
+   "index_pair": "A154",
+   "thumbnail_check": {
+    "negative": "A154",
+    "r": 0.9167,
+    "margin": 0.5148,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A154",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R134",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R134.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (4).jpg",
+   "bytes": 28022696,
+   "sha256": "a1562fae8653d212e9ea8ce1374551ee3c16b04677061568fb586490be311a24",
+   "captured": "",
+   "index_pair": "A155",
+   "thumbnail_check": {
+    "negative": "A155",
+    "r": 0.9436,
+    "margin": 0.3564,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A155",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R135",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R135.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (5).jpg",
+   "bytes": 20702889,
+   "sha256": "61e99ab6ed5c8df95edc46cecd94dd0c2708ea4f0160be2b592db3c4ea68d782",
+   "captured": "",
+   "index_pair": "A156",
+   "thumbnail_check": {
+    "negative": "A156",
+    "r": 0.9614,
+    "margin": 0.3416,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A156",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R136",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R136.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (6).jpg",
+   "bytes": 21166030,
+   "sha256": "bd72cb954b645f21a27a3caddf2e2ac8c49d8aed3abc5a6719e9db18b1315017",
+   "captured": "",
+   "index_pair": "A157",
+   "thumbnail_check": {
+    "negative": "A157",
+    "r": 0.927,
+    "margin": 0.4168,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A157",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R137",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R137.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (7).jpg",
+   "bytes": 20712436,
+   "sha256": "9e9ac0d4b7dfee87097e4154e856d9b784193a937967853cf5f8c13248aa5b96",
+   "captured": "",
+   "index_pair": "A158",
+   "thumbnail_check": {
+    "negative": "A158",
+    "r": 0.9105,
+    "margin": 0.4105,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A158",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R138",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R138.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (8).jpg",
+   "bytes": 28671162,
+   "sha256": "ba6f2954f9206d0186da901626e6ea80b3bdc100a67508e1e3fab5e6fc18ea0a",
+   "captured": "",
+   "index_pair": "A159",
+   "thumbnail_check": {
+    "negative": "A159",
+    "r": 0.8649,
+    "margin": 0.2526,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A159",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R139",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R139.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (9).jpg",
+   "bytes": 23696124,
+   "sha256": "cd3b5da355ef2d720c9e3b4ee6259c41fb7aa2c51ef76b2ae0f196a1a01f8a5f",
+   "captured": "",
+   "index_pair": "A160",
+   "thumbnail_check": {
+    "negative": "A160",
+    "r": 0.8394,
+    "margin": 0.5495,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A160",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R140",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R140.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (11).jpg",
+   "bytes": 22334916,
+   "sha256": "bdd4286c7d71d2e00003a88246f9e1a86701fa0f82ea9047bdaad70bc33ff3c4",
+   "captured": "",
+   "index_pair": "A162",
+   "thumbnail_check": {
+    "negative": "A162",
+    "r": 0.8912,
+    "margin": 0.0319,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A162",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R141",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R141.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (12).jpg",
+   "bytes": 17026214,
+   "sha256": "d7e76c114dd77c6c5a207f78e848dfe8ca989370bb966deac2e365c67e6879e1",
+   "captured": "",
+   "index_pair": "A163",
+   "thumbnail_check": {
+    "negative": "A163",
+    "r": 0.9571,
+    "margin": 0.3268,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A163",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R142",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R142.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (13).jpg",
+   "bytes": 18008295,
+   "sha256": "2a387a3cb04a8b07fb30fe8136369f367058c9603fa06bba59d0839f56018395",
+   "captured": "",
+   "index_pair": "A164",
+   "thumbnail_check": {
+    "negative": "A164",
+    "r": 0.9576,
+    "margin": 0.2836,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A164",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R143",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R143.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (14).jpg",
+   "bytes": 16017385,
+   "sha256": "b917785eb214ba89a62546bc66bfa9d67ded14d2c96dcb192e577af81acaa1b0",
+   "captured": "",
+   "index_pair": "A165",
+   "thumbnail_check": {
+    "negative": "A165",
+    "r": 0.7866,
+    "margin": 0.4146,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A165",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R144",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R144.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (15).jpg",
+   "bytes": 18799598,
+   "sha256": "83b4c702347296a5f9c61791727ac833e5e7449a50e964572ebad228d2f3ff95",
+   "captured": "",
+   "index_pair": "A166",
+   "thumbnail_check": {
+    "negative": "A166",
+    "r": 0.924,
+    "margin": 0.2946,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A166",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R145",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R145.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (16).jpg",
+   "bytes": 14783940,
+   "sha256": "b42bf1ea29aa1ee7ccc3ba25f63da940a1ab73718b201407cb982a88de066e17",
+   "captured": "",
+   "index_pair": "A167",
+   "thumbnail_check": {
+    "negative": "A167",
+    "r": 0.9609,
+    "margin": 0.335,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A167",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R146",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R146.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (17).jpg",
+   "bytes": 14210871,
+   "sha256": "c50ab87227585d3b6c0392343f8d8806d353544c88969bfd62ea1eac4d7aac47",
+   "captured": "",
+   "index_pair": "A168",
+   "thumbnail_check": {
+    "negative": "A168",
+    "r": 0.9438,
+    "margin": 0.2109,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A168",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R147",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R147.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (18).jpg",
+   "bytes": 21880000,
+   "sha256": "19601f0e561eb86662795c1263e6c90bf9be9aced03ff424bafda6d242d2adb5",
+   "captured": "",
+   "index_pair": "A169",
+   "thumbnail_check": {
+    "negative": "A169",
+    "r": 0.9243,
+    "margin": 0.5311,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A169",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R148",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R148.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (19).jpg",
+   "bytes": 21704992,
+   "sha256": "ed5b4ede268b29a2fd8f751bc9fe6ff535176e8712aecbeeaf4ef7f29c2e7360",
+   "captured": "",
+   "index_pair": "A170",
+   "thumbnail_check": {
+    "negative": "A170",
+    "r": 0.8936,
+    "margin": 0.4381,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A170",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R149",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R149.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (20).jpg",
+   "bytes": 14687006,
+   "sha256": "3c90dfa7df1a615ab48ddc8b6ed706c42af4c0427fa7996d178bad854b4e80f8",
+   "captured": "",
+   "index_pair": "A171",
+   "thumbnail_check": {
+    "negative": "A171",
+    "r": 0.951,
+    "margin": 0.2861,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A171",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R150",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R150.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (21).jpg",
+   "bytes": 21503175,
+   "sha256": "d4d191590becae8d0636d9464b1602bd15694f5646481df6c4b6f39dfc426df3",
+   "captured": "",
+   "index_pair": "A172",
+   "thumbnail_check": {
+    "negative": "A172",
+    "r": 0.9504,
+    "margin": 0.3667,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A172",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R151",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R151.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (22).jpg",
+   "bytes": 24308288,
+   "sha256": "7c99398e4f4aedbb626be11f252b3b40c16fead50a47282a769c0f4452e37cf1",
+   "captured": "",
+   "index_pair": "A173",
+   "thumbnail_check": {
+    "negative": "A173",
+    "r": 0.9664,
+    "margin": 0.4268,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A173",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R152",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R152.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (23).jpg",
+   "bytes": 20780019,
+   "sha256": "6f4915c7dc25a367b608e6a7490c9b89e93069670de408f2a1b1e7cfb887b4a7",
+   "captured": "",
+   "index_pair": "A174",
+   "thumbnail_check": {
+    "negative": "A174",
+    "r": 0.8998,
+    "margin": 0.453,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A174",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R153",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R153.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (24).jpg",
+   "bytes": 25538047,
+   "sha256": "8d183ca4f8f355fb97c64a31590bf365afb19d9902be4463d9da941db9c8633e",
+   "captured": "",
+   "index_pair": "A175",
+   "thumbnail_check": {
+    "negative": "A175",
+    "r": 0.9848,
+    "margin": 0.1662,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A175",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R154",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R154.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (25).jpg",
+   "bytes": 22992069,
+   "sha256": "86be47947be0d38d1e617b7c7c5d416a76701b9a8707edede78f153a719e9c22",
+   "captured": "",
+   "index_pair": "A176",
+   "thumbnail_check": {
+    "negative": "A176",
+    "r": 0.9707,
+    "margin": 0.1294,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A176",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R155",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R155.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (26).jpg",
+   "bytes": 23080861,
+   "sha256": "533879e177e4449fcf7ed6047775490fbf7107f4f12a9d8b668af7c0d0b9517b",
+   "captured": "",
+   "index_pair": "A177",
+   "thumbnail_check": {
+    "negative": "A177",
+    "r": 0.9372,
+    "margin": 0.5052,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A177",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R156",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R156.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (27).jpg",
+   "bytes": 28984502,
+   "sha256": "ef13670df87d97b5139ee08130d5e50970b78092a774297d2a9562a295e6222d",
+   "captured": "",
+   "index_pair": "A178",
+   "thumbnail_check": {
+    "negative": "A178",
+    "r": 0.9871,
+    "margin": 0.0781,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A178",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R157",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R157.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (28).jpg",
+   "bytes": 23406932,
+   "sha256": "bca4e85a5a6565a1b8105cb19d6d4356a84d2948a0dad844aade2476ee9f599e",
+   "captured": "",
+   "index_pair": "A179",
+   "thumbnail_check": {
+    "negative": "A179",
+    "r": 0.9811,
+    "margin": 0.2206,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A179",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R158",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R158.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (30).jpg",
+   "bytes": 19386387,
+   "sha256": "54173a270578c37e21bc2e3a0fd61a9daa1118b2fe828dd60aa33ffb0449f22a",
+   "captured": "",
+   "index_pair": "A181",
+   "thumbnail_check": {
+    "negative": "A181",
+    "r": 0.9789,
+    "margin": 0.1731,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A181",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R159",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R159.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (31).jpg",
+   "bytes": 22334611,
+   "sha256": "879ea9dbc9f4944761a19fb9ef2dc9c750ebb39bff6b6d45930afbbe2b9634aa",
+   "captured": "",
+   "index_pair": "A182",
+   "thumbnail_check": {
+    "negative": "A182",
+    "r": 0.8761,
+    "margin": 0.492,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A182",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R160",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R160.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (32).jpg",
+   "bytes": 17745375,
+   "sha256": "034d0739bc083d3c00874ca9a4999caf260d11b8b077b7a9e349410211060c3f",
+   "captured": "",
+   "index_pair": "A183",
+   "thumbnail_check": {
+    "negative": "A183",
+    "r": 0.9718,
+    "margin": 0.1334,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A183",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R161",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R161.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (33).jpg",
+   "bytes": 22240762,
+   "sha256": "08ffaf7f4cb614cd0a76cf116f77b49a33769f0bb5fd3fcddd152ed0d620be87",
+   "captured": "",
+   "index_pair": "A184",
+   "thumbnail_check": {
+    "negative": "A184",
+    "r": 0.9719,
+    "margin": 0.132,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A184",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R162",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R162.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (34).jpg",
+   "bytes": 17417539,
+   "sha256": "4744cff5a2f7381a6db8a70ba20c781ddf207e5c9c970b8a14ec5b8ce80ba043",
+   "captured": "",
+   "index_pair": "A185",
+   "thumbnail_check": {
+    "negative": "A185",
+    "r": 0.9673,
+    "margin": 0.2092,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A185",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R163",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R163.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (35).jpg",
+   "bytes": 18647590,
+   "sha256": "60af3549e3f7f797f88cf85e463f93a0ceda7522d7698ba7400a6f5f28128b37",
+   "captured": "",
+   "index_pair": "A186",
+   "thumbnail_check": {
+    "negative": "A186",
+    "r": 0.9778,
+    "margin": 0.1694,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A186",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R164",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R164.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (36).jpg",
+   "bytes": 17383394,
+   "sha256": "96e1aceea6df5e7f26ccd151cfa440c80dbf2c3023780c958ea16c153e931b54",
+   "captured": "",
+   "index_pair": "A187",
+   "thumbnail_check": {
+    "negative": "A187",
+    "r": 0.9678,
+    "margin": 0.1932,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A187",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R165",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R165.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (37).jpg",
+   "bytes": 20937658,
+   "sha256": "4dde233c0334ab7dd54eca2692030e47d5749e9990b16c0a16c8782519efdd44",
+   "captured": "",
+   "index_pair": "A188",
+   "thumbnail_check": {
+    "negative": "A188",
+    "r": 0.9739,
+    "margin": 0.2124,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A188",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R166",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R166.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (38).jpg",
+   "bytes": 22217293,
+   "sha256": "ae4485064060a04a5c5478d903adb11ac8eb041607296a4742c7824a23a475a4",
+   "captured": "",
+   "index_pair": "A189",
+   "thumbnail_check": {
+    "negative": "A189",
+    "r": 0.9337,
+    "margin": 0.4571,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A189",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  },
+  {
+   "id": "R167",
+   "roll": "own-e5219-20240323-dsc8202",
+   "why": "file of the roll",
+   "group": "R",
+   "rel": "04_已反转成品_对照答案/R167.jpg",
+   "orig_dir": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "orig_name": "1 (39).jpg",
+   "bytes": 21013358,
+   "sha256": "fe11512b47fda565a39fba4cf55c3bf59ae165df32a8763669c936b94c7c1572",
+   "captured": "",
+   "index_pair": "A190",
+   "thumbnail_check": {
+    "negative": "A190",
+    "r": 0.9436,
+    "margin": 0.3316,
+    "mutual": true
+   },
+   "pair": {
+    "negative": "A190",
+    "how": "thumbnail mutual best, confirmed by eye",
+    "scored": true
+   }
+  }
+ ]
+}
