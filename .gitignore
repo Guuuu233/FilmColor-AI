@@ -16,3 +16,5 @@ experiments/**/*.png
 *.npy
 # reference renderings (NLP, shop) are image data
 data/reference/
+# superseded first pass of the external-material audit (raw exif may hold GPS / serials); kept on disk, not in git
+experiments/s3_ext_audit/
