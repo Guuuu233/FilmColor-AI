@@ -52,7 +52,7 @@ def main(ext_root, out_json):
         root = "data/raw/public/blueneg/"
         frames.append(dict(id=f"blueneg:{f['filename']}", domain="blueneg", stem=f["filename"], roll=f["roll_id"],
                            film=f["film_type"], raw=root + f["negative_path"], ref=root + f["printed_path"],
-                           ref_kind="srgb_no_icc", raw_sha256=fetched[f["negative_path"]],
+                           ref_kind="srgb_no_icc", color_space_assumed="sRGB", raw_sha256=fetched[f["negative_path"]],
                            ref_sha256=fetched[f["printed_path"]], experiments=["A"]))
     inv = {r["id"]: r for r in json.load(open("experiments/s3_data_audit/inventory.json")) if r.get("id")}
     pairing = json.load(open("experiments/s3_data_audit/pairing.json"))
@@ -65,6 +65,7 @@ def main(ext_root, out_json):
                            film=neg["film_or_source"], raw=str(ext_root / neg["rel"]), ref=str(ext_root / ref["rel"]),
                            # 6 prints of dsc6161 were exported without ICC or EXIF (8256x5504): read as sRGB, flagged
                            ref_kind="icc" if ref["ProfileDescription"] else "srgb_assumed",
+                           **({} if ref["ProfileDescription"] else dict(color_space_assumed="sRGB")),
                            raw_sha256=neg["sha256"], ref_sha256=ref["sha256"],
                            orig_name=neg["orig_name"], ref_id=p["ref"], experiments=["B"]))
     for f in frames:  # local files are hashed now; downloaded and external ones carry verified hashes

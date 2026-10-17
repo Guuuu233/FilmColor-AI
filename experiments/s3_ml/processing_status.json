@@ -1,0 +1,1412 @@
+{
+ "design_exclusions": {
+  "nlp": [
+   "_DSF9228"
+  ],
+  "shop": [
+   "DSC_3822",
+   "DSC_3858"
+  ],
+  "ext_own": [
+   "A148",
+   "A210"
+  ],
+  "reason": {
+   "nlp": "black-and-white negative",
+   "shop": "roll leader / mostly unexposed (S2)",
+   "ext_own": "blank frames (audit)"
+  }
+ },
+ "pipeline_failures": [
+  {
+   "id": "ext:A104",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "pipeline_failure",
+   "detail": {
+    "id": "ext:A104",
+    "stage": "film base",
+    "error": "no chromatically consistent base candidates; specify region manually"
+   }
+  },
+  {
+   "id": "ext:A198",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "pipeline_failure",
+   "detail": {
+    "id": "ext:A198",
+    "stage": "film base",
+    "error": "no chromatically consistent base candidates; specify region manually"
+   }
+  }
+ ],
+ "counts": {
+  "blueneg": {
+   "labelled": 27
+  },
+  "ext_own": {
+   "labelled": 130,
+   "pipeline_failure": 2
+  },
+  "nlp": {
+   "labelled": 11
+  },
+  "shop": {
+   "labelled": 21
+  }
+ },
+ "success_rate": {
+  "blueneg": 1.0,
+  "ext_own": 0.9848,
+  "nlp": 1.0,
+  "shop": 1.0
+ },
+ "frames": [
+  {
+   "id": "nlp:_DSF8434",
+   "domain": "nlp",
+   "roll": "nlp-20180518",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF8948",
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF8951",
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF8983",
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF9229",
+   "domain": "nlp",
+   "roll": "nlp-20180728",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF9231",
+   "domain": "nlp",
+   "roll": "nlp-20180728",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF9235",
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF9237",
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF9238",
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF9239",
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "nlp:_DSF9243",
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3823",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3825",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3827",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3828",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3829",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3831",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3833",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3835",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3837",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3838",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3839",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3840",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3843",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3844",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3846",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3847",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3849",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3853",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3855",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3856",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "shop:DSC_3859",
+   "domain": "shop",
+   "roll": "shop_r01",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941217A-15-tokyo",
+   "domain": "blueneg",
+   "roll": "19941217A",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941217B-08-tokyo",
+   "domain": "blueneg",
+   "roll": "19941217B",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941218B-23-tokyo",
+   "domain": "blueneg",
+   "roll": "19941218B",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941218C-05-tokyo",
+   "domain": "blueneg",
+   "roll": "19941218C",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941220D-20-kamakura",
+   "domain": "blueneg",
+   "roll": "19941220D",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941221D-25-kyoto",
+   "domain": "blueneg",
+   "roll": "19941221D",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941222D-32-kyoto",
+   "domain": "blueneg",
+   "roll": "19941222D",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941222E-04-nara",
+   "domain": "blueneg",
+   "roll": "19941222E",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941223E-17-osaka",
+   "domain": "blueneg",
+   "roll": "19941223E",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941224E-23-nagasaki",
+   "domain": "blueneg",
+   "roll": "19941224E",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941225E-34-nagasaki",
+   "domain": "blueneg",
+   "roll": "19941225E",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941225F-03-nagasaki",
+   "domain": "blueneg",
+   "roll": "19941225F",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19941228F-12-tokyo",
+   "domain": "blueneg",
+   "roll": "19941228F",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19960808B-03-new-orleans-siggraph96",
+   "domain": "blueneg",
+   "roll": "19960808B",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19960809B-14-new-orleans-siggraph96",
+   "domain": "blueneg",
+   "roll": "19960809B",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19960811B-28-arizona-london-bridge",
+   "domain": "blueneg",
+   "roll": "19960811B",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19960812D-17-las-vegas",
+   "domain": "blueneg",
+   "roll": "19960812D",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19970619A-14-white-chapel",
+   "domain": "blueneg",
+   "roll": "19970619A",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19970619B-09-notre-dame",
+   "domain": "blueneg",
+   "roll": "19970619B",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19970620C-10-st-michel",
+   "domain": "blueneg",
+   "roll": "19970620C",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:199807A-06-hk",
+   "domain": "blueneg",
+   "roll": "199807A",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:199807B-10-orlando-seaworld",
+   "domain": "blueneg",
+   "roll": "199807B",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:199910-01-korea",
+   "domain": "blueneg",
+   "roll": "199910",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:19960812D-09-las-vegas",
+   "domain": "blueneg",
+   "roll": "19960812D",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:199807A-09-orlando-siggraph",
+   "domain": "blueneg",
+   "roll": "199807A",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:199807B-16-seattle",
+   "domain": "blueneg",
+   "roll": "199807B",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "blueneg:199910-08-korea",
+   "domain": "blueneg",
+   "roll": "199910",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A113",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A002",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A114",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A075",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A003",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A115",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A004",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A116",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A005",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A117",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A078",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A006",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A118",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A007",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A119",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A080",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A008",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A120",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A081",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A009",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A121",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A010",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A122",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A011",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A123",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A084",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A012",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A124",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A013",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A125",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A086",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A014",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A126",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A087",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A015",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A127",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A016",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A128",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A017",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A129",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A018",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A130",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A091",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A019",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A131",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A092",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A020",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A132",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A093",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A021",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A133",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A094",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A022",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A134",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A095",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A023",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A135",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A024",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A136",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A097",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A025",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A137",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A098",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A026",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A138",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A027",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A139",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A100",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A028",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A140",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A101",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A029",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A141",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A102",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A030",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A142",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A103",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A031",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A143",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A104",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "pipeline_failure",
+   "detail": {
+    "id": "ext:A104",
+    "stage": "film base",
+    "error": "no chromatically consistent base candidates; specify region manually"
+   }
+  },
+  {
+   "id": "ext:A032",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A144",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A105",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A033",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A145",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A106",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A034",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A146",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A035",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A147",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A036",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A037",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A149",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A110",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6233",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A038",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A150",
+   "domain": "ext_own",
+   "roll": "own-e5207-20240323-dsc8242",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A192",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A193",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A194",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A195",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A196",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A197",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A198",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "pipeline_failure",
+   "detail": {
+    "id": "ext:A198",
+    "stage": "film base",
+    "error": "no chromatically consistent base candidates; specify region manually"
+   }
+  },
+  {
+   "id": "ext:A199",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A200",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A201",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A202",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A203",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A204",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A205",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A206",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A207",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A208",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A209",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A211",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A212",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A213",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A214",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A215",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A216",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A217",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A218",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A219",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A220",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A221",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A222",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A223",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A224",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A225",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A226",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A227",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  },
+  {
+   "id": "ext:A228",
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "status": "labelled",
+   "detail": null
+  }
+ ]
+}
