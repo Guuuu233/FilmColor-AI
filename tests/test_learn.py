@@ -53,6 +53,29 @@ def test_alpha_selection_is_leave_one_group_out_inside_training_data():
         select_alpha(X, lin, groups, validate={"a"})
 
 
+def test_area_resize_dino_input_and_pca():
+    from filmcolor.compare import block_mean
+    from filmcolor.learn import DINO_SIZE, PAD_GREY, area_resize, dino_input, pca_fit
+
+    X = frame(h=120, w=180)
+    np.testing.assert_allclose(area_resize(X, 40, 60), block_mean(X, 3), atol=1e-6)  # integer factor = block mean
+    np.testing.assert_allclose(area_resize(X, 37, 53).mean((0, 1)), X.mean((0, 1)), atol=2e-3)
+    mean, std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
+    seen = []
+    x = dino_input(X, mean, std, lambda a: (seen.append(a.shape), np.clip(a, 0, 1))[1])
+    assert x.shape == (3, DINO_SIZE, DINO_SIZE) and seen == [(149, 224, 3)]  # long side 224, aspect kept
+    pad = (np.array(PAD_GREY) - np.array(mean)) / np.array(std)
+    np.testing.assert_allclose(x[:, 0, 0], pad, atol=1e-6)    # padded rows are neutral grey
+    top = (DINO_SIZE - 149) // 2  # first image row on the canvas
+    img = np.clip(area_resize(X, 149, 224), 0, 1)
+    np.testing.assert_allclose(x[:, top, 0], (img[0, 0] - mean) / std, atol=1e-5)
+    np.testing.assert_allclose(x[:, top - 1, 0], pad, atol=1e-6)
+    F = np.random.default_rng(3).normal(size=(30, 12))
+    mu, C = pca_fit(F, 5)
+    np.testing.assert_allclose(C @ C.T, np.eye(5), atol=1e-9)
+    np.testing.assert_array_equal(C, pca_fit(F, 5)[1])
+
+
 def test_roll_bootstrap_aggregates_frames_per_roll_first():
     r = roll_bootstrap([-1.0, -1.0, 1.0], ["a", "a", "b"], n=2000)
     assert r["mean"] == 0.0 and r["n_rolls"] == 2 and r["improved_rolls"] == 0.5

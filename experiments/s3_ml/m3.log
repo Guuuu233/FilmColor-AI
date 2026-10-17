@@ -1,0 +1,28 @@
+189 frames, 3140 predictions
+evaluated 2669 renders
+A_a:p4 n 27 M0_fixed 11.08 M0_median 10.92 M1 10.78 M2 10.76 M3 10.94 | label 6.82 | {'tier1_pass': False, 'tier2_pass': False, 'note': 'tier 2 only counts if tier 1 passes (fixed sequence); A_b is an ablation, descriptive'}
+A_a:p3 n 27 M0_fixed 11.08 M0_median 10.75 M1 10.96 M2 10.32 M3 10.76 | label 7.15 | {'tier1_pass': False, 'tier2_pass': False, 'note': 'tier 2 only counts if tier 1 passes (fixed sequence); A_b is an ablation, descriptive'}
+A_b:p4 n 27 M0_fixed 11.08 M0_median 10.95 M1 10.02 M2 10.11 M3 10.06 | label 6.82 | {'tier1_pass': True, 'tier2_pass': True, 'note': 'tier 2 only counts if tier 1 passes (fixed sequence); A_b is an ablation, descriptive'}
+A_b:p3 n 27 M0_fixed 11.08 M0_median 10.67 M1 10.08 M2 10.06 M3 9.63 | label 7.15 | {'tier1_pass': True, 'tier2_pass': False, 'note': 'tier 2 only counts if tier 1 passes (fixed sequence); A_b is an ablation, descriptive'}
+B_dev_a:p4 n 130 M0_fixed 11.53 M0_median 10.88 M1 9.23 M2 10.05 M3 9.87 | label 3.68 | 
+B_dev_a:p3 n 130 M0_fixed 11.53 M0_median 10.89 M1 10.09 M2 10.32 M3 10.11 | label 4.50 | 
+B_dev_b:p4 n 130 M0_fixed 11.53 M0_median 11.44 M1 8.95 M2 9.06 M3 9.42 | label 3.68 | 
+B_dev_b:p3 n 130 M0_fixed 11.53 M0_median 11.31 M1 9.37 M2 9.97 M3 10.12 | label 4.50 | 
+      249.98 real       900.76 user        13.89 sys
+           807485440  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              621606  page reclaims
+                 123  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4963  voluntary context switches
+             1659053  involuntary context switches
+        288927947555  instructions retired
+         73460423950  cycles elapsed
+           483525496  peak memory footprint

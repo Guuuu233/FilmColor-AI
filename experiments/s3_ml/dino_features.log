@@ -1,0 +1,209 @@
+W1017 17:39:05.249000 52938 torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/223 [00:00<?, ?it/s]Loading weights: 100%|██████████| 223/223 [00:00<00:00, 19758.96it/s]
+nlp:_DSF8434 (768,) 54.83
+nlp:_DSF8948 (768,) 57.27
+nlp:_DSF8951 (768,) 54.38
+nlp:_DSF8983 (768,) 53.85
+nlp:_DSF9229 (768,) 51.83
+nlp:_DSF9231 (768,) 52.23
+nlp:_DSF9235 (768,) 51.59
+nlp:_DSF9237 (768,) 53.74
+nlp:_DSF9238 (768,) 50.54
+nlp:_DSF9239 (768,) 51.63
+nlp:_DSF9243 (768,) 52.73
+shop:DSC_3823 (768,) 53.40
+shop:DSC_3825 (768,) 53.72
+shop:DSC_3827 (768,) 56.88
+shop:DSC_3828 (768,) 56.38
+shop:DSC_3829 (768,) 56.87
+shop:DSC_3831 (768,) 55.05
+shop:DSC_3833 (768,) 56.19
+shop:DSC_3835 (768,) 56.32
+shop:DSC_3837 (768,) 54.75
+shop:DSC_3838 (768,) 55.66
+shop:DSC_3839 (768,) 53.05
+shop:DSC_3840 (768,) 55.62
+shop:DSC_3843 (768,) 56.10
+shop:DSC_3844 (768,) 55.45
+shop:DSC_3846 (768,) 55.86
+shop:DSC_3847 (768,) 55.22
+shop:DSC_3849 (768,) 56.11
+shop:DSC_3853 (768,) 51.66
+shop:DSC_3855 (768,) 54.76
+shop:DSC_3856 (768,) 54.98
+shop:DSC_3859 (768,) 52.40
+blueneg:19941217A-15-tokyo (768,) 52.20
+blueneg:19941217B-08-tokyo (768,) 51.23
+blueneg:19941218B-23-tokyo (768,) 54.54
+blueneg:19941218C-05-tokyo (768,) 50.32
+blueneg:19941220D-20-kamakura (768,) 52.76
+blueneg:19941221D-25-kyoto (768,) 53.43
+blueneg:19941222D-32-kyoto (768,) 54.73
+blueneg:19941222E-04-nara (768,) 54.32
+blueneg:19941223E-17-osaka (768,) 49.37
+blueneg:19941224E-23-nagasaki (768,) 52.44
+blueneg:19941225E-34-nagasaki (768,) 51.42
+blueneg:19941225F-03-nagasaki (768,) 53.19
+blueneg:19941228F-12-tokyo (768,) 54.80
+blueneg:19960808B-03-new-orleans-siggraph96 (768,) 48.61
+blueneg:19960809B-14-new-orleans-siggraph96 (768,) 53.07
+blueneg:19960811B-28-arizona-london-bridge (768,) 52.88
+blueneg:19960812D-17-las-vegas (768,) 54.00
+blueneg:19970619A-14-white-chapel (768,) 51.84
+blueneg:19970619B-09-notre-dame (768,) 54.54
+blueneg:19970620C-10-st-michel (768,) 50.69
+blueneg:199807A-06-hk (768,) 54.05
+blueneg:199807B-10-orlando-seaworld (768,) 52.62
+blueneg:199910-01-korea (768,) 52.07
+blueneg:19960812D-09-las-vegas (768,) 52.25
+blueneg:199807A-09-orlando-siggraph (768,) 53.64
+blueneg:199807B-16-seattle (768,) 51.79
+blueneg:199910-08-korea (768,) 50.02
+ext:A113 (768,) 54.86
+ext:A002 (768,) 54.64
+ext:A114 (768,) 56.12
+ext:A075 (768,) 51.02
+ext:A003 (768,) 55.95
+ext:A115 (768,) 50.81
+ext:A004 (768,) 56.63
+ext:A116 (768,) 54.22
+ext:A005 (768,) 53.35
+ext:A117 (768,) 55.81
+ext:A078 (768,) 54.00
+ext:A006 (768,) 54.72
+ext:A118 (768,) 56.89
+ext:A007 (768,) 54.58
+ext:A119 (768,) 54.50
+ext:A080 (768,) 51.66
+ext:A008 (768,) 55.18
+ext:A120 (768,) 53.67
+ext:A081 (768,) 53.11
+ext:A009 (768,) 54.92
+ext:A121 (768,) 52.91
+ext:A010 (768,) 54.68
+ext:A122 (768,) 52.43
+ext:A011 (768,) 55.01
+ext:A123 (768,) 51.87
+ext:A084 (768,) 50.54
+ext:A012 (768,) 53.53
+ext:A124 (768,) 52.56
+ext:A013 (768,) 55.89
+ext:A125 (768,) 52.69
+ext:A086 (768,) 50.63
+ext:A014 (768,) 55.56
+ext:A126 (768,) 55.11
+ext:A087 (768,) 53.06
+ext:A015 (768,) 55.37
+ext:A127 (768,) 53.08
+ext:A016 (768,) 55.99
+ext:A128 (768,) 55.10
+ext:A017 (768,) 56.78
+ext:A129 (768,) 56.25
+ext:A018 (768,) 57.99
+ext:A130 (768,) 56.44
+ext:A091 (768,) 53.82
+ext:A019 (768,) 52.78
+ext:A131 (768,) 55.94
+ext:A092 (768,) 52.62
+ext:A020 (768,) 55.15
+ext:A132 (768,) 54.30
+ext:A093 (768,) 54.53
+ext:A021 (768,) 51.93
+ext:A133 (768,) 54.75
+ext:A094 (768,) 51.91
+ext:A022 (768,) 50.89
+ext:A134 (768,) 54.56
+ext:A095 (768,) 51.80
+ext:A023 (768,) 52.33
+ext:A135 (768,) 58.31
+ext:A024 (768,) 56.19
+ext:A136 (768,) 55.39
+ext:A097 (768,) 54.22
+ext:A025 (768,) 59.10
+ext:A137 (768,) 54.48
+ext:A098 (768,) 55.14
+ext:A026 (768,) 56.12
+ext:A138 (768,) 56.10
+ext:A027 (768,) 56.72
+ext:A139 (768,) 53.71
+ext:A100 (768,) 53.60
+ext:A028 (768,) 58.11
+ext:A140 (768,) 51.55
+ext:A101 (768,) 52.41
+ext:A029 (768,) 58.89
+ext:A141 (768,) 53.53
+ext:A102 (768,) 51.68
+ext:A030 (768,) 55.58
+ext:A142 (768,) 55.84
+ext:A103 (768,) 53.14
+ext:A031 (768,) 54.31
+ext:A143 (768,) 54.04
+ext:A032 (768,) 54.90
+ext:A144 (768,) 54.20
+ext:A105 (768,) 50.94
+ext:A033 (768,) 51.70
+ext:A145 (768,) 55.36
+ext:A106 (768,) 53.38
+ext:A034 (768,) 55.67
+ext:A146 (768,) 51.61
+ext:A035 (768,) 54.42
+ext:A147 (768,) 55.28
+ext:A036 (768,) 53.36
+ext:A037 (768,) 54.25
+ext:A149 (768,) 54.94
+ext:A110 (768,) 53.81
+ext:A038 (768,) 56.18
+ext:A150 (768,) 53.97
+ext:A192 (768,) 53.45
+ext:A193 (768,) 54.99
+ext:A194 (768,) 53.89
+ext:A195 (768,) 53.52
+ext:A196 (768,) 52.65
+ext:A197 (768,) 55.40
+ext:A199 (768,) 53.20
+ext:A200 (768,) 53.19
+ext:A201 (768,) 55.23
+ext:A202 (768,) 52.96
+ext:A203 (768,) 53.89
+ext:A204 (768,) 54.77
+ext:A205 (768,) 55.73
+ext:A206 (768,) 52.91
+ext:A207 (768,) 54.95
+ext:A208 (768,) 53.38
+ext:A209 (768,) 52.69
+ext:A211 (768,) 48.46
+ext:A212 (768,) 53.57
+ext:A213 (768,) 54.93
+ext:A214 (768,) 54.62
+ext:A215 (768,) 53.10
+ext:A216 (768,) 53.11
+ext:A217 (768,) 52.51
+ext:A218 (768,) 52.08
+ext:A219 (768,) 54.29
+ext:A220 (768,) 54.94
+ext:A221 (768,) 56.00
+ext:A222 (768,) 52.91
+ext:A223 (768,) 53.97
+ext:A224 (768,) 51.53
+ext:A225 (768,) 55.35
+ext:A226 (768,) 56.61
+ext:A227 (768,) 55.22
+ext:A228 (768,) 53.42
+       57.24 real         9.67 user         2.01 sys
+           711622656  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               77558  page reclaims
+                4388  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                7715  voluntary context switches
+              217748  involuntary context switches
+        123969623380  instructions retired
+         38801598278  cycles elapsed
+           559629632  peak memory footprint

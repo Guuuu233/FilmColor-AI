@@ -52,6 +52,50 @@ def features_grid(X8) -> np.ndarray:
     return np.array(out)
 
 
+DINO_SIZE = 224
+PAD_GREY = 0.5  # sRGB-encoded neutral grey for the padded short side
+
+
+def _area_matrix(n_in, n_out):
+    """(n_out, n_in) weights of exact area averaging: each output cell is the mean over its share of the input."""
+    edges = np.arange(n_out + 1) * (n_in / n_out)
+    lo, hi = edges[:-1, None], edges[1:, None]
+    i = np.arange(n_in)[None]
+    w = np.clip(np.minimum(hi, i + 1) - np.maximum(lo, i), 0, None)
+    return w / w.sum(1, keepdims=True)
+
+
+def area_resize(img, h, w):
+    """Area-average resampling of an (H, W, C) array to (h, w) (no interpolation across cells)."""
+    a = np.asarray(img, np.float64)
+    rows = np.tensordot(_area_matrix(a.shape[0], h), a, axes=(1, 0))      # (h, W, C)
+    return np.tensordot(rows, _area_matrix(a.shape[1], w), axes=(1, 1)).transpose(0, 2, 1)  # (h, w, C)
+
+
+def dino_input(X8, mean, std, render_fn) -> np.ndarray:
+    """F-dino input (design section 3): the linear positive area-averaged to a long side of 224, rendered by
+    ``render_fn`` (linear (h, w, 3) -> sRGB-encoded display in [0, 1]; the engine defaults), the short side padded
+    with neutral grey to 224 x 224 (nothing cropped), normalised with the model's mean / std; (3, 224, 224)."""
+    H, W = X8.shape[:2]
+    s = DINO_SIZE / max(H, W)
+    h, w = max(1, round(H * s)), max(1, round(W * s))
+    disp = np.asarray(render_fn(area_resize(X8, h, w).astype(np.float32)), np.float64)
+    canvas = np.full((DINO_SIZE, DINO_SIZE, 3), PAD_GREY)
+    y, x = (DINO_SIZE - h) // 2, (DINO_SIZE - w) // 2
+    canvas[y : y + h, x : x + w] = disp
+    return ((canvas - np.asarray(mean)) / np.asarray(std)).transpose(2, 0, 1).astype(np.float32)
+
+
+def pca_fit(F, k):
+    """Principal axes of the training features (centred, not scaled): (mean, components (k, d))."""
+    F = np.asarray(F, np.float64)
+    mu = F.mean(0)
+    _, _, vt = np.linalg.svd(F - mu, full_matrices=False)
+    comps = vt[:k]
+    comps *= np.where(comps[np.arange(len(comps)), np.abs(comps).argmax(1)] < 0, -1, 1)[:, None]  # sign fixed
+    return mu, comps
+
+
 class Ridge:
     """Ridge regression on standardised features (statistics from the training frames), unpenalised intercept,
     multi-output, closed form."""

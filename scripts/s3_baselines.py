@@ -1,4 +1,5 @@
-"""S3 step 4: baselines M0-M2 for experiment A (BlueNeg leave-one-roll-out) and the development stage of
+"""S3 step 4: baselines M0-M2 and the exploratory M3 (frozen DINOv2-Small features, PCA in the training fold,
+plus F-glob, ridge; run after experiment A tier 1 failed, so it opens no formal test) for experiment A (BlueNeg leave-one-roll-out) and the development stage of
 experiment B (4 folds, one ext_own roll out, shop_r01 always in training); docs/S3_ML_DESIGN.md v2.2.
 
   s3_baselines.py FRAMES_JSON LABEL_DIR OUT_DIR [WORKERS]
@@ -25,14 +26,15 @@ import numpy as np  # noqa: E402
 from filmcolor.colorimetry import delta_e2000  # noqa: E402
 from filmcolor.fit import FIT_CONFIG_S3, SCALES, reference_clipped, render_lab  # noqa: E402
 from filmcolor.frozen import load_cache  # noqa: E402
-from filmcolor.learn import Ridge, features_glob, features_grid, roll_bootstrap, select_alpha  # noqa: E402
+from filmcolor.learn import Ridge, features_glob, features_grid, pca_fit, roll_bootstrap, select_alpha  # noqa: E402
 from filmcolor.paths import data_dir  # noqa: E402
 from filmcolor.qc import quality_checks  # noqa: E402
 from filmcolor.render import BOUNDS, RenderParams, overexposure_stops, render  # noqa: E402
 
 LOOK = json.loads(Path("src/filmcolor/configs/global_look_v1.json").read_text())
 VARIANTS = {v: tuple(FIT_CONFIG_S3[v]["free"]) for v in ("p4", "p3")}
-METHODS = ("M0_fixed", "M0_median", "M1", "M2")
+METHODS = ("M0_fixed", "M0_median", "M1", "M2", "M3")
+PCA_K = 16  # F-dino: at most 16 principal components of the training frames (design section 3)
 NEW_CLIP_FLAG = 0.02
 
 
@@ -44,8 +46,10 @@ def load_frames(frames_json, label_dir):
             continue
         lab = json.loads(lp.read_text())
         X8 = load_cache(data_dir("s3_ml", "cache", f["domain"]) / f"{f['stem']}_X8.npy")
+        dino = data_dir("s3_ml", "dino", f["domain"]) / f"{f['stem']}_dino.npy"
         frames.append(dict(id=f["id"], domain=f["domain"], stem=f["stem"], roll=f["roll"],
                            assumed=f.get("color_space_assumed"), glob=features_glob(X8), grid=features_grid(X8),
+                           dino=load_cache(dino),
                            labels={v: lab[v]["params"] for v in VARIANTS},
                            label_de={k: lab[k]["de2000_median"] for k in ("p4", "p3", "ub7", "v1", "fixed_look")}))
     return frames
@@ -98,6 +102,17 @@ def predict_all(frames):
                     model = Ridge(alpha).fit(X, Y)
                     for f, row in zip(test, model.predict(design(test, m))):
                         out[(name, v, m, f["id"])] = dict(params=to_params(row, v), fold=roll, alpha=alpha)
+                # M3: PCA of the frozen DINOv2 features fitted on this fold's training frames, plus F-glob. The PCA
+                # stays fixed inside the inner regulariser search (fitted once on all training frames of the fold).
+                k = min(PCA_K, len(train) - 1)
+                mu, comps = pca_fit([f["dino"] for f in train], k)
+                proj = lambda fs: np.c_[(np.array([f["dino"] for f in fs], np.float64) - mu) @ comps.T,  # noqa: E731
+                                        [f["glob"] for f in fs]]
+                X = proj(train)
+                alpha, _ = select_alpha(X, Y, groups, validate=inner)
+                model = Ridge(alpha).fit(X, Y)
+                for f, row in zip(test, model.predict(proj(test))):
+                    out[(name, v, "M3", f["id"])] = dict(params=to_params(row, v), fold=roll, alpha=alpha, pca_k=k)
     return out
 
 
@@ -143,6 +158,15 @@ def compare(rows, a, b):
 def passes(c, level=0.95):
     return c["ci"][1] < 0 and c["improved_rolls"] >= 0.6 and c["clip_over_2pct"][list(c["clip_over_2pct"])[0]] <= \
         c["clip_over_2pct"][list(c["clip_over_2pct"])[1]]
+
+
+def param_bias(rows, variant, by_id):
+    """Mean signed error and RMSE of each predicted parameter, in scale units, per method."""
+    out = {}
+    for m in METHODS:
+        e = {k: [(r[m]["params"][k] - by_id[r["id"]]["labels"][variant][k]) / SCALES[k] for r in rows] for k in VARIANTS[variant]}
+        out[m] = {k: dict(bias=float(np.mean(v)), rmse=float(np.sqrt(np.mean(np.square(v))))) for k, v in e.items()}
+    return out
 
 
 def summary(rows, frames_by_id):
@@ -192,7 +216,10 @@ def main(frames_json, label_dir, out_dir, workers="6"):
             res["tiers"] = {"1 M1 vs M0_median": compare(rows, "M1", "M0_median"), "2 M2 vs M1": compare(rows, "M2", "M1")}
             res["exploratory"] = {"M1 vs M0_fixed": compare(rows, "M1", "M0_fixed"), "M2 vs M0_fixed": compare(rows, "M2", "M0_fixed"),
                                   "M2 vs M0_median": compare(rows, "M2", "M0_median"),
-                                  "M0_median vs M0_fixed": compare(rows, "M0_median", "M0_fixed")}
+                                  "M0_median vs M0_fixed": compare(rows, "M0_median", "M0_fixed"),
+                                  "M3 vs M2": compare(rows, "M3", "M2"), "M3 vs M1": compare(rows, "M3", "M1"),
+                                  "M3 vs M0_median": compare(rows, "M3", "M0_median"),
+                                  "M3 vs M0_fixed": compare(rows, "M3", "M0_fixed")}
             t1 = passes(res["tiers"]["1 M1 vs M0_median"])
             res["conclusion"] = dict(tier1_pass=t1, tier2_pass=t1 and passes(res["tiers"]["2 M2 vs M1"]),
                                      note="tier 2 only counts if tier 1 passes (fixed sequence); A_b is an ablation, descriptive")
@@ -201,7 +228,12 @@ def main(frames_json, label_dir, out_dir, workers="6"):
             res["without_color_space_assumed"] = summary([r for r in rows if not r["assumed"]], by_id)
             res["per_roll_mean_diff"] = {f"{a} - {b}": {roll: float(np.mean([r[a]["de_median"] - r[b]["de_median"] for r in rows if r["roll"] == roll]))
                                                          for roll in sorted({r["roll"] for r in rows})}
-                                         for a, b in (("M1", "M0_median"), ("M2", "M1"), ("M2", "M0_fixed"))}
+                                         for a, b in (("M1", "M0_median"), ("M2", "M1"), ("M2", "M0_fixed"),
+                                                      ("M3", "M2"), ("M3", "M1"), ("M3", "M0_fixed"), ("M3", "M0_median"))}
+        res["param_bias"] = {"all": param_bias(rows, v, by_id)}
+        if not e.startswith("A"):
+            res["param_bias"] |= {roll: param_bias([r for r in rows if r["roll"] == roll], v, by_id)
+                                  for roll in sorted({r["roll"] for r in rows})}
         results[f"{e}:{v}"] = res
         results[f"{e}:{v}"]["frames"] = rows
     (out_dir / "results.json").write_text(json.dumps(results, indent=1, default=float))
