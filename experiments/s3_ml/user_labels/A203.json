@@ -1,0 +1,209 @@
+{
+ "id": "ext:A203",
+ "roll": "own-g200-20240320-dsc4889",
+ "user_ref": "/Volumes/waizhiyingpan/\u7167\u7247/\u65b0\u7586/#007 \u91d1200/DSC_4901-4.jpg",
+ "user_ref_sha256": "b9965d0b04a81439b6d0b1cbd17ed4952b3c302f16e7449a6eafd53155f90e2c",
+ "ref_kind": "icc",
+ "alignment": {
+  "rot90": 0,
+  "scale": 0.995,
+  "offset": [
+   2,
+   4
+  ],
+  "ncc": 0.9851554355455318,
+  "factor": 1
+ },
+ "fixed_look": {
+  "de2000_median": 5.9025114817934,
+  "de2000_mean": 6.1771022785136624
+ },
+ "p4": {
+  "mode": "p4",
+  "free": [
+   "ev",
+   "temp",
+   "tint",
+   "midtone"
+  ],
+  "fixed": {
+   "sat": 1.0969133294792859,
+   "contrast": 2.0,
+   "shoulder": 0.10837665455438666
+  },
+  "lam": 0.05,
+  "scales": {
+   "ev": 1.0,
+   "temp": 0.25,
+   "tint": 0.25,
+   "midtone": 0.05
+  },
+  "params": {
+   "ev": -0.4901622351583355,
+   "temp": -0.48259994781701493,
+   "tint": 0.2094539183738295,
+   "sat": 1.0969133294792859,
+   "contrast": 2.0,
+   "midtone": 0.30115685616584487,
+   "shoulder": 0.10837665455438666,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "de2000_mean": 4.1912014194883795,
+  "de2000_median": 3.0365762647320635,
+  "de2000_p90": 8.628708176712,
+  "objective": 3.8822867032628596,
+  "diagnostics": {
+   "below_zero_after_colour": 0.011313928102846118,
+   "above_white": 6.413185509407341e-06
+  },
+  "at_bound": [],
+  "highlight": {
+   "weight": 30.0,
+   "ref_clip_encoded": 0.99,
+   "delta_stops": 0.05,
+   "clipped_frac": 1.6032963773518354e-05,
+   "ref_clipped_frac": 0.0,
+   "clipped_where_ref_not_clipped_frac": 1.6032963773518354e-05,
+   "penalty": 5.1551074587450326e-05,
+   "area_weight": 10.0,
+   "area_ramp_stops": 0.05,
+   "area": 1.5223833302159068e-05
+  },
+  "n_near_optimal": 5,
+  "spread_near_optimal": {
+   "ev": 0.0028816725792726317,
+   "temp": 0.002570039669304691,
+   "tint": 0.0003238304085545485,
+   "midtone": 0.013761464062492124
+  },
+  "fit_config": "fit_config_s3_p4",
+  "look": "global_look_v1"
+ },
+ "ub7": {
+  "mode": "7",
+  "free": [
+   "ev",
+   "temp",
+   "tint",
+   "sat",
+   "contrast",
+   "midtone",
+   "shoulder"
+  ],
+  "fixed": {},
+  "lam": 0.0,
+  "scales": {
+   "ev": 1.0,
+   "temp": 0.25,
+   "tint": 0.25,
+   "sat": 0.25,
+   "contrast": 0.25,
+   "midtone": 0.05,
+   "shoulder": 0.25
+  },
+  "params": {
+   "ev": 0.2260245780332981,
+   "temp": -0.5083252931445567,
+   "tint": 0.21919850307853897,
+   "sat": 1.2693713298548817,
+   "contrast": 1.4825346282705758,
+   "midtone": 0.19204772020298994,
+   "shoulder": 0.24557283576706623,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "de2000_mean": 3.6934998985135925,
+  "de2000_median": 2.6142078147377603,
+  "de2000_p90": 7.87812847720223,
+  "objective": 2.884503819720294,
+  "diagnostics": {
+   "below_zero_after_colour": 0.013983951003262707,
+   "above_white": 6.947617635191287e-06
+  },
+  "at_bound": [],
+  "highlight": {
+   "weight": 30.0,
+   "ref_clip_encoded": 0.99,
+   "delta_stops": 0.05,
+   "clipped_frac": 1.7636260150870188e-05,
+   "ref_clipped_frac": 0.0,
+   "clipped_where_ref_not_clipped_frac": 1.7636260150870188e-05,
+   "penalty": 5.0770099392270886e-05,
+   "area_weight": 10.0,
+   "area_ramp_stops": 0.05,
+   "area": 1.6137331885818464e-05
+  },
+  "n_near_optimal": 5,
+  "spread_near_optimal": {
+   "ev": 0.736096318678622,
+   "temp": 0.0755449241714028,
+   "tint": 0.030761630728632694,
+   "sat": 0.18133363262988533,
+   "contrast": 2.069821826239138,
+   "midtone": 2.613333005978362,
+   "shoulder": 3.18542067561616
+  }
+ },
+ "shop_p4_on_user": {
+  "de2000_median": 7.718984239083241,
+  "de2000_mean": 9.295089678161037
+ },
+ "shop_p4_params": {
+  "ev": -0.8663190287535801,
+  "temp": -0.4003817136989416,
+  "tint": 0.17396475273830958,
+  "sat": 1.0969133294792859,
+  "contrast": 2.0,
+  "midtone": 0.2478516991046562,
+  "shoulder": 0.10837665455438666,
+  "matrix": [
+   [
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ },
+ "shop_p4_de": 3.3806829971648797
+}

@@ -1,0 +1,213 @@
+{
+ "id": "ext:A003",
+ "roll": "own-e5207-20240401-dsc6161",
+ "user_ref": "/Volumes/waizhiyingpan/\u7167\u7247/\u65b0\u7586/#012 5207/DSC_6163-\u7f16\u8f91.jpg",
+ "user_ref_sha256": "c6f5dea7811f41092f08b1622dd14dccc1524575cadc31c819d345afffd13d99",
+ "ref_kind": "icc",
+ "alignment": {
+  "rot90": 3,
+  "scale": 0.995,
+  "offset": [
+   2,
+   5
+  ],
+  "ncc": 0.9552470016331145,
+  "factor": 1
+ },
+ "fixed_look": {
+  "de2000_median": 22.593048632299045,
+  "de2000_mean": 24.02588693932736
+ },
+ "p4": {
+  "mode": "p4",
+  "free": [
+   "ev",
+   "temp",
+   "tint",
+   "midtone"
+  ],
+  "fixed": {
+   "sat": 1.0969133294792859,
+   "contrast": 2.0,
+   "shoulder": 0.10837665455438666
+  },
+  "lam": 0.05,
+  "scales": {
+   "ev": 1.0,
+   "temp": 0.25,
+   "tint": 0.25,
+   "midtone": 0.05
+  },
+  "params": {
+   "ev": -0.22267609285766177,
+   "temp": -1.0,
+   "tint": 0.07264210385703816,
+   "sat": 1.0969133294792859,
+   "contrast": 2.0,
+   "midtone": 0.32288469009195186,
+   "shoulder": 0.10837665455438666,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "de2000_mean": 18.157582697163214,
+  "de2000_median": 18.17662824402669,
+  "de2000_p90": 33.13526105510448,
+  "objective": 18.57334655899971,
+  "diagnostics": {
+   "below_zero_after_colour": 0.12232456597430985,
+   "above_white": 1.0688642515678903e-06
+  },
+  "at_bound": [
+   "temp"
+  ],
+  "highlight": {
+   "weight": 30.0,
+   "ref_clip_encoded": 0.99,
+   "delta_stops": 0.05,
+   "clipped_frac": 3.2065927547036706e-06,
+   "ref_clipped_frac": 0.000662161403846308,
+   "clipped_where_ref_not_clipped_frac": 3.2065927547036706e-06,
+   "penalty": 6.799860709797774e-07,
+   "area_weight": 10.0,
+   "area_ramp_stops": 0.05,
+   "area": 3.2065927547036706e-06
+  },
+  "n_near_optimal": 5,
+  "spread_near_optimal": {
+   "ev": 0.00424872049297681,
+   "temp": 0.0,
+   "tint": 0.0014844230302746841,
+   "midtone": 0.0230096194713707
+  },
+  "fit_config": "fit_config_s3_p4",
+  "look": "global_look_v1"
+ },
+ "ub7": {
+  "mode": "7",
+  "free": [
+   "ev",
+   "temp",
+   "tint",
+   "sat",
+   "contrast",
+   "midtone",
+   "shoulder"
+  ],
+  "fixed": {},
+  "lam": 0.0,
+  "scales": {
+   "ev": 1.0,
+   "temp": 0.25,
+   "tint": 0.25,
+   "sat": 0.25,
+   "contrast": 0.25,
+   "midtone": 0.05,
+   "shoulder": 0.25
+  },
+  "params": {
+   "ev": 1.1129595555354332,
+   "temp": -1.0,
+   "tint": -0.0913873456102607,
+   "sat": 0.2570471439801253,
+   "contrast": 0.6905993966185372,
+   "midtone": 0.23235411643514964,
+   "shoulder": 0.10477337497900054,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "de2000_mean": 13.972443242704243,
+  "de2000_median": 13.923209852789203,
+  "de2000_p90": 22.886014798328194,
+  "objective": 13.15969595722865,
+  "diagnostics": {
+   "below_zero_after_colour": 0.045230059669346845,
+   "above_white": 0.003963348644813737
+  },
+  "at_bound": [
+   "temp"
+  ],
+  "highlight": {
+   "weight": 30.0,
+   "ref_clip_encoded": 0.99,
+   "delta_stops": 0.05,
+   "clipped_frac": 0.007056107356725428,
+   "ref_clipped_frac": 0.000662161403846308,
+   "clipped_where_ref_not_clipped_frac": 0.007025644725555742,
+   "penalty": 0.00035796216253478503,
+   "area_weight": 10.0,
+   "area_ramp_stops": 0.05,
+   "area": 0.004918861852692301
+  },
+  "n_near_optimal": 1,
+  "spread_near_optimal": {
+   "ev": 0.0,
+   "temp": 0.0,
+   "tint": 0.0,
+   "sat": 0.0,
+   "contrast": 0.0,
+   "midtone": 0.0,
+   "shoulder": 0.0
+  }
+ },
+ "shop_p4_on_user": {
+  "de2000_median": 19.33023232917382,
+  "de2000_mean": 19.837439939691784
+ },
+ "shop_p4_params": {
+  "ev": -0.15084141455810388,
+  "temp": -0.8565187648767281,
+  "tint": 0.2634063903037223,
+  "sat": 1.0969133294792859,
+  "contrast": 2.0,
+  "midtone": 0.30763934153257877,
+  "shoulder": 0.10837665455438666,
+  "matrix": [
+   [
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ },
+ "shop_p4_de": 15.396201537572853
+}

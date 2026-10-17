@@ -1,0 +1,211 @@
+{
+ "id": "ext:A224",
+ "roll": "own-g200-20240320-dsc4889",
+ "user_ref": "/Volumes/waizhiyingpan/\u7167\u7247/\u65b0\u7586/#007 \u91d1200/DSC_4922-4.jpg",
+ "user_ref_sha256": "1319a5e63f0805077f9e0ecdac74533fe6fc537b4a2ae5de8221edb9ec671064",
+ "ref_kind": "icc",
+ "alignment": {
+  "rot90": 0,
+  "scale": 0.995,
+  "offset": [
+   3,
+   5
+  ],
+  "ncc": 0.9821552874252542,
+  "factor": 1
+ },
+ "fixed_look": {
+  "de2000_median": 10.661228198533253,
+  "de2000_mean": 10.51076212024277
+ },
+ "p4": {
+  "mode": "p4",
+  "free": [
+   "ev",
+   "temp",
+   "tint",
+   "midtone"
+  ],
+  "fixed": {
+   "sat": 1.0969133294792859,
+   "contrast": 2.0,
+   "shoulder": 0.10837665455438666
+  },
+  "lam": 0.05,
+  "scales": {
+   "ev": 1.0,
+   "temp": 0.25,
+   "tint": 0.25,
+   "midtone": 0.05
+  },
+  "params": {
+   "ev": 0.4812945972046699,
+   "temp": -0.10719953691667014,
+   "tint": 0.028691812378617305,
+   "sat": 1.0969133294792859,
+   "contrast": 2.0,
+   "midtone": 0.31436424683788405,
+   "shoulder": 0.10837665455438666,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "de2000_mean": 6.04148792521967,
+  "de2000_median": 4.977803131738312,
+  "de2000_p90": 11.047945745125446,
+  "objective": 5.558368286826988,
+  "diagnostics": {
+   "below_zero_after_colour": 0.01330682549989445,
+   "above_white": 8.016481886759177e-06
+  },
+  "at_bound": [],
+  "highlight": {
+   "weight": 30.0,
+   "ref_clip_encoded": 0.99,
+   "delta_stops": 0.05,
+   "clipped_frac": 2.2446149282925697e-05,
+   "ref_clipped_frac": 0.005167424224204966,
+   "clipped_where_ref_not_clipped_frac": 3.2065927547036706e-06,
+   "penalty": 1.2408145754849816e-08,
+   "area_weight": 10.0,
+   "area_ramp_stops": 0.05,
+   "area": 9.866132819529883e-07
+  },
+  "n_near_optimal": 5,
+  "spread_near_optimal": {
+   "ev": 0.004413998102712646,
+   "temp": 0.0007534791473119418,
+   "tint": 0.0010018726937323363,
+   "midtone": 0.018075238843636487
+  },
+  "fit_config": "fit_config_s3_p4",
+  "look": "global_look_v1"
+ },
+ "ub7": {
+  "mode": "7",
+  "free": [
+   "ev",
+   "temp",
+   "tint",
+   "sat",
+   "contrast",
+   "midtone",
+   "shoulder"
+  ],
+  "fixed": {},
+  "lam": 0.0,
+  "scales": {
+   "ev": 1.0,
+   "temp": 0.25,
+   "tint": 0.25,
+   "sat": 0.25,
+   "contrast": 0.25,
+   "midtone": 0.05,
+   "shoulder": 0.25
+  },
+  "params": {
+   "ev": 0.5076083696859363,
+   "temp": 0.06310008378042682,
+   "tint": 0.035665522089912936,
+   "sat": 0.854573759530127,
+   "contrast": 2.0,
+   "midtone": 0.31310050928629385,
+   "shoulder": 0.32699141993053293,
+   "matrix": [
+    [
+     1.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  "de2000_mean": 5.809340121415286,
+  "de2000_median": 4.929856890546911,
+  "de2000_p90": 10.275296432135388,
+  "objective": 4.943650749504451,
+  "diagnostics": {
+   "below_zero_after_colour": 0.011300032867575735,
+   "above_white": 0.0
+  },
+  "at_bound": [
+   "contrast"
+  ],
+  "highlight": {
+   "weight": 30.0,
+   "ref_clip_encoded": 0.99,
+   "delta_stops": 0.05,
+   "clipped_frac": 0.0,
+   "ref_clipped_frac": 0.005167424224204966,
+   "clipped_where_ref_not_clipped_frac": 0.0,
+   "penalty": 0.0,
+   "area_weight": 10.0,
+   "area_ramp_stops": 0.05,
+   "area": 0.0
+  },
+  "n_near_optimal": 5,
+  "spread_near_optimal": {
+   "ev": 0.09140202626083338,
+   "temp": 0.32891352446340655,
+   "tint": 0.009384674109937097,
+   "sat": 0.1871170306051625,
+   "contrast": 0.06301277473072675,
+   "midtone": 0.2742984229672931,
+   "shoulder": 2.684617244292475
+  }
+ },
+ "shop_p4_on_user": {
+  "de2000_median": 16.39440054871118,
+  "de2000_mean": 16.34492611173204
+ },
+ "shop_p4_params": {
+  "ev": -0.3757107185705458,
+  "temp": -0.0973337760459436,
+  "tint": 0.13628915322238883,
+  "sat": 1.0969133294792859,
+  "contrast": 2.0,
+  "midtone": 0.19239150617216724,
+  "shoulder": 0.10837665455438666,
+  "matrix": [
+   [
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ]
+ },
+ "shop_p4_de": 2.9724376610189696
+}
