@@ -39,6 +39,9 @@ MODES = {
     "6": dict(free=tuple(k for k in PER_IMAGE if k != "ev"), lam=0.0),
     "7": dict(free=PER_IMAGE, lam=0.0),
     "7reg": dict(free=PER_IMAGE, lam=0.05),
+    # S3 constrained labels (docs/S3_ML_DESIGN.md 2.3): the rest of the parameters come from ``fixed``
+    "p4": dict(free=("ev", "temp", "tint", "midtone"), lam=0.05),
+    "p3": dict(free=("temp", "tint", "midtone"), lam=0.05),
 }
 FD_STEP = 2e-3     # finite-difference step in scaled units
 MAXITER = 300      # L-BFGS-B iterations per start
@@ -90,17 +93,26 @@ def clip_area(pre_clip, allowed=None, ramp: float = CLIP_AREA_RAMP) -> float:
 
 def fit_reference(P, ref_lab, mode: str = "7", *, n_starts: int = 5, seed: int = 0,
                   n_sample: int = 20000, lam: float | None = None, scales: dict | None = None,
-                  highlight_weight: float = HIGHLIGHT_WEIGHT, area_weight: float = 0.0) -> dict:
+                  highlight_weight: float = HIGHLIGHT_WEIGHT, area_weight: float = 0.0,
+                  fixed: dict | None = None) -> dict:
     """``P``: scene-linear positive pixels (..., 3); ``ref_lab``: reference Lab on the same pixels.
     ``lam`` / ``scales`` override the mode's penalty strength and the parameter scales;
     ``highlight_weight`` sets the highlight depth constraint and ``area_weight`` (dE per unit image share)
-    the clipped-area constraint (0 = off)."""
+    the clipped-area constraint (0 = off). ``fixed`` gives values for parameters that are not free in this
+    mode (the others not free stay at the engine defaults); the penalty still centres the free ones on the
+    defaults."""
     for name, w in (("highlight_weight", highlight_weight), ("area_weight", area_weight)):
         if not (np.isfinite(w) and w >= 0):
             raise ValueError(f"{name} must be >= 0, got {w}")
     scales = SCALES | (scales or {})
     cfg = MODES[mode]
     free, lam = list(cfg["free"]), cfg["lam"] if lam is None else lam
+    fixed = dict(fixed or {})
+    for k, v in fixed.items():
+        if k not in PER_IMAGE or k in free:
+            raise ValueError(f"fixed: {k} is not a non-free per-image parameter of mode {mode}")
+        if not (np.isfinite(v) and BOUNDS[k][0] <= v <= BOUNDS[k][1]):
+            raise ValueError(f"fixed: {k}={v} outside {BOUNDS[k]}")
     P2, R2 = np.asarray(P, np.float32).reshape(-1, 3), np.asarray(ref_lab, np.float64).reshape(-1, 3)
     if len(P2) != len(R2):
         raise ValueError("P and ref_lab must cover the same pixels")
@@ -116,7 +128,7 @@ def fit_reference(P, ref_lab, mode: str = "7", *, n_starts: int = 5, seed: int =
 
     def params_of(u):
         theta = np.clip(d0 + sc * u, blo, bhi)  # clip after the transform: rounding can step past a bound
-        return RenderParams(**{k: float(v) for k, v in zip(free, theta)})
+        return RenderParams(**{k: float(v) for k, v in fixed.items()}, **{k: float(v) for k, v in zip(free, theta)})
 
     def objective(u):
         lab, _, pre = render_lab(Ps, params_of(u), with_pre_clip=True)
@@ -142,7 +154,7 @@ def fit_reference(P, ref_lab, mode: str = "7", *, n_starts: int = 5, seed: int =
     rng_u = hi - lo
     at_bound = [k for k, u, l, h, w in zip(free, best["u"], lo, hi, rng_u) if min(u - l, h - u) <= 0.01 * w]
     return dict(
-        mode=mode, free=free, lam=lam, scales={k: scales[k] for k in free}, params=p.to_dict(),
+        mode=mode, free=free, fixed=fixed, lam=lam, scales={k: scales[k] for k in free}, params=p.to_dict(),
         de2000_mean=float(de.mean()), de2000_median=float(np.median(de)), de2000_p90=float(np.percentile(de, 90)),
         objective=best["objective"], diagnostics=diag, at_bound=at_bound,
         highlight=dict(weight=highlight_weight, ref_clip_encoded=REF_CLIP_ENCODED, delta_stops=HIGHLIGHT_DELTA,
@@ -170,20 +182,43 @@ FIT_CONFIG_V1 = dict(
 )
 
 
-def fit_reference_v1(P, ref_lab) -> dict:
-    """``fit_reference`` under FIT_CONFIG_V1; refuses to run if the module's scales, bounds or constants
-    differ from the frozen values (e.g. inside ``experimental_bounds``)."""
-    c = FIT_CONFIG_V1
+def _check_frozen(c: dict) -> None:
     current = dict(scales=SCALES, bounds={k: tuple(BOUNDS[k]) for k in PER_IMAGE}, huber_delta=HUBER_DELTA,
                    highlight_delta_stops=HIGHLIGHT_DELTA, area_ramp_stops=CLIP_AREA_RAMP,
                    ref_clip_encoded=REF_CLIP_ENCODED, fd_step=FD_STEP, maxiter=MAXITER, near_optimal=NEAR_OPTIMAL,
                    lam=MODES[c["mode"]]["lam"])
     for k, v in current.items():
         if v != c[k]:
-            raise RuntimeError(f"fit_config_v1: {k} is {v}, frozen value {c[k]}")
+            raise RuntimeError(f"{c['id']}: {k} is {v}, frozen value {c[k]}")
+
+
+def fit_reference_v1(P, ref_lab) -> dict:
+    """``fit_reference`` under FIT_CONFIG_V1; refuses to run if the module's scales, bounds or constants
+    differ from the frozen values (e.g. inside ``experimental_bounds``)."""
+    c = FIT_CONFIG_V1
+    _check_frozen(c)
     r = fit_reference(P, ref_lab, c["mode"], n_starts=c["n_starts"], seed=c["seed"], n_sample=c["n_sample"],
                       lam=c["lam"], highlight_weight=c["highlight_weight"], area_weight=c["area_weight"])
     r["fit_config"] = c["id"]
+    return r
+
+
+# Frozen 2026-10-17 (docs/S3_ML_DESIGN.md 2.3): FIT_CONFIG_V1 with fewer free parameters; the others are taken
+# from a fixed global look (theta_fixed), never from the frame's own reference.
+FIT_CONFIG_S3 = {v: FIT_CONFIG_V1 | dict(id=f"fit_config_s3_{v}", mode=v, free=MODES[v]["free"],
+                                         fixed_from_look=tuple(k for k in PER_IMAGE if k not in MODES[v]["free"]))
+                 for v in ("p4", "p3")}
+
+
+def fit_reference_s3(P, ref_lab, variant: str, look: dict) -> dict:
+    """Constrained label under FIT_CONFIG_S3[variant] ("p4" / "p3"); ``look`` is a global look config
+    (``id``, ``params``) that supplies the parameters that are not free. Guarded like ``fit_reference_v1``."""
+    c = FIT_CONFIG_S3[variant]
+    _check_frozen(c)
+    fixed = {k: float(look["params"][k]) for k in c["fixed_from_look"]}
+    r = fit_reference(P, ref_lab, c["mode"], n_starts=c["n_starts"], seed=c["seed"], n_sample=c["n_sample"],
+                      lam=c["lam"], highlight_weight=c["highlight_weight"], area_weight=c["area_weight"], fixed=fixed)
+    r["fit_config"], r["look"] = c["id"], look["id"]
     return r
 
 

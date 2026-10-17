@@ -1,0 +1,25 @@
+v1_frozen  ev=-0.0477 temp=-0.2428 tint=0.1796 sat=1.0969 contrast=2.0000 midtone=0.2682 shoulder=0.1084 | median dE nlp 6.337 shop 6.656
+v1_refit   ev=-0.0477 temp=-0.2428 tint=0.1796 sat=1.0969 contrast=2.0000 midtone=0.2682 shoulder=0.1084 | median dE nlp 6.337 shop 6.656
+c1         ev=-0.0595 temp=-0.2542 tint=0.1834 sat=1.1218 contrast=2.0000 midtone=0.2730 shoulder=0.1133 | median dE nlp 6.281 shop 6.471
+v1 refit - frozen v1: {'ev': 0.0, 'temp': 0.0, 'tint': 0.0, 'sat': 0.0, 'contrast': 0.0, 'midtone': 0.0, 'shoulder': 0.0}
+c1 - v1 in scale units: {'contrast': 0.0, 'sat': 0.1, 'shoulder': 0.02, 'ev': -0.012}
+median dE change c1 - v1: {'nlp': -0.056, 'shop': -0.185}
+decision: global_look_v1
+      241.04 real       238.22 user         3.10 sys
+           886243328  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              105508  page reclaims
+                1495  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1064  voluntary context switches
+              139533  involuntary context switches
+       2874033262134  instructions retired
+        892772337937  cycles elapsed
+           922551688  peak memory footprint

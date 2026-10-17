@@ -193,3 +193,46 @@ def test_fit_config_v1_is_frozen_and_guarded():
     with experimental_bounds(contrast=(0.5, 3.0)):
         with pytest.raises(RuntimeError, match="bounds"):
             fit_reference_v1(P, ref[0])
+
+
+def test_fixed_parameters_are_kept_and_the_free_ones_fitted():
+    P = scene()
+    true = TRUE6 | dict(ev=0.3)
+    ref, _ = render_lab(P[None], RenderParams(**true))
+    fixed = {k: true[k] for k in ("sat", "contrast", "shoulder")}
+    r = fit_reference(P, ref[0], "p4", n_starts=2, lam=0.0, fixed=fixed)
+    assert r["fixed"] == fixed and r["free"] == ["ev", "temp", "tint", "midtone"]
+    assert all(r["params"][k] == v for k, v in fixed.items())
+    assert r["de2000_median"] < 0.2
+    # without the fixed values the same free parameters cannot reach the reference
+    r0 = fit_reference(P, ref[0], "p4", n_starts=2, lam=0.0)
+    assert all(r0["params"][k] == DEFAULTS[k] for k in fixed) and r0["de2000_median"] > r["de2000_median"] + 0.5
+
+
+def test_fixed_rejects_free_unknown_or_out_of_bounds_parameters():
+    P = scene(100)
+    for bad in (dict(ev=0.1), dict(matrix=1.0), dict(contrast=5.0), dict(sat=float("nan"))):
+        with pytest.raises(ValueError, match="fixed"):
+            fit_reference(P, np.zeros((100, 3)), "p4", fixed=bad)
+
+
+def test_fit_config_s3_is_frozen_guarded_and_takes_the_look():
+    from filmcolor.fit import FIT_CONFIG_S3, FIT_CONFIG_V1, fit_reference_s3
+    from filmcolor.render import experimental_bounds
+
+    for v, free in (("p4", ("ev", "temp", "tint", "midtone")), ("p3", ("temp", "tint", "midtone"))):
+        c = FIT_CONFIG_S3[v]
+        assert c["id"] == f"fit_config_s3_{v}" and tuple(c["free"]) == free
+        assert set(c["fixed_from_look"]) == set(PER_IMAGE) - set(free)
+        for k in ("lam", "highlight_weight", "area_weight", "scales", "bounds", "n_starts", "n_sample", "seed"):
+            assert c[k] == FIT_CONFIG_V1[k], k
+    look = dict(id="test_look", params=TRUE6 | dict(ev=0.2))
+    P = scene(3000)
+    ref, _ = render_lab(P[None], RenderParams(**look["params"]))
+    r = fit_reference_s3(P, ref[0], "p3", look)
+    assert (r["fit_config"], r["look"]) == ("fit_config_s3_p3", "test_look")
+    assert all(r["params"][k] == look["params"][k] for k in ("ev", "sat", "contrast", "shoulder"))
+    assert r["de2000_median"] < 1.0
+    with experimental_bounds(contrast=(0.5, 3.0)):
+        with pytest.raises(RuntimeError, match="bounds"):
+            fit_reference_s3(P, ref[0], "p4", look)
