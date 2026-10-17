@@ -1,0 +1,814 @@
+{
+ "id": "frozen_test_v1_photos",
+ "created": "2026-10-17",
+ "addendum_to": "frozen_test_v1",
+ "source": "/Volumes/waizhiyingpan/照片",
+ "rule": "Addendum to frozen_test_v1: copies of the frozen frames found in another photo folder (other exports, the\nuser's own edits), by content (audit_photos_match.py). A folder counts as a copy of a frozen roll when at least\nFOLDER_SHARE of its photos match frames of that roll with r >= FOLDER_R; every photo of such a folder whose best\nmatch is a frozen frame is frozen, by SHA256. Candidates outside such folders were checked by eye and are listed\nas rejected (different pictures with a similar light layout), not frozen.",
+ "folders": {
+  "#005 5219 小寨华山": "own-e5219-20240323-dsc8202",
+  "新疆/#011 5207": "own-e5207-20240401-dsc6199"
+ },
+ "eye_check": "2026-10-17: every rejected candidate looked at next to its matched frozen frame; none is the same frame",
+ "files": [
+  {
+   "id": "photos:#005 5219 小寨华山/1 (1).jpg",
+   "sha256": "d72aa86ab0fd256a342cc82b363907d3d452216a9ca68128ccd4e2697279c97c",
+   "matched_frame": "R131",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (10).jpg",
+   "sha256": "ea1adf53129f7fb8de60361fc9aa38d5fbbd5ff29c95f52f26ff494b8f1bc50d",
+   "matched_frame": "R140",
+   "r": 0.9359,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (11).jpg",
+   "sha256": "db86e8185b9aef201c3d4c00177fe91c9e8934d9db1bff1681b53c1c44b5d666",
+   "matched_frame": "R140",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (12).jpg",
+   "sha256": "788da1aeeac3ec8a1d6ab50398d358b0f58eaa59f89d8f523d1edfe6eaf25825",
+   "matched_frame": "R141",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (13).jpg",
+   "sha256": "7f53568f199598fc1b0ba84cbbcdf5f9502c0663915bda307b31fedec3f990dc",
+   "matched_frame": "R142",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (14).jpg",
+   "sha256": "f79bab027fc53cf51231c3c45eb58d5d3675bc7a5ffc43b27468f75e39658f11",
+   "matched_frame": "R143",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (15).jpg",
+   "sha256": "d29f2db3a8c9499a29d3c996e5b5a5e2c78195cb1e2e9600433385a2c9751cd2",
+   "matched_frame": "R144",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (16).jpg",
+   "sha256": "b904c90b6d87744a95fa7323a3387bb3df21fcbc36caaf9db4e1591c354342bd",
+   "matched_frame": "R145",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (17).jpg",
+   "sha256": "2a7675d6554a13a1610f780a8e5df459755ddddffcfc76fd64593da3d02d7cae",
+   "matched_frame": "R146",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (18).jpg",
+   "sha256": "f6e430886958f7b2e61e910f64838d8aa3a014eedad23797459600e6e193b7e7",
+   "matched_frame": "R147",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (19).jpg",
+   "sha256": "234403a6bc3c460699169a7d25f7b4eeef32b04564c0e9e7b60440e9ff1488b6",
+   "matched_frame": "R148",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (2).jpg",
+   "sha256": "a90305d09f3189232b9d05e741271c447572422b3f99d1406b512ffcb3fd8dc8",
+   "matched_frame": "R132",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (20).jpg",
+   "sha256": "d5f1db95c21c663695c1153fae5616528fabaa703ae25bbc5830fa7d6dd23f22",
+   "matched_frame": "R149",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (21).jpg",
+   "sha256": "f322e3c873b1f3ab479dbb7fbc832ece6ed4c8c5305f40671673cfc755559af2",
+   "matched_frame": "R150",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (22).jpg",
+   "sha256": "0e0e587d1369959b1f25870ef3343dde92c8246310409b435910232ea2c0dfd9",
+   "matched_frame": "R151",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (23).jpg",
+   "sha256": "2a90a854b2cbd60ce67ee29c66fd4a20a81c41ce914162f3b946034c239cdfc3",
+   "matched_frame": "R152",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (24).jpg",
+   "sha256": "0ec56775e6c684e68ca38d45ac5c5df6d3684b686696db09ba3464fc97d9a948",
+   "matched_frame": "R153",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (25).jpg",
+   "sha256": "fff46247fa642d0cff52837c0204d85a79bc31800791402920771113835ba54b",
+   "matched_frame": "R154",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (26).jpg",
+   "sha256": "aab5125c578c40c2a146c1e12a7daa174b70c75eca8eda6ebe8cace3a0ad89fa",
+   "matched_frame": "R155",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (27).jpg",
+   "sha256": "a74c501d976178a00ea93564f7ce1b92de309d1d739274a08c74423baebe3582",
+   "matched_frame": "R156",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (28).jpg",
+   "sha256": "f3cd77ff5b798776b768f2915a4dcd4d6071a6fa0bb1c1e318d7d4c449bb274f",
+   "matched_frame": "R157",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (29).jpg",
+   "sha256": "1d61ffe65bc55f2434bf25166142d40aa2728186a767b1e086883b44ddff5dc5",
+   "matched_frame": "A180",
+   "r": 0.9514,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (3).jpg",
+   "sha256": "0eaac64215a0472378446ebc8302be06c2a6e30d5b599b8271e126065bdc6998",
+   "matched_frame": "R133",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (30).jpg",
+   "sha256": "6e948d471cb2f317e472df720d57829e99f9b75ea8b609b4979db2aefab160d2",
+   "matched_frame": "R158",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (31).jpg",
+   "sha256": "4958c363b19fac2450323b29c797bb4df254a795a5947357c77e13cbe27689ad",
+   "matched_frame": "R159",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (32).jpg",
+   "sha256": "6fa7535b496d1f74bdb49a50ac280c4079bd6b2b111af1862747d76f1a03cc9d",
+   "matched_frame": "R160",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (33).jpg",
+   "sha256": "200bdb90f974fd301be3fc32c96154e8b528a2922006260aa03fabb8adaf615c",
+   "matched_frame": "R161",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (34).jpg",
+   "sha256": "4dcb05a542ad089a6f554f04932ac5671710455b58aea1a2415de63a947e0653",
+   "matched_frame": "R162",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (35).jpg",
+   "sha256": "1b41f21733cbb0dc09d4162a9667e6f1d3439c237b5e094bdf992ef001ab73fb",
+   "matched_frame": "R163",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (36).jpg",
+   "sha256": "31d0dab3b9a1398de2fe43075f01418902dd78111d3e13f7002d3e2f2525e984",
+   "matched_frame": "R164",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (37).jpg",
+   "sha256": "93e898ad3a4ee5d6480f422d60220759f0d67278e68fa1dc83b04475a940c17a",
+   "matched_frame": "R165",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (38).jpg",
+   "sha256": "a238b6786d81a764bc95a43969849d679cc25b179f7f148829f4b95df71c651c",
+   "matched_frame": "R166",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (39).jpg",
+   "sha256": "55fbf43387ea027a18177d15eb539302422b97ae29ece002d71562f4ae81c79f",
+   "matched_frame": "R167",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (4).jpg",
+   "sha256": "62c2d6391af9bc607ec8866cdaba6543d8a66dc5a424034a392f7350cef1deb7",
+   "matched_frame": "R134",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (5).jpg",
+   "sha256": "484cb8010d6b576110734f597ee7ed8c84eea71131ed0cbb6760829d10b19b2c",
+   "matched_frame": "R135",
+   "r": 1.0,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (6).jpg",
+   "sha256": "9449421d0e9394f7f2b0093a07f951e8ce88ea66314bc5d7564ad4dd286073a3",
+   "matched_frame": "R136",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (7).jpg",
+   "sha256": "325ff992bc547e07420870cfe5d6e00b8b987451644c2c73e6a2ab3d82f1fa7f",
+   "matched_frame": "R137",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (8).jpg",
+   "sha256": "57015a2ddd60d7eed6995decf4b7f3c485df8e996a9b30b3ec92344dbae20217",
+   "matched_frame": "R138",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#005 5219 小寨华山/1 (9).jpg",
+   "sha256": "3d3b70378800cbd98406bd87261493b7cf3b38c3072a87a2a2fc088f534d9a61",
+   "matched_frame": "R139",
+   "r": 0.9999,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6200-编辑.jpg",
+   "sha256": "24c707b7a7492f5866b64ada81b847b059c3c2a06a3891d5f18e44483a1383a4",
+   "matched_frame": "A040",
+   "r": 0.9872,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6201-编辑.jpg",
+   "sha256": "cab3605830ceb30d640c7b863ed15862abc671c0fda20c60925a4744a182047b",
+   "matched_frame": "R006",
+   "r": 0.9741,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6202-编辑.jpg",
+   "sha256": "f40989131f47ef54fc21c92290469b60441d6f1a06de00d0aeff9a184c045f85",
+   "matched_frame": "A042",
+   "r": 0.9671,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6203-编辑.jpg",
+   "sha256": "484122a415db851b0e0bf0e0d22e52c7bd316331eedcd887de2c1f6c440692e7",
+   "matched_frame": "A043",
+   "r": 0.9687,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6204-编辑.jpg",
+   "sha256": "c8bc5f4e621b4a3d43cad1a0a5fa9998ca84cbb2bd9a30dbc2a83addc9fda131",
+   "matched_frame": "A044",
+   "r": 0.9848,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6205-编辑.jpg",
+   "sha256": "36881baa7f4fedbdc7055b2d4d54407d6b6bbd330d6cb7e3ee252e06ec477aaa",
+   "matched_frame": "A045",
+   "r": 0.9776,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6206-编辑.jpg",
+   "sha256": "6b8e5595448a7b5455c0e57bb6a9b320699b5b9ef270ddb32ab726b79a5f171c",
+   "matched_frame": "A046",
+   "r": 0.9727,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6207-编辑.jpg",
+   "sha256": "c00a9776895665ceeef1dd85dc275dde71fb4bfc4672d2de8e4343997ffa4b3b",
+   "matched_frame": "A047",
+   "r": 0.9693,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6208-编辑.jpg",
+   "sha256": "1914d4011a62188b6ee7b0ffa0b25804abba1cc8dae4fd6d0404a97ad671afb2",
+   "matched_frame": "A048",
+   "r": 0.9727,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6209-编辑.jpg",
+   "sha256": "dda89fb9d4bc5eb96362b1c9d39dc891ce7c6b2bfc33c1a3948e0befcbc1eead",
+   "matched_frame": "A049",
+   "r": 0.9865,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6210-编辑.jpg",
+   "sha256": "8df62eacc5861c5aed2f93d65780c8277879b8612623ec648f4fc4593ba75615",
+   "matched_frame": "A050",
+   "r": 0.9616,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6211-编辑.jpg",
+   "sha256": "4fb074f170927bb3aced1996f41fe17d3d2b902a735cd5d20400f240315b3ba1",
+   "matched_frame": "R040",
+   "r": 0.9724,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6212-编辑.jpg",
+   "sha256": "3a95a3b57932d56cc5a629462983c0eade28be65b0757298b2257f9bdb0b2eff",
+   "matched_frame": "A052",
+   "r": 0.9472,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6214-编辑.jpg",
+   "sha256": "9ab64609934f5634130dfaef34851b0f5712ac28ff0fa88ce90f225bad1e31fa",
+   "matched_frame": "R051",
+   "r": 0.9767,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6215-编辑.jpg",
+   "sha256": "2a7f62f7556738ff10939b7c0b25c3a75e95e1eb4b4fbee3eae3e8634c68f6d0",
+   "matched_frame": "R054",
+   "r": 0.9813,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6216-编辑.jpg",
+   "sha256": "f7e3670c8b0b7e54a5ab0b96678faf2d75ac4f39392f75fd6c27c7670066e7d1",
+   "matched_frame": "R057",
+   "r": 0.9885,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6217-编辑.jpg",
+   "sha256": "4e777bc8dc86073c4ee7eb0fcb626abe8cc45e53cb7b6fa6ba2a63b4d224f8d9",
+   "matched_frame": "A057",
+   "r": 0.9934,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6218-编辑.jpg",
+   "sha256": "a6a47a906fbb1d39a64e8ab14200875b550dc569cfff32f1f739a799c5e4f657",
+   "matched_frame": "A058",
+   "r": 0.9697,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6219-编辑.jpg",
+   "sha256": "64bc652ab4020a95bbd41e163b8dfec5f6acce6ce9a3aaca4463f3ae51135a32",
+   "matched_frame": "R069",
+   "r": 0.9848,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6220-编辑.jpg",
+   "sha256": "d2fcf003ee58c711ef8b78261a6d62cf882c1d55c35c9f2f31b841eca8e8efef",
+   "matched_frame": "A060",
+   "r": 0.9408,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6221-编辑.jpg",
+   "sha256": "29cfeecd46a9422b2503f40baacae4c4963b18b6bc4a4236b5726eff5e242738",
+   "matched_frame": "R077",
+   "r": 0.9452,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6222-编辑.jpg",
+   "sha256": "2b9f87568d160e33e80d96807abdaa0bad827a86896dedbf2537d4a9a1a48965",
+   "matched_frame": "R080",
+   "r": 0.9904,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6223-编辑.jpg",
+   "sha256": "3557e5bee92fd75f8cbc1b92147aea2615122bd62bbea80445297a35a54e1219",
+   "matched_frame": "R084",
+   "r": 0.9853,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6224-编辑.jpg",
+   "sha256": "f196695701320ac9ae357bb1acc1043907ea91f3034098036fee880d9286755c",
+   "matched_frame": "A064",
+   "r": 0.9917,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6225-编辑.jpg",
+   "sha256": "46886dcc99e783de7fedc25e38219f53f9a6afa83c4d31ac2bffd3659f27e230",
+   "matched_frame": "R091",
+   "r": 0.9965,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6226-编辑.jpg",
+   "sha256": "5ffb7bbbf38e35ef92851186f17ec1b5eb311722e719a93c46450ca560fc0224",
+   "matched_frame": "A066",
+   "r": 0.987,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6227-编辑.jpg",
+   "sha256": "bcce215d9ecb0574673716dff357e900968c36541dab59e2e8deee053817665e",
+   "matched_frame": "R099",
+   "r": 0.9891,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6228-编辑.jpg",
+   "sha256": "3a5f267c4d4bcb4704ca536f561dd73656ad5a4139ef6e0cd33616bc22de7fb9",
+   "matched_frame": "R103",
+   "r": 0.9872,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6229-编辑.jpg",
+   "sha256": "90747137b7ddffd6bdfa69e0f5699a9894d4d8e89281c83cdb0d6bbe4883d707",
+   "matched_frame": "R107",
+   "r": 0.9853,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6230-编辑.jpg",
+   "sha256": "a4f08106cacc21d03840f04647a5d4159543b2ffab9e6e8f7cfa64a0bc25837f",
+   "matched_frame": "R111",
+   "r": 0.9726,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6231-编辑.jpg",
+   "sha256": "d5fa07eb96e786a9e6ee0bd729d7f7c37ce579c7aea6b0214d36562a1f7b2613",
+   "matched_frame": "A071",
+   "r": 0.9803,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#011 5207/DSC_6232-编辑.jpg",
+   "sha256": "9a7cd0b48531c39f85e94bac8481ad100a2657a16ad91a8cb7afd6298c640bdc",
+   "matched_frame": "R119",
+   "r": 0.9806,
+   "roll": "own-e5207-20240401-dsc6199"
+  }
+ ],
+ "rejected_candidates": [
+  {
+   "id": "photos:#015 延安 梁家河 foma400按200拍0.9冲 2024.5/P5050487.jpg",
+   "sha256": "cce8b302b806caab2f8ded30b82d78bfd50b77d3e5814450217cd7ac679a333d",
+   "matched_frame": "A072",
+   "r": 0.792,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:#015 延安 梁家河 foma400按200拍0.9冲 2024.5/P5050489.jpg",
+   "sha256": "9c784e2dc6201e8f7b6c8a54faeed9f124a5072b9ef30797dfdbc8f49b08e795",
+   "matched_frame": "A072",
+   "r": 0.8099,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:#015 延安 梁家河 foma400按200拍0.9冲 2024.5/P5050494.jpg",
+   "sha256": "3b975c4fcb4268e2a08194caf05962c8c9a02bdaccac24c6db864cde4f01ea6c",
+   "matched_frame": "A072",
+   "r": 0.83,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:#018 2025.1 成都 富士400 2/000142890031.jpg",
+   "sha256": "1fcf168ff1aebd4a8e2c3db059d75c61099e7bafed56ecb2a46b758f7abb3382",
+   "matched_frame": "R163",
+   "r": 0.8125,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:#020 2024.9 甘南 大画幅 foma100&rvp100/Untitled 6.tif",
+   "sha256": "6cf89427ce76f681c0894b5e86efd5ed1d0a8f0999662ebbcb6d41549713be4f",
+   "matched_frame": "R057",
+   "r": 0.9364,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:寻微映像 最早三卷/5207 2/000056.JPG",
+   "sha256": "16597ec468c7e16dcccc83e02c45adb0c75a0d54fa5ea7cf6df52f8e36abec50",
+   "matched_frame": "R057",
+   "r": 0.9028,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:寻微映像 最早三卷/5207 2/000059.JPG",
+   "sha256": "907c1a88debab8060d9f30e51c66c766baa3f1df33a50390a9f07c7dca89a25b",
+   "matched_frame": "A056",
+   "r": 0.8452,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:寻微映像 最早三卷/伊尔福pan100/0014_24.jpg",
+   "sha256": "743699152c22f27b9413bc643f76b5dd11fbf7f251ff791abd943340dab855a2",
+   "matched_frame": "A178",
+   "r": 0.8994,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:寻微映像 最早三卷/伊尔福pan100/0026_12.jpg",
+   "sha256": "874ddbff353a66df33de74a5a9c8610f87cb9011cfcd33bdbac37aee794cdc79",
+   "matched_frame": "A188",
+   "r": 0.8203,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:寻微映像 最早三卷/伊尔福pan100/0027_11.jpg",
+   "sha256": "b236084b1c9ac9d2627afb97c4d5e063adea49997138789b2325aac5a698338b",
+   "matched_frame": "A188",
+   "r": 0.7772,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#004 5294/DSC_8031.jpg",
+   "sha256": "d27d0b23fcc4d1b0185acb11f0066081d3eed303347477d2416459fb2e5e993a",
+   "matched_frame": "A054",
+   "r": 0.8254,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#004 5294/DSC_8051.jpg",
+   "sha256": "e562ebe1f45132176db4d68e2884219df060a8a1b5b8527896d5b42052e92abc",
+   "matched_frame": "R084",
+   "r": 0.7581,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#004 5294/DSC_8052.jpg",
+   "sha256": "a73279fb7fcde64dab0299d37c6e93d6e99d8f328d2722564df8aeeb86eb95f4",
+   "matched_frame": "R099",
+   "r": 0.8489,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#008 全能400/1 (11).jpg",
+   "sha256": "d63e4391d8fc36d0432ff510e466f20223e4f79661855a6b9940526090afd289",
+   "matched_frame": "R156",
+   "r": 0.8618,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#008 全能400/1 (19).jpg",
+   "sha256": "21082dc50b00422c190bc41c5408172376bc76b7af0ee3395eeccb60790cf577",
+   "matched_frame": "R156",
+   "r": 0.8213,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#008 全能400/1 (27).jpg",
+   "sha256": "f61c71ebff4eecac0a45b9ff54096373783ca34997995302b598135129e6c6f7",
+   "matched_frame": "R069",
+   "r": 0.881,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3701.jpg",
+   "sha256": "59eec7df173965ef78ad6bef507bf5831820fe450c73fc1b62097d2d0b614db7",
+   "matched_frame": "R095",
+   "r": 0.8459,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3702.jpg",
+   "sha256": "bc8a019afb5ee9f7f41ec2061159c60a9f2cf6ca0e607f7fba574dd80733aec7",
+   "matched_frame": "R091",
+   "r": 0.8761,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3710.jpg",
+   "sha256": "d33ac217484b4ff6786f7ca0a3ff3cf15725448ff1fa783e573dbb4dcb6ca0aa",
+   "matched_frame": "R057",
+   "r": 0.7832,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3715.jpg",
+   "sha256": "98785a9c103f01caff3c99a1e031562ef3b5cb8811736c018738bf85421c9be6",
+   "matched_frame": "A178",
+   "r": 0.8832,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3717.jpg",
+   "sha256": "18a0085f972f173a7fbb35749d3c1e2191cf1b3ffe217053c24db5f412908b46",
+   "matched_frame": "A055",
+   "r": 0.7979,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3718.jpg",
+   "sha256": "c55875aed6f2465019a1a23e569437a9e36783c82f33a68dc943295ba884097f",
+   "matched_frame": "A055",
+   "r": 0.8379,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3725.jpg",
+   "sha256": "d3429a609a09957b68d0af1a5001bdfb61778a903a5171f7352cd0982b53b485",
+   "matched_frame": "R091",
+   "r": 0.9213,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3726.jpg",
+   "sha256": "cb70133c61721158944df404eda6cb86178037239b9d0ee5bcaca9a5f8721c72",
+   "matched_frame": "A055",
+   "r": 0.872,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3731.jpg",
+   "sha256": "ab9c85b56e560674133e02dafe65817a32ce414013c3720585ac147e9b0d5bde",
+   "matched_frame": "R107",
+   "r": 0.7763,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#009 5294/DSC_3734.jpg",
+   "sha256": "e009db344c8087cd9216adbc831a73f125720cc0b74515b23443b4efc7cc57fd",
+   "matched_frame": "R080",
+   "r": 0.8591,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3743.jpg",
+   "sha256": "d2e927897c9530c565ee96bbbf9e29dca106b66b735683163cc63b45b8c257e5",
+   "matched_frame": "R057",
+   "r": 0.9337,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3744.jpg",
+   "sha256": "fce771a2a579537d4fea9e7a55292ccde847506d91a3d4f1f05658cf64717789",
+   "matched_frame": "R080",
+   "r": 0.8328,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3753.jpg",
+   "sha256": "e2f2e239bb4280fc0185bf0bf04f85688dd20180a695caa740690c257c8a643c",
+   "matched_frame": "R161",
+   "r": 0.781,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3754.jpg",
+   "sha256": "403778e1d065c53f187d2731039e6c2ac731bbaa882d37dd3694dd82b69369cc",
+   "matched_frame": "A039",
+   "r": 0.8518,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3763.jpg",
+   "sha256": "c64948877a0b1d83aa599c78dc145888efa19780080469909d881de09ee20f31",
+   "matched_frame": "R080",
+   "r": 0.8024,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3769.jpg",
+   "sha256": "08df264662a6d36b720bb0ab8c0eb9a2e55afb8b1aeebda32655123dc9c3d591",
+   "matched_frame": "A178",
+   "r": 0.8773,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3771.jpg",
+   "sha256": "d4695f3719a52a96c7d183369409a3a0e22687f84b61f7a010ec6eb63ba8e131",
+   "matched_frame": "A178",
+   "r": 0.8893,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3774.jpg",
+   "sha256": "7d3ce6d3b234d74adfa7750beabe3c8b840639ff1160a93eabf7d96971840ef5",
+   "matched_frame": "A178",
+   "r": 0.8836,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3775.jpg",
+   "sha256": "aa502f350c77938405e56059bfc1422e6c3f5665f55fef742f162a1d745b516f",
+   "matched_frame": "A063",
+   "r": 0.7849,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:新疆/#010 5294/DSC_3777.jpg",
+   "sha256": "2aab184127b4ed5e27c8eba95fee0b6097fbab114725d36be8f01cfa2c9f3865",
+   "matched_frame": "R156",
+   "r": 0.7998,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:老照片/01/P1010237.jpg",
+   "sha256": "2091c908e34be8e1dceb8c97a8ad7dfdeae68ca5addd34c962fc27ffe1f095ef",
+   "matched_frame": "R051",
+   "r": 0.7878,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:老照片/01/P1010240.jpg",
+   "sha256": "5da4be61ec38e721daea41fa2d5c64ec7115df1a033570733dbb5a1e7813d1e7",
+   "matched_frame": "A178",
+   "r": 0.8694,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:老照片/01/P1010242.jpg",
+   "sha256": "ac9cc35549cb45e846ff3361eae46147c12189b31b6a8efa54cb7ea40c02cb7d",
+   "matched_frame": "R154",
+   "r": 0.8498,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:老照片/02/P1010295.jpg",
+   "sha256": "130952dad4e356fcdcdfbf7e992793082a25436f307d1d579b939c4c8105e9bf",
+   "matched_frame": "A055",
+   "r": 0.8893,
+   "roll": "own-e5207-20240401-dsc6199"
+  },
+  {
+   "id": "photos:老照片/03/P1010319.jpg",
+   "sha256": "19b175a6727451b25d86bc38765daf8f890d2e4cc68b0459b47015295cc53091",
+   "matched_frame": "R156",
+   "r": 0.8029,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:老照片/03/P1010320.jpg",
+   "sha256": "0a352271cc503c9e088948ffb18f3503feea65c1fe78281becdd8e86a5008243",
+   "matched_frame": "R156",
+   "r": 0.8212,
+   "roll": "own-e5219-20240323-dsc8202"
+  },
+  {
+   "id": "photos:老照片/03/P1010332.jpg",
+   "sha256": "01aec76bd4eb27de5b4aaacbfabf0bb0902cf5e9da4d1d0ee51992c35bb858a7",
+   "matched_frame": "R162",
+   "r": 0.7563,
+   "roll": "own-e5219-20240323-dsc8202"
+  }
+ ]
+}

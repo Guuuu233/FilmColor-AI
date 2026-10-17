@@ -1,0 +1,19 @@
+947 photos, 0 skipped, 114 matched to frozen frames
+      215.34 real       127.29 user         9.70 sys
+           689438720  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               54160  page reclaims
+               30310  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                6849  voluntary context switches
+              117373  involuntary context switches
+       1198191652335  instructions retired
+        502914865409  cycles elapsed
+           703235032  peak memory footprint
