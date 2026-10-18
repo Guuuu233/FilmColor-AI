@@ -4,7 +4,7 @@ Reads the diag_rollcheck.py outputs (B0 and B1 per frame against the shop print)
 chroma disagreement max(|o_R - o_G|, |o_B - o_G|) >= 0.1 D (o = log10(roll base / own base)), else B0. Primary
 metric: fixed-look dE2000 median; Delta = R1 - B0 per frame. Criteria exactly as PREREG section 6.
 
-  rb_summary.py ROLLCHECK_DIR OUT_JSON OUT_MD
+  rb_summary.py ROLLCHECK_DIR OUT_JSON OUT_MD [FRAMES_JSON ROLL_BASE_JSON]   (last two: BlueNeg mode)
 """
 import json
 import sys
@@ -13,6 +13,7 @@ from pathlib import Path
 import numpy as np
 
 SPLIT, SEVERE, CLIP_PP, MIN_TRIG = 0.1, 2.0, 0.02, 3
+NCC_MIN = 0.7  # BlueNeg registration threshold of S3-3, fixed before its results
 
 
 def colour_error(o):
@@ -69,15 +70,54 @@ def judge(rows):
     return s
 
 
-def main(rc_dir, out_json, out_md):
+def verdict_of(per):
+    stage = all(s["passed"] for s in per.values()) and any(s["kind"] == "evidence" for s in per.values())
+    return "passed" if stage else ("insufficient evidence" if all(s["passed"] for s in per.values()) else "failed")
+
+
+def main(rc_dir, out_json, out_md, frames_json=None, rollbase_json=None):
+    """BlueNeg mode (PREREG_BLUENEG.md) when FRAMES_JSON and ROLL_BASE_JSON are given: frames with registration
+    NCC < 0.7 are excluded, rolls failing a gate are listed as not applicable, and the judgement is repeated
+    without the 27 S3-5 frames."""
     rows = [frame_row(json.loads(p.read_text())) for p in sorted(Path(rc_dir).glob("*_shop.json"))]
+    extra = {}
+    if frames_json:
+        from filmcolor.paths import data_dir
+        meta = {f["id"]: f for f in json.loads(Path(frames_json).read_text())["frames"]}
+        for r in rows:
+            f = meta[r["id"]]
+            a = json.loads((data_dir("s3_ml", "cache", f["domain"]) / f"{f['stem']}.json").read_text())["alignment"]
+            r["ncc"], r["s3_5"] = round(a.get("ncc_recomputed", a["ncc"]), 3), f["s3_5"]
+        extra["excluded_low_ncc"] = [dict(id=r["id"], ncc=r["ncc"]) for r in rows if r["ncc"] < NCC_MIN]
+        rows = [r for r in rows if r["ncc"] >= NCC_MIN]
+        rb = json.loads(Path(rollbase_json).read_text())["rolls"]
+        extra["not_applicable"] = {k: dict(gates=v["gates"], frames=len(v["frames"]), error=v.get("error"))
+                                   for k, v in rb.items() if not v["applicable"]}
     rolls = sorted({r["roll"] for r in rows})
     per = {roll: judge([r for r in rows if r["roll"] == roll]) for roll in rolls}
-    stage = all(s["passed"] for s in per.values()) and any(s["kind"] == "evidence" for s in per.values())
-    verdict = "passed" if stage else ("insufficient evidence" if all(s["passed"] for s in per.values()) else "failed")
-    Path(out_json).write_text(json.dumps(dict(prereg="experiments/s3_rollbase_v1/PREREG.md", verdict=verdict,
-                                              rolls=per, frames=rows), indent=1, ensure_ascii=False))
+    verdict = verdict_of(per)
+    if frames_json:
+        sub = [r for r in rows if not r["s3_5"]]
+        per_sub = {roll: judge([r for r in sub if r["roll"] == roll]) for roll in sorted({r["roll"] for r in sub})}
+        trig = [r for r in rows if r["triggered"]]
+        extra.update(
+            without_s3_5=dict(verdict=verdict_of(per_sub), rolls=per_sub),
+            pooled=dict(frames=len(rows), triggered=len(trig), improved=sum(r["delta_fixed"] < 0 for r in trig),
+                        severe=[r["id"] for r in rows if r["delta_fixed"] > SEVERE],
+                        new_clipping=[r["id"] for r in rows if r["new_clipping"]],
+                        median_delta_triggered=round(float(np.median([r["delta_fixed"] for r in trig])), 3) if trig else None),
+            worst5=[dict(id=r["id"], delta_fixed=r["delta_fixed"], triggered=r["triggered"])
+                    for r in sorted(rows, key=lambda r: -r["delta_fixed"])[:5]])
+    Path(out_json).write_text(json.dumps(dict(prereg="experiments/s3_rollbase_v1/PREREG.md" + (
+        " + PREREG_BLUENEG.md" if frames_json else ""), verdict=verdict, rolls=per, **extra, frames=rows),
+        indent=1, ensure_ascii=False))
     L = [f"# 卷级片基验证 v1：结果表（`rb_summary.py` 生成）", "", f"阶段判定：**{verdict}**", ""]
+    if frames_json:
+        L += [f"- 去掉 S3-5 的 27 帧后：**{extra['without_s3_5']['verdict']}**",
+              f"- 合并：{extra['pooled']}",
+              f"- 配准 NCC < {NCC_MIN} 剔除：{extra['excluded_low_ncc'] or '无'}",
+              f"- 不适用的卷：{extra['not_applicable'] or '无'}",
+              f"- 最差 5 帧：{extra['worst5']}", ""]
     for roll, s in per.items():
         L += [f"## {roll}", "",
               f"- 帧数 {s['frames']}，触发 {s['triggered']}（{s['trigger_rate']:.0%}），判定类型 {s['kind']}，"
@@ -104,4 +144,4 @@ def main(rc_dir, out_json, out_md):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:6])

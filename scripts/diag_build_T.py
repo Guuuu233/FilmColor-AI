@@ -31,6 +31,7 @@ from filmcolor.invert import EPS, central_region, region_mask
 from filmcolor.paths import data_dir
 from filmcolor.raw import saturation_mask
 from filmcolor.rawpy_io import demosaic_linear, load_raw
+from filmcolor.scanner import load_scanner
 
 ROLL_BASE = Path(os.environ.get("DIAG_ROLL_BASE", "experiments/s3_diag/roll_base.json"))  # later rounds: own file
 PCTS = (0.01, 0.1, 0.5, 1, 2, 5, 10, 25, 50, 75, 90, 95, 99, 99.5, 99.9, 99.99)
@@ -42,26 +43,32 @@ def build(f, out_dir, store="T4"):
     if raw_sha != f["raw_sha256"]:
         raise SystemExit(f"{f['id']}: RAW differs from the frame list")
     rec = json.loads((data_dir("s3_ml", "cache", f["domain"]) / f"{f['stem']}.json").read_text())
-    fr = load_raw(f["raw"])
-    sat = saturation_mask(fr)
-    del fr
+    scanner = f["domain"] == "blueneg"  # linear scanner DNG: the decoded image is the signal (pipeline._scanner_input)
+    if scanner:
+        sfr = load_scanner(f["raw"])
+        sat = sfr.sat
+    else:
+        fr = load_raw(f["raw"])
+        sat = saturation_mask(fr)
+        del fr
     region = central_region(sat.shape)
     if list(region) != rec["positive"]["image_region"]:
         raise SystemExit(f"{f['id']}: image region {region} differs from the S3 cache")
     in_region = region_mask(sat.shape, region)
     mask = ~sat & in_region
-    rgb = demosaic_linear(f["raw"])
+    rgb = sfr.rgb if scanner else demosaic_linear(f["raw"])
     Tm = rgb[mask]
     L = -np.log10(np.maximum(Tm, EPS))
     pct = {str(p): [float(x) for x in np.percentile(L, p, axis=0)] for p in PCTS}
     del L
     # white points of the camera-matrix variant (matrix on T / b before the density), which is not a per-channel
-    # shift of L, at full resolution for the frame's own base and the roll base
-    with rawpy.imread(f["raw"]) as r:
-        C = camera_to_srgb(np.asarray(r.rgb_xyz_matrix)[:3])
+    # shift of L, at full resolution for the frame's own base and the roll base (camera RAW only)
+    C, mct = None, {}
+    if not scanner:
+        with rawpy.imread(f["raw"]) as r:
+            C = camera_to_srgb(np.asarray(r.rgb_xyz_matrix)[:3])
     b_roll = json.loads(ROLL_BASE.read_text())["rolls"][f["roll"]]["frames"][f["stem"]]["base_roll"]
-    mct = {}
-    for name, b in (("B0", rec["positive"]["inversion"]["base"]), ("B1c", b_roll)):
+    for name, b in (("B0", rec["positive"]["inversion"]["base"]), ("B1c", b_roll)) if not scanner else ():
         x = (Tm / np.asarray(b, np.float32)) @ C.T.astype(np.float32)
         mct[name] = dict(base=list(b), d_hi=[float(v) for v in np.percentile(-np.log10(np.maximum(x, EPS)), 99.9, 0)],
                          nonpositive_frac=float((x <= 0).any(-1).mean()))
@@ -73,6 +80,8 @@ def build(f, out_dir, store="T4"):
     T4 = block_mean(rgb, 4).astype(np.float32)
     sat4 = block_mean(sat.astype(np.float32), 4)
     del rgb
+    if scanner:
+        del sfr
     # the w4 white point (diag_variants.white_T4): 4x4 block means, central region of the 1/4 grid, no saturated sample
     t, l, h, w = central_region(T4.shape[:2])
     L4 = -np.log10(np.maximum(T4[t : t + h, l : l + w][sat4[t : t + h, l : l + w] == 0], EPS))
@@ -86,7 +95,7 @@ def build(f, out_dir, store="T4"):
                image_region=list(region), mask_pixels=int(mask.sum()), saturated_in_region=float(sat[in_region].mean()),
                L_percentiles=pct, base_cache=base.tolist(), d_hi_cache=d_hi_cache.tolist(),
                d_hi_replay=d_hi_replay.tolist(), d_hi_replay_max_abs_err=float(np.abs(d_hi_replay - d_hi_cache).max()),
-               camera_to_srgb=C.tolist(), mct_white=mct, L_percentiles_b4=pct_b4,
+               camera_to_srgb=None if C is None else C.tolist(), mct_white=mct, L_percentiles_b4=pct_b4,
                T4_shape=list(T4.shape), stored=store, seconds=round(time.time() - t0, 1))
     (out_dir / f"{f['stem']}.json").write_text(json.dumps(out, indent=1))
     return out
