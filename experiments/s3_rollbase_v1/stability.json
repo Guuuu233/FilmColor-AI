@@ -1,0 +1,2123 @@
+{
+ "source": "experiments/s3_diag/roll_base.json",
+ "split": 0.1,
+ "rolls": {
+  "own-e5207-20240401-dsc6161": {
+   "frames": 37,
+   "used": [
+    "A012",
+    "A021",
+    "A022"
+   ],
+   "members": [
+    "A012",
+    "A021",
+    "A022"
+   ],
+   "exposure_times": [
+    0.025,
+    0.04,
+    0.05,
+    0.06666666667,
+    0.07692307692
+   ],
+   "triggered": [
+    "A002",
+    "A003",
+    "A004",
+    "A007",
+    "A008",
+    "A009",
+    "A010",
+    "A013",
+    "A014",
+    "A015",
+    "A016",
+    "A017",
+    "A018",
+    "A019",
+    "A020",
+    "A025",
+    "A026",
+    "A027",
+    "A028",
+    "A029",
+    "A030",
+    "A031",
+    "A032",
+    "A034",
+    "A036",
+    "A038"
+   ],
+   "alternatives": {
+    "loo:A012": {
+     "used": [
+      "A024",
+      "A035"
+     ],
+     "members": 2,
+     "warnings": [
+      "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+     ],
+     "d_density": [
+      -0.0234,
+      -0.0348,
+      -0.0234
+     ],
+     "d_chroma_RG_BG": [
+      0.0115,
+      0.0114
+     ],
+     "trigger_flips": [
+      "A015"
+     ]
+    },
+    "loo:A021": {
+     "used": [
+      "A012",
+      "A022"
+     ],
+     "members": 2,
+     "warnings": [
+      "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+     ],
+     "d_density": [
+      0.0061,
+      0.005,
+      -0.0143
+     ],
+     "d_chroma_RG_BG": [
+      0.001,
+      -0.0193
+     ],
+     "trigger_flips": []
+    },
+    "loo:A022": {
+     "used": [
+      "A021",
+      "A024",
+      "A035"
+     ],
+     "members": 3,
+     "warnings": [],
+     "d_density": [
+      -0.0029,
+      -0.0186,
+      -0.0073
+     ],
+     "d_chroma_RG_BG": [
+      0.0157,
+      0.0113
+     ],
+     "trigger_flips": [
+      "A015"
+     ]
+    },
+    "loo:A023": {
+     "used": [
+      "A021",
+      "A024",
+      "A035"
+     ],
+     "members": 3,
+     "warnings": [],
+     "d_density": [
+      -0.0029,
+      -0.0186,
+      -0.0073
+     ],
+     "d_chroma_RG_BG": [
+      0.0157,
+      0.0113
+     ],
+     "trigger_flips": [
+      "A015"
+     ]
+    },
+    "loo:A024": {
+     "used": [
+      "A012",
+      "A022"
+     ],
+     "members": 2,
+     "warnings": [
+      "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+     ],
+     "d_density": [
+      0.0061,
+      0.005,
+      -0.0143
+     ],
+     "d_chroma_RG_BG": [
+      0.001,
+      -0.0193
+     ],
+     "trigger_flips": []
+    },
+    "loo:A035": {
+     "used": [
+      "A012",
+      "A022"
+     ],
+     "members": 2,
+     "warnings": [
+      "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+     ],
+     "d_density": [
+      0.0061,
+      0.005,
+      -0.0143
+     ],
+     "d_chroma_RG_BG": [
+      0.001,
+      -0.0193
+     ],
+     "trigger_flips": []
+    },
+    "ev_true": {
+     "used": [
+      "A012",
+      "A021",
+      "A022"
+     ],
+     "members": 3,
+     "warnings": [],
+     "d_density": [
+      0.028,
+      0.028,
+      0.0146
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      -0.0134
+     ],
+     "trigger_flips": [],
+     "nominal_vs_true_D": [
+      -0.0102,
+      0.0034,
+      0.0069,
+      0.028
+     ]
+    },
+    "n_use=1": {
+     "used": [
+      "A012"
+     ],
+     "members": 3,
+     "warnings": [],
+     "d_density": [
+      0.0356,
+      0.029,
+      0.0112
+     ],
+     "d_chroma_RG_BG": [
+      0.0065,
+      -0.0178
+     ],
+     "trigger_flips": []
+    },
+    "n_use=2": {
+     "used": [
+      "A012",
+      "A021"
+     ],
+     "members": 3,
+     "warnings": [],
+     "d_density": [
+      0.0181,
+      0.0148,
+      0.0056
+     ],
+     "d_chroma_RG_BG": [
+      0.0034,
+      -0.0091
+     ],
+     "trigger_flips": []
+    },
+    "n_use=3": {
+     "used": [
+      "A012",
+      "A021",
+      "A022"
+     ],
+     "members": 3,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "chroma_tol=0.025": {
+     "error": "no frames form a consistent minimum-density cluster; specify the base manually"
+    },
+    "chroma_tol=0.1": {
+     "used": [
+      "A012",
+      "A021",
+      "A024"
+     ],
+     "members": 5,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "level_window=0.05": {
+     "used": [
+      "A012",
+      "A021",
+      "A022"
+     ],
+     "members": 3,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "level_window=0.2": {
+     "used": [
+      "A012",
+      "A021"
+     ],
+     "members": 2,
+     "warnings": [
+      "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+     ],
+     "d_density": [
+      0.0181,
+      0.0148,
+      0.0056
+     ],
+     "d_chroma_RG_BG": [
+      0.0034,
+      -0.0091
+     ],
+     "trigger_flips": []
+    }
+   }
+  },
+  "own-e5207-20240323-dsc8242": {
+   "frames": 37,
+   "used": [
+    "A141",
+    "A123",
+    "A113"
+   ],
+   "members": [
+    "A141",
+    "A123",
+    "A113",
+    "A142",
+    "A120",
+    "A139"
+   ],
+   "exposure_times": [
+    0.03333333333,
+    0.04,
+    0.05,
+    0.06666666667,
+    0.07692307692,
+    0.1,
+    0.125,
+    0.25
+   ],
+   "triggered": [
+    "A114",
+    "A116",
+    "A118",
+    "A119",
+    "A126",
+    "A127",
+    "A128",
+    "A129",
+    "A130",
+    "A131",
+    "A132",
+    "A133",
+    "A134",
+    "A135",
+    "A136",
+    "A137",
+    "A138",
+    "A140",
+    "A143",
+    "A144",
+    "A150"
+   ],
+   "alternatives": {
+    "loo:A113": {
+     "used": [
+      "A141",
+      "A123",
+      "A142"
+     ],
+     "members": 5,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A120": {
+     "used": [
+      "A141",
+      "A123",
+      "A113"
+     ],
+     "members": 5,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A123": {
+     "used": [
+      "A141",
+      "A113",
+      "A142"
+     ],
+     "members": 5,
+     "warnings": [],
+     "d_density": [
+      -0.0454,
+      -0.0553,
+      -0.0425
+     ],
+     "d_chroma_RG_BG": [
+      0.0099,
+      0.0128
+     ],
+     "trigger_flips": [
+      "A143",
+      "A150"
+     ]
+    },
+    "loo:A139": {
+     "used": [
+      "A141",
+      "A123",
+      "A113"
+     ],
+     "members": 5,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A141": {
+     "used": [
+      "A123",
+      "A113",
+      "A142"
+     ],
+     "members": 5,
+     "warnings": [],
+     "d_density": [
+      -0.0454,
+      -0.0553,
+      -0.0425
+     ],
+     "d_chroma_RG_BG": [
+      0.0099,
+      0.0128
+     ],
+     "trigger_flips": [
+      "A143",
+      "A150"
+     ]
+    },
+    "loo:A142": {
+     "used": [
+      "A141",
+      "A123",
+      "A113"
+     ],
+     "members": 5,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "ev_true": {
+     "used": [
+      "A141",
+      "A123",
+      "A113"
+     ],
+     "members": 6,
+     "warnings": [],
+     "d_density": [
+      0.0069,
+      0.0069,
+      0.0069
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": [],
+     "nominal_vs_true_D": [
+      -0.0102,
+      0.0,
+      0.0034,
+      0.0069,
+      0.028
+     ]
+    },
+    "n_use=1": {
+     "used": [
+      "A141"
+     ],
+     "members": 6,
+     "warnings": [],
+     "d_density": [
+      0.0043,
+      0.0019,
+      0.0073
+     ],
+     "d_chroma_RG_BG": [
+      0.0024,
+      0.0054
+     ],
+     "trigger_flips": []
+    },
+    "n_use=2": {
+     "used": [
+      "A141",
+      "A123"
+     ],
+     "members": 6,
+     "warnings": [],
+     "d_density": [
+      0.0022,
+      0.001,
+      0.0037
+     ],
+     "d_chroma_RG_BG": [
+      0.0012,
+      0.0027
+     ],
+     "trigger_flips": []
+    },
+    "n_use=3": {
+     "used": [
+      "A141",
+      "A123",
+      "A113"
+     ],
+     "members": 6,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "n_use=4": {
+     "used": [
+      "A141",
+      "A123",
+      "A113",
+      "A142"
+     ],
+     "members": 6,
+     "warnings": [],
+     "d_density": [
+      -0.0221,
+      -0.0268,
+      -0.0207
+     ],
+     "d_chroma_RG_BG": [
+      0.0047,
+      0.006
+     ],
+     "trigger_flips": []
+    },
+    "n_use=5": {
+     "used": [
+      "A141",
+      "A123",
+      "A113",
+      "A142",
+      "A120"
+     ],
+     "members": 6,
+     "warnings": [],
+     "d_density": [
+      -0.0405,
+      -0.0553,
+      -0.0425
+     ],
+     "d_chroma_RG_BG": [
+      0.0148,
+      0.0128
+     ],
+     "trigger_flips": [
+      "A143",
+      "A150"
+     ]
+    },
+    "n_use=6": {
+     "used": [
+      "A141",
+      "A123",
+      "A113",
+      "A142",
+      "A120",
+      "A139"
+     ],
+     "members": 6,
+     "warnings": [],
+     "d_density": [
+      -0.0429,
+      -0.0562,
+      -0.0426
+     ],
+     "d_chroma_RG_BG": [
+      0.0133,
+      0.0136
+     ],
+     "trigger_flips": [
+      "A143",
+      "A150"
+     ]
+    },
+    "chroma_tol=0.025": {
+     "used": [
+      "A141",
+      "A139"
+     ],
+     "members": 2,
+     "warnings": [
+      "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+     ],
+     "d_density": [
+      -0.0351,
+      -0.0412,
+      -0.0399
+     ],
+     "d_chroma_RG_BG": [
+      0.0061,
+      0.0013
+     ],
+     "trigger_flips": []
+    },
+    "chroma_tol=0.1": {
+     "used": [
+      "A141",
+      "A123",
+      "A149"
+     ],
+     "members": 8,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "level_window=0.05": {
+     "used": [
+      "A141",
+      "A123",
+      "A149"
+     ],
+     "members": 3,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "level_window=0.2": {
+     "used": [
+      "A141",
+      "A123",
+      "A120"
+     ],
+     "members": 5,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    }
+   }
+  },
+  "own-g200-20240320-dsc4889": {
+   "frames": 35,
+   "used": [
+    "A217",
+    "A204",
+    "A212"
+   ],
+   "members": [
+    "A217",
+    "A204",
+    "A212",
+    "A203",
+    "A219",
+    "A213",
+    "A192",
+    "A220",
+    "A206",
+    "A223",
+    "A227",
+    "A218",
+    "A215",
+    "A200",
+    "A214",
+    "A228",
+    "A225",
+    "A207",
+    "A211",
+    "A224",
+    "A194",
+    "A199",
+    "A208",
+    "A221",
+    "A209",
+    "A222"
+   ],
+   "exposure_times": [
+    0.01666666667,
+    0.02,
+    0.025,
+    0.03333333333
+   ],
+   "triggered": [],
+   "alternatives": {
+    "loo:A192": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A194": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A199": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A200": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A203": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A204": {
+     "used": [
+      "A217",
+      "A212",
+      "A203"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      -0.0004,
+      -0.0037,
+      -0.0023
+     ],
+     "d_chroma_RG_BG": [
+      0.0034,
+      0.0014
+     ],
+     "trigger_flips": []
+    },
+    "loo:A206": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A207": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A208": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A209": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A211": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A212": {
+     "used": [
+      "A217",
+      "A204",
+      "A203"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A213": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A214": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A215": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A217": {
+     "used": [
+      "A204",
+      "A212",
+      "A203"
+     ],
+     "members": 27,
+     "warnings": [],
+     "d_density": [
+      -0.0004,
+      -0.0037,
+      -0.0023
+     ],
+     "d_chroma_RG_BG": [
+      0.0034,
+      0.0014
+     ],
+     "trigger_flips": []
+    },
+    "loo:A218": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A219": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A220": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A221": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A222": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A223": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A224": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A225": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A227": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "loo:A228": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 25,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "ev_true": {
+     "used": [
+      "A219",
+      "A217",
+      "A204"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      0.0177,
+      0.0151,
+      0.0137
+     ],
+     "d_chroma_RG_BG": [
+      0.0026,
+      -0.0014
+     ],
+     "trigger_flips": [],
+     "nominal_vs_true_D": [
+      0.0034,
+      0.0069,
+      0.028
+     ]
+    },
+    "n_use=1": {
+     "used": [
+      "A217"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      0.0108,
+      0.0082,
+      0.0075
+     ],
+     "d_chroma_RG_BG": [
+      0.0026,
+      -0.0007
+     ],
+     "trigger_flips": []
+    },
+    "n_use=2": {
+     "used": [
+      "A217",
+      "A204"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      0.0055,
+      0.0041,
+      0.0038
+     ],
+     "d_chroma_RG_BG": [
+      0.0013,
+      -0.0003
+     ],
+     "trigger_flips": []
+    },
+    "n_use=3": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "n_use=4": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0002,
+      -0.0019,
+      -0.0012
+     ],
+     "d_chroma_RG_BG": [
+      0.0017,
+      0.0007
+     ],
+     "trigger_flips": []
+    },
+    "n_use=5": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0004,
+      -0.0037,
+      -0.0023
+     ],
+     "d_chroma_RG_BG": [
+      0.0034,
+      0.0014
+     ],
+     "trigger_flips": []
+    },
+    "n_use=6": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0028,
+      -0.0053,
+      -0.0053
+     ],
+     "d_chroma_RG_BG": [
+      0.0025,
+      -0.0
+     ],
+     "trigger_flips": []
+    },
+    "n_use=7": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0053,
+      -0.007,
+      -0.0084
+     ],
+     "d_chroma_RG_BG": [
+      0.0016,
+      -0.0014
+     ],
+     "trigger_flips": []
+    },
+    "n_use=8": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0073,
+      -0.0089,
+      -0.0114
+     ],
+     "d_chroma_RG_BG": [
+      0.0015,
+      -0.0025
+     ],
+     "trigger_flips": []
+    },
+    "n_use=9": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0094,
+      -0.0108,
+      -0.0144
+     ],
+     "d_chroma_RG_BG": [
+      0.0014,
+      -0.0036
+     ],
+     "trigger_flips": []
+    },
+    "n_use=10": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0108,
+      -0.0136,
+      -0.0157
+     ],
+     "d_chroma_RG_BG": [
+      0.0029,
+      -0.0021
+     ],
+     "trigger_flips": []
+    },
+    "n_use=11": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0122,
+      -0.0165,
+      -0.017
+     ],
+     "d_chroma_RG_BG": [
+      0.0043,
+      -0.0005
+     ],
+     "trigger_flips": []
+    },
+    "n_use=12": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0137,
+      -0.017,
+      -0.0183
+     ],
+     "d_chroma_RG_BG": [
+      0.0033,
+      -0.0013
+     ],
+     "trigger_flips": []
+    },
+    "n_use=13": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0152,
+      -0.0175,
+      -0.0197
+     ],
+     "d_chroma_RG_BG": [
+      0.0023,
+      -0.0022
+     ],
+     "trigger_flips": []
+    },
+    "n_use=14": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0154,
+      -0.0182,
+      -0.0212
+     ],
+     "d_chroma_RG_BG": [
+      0.0028,
+      -0.003
+     ],
+     "trigger_flips": []
+    },
+    "n_use=15": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0156,
+      -0.0188,
+      -0.0227
+     ],
+     "d_chroma_RG_BG": [
+      0.0032,
+      -0.0039
+     ],
+     "trigger_flips": []
+    },
+    "n_use=16": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0179,
+      -0.0213,
+      -0.0244
+     ],
+     "d_chroma_RG_BG": [
+      0.0035,
+      -0.0031
+     ],
+     "trigger_flips": []
+    },
+    "n_use=17": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0202,
+      -0.0239,
+      -0.0262
+     ],
+     "d_chroma_RG_BG": [
+      0.0037,
+      -0.0023
+     ],
+     "trigger_flips": []
+    },
+    "n_use=18": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0232,
+      -0.025,
+      -0.0309
+     ],
+     "d_chroma_RG_BG": [
+      0.0018,
+      -0.006
+     ],
+     "trigger_flips": []
+    },
+    "n_use=19": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207",
+      "A211"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0263,
+      -0.026,
+      -0.0357
+     ],
+     "d_chroma_RG_BG": [
+      -0.0003,
+      -0.0097
+     ],
+     "trigger_flips": []
+    },
+    "n_use=20": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207",
+      "A211",
+      "A224"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0295,
+      -0.0305,
+      -0.0388
+     ],
+     "d_chroma_RG_BG": [
+      0.001,
+      -0.0083
+     ],
+     "trigger_flips": []
+    },
+    "n_use=21": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207",
+      "A211",
+      "A224",
+      "A194"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0328,
+      -0.035,
+      -0.0419
+     ],
+     "d_chroma_RG_BG": [
+      0.0022,
+      -0.0069
+     ],
+     "trigger_flips": []
+    },
+    "n_use=22": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207",
+      "A211",
+      "A224",
+      "A194",
+      "A199"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0336,
+      -0.0363,
+      -0.0424
+     ],
+     "d_chroma_RG_BG": [
+      0.0027,
+      -0.0061
+     ],
+     "trigger_flips": []
+    },
+    "n_use=23": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207",
+      "A211",
+      "A224",
+      "A194",
+      "A199",
+      "A208"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0343,
+      -0.0376,
+      -0.0428
+     ],
+     "d_chroma_RG_BG": [
+      0.0033,
+      -0.0053
+     ],
+     "trigger_flips": []
+    },
+    "n_use=24": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207",
+      "A211",
+      "A224",
+      "A194",
+      "A199",
+      "A208",
+      "A221"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0376,
+      -0.0421,
+      -0.0451
+     ],
+     "d_chroma_RG_BG": [
+      0.0045,
+      -0.0031
+     ],
+     "trigger_flips": []
+    },
+    "n_use=25": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207",
+      "A211",
+      "A224",
+      "A194",
+      "A199",
+      "A208",
+      "A221",
+      "A209"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0409,
+      -0.0466,
+      -0.0475
+     ],
+     "d_chroma_RG_BG": [
+      0.0057,
+      -0.0008
+     ],
+     "trigger_flips": []
+    },
+    "n_use=26": {
+     "used": [
+      "A217",
+      "A204",
+      "A212",
+      "A203",
+      "A219",
+      "A213",
+      "A192",
+      "A220",
+      "A206",
+      "A223",
+      "A227",
+      "A218",
+      "A215",
+      "A200",
+      "A214",
+      "A228",
+      "A225",
+      "A207",
+      "A211",
+      "A224",
+      "A194",
+      "A199",
+      "A208",
+      "A221",
+      "A209",
+      "A222"
+     ],
+     "members": 26,
+     "warnings": [],
+     "d_density": [
+      -0.0429,
+      -0.0469,
+      -0.0485
+     ],
+     "d_chroma_RG_BG": [
+      0.004,
+      -0.0016
+     ],
+     "trigger_flips": []
+    },
+    "chroma_tol=0.025": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 22,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "chroma_tol=0.1": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 27,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "level_window=0.05": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 12,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    },
+    "level_window=0.2": {
+     "used": [
+      "A217",
+      "A204",
+      "A212"
+     ],
+     "members": 29,
+     "warnings": [],
+     "d_density": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "d_chroma_RG_BG": [
+      0.0,
+      0.0
+     ],
+     "trigger_flips": []
+    }
+   }
+  }
+ }
+}
