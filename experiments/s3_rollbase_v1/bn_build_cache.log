@@ -1,0 +1,69 @@
+blueneg:19941217A-08-tokyo ncc 0.951 rot 0 scale 0.766 P8 [738, 1076, 3] base warnings ['R base blocks spread 10.7% (p05-p95)'] 20.0 s
+blueneg:19941217A-10-tokyo ncc 0.930 rot 0 scale 0.770 P8 [742, 1075, 3] base warnings ['47% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 19.0 s
+blueneg:19941217A-16-tokyo ncc 0.957 rot 0 scale 0.766 P8 [745, 1066, 3] base warnings ['G base blocks spread 12.0% (p05-p95)'] 18.1 s
+blueneg:19941217A-27-tokyo ncc 0.958 rot 0 scale 0.766 P8 [745, 1077, 3] base warnings [] 18.0 s
+blueneg:19941217A-35-tokyo ncc 0.930 rot 0 scale 0.766 P8 [745, 1064, 3] base warnings [] 18.9 s
+blueneg:19941217B-07-tokyo ncc 0.890 rot 0 scale 0.766 P8 [738, 1067, 3] base warnings [] 18.3 s
+blueneg:19941217B-11-tokyo ncc 0.960 rot 0 scale 0.766 P8 [741, 1073, 3] base warnings [] 19.9 s
+blueneg:19941218B-25-tokyo ncc 0.955 rot 0 scale 0.766 P8 [741, 1070, 3] base warnings [] 19.4 s
+blueneg:19941218C-03-tokyo ncc 0.923 rot 0 scale 0.766 P8 [745, 1077, 3] base warnings [] 18.7 s
+blueneg:19941218C-04-tokyo ncc 0.849 rot 0 scale 0.766 P8 [735, 1071, 3] base warnings [] 19.4 s
+blueneg:19941218C-06-tokyo ncc 0.874 rot 0 scale 0.766 P8 [730, 1069, 3] base warnings [] 18.9 s
+blueneg:19941218C-07-tokyo ncc 0.958 rot 3 scale 0.766 P8 [741, 1070, 3] base warnings [] 19.2 s
+blueneg:19941218C-08-tokyo ncc 0.975 rot 3 scale 0.770 P8 [742, 1077, 3] base warnings [] 21.3 s
+blueneg:19941220D-18-kamakura ncc 0.971 rot 0 scale 0.766 P8 [741, 1073, 3] base warnings ['94% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 10.0% (p05-p95)', 'G base blocks spread 11.1% (p05-p95)'] 22.2 s
+blueneg:19941220D-19-kamakura ncc 0.962 rot 3 scale 0.766 P8 [741, 1073, 3] base warnings ['27% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 20.4 s
+blueneg:19941220D-22-kamakura ncc 0.902 rot 0 scale 0.766 P8 [738, 1070, 3] base warnings [] 22.0 s
+blueneg:19941220D-23-kamakura ncc 0.888 rot 0 scale 0.766 P8 [737, 1070, 3] base warnings [] 22.7 s
+blueneg:19941221D-30-kyoto ncc 0.939 rot 0 scale 0.766 P8 [745, 1071, 3] base warnings [] 25.2 s
+blueneg:19941222E-01-nara ncc 0.914 rot 0 scale 0.766 P8 [745, 1071, 3] base warnings ['59% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 23.1 s
+blueneg:19941222E-02-nara ncc 0.893 rot 0 scale 0.766 P8 [738, 1075, 3] base warnings [] 22.6 s
+blueneg:19941222E-07-nara ncc 0.931 rot 3 scale 0.770 P8 [739, 1072, 3] base warnings ['24% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 21.0 s
+blueneg:19941222E-10-nara ncc 0.974 rot 0 scale 0.766 P8 [738, 1073, 3] base warnings [] 23.4 s
+blueneg:19941223E-13-osaka ncc 0.972 rot 0 scale 0.766 P8 [737, 1071, 3] base warnings [] 25.1 s
+blueneg:19941223E-20-kyoto ncc 0.945 rot 1 scale 0.766 P8 [737, 1073, 3] base warnings ['21% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 24.2 s
+blueneg:19941224E-21-nagasaki ncc 0.969 rot 0 scale 0.770 P8 [739, 1075, 3] base warnings [] 25.7 s
+blueneg:19941224E-27-nagasaki ncc 0.976 rot 3 scale 0.766 P8 [745, 1070, 3] base warnings [] 23.1 s
+blueneg:19941225F-04-nagasaki ncc 0.962 rot 0 scale 0.766 P8 [735, 1066, 3] base warnings [] 23.5 s
+blueneg:19960808B-04-new-orleans-siggraph96 ncc 0.963 rot 0 scale 0.734 P8 [708, 1024, 3] base warnings [] 22.6 s
+blueneg:19960808B-05-new-orleans-siggraph96 ncc 0.890 rot 3 scale 0.734 P8 [705, 1022, 3] base warnings [] 21.5 s
+blueneg:19960808B-06-new-orleans-siggraph96 ncc 0.925 rot 0 scale 0.734 P8 [697, 1020, 3] base warnings [] 22.8 s
+blueneg:19960808B-07-new-orleans-siggraph96 ncc 0.892 rot 0 scale 0.734 P8 [700, 1020, 3] base warnings [] 20.9 s
+blueneg:19960812D-20-las-vegas ncc 0.954 rot 0 scale 0.734 P8 [711, 1022, 3] base warnings [] 24.9 s
+blueneg:19960812D-32-las-vegas ncc 0.910 rot 0 scale 0.734 P8 [705, 1025, 3] base warnings [] 20.6 s
+blueneg:19960812D-33-las-vegas ncc 0.939 rot 3 scale 0.734 P8 [711, 1024, 3] base warnings [] 19.3 s
+blueneg:19960812D-34-las-vegas ncc 0.943 rot 0 scale 0.734 P8 [710, 1020, 3] base warnings [] 24.1 s
+blueneg:19960812D-35-las-vegas ncc 0.915 rot 3 scale 0.734 P8 [671, 1019, 3] base warnings [] 23.6 s
+blueneg:199807B-17-seattle ncc 0.952 rot 3 scale 0.758 P8 [728, 1060, 3] base warnings [] 19.2 s
+blueneg:199807B-18-seattle ncc 0.931 rot 0 scale 0.754 P8 [676, 1047, 3] base warnings ['65% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 18.8 s
+blueneg:199807B-19-seattle ncc 0.919 rot 0 scale 0.758 P8 [727, 1056, 3] base warnings [] 19.6 s
+blueneg:199807B-20-seattle ncc 0.957 rot 0 scale 0.754 P8 [691, 1047, 3] base warnings [] 24.3 s
+blueneg:199910-02-korea ncc 0.938 rot 0 scale 0.758 P8 [732, 1058, 3] base warnings ['26% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 20.0 s
+blueneg:199910-03-korea ncc 0.953 rot 3 scale 0.762 P8 [730, 1066, 3] base warnings ['35% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 20.5 s
+blueneg:199910-04-korea ncc 0.933 rot 3 scale 0.758 P8 [727, 1056, 3] base warnings ['39% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 19.4 s
+blueneg:199910-05-korea ncc 0.909 rot 0 scale 0.758 P8 [730, 1048, 3] base warnings ['65% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 20.2 s
+blueneg:199910-06-korea ncc 0.893 rot 0 scale 0.754 P8 [676, 1047, 3] base warnings ['62% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 18.1 s
+blueneg:199910-07-korea ncc 0.873 rot 0 scale 0.758 P8 [693, 1057, 3] base warnings ['43% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 18.6 s
+blueneg:199910-09-hk ncc 0.945 rot 0 scale 0.754 P8 [688, 1047, 3] base warnings ['27% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 19.5 s
+blueneg:199910-10-hk ncc 0.974 rot 0 scale 0.758 P8 [727, 1057, 3] base warnings ['R base blocks spread 14.0% (p05-p95)', 'G base blocks spread 15.9% (p05-p95)', 'B base blocks spread 15.1% (p05-p95)'] 19.3 s
+blueneg:199910-14-hk-maipo ncc 0.944 rot 0 scale 0.762 P8 [697, 1058, 3] base warnings ['71% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 11.0% (p05-p95)', 'G base blocks spread 11.7% (p05-p95)'] 20.0 s
+blueneg:199910-23-hk-maipo ncc 0.981 rot 0 scale 0.758 P8 [730, 1056, 3] base warnings ['74% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 19.1% (p05-p95)', 'G base blocks spread 20.0% (p05-p95)', 'B base blocks spread 19.8% (p05-p95)'] 20.1 s
+blueneg:199910-24-hk-maipo ncc 0.913 rot 3 scale 0.758 P8 [730, 1060, 3] base warnings ['23% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 20.6 s
+     1073.29 real       833.54 user        90.90 sys
+          4272177152  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            29018010  page reclaims
+                3914  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                5230  voluntary context switches
+             2976261  involuntary context switches
+      15252030615472  instructions retired
+       3244130780928  cycles elapsed
+          5346415080  peak memory footprint

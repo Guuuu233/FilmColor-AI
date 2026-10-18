@@ -1,0 +1,91 @@
+blueneg:19960808B-08-new-orleans-siggraph96 ncc 0.959 rot 0 scale 0.734 P8 [711, 1028, 3] base warnings [] 21.1 s
+blueneg:19960808B-09-new-orleans-siggraph96 ncc 0.922 rot 0 scale 0.734 P8 [713, 1022, 3] base warnings [] 22.2 s
+blueneg:19960808B-10-new-orleans-siggraph96 ncc 0.956 rot 3 scale 0.734 P8 [704, 1022, 3] base warnings [] 25.3 s
+blueneg:19960808B-11-new-orleans-siggraph96 ncc 0.917 rot 0 scale 0.734 P8 [705, 1022, 3] base warnings [] 20.7 s
+blueneg:19960809B-15-new-orleans-siggraph96 ncc 0.963 rot 0 scale 0.734 P8 [710, 1030, 3] base warnings [] 20.7 s
+blueneg:19960811B-17-arizona-london-bridge ncc 0.933 rot 3 scale 0.734 P8 [706, 1024, 3] base warnings [] 18.6 s
+blueneg:19960811B-20-arizona-london-bridge ncc 0.943 rot 0 scale 0.734 P8 [709, 1026, 3] base warnings [] 19.5 s
+blueneg:19960811B-21-arizona-london-bridge ncc 0.940 rot 0 scale 0.734 P8 [708, 1026, 3] base warnings [] 20.7 s
+blueneg:19960811B-25-arizona-london-bridge ncc 0.971 rot 3 scale 0.734 P8 [713, 1026, 3] base warnings [] 19.1 s
+blueneg:19960811B-29-arizona-london-bridge ncc 0.966 rot 3 scale 0.734 P8 [700, 1022, 3] base warnings [] 20.3 s
+blueneg:19960811B-34-laughlin ncc 0.950 rot 0 scale 0.734 P8 [711, 1020, 3] base warnings [] 26.2 s
+blueneg:19960811B-35-laughlin ncc 0.925 rot 0 scale 0.734 P8 [706, 1019, 3] base warnings [] 27.5 s
+blueneg:19960811B-36-laughlin ncc 0.955 rot 0 scale 0.766 P8 [737, 1066, 3] base warnings [] 19.9 s
+blueneg:19960812D-01-hoover-dam ncc 0.967 rot 0 scale 0.734 P8 [711, 1027, 3] base warnings [] 26.0 s
+blueneg:19960812D-02-hoover-dam ncc 0.977 rot 0 scale 0.734 P8 [711, 1022, 3] base warnings ['40% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 11.3% (p05-p95)'] 25.0 s
+blueneg:19960812D-05-hoover-dam ncc 0.982 rot 3 scale 0.734 P8 [706, 1020, 3] base warnings ['66% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 23.4 s
+blueneg:19960812D-06-hoover-dam ncc 0.961 rot 0 scale 0.734 P8 [705, 1027, 3] base warnings ['23% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 23.7 s
+blueneg:19960812D-07-hoover-dam ncc 0.940 rot 0 scale 0.734 P8 [710, 1026, 3] base warnings [] 21.5 s
+blueneg:19960812D-08-hoover-dam ncc 0.972 rot 0 scale 0.734 P8 [711, 1024, 3] base warnings [] 19.2 s
+blueneg:19960812D-10-las-vegas ncc 0.917 rot 0 scale 0.738 P8 [707, 1026, 3] base warnings [] 23.0 s
+blueneg:19960812D-11-las-vegas ncc 0.939 rot 3 scale 0.738 P8 [707, 1028, 3] base warnings [] 25.5 s
+blueneg:19960812D-12-las-vegas ncc 0.912 rot 0 scale 0.734 P8 [710, 1019, 3] base warnings [] 24.6 s
+blueneg:19960812D-13-las-vegas ncc 0.967 rot 0 scale 0.766 P8 [741, 1067, 3] base warnings [] 24.0 s
+blueneg:19960812D-14-las-vegas ncc 0.888 rot 0 scale 0.730 P8 [704, 1020, 3] base warnings [] 23.4 s
+blueneg:19960812D-15-las-vegas ncc 0.955 rot 0 scale 0.734 P8 [704, 1022, 3] base warnings [] 23.0 s
+blueneg:19960812D-22-las-vegas ncc 0.896 rot 3 scale 0.734 P8 [666, 1016, 3] base warnings [] 18.5 s
+blueneg:19960812D-25-las-vegas ncc 0.938 rot 3 scale 0.734 P8 [660, 1019, 3] base warnings [] 18.1 s
+blueneg:19960812D-26-las-vegas ncc 0.910 rot 0 scale 0.734 P8 [706, 1024, 3] base warnings [] 20.2 s
+blueneg:19960812D-27-las-vegas ncc 0.972 rot 3 scale 0.734 P8 [708, 1026, 3] base warnings [] 19.3 s
+blueneg:19960812D-28-las-vegas ncc 0.960 rot 0 scale 0.734 P8 [708, 1019, 3] base warnings [] 20.7 s
+blueneg:19960812D-29-las-vegas ncc 0.964 rot 3 scale 0.734 P8 [704, 1026, 3] base warnings ['63% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 14.0% (p05-p95)', 'G base blocks spread 13.5% (p05-p95)'] 20.7 s
+blueneg:19960812D-30-las-vegas ncc 0.956 rot 0 scale 0.734 P8 [708, 1024, 3] base warnings [] 26.6 s
+blueneg:19960812D-31-las-vegas ncc 0.915 rot 3 scale 0.730 P8 [706, 1016, 3] base warnings [] 21.9 s
+blueneg:19970619A-15-white-chapel ncc 0.974 rot 3 scale 0.754 P8 [725, 1055, 3] base warnings ['72% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'R base blocks spread 11.7% (p05-p95)'] 20.0 s
+blueneg:19970619B-07-notre-dame ncc 0.951 rot 0 scale 0.754 P8 [722, 1055, 3] base warnings [] 19.3 s
+blueneg:19970619B-10-notre-dame ncc 0.963 rot 1 scale 0.754 P8 [726, 1054, 3] base warnings [] 19.5 s
+blueneg:199807A-08-hk ncc 0.938 rot 0 scale 0.754 P8 [676, 1050, 3] base warnings ['G base blocks spread 11.2% (p05-p95)'] 20.2 s
+blueneg:199807A-10-orlando-siggraph ncc 0.876 rot 0 scale 0.758 P8 [724, 1090, 3] base warnings [] 22.2 s
+blueneg:199807A-11-orlando-siggraph ncc 0.956 rot 0 scale 0.754 P8 [723, 1047, 3] base warnings [] 24.4 s
+blueneg:199807A-12-orlando-universal-studio ncc 0.975 rot 0 scale 0.758 P8 [686, 1053, 3] base warnings [] 20.7 s
+blueneg:199807A-13-orlando-universal-studio ncc 0.972 rot 0 scale 0.758 P8 [680, 1053, 3] base warnings [] 24.2 s
+blueneg:199807A-14-orlando-universal-studio ncc 0.950 rot 3 scale 0.758 P8 [726, 1061, 3] base warnings [] 24.1 s
+blueneg:199807A-17-orlando-universal-studio ncc 0.974 rot 3 scale 0.758 P8 [727, 1056, 3] base warnings [] 23.4 s
+blueneg:199807A-18-orlando-universal-studio ncc 0.972 rot 0 scale 0.754 P8 [688, 1048, 3] base warnings [] 18.3 s
+blueneg:199807A-19-orlando-disney ncc 0.759 rot 3 scale 0.758 P8 [729, 1056, 3] base warnings [] 17.5 s
+blueneg:199807A-20-orlando-disney ncc 0.859 rot 3 scale 0.758 P8 [730, 1057, 3] base warnings [] 21.2 s
+blueneg:199807A-21-orlando-disney ncc 0.575 rot 0 scale 0.714 P8 [686, 998, 3] base warnings [] 17.4 s
+blueneg:199807A-22-orlando-disney ncc 0.881 rot 0 scale 0.690 P8 [631, 964, 3] base warnings [] 19.9 s
+blueneg:199807A-23-orlando-disney ncc 0.955 rot 3 scale 0.762 P8 [728, 1059, 3] base warnings [] 19.7 s
+blueneg:199807A-27-orlando-disney ncc 0.943 rot 3 scale 0.754 P8 [730, 1054, 3] base warnings [] 18.4 s
+blueneg:199807A-28-orlando-disney ncc 0.944 rot 0 scale 0.754 P8 [723, 1050, 3] base warnings [] 20.7 s
+blueneg:199807A-29-orlando-disney ncc 0.929 rot 0 scale 0.754 P8 [676, 1047, 3] base warnings [] 20.5 s
+blueneg:199807A-30-orlando-disney ncc 0.959 rot 3 scale 0.754 P8 [723, 1050, 3] base warnings [] 18.6 s
+blueneg:199807A-31-orlando-disney ncc 0.900 rot 0 scale 0.758 P8 [683, 1056, 3] base warnings [] 18.2 s
+blueneg:199807A-32-orlando-disney ncc 0.933 rot 0 scale 0.750 P8 [672, 1044, 3] base warnings [] 20.9 s
+blueneg:199807A-33-orlando-disney ncc 0.951 rot 1 scale 0.762 P8 [734, 1059, 3] base warnings ['36% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 18.5 s
+blueneg:199807A-34-orlando-disney ncc 0.953 rot 0 scale 0.754 P8 [692, 1048, 3] base warnings [] 19.0 s
+blueneg:199807A-35-orlando-disney ncc 0.962 rot 0 scale 0.754 P8 [722, 1050, 3] base warnings [] 18.8 s
+blueneg:199807A-36-orlando-disney ncc 0.867 rot 1 scale 0.758 P8 [696, 1072, 3] base warnings [] 21.0 s
+blueneg:199807A-37-orlando-disney ncc 0.739 rot 0 scale 0.694 P8 [635, 970, 3] base warnings [] 19.1 s
+blueneg:199807B-01-orlando-seaworld ncc 0.955 rot 0 scale 0.758 P8 [727, 1056, 3] base warnings [] 19.1 s
+blueneg:199807B-02-orlando-seaworld ncc 0.932 rot 3 scale 0.754 P8 [723, 1047, 3] base warnings ['25% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 10.3% (p05-p95)'] 19.0 s
+blueneg:199807B-03-orlando-seaworld ncc 0.890 rot 3 scale 0.758 P8 [680, 1056, 3] base warnings [] 18.9 s
+blueneg:199807B-04-orlando-seaworld ncc 0.944 rot 3 scale 0.754 P8 [726, 1047, 3] base warnings [] 19.5 s
+blueneg:199807B-05-orlando-seaworld ncc 0.900 rot 2 scale 0.758 P8 [683, 1056, 3] base warnings ['60% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 18.6 s
+blueneg:199807B-06-orlando-seaworld ncc 0.839 rot 0 scale 0.758 P8 [693, 1053, 3] base warnings [] 21.8 s
+blueneg:199807B-07-orlando-seaworld ncc 0.856 rot 0 scale 0.754 P8 [723, 1047, 3] base warnings [] 20.4 s
+blueneg:199807B-08-orlando-seaworld ncc 0.885 rot 0 scale 0.758 P8 [702, 1053, 3] base warnings ['35% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region'] 18.7 s
+blueneg:199807B-09-orlando-seaworld ncc 0.972 rot 0 scale 0.754 P8 [722, 1050, 3] base warnings ['65% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region', 'G base blocks spread 10.2% (p05-p95)'] 18.9 s
+blueneg:199807B-11-orlando-seaworld ncc 0.961 rot 0 scale 0.754 P8 [688, 1053, 3] base warnings [] 19.2 s
+blueneg:199807B-13-orlando-seaworld ncc 0.924 rot 0 scale 0.758 P8 [730, 1061, 3] base warnings [] 20.6 s
+blueneg:199807B-14-orlando-seaworld ncc 0.826 rot 0 scale 0.758 P8 [726, 1057, 3] base warnings [] 19.5 s
+blueneg:199807B-15-orlando-seaworld ncc 0.925 rot 0 scale 0.758 P8 [723, 1061, 3] base warnings [] 19.5 s
+     1531.72 real      1207.14 user       131.00 sys
+          4750360576  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            41063047  page reclaims
+                6886  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                8530  voluntary context switches
+             3971457  involuntary context switches
+      21676970315320  instructions retired
+       4661769691516  cycles elapsed
+          5635068536  peak memory footprint

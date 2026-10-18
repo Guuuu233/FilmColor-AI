@@ -1,0 +1,395 @@
+downloaded, verified negative-16bit/blue-intact/19941217A-08-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941217A-08-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941217A-10-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941217A-10-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941217A-16-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941217A-16-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941217A-27-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941217A-27-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941217A-35-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941217A-35-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941217B-07-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941217B-07-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941217B-11-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941217B-11-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941218B-25-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941218B-25-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941218C-03-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941218C-03-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941218C-04-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941218C-04-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941218C-06-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941218C-06-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941218C-07-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941218C-07-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941218C-08-tokyo.dng
+downloaded, verified printed-16bit/blue-intact/19941218C-08-tokyo.tif
+downloaded, verified negative-16bit/blue-intact/19941220D-18-kamakura.dng
+downloaded, verified printed-16bit/blue-intact/19941220D-18-kamakura.tif
+downloaded, verified negative-16bit/blue-intact/19941220D-19-kamakura.dng
+downloaded, verified printed-16bit/blue-intact/19941220D-19-kamakura.tif
+downloaded, verified negative-16bit/blue-intact/19941220D-22-kamakura.dng
+downloaded, verified printed-16bit/blue-intact/19941220D-22-kamakura.tif
+downloaded, verified negative-16bit/blue-intact/19941220D-23-kamakura.dng
+downloaded, verified printed-16bit/blue-intact/19941220D-23-kamakura.tif
+downloaded, verified negative-16bit/blue-intact/19941221D-30-kyoto.dng
+downloaded, verified printed-16bit/blue-intact/19941221D-30-kyoto.tif
+downloaded, verified negative-16bit/blue-intact/19941222E-01-nara.dng
+downloaded, verified printed-16bit/blue-intact/19941222E-01-nara.tif
+downloaded, verified negative-16bit/blue-intact/19941222E-02-nara.dng
+downloaded, verified printed-16bit/blue-intact/19941222E-02-nara.tif
+downloaded, verified negative-16bit/blue-intact/19941222E-07-nara.dng
+downloaded, verified printed-16bit/blue-intact/19941222E-07-nara.tif
+downloaded, verified negative-16bit/blue-intact/19941222E-10-nara.dng
+downloaded, verified printed-16bit/blue-intact/19941222E-10-nara.tif
+downloaded, verified negative-16bit/blue-intact/19941223E-13-osaka.dng
+downloaded, verified printed-16bit/blue-intact/19941223E-13-osaka.tif
+downloaded, verified negative-16bit/blue-intact/19941223E-20-kyoto.dng
+downloaded, verified printed-16bit/blue-intact/19941223E-20-kyoto.tif
+downloaded, verified negative-16bit/blue-intact/19941224E-21-nagasaki.dng
+downloaded, verified printed-16bit/blue-intact/19941224E-21-nagasaki.tif
+downloaded, verified negative-16bit/blue-intact/19941224E-27-nagasaki.dng
+downloaded, verified printed-16bit/blue-intact/19941224E-27-nagasaki.tif
+downloaded, verified negative-16bit/blue-intact/19941225F-04-nagasaki.dng
+downloaded, verified printed-16bit/blue-intact/19941225F-04-nagasaki.tif
+downloaded, verified negative-16bit/blue-intact/19960808B-04-new-orleans-siggraph96.dng
+downloaded, verified printed-16bit/blue-intact/19960808B-04-new-orleans-siggraph96.tif
+downloaded, verified negative-16bit/blue-intact/19960808B-05-new-orleans-siggraph96.dng
+downloaded, verified printed-16bit/blue-intact/19960808B-05-new-orleans-siggraph96.tif
+downloaded, verified negative-16bit/blue-intact/19960808B-06-new-orleans-siggraph96.dng
+downloaded, verified printed-16bit/blue-intact/19960808B-06-new-orleans-siggraph96.tif
+downloaded, verified negative-16bit/blue-intact/19960808B-07-new-orleans-siggraph96.dng
+downloaded, verified printed-16bit/blue-intact/19960808B-07-new-orleans-siggraph96.tif
+curl: (18) Transferred a partial file
+FAILED negative-16bit/blue-intact/19960808B-08-new-orleans-siggraph96.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960808B-08-new-orleans-siggraph96.tif
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED negative-16bit/blue-intact/19960808B-09-new-orleans-siggraph96.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960808B-09-new-orleans-siggraph96.tif
+curl: (18) Transferred a partial file
+FAILED negative-16bit/blue-intact/19960808B-10-new-orleans-siggraph96.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960808B-10-new-orleans-siggraph96.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960808B-11-new-orleans-siggraph96.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960808B-11-new-orleans-siggraph96.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960809B-15-new-orleans-siggraph96.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960809B-15-new-orleans-siggraph96.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960811B-17-arizona-london-bridge.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960811B-17-arizona-london-bridge.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960811B-20-arizona-london-bridge.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960811B-20-arizona-london-bridge.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960811B-21-arizona-london-bridge.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960811B-21-arizona-london-bridge.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960811B-25-arizona-london-bridge.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960811B-25-arizona-london-bridge.tif
+curl: (18) Transferred a partial file
+FAILED negative-16bit/blue-intact/19960811B-29-arizona-london-bridge.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960811B-29-arizona-london-bridge.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960811B-34-laughlin.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960811B-34-laughlin.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960811B-35-laughlin.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960811B-35-laughlin.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960811B-36-laughlin.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960811B-36-laughlin.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-01-hoover-dam.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-01-hoover-dam.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-02-hoover-dam.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-02-hoover-dam.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-05-hoover-dam.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-05-hoover-dam.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-06-hoover-dam.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-06-hoover-dam.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-07-hoover-dam.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-07-hoover-dam.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-08-hoover-dam.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-08-hoover-dam.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-10-las-vegas.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-10-las-vegas.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-11-las-vegas.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-11-las-vegas.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-12-las-vegas.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-12-las-vegas.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-13-las-vegas.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-13-las-vegas.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-14-las-vegas.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-14-las-vegas.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19960812D-15-las-vegas.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19960812D-15-las-vegas.tif
+downloaded, verified negative-16bit/blue-intact/19960812D-20-las-vegas.dng
+downloaded, verified printed-16bit/blue-intact/19960812D-20-las-vegas.tif
+curl: (18) Transferred a partial file
+FAILED negative-16bit/blue-intact/19960812D-22-las-vegas.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960812D-22-las-vegas.tif
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED negative-16bit/blue-intact/19960812D-25-las-vegas.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960812D-25-las-vegas.tif
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED negative-16bit/blue-intact/19960812D-26-las-vegas.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960812D-26-las-vegas.tif
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED negative-16bit/blue-intact/19960812D-27-las-vegas.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960812D-27-las-vegas.tif
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED negative-16bit/blue-intact/19960812D-28-las-vegas.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960812D-28-las-vegas.tif
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED negative-16bit/blue-intact/19960812D-29-las-vegas.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960812D-29-las-vegas.tif
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED negative-16bit/blue-intact/19960812D-30-las-vegas.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960812D-30-las-vegas.tif
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED negative-16bit/blue-intact/19960812D-31-las-vegas.dng
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to huggingface.co:443 
+FAILED printed-16bit/blue-intact/19960812D-31-las-vegas.tif
+downloaded, verified negative-16bit/blue-intact/19960812D-32-las-vegas.dng
+downloaded, verified printed-16bit/blue-intact/19960812D-32-las-vegas.tif
+downloaded, verified negative-16bit/blue-intact/19960812D-33-las-vegas.dng
+downloaded, verified printed-16bit/blue-intact/19960812D-33-las-vegas.tif
+downloaded, verified negative-16bit/blue-intact/19960812D-34-las-vegas.dng
+downloaded, verified printed-16bit/blue-intact/19960812D-34-las-vegas.tif
+downloaded, verified negative-16bit/blue-intact/19960812D-35-las-vegas.dng
+downloaded, verified printed-16bit/blue-intact/19960812D-35-las-vegas.tif
+curl: (18) Transferred a partial file
+FAILED negative-16bit/blue-intact/19970619A-15-white-chapel.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19970619A-15-white-chapel.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 1 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19970619B-07-notre-dame.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19970619B-07-notre-dame.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/19970619B-10-notre-dame.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/19970619B-10-notre-dame.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-08-hk.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-08-hk.tif
+curl: (18) Transferred a partial file
+FAILED negative-16bit/blue-intact/199807A-10-orlando-siggraph.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-10-orlando-siggraph.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-11-orlando-siggraph.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-11-orlando-siggraph.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-12-orlando-universal-studio.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-12-orlando-universal-studio.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-13-orlando-universal-studio.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-13-orlando-universal-studio.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-14-orlando-universal-studio.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-14-orlando-universal-studio.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-17-orlando-universal-studio.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-17-orlando-universal-studio.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-18-orlando-universal-studio.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-18-orlando-universal-studio.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-19-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-19-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-20-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-20-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-21-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-21-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-22-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-22-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-23-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-23-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-27-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-27-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-28-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-28-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-29-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-29-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-30-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-30-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-31-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-31-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-32-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-32-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-33-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-33-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-34-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-34-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-35-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-35-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-36-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-36-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807A-37-orlando-disney.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807A-37-orlando-disney.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-01-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-01-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-02-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-02-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-03-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-03-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-04-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-04-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-05-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-05-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-06-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-06-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-07-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-07-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-08-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-08-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-09-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-09-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-11-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-11-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-13-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-13-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-14-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-14-orlando-seaworld.tif
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED negative-16bit/blue-intact/199807B-15-orlando-seaworld.dng
+curl: (7) Failed to connect to 127.0.0.1 port 7897 after 0 ms: Couldn't connect to server
+FAILED printed-16bit/blue-intact/199807B-15-orlando-seaworld.tif
+downloaded, verified negative-16bit/blue-intact/199807B-17-seattle.dng
+downloaded, verified printed-16bit/blue-intact/199807B-17-seattle.tif
+downloaded, verified negative-16bit/blue-intact/199807B-18-seattle.dng
+downloaded, verified printed-16bit/blue-intact/199807B-18-seattle.tif
+downloaded, verified negative-16bit/blue-intact/199807B-19-seattle.dng
+downloaded, verified printed-16bit/blue-intact/199807B-19-seattle.tif
+downloaded, verified negative-16bit/blue-intact/199807B-20-seattle.dng
+downloaded, verified printed-16bit/blue-intact/199807B-20-seattle.tif
+downloaded, verified negative-16bit/blue-intact/199910-02-korea.dng
+downloaded, verified printed-16bit/blue-intact/199910-02-korea.tif
+downloaded, verified negative-16bit/blue-intact/199910-03-korea.dng
+downloaded, verified printed-16bit/blue-intact/199910-03-korea.tif
+downloaded, verified negative-16bit/blue-intact/199910-04-korea.dng
+downloaded, verified printed-16bit/blue-intact/199910-04-korea.tif
+downloaded, verified negative-16bit/blue-intact/199910-05-korea.dng
+downloaded, verified printed-16bit/blue-intact/199910-05-korea.tif
+downloaded, verified negative-16bit/blue-intact/199910-06-korea.dng
+downloaded, verified printed-16bit/blue-intact/199910-06-korea.tif
+downloaded, verified negative-16bit/blue-intact/199910-07-korea.dng
+downloaded, verified printed-16bit/blue-intact/199910-07-korea.tif
+downloaded, verified negative-16bit/blue-intact/199910-09-hk.dng
+downloaded, verified printed-16bit/blue-intact/199910-09-hk.tif
+downloaded, verified negative-16bit/blue-intact/199910-10-hk.dng
+downloaded, verified printed-16bit/blue-intact/199910-10-hk.tif
+downloaded, verified negative-16bit/blue-intact/199910-14-hk-maipo.dng
+downloaded, verified printed-16bit/blue-intact/199910-14-hk-maipo.tif
+downloaded, verified negative-16bit/blue-intact/199910-23-hk-maipo.dng
+downloaded, verified printed-16bit/blue-intact/199910-23-hk-maipo.tif
+downloaded, verified negative-16bit/blue-intact/199910-24-hk-maipo.dng
+downloaded, verified printed-16bit/blue-intact/199910-24-hk-maipo.tif
+156 verified, 146 not verified

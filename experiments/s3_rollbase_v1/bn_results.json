@@ -1,0 +1,8536 @@
+{
+ "prereg": "experiments/s3_rollbase_v1/PREREG.md + PREREG_BLUENEG.md",
+ "verdict": "failed",
+ "rolls": {
+  "ds-199412A": {
+   "frames": 6,
+   "triggered": 0,
+   "trigger_rate": 0.0,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": null,
+   "improved_triggered": 0,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": -0.013,
+   "median_delta_p4_triggered": null,
+   "median_fixed": {
+    "B0": 12.829,
+    "R1": 12.829,
+    "B1": 12.716
+   },
+   "worst": [
+    {
+     "id": "blueneg:19941217A-08-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0241
+    },
+    {
+     "id": "blueneg:19941217A-10-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0188
+    },
+    {
+     "id": "blueneg:19941217A-15-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0258
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  },
+  "ds-199412B": {
+   "frames": 5,
+   "triggered": 0,
+   "trigger_rate": 0.0,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": null,
+   "improved_triggered": 0,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": 0.057,
+   "median_delta_p4_triggered": null,
+   "median_fixed": {
+    "B0": 9.873,
+    "R1": 9.873,
+    "B1": 11.072
+   },
+   "worst": [
+    {
+     "id": "blueneg:19941217B-07-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0009
+    },
+    {
+     "id": "blueneg:19941217B-08-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.02
+    },
+    {
+     "id": "blueneg:19941217B-11-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0068
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  },
+  "ds-199412C": {
+   "frames": 6,
+   "triggered": 0,
+   "trigger_rate": 0.0,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": null,
+   "improved_triggered": 0,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": 0.239,
+   "median_delta_p4_triggered": null,
+   "median_fixed": {
+    "B0": 16.177,
+    "R1": 16.177,
+    "B1": 16.895
+   },
+   "worst": [
+    {
+     "id": "blueneg:19941218C-03-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0071
+    },
+    {
+     "id": "blueneg:19941218C-04-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0194
+    },
+    {
+     "id": "blueneg:19941218C-05-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0048
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  },
+  "ds-199412D": {
+   "frames": 8,
+   "triggered": 1,
+   "trigger_rate": 0.125,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": 0.897,
+   "improved_triggered": 0,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": 0.577,
+   "median_delta_p4_triggered": -0.241,
+   "median_fixed": {
+    "B0": 12.116,
+    "R1": 12.116,
+    "B1": 12.501
+   },
+   "worst": [
+    {
+     "id": "blueneg:19941220D-18-kamakura",
+     "delta_fixed": 0.897,
+     "triggered": true,
+     "chroma_disagreement": 0.1905
+    },
+    {
+     "id": "blueneg:19941220D-19-kamakura",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0247
+    },
+    {
+     "id": "blueneg:19941220D-20-kamakura",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.009
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  },
+  "ds-199412E": {
+   "frames": 12,
+   "triggered": 2,
+   "trigger_rate": 0.167,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": 3.622,
+   "improved_triggered": 0,
+   "severe": [
+    "blueneg:19941222E-01-nara",
+    "blueneg:19941223E-17-osaka"
+   ],
+   "new_clipping": [],
+   "median_delta_B1_all": 0.594,
+   "median_delta_p4_triggered": -1.087,
+   "median_fixed": {
+    "B0": 13.705,
+    "R1": 13.705,
+    "B1": 13.951
+   },
+   "worst": [
+    {
+     "id": "blueneg:19941222E-01-nara",
+     "delta_fixed": 4.336,
+     "triggered": true,
+     "chroma_disagreement": 0.13
+    },
+    {
+     "id": "blueneg:19941223E-17-osaka",
+     "delta_fixed": 2.908,
+     "triggered": true,
+     "chroma_disagreement": 0.141
+    },
+    {
+     "id": "blueneg:19941222E-02-nara",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0125
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": false,
+    "no_new_clipping": true
+   },
+   "passed": false
+  },
+  "ds-199412F": {
+   "frames": 3,
+   "triggered": 0,
+   "trigger_rate": 0.0,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": null,
+   "improved_triggered": 0,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": 0.072,
+   "median_delta_p4_triggered": null,
+   "median_fixed": {
+    "B0": 8.876,
+    "R1": 8.876,
+    "B1": 9.336
+   },
+   "worst": [
+    {
+     "id": "blueneg:19941225F-03-nagasaki",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0008
+    },
+    {
+     "id": "blueneg:19941225F-04-nagasaki",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0008
+    },
+    {
+     "id": "blueneg:19941228F-12-tokyo",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0281
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  },
+  "ds-199608B": {
+   "frames": 20,
+   "triggered": 0,
+   "trigger_rate": 0.0,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": null,
+   "improved_triggered": 0,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": 0.003,
+   "median_delta_p4_triggered": null,
+   "median_fixed": {
+    "B0": 13.421,
+    "R1": 13.421,
+    "B1": 13.819
+   },
+   "worst": [
+    {
+     "id": "blueneg:19960808B-03-new-orleans-siggraph96",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0021
+    },
+    {
+     "id": "blueneg:19960808B-04-new-orleans-siggraph96",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.002
+    },
+    {
+     "id": "blueneg:19960808B-05-new-orleans-siggraph96",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0017
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  },
+  "ds-199706B": {
+   "frames": 3,
+   "triggered": 0,
+   "trigger_rate": 0.0,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": null,
+   "improved_triggered": 0,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": -0.06,
+   "median_delta_p4_triggered": null,
+   "median_fixed": {
+    "B0": 9.686,
+    "R1": 9.686,
+    "B1": 9.626
+   },
+   "worst": [
+    {
+     "id": "blueneg:19970619B-07-notre-dame",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0027
+    },
+    {
+     "id": "blueneg:19970619B-09-notre-dame",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0027
+    },
+    {
+     "id": "blueneg:19970619B-10-notre-dame",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0182
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  },
+  "ds-199807A": {
+   "frames": 25,
+   "triggered": 0,
+   "trigger_rate": 0.0,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": null,
+   "improved_triggered": 0,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": 0.255,
+   "median_delta_p4_triggered": null,
+   "median_fixed": {
+    "B0": 14.795,
+    "R1": 14.795,
+    "B1": 15.945
+   },
+   "worst": [
+    {
+     "id": "blueneg:199807A-06-hk",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.065
+    },
+    {
+     "id": "blueneg:199807A-08-hk",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0441
+    },
+    {
+     "id": "blueneg:199807A-09-orlando-siggraph",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0031
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  },
+  "ds-199807B": {
+   "frames": 19,
+   "triggered": 1,
+   "trigger_rate": 0.053,
+   "median_delta_all": 0.0,
+   "median_delta_triggered": -4.842,
+   "improved_triggered": 1,
+   "severe": [],
+   "new_clipping": [],
+   "median_delta_B1_all": 0.139,
+   "median_delta_p4_triggered": -2.894,
+   "median_fixed": {
+    "B0": 13.909,
+    "R1": 12.571,
+    "B1": 12.571
+   },
+   "worst": [
+    {
+     "id": "blueneg:199807B-01-orlando-seaworld",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0209
+    },
+    {
+     "id": "blueneg:199807B-02-orlando-seaworld",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0462
+    },
+    {
+     "id": "blueneg:199807B-03-orlando-seaworld",
+     "delta_fixed": 0.0,
+     "triggered": false,
+     "chroma_disagreement": 0.0083
+    }
+   ],
+   "kind": "harm-only",
+   "checks": {
+    "no_severe": true,
+    "no_new_clipping": true
+   },
+   "passed": true
+  }
+ },
+ "excluded_low_ncc": [
+  {
+   "id": "blueneg:199807A-21-orlando-disney",
+   "ncc": 0.575
+  }
+ ],
+ "not_applicable": {
+  "ds-199608D": {
+   "gates": {
+    "G1": false,
+    "G2": true,
+    "G3": null
+   },
+   "frames": 27,
+   "error": null
+  },
+  "ds-199706A": {
+   "gates": {
+    "G1": true,
+    "G2": false,
+    "G3": null
+   },
+   "frames": 2,
+   "error": null
+  },
+  "ds-199706C": {
+   "gates": {
+    "G1": true,
+    "G2": false,
+    "G3": null
+   },
+   "frames": 1,
+   "error": null
+  },
+  "ds-199910": {
+   "gates": {
+    "G1": false,
+    "G2": true,
+    "G3": null
+   },
+   "frames": 13,
+   "error": null
+  }
+ },
+ "without_s3_5": {
+  "verdict": "failed",
+  "rolls": {
+   "ds-199412A": {
+    "frames": 5,
+    "triggered": 0,
+    "trigger_rate": 0.0,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": null,
+    "improved_triggered": 0,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.022,
+    "median_delta_p4_triggered": null,
+    "median_fixed": {
+     "B0": 12.502,
+     "R1": 12.502,
+     "B1": 12.552
+    },
+    "worst": [
+     {
+      "id": "blueneg:19941217A-08-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0241
+     },
+     {
+      "id": "blueneg:19941217A-10-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0188
+     },
+     {
+      "id": "blueneg:19941217A-16-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0085
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   },
+   "ds-199412B": {
+    "frames": 3,
+    "triggered": 0,
+    "trigger_rate": 0.0,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": null,
+    "improved_triggered": 0,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.037,
+    "median_delta_p4_triggered": null,
+    "median_fixed": {
+     "B0": 11.035,
+     "R1": 11.035,
+     "B1": 11.072
+    },
+    "worst": [
+     {
+      "id": "blueneg:19941217B-07-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0009
+     },
+     {
+      "id": "blueneg:19941217B-11-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0068
+     },
+     {
+      "id": "blueneg:19941218B-25-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0008
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   },
+   "ds-199412C": {
+    "frames": 5,
+    "triggered": 0,
+    "trigger_rate": 0.0,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": null,
+    "improved_triggered": 0,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.0,
+    "median_delta_p4_triggered": null,
+    "median_fixed": {
+     "B0": 16.285,
+     "R1": 16.285,
+     "B1": 16.764
+    },
+    "worst": [
+     {
+      "id": "blueneg:19941218C-03-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0071
+     },
+     {
+      "id": "blueneg:19941218C-04-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0194
+     },
+     {
+      "id": "blueneg:19941218C-06-tokyo",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0268
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   },
+   "ds-199412D": {
+    "frames": 5,
+    "triggered": 1,
+    "trigger_rate": 0.2,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": 0.897,
+    "improved_triggered": 0,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.897,
+    "median_delta_p4_triggered": -0.241,
+    "median_fixed": {
+     "B0": 14.151,
+     "R1": 14.647,
+     "B1": 15.048
+    },
+    "worst": [
+     {
+      "id": "blueneg:19941220D-18-kamakura",
+      "delta_fixed": 0.897,
+      "triggered": true,
+      "chroma_disagreement": 0.1905
+     },
+     {
+      "id": "blueneg:19941220D-19-kamakura",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0247
+     },
+     {
+      "id": "blueneg:19941220D-22-kamakura",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0174
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   },
+   "ds-199412E": {
+    "frames": 8,
+    "triggered": 1,
+    "trigger_rate": 0.125,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": 4.336,
+    "improved_triggered": 0,
+    "severe": [
+     "blueneg:19941222E-01-nara"
+    ],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.378,
+    "median_delta_p4_triggered": -1.395,
+    "median_fixed": {
+     "B0": 14.159,
+     "R1": 14.483,
+     "B1": 14.698
+    },
+    "worst": [
+     {
+      "id": "blueneg:19941222E-01-nara",
+      "delta_fixed": 4.336,
+      "triggered": true,
+      "chroma_disagreement": 0.13
+     },
+     {
+      "id": "blueneg:19941222E-02-nara",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0125
+     },
+     {
+      "id": "blueneg:19941222E-07-nara",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.033
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": false,
+     "no_new_clipping": true
+    },
+    "passed": false
+   },
+   "ds-199412F": {
+    "frames": 1,
+    "triggered": 0,
+    "trigger_rate": 0.0,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": null,
+    "improved_triggered": 0,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.072,
+    "median_delta_p4_triggered": null,
+    "median_fixed": {
+     "B0": 8.472,
+     "R1": 8.472,
+     "B1": 8.544
+    },
+    "worst": [
+     {
+      "id": "blueneg:19941225F-04-nagasaki",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0008
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   },
+   "ds-199608B": {
+    "frames": 17,
+    "triggered": 0,
+    "trigger_rate": 0.0,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": null,
+    "improved_triggered": 0,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.02,
+    "median_delta_p4_triggered": null,
+    "median_fixed": {
+     "B0": 13.371,
+     "R1": 13.371,
+     "B1": 13.515
+    },
+    "worst": [
+     {
+      "id": "blueneg:19960808B-04-new-orleans-siggraph96",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.002
+     },
+     {
+      "id": "blueneg:19960808B-05-new-orleans-siggraph96",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0017
+     },
+     {
+      "id": "blueneg:19960808B-06-new-orleans-siggraph96",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.009
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   },
+   "ds-199706B": {
+    "frames": 2,
+    "triggered": 0,
+    "trigger_rate": 0.0,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": null,
+    "improved_triggered": 0,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": -0.227,
+    "median_delta_p4_triggered": null,
+    "median_fixed": {
+     "B0": 11.665,
+     "R1": 11.665,
+     "B1": 11.439
+    },
+    "worst": [
+     {
+      "id": "blueneg:19970619B-07-notre-dame",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0027
+     },
+     {
+      "id": "blueneg:19970619B-10-notre-dame",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0182
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   },
+   "ds-199807A": {
+    "frames": 23,
+    "triggered": 0,
+    "trigger_rate": 0.0,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": null,
+    "improved_triggered": 0,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.255,
+    "median_delta_p4_triggered": null,
+    "median_fixed": {
+     "B0": 14.795,
+     "R1": 14.795,
+     "B1": 15.945
+    },
+    "worst": [
+     {
+      "id": "blueneg:199807A-08-hk",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0441
+     },
+     {
+      "id": "blueneg:199807A-10-orlando-siggraph",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0062
+     },
+     {
+      "id": "blueneg:199807A-11-orlando-siggraph",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0041
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   },
+   "ds-199807B": {
+    "frames": 17,
+    "triggered": 1,
+    "trigger_rate": 0.059,
+    "median_delta_all": 0.0,
+    "median_delta_triggered": -4.842,
+    "improved_triggered": 1,
+    "severe": [],
+    "new_clipping": [],
+    "median_delta_B1_all": 0.234,
+    "median_delta_p4_triggered": -2.894,
+    "median_fixed": {
+     "B0": 13.909,
+     "R1": 12.571,
+     "B1": 12.571
+    },
+    "worst": [
+     {
+      "id": "blueneg:199807B-01-orlando-seaworld",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0209
+     },
+     {
+      "id": "blueneg:199807B-02-orlando-seaworld",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0462
+     },
+     {
+      "id": "blueneg:199807B-03-orlando-seaworld",
+      "delta_fixed": 0.0,
+      "triggered": false,
+      "chroma_disagreement": 0.0083
+     }
+    ],
+    "kind": "harm-only",
+    "checks": {
+     "no_severe": true,
+     "no_new_clipping": true
+    },
+    "passed": true
+   }
+  }
+ },
+ "pooled": {
+  "frames": 107,
+  "triggered": 4,
+  "improved": 1,
+  "severe": [
+   "blueneg:19941222E-01-nara",
+   "blueneg:19941223E-17-osaka"
+  ],
+  "new_clipping": [],
+  "median_delta_triggered": 1.902
+ },
+ "worst5": [
+  {
+   "id": "blueneg:19941222E-01-nara",
+   "delta_fixed": 4.336,
+   "triggered": true
+  },
+  {
+   "id": "blueneg:19941223E-17-osaka",
+   "delta_fixed": 2.908,
+   "triggered": true
+  },
+  {
+   "id": "blueneg:19941220D-18-kamakura",
+   "delta_fixed": 0.897,
+   "triggered": true
+  },
+  {
+   "id": "blueneg:19941217A-08-tokyo",
+   "delta_fixed": 0.0,
+   "triggered": false
+  },
+  {
+   "id": "blueneg:19941217A-10-tokyo",
+   "delta_fixed": 0.0,
+   "triggered": false
+  }
+ ],
+ "frames": [
+  {
+   "id": "blueneg:19941217A-08-tokyo",
+   "roll": "ds-199412A",
+   "chroma_disagreement": 0.0241,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.021,
+    0.034,
+    0.01
+   ],
+   "B0": {
+    "fixed": 12.317,
+    "p4": 5.841,
+    "ub7": 5.288,
+    "dL": 9.37,
+    "dh": 8.1,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.58,
+     "mid": 12.85,
+     "high": 12.33
+    }
+   },
+   "B1": {
+    "fixed": 12.552,
+    "p4": 5.861,
+    "ub7": 5.26,
+    "dL": 10.02,
+    "dh": 7.8,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 10.71,
+     "mid": 13.0,
+     "high": 12.43
+    }
+   },
+   "R1": {
+    "fixed": 12.317,
+    "p4": 5.841,
+    "ub7": 5.288,
+    "dL": 9.37,
+    "dh": 8.1,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.58,
+     "mid": 12.85,
+     "high": 12.33
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.235,
+   "new_clipping": false,
+   "ncc": 0.951,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941217A-10-tokyo",
+   "roll": "ds-199412A",
+   "chroma_disagreement": 0.0188,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.023,
+    0.041,
+    0.024
+   ],
+   "B0": {
+    "fixed": 17.345,
+    "p4": 6.793,
+    "ub7": 6.268,
+    "dL": 17.93,
+    "dh": 23.0,
+    "below_black": [
+     0.0031,
+     0.0034,
+     0.0023
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 15.82,
+     "mid": 19.76,
+     "high": 12.65
+    }
+   },
+   "B1": {
+    "fixed": 18.532,
+    "p4": 6.169,
+    "ub7": 5.704,
+    "dL": 19.06,
+    "dh": 17.9,
+    "below_black": [
+     0.0003,
+     0.0001,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 17.42,
+     "mid": 20.73,
+     "high": 12.89
+    }
+   },
+   "R1": {
+    "fixed": 17.345,
+    "p4": 6.793,
+    "ub7": 6.268,
+    "dL": 17.93,
+    "dh": 23.0,
+    "below_black": [
+     0.0031,
+     0.0034,
+     0.0023
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 15.82,
+     "mid": 19.76,
+     "high": 12.65
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.187,
+   "new_clipping": false,
+   "ncc": 0.93,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941217A-15-tokyo",
+   "roll": "ds-199412A",
+   "chroma_disagreement": 0.0258,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.028,
+    0.029,
+    0.003
+   ],
+   "B0": {
+    "fixed": 13.331,
+    "p4": 6.313,
+    "ub7": 5.8,
+    "dL": 0.93,
+    "dh": 74.0,
+    "below_black": [
+     0.0,
+     0.0001,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 5.0,
+     "mid": 13.36,
+     "high": 14.84
+    }
+   },
+   "B1": {
+    "fixed": 12.957,
+    "p4": 6.705,
+    "ub7": 5.856,
+    "dL": 1.29,
+    "dh": 71.2,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 5.74,
+     "mid": 12.54,
+     "high": 14.58
+    }
+   },
+   "R1": {
+    "fixed": 13.331,
+    "p4": 6.313,
+    "ub7": 5.8,
+    "dL": 0.93,
+    "dh": 74.0,
+    "below_black": [
+     0.0,
+     0.0001,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 5.0,
+     "mid": 13.36,
+     "high": 14.84
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.374,
+   "new_clipping": false,
+   "ncc": 0.965,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941217A-16-tokyo",
+   "roll": "ds-199412A",
+   "chroma_disagreement": 0.0085,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.004,
+    0.0,
+    -0.009
+   ],
+   "B0": {
+    "fixed": 13.156,
+    "p4": 5.198,
+    "ub7": 4.627,
+    "dL": 16.32,
+    "dh": 12.4,
+    "below_black": [
+     0.0013,
+     0.0013,
+     0.0014
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 12.1,
+     "mid": 16.14,
+     "high": 11.4
+    }
+   },
+   "B1": {
+    "fixed": 12.88,
+    "p4": 5.431,
+    "ub7": 4.835,
+    "dL": 16.22,
+    "dh": 12.5,
+    "below_black": [
+     0.0017,
+     0.0013,
+     0.0026
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 11.91,
+     "mid": 15.79,
+     "high": 11.28
+    }
+   },
+   "R1": {
+    "fixed": 13.156,
+    "p4": 5.198,
+    "ub7": 4.627,
+    "dL": 16.32,
+    "dh": 12.4,
+    "below_black": [
+     0.0013,
+     0.0013,
+     0.0014
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 12.1,
+     "mid": 16.14,
+     "high": 11.4
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.276,
+   "new_clipping": false,
+   "ncc": 0.957,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941217A-27-tokyo",
+   "roll": "ds-199412A",
+   "chroma_disagreement": 0.0013,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    -0.001,
+    0.0
+   ],
+   "B0": {
+    "fixed": 12.502,
+    "p4": 7.304,
+    "ub7": 6.562,
+    "dL": 0.01,
+    "dh": 11.5,
+    "below_black": [
+     0.0039,
+     0.0042,
+     0.0035
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.72,
+     "mid": 11.86,
+     "high": 16.99
+    }
+   },
+   "B1": {
+    "fixed": 12.524,
+    "p4": 7.312,
+    "ub7": 6.566,
+    "dL": 0.01,
+    "dh": 11.6,
+    "below_black": [
+     0.0039,
+     0.0047,
+     0.0035
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.77,
+     "mid": 11.89,
+     "high": 16.96
+    }
+   },
+   "R1": {
+    "fixed": 12.502,
+    "p4": 7.304,
+    "ub7": 6.562,
+    "dL": 0.01,
+    "dh": 11.5,
+    "below_black": [
+     0.0039,
+     0.0042,
+     0.0035
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.72,
+     "mid": 11.86,
+     "high": 16.99
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.022,
+   "new_clipping": false,
+   "ncc": 0.958,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941217A-35-tokyo",
+   "roll": "ds-199412A",
+   "chroma_disagreement": 0.0108,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.014,
+    -0.025,
+    -0.014
+   ],
+   "B0": {
+    "fixed": 11.456,
+    "p4": 6.79,
+    "ub7": 5.952,
+    "dL": -8.41,
+    "dh": 17.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.15,
+     "mid": 18.9,
+     "high": 12.12
+    }
+   },
+   "B1": {
+    "fixed": 11.409,
+    "p4": 7.287,
+    "ub7": 6.416,
+    "dL": -9.74,
+    "dh": 20.2,
+    "below_black": [
+     0.0005,
+     0.0012,
+     0.0013
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 8.2,
+     "mid": 18.55,
+     "high": 11.83
+    }
+   },
+   "R1": {
+    "fixed": 11.456,
+    "p4": 6.79,
+    "ub7": 5.952,
+    "dL": -8.41,
+    "dh": 17.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.15,
+     "mid": 18.9,
+     "high": 12.12
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.047,
+   "new_clipping": false,
+   "ncc": 0.93,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941217B-07-tokyo",
+   "roll": "ds-199412B",
+   "chroma_disagreement": 0.0009,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    0.0,
+    0.001
+   ],
+   "B0": {
+    "fixed": 9.873,
+    "p4": 6.777,
+    "ub7": 6.643,
+    "dL": 6.21,
+    "dh": 19.4,
+    "below_black": [
+     0.0026,
+     0.0025,
+     0.0032
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.4,
+     "mid": 11.27,
+     "high": 9.79
+    }
+   },
+   "B1": {
+    "fixed": 9.893,
+    "p4": 6.704,
+    "ub7": 6.584,
+    "dL": 6.22,
+    "dh": 19.5,
+    "below_black": [
+     0.0026,
+     0.0025,
+     0.0022
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.34,
+     "mid": 11.35,
+     "high": 9.81
+    }
+   },
+   "R1": {
+    "fixed": 9.873,
+    "p4": 6.777,
+    "ub7": 6.643,
+    "dL": 6.21,
+    "dh": 19.4,
+    "below_black": [
+     0.0026,
+     0.0025,
+     0.0032
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.4,
+     "mid": 11.27,
+     "high": 9.79
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.02,
+   "new_clipping": false,
+   "ncc": 0.89,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941217B-08-tokyo",
+   "roll": "ds-199412B",
+   "chroma_disagreement": 0.02,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.033,
+    0.049,
+    0.029
+   ],
+   "B0": {
+    "fixed": 9.872,
+    "p4": 6.627,
+    "ub7": 6.538,
+    "dL": 6.51,
+    "dh": 16.0,
+    "below_black": [
+     0.0013,
+     0.0026,
+     0.0041
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.13,
+     "mid": 11.19,
+     "high": 14.4
+    }
+   },
+   "B1": {
+    "fixed": 11.111,
+    "p4": 5.961,
+    "ub7": 5.896,
+    "dL": 7.63,
+    "dh": 15.9,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 10.25,
+     "mid": 12.92,
+     "high": 15.25
+    }
+   },
+   "R1": {
+    "fixed": 9.872,
+    "p4": 6.627,
+    "ub7": 6.538,
+    "dL": 6.51,
+    "dh": 16.0,
+    "below_black": [
+     0.0013,
+     0.0026,
+     0.0041
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.13,
+     "mid": 11.19,
+     "high": 14.4
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.239,
+   "new_clipping": false,
+   "ncc": 0.933,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941217B-11-tokyo",
+   "roll": "ds-199412B",
+   "chroma_disagreement": 0.0068,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.016,
+    0.013,
+    0.006
+   ],
+   "B0": {
+    "fixed": 18.09,
+    "p4": 5.614,
+    "ub7": 4.678,
+    "dL": 16.16,
+    "dh": 32.2,
+    "below_black": [
+     0.0001,
+     0.0003,
+     0.0006
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 21.39,
+     "mid": 18.47,
+     "high": 13.34
+    }
+   },
+   "B1": {
+    "fixed": 18.147,
+    "p4": 5.54,
+    "ub7": 4.638,
+    "dL": 16.54,
+    "dh": 30.9,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0001
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 21.52,
+     "mid": 18.56,
+     "high": 13.29
+    }
+   },
+   "R1": {
+    "fixed": 18.09,
+    "p4": 5.614,
+    "ub7": 4.678,
+    "dL": 16.16,
+    "dh": 32.2,
+    "below_black": [
+     0.0001,
+     0.0003,
+     0.0006
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 21.39,
+     "mid": 18.47,
+     "high": 13.34
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.057,
+   "new_clipping": false,
+   "ncc": 0.96,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941218B-23-tokyo",
+   "roll": "ds-199412B",
+   "chroma_disagreement": 0.0097,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.012,
+    -0.015,
+    -0.006
+   ],
+   "B0": {
+    "fixed": 9.709,
+    "p4": 8.326,
+    "ub7": 7.913,
+    "dL": -6.69,
+    "dh": 17.9,
+    "below_black": [
+     0.0151,
+     0.0183,
+     0.0278
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.7,
+     "mid": 11.96,
+     "high": 13.53
+    }
+   },
+   "B1": {
+    "fixed": 9.881,
+    "p4": 8.744,
+    "ub7": 8.411,
+    "dL": -7.32,
+    "dh": 17.3,
+    "below_black": [
+     0.0906,
+     0.1327,
+     0.1076
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.1,
+     "mid": 11.87,
+     "high": 13.45
+    }
+   },
+   "R1": {
+    "fixed": 9.709,
+    "p4": 8.326,
+    "ub7": 7.913,
+    "dL": -6.69,
+    "dh": 17.9,
+    "below_black": [
+     0.0151,
+     0.0183,
+     0.0278
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.7,
+     "mid": 11.96,
+     "high": 13.53
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.172,
+   "new_clipping": false,
+   "ncc": 0.95,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941218B-25-tokyo",
+   "roll": "ds-199412B",
+   "chroma_disagreement": 0.0008,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.001,
+    0.001,
+    0.0
+   ],
+   "B0": {
+    "fixed": 11.035,
+    "p4": 8.239,
+    "ub7": 7.573,
+    "dL": -7.29,
+    "dh": 32.6,
+    "below_black": [
+     0.0039,
+     0.0032,
+     0.0069
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.08,
+     "mid": 19.65,
+     "high": 17.89
+    }
+   },
+   "B1": {
+    "fixed": 11.072,
+    "p4": 8.276,
+    "ub7": 7.593,
+    "dL": -7.26,
+    "dh": 32.9,
+    "below_black": [
+     0.0032,
+     0.0028,
+     0.0069
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.13,
+     "mid": 19.63,
+     "high": 17.89
+    }
+   },
+   "R1": {
+    "fixed": 11.035,
+    "p4": 8.239,
+    "ub7": 7.573,
+    "dL": -7.29,
+    "dh": 32.6,
+    "below_black": [
+     0.0039,
+     0.0032,
+     0.0069
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.08,
+     "mid": 19.65,
+     "high": 17.89
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.037,
+   "new_clipping": false,
+   "ncc": 0.955,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941218C-03-tokyo",
+   "roll": "ds-199412C",
+   "chroma_disagreement": 0.0071,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.003,
+    -0.01,
+    -0.005
+   ],
+   "B0": {
+    "fixed": 13.76,
+    "p4": 9.117,
+    "ub7": 7.743,
+    "dL": -10.94,
+    "dh": 25.4,
+    "below_black": [
+     0.0041,
+     0.0058,
+     0.0052
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.45,
+     "mid": 21.32,
+     "high": 15.61
+    }
+   },
+   "B1": {
+    "fixed": 13.741,
+    "p4": 9.561,
+    "ub7": 8.088,
+    "dL": -11.43,
+    "dh": 25.0,
+    "below_black": [
+     0.0064,
+     0.0151,
+     0.0168
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.94,
+     "mid": 20.93,
+     "high": 15.45
+    }
+   },
+   "R1": {
+    "fixed": 13.76,
+    "p4": 9.117,
+    "ub7": 7.743,
+    "dL": -10.94,
+    "dh": 25.4,
+    "below_black": [
+     0.0041,
+     0.0058,
+     0.0052
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.45,
+     "mid": 21.32,
+     "high": 15.61
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.019,
+   "new_clipping": false,
+   "ncc": 0.923,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941218C-04-tokyo",
+   "roll": "ds-199412C",
+   "chroma_disagreement": 0.0194,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.026,
+    0.041,
+    0.022
+   ],
+   "B0": {
+    "fixed": 16.474,
+    "p4": 7.871,
+    "ub7": 7.438,
+    "dL": -8.95,
+    "dh": 50.1,
+    "below_black": [
+     0.0006,
+     0.0013,
+     0.0013
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.79,
+     "mid": 19.47,
+     "high": 19.98
+    }
+   },
+   "B1": {
+    "fixed": 17.329,
+    "p4": 7.594,
+    "ub7": 7.075,
+    "dL": -8.03,
+    "dh": 60.3,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.65,
+     "mid": 20.46,
+     "high": 20.65
+    }
+   },
+   "R1": {
+    "fixed": 16.474,
+    "p4": 7.871,
+    "ub7": 7.438,
+    "dL": -8.95,
+    "dh": 50.1,
+    "below_black": [
+     0.0006,
+     0.0013,
+     0.0013
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.79,
+     "mid": 19.47,
+     "high": 19.98
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.855,
+   "new_clipping": false,
+   "ncc": 0.849,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941218C-05-tokyo",
+   "roll": "ds-199412C",
+   "chroma_disagreement": 0.0048,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.015,
+    0.02,
+    0.017
+   ],
+   "B0": {
+    "fixed": 16.069,
+    "p4": 7.596,
+    "ub7": 6.77,
+    "dL": -4.67,
+    "dh": 38.0,
+    "below_black": [
+     0.0018,
+     0.0034,
+     0.0031
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.79,
+     "mid": 19.14,
+     "high": 18.57
+    }
+   },
+   "B1": {
+    "fixed": 17.025,
+    "p4": 7.281,
+    "ub7": 6.479,
+    "dL": -4.13,
+    "dh": 43.0,
+    "below_black": [
+     0.0001,
+     0.0005,
+     0.0001
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.4,
+     "mid": 20.15,
+     "high": 18.89
+    }
+   },
+   "R1": {
+    "fixed": 16.069,
+    "p4": 7.596,
+    "ub7": 6.77,
+    "dL": -4.67,
+    "dh": 38.0,
+    "below_black": [
+     0.0018,
+     0.0034,
+     0.0031
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.79,
+     "mid": 19.14,
+     "high": 18.57
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.956,
+   "new_clipping": false,
+   "ncc": 0.892,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941218C-06-tokyo",
+   "roll": "ds-199412C",
+   "chroma_disagreement": 0.0268,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.061,
+    0.06,
+    0.034
+   ],
+   "B0": {
+    "fixed": 19.276,
+    "p4": 7.0,
+    "ub7": 6.429,
+    "dL": 6.27,
+    "dh": 71.3,
+    "below_black": [
+     0.0027,
+     0.0033,
+     0.0036
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 14.06,
+     "mid": 25.36,
+     "high": 20.1
+    }
+   },
+   "B1": {
+    "fixed": 17.449,
+    "p4": 7.039,
+    "ub7": 6.198,
+    "dL": 7.28,
+    "dh": 52.4,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 13.06,
+     "mid": 22.8,
+     "high": 18.82
+    }
+   },
+   "R1": {
+    "fixed": 19.276,
+    "p4": 7.0,
+    "ub7": 6.429,
+    "dL": 6.27,
+    "dh": 71.3,
+    "below_black": [
+     0.0027,
+     0.0033,
+     0.0036
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 14.06,
+     "mid": 25.36,
+     "high": 20.1
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -1.827,
+   "new_clipping": false,
+   "ncc": 0.874,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941218C-07-tokyo",
+   "roll": "ds-199412C",
+   "chroma_disagreement": 0.0075,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.007,
+    0.014,
+    0.008
+   ],
+   "B0": {
+    "fixed": 16.285,
+    "p4": 6.082,
+    "ub7": 5.505,
+    "dL": 0.21,
+    "dh": 24.7,
+    "below_black": [
+     0.0058,
+     0.005,
+     0.0055
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 7.6,
+     "mid": 17.75,
+     "high": 18.36
+    }
+   },
+   "B1": {
+    "fixed": 16.764,
+    "p4": 5.839,
+    "ub7": 5.304,
+    "dL": 0.38,
+    "dh": 24.8,
+    "below_black": [
+     0.0022,
+     0.0011,
+     0.0008
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 7.93,
+     "mid": 18.57,
+     "high": 18.56
+    }
+   },
+   "R1": {
+    "fixed": 16.285,
+    "p4": 6.082,
+    "ub7": 5.505,
+    "dL": 0.21,
+    "dh": 24.7,
+    "below_black": [
+     0.0058,
+     0.005,
+     0.0055
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 7.6,
+     "mid": 17.75,
+     "high": 18.36
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.479,
+   "new_clipping": false,
+   "ncc": 0.958,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941218C-08-tokyo",
+   "roll": "ds-199412C",
+   "chroma_disagreement": 0.0,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "B0": {
+    "fixed": 13.568,
+    "p4": 5.797,
+    "ub7": 5.422,
+    "dL": 2.38,
+    "dh": 18.4,
+    "below_black": [
+     0.013,
+     0.0126,
+     0.012
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 8.21,
+     "mid": 16.63,
+     "high": 15.73
+    }
+   },
+   "B1": {
+    "fixed": 13.568,
+    "p4": 5.797,
+    "ub7": 5.422,
+    "dL": 2.38,
+    "dh": 18.4,
+    "below_black": [
+     0.013,
+     0.0126,
+     0.012
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 8.21,
+     "mid": 16.63,
+     "high": 15.73
+    }
+   },
+   "R1": {
+    "fixed": 13.568,
+    "p4": 5.797,
+    "ub7": 5.422,
+    "dL": 2.38,
+    "dh": 18.4,
+    "below_black": [
+     0.013,
+     0.0126,
+     0.012
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 8.21,
+     "mid": 16.63,
+     "high": 15.73
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.0,
+   "new_clipping": false,
+   "ncc": 0.975,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941220D-18-kamakura",
+   "roll": "ds-199412D",
+   "chroma_disagreement": 0.1905,
+   "triggered": true,
+   "own_minus_roll_density": [
+    0.291,
+    0.33,
+    0.139
+   ],
+   "B0": {
+    "fixed": 14.151,
+    "p4": 4.922,
+    "ub7": 4.612,
+    "dL": 13.92,
+    "dh": 53.3,
+    "below_black": [
+     0.0458,
+     0.0551,
+     0.0568
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 13.24,
+     "mid": 15.73,
+     "high": 13.12
+    }
+   },
+   "B1": {
+    "fixed": 15.048,
+    "p4": 4.681,
+    "ub7": 4.295,
+    "dL": 18.2,
+    "dh": 37.8,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 21.36,
+     "mid": 16.31,
+     "high": 12.4
+    }
+   },
+   "R1": {
+    "fixed": 15.048,
+    "p4": 4.681,
+    "ub7": 4.295,
+    "dL": 18.2,
+    "dh": 37.8,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 21.36,
+     "mid": 16.31,
+     "high": 12.4
+    }
+   },
+   "delta_fixed": 0.897,
+   "delta_p4": -0.241,
+   "delta_fixed_B1": 0.897,
+   "new_clipping": false,
+   "ncc": 0.971,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941220D-19-kamakura",
+   "roll": "ds-199412D",
+   "chroma_disagreement": 0.0247,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.051,
+    0.062,
+    0.038
+   ],
+   "B0": {
+    "fixed": 9.433,
+    "p4": 7.801,
+    "ub7": 5.532,
+    "dL": -2.68,
+    "dh": 8.3,
+    "below_black": [
+     0.0061,
+     0.0055,
+     0.0047
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 5.52,
+     "mid": 17.3,
+     "high": 10.59
+    }
+   },
+   "B1": {
+    "fixed": 9.469,
+    "p4": 6.456,
+    "ub7": 4.856,
+    "dL": -0.8,
+    "dh": 7.4,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 4.02,
+     "mid": 17.39,
+     "high": 10.86
+    }
+   },
+   "R1": {
+    "fixed": 9.433,
+    "p4": 7.801,
+    "ub7": 5.532,
+    "dL": -2.68,
+    "dh": 8.3,
+    "below_black": [
+     0.0061,
+     0.0055,
+     0.0047
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 5.52,
+     "mid": 17.3,
+     "high": 10.59
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.036,
+   "new_clipping": false,
+   "ncc": 0.962,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941220D-20-kamakura",
+   "roll": "ds-199412D",
+   "chroma_disagreement": 0.009,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.006,
+    -0.011,
+    -0.002
+   ],
+   "B0": {
+    "fixed": 10.958,
+    "p4": 6.156,
+    "ub7": 5.708,
+    "dL": 0.96,
+    "dh": 14.1,
+    "below_black": [
+     0.0026,
+     0.0028,
+     0.003
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.61,
+     "mid": 13.59,
+     "high": 13.85
+    }
+   },
+   "B1": {
+    "fixed": 11.214,
+    "p4": 6.078,
+    "ub7": 5.609,
+    "dL": 0.24,
+    "dh": 13.0,
+    "below_black": [
+     0.0102,
+     0.0253,
+     0.0071
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.22,
+     "mid": 13.73,
+     "high": 13.84
+    }
+   },
+   "R1": {
+    "fixed": 10.958,
+    "p4": 6.156,
+    "ub7": 5.708,
+    "dL": 0.96,
+    "dh": 14.1,
+    "below_black": [
+     0.0026,
+     0.0028,
+     0.003
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.61,
+     "mid": 13.59,
+     "high": 13.85
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.256,
+   "new_clipping": false,
+   "ncc": 0.966,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941220D-22-kamakura",
+   "roll": "ds-199412D",
+   "chroma_disagreement": 0.0174,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.004,
+    0.022,
+    0.01
+   ],
+   "B0": {
+    "fixed": 13.077,
+    "p4": 6.941,
+    "ub7": 6.484,
+    "dL": -10.41,
+    "dh": 9.5,
+    "below_black": [
+     0.0028,
+     0.0032,
+     0.0024
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.76,
+     "mid": 17.11,
+     "high": 15.13
+    }
+   },
+   "B1": {
+    "fixed": 12.969,
+    "p4": 7.021,
+    "ub7": 6.387,
+    "dL": -9.67,
+    "dh": 10.7,
+    "below_black": [
+     0.0009,
+     0.0,
+     0.0001
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.24,
+     "mid": 16.92,
+     "high": 15.44
+    }
+   },
+   "R1": {
+    "fixed": 13.077,
+    "p4": 6.941,
+    "ub7": 6.484,
+    "dL": -10.41,
+    "dh": 9.5,
+    "below_black": [
+     0.0028,
+     0.0032,
+     0.0024
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.76,
+     "mid": 17.11,
+     "high": 15.13
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.108,
+   "new_clipping": false,
+   "ncc": 0.902,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941220D-23-kamakura",
+   "roll": "ds-199412D",
+   "chroma_disagreement": 0.0084,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.003,
+    0.006,
+    0.014
+   ],
+   "B0": {
+    "fixed": 14.647,
+    "p4": 7.409,
+    "ub7": 6.932,
+    "dL": 13.85,
+    "dh": 10.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0345,
+    "zones": {
+     "shadow": 12.89,
+     "mid": 16.47,
+     "high": 13.05
+    }
+   },
+   "B1": {
+    "fixed": 15.819,
+    "p4": 6.891,
+    "ub7": 6.523,
+    "dL": 14.25,
+    "dh": 9.3,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0338,
+    "zones": {
+     "shadow": 14.41,
+     "mid": 17.5,
+     "high": 13.08
+    }
+   },
+   "R1": {
+    "fixed": 14.647,
+    "p4": 7.409,
+    "ub7": 6.932,
+    "dL": 13.85,
+    "dh": 10.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0345,
+    "zones": {
+     "shadow": 12.89,
+     "mid": 16.47,
+     "high": 13.05
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.172,
+   "new_clipping": false,
+   "ncc": 0.888,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941221D-25-kyoto",
+   "roll": "ds-199412D",
+   "chroma_disagreement": 0.0,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "B0": {
+    "fixed": 11.154,
+    "p4": 6.892,
+    "ub7": 5.762,
+    "dL": -8.98,
+    "dh": 7.6,
+    "below_black": [
+     0.0043,
+     0.0033,
+     0.0029
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.6,
+     "mid": 19.75,
+     "high": 14.7
+    }
+   },
+   "B1": {
+    "fixed": 11.154,
+    "p4": 6.892,
+    "ub7": 5.762,
+    "dL": -8.98,
+    "dh": 7.6,
+    "below_black": [
+     0.0043,
+     0.0033,
+     0.0029
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.6,
+     "mid": 19.75,
+     "high": 14.7
+    }
+   },
+   "R1": {
+    "fixed": 11.154,
+    "p4": 6.892,
+    "ub7": 5.762,
+    "dL": -8.98,
+    "dh": 7.6,
+    "below_black": [
+     0.0043,
+     0.0033,
+     0.0029
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.6,
+     "mid": 19.75,
+     "high": 14.7
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.0,
+   "new_clipping": false,
+   "ncc": 0.969,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941221D-30-kyoto",
+   "roll": "ds-199412D",
+   "chroma_disagreement": 0.0169,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.015,
+    -0.021,
+    -0.005
+   ],
+   "B0": {
+    "fixed": 20.179,
+    "p4": 8.594,
+    "ub7": 5.659,
+    "dL": -14.92,
+    "dh": 50.3,
+    "below_black": [
+     0.0261,
+     0.032,
+     0.0251
+    ],
+    "clipped": 0.0329,
+    "zones": {
+     "shadow": 19.77,
+     "mid": 21.37,
+     "high": 17.41
+    }
+   },
+   "B1": {
+    "fixed": 23.157,
+    "p4": 20.52,
+    "ub7": 14.173,
+    "dL": -26.68,
+    "dh": 39.4,
+    "below_black": [
+     0.3695,
+     0.4676,
+     0.1113
+    ],
+    "clipped": 0.0333,
+    "zones": {
+     "shadow": 23.52,
+     "mid": 22.83,
+     "high": 17.46
+    }
+   },
+   "R1": {
+    "fixed": 20.179,
+    "p4": 8.594,
+    "ub7": 5.659,
+    "dL": -14.92,
+    "dh": 50.3,
+    "below_black": [
+     0.0261,
+     0.032,
+     0.0251
+    ],
+    "clipped": 0.0329,
+    "zones": {
+     "shadow": 19.77,
+     "mid": 21.37,
+     "high": 17.41
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 2.978,
+   "new_clipping": false,
+   "ncc": 0.939,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941222D-32-kyoto",
+   "roll": "ds-199412D",
+   "chroma_disagreement": 0.0156,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.031,
+    0.047,
+    0.048
+   ],
+   "B0": {
+    "fixed": 10.434,
+    "p4": 6.905,
+    "ub7": 6.726,
+    "dL": -0.85,
+    "dh": 14.2,
+    "below_black": [
+     0.0043,
+     0.0048,
+     0.0053
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 5.83,
+     "mid": 14.66,
+     "high": 13.0
+    }
+   },
+   "B1": {
+    "fixed": 12.033,
+    "p4": 6.341,
+    "ub7": 6.219,
+    "dL": -0.29,
+    "dh": 16.3,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.33,
+     "mid": 19.52,
+     "high": 13.62
+    }
+   },
+   "R1": {
+    "fixed": 10.434,
+    "p4": 6.905,
+    "ub7": 6.726,
+    "dL": -0.85,
+    "dh": 14.2,
+    "below_black": [
+     0.0043,
+     0.0048,
+     0.0053
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 5.83,
+     "mid": 14.66,
+     "high": 13.0
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.599,
+   "new_clipping": false,
+   "ncc": 0.964,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941222E-01-nara",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.13,
+   "triggered": true,
+   "own_minus_roll_density": [
+    0.141,
+    0.201,
+    0.071
+   ],
+   "B0": {
+    "fixed": 14.322,
+    "p4": 7.829,
+    "ub7": 7.714,
+    "dL": 14.1,
+    "dh": 22.4,
+    "below_black": [
+     0.0019,
+     0.0056,
+     0.0068
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 13.76,
+     "mid": 17.77,
+     "high": 12.94
+    }
+   },
+   "B1": {
+    "fixed": 18.658,
+    "p4": 6.434,
+    "ub7": 6.529,
+    "dL": 18.15,
+    "dh": 36.4,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 19.07,
+     "mid": 21.57,
+     "high": 13.99
+    }
+   },
+   "R1": {
+    "fixed": 18.658,
+    "p4": 6.434,
+    "ub7": 6.529,
+    "dL": 18.15,
+    "dh": 36.4,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 19.07,
+     "mid": 21.57,
+     "high": 13.99
+    }
+   },
+   "delta_fixed": 4.336,
+   "delta_p4": -1.395,
+   "delta_fixed_B1": 4.336,
+   "new_clipping": false,
+   "ncc": 0.914,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941222E-02-nara",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.0125,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.015,
+    -0.014,
+    -0.001
+   ],
+   "B0": {
+    "fixed": 17.158,
+    "p4": 8.609,
+    "ub7": 7.651,
+    "dL": -13.79,
+    "dh": 40.2,
+    "below_black": [
+     0.0091,
+     0.01,
+     0.0141
+    ],
+    "clipped": 0.01,
+    "zones": {
+     "shadow": 17.86,
+     "mid": 17.37,
+     "high": 12.94
+    }
+   },
+   "B1": {
+    "fixed": 17.612,
+    "p4": 9.291,
+    "ub7": 7.791,
+    "dL": -15.35,
+    "dh": 34.1,
+    "below_black": [
+     0.0756,
+     0.0566,
+     0.0203
+    ],
+    "clipped": 0.01,
+    "zones": {
+     "shadow": 18.51,
+     "mid": 17.71,
+     "high": 13.05
+    }
+   },
+   "R1": {
+    "fixed": 17.158,
+    "p4": 8.609,
+    "ub7": 7.651,
+    "dL": -13.79,
+    "dh": 40.2,
+    "below_black": [
+     0.0091,
+     0.01,
+     0.0141
+    ],
+    "clipped": 0.01,
+    "zones": {
+     "shadow": 17.86,
+     "mid": 17.37,
+     "high": 12.94
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.454,
+   "new_clipping": false,
+   "ncc": 0.893,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941222E-04-nara",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.0168,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.035,
+    0.048,
+    0.031
+   ],
+   "B0": {
+    "fixed": 13.415,
+    "p4": 6.702,
+    "ub7": 6.569,
+    "dL": 13.76,
+    "dh": 7.4,
+    "below_black": [
+     0.0051,
+     0.0058,
+     0.0087
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 15.98,
+     "mid": 13.02,
+     "high": 11.53
+    }
+   },
+   "B1": {
+    "fixed": 14.211,
+    "p4": 6.008,
+    "ub7": 5.908,
+    "dL": 14.51,
+    "dh": 7.6,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 16.87,
+     "mid": 13.89,
+     "high": 12.02
+    }
+   },
+   "R1": {
+    "fixed": 13.415,
+    "p4": 6.702,
+    "ub7": 6.569,
+    "dL": 13.76,
+    "dh": 7.4,
+    "below_black": [
+     0.0051,
+     0.0058,
+     0.0087
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 15.98,
+     "mid": 13.02,
+     "high": 11.53
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.796,
+   "new_clipping": false,
+   "ncc": 0.857,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941222E-07-nara",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.033,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.032,
+    0.053,
+    0.019
+   ],
+   "B0": {
+    "fixed": 23.175,
+    "p4": 6.312,
+    "ub7": 6.367,
+    "dL": 24.32,
+    "dh": 30.2,
+    "below_black": [
+     0.0001,
+     0.0006,
+     0.0023
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 30.32,
+     "mid": 23.31,
+     "high": 14.82
+    }
+   },
+   "B1": {
+    "fixed": 24.201,
+    "p4": 6.118,
+    "ub7": 6.202,
+    "dL": 25.33,
+    "dh": 31.9,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 32.65,
+     "mid": 24.14,
+     "high": 14.85
+    }
+   },
+   "R1": {
+    "fixed": 23.175,
+    "p4": 6.312,
+    "ub7": 6.367,
+    "dL": 24.32,
+    "dh": 30.2,
+    "below_black": [
+     0.0001,
+     0.0006,
+     0.0023
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 30.32,
+     "mid": 23.31,
+     "high": 14.82
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.026,
+   "new_clipping": false,
+   "ncc": 0.931,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941222E-10-nara",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.0135,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.012,
+    -0.01,
+    0.004
+   ],
+   "B0": {
+    "fixed": 13.995,
+    "p4": 5.787,
+    "ub7": 5.134,
+    "dL": 4.4,
+    "dh": 40.8,
+    "below_black": [
+     0.0089,
+     0.01,
+     0.0163
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 10.76,
+     "mid": 10.96,
+     "high": 15.32
+    }
+   },
+   "B1": {
+    "fixed": 13.691,
+    "p4": 5.212,
+    "ub7": 4.484,
+    "dL": 4.33,
+    "dh": 26.6,
+    "below_black": [
+     0.0407,
+     0.0334,
+     0.0052
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.68,
+     "mid": 10.01,
+     "high": 15.35
+    }
+   },
+   "R1": {
+    "fixed": 13.995,
+    "p4": 5.787,
+    "ub7": 5.134,
+    "dL": 4.4,
+    "dh": 40.8,
+    "below_black": [
+     0.0089,
+     0.01,
+     0.0163
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 10.76,
+     "mid": 10.96,
+     "high": 15.32
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.304,
+   "new_clipping": false,
+   "ncc": 0.974,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941223E-13-osaka",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.0066,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.008,
+    0.01,
+    0.004
+   ],
+   "B0": {
+    "fixed": 10.815,
+    "p4": 6.602,
+    "ub7": 6.305,
+    "dL": 10.72,
+    "dh": 37.4,
+    "below_black": [
+     0.0047,
+     0.0037,
+     0.0085
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 16.16,
+     "mid": 12.75,
+     "high": 8.9
+    }
+   },
+   "B1": {
+    "fixed": 10.903,
+    "p4": 6.517,
+    "ub7": 6.223,
+    "dL": 10.86,
+    "dh": 38.1,
+    "below_black": [
+     0.0017,
+     0.001,
+     0.0041
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 16.33,
+     "mid": 12.94,
+     "high": 8.93
+    }
+   },
+   "R1": {
+    "fixed": 10.815,
+    "p4": 6.602,
+    "ub7": 6.305,
+    "dL": 10.72,
+    "dh": 37.4,
+    "below_black": [
+     0.0047,
+     0.0037,
+     0.0085
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 16.16,
+     "mid": 12.75,
+     "high": 8.9
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.088,
+   "new_clipping": false,
+   "ncc": 0.972,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941223E-17-osaka",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.141,
+   "triggered": true,
+   "own_minus_roll_density": [
+    0.185,
+    0.219,
+    0.078
+   ],
+   "B0": {
+    "fixed": 10.117,
+    "p4": 7.467,
+    "ub7": 6.974,
+    "dL": 0.85,
+    "dh": 39.3,
+    "below_black": [
+     0.0131,
+     0.0138,
+     0.0134
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.7,
+     "mid": 11.25,
+     "high": 11.02
+    }
+   },
+   "B1": {
+    "fixed": 13.025,
+    "p4": 6.687,
+    "ub7": 6.387,
+    "dL": 4.83,
+    "dh": 54.6,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 11.67,
+     "mid": 14.46,
+     "high": 12.64
+    }
+   },
+   "R1": {
+    "fixed": 13.025,
+    "p4": 6.687,
+    "ub7": 6.387,
+    "dL": 4.83,
+    "dh": 54.6,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 11.67,
+     "mid": 14.46,
+     "high": 12.64
+    }
+   },
+   "delta_fixed": 2.908,
+   "delta_p4": -0.78,
+   "delta_fixed_B1": 2.908,
+   "new_clipping": false,
+   "ncc": 0.921,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941223E-20-kyoto",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.0335,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.032,
+    0.043,
+    0.01
+   ],
+   "B0": {
+    "fixed": 14.971,
+    "p4": 5.076,
+    "ub7": 4.303,
+    "dL": 17.94,
+    "dh": 25.4,
+    "below_black": [
+     0.006,
+     0.0063,
+     0.0073
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 21.07,
+     "mid": 15.91,
+     "high": 11.73
+    }
+   },
+   "B1": {
+    "fixed": 15.705,
+    "p4": 5.146,
+    "ub7": 4.319,
+    "dL": 18.47,
+    "dh": 30.0,
+    "below_black": [
+     0.0002,
+     0.0002,
+     0.0008
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 23.8,
+     "mid": 16.43,
+     "high": 11.98
+    }
+   },
+   "R1": {
+    "fixed": 14.971,
+    "p4": 5.076,
+    "ub7": 4.303,
+    "dL": 17.94,
+    "dh": 25.4,
+    "below_black": [
+     0.006,
+     0.0063,
+     0.0073
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 21.07,
+     "mid": 15.91,
+     "high": 11.73
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.734,
+   "new_clipping": false,
+   "ncc": 0.945,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941224E-21-nagasaki",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.0092,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.013,
+    0.013,
+    0.004
+   ],
+   "B0": {
+    "fixed": 13.277,
+    "p4": 4.375,
+    "ub7": 3.779,
+    "dL": 15.64,
+    "dh": 43.1,
+    "below_black": [
+     0.0039,
+     0.0035,
+     0.004
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 21.95,
+     "mid": 18.96,
+     "high": 12.09
+    }
+   },
+   "B1": {
+    "fixed": 13.355,
+    "p4": 4.373,
+    "ub7": 3.789,
+    "dL": 15.76,
+    "dh": 44.2,
+    "below_black": [
+     0.0006,
+     0.0007,
+     0.0018
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 22.56,
+     "mid": 19.27,
+     "high": 12.12
+    }
+   },
+   "R1": {
+    "fixed": 13.277,
+    "p4": 4.375,
+    "ub7": 3.779,
+    "dL": 15.64,
+    "dh": 43.1,
+    "below_black": [
+     0.0039,
+     0.0035,
+     0.004
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 21.95,
+     "mid": 18.96,
+     "high": 12.09
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.078,
+   "new_clipping": false,
+   "ncc": 0.969,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941224E-23-nagasaki",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.0012,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    -0.001,
+    0.0
+   ],
+   "B0": {
+    "fixed": 9.54,
+    "p4": 6.382,
+    "ub7": 5.688,
+    "dL": 6.1,
+    "dh": 63.0,
+    "below_black": [
+     0.0038,
+     0.0041,
+     0.0054
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 13.31,
+     "mid": 12.62,
+     "high": 7.19
+    }
+   },
+   "B1": {
+    "fixed": 9.403,
+    "p4": 6.317,
+    "ub7": 5.653,
+    "dL": 6.09,
+    "dh": 57.5,
+    "below_black": [
+     0.0038,
+     0.0046,
+     0.0054
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 13.06,
+     "mid": 12.45,
+     "high": 7.17
+    }
+   },
+   "R1": {
+    "fixed": 9.54,
+    "p4": 6.382,
+    "ub7": 5.688,
+    "dL": 6.1,
+    "dh": 63.0,
+    "below_black": [
+     0.0038,
+     0.0041,
+     0.0054
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 13.31,
+     "mid": 12.62,
+     "high": 7.19
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.137,
+   "new_clipping": false,
+   "ncc": 0.966,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941224E-27-nagasaki",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.0031,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.001,
+    0.0,
+    -0.003
+   ],
+   "B0": {
+    "fixed": 8.989,
+    "p4": 5.916,
+    "ub7": 5.776,
+    "dL": -0.79,
+    "dh": 22.1,
+    "below_black": [
+     0.0052,
+     0.0042,
+     0.0057
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.92,
+     "mid": 9.39,
+     "high": 9.56
+    }
+   },
+   "B1": {
+    "fixed": 9.29,
+    "p4": 6.32,
+    "ub7": 6.112,
+    "dL": -0.86,
+    "dh": 23.1,
+    "below_black": [
+     0.0062,
+     0.0042,
+     0.0121
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.78,
+     "mid": 9.43,
+     "high": 9.58
+    }
+   },
+   "R1": {
+    "fixed": 8.989,
+    "p4": 5.916,
+    "ub7": 5.776,
+    "dL": -0.79,
+    "dh": 22.1,
+    "below_black": [
+     0.0052,
+     0.0042,
+     0.0057
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.92,
+     "mid": 9.39,
+     "high": 9.56
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.301,
+   "new_clipping": false,
+   "ncc": 0.976,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941225E-34-nagasaki",
+   "roll": "ds-199412E",
+   "chroma_disagreement": 0.097,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.13,
+    0.172,
+    0.075
+   ],
+   "B0": {
+    "fixed": 18.093,
+    "p4": 6.799,
+    "ub7": 6.381,
+    "dL": 19.12,
+    "dh": 13.2,
+    "below_black": [
+     0.0016,
+     0.0011,
+     0.0008
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 18.04,
+     "mid": 18.18,
+     "high": 12.42
+    }
+   },
+   "B1": {
+    "fixed": 21.915,
+    "p4": 6.128,
+    "ub7": 5.825,
+    "dL": 22.78,
+    "dh": 15.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 23.41,
+     "mid": 21.06,
+     "high": 13.05
+    }
+   },
+   "R1": {
+    "fixed": 18.093,
+    "p4": 6.799,
+    "ub7": 6.381,
+    "dL": 19.12,
+    "dh": 13.2,
+    "below_black": [
+     0.0016,
+     0.0011,
+     0.0008
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 18.04,
+     "mid": 18.18,
+     "high": 12.42
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 3.822,
+   "new_clipping": false,
+   "ncc": 0.872,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941225F-03-nagasaki",
+   "roll": "ds-199412F",
+   "chroma_disagreement": 0.0008,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.002,
+    0.003,
+    0.002
+   ],
+   "B0": {
+    "fixed": 9.389,
+    "p4": 5.002,
+    "ub7": 4.756,
+    "dL": 9.16,
+    "dh": 24.5,
+    "below_black": [
+     0.0002,
+     0.0002,
+     0.0003
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 17.95,
+     "mid": 11.63,
+     "high": 7.66
+    }
+   },
+   "B1": {
+    "fixed": 9.336,
+    "p4": 4.992,
+    "ub7": 4.741,
+    "dL": 9.18,
+    "dh": 23.3,
+    "below_black": [
+     0.0001,
+     0.0001,
+     0.0002
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 17.89,
+     "mid": 11.56,
+     "high": 7.64
+    }
+   },
+   "R1": {
+    "fixed": 9.389,
+    "p4": 5.002,
+    "ub7": 4.756,
+    "dL": 9.16,
+    "dh": 24.5,
+    "below_black": [
+     0.0002,
+     0.0002,
+     0.0003
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 17.95,
+     "mid": 11.63,
+     "high": 7.66
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.053,
+   "new_clipping": false,
+   "ncc": 0.95,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19941225F-04-nagasaki",
+   "roll": "ds-199412F",
+   "chroma_disagreement": 0.0008,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.002,
+    -0.003,
+    -0.002
+   ],
+   "B0": {
+    "fixed": 8.472,
+    "p4": 6.135,
+    "ub7": 5.675,
+    "dL": 6.9,
+    "dh": 28.5,
+    "below_black": [
+     0.0024,
+     0.0018,
+     0.0052
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 11.62,
+     "mid": 7.56,
+     "high": 7.7
+    }
+   },
+   "B1": {
+    "fixed": 8.544,
+    "p4": 6.205,
+    "ub7": 5.724,
+    "dL": 6.86,
+    "dh": 29.7,
+    "below_black": [
+     0.0043,
+     0.0029,
+     0.0083
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 11.84,
+     "mid": 7.64,
+     "high": 7.71
+    }
+   },
+   "R1": {
+    "fixed": 8.472,
+    "p4": 6.135,
+    "ub7": 5.675,
+    "dL": 6.9,
+    "dh": 28.5,
+    "below_black": [
+     0.0024,
+     0.0018,
+     0.0052
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 11.62,
+     "mid": 7.56,
+     "high": 7.7
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.072,
+   "new_clipping": false,
+   "ncc": 0.962,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19941228F-12-tokyo",
+   "roll": "ds-199412F",
+   "chroma_disagreement": 0.0281,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.032,
+    0.038,
+    0.01
+   ],
+   "B0": {
+    "fixed": 8.876,
+    "p4": 7.673,
+    "ub7": 5.802,
+    "dL": 4.14,
+    "dh": 34.1,
+    "below_black": [
+     0.0017,
+     0.0016,
+     0.0025
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 14.92,
+     "mid": 10.91,
+     "high": 6.73
+    }
+   },
+   "B1": {
+    "fixed": 9.455,
+    "p4": 7.811,
+    "ub7": 5.729,
+    "dL": 4.9,
+    "dh": 39.1,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0002
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 16.01,
+     "mid": 11.83,
+     "high": 6.72
+    }
+   },
+   "R1": {
+    "fixed": 8.876,
+    "p4": 7.673,
+    "ub7": 5.802,
+    "dL": 4.14,
+    "dh": 34.1,
+    "below_black": [
+     0.0017,
+     0.0016,
+     0.0025
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 14.92,
+     "mid": 10.91,
+     "high": 6.73
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.579,
+   "new_clipping": false,
+   "ncc": 0.871,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19960808B-03-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0021,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    0.0,
+    0.002
+   ],
+   "B0": {
+    "fixed": 6.666,
+    "p4": 6.851,
+    "ub7": 6.516,
+    "dL": -6.14,
+    "dh": 78.4,
+    "below_black": [
+     0.0226,
+     0.0314,
+     0.0428
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 6.06,
+     "mid": 25.24,
+     "high": 20.49
+    }
+   },
+   "B1": {
+    "fixed": 6.448,
+    "p4": 6.675,
+    "ub7": 6.301,
+    "dL": -6.1,
+    "dh": 79.5,
+    "below_black": [
+     0.0226,
+     0.0314,
+     0.0244
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 5.89,
+     "mid": 25.45,
+     "high": 20.53
+    }
+   },
+   "R1": {
+    "fixed": 6.666,
+    "p4": 6.851,
+    "ub7": 6.516,
+    "dL": -6.14,
+    "dh": 78.4,
+    "below_black": [
+     0.0226,
+     0.0314,
+     0.0428
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 6.06,
+     "mid": 25.24,
+     "high": 20.49
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.218,
+   "new_clipping": false,
+   "ncc": 0.961,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19960808B-04-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.002,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.004,
+    0.006,
+    0.004
+   ],
+   "B0": {
+    "fixed": 16.862,
+    "p4": 7.157,
+    "ub7": 7.205,
+    "dL": -10.33,
+    "dh": 59.6,
+    "below_black": [
+     0.0094,
+     0.0144,
+     0.0185
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 6.61,
+     "mid": 29.05,
+     "high": 21.95
+    }
+   },
+   "B1": {
+    "fixed": 17.025,
+    "p4": 7.053,
+    "ub7": 7.166,
+    "dL": -10.19,
+    "dh": 60.8,
+    "below_black": [
+     0.0048,
+     0.0042,
+     0.005
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 6.36,
+     "mid": 29.29,
+     "high": 22.04
+    }
+   },
+   "R1": {
+    "fixed": 16.862,
+    "p4": 7.157,
+    "ub7": 7.205,
+    "dL": -10.33,
+    "dh": 59.6,
+    "below_black": [
+     0.0094,
+     0.0144,
+     0.0185
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 6.61,
+     "mid": 29.05,
+     "high": 21.95
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.163,
+   "new_clipping": false,
+   "ncc": 0.963,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960808B-05-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0017,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.009,
+    0.007,
+    0.008
+   ],
+   "B0": {
+    "fixed": 11.31,
+    "p4": 9.217,
+    "ub7": 9.155,
+    "dL": -14.91,
+    "dh": 70.6,
+    "below_black": [
+     0.0078,
+     0.0123,
+     0.0202
+    ],
+    "clipped": 0.0012,
+    "zones": {
+     "shadow": 9.03,
+     "mid": 30.98,
+     "high": 33.36
+    }
+   },
+   "B1": {
+    "fixed": 11.22,
+    "p4": 8.59,
+    "ub7": 8.792,
+    "dL": -14.67,
+    "dh": 74.3,
+    "below_black": [
+     0.0016,
+     0.0024,
+     0.0014
+    ],
+    "clipped": 0.0011,
+    "zones": {
+     "shadow": 8.49,
+     "mid": 31.36,
+     "high": 33.54
+    }
+   },
+   "R1": {
+    "fixed": 11.31,
+    "p4": 9.217,
+    "ub7": 9.155,
+    "dL": -14.91,
+    "dh": 70.6,
+    "below_black": [
+     0.0078,
+     0.0123,
+     0.0202
+    ],
+    "clipped": 0.0012,
+    "zones": {
+     "shadow": 9.03,
+     "mid": 30.98,
+     "high": 33.36
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.09,
+   "new_clipping": false,
+   "ncc": 0.89,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960808B-06-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.009,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.004,
+    0.005,
+    -0.003
+   ],
+   "B0": {
+    "fixed": 15.84,
+    "p4": 8.583,
+    "ub7": 8.602,
+    "dL": -20.49,
+    "dh": 62.6,
+    "below_black": [
+     0.0242,
+     0.0293,
+     0.0304
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.77,
+     "mid": 35.28,
+     "high": 46.12
+    }
+   },
+   "B1": {
+    "fixed": 15.963,
+    "p4": 9.512,
+    "ub7": 9.255,
+    "dL": -20.52,
+    "dh": 60.8,
+    "below_black": [
+     0.0418,
+     0.0089,
+     0.058
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 10.09,
+     "mid": 35.03,
+     "high": 46.1
+    }
+   },
+   "R1": {
+    "fixed": 15.84,
+    "p4": 8.583,
+    "ub7": 8.602,
+    "dL": -20.49,
+    "dh": 62.6,
+    "below_black": [
+     0.0242,
+     0.0293,
+     0.0304
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.77,
+     "mid": 35.28,
+     "high": 46.12
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.123,
+   "new_clipping": false,
+   "ncc": 0.925,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960808B-07-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0021,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.001,
+    0.002,
+    0.0
+   ],
+   "B0": {
+    "fixed": 15.259,
+    "p4": 8.635,
+    "ub7": 8.52,
+    "dL": -17.05,
+    "dh": 63.9,
+    "below_black": [
+     0.0081,
+     0.0106,
+     0.0115
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.29,
+     "mid": 29.58,
+     "high": 29.15
+    }
+   },
+   "B1": {
+    "fixed": 15.19,
+    "p4": 8.731,
+    "ub7": 8.584,
+    "dL": -17.0,
+    "dh": 63.4,
+    "below_black": [
+     0.0066,
+     0.0072,
+     0.0115
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.31,
+     "mid": 29.48,
+     "high": 29.12
+    }
+   },
+   "R1": {
+    "fixed": 15.259,
+    "p4": 8.635,
+    "ub7": 8.52,
+    "dL": -17.05,
+    "dh": 63.9,
+    "below_black": [
+     0.0081,
+     0.0106,
+     0.0115
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.29,
+     "mid": 29.58,
+     "high": 29.15
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.069,
+   "new_clipping": false,
+   "ncc": 0.892,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960808B-08-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0014,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.002,
+    0.002,
+    0.001
+   ],
+   "B0": {
+    "fixed": 8.702,
+    "p4": 7.621,
+    "ub7": 7.032,
+    "dL": -10.16,
+    "dh": 23.2,
+    "below_black": [
+     0.024,
+     0.035,
+     0.0342
+    ],
+    "clipped": 0.0087,
+    "zones": {
+     "shadow": 8.4,
+     "mid": 26.24,
+     "high": 18.68
+    }
+   },
+   "B1": {
+    "fixed": 8.632,
+    "p4": 7.487,
+    "ub7": 6.872,
+    "dL": -10.04,
+    "dh": 23.3,
+    "below_black": [
+     0.0186,
+     0.022,
+     0.0266
+    ],
+    "clipped": 0.0087,
+    "zones": {
+     "shadow": 8.33,
+     "mid": 26.21,
+     "high": 18.68
+    }
+   },
+   "R1": {
+    "fixed": 8.702,
+    "p4": 7.621,
+    "ub7": 7.032,
+    "dL": -10.16,
+    "dh": 23.2,
+    "below_black": [
+     0.024,
+     0.035,
+     0.0342
+    ],
+    "clipped": 0.0087,
+    "zones": {
+     "shadow": 8.4,
+     "mid": 26.24,
+     "high": 18.68
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.07,
+   "new_clipping": false,
+   "ncc": 0.959,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960808B-09-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0037,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.001,
+    0.005,
+    0.001
+   ],
+   "B0": {
+    "fixed": 7.806,
+    "p4": 7.683,
+    "ub7": 7.566,
+    "dL": -10.04,
+    "dh": 50.6,
+    "below_black": [
+     0.0129,
+     0.0172,
+     0.018
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.21,
+     "mid": 27.77,
+     "high": 26.98
+    }
+   },
+   "B1": {
+    "fixed": 7.792,
+    "p4": 7.709,
+    "ub7": 7.587,
+    "dL": -9.89,
+    "dh": 50.5,
+    "below_black": [
+     0.0101,
+     0.0061,
+     0.0136
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.18,
+     "mid": 27.71,
+     "high": 26.95
+    }
+   },
+   "R1": {
+    "fixed": 7.806,
+    "p4": 7.683,
+    "ub7": 7.566,
+    "dL": -10.04,
+    "dh": 50.6,
+    "below_black": [
+     0.0129,
+     0.0172,
+     0.018
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.21,
+     "mid": 27.77,
+     "high": 26.98
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.014,
+   "new_clipping": false,
+   "ncc": 0.922,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960808B-10-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.011,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.019,
+    0.019,
+    0.008
+   ],
+   "B0": {
+    "fixed": 23.857,
+    "p4": 10.208,
+    "ub7": 10.509,
+    "dL": -13.44,
+    "dh": 114.6,
+    "below_black": [
+     0.0041,
+     0.0064,
+     0.0074
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 5.86,
+     "mid": 34.08,
+     "high": 30.75
+    }
+   },
+   "B1": {
+    "fixed": 23.877,
+    "p4": 10.249,
+    "ub7": 10.573,
+    "dL": -13.35,
+    "dh": 115.2,
+    "below_black": [
+     0.0001,
+     0.0001,
+     0.0005
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 5.7,
+     "mid": 34.08,
+     "high": 30.76
+    }
+   },
+   "R1": {
+    "fixed": 23.857,
+    "p4": 10.208,
+    "ub7": 10.509,
+    "dL": -13.44,
+    "dh": 114.6,
+    "below_black": [
+     0.0041,
+     0.0064,
+     0.0074
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 5.86,
+     "mid": 34.08,
+     "high": 30.75
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.02,
+   "new_clipping": false,
+   "ncc": 0.956,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960808B-11-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0028,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.003,
+    -0.0,
+    -0.002
+   ],
+   "B0": {
+    "fixed": 13.371,
+    "p4": 9.978,
+    "ub7": 9.792,
+    "dL": -17.63,
+    "dh": 39.9,
+    "below_black": [
+     0.0186,
+     0.0231,
+     0.0284
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 12.6,
+     "mid": 30.02,
+     "high": 44.04
+    }
+   },
+   "B1": {
+    "fixed": 13.515,
+    "p4": 10.607,
+    "ub7": 10.591,
+    "dL": -17.7,
+    "dh": 38.6,
+    "below_black": [
+     0.0305,
+     0.025,
+     0.0465
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 12.77,
+     "mid": 29.96,
+     "high": 44.01
+    }
+   },
+   "R1": {
+    "fixed": 13.371,
+    "p4": 9.978,
+    "ub7": 9.792,
+    "dL": -17.63,
+    "dh": 39.9,
+    "below_black": [
+     0.0186,
+     0.0231,
+     0.0284
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 12.6,
+     "mid": 30.02,
+     "high": 44.04
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.144,
+   "new_clipping": false,
+   "ncc": 0.917,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960809B-14-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0482,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.119,
+    0.088,
+    0.04
+   ],
+   "B0": {
+    "fixed": 25.314,
+    "p4": 6.696,
+    "ub7": 6.196,
+    "dL": 0.33,
+    "dh": 106.0,
+    "below_black": [
+     0.0017,
+     0.0028,
+     0.002
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 11.33,
+     "mid": 28.16,
+     "high": 26.57
+    }
+   },
+   "B1": {
+    "fixed": 25.242,
+    "p4": 6.304,
+    "ub7": 5.734,
+    "dL": 2.62,
+    "dh": 104.2,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 12.84,
+     "mid": 28.14,
+     "high": 26.37
+    }
+   },
+   "R1": {
+    "fixed": 25.314,
+    "p4": 6.696,
+    "ub7": 6.196,
+    "dL": 0.33,
+    "dh": 106.0,
+    "below_black": [
+     0.0017,
+     0.0028,
+     0.002
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 11.33,
+     "mid": 28.16,
+     "high": 26.57
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.072,
+   "new_clipping": false,
+   "ncc": 0.978,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19960809B-15-new-orleans-siggraph96",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0244,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.033,
+    0.03,
+    0.006
+   ],
+   "B0": {
+    "fixed": 21.844,
+    "p4": 6.714,
+    "ub7": 5.688,
+    "dL": 19.18,
+    "dh": 68.8,
+    "below_black": [
+     0.0066,
+     0.0069,
+     0.0075
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 17.02,
+     "mid": 26.8,
+     "high": 20.07
+    }
+   },
+   "B1": {
+    "fixed": 21.67,
+    "p4": 6.607,
+    "ub7": 5.516,
+    "dL": 19.5,
+    "dh": 61.6,
+    "below_black": [
+     0.0001,
+     0.0,
+     0.003
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 17.81,
+     "mid": 26.26,
+     "high": 19.92
+    }
+   },
+   "R1": {
+    "fixed": 21.844,
+    "p4": 6.714,
+    "ub7": 5.688,
+    "dL": 19.18,
+    "dh": 68.8,
+    "below_black": [
+     0.0066,
+     0.0069,
+     0.0075
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 17.02,
+     "mid": 26.8,
+     "high": 20.07
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.174,
+   "new_clipping": false,
+   "ncc": 0.963,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960811B-17-arizona-london-bridge",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0068,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.017,
+    0.023,
+    0.018
+   ],
+   "B0": {
+    "fixed": 12.222,
+    "p4": 6.77,
+    "ub7": 6.738,
+    "dL": 3.85,
+    "dh": 35.7,
+    "below_black": [
+     0.0049,
+     0.0045,
+     0.0059
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.2,
+     "mid": 12.72,
+     "high": 13.92
+    }
+   },
+   "B1": {
+    "fixed": 12.49,
+    "p4": 6.335,
+    "ub7": 6.255,
+    "dL": 4.38,
+    "dh": 35.8,
+    "below_black": [
+     0.0003,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 6.97,
+     "mid": 12.99,
+     "high": 14.23
+    }
+   },
+   "R1": {
+    "fixed": 12.222,
+    "p4": 6.77,
+    "ub7": 6.738,
+    "dL": 3.85,
+    "dh": 35.7,
+    "below_black": [
+     0.0049,
+     0.0045,
+     0.0059
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.2,
+     "mid": 12.72,
+     "high": 13.92
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.268,
+   "new_clipping": false,
+   "ncc": 0.933,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960811B-20-arizona-london-bridge",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0531,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.088,
+    0.107,
+    0.053
+   ],
+   "B0": {
+    "fixed": 13.834,
+    "p4": 6.97,
+    "ub7": 6.66,
+    "dL": 15.92,
+    "dh": 39.5,
+    "below_black": [
+     0.0049,
+     0.005,
+     0.0052
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 12.72,
+     "mid": 17.51,
+     "high": 12.87
+    }
+   },
+   "B1": {
+    "fixed": 14.685,
+    "p4": 6.463,
+    "ub7": 6.031,
+    "dL": 17.13,
+    "dh": 39.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 16.41,
+     "mid": 18.49,
+     "high": 13.06
+    }
+   },
+   "R1": {
+    "fixed": 13.834,
+    "p4": 6.97,
+    "ub7": 6.66,
+    "dL": 15.92,
+    "dh": 39.5,
+    "below_black": [
+     0.0049,
+     0.005,
+     0.0052
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 12.72,
+     "mid": 17.51,
+     "high": 12.87
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.851,
+   "new_clipping": false,
+   "ncc": 0.943,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960811B-21-arizona-london-bridge",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0133,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.026,
+    0.029,
+    0.016
+   ],
+   "B0": {
+    "fixed": 9.687,
+    "p4": 6.538,
+    "ub7": 6.508,
+    "dL": 4.85,
+    "dh": 25.2,
+    "below_black": [
+     0.0049,
+     0.0065,
+     0.0052
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.09,
+     "mid": 9.89,
+     "high": 14.43
+    }
+   },
+   "B1": {
+    "fixed": 10.119,
+    "p4": 6.343,
+    "ub7": 6.322,
+    "dL": 5.44,
+    "dh": 26.0,
+    "below_black": [
+     0.0001,
+     0.0,
+     0.0001
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.69,
+     "mid": 10.22,
+     "high": 14.49
+    }
+   },
+   "R1": {
+    "fixed": 9.687,
+    "p4": 6.538,
+    "ub7": 6.508,
+    "dL": 4.85,
+    "dh": 25.2,
+    "below_black": [
+     0.0049,
+     0.0065,
+     0.0052
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.09,
+     "mid": 9.89,
+     "high": 14.43
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.432,
+   "new_clipping": false,
+   "ncc": 0.94,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960811B-25-arizona-london-bridge",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0079,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.019,
+    0.024,
+    0.017
+   ],
+   "B0": {
+    "fixed": 15.179,
+    "p4": 5.192,
+    "ub7": 5.132,
+    "dL": 19.44,
+    "dh": 27.4,
+    "below_black": [
+     0.0069,
+     0.0077,
+     0.0091
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 10.68,
+     "mid": 17.88,
+     "high": 13.14
+    }
+   },
+   "B1": {
+    "fixed": 15.516,
+    "p4": 4.85,
+    "ub7": 4.801,
+    "dL": 19.88,
+    "dh": 28.1,
+    "below_black": [
+     0.0002,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 11.74,
+     "mid": 18.06,
+     "high": 13.22
+    }
+   },
+   "R1": {
+    "fixed": 15.179,
+    "p4": 5.192,
+    "ub7": 5.132,
+    "dL": 19.44,
+    "dh": 27.4,
+    "below_black": [
+     0.0069,
+     0.0077,
+     0.0091
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 10.68,
+     "mid": 17.88,
+     "high": 13.14
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.337,
+   "new_clipping": false,
+   "ncc": 0.971,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960811B-28-arizona-london-bridge",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0167,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.033,
+    0.04,
+    0.023
+   ],
+   "B0": {
+    "fixed": 13.47,
+    "p4": 5.303,
+    "ub7": 5.142,
+    "dL": 15.54,
+    "dh": 30.5,
+    "below_black": [
+     0.0022,
+     0.0021,
+     0.0024
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.96,
+     "mid": 15.69,
+     "high": 12.64
+    }
+   },
+   "B1": {
+    "fixed": 14.122,
+    "p4": 4.787,
+    "ub7": 4.654,
+    "dL": 16.39,
+    "dh": 31.6,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 12.06,
+     "mid": 16.24,
+     "high": 12.8
+    }
+   },
+   "R1": {
+    "fixed": 13.47,
+    "p4": 5.303,
+    "ub7": 5.142,
+    "dL": 15.54,
+    "dh": 30.5,
+    "below_black": [
+     0.0022,
+     0.0021,
+     0.0024
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.96,
+     "mid": 15.69,
+     "high": 12.64
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.652,
+   "new_clipping": false,
+   "ncc": 0.97,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19960811B-29-arizona-london-bridge",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0053,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.013,
+    0.016,
+    0.011
+   ],
+   "B0": {
+    "fixed": 15.238,
+    "p4": 6.924,
+    "ub7": 6.138,
+    "dL": -6.83,
+    "dh": 131.7,
+    "below_black": [
+     0.0151,
+     0.0178,
+     0.02
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.07,
+     "mid": 21.21,
+     "high": 18.43
+    }
+   },
+   "B1": {
+    "fixed": 15.37,
+    "p4": 6.481,
+    "ub7": 5.685,
+    "dL": -5.82,
+    "dh": 132.2,
+    "below_black": [
+     0.001,
+     0.0002,
+     0.0005
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 5.22,
+     "mid": 21.34,
+     "high": 18.54
+    }
+   },
+   "R1": {
+    "fixed": 15.238,
+    "p4": 6.924,
+    "ub7": 6.138,
+    "dL": -6.83,
+    "dh": 131.7,
+    "below_black": [
+     0.0151,
+     0.0178,
+     0.02
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.07,
+     "mid": 21.21,
+     "high": 18.43
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.132,
+   "new_clipping": false,
+   "ncc": 0.966,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960811B-34-laughlin",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0024,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    0.003,
+    0.002
+   ],
+   "B0": {
+    "fixed": 6.688,
+    "p4": 6.501,
+    "ub7": 3.644,
+    "dL": -9.76,
+    "dh": 99.8,
+    "below_black": [
+     0.0588,
+     0.0671,
+     0.0714
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.54,
+     "mid": 33.51,
+     "high": 30.58
+    }
+   },
+   "B1": {
+    "fixed": 6.601,
+    "p4": 6.219,
+    "ub7": 3.299,
+    "dL": -9.66,
+    "dh": 100.4,
+    "below_black": [
+     0.054,
+     0.0361,
+     0.0421
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.45,
+     "mid": 33.59,
+     "high": 30.63
+    }
+   },
+   "R1": {
+    "fixed": 6.688,
+    "p4": 6.501,
+    "ub7": 3.644,
+    "dL": -9.76,
+    "dh": 99.8,
+    "below_black": [
+     0.0588,
+     0.0671,
+     0.0714
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.54,
+     "mid": 33.51,
+     "high": 30.58
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.087,
+   "new_clipping": false,
+   "ncc": 0.95,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960811B-35-laughlin",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0013,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.001,
+    0.002,
+    0.002
+   ],
+   "B0": {
+    "fixed": 6.839,
+    "p4": 7.017,
+    "ub7": 6.661,
+    "dL": -9.49,
+    "dh": 122.1,
+    "below_black": [
+     0.0438,
+     0.0474,
+     0.0581
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 6.42,
+     "mid": 31.59,
+     "high": 28.19
+    }
+   },
+   "B1": {
+    "fixed": 6.735,
+    "p4": 6.952,
+    "ub7": 6.453,
+    "dL": -9.38,
+    "dh": 122.4,
+    "below_black": [
+     0.037,
+     0.0298,
+     0.0383
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 6.32,
+     "mid": 31.64,
+     "high": 28.23
+    }
+   },
+   "R1": {
+    "fixed": 6.839,
+    "p4": 7.017,
+    "ub7": 6.661,
+    "dL": -9.49,
+    "dh": 122.1,
+    "below_black": [
+     0.0438,
+     0.0474,
+     0.0581
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 6.42,
+     "mid": 31.59,
+     "high": 28.19
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.104,
+   "new_clipping": false,
+   "ncc": 0.925,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19960811B-36-laughlin",
+   "roll": "ds-199608B",
+   "chroma_disagreement": 0.0008,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.001,
+    0.002,
+    0.002
+   ],
+   "B0": {
+    "fixed": 7.658,
+    "p4": 7.133,
+    "ub7": 6.832,
+    "dL": -9.96,
+    "dh": 111.9,
+    "below_black": [
+     0.047,
+     0.0486,
+     0.0508
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.25,
+     "mid": 30.73,
+     "high": 33.04
+    }
+   },
+   "B1": {
+    "fixed": 7.545,
+    "p4": 6.965,
+    "ub7": 6.641,
+    "dL": -9.88,
+    "dh": 112.2,
+    "below_black": [
+     0.0363,
+     0.0305,
+     0.0318
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.13,
+     "mid": 30.79,
+     "high": 33.08
+    }
+   },
+   "R1": {
+    "fixed": 7.658,
+    "p4": 7.133,
+    "ub7": 6.832,
+    "dL": -9.96,
+    "dh": 111.9,
+    "below_black": [
+     0.047,
+     0.0486,
+     0.0508
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.25,
+     "mid": 30.73,
+     "high": 33.04
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.113,
+   "new_clipping": false,
+   "ncc": 0.955,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19970619B-07-notre-dame",
+   "roll": "ds-199706B",
+   "chroma_disagreement": 0.0027,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.002,
+    -0.004,
+    -0.002
+   ],
+   "B0": {
+    "fixed": 14.882,
+    "p4": 7.57,
+    "ub7": 6.914,
+    "dL": -12.46,
+    "dh": 17.3,
+    "below_black": [
+     0.0223,
+     0.0459,
+     0.0373
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.76,
+     "mid": 24.73,
+     "high": 18.87
+    }
+   },
+   "B1": {
+    "fixed": 14.83,
+    "p4": 7.797,
+    "ub7": 7.131,
+    "dL": -12.53,
+    "dh": 17.1,
+    "below_black": [
+     0.0349,
+     0.0786,
+     0.058
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.85,
+     "mid": 24.66,
+     "high": 18.83
+    }
+   },
+   "R1": {
+    "fixed": 14.882,
+    "p4": 7.57,
+    "ub7": 6.914,
+    "dL": -12.46,
+    "dh": 17.3,
+    "below_black": [
+     0.0223,
+     0.0459,
+     0.0373
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.76,
+     "mid": 24.73,
+     "high": 18.87
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.052,
+   "new_clipping": false,
+   "ncc": 0.951,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:19970619B-09-notre-dame",
+   "roll": "ds-199706B",
+   "chroma_disagreement": 0.0027,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.002,
+    0.004,
+    0.002
+   ],
+   "B0": {
+    "fixed": 9.686,
+    "p4": 7.314,
+    "ub7": 7.059,
+    "dL": -4.1,
+    "dh": 27.0,
+    "below_black": [
+     0.0024,
+     0.0269,
+     0.0265
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.72,
+     "mid": 16.28,
+     "high": 15.52
+    }
+   },
+   "B1": {
+    "fixed": 9.626,
+    "p4": 7.234,
+    "ub7": 7.007,
+    "dL": -4.01,
+    "dh": 27.4,
+    "below_black": [
+     0.0014,
+     0.017,
+     0.0179
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.57,
+     "mid": 16.45,
+     "high": 15.58
+    }
+   },
+   "R1": {
+    "fixed": 9.686,
+    "p4": 7.314,
+    "ub7": 7.059,
+    "dL": -4.1,
+    "dh": 27.0,
+    "below_black": [
+     0.0024,
+     0.0269,
+     0.0265
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.72,
+     "mid": 16.28,
+     "high": 15.52
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.06,
+   "new_clipping": false,
+   "ncc": 0.977,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:19970619B-10-notre-dame",
+   "roll": "ds-199706B",
+   "chroma_disagreement": 0.0182,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.059,
+    0.047,
+    0.028
+   ],
+   "B0": {
+    "fixed": 8.449,
+    "p4": 6.936,
+    "ub7": 6.1,
+    "dL": -4.11,
+    "dh": 33.5,
+    "below_black": [
+     0.0023,
+     0.0032,
+     0.0052
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 5.74,
+     "mid": 19.11,
+     "high": 12.35
+    }
+   },
+   "B1": {
+    "fixed": 8.048,
+    "p4": 6.68,
+    "ub7": 5.425,
+    "dL": -3.24,
+    "dh": 32.3,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 4.89,
+     "mid": 17.48,
+     "high": 11.98
+    }
+   },
+   "R1": {
+    "fixed": 8.449,
+    "p4": 6.936,
+    "ub7": 6.1,
+    "dL": -4.11,
+    "dh": 33.5,
+    "below_black": [
+     0.0023,
+     0.0032,
+     0.0052
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 5.74,
+     "mid": 19.11,
+     "high": 12.35
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.401,
+   "new_clipping": false,
+   "ncc": 0.963,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-06-hk",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.065,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.112,
+    0.156,
+    0.091
+   ],
+   "B0": {
+    "fixed": 10.849,
+    "p4": 4.733,
+    "ub7": 3.504,
+    "dL": 11.03,
+    "dh": 50.9,
+    "below_black": [
+     0.0053,
+     0.0063,
+     0.0073
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 11.07,
+     "mid": 11.81,
+     "high": 10.69
+    }
+   },
+   "B1": {
+    "fixed": 12.171,
+    "p4": 4.487,
+    "ub7": 3.279,
+    "dL": 12.57,
+    "dh": 55.4,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 13.53,
+     "mid": 15.72,
+     "high": 11.41
+    }
+   },
+   "R1": {
+    "fixed": 10.849,
+    "p4": 4.733,
+    "ub7": 3.504,
+    "dL": 11.03,
+    "dh": 50.9,
+    "below_black": [
+     0.0053,
+     0.0063,
+     0.0073
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 11.07,
+     "mid": 11.81,
+     "high": 10.69
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.322,
+   "new_clipping": false,
+   "ncc": 0.981,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:199807A-08-hk",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0441,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.101,
+    0.118,
+    0.074
+   ],
+   "B0": {
+    "fixed": 14.179,
+    "p4": 8.683,
+    "ub7": 6.614,
+    "dL": -4.07,
+    "dh": 145.3,
+    "below_black": [
+     0.0007,
+     0.0009,
+     0.0008
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.55,
+     "mid": 25.64,
+     "high": 14.81
+    }
+   },
+   "B1": {
+    "fixed": 15.945,
+    "p4": 9.197,
+    "ub7": 6.724,
+    "dL": -2.39,
+    "dh": 141.2,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 11.02,
+     "mid": 26.46,
+     "high": 15.23
+    }
+   },
+   "R1": {
+    "fixed": 14.179,
+    "p4": 8.683,
+    "ub7": 6.614,
+    "dL": -4.07,
+    "dh": 145.3,
+    "below_black": [
+     0.0007,
+     0.0009,
+     0.0008
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.55,
+     "mid": 25.64,
+     "high": 14.81
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.766,
+   "new_clipping": false,
+   "ncc": 0.938,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-09-orlando-siggraph",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0031,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.001,
+    0.003,
+    0.0
+   ],
+   "B0": {
+    "fixed": 17.986,
+    "p4": 8.6,
+    "ub7": 6.167,
+    "dL": -27.06,
+    "dh": 48.6,
+    "below_black": [
+     0.0473,
+     0.0634,
+     0.0456
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 16.7,
+     "mid": 33.37,
+     "high": 46.86
+    }
+   },
+   "B1": {
+    "fixed": 17.953,
+    "p4": 8.66,
+    "ub7": 6.011,
+    "dL": -27.0,
+    "dh": 48.3,
+    "below_black": [
+     0.043,
+     0.0461,
+     0.0456
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 16.67,
+     "mid": 33.33,
+     "high": 46.85
+    }
+   },
+   "R1": {
+    "fixed": 17.986,
+    "p4": 8.6,
+    "ub7": 6.167,
+    "dL": -27.06,
+    "dh": 48.6,
+    "below_black": [
+     0.0473,
+     0.0634,
+     0.0456
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 16.7,
+     "mid": 33.37,
+     "high": 46.86
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.033,
+   "new_clipping": false,
+   "ncc": 0.933,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:199807A-10-orlando-siggraph",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0062,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.024,
+    0.029,
+    0.023
+   ],
+   "B0": {
+    "fixed": 10.812,
+    "p4": 4.791,
+    "ub7": 4.529,
+    "dL": 7.8,
+    "dh": 17.0,
+    "below_black": [
+     0.0057,
+     0.0073,
+     0.0056
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.04,
+     "mid": 10.75,
+     "high": 11.99
+    }
+   },
+   "B1": {
+    "fixed": 11.823,
+    "p4": 4.666,
+    "ub7": 4.524,
+    "dL": 8.95,
+    "dh": 16.7,
+    "below_black": [
+     0.0003,
+     0.0003,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 10.26,
+     "mid": 12.0,
+     "high": 12.36
+    }
+   },
+   "R1": {
+    "fixed": 10.812,
+    "p4": 4.791,
+    "ub7": 4.529,
+    "dL": 7.8,
+    "dh": 17.0,
+    "below_black": [
+     0.0057,
+     0.0073,
+     0.0056
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.04,
+     "mid": 10.75,
+     "high": 11.99
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.011,
+   "new_clipping": false,
+   "ncc": 0.876,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-11-orlando-siggraph",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0041,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.011,
+    0.015,
+    0.017
+   ],
+   "B0": {
+    "fixed": 23.412,
+    "p4": 7.05,
+    "ub7": 6.759,
+    "dL": -22.11,
+    "dh": 28.2,
+    "below_black": [
+     0.0165,
+     0.0185,
+     0.0159
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 10.93,
+     "mid": 24.92,
+     "high": 28.05
+    }
+   },
+   "B1": {
+    "fixed": 23.443,
+    "p4": 7.012,
+    "ub7": 6.931,
+    "dL": -21.5,
+    "dh": 34.4,
+    "below_black": [
+     0.0045,
+     0.0039,
+     0.0001
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 10.0,
+     "mid": 24.9,
+     "high": 28.27
+    }
+   },
+   "R1": {
+    "fixed": 23.412,
+    "p4": 7.05,
+    "ub7": 6.759,
+    "dL": -22.11,
+    "dh": 28.2,
+    "below_black": [
+     0.0165,
+     0.0185,
+     0.0159
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 10.93,
+     "mid": 24.92,
+     "high": 28.05
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.031,
+   "new_clipping": false,
+   "ncc": 0.956,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-12-orlando-universal-studio",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0104,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.018,
+    0.028,
+    0.023
+   ],
+   "B0": {
+    "fixed": 9.47,
+    "p4": 3.996,
+    "ub7": 3.497,
+    "dL": 2.46,
+    "dh": 15.0,
+    "below_black": [
+     0.008,
+     0.0076,
+     0.0068
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.29,
+     "mid": 9.43,
+     "high": 9.59
+    }
+   },
+   "B1": {
+    "fixed": 9.997,
+    "p4": 3.755,
+    "ub7": 3.383,
+    "dL": 3.46,
+    "dh": 16.7,
+    "below_black": [
+     0.0013,
+     0.0004,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.33,
+     "mid": 10.23,
+     "high": 10.06
+    }
+   },
+   "R1": {
+    "fixed": 9.47,
+    "p4": 3.996,
+    "ub7": 3.497,
+    "dL": 2.46,
+    "dh": 15.0,
+    "below_black": [
+     0.008,
+     0.0076,
+     0.0068
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.29,
+     "mid": 9.43,
+     "high": 9.59
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.527,
+   "new_clipping": false,
+   "ncc": 0.975,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-13-orlando-universal-studio",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0174,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.035,
+    0.051,
+    0.034
+   ],
+   "B0": {
+    "fixed": 9.002,
+    "p4": 4.836,
+    "ub7": 4.738,
+    "dL": 5.08,
+    "dh": 15.4,
+    "below_black": [
+     0.0091,
+     0.01,
+     0.0091
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.06,
+     "mid": 10.97,
+     "high": 11.86
+    }
+   },
+   "B1": {
+    "fixed": 11.042,
+    "p4": 4.375,
+    "ub7": 4.262,
+    "dL": 7.72,
+    "dh": 17.0,
+    "below_black": [
+     0.0003,
+     0.0001,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 9.57,
+     "mid": 12.33,
+     "high": 12.33
+    }
+   },
+   "R1": {
+    "fixed": 9.002,
+    "p4": 4.836,
+    "ub7": 4.738,
+    "dL": 5.08,
+    "dh": 15.4,
+    "below_black": [
+     0.0091,
+     0.01,
+     0.0091
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 7.06,
+     "mid": 10.97,
+     "high": 11.86
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 2.04,
+   "new_clipping": false,
+   "ncc": 0.972,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-14-orlando-universal-studio",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.006,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.016,
+    0.022,
+    0.02
+   ],
+   "B0": {
+    "fixed": 10.604,
+    "p4": 5.397,
+    "ub7": 4.607,
+    "dL": 6.08,
+    "dh": 37.5,
+    "below_black": [
+     0.0115,
+     0.0131,
+     0.01
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.3,
+     "mid": 13.78,
+     "high": 11.03
+    }
+   },
+   "B1": {
+    "fixed": 11.021,
+    "p4": 4.676,
+    "ub7": 4.031,
+    "dL": 8.35,
+    "dh": 41.6,
+    "below_black": [
+     0.0017,
+     0.001,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.29,
+     "mid": 14.95,
+     "high": 11.18
+    }
+   },
+   "R1": {
+    "fixed": 10.604,
+    "p4": 5.397,
+    "ub7": 4.607,
+    "dL": 6.08,
+    "dh": 37.5,
+    "below_black": [
+     0.0115,
+     0.0131,
+     0.01
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.3,
+     "mid": 13.78,
+     "high": 11.03
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.417,
+   "new_clipping": false,
+   "ncc": 0.95,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-17-orlando-universal-studio",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0102,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.031,
+    0.036,
+    0.026
+   ],
+   "B0": {
+    "fixed": 8.861,
+    "p4": 3.571,
+    "ub7": 2.327,
+    "dL": 5.23,
+    "dh": 43.3,
+    "below_black": [
+     0.0085,
+     0.0087,
+     0.007
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 10.08,
+     "mid": 10.33,
+     "high": 8.28
+    }
+   },
+   "B1": {
+    "fixed": 9.119,
+    "p4": 3.666,
+    "ub7": 2.37,
+    "dL": 5.81,
+    "dh": 46.8,
+    "below_black": [
+     0.0003,
+     0.0003,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.75,
+     "mid": 11.09,
+     "high": 8.45
+    }
+   },
+   "R1": {
+    "fixed": 8.861,
+    "p4": 3.571,
+    "ub7": 2.327,
+    "dL": 5.23,
+    "dh": 43.3,
+    "below_black": [
+     0.0085,
+     0.0087,
+     0.007
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 10.08,
+     "mid": 10.33,
+     "high": 8.28
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.258,
+   "new_clipping": false,
+   "ncc": 0.974,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-18-orlando-universal-studio",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.022,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.106,
+    0.084,
+    0.062
+   ],
+   "B0": {
+    "fixed": 17.352,
+    "p4": 9.082,
+    "ub7": 5.729,
+    "dL": -5.81,
+    "dh": 95.4,
+    "below_black": [
+     0.0031,
+     0.003,
+     0.0029
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.5,
+     "mid": 30.03,
+     "high": 18.21
+    }
+   },
+   "B1": {
+    "fixed": 17.429,
+    "p4": 9.976,
+    "ub7": 5.508,
+    "dL": -4.73,
+    "dh": 95.6,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 12.13,
+     "mid": 31.19,
+     "high": 17.91
+    }
+   },
+   "R1": {
+    "fixed": 17.352,
+    "p4": 9.082,
+    "ub7": 5.729,
+    "dL": -5.81,
+    "dh": 95.4,
+    "below_black": [
+     0.0031,
+     0.003,
+     0.0029
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.5,
+     "mid": 30.03,
+     "high": 18.21
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.077,
+   "new_clipping": false,
+   "ncc": 0.972,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-19-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0026,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.004,
+    0.005,
+    0.007
+   ],
+   "B0": {
+    "fixed": 22.595,
+    "p4": 9.018,
+    "ub7": 8.902,
+    "dL": -30.32,
+    "dh": 50.5,
+    "below_black": [
+     0.0422,
+     0.0622,
+     0.046
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 18.09,
+     "mid": 33.54,
+     "high": 35.73
+    }
+   },
+   "B1": {
+    "fixed": 22.605,
+    "p4": 8.186,
+    "ub7": 8.375,
+    "dL": -30.17,
+    "dh": 56.8,
+    "below_black": [
+     0.0253,
+     0.0379,
+     0.0054
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 18.01,
+     "mid": 33.7,
+     "high": 35.73
+    }
+   },
+   "R1": {
+    "fixed": 22.595,
+    "p4": 9.018,
+    "ub7": 8.902,
+    "dL": -30.32,
+    "dh": 50.5,
+    "below_black": [
+     0.0422,
+     0.0622,
+     0.046
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 18.09,
+     "mid": 33.54,
+     "high": 35.73
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.01,
+   "new_clipping": false,
+   "ncc": 0.759,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-20-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0034,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    -0.001,
+    0.003
+   ],
+   "B0": {
+    "fixed": 16.538,
+    "p4": 11.027,
+    "ub7": 5.273,
+    "dL": -24.98,
+    "dh": 54.4,
+    "below_black": [
+     0.084,
+     0.1025,
+     0.0802
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 16.16,
+     "mid": 33.18,
+     "high": 29.31
+    }
+   },
+   "B1": {
+    "fixed": 16.5,
+    "p4": 10.6,
+    "ub7": 5.094,
+    "dL": -24.97,
+    "dh": 57.1,
+    "below_black": [
+     0.084,
+     0.1087,
+     0.0386
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 16.12,
+     "mid": 33.35,
+     "high": 29.46
+    }
+   },
+   "R1": {
+    "fixed": 16.538,
+    "p4": 11.027,
+    "ub7": 5.273,
+    "dL": -24.98,
+    "dh": 54.4,
+    "below_black": [
+     0.084,
+     0.1025,
+     0.0802
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 16.16,
+     "mid": 33.18,
+     "high": 29.31
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.038,
+   "new_clipping": false,
+   "ncc": 0.859,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-22-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0026,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.008,
+    0.01,
+    0.011
+   ],
+   "B0": {
+    "fixed": 20.345,
+    "p4": 11.607,
+    "ub7": 7.232,
+    "dL": -10.95,
+    "dh": 82.9,
+    "below_black": [
+     0.014,
+     0.0163,
+     0.0198
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.74,
+     "mid": 33.39,
+     "high": 31.72
+    }
+   },
+   "B1": {
+    "fixed": 20.559,
+    "p4": 11.875,
+    "ub7": 6.97,
+    "dL": -10.7,
+    "dh": 83.4,
+    "below_black": [
+     0.0052,
+     0.0049,
+     0.0007
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.08,
+     "mid": 33.61,
+     "high": 31.76
+    }
+   },
+   "R1": {
+    "fixed": 20.345,
+    "p4": 11.607,
+    "ub7": 7.232,
+    "dL": -10.95,
+    "dh": 82.9,
+    "below_black": [
+     0.014,
+     0.0163,
+     0.0198
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.74,
+     "mid": 33.39,
+     "high": 31.72
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.214,
+   "new_clipping": false,
+   "ncc": 0.881,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-23-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0139,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.022,
+    0.035,
+    0.021
+   ],
+   "B0": {
+    "fixed": 12.587,
+    "p4": 4.042,
+    "ub7": 3.899,
+    "dL": -6.71,
+    "dh": 8.5,
+    "below_black": [
+     0.0016,
+     0.0009,
+     0.0008
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.62,
+     "mid": 12.58,
+     "high": 13.54
+    }
+   },
+   "B1": {
+    "fixed": 12.568,
+    "p4": 3.932,
+    "ub7": 3.819,
+    "dL": -5.66,
+    "dh": 8.3,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.46,
+     "mid": 12.49,
+     "high": 13.8
+    }
+   },
+   "R1": {
+    "fixed": 12.587,
+    "p4": 4.042,
+    "ub7": 3.899,
+    "dL": -6.71,
+    "dh": 8.5,
+    "below_black": [
+     0.0016,
+     0.0009,
+     0.0008
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.62,
+     "mid": 12.58,
+     "high": 13.54
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.019,
+   "new_clipping": false,
+   "ncc": 0.955,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-27-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0051,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.011,
+    0.016,
+    0.015
+   ],
+   "B0": {
+    "fixed": 13.325,
+    "p4": 7.097,
+    "ub7": 6.309,
+    "dL": 2.25,
+    "dh": 42.5,
+    "below_black": [
+     0.0265,
+     0.031,
+     0.0232
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 13.49,
+     "mid": 13.65,
+     "high": 12.83
+    }
+   },
+   "B1": {
+    "fixed": 13.839,
+    "p4": 6.691,
+    "ub7": 5.934,
+    "dL": 4.58,
+    "dh": 53.2,
+    "below_black": [
+     0.0062,
+     0.0045,
+     0.0002
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 12.78,
+     "mid": 15.26,
+     "high": 12.92
+    }
+   },
+   "R1": {
+    "fixed": 13.325,
+    "p4": 7.097,
+    "ub7": 6.309,
+    "dL": 2.25,
+    "dh": 42.5,
+    "below_black": [
+     0.0265,
+     0.031,
+     0.0232
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 13.49,
+     "mid": 13.65,
+     "high": 12.83
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.514,
+   "new_clipping": false,
+   "ncc": 0.943,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-28-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.006,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.01,
+    0.016,
+    0.012
+   ],
+   "B0": {
+    "fixed": 13.051,
+    "p4": 6.165,
+    "ub7": 5.55,
+    "dL": 0.44,
+    "dh": 43.6,
+    "below_black": [
+     0.0212,
+     0.0208,
+     0.0172
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 16.16,
+     "mid": 14.29,
+     "high": 11.01
+    }
+   },
+   "B1": {
+    "fixed": 13.09,
+    "p4": 5.789,
+    "ub7": 5.349,
+    "dL": 1.11,
+    "dh": 46.8,
+    "below_black": [
+     0.006,
+     0.0034,
+     0.0004
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 15.05,
+     "mid": 14.81,
+     "high": 11.19
+    }
+   },
+   "R1": {
+    "fixed": 13.051,
+    "p4": 6.165,
+    "ub7": 5.55,
+    "dL": 0.44,
+    "dh": 43.6,
+    "below_black": [
+     0.0212,
+     0.0208,
+     0.0172
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "shadow": 16.16,
+     "mid": 14.29,
+     "high": 11.01
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.039,
+   "new_clipping": false,
+   "ncc": 0.944,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-29-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0063,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.007,
+    0.011,
+    0.005
+   ],
+   "B0": {
+    "fixed": 7.929,
+    "p4": 7.759,
+    "ub7": 6.914,
+    "dL": -9.98,
+    "dh": 81.7,
+    "below_black": [
+     0.0371,
+     0.0448,
+     0.0328
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.28,
+     "mid": 27.64,
+     "high": 28.55
+    }
+   },
+   "B1": {
+    "fixed": 7.753,
+    "p4": 7.674,
+    "ub7": 6.562,
+    "dL": -9.64,
+    "dh": 82.4,
+    "below_black": [
+     0.0148,
+     0.0125,
+     0.0084
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.07,
+     "mid": 27.64,
+     "high": 28.57
+    }
+   },
+   "R1": {
+    "fixed": 7.929,
+    "p4": 7.759,
+    "ub7": 6.914,
+    "dL": -9.98,
+    "dh": 81.7,
+    "below_black": [
+     0.0371,
+     0.0448,
+     0.0328
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.28,
+     "mid": 27.64,
+     "high": 28.55
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.176,
+   "new_clipping": false,
+   "ncc": 0.929,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-30-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0081,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.014,
+    0.022,
+    0.014
+   ],
+   "B0": {
+    "fixed": 17.153,
+    "p4": 8.364,
+    "ub7": 7.925,
+    "dL": -0.13,
+    "dh": 58.2,
+    "below_black": [
+     0.0116,
+     0.0221,
+     0.0127
+    ],
+    "clipped": 0.0105,
+    "zones": {
+     "shadow": 10.1,
+     "mid": 22.28,
+     "high": 20.83
+    }
+   },
+   "B1": {
+    "fixed": 18.226,
+    "p4": 8.068,
+    "ub7": 7.583,
+    "dL": 1.24,
+    "dh": 67.5,
+    "below_black": [
+     0.0016,
+     0.0014,
+     0.0001
+    ],
+    "clipped": 0.0104,
+    "zones": {
+     "shadow": 9.06,
+     "mid": 23.1,
+     "high": 21.12
+    }
+   },
+   "R1": {
+    "fixed": 17.153,
+    "p4": 8.364,
+    "ub7": 7.925,
+    "dL": -0.13,
+    "dh": 58.2,
+    "below_black": [
+     0.0116,
+     0.0221,
+     0.0127
+    ],
+    "clipped": 0.0105,
+    "zones": {
+     "shadow": 10.1,
+     "mid": 22.28,
+     "high": 20.83
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.073,
+   "new_clipping": false,
+   "ncc": 0.959,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-31-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0114,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.032,
+    0.042,
+    0.031
+   ],
+   "B0": {
+    "fixed": 14.795,
+    "p4": 7.685,
+    "ub7": 7.427,
+    "dL": -8.91,
+    "dh": 82.5,
+    "below_black": [
+     0.0033,
+     0.0053,
+     0.002
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.87,
+     "mid": 23.91,
+     "high": 21.77
+    }
+   },
+   "B1": {
+    "fixed": 15.716,
+    "p4": 6.892,
+    "ub7": 6.858,
+    "dL": -7.17,
+    "dh": 85.0,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.38,
+     "mid": 24.61,
+     "high": 22.23
+    }
+   },
+   "R1": {
+    "fixed": 14.795,
+    "p4": 7.685,
+    "ub7": 7.427,
+    "dL": -8.91,
+    "dh": 82.5,
+    "below_black": [
+     0.0033,
+     0.0053,
+     0.002
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.87,
+     "mid": 23.91,
+     "high": 21.77
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.921,
+   "new_clipping": false,
+   "ncc": 0.9,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-32-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0114,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.039,
+    0.035,
+    0.024
+   ],
+   "B0": {
+    "fixed": 28.856,
+    "p4": 9.979,
+    "ub7": 8.746,
+    "dL": -14.71,
+    "dh": 119.3,
+    "below_black": [
+     0.0004,
+     0.001,
+     0.0007
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.48,
+     "mid": 34.43,
+     "high": 23.49
+    }
+   },
+   "B1": {
+    "fixed": 29.413,
+    "p4": 10.42,
+    "ub7": 9.451,
+    "dL": -14.31,
+    "dh": 119.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.05,
+     "mid": 35.01,
+     "high": 23.97
+    }
+   },
+   "R1": {
+    "fixed": 28.856,
+    "p4": 9.979,
+    "ub7": 8.746,
+    "dL": -14.71,
+    "dh": 119.3,
+    "below_black": [
+     0.0004,
+     0.001,
+     0.0007
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.48,
+     "mid": 34.43,
+     "high": 23.49
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.557,
+   "new_clipping": false,
+   "ncc": 0.933,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-33-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0564,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.098,
+    0.042,
+    0.035
+   ],
+   "B0": {
+    "fixed": 24.455,
+    "p4": 7.698,
+    "ub7": 6.8,
+    "dL": -17.48,
+    "dh": 70.1,
+    "below_black": [
+     0.0,
+     0.0039,
+     0.0003
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.9,
+     "mid": 32.25,
+     "high": 18.99
+    }
+   },
+   "B1": {
+    "fixed": 24.255,
+    "p4": 7.5,
+    "ub7": 6.914,
+    "dL": -15.82,
+    "dh": 69.4,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.94,
+     "mid": 31.94,
+     "high": 19.26
+    }
+   },
+   "R1": {
+    "fixed": 24.455,
+    "p4": 7.698,
+    "ub7": 6.8,
+    "dL": -17.48,
+    "dh": 70.1,
+    "below_black": [
+     0.0,
+     0.0039,
+     0.0003
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.9,
+     "mid": 32.25,
+     "high": 18.99
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.2,
+   "new_clipping": false,
+   "ncc": 0.951,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-34-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0072,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.03,
+    0.032,
+    0.025
+   ],
+   "B0": {
+    "fixed": 7.65,
+    "p4": 7.997,
+    "ub7": 6.188,
+    "dL": -9.31,
+    "dh": 39.5,
+    "below_black": [
+     0.0151,
+     0.0623,
+     0.0348
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.38,
+     "mid": 24.73,
+     "high": 21.12
+    }
+   },
+   "B1": {
+    "fixed": 6.675,
+    "p4": 5.347,
+    "ub7": 5.023,
+    "dL": -7.22,
+    "dh": 51.4,
+    "below_black": [
+     0.0001,
+     0.0004,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 6.29,
+     "mid": 26.5,
+     "high": 21.68
+    }
+   },
+   "R1": {
+    "fixed": 7.65,
+    "p4": 7.997,
+    "ub7": 6.188,
+    "dL": -9.31,
+    "dh": 39.5,
+    "below_black": [
+     0.0151,
+     0.0623,
+     0.0348
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.38,
+     "mid": 24.73,
+     "high": 21.12
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.975,
+   "new_clipping": false,
+   "ncc": 0.953,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-35-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0092,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.038,
+    0.035,
+    0.026
+   ],
+   "B0": {
+    "fixed": 16.776,
+    "p4": 8.356,
+    "ub7": 7.855,
+    "dL": -9.14,
+    "dh": 111.4,
+    "below_black": [
+     0.0023,
+     0.0083,
+     0.0035
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.16,
+     "mid": 33.11,
+     "high": 16.49
+    }
+   },
+   "B1": {
+    "fixed": 17.259,
+    "p4": 8.658,
+    "ub7": 7.921,
+    "dL": -8.39,
+    "dh": 112.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 5.4,
+     "mid": 33.85,
+     "high": 16.89
+    }
+   },
+   "R1": {
+    "fixed": 16.776,
+    "p4": 8.356,
+    "ub7": 7.855,
+    "dL": -9.14,
+    "dh": 111.4,
+    "below_black": [
+     0.0023,
+     0.0083,
+     0.0035
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.16,
+     "mid": 33.11,
+     "high": 16.49
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.483,
+   "new_clipping": false,
+   "ncc": 0.962,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-36-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0009,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.01,
+    0.011,
+    0.01
+   ],
+   "B0": {
+    "fixed": 16.794,
+    "p4": 7.684,
+    "ub7": 7.511,
+    "dL": -15.53,
+    "dh": 60.1,
+    "below_black": [
+     0.0321,
+     0.0357,
+     0.0276
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.88,
+     "mid": 25.96,
+     "high": 26.15
+    }
+   },
+   "B1": {
+    "fixed": 17.049,
+    "p4": 7.046,
+    "ub7": 6.883,
+    "dL": -15.03,
+    "dh": 61.7,
+    "below_black": [
+     0.0083,
+     0.0107,
+     0.0014
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 7.98,
+     "mid": 26.15,
+     "high": 26.23
+    }
+   },
+   "R1": {
+    "fixed": 16.794,
+    "p4": 7.684,
+    "ub7": 7.511,
+    "dL": -15.53,
+    "dh": 60.1,
+    "below_black": [
+     0.0321,
+     0.0357,
+     0.0276
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.88,
+     "mid": 25.96,
+     "high": 26.15
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.255,
+   "new_clipping": false,
+   "ncc": 0.867,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807A-37-orlando-disney",
+   "roll": "ds-199807A",
+   "chroma_disagreement": 0.0046,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.011,
+    0.015,
+    0.01
+   ],
+   "B0": {
+    "fixed": 16.656,
+    "p4": 11.619,
+    "ub7": 9.93,
+    "dL": -14.5,
+    "dh": 62.5,
+    "below_black": [
+     0.0452,
+     0.0532,
+     0.0525
+    ],
+    "clipped": 0.0008,
+    "zones": {
+     "shadow": 10.13,
+     "mid": 31.15,
+     "high": 41.74
+    }
+   },
+   "B1": {
+    "fixed": 16.769,
+    "p4": 10.776,
+    "ub7": 9.068,
+    "dL": -14.01,
+    "dh": 64.5,
+    "below_black": [
+     0.0111,
+     0.0094,
+     0.0023
+    ],
+    "clipped": 0.0008,
+    "zones": {
+     "shadow": 9.35,
+     "mid": 31.21,
+     "high": 41.62
+    }
+   },
+   "R1": {
+    "fixed": 16.656,
+    "p4": 11.619,
+    "ub7": 9.93,
+    "dL": -14.5,
+    "dh": 62.5,
+    "below_black": [
+     0.0452,
+     0.0532,
+     0.0525
+    ],
+    "clipped": 0.0008,
+    "zones": {
+     "shadow": 10.13,
+     "mid": 31.15,
+     "high": 41.74
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.113,
+   "new_clipping": false,
+   "ncc": 0.739,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-01-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0209,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.045,
+    0.058,
+    0.037
+   ],
+   "B0": {
+    "fixed": 13.909,
+    "p4": 6.099,
+    "ub7": 5.064,
+    "dL": -7.35,
+    "dh": 15.8,
+    "below_black": [
+     0.0026,
+     0.0029,
+     0.0023
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.52,
+     "mid": 17.05,
+     "high": 14.13
+    }
+   },
+   "B1": {
+    "fixed": 14.144,
+    "p4": 5.807,
+    "ub7": 4.862,
+    "dL": -5.59,
+    "dh": 13.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.48,
+     "mid": 17.33,
+     "high": 14.23
+    }
+   },
+   "R1": {
+    "fixed": 13.909,
+    "p4": 6.099,
+    "ub7": 5.064,
+    "dL": -7.35,
+    "dh": 15.8,
+    "below_black": [
+     0.0026,
+     0.0029,
+     0.0023
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.52,
+     "mid": 17.05,
+     "high": 14.13
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.235,
+   "new_clipping": false,
+   "ncc": 0.955,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-02-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0462,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.102,
+    0.104,
+    0.058
+   ],
+   "B0": {
+    "fixed": 18.009,
+    "p4": 6.213,
+    "ub7": 5.734,
+    "dL": -1.03,
+    "dh": 71.8,
+    "below_black": [
+     0.0017,
+     0.0003,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 12.2,
+     "mid": 20.27,
+     "high": 18.92
+    }
+   },
+   "B1": {
+    "fixed": 18.666,
+    "p4": 6.515,
+    "ub7": 5.91,
+    "dL": 0.99,
+    "dh": 73.3,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 13.92,
+     "mid": 20.42,
+     "high": 18.71
+    }
+   },
+   "R1": {
+    "fixed": 18.009,
+    "p4": 6.213,
+    "ub7": 5.734,
+    "dL": -1.03,
+    "dh": 71.8,
+    "below_black": [
+     0.0017,
+     0.0003,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 12.2,
+     "mid": 20.27,
+     "high": 18.92
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.657,
+   "new_clipping": false,
+   "ncc": 0.932,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-03-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0083,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.015,
+    0.023,
+    0.016
+   ],
+   "B0": {
+    "fixed": 9.624,
+    "p4": 7.668,
+    "ub7": 7.288,
+    "dL": -3.2,
+    "dh": 28.2,
+    "below_black": [
+     0.0032,
+     0.0021,
+     0.0012
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.96,
+     "mid": 15.06,
+     "high": 12.4
+    }
+   },
+   "B1": {
+    "fixed": 9.984,
+    "p4": 7.237,
+    "ub7": 6.876,
+    "dL": -2.26,
+    "dh": 29.2,
+    "below_black": [
+     0.0003,
+     0.0001,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.5,
+     "mid": 15.43,
+     "high": 12.59
+    }
+   },
+   "R1": {
+    "fixed": 9.624,
+    "p4": 7.668,
+    "ub7": 7.288,
+    "dL": -3.2,
+    "dh": 28.2,
+    "below_black": [
+     0.0032,
+     0.0021,
+     0.0012
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.96,
+     "mid": 15.06,
+     "high": 12.4
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.36,
+   "new_clipping": false,
+   "ncc": 0.89,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-04-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0174,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.037,
+    0.049,
+    0.031
+   ],
+   "B0": {
+    "fixed": 18.286,
+    "p4": 6.481,
+    "ub7": 6.222,
+    "dL": 15.03,
+    "dh": 56.1,
+    "below_black": [
+     0.0017,
+     0.0017,
+     0.0016
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 15.71,
+     "mid": 20.09,
+     "high": 14.28
+    }
+   },
+   "B1": {
+    "fixed": 19.47,
+    "p4": 6.256,
+    "ub7": 6.059,
+    "dL": 16.14,
+    "dh": 59.7,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 17.77,
+     "mid": 20.88,
+     "high": 14.4
+    }
+   },
+   "R1": {
+    "fixed": 18.286,
+    "p4": 6.481,
+    "ub7": 6.222,
+    "dL": 15.03,
+    "dh": 56.1,
+    "below_black": [
+     0.0017,
+     0.0017,
+     0.0016
+    ],
+    "clipped": 0.0002,
+    "zones": {
+     "shadow": 15.71,
+     "mid": 20.09,
+     "high": 14.28
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.184,
+   "new_clipping": false,
+   "ncc": 0.944,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-05-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0682,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.043,
+    0.111,
+    0.051
+   ],
+   "B0": {
+    "fixed": 17.259,
+    "p4": 4.69,
+    "ub7": 2.518,
+    "dL": -17.58,
+    "dh": 24.9,
+    "below_black": [
+     0.0005,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "mid": 25.29,
+     "high": 13.0
+    }
+   },
+   "B1": {
+    "fixed": 13.623,
+    "p4": 4.262,
+    "ub7": 2.312,
+    "dL": -13.44,
+    "dh": 22.6,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "mid": 19.26,
+     "high": 10.69
+    }
+   },
+   "R1": {
+    "fixed": 17.259,
+    "p4": 4.69,
+    "ub7": 2.518,
+    "dL": -17.58,
+    "dh": 24.9,
+    "below_black": [
+     0.0005,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0005,
+    "zones": {
+     "mid": 25.29,
+     "high": 13.0
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -3.636,
+   "new_clipping": false,
+   "ncc": 0.9,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-06-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0055,
+   "triggered": false,
+   "own_minus_roll_density": [
+    -0.005,
+    0.0,
+    0.003
+   ],
+   "B0": {
+    "fixed": 12.235,
+    "p4": 10.17,
+    "ub7": 5.634,
+    "dL": -8.77,
+    "dh": 27.6,
+    "below_black": [
+     0.0956,
+     0.1166,
+     0.0756
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 11.97,
+     "mid": 21.62,
+     "high": 24.75
+    }
+   },
+   "B1": {
+    "fixed": 11.003,
+    "p4": 9.593,
+    "ub7": 5.117,
+    "dL": -9.42,
+    "dh": 25.1,
+    "below_black": [
+     0.1717,
+     0.1166,
+     0.0361
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 10.77,
+     "mid": 21.22,
+     "high": 24.69
+    }
+   },
+   "R1": {
+    "fixed": 12.235,
+    "p4": 10.17,
+    "ub7": 5.634,
+    "dL": -8.77,
+    "dh": 27.6,
+    "below_black": [
+     0.0956,
+     0.1166,
+     0.0756
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 11.97,
+     "mid": 21.62,
+     "high": 24.75
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -1.232,
+   "new_clipping": false,
+   "ncc": 0.839,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-07-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0136,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.017,
+    0.031,
+    0.018
+   ],
+   "B0": {
+    "fixed": 19.376,
+    "p4": 8.119,
+    "ub7": 7.814,
+    "dL": -9.53,
+    "dh": 147.1,
+    "below_black": [
+     0.0015,
+     0.0011,
+     0.0008
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.62,
+     "mid": 22.81,
+     "high": 18.17
+    }
+   },
+   "B1": {
+    "fixed": 20.153,
+    "p4": 7.909,
+    "ub7": 7.717,
+    "dL": -8.51,
+    "dh": 153.7,
+    "below_black": [
+     0.0001,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.93,
+     "mid": 23.6,
+     "high": 18.53
+    }
+   },
+   "R1": {
+    "fixed": 19.376,
+    "p4": 8.119,
+    "ub7": 7.814,
+    "dL": -9.53,
+    "dh": 147.1,
+    "below_black": [
+     0.0015,
+     0.0011,
+     0.0008
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.62,
+     "mid": 22.81,
+     "high": 18.17
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.777,
+   "new_clipping": false,
+   "ncc": 0.856,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-08-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0083,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.021,
+    0.03,
+    0.022
+   ],
+   "B0": {
+    "fixed": 20.199,
+    "p4": 5.757,
+    "ub7": 4.185,
+    "dL": -21.09,
+    "dh": 18.0,
+    "below_black": [
+     0.0005,
+     0.0,
+     0.0001
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 10.61,
+     "mid": 22.83,
+     "high": 15.26
+    }
+   },
+   "B1": {
+    "fixed": 20.061,
+    "p4": 5.774,
+    "ub7": 4.256,
+    "dL": -20.47,
+    "dh": 23.4,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 9.89,
+     "mid": 22.65,
+     "high": 15.22
+    }
+   },
+   "R1": {
+    "fixed": 20.199,
+    "p4": 5.757,
+    "ub7": 4.185,
+    "dL": -21.09,
+    "dh": 18.0,
+    "below_black": [
+     0.0005,
+     0.0,
+     0.0001
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 10.61,
+     "mid": 22.83,
+     "high": 15.26
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.138,
+   "new_clipping": false,
+   "ncc": 0.885,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-09-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.173,
+   "triggered": true,
+   "own_minus_roll_density": [
+    0.191,
+    0.364,
+    0.194
+   ],
+   "B0": {
+    "fixed": 17.413,
+    "p4": 8.462,
+    "ub7": 7.052,
+    "dL": -17.77,
+    "dh": 19.2,
+    "below_black": [
+     0.0001,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 18.53,
+     "mid": 18.64,
+     "high": 10.5
+    }
+   },
+   "B1": {
+    "fixed": 12.571,
+    "p4": 5.568,
+    "ub7": 4.186,
+    "dL": -6.65,
+    "dh": 33.1,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 10.15,
+     "mid": 12.6,
+     "high": 13.46
+    }
+   },
+   "R1": {
+    "fixed": 12.571,
+    "p4": 5.568,
+    "ub7": 4.186,
+    "dL": -6.65,
+    "dh": 33.1,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 10.15,
+     "mid": 12.6,
+     "high": 13.46
+    }
+   },
+   "delta_fixed": -4.842,
+   "delta_p4": -2.894,
+   "delta_fixed_B1": -4.842,
+   "new_clipping": false,
+   "ncc": 0.972,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-10-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0062,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.005,
+    0.012,
+    0.009
+   ],
+   "B0": {
+    "fixed": 20.208,
+    "p4": 5.848,
+    "ub7": 5.009,
+    "dL": -23.17,
+    "dh": 23.9,
+    "below_black": [
+     0.0125,
+     0.0108,
+     0.0078
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 19.23,
+     "mid": 25.49,
+     "high": 17.86
+    }
+   },
+   "B1": {
+    "fixed": 20.038,
+    "p4": 5.761,
+    "ub7": 4.978,
+    "dL": -22.65,
+    "dh": 24.6,
+    "below_black": [
+     0.0063,
+     0.003,
+     0.0006
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 18.93,
+     "mid": 25.34,
+     "high": 17.86
+    }
+   },
+   "R1": {
+    "fixed": 20.208,
+    "p4": 5.848,
+    "ub7": 5.009,
+    "dL": -23.17,
+    "dh": 23.9,
+    "below_black": [
+     0.0125,
+     0.0108,
+     0.0078
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 19.23,
+     "mid": 25.49,
+     "high": 17.86
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.17,
+   "new_clipping": false,
+   "ncc": 0.901,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:199807B-11-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0023,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.0,
+    -0.002,
+    -0.002
+   ],
+   "B0": {
+    "fixed": 8.547,
+    "p4": 7.82,
+    "ub7": 6.936,
+    "dL": -5.64,
+    "dh": 9.2,
+    "below_black": [
+     0.0389,
+     0.045,
+     0.0357
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.5,
+     "mid": 17.15,
+     "high": 11.47
+    }
+   },
+   "B1": {
+    "fixed": 8.781,
+    "p4": 8.035,
+    "ub7": 7.032,
+    "dL": -5.82,
+    "dh": 9.2,
+    "below_black": [
+     0.0389,
+     0.0548,
+     0.051
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.69,
+     "mid": 17.01,
+     "high": 11.43
+    }
+   },
+   "R1": {
+    "fixed": 8.547,
+    "p4": 7.82,
+    "ub7": 6.936,
+    "dL": -5.64,
+    "dh": 9.2,
+    "below_black": [
+     0.0389,
+     0.045,
+     0.0357
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.5,
+     "mid": 17.15,
+     "high": 11.47
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.234,
+   "new_clipping": false,
+   "ncc": 0.961,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-13-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0061,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.023,
+    0.027,
+    0.021
+   ],
+   "B0": {
+    "fixed": 10.619,
+    "p4": 6.292,
+    "ub7": 5.897,
+    "dL": -7.24,
+    "dh": 19.9,
+    "below_black": [
+     0.0031,
+     0.0036,
+     0.0026
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.35,
+     "mid": 14.28,
+     "high": 9.5
+    }
+   },
+   "B1": {
+    "fixed": 10.517,
+    "p4": 6.155,
+    "ub7": 5.622,
+    "dL": -6.24,
+    "dh": 21.2,
+    "below_black": [
+     0.0,
+     0.0001,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.37,
+     "mid": 14.18,
+     "high": 9.57
+    }
+   },
+   "R1": {
+    "fixed": 10.619,
+    "p4": 6.292,
+    "ub7": 5.897,
+    "dL": -7.24,
+    "dh": 19.9,
+    "below_black": [
+     0.0031,
+     0.0036,
+     0.0026
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.35,
+     "mid": 14.28,
+     "high": 9.5
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.102,
+   "new_clipping": false,
+   "ncc": 0.924,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-14-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0085,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.021,
+    0.03,
+    0.023
+   ],
+   "B0": {
+    "fixed": 16.582,
+    "p4": 7.601,
+    "ub7": 7.297,
+    "dL": -15.14,
+    "dh": 25.5,
+    "below_black": [
+     0.0037,
+     0.0031,
+     0.0016
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 11.62,
+     "mid": 19.4,
+     "high": 15.5
+    }
+   },
+   "B1": {
+    "fixed": 16.484,
+    "p4": 7.31,
+    "ub7": 7.0,
+    "dL": -13.54,
+    "dh": 27.0,
+    "below_black": [
+     0.0001,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 11.11,
+     "mid": 19.23,
+     "high": 15.53
+    }
+   },
+   "R1": {
+    "fixed": 16.582,
+    "p4": 7.601,
+    "ub7": 7.297,
+    "dL": -15.14,
+    "dh": 25.5,
+    "below_black": [
+     0.0037,
+     0.0031,
+     0.0016
+    ],
+    "clipped": 0.0003,
+    "zones": {
+     "shadow": 11.62,
+     "mid": 19.4,
+     "high": 15.5
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.098,
+   "new_clipping": false,
+   "ncc": 0.826,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-15-orlando-seaworld",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0124,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.026,
+    0.036,
+    0.023
+   ],
+   "B0": {
+    "fixed": 11.574,
+    "p4": 6.374,
+    "ub7": 5.623,
+    "dL": -5.53,
+    "dh": 18.0,
+    "below_black": [
+     0.0006,
+     0.0003,
+     0.0
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 8.33,
+     "mid": 14.56,
+     "high": 11.11
+    }
+   },
+   "B1": {
+    "fixed": 11.711,
+    "p4": 6.265,
+    "ub7": 5.524,
+    "dL": -4.46,
+    "dh": 18.3,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 8.54,
+     "mid": 14.65,
+     "high": 11.19
+    }
+   },
+   "R1": {
+    "fixed": 11.574,
+    "p4": 6.374,
+    "ub7": 5.623,
+    "dL": -5.53,
+    "dh": 18.0,
+    "below_black": [
+     0.0006,
+     0.0003,
+     0.0
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 8.33,
+     "mid": 14.56,
+     "high": 11.11
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.137,
+   "new_clipping": false,
+   "ncc": 0.925,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-16-seattle",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0103,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.006,
+    0.01,
+    0.0
+   ],
+   "B0": {
+    "fixed": 11.106,
+    "p4": 8.655,
+    "ub7": 7.948,
+    "dL": -13.59,
+    "dh": 115.6,
+    "below_black": [
+     0.0119,
+     0.0165,
+     0.0153
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.79,
+     "mid": 30.49,
+     "high": 16.87
+    }
+   },
+   "B1": {
+    "fixed": 10.883,
+    "p4": 9.153,
+    "ub7": 8.058,
+    "dL": -13.38,
+    "dh": 117.3,
+    "below_black": [
+     0.0053,
+     0.0055,
+     0.0153
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.92,
+     "mid": 30.15,
+     "high": 16.86
+    }
+   },
+   "R1": {
+    "fixed": 11.106,
+    "p4": 8.655,
+    "ub7": 7.948,
+    "dL": -13.59,
+    "dh": 115.6,
+    "below_black": [
+     0.0119,
+     0.0165,
+     0.0153
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 8.79,
+     "mid": 30.49,
+     "high": 16.87
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": -0.223,
+   "new_clipping": false,
+   "ncc": 0.86,
+   "s3_5": true
+  },
+  {
+   "id": "blueneg:199807B-17-seattle",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0112,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.023,
+    0.035,
+    0.026
+   ],
+   "B0": {
+    "fixed": 17.186,
+    "p4": 8.414,
+    "ub7": 4.139,
+    "dL": -10.98,
+    "dh": 9.9,
+    "below_black": [
+     0.0064,
+     0.005,
+     0.0033
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 8.5,
+     "mid": 25.19,
+     "high": 17.63
+    }
+   },
+   "B1": {
+    "fixed": 17.325,
+    "p4": 8.011,
+    "ub7": 4.151,
+    "dL": -9.65,
+    "dh": 9.3,
+    "below_black": [
+     0.0002,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 6.61,
+     "mid": 25.3,
+     "high": 17.81
+    }
+   },
+   "R1": {
+    "fixed": 17.186,
+    "p4": 8.414,
+    "ub7": 4.139,
+    "dL": -10.98,
+    "dh": 9.9,
+    "below_black": [
+     0.0064,
+     0.005,
+     0.0033
+    ],
+    "clipped": 0.0004,
+    "zones": {
+     "shadow": 8.5,
+     "mid": 25.19,
+     "high": 17.63
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.139,
+   "new_clipping": false,
+   "ncc": 0.952,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-18-seattle",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0609,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.071,
+    0.132,
+    0.078
+   ],
+   "B0": {
+    "fixed": 8.805,
+    "p4": 8.032,
+    "ub7": 6.702,
+    "dL": -4.13,
+    "dh": 17.6,
+    "below_black": [
+     0.01,
+     0.0088,
+     0.0081
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.73,
+     "mid": 19.58,
+     "high": 19.49
+    }
+   },
+   "B1": {
+    "fixed": 10.348,
+    "p4": 7.333,
+    "ub7": 5.976,
+    "dL": -1.86,
+    "dh": 15.2,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.24,
+     "mid": 21.11,
+     "high": 21.07
+    }
+   },
+   "R1": {
+    "fixed": 8.805,
+    "p4": 8.032,
+    "ub7": 6.702,
+    "dL": -4.13,
+    "dh": 17.6,
+    "below_black": [
+     0.01,
+     0.0088,
+     0.0081
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 6.73,
+     "mid": 19.58,
+     "high": 19.49
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 1.543,
+   "new_clipping": false,
+   "ncc": 0.931,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-19-seattle",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0054,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.01,
+    0.015,
+    0.014
+   ],
+   "B0": {
+    "fixed": 11.139,
+    "p4": 7.764,
+    "ub7": 7.171,
+    "dL": -10.77,
+    "dh": 93.4,
+    "below_black": [
+     0.0046,
+     0.0043,
+     0.0052
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.79,
+     "mid": 26.45,
+     "high": 11.34
+    }
+   },
+   "B1": {
+    "fixed": 11.477,
+    "p4": 7.461,
+    "ub7": 6.857,
+    "dL": -10.45,
+    "dh": 95.0,
+    "below_black": [
+     0.0013,
+     0.0007,
+     0.0001
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.65,
+     "mid": 26.91,
+     "high": 11.61
+    }
+   },
+   "R1": {
+    "fixed": 11.139,
+    "p4": 7.764,
+    "ub7": 7.171,
+    "dL": -10.77,
+    "dh": 93.4,
+    "below_black": [
+     0.0046,
+     0.0043,
+     0.0052
+    ],
+    "clipped": 0.0,
+    "zones": {
+     "shadow": 7.79,
+     "mid": 26.45,
+     "high": 11.34
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.338,
+   "new_clipping": false,
+   "ncc": 0.919,
+   "s3_5": false
+  },
+  {
+   "id": "blueneg:199807B-20-seattle",
+   "roll": "ds-199807B",
+   "chroma_disagreement": 0.0202,
+   "triggered": false,
+   "own_minus_roll_density": [
+    0.036,
+    0.056,
+    0.037
+   ],
+   "B0": {
+    "fixed": 9.361,
+    "p4": 4.368,
+    "ub7": 4.223,
+    "dL": 9.69,
+    "dh": 8.8,
+    "below_black": [
+     0.0042,
+     0.0036,
+     0.0028
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.03,
+     "mid": 9.87,
+     "high": 9.19
+    }
+   },
+   "B1": {
+    "fixed": 9.93,
+    "p4": 4.136,
+    "ub7": 3.964,
+    "dL": 10.44,
+    "dh": 8.1,
+    "below_black": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 9.48,
+     "mid": 10.64,
+     "high": 9.48
+    }
+   },
+   "R1": {
+    "fixed": 9.361,
+    "p4": 4.368,
+    "ub7": 4.223,
+    "dL": 9.69,
+    "dh": 8.8,
+    "below_black": [
+     0.0042,
+     0.0036,
+     0.0028
+    ],
+    "clipped": 0.0001,
+    "zones": {
+     "shadow": 8.03,
+     "mid": 9.87,
+     "high": 9.19
+    }
+   },
+   "delta_fixed": 0.0,
+   "delta_p4": 0.0,
+   "delta_fixed_B1": 0.569,
+   "new_clipping": false,
+   "ncc": 0.957,
+   "s3_5": false
+  }
+ ]
+}
