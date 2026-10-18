@@ -1,0 +1,37 @@
+18 tasks to do
+ext:A081 shop B0 m 12.97 B1 m 12.65 L0C1 m 13.01 L1C0 m 12.39 135.6
+ext:A084 shop B0 m 14.23 B1 m 14.33 L0C1 m 14.27 L1C0 m 14.24 152.4
+ext:A086 shop B0 m 18.44 B1 m 18.67 L0C1 m 18.56 L1C0 m 18.56 122.3
+ext:A087 shop B0 m 22.35 B1 m 22.52 L0C1 m 22.43 L1C0 m 22.43 147.6
+ext:A091 shop B0 m 16.55 B1 m 18.27 L0C1 m 16.15 L1C0 m 18.80 151.8
+ext:A092 shop B0 m 14.72 B1 m 15.07 L0C1 m 14.88 L1C0 m 14.91 134.9
+ext:A093 shop B0 m 2.13 B1 m 2.18 L0C1 m 2.17 L1C0 m 2.16 130.6
+ext:A094 shop B0 m 15.90 B1 m 16.49 L0C1 m 16.05 L1C0 m 16.28 146.5
+ext:A095 shop B0 m 16.13 B1 m 16.02 L0C1 m 15.99 L1C0 m 16.15 122.6
+ext:A097 shop B0 m 12.19 B1 m 12.46 L0C1 m 12.25 L1C0 m 12.38 118.1
+ext:A098 shop B0 m 13.37 B1 m 13.42 L0C1 m 13.42 L1C0 m 13.37 111.0
+ext:A100 shop B0 m 7.14 B1 m 7.98 L0C1 m 8.03 L1C0 m 7.15 117.4
+ext:A101 shop B0 m 6.56 B1 m 7.00 L0C1 m 6.97 L1C0 m 6.58 121.2
+ext:A102 shop B0 m 18.47 B1 m 18.56 L0C1 m 18.36 L1C0 m 18.53 109.7
+ext:A103 shop B0 m 24.76 B1 m 24.75 L0C1 m 24.17 L1C0 m 25.54 121.9
+ext:A105 shop B0 m 13.28 B1 m 14.84 L0C1 m 13.27 L1C0 m 15.99 117.2
+ext:A106 shop B0 m 14.43 B1 m 14.95 L0C1 m 14.94 L1C0 m 14.41 93.9
+ext:A110 shop B0 m 22.98 B1 m 23.31 L0C1 m 22.96 L1C0 m 23.42 97.8
+      345.10 real      1794.15 user        29.33 sys
+           398704640  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             3003571  page reclaims
+                 826  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1394  voluntary context switches
+             3528653  involuntary context switches
+          2803153618  instructions retired
+          1577675010  cycles elapsed
+            54329872  peak memory footprint
