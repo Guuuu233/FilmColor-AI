@@ -1,0 +1,55 @@
+{
+ "files": {
+  "on_disk_material": 3472,
+  "unique_content": 3382
+ },
+ "colour_neg": {
+  "frames": 897,
+  "excluded_not_negative": 10,
+  "negatives": 887,
+  "known_rolls": 39,
+  "frames_with_known_roll": 707,
+  "frozen_negatives": 220,
+  "frames_by_strongest_reference": {
+   "none": 244,
+   "strong": 592,
+   "medium": 47,
+   "candidate_only": 2,
+   "weak": 2
+  },
+  "frames_with_reference": 641,
+  "frames_with_reference_dev": 438,
+  "frames_with_reference_frozen": 203,
+  "frames_with_user_edit_and_shop": 56,
+  "reference_relations_by_source": {
+   "dev_ref": 143,
+   "index": 559,
+   "content": 161,
+   "user_edit": 56,
+   "photo": 24,
+   "blueneg_print": 380
+  }
+ },
+ "bw_neg": {
+  "frames": 1296,
+  "excluded_not_negative": 1,
+  "negatives": 1295,
+  "known_rolls": 3,
+  "frames_with_known_roll": 67,
+  "frozen_negatives": 0,
+  "frames_by_strongest_reference": {
+   "none": 1229,
+   "medium": 64,
+   "candidate_only": 2
+  },
+  "frames_with_reference": 64,
+  "frames_with_reference_dev": 64,
+  "frames_with_reference_frozen": 0,
+  "frames_with_user_edit_and_shop": 0,
+  "reference_relations_by_source": {
+   "content": 52,
+   "index": 10,
+   "photo": 12
+  }
+ }
+}

@@ -6,6 +6,15 @@ copy with the same ``render`` the export uses (per-pixel, so the preview differs
 the order of averaging and the curve). The export replays the preview's base and white point at full resolution
 (the ``--replay`` semantics of pipeline.replay_kwargs): nothing is re-estimated, so what was previewed is what is
 written.
+
+What the cached copy covers: the seven render parameters (``RenderParams``) only. Everything ``load_preview``
+takes - base regions or base RGB, image region (it sets the white point and the QC statistics), white point,
+gamma, inversion exposure, film mode, auto estimate - is fixed in the cache; changing any of them needs a new load
+(``Preview.reload(**changes)``), which redoes decode, base and inversion. ``Preview.load_kwargs`` records them.
+
+Downscaling: block mean (area average) of the scene-linear positive by an integer factor, remainder rows / columns
+dropped. The render after it is per pixel but non-linear (tone curve, shoulder, sRGB encoding), so the preview of
+an averaged block differs from the average of the rendered block, most at strong edges and clipped highlights.
 """
 from __future__ import annotations
 
@@ -38,6 +47,11 @@ class Preview:
     base_inside_image: float | None
     full_shape: tuple
     auto: dict | None = field(default=None)   # noref estimate on the full-resolution positive, if requested
+    load_kwargs: dict = field(default_factory=dict)  # what load_preview was called with (besides path)
+
+    def reload(self, **changes) -> "Preview":
+        """A new preview with some load arguments changed (base, region, film, ...): decode and invert again."""
+        return load_preview(self.path, **(self.load_kwargs | changes))
 
     def render(self, params=None) -> np.ndarray:
         """sRGB-encoded display image (h, w, 3) float32 for render parameters (RenderParams or dict)."""
@@ -86,4 +100,7 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
     return Preview(path=path, sha256=sha256(path), factor=f, positive=small, mask=msk,
                    image_region=p["image_region"], region_source=p["region_source"], film=film,
                    base_info=p["base_info"], inversion=res.params.to_dict(), white_pct=white_pct, report=res.report,
-                   base_inside_image=p["base_inside_image"], full_shape=tuple(full_shape), auto=auto_info)
+                   base_inside_image=p["base_inside_image"], full_shape=tuple(full_shape), auto=auto_info,
+                   load_kwargs=dict(max_side=max_side, auto=auto, base_regions=base_regions, base_rgb=base_rgb,
+                                    image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,
+                                    exposure=exposure, film=film))

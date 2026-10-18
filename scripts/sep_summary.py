@@ -120,6 +120,20 @@ def main(check_dir, a7_json, out_json, out_md):
         L += ["明度对齐口径下相对 B0 变差最多的帧：", "", "| 帧 | 参考 | B0 | B1 | L0C1 | L1C0 |", "|---|---|---|---|---|---|"]
         L += [f"| {w['id']} | {w['ref']} | {w['B0']} | {w['B1']} | {w['L0C1']} | {w['L1C0']} |" for w in sub["worst_matched"]]
         L.append("")
+    L += ["## 逐卷（明度对齐口径，相对 B0 的 ΔE 中位数变化；括号：变好 / 变差 > 2 含无定义 / 无定义）", "",
+          "| 卷 | 参考 | 帧 | B0 ΔE 中位数 | B1 | L0C1 | L1C0 |", "|---|---|---|---|---|---|---|"]
+    by_roll = defaultdict(list)
+    for r in rows:
+        by_roll[(r["roll"], r["ref_kind"])].append(r)
+    res["rolls"] = {}
+    for (roll, kind), rs in sorted(by_roll.items()):
+        s = stats(rs)
+        res["rolls"][f"{roll}|{kind}"] = s
+        cell = lambda v: (f"{s[f'{v}/matched']['d_vs_B0']}（{s[f'{v}/matched']['better']} / "
+                          f"{s[f'{v}/matched']['worse2']} / {s[f'{v}/matched']['undefined']}）")
+        L.append(f"| {roll} | {kind} | {len(rs)} | {s['B0/matched']['dE']} | {cell('B1')} | {cell('L0C1')} | {cell('L1C0')} |")
+    L.append("")
+    Path(out_json).write_text(json.dumps(res, ensure_ascii=False, indent=1))
     L += ["## A7R5（与实测片基 BM 的渲染结果比较，明度对齐口径）", "",
           "| 帧 | " + " | ".join(f"{v} ΔE / ab / 黑点下" for v in ("B0", "B1", "L0C1", "L1C0")) + " |",
           "|---|---|---|---|---|"]

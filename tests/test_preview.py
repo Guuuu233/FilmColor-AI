@@ -47,6 +47,22 @@ def test_region_coordinates(tmp_path):
     assert pv.to_preview(pv.to_sensor((5, 10, 15, 20))) == (5, 10, 15, 20)
 
 
+def test_reload_redoes_base_and_inversion(tmp_path):
+    rgb, irl = scan()
+    p = tmp_path / "s.dng"
+    write_dng(p, rgb, irl)
+    pv = load_preview(p, max_side=100, image_region=SCAN_REGION)
+    assert pv.base_info["method"] == "auto"
+    manual = [pv.to_sensor((0, 0, 60, 6))]
+    pv2 = pv.reload(base_regions=manual)
+    direct = load_preview(p, max_side=100, image_region=SCAN_REGION, base_regions=manual)
+    assert pv2.base_info["method"] == "manual" and pv2.load_kwargs["base_regions"] == manual
+    assert np.array_equal(pv2.positive, direct.positive) and pv2.inversion == direct.inversion
+    out = pv2.export(tmp_path / "o")
+    full, sc = convert(p, image_region=SCAN_REGION, base_regions=manual)
+    assert out["inversion"]["params"] == sc["inversion"]["params"]
+
+
 @needs_raf
 def test_camera_preview_default_auto_and_params(tmp_path):
     pv = load_preview(RAF, auto=NOREF_V2)
