@@ -34,7 +34,7 @@ from filmcolor.pipeline import positive
 from filmcolor.render import RenderParams
 
 sys.path.insert(0, str(Path(__file__).parent))
-from eval_blueneg import SRGB_D50, pair as pair_blueneg, print_lab  # noqa: E402
+from eval_blueneg import SRGB_D50, pair as pair_blueneg, print_lab, register as register_blueneg  # noqa: E402
 from sensitivity import margin_crop  # noqa: E402
 
 LOAD_FACTOR, ALIGN_FACTOR = 4, 2  # 1/8 grid, as in compare_nlp.py
@@ -76,11 +76,14 @@ def build(f, out_dir):
     del pos, p["positive"]
     ours_lab4, _ = render_lab(P4, RenderParams())
     if f["ref_kind"] == "srgb_no_icc":
-        reg = next(r["registration"] for r in json.load(open(BLUENEG_EVAL))["frames"] if r["frame"] == f["stem"])
+        reg = next((r["registration"] for r in json.load(open(BLUENEG_EVAL))["frames"] if r["frame"] == f["stem"]), None)
         ref = print_lab(f["ref"])
+        source = "S3-3 registration reused"
+        if reg is None:  # frames added after S3-3: the same registration (eval_blueneg.register) on the same input
+            reg, source = register_blueneg(ours_lab4[..., 0], ref[..., 0]), "registered now (eval_blueneg.register)"
         P8, R8 = pair_blueneg(P4, ref, reg)
         L8, _ = pair_blueneg(ours_lab4, ref, reg)
-        alignment = dict(source="S3-3 registration reused", **reg, ncc_recomputed=ncc(L8[..., 0], R8[..., 0]))
+        alignment = dict(source=source, **reg, ncc_recomputed=ncc(L8[..., 0], R8[..., 0]))
     else:
         ref4 = load_lab(f["ref"], LOAD_FACTOR) if f["ref_kind"] == "icc" else srgb_assumed_lab(f["ref"], LOAD_FACTOR)
         al = align(ours_lab4[..., 0], ref4[..., 0], ALIGN_FACTOR)

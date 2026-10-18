@@ -1,0 +1,115 @@
+done 19941217A-08-tokyo
+done 19941217A-10-tokyo
+done 19941217A-15-tokyo
+done 19941217A-16-tokyo
+done 19941217A-27-tokyo
+done 19941217A-35-tokyo
+done 19941217B-07-tokyo
+done 19941217B-08-tokyo
+done 19941217B-11-tokyo
+done 19941218B-23-tokyo
+done 19941218B-25-tokyo
+done 19941218C-03-tokyo
+done 19941218C-04-tokyo
+done 19941218C-05-tokyo
+done 19941218C-06-tokyo
+done 19941218C-07-tokyo
+done 19941218C-08-tokyo
+done 19941220D-18-kamakura
+done 19941220D-19-kamakura
+done 19941220D-20-kamakura
+done 19941220D-22-kamakura
+done 19941220D-23-kamakura
+done 19941221D-25-kyoto
+done 19941221D-30-kyoto
+done 19941222D-32-kyoto
+done 19941222E-01-nara
+done 19941222E-02-nara
+done 19941222E-04-nara
+done 19941222E-07-nara
+done 19941222E-10-nara
+done 19941223E-13-osaka
+done 19941223E-17-osaka
+done 19941223E-20-kyoto
+done 19941224E-21-nagasaki
+done 19941224E-23-nagasaki
+done 19941224E-27-nagasaki
+done 19941225E-34-nagasaki
+done 19941225F-03-nagasaki
+done 19941225F-04-nagasaki
+done 19941228F-12-tokyo
+done 19960808B-03-new-orleans-siggraph96
+done 19960808B-04-new-orleans-siggraph96
+done 19960808B-05-new-orleans-siggraph96
+done 19960808B-06-new-orleans-siggraph96
+done 19960808B-07-new-orleans-siggraph96
+done 19960809B-14-new-orleans-siggraph96
+done 19960811B-28-arizona-london-bridge
+done 19960812D-09-las-vegas
+done 19960812D-17-las-vegas
+done 19960812D-20-las-vegas
+done 19960812D-32-las-vegas
+done 19960812D-33-las-vegas
+done 19960812D-34-las-vegas
+done 19960812D-35-las-vegas
+done 19970619A-14-white-chapel
+done 19970619B-09-notre-dame
+done 19970620C-10-st-michel
+done 199807A-06-hk
+done 199807A-09-orlando-siggraph
+done 199807B-10-orlando-seaworld
+done 199807B-16-seattle
+done 199807B-17-seattle
+done 199807B-18-seattle
+done 199807B-19-seattle
+done 199807B-20-seattle
+done 199910-01-korea
+done 199910-08-korea
+{
+ "R/G": {
+  "n": 64,
+  "slope": 0.00410014242319574,
+  "nf_spread_log2": 0.15454250254473748,
+  "base_chroma_spread_log2": 0.04455132790844424,
+  "corr": 0.014222836907862696
+ },
+ "B/G": {
+  "n": 64,
+  "slope": 0.2798288016671361,
+  "nf_spread_log2": 0.15968551490051194,
+  "base_chroma_spread_log2": 0.11329842278573743,
+  "corr": 0.3943974256615598
+ }
+}
+ds-199412A 6 ['FALSE', 'TRUE'] clear G range 0.043 D, base G range 0.066 D
+ds-199412B 5 ['FALSE', 'TRUE'] clear G range 0.045 D, base G range 0.064 D
+ds-199412C 6 ['FALSE'] clear G range 0.056 D, base G range 0.071 D
+ds-199412D 8 ['TRUE'] clear G range 0.162 D, base G range 0.351 D
+ds-199412E 12 ['TRUE'] clear G range 0.175 D, base G range 0.233 D
+ds-199412F 3 ['TRUE'] clear G range 0.017 D, base G range 0.041 D
+ds-199608B 7 ['FALSE'] clear G range 0.035 D, base G range 0.088 D
+ds-199608D 7 ['FALSE'] clear G range 0.009 D, base G range 0.009 D
+ds-199706A 1 ['FALSE'] clear G range 0.000 D, base G range 0.000 D
+ds-199706B 1 ['FALSE'] clear G range 0.000 D, base G range 0.000 D
+ds-199706C 1 ['FALSE'] clear G range 0.000 D, base G range 0.000 D
+ds-199807A 2 ['TRUE'] clear G range 0.046 D, base G range 0.153 D
+ds-199807B 6 ['TRUE'] clear G range 0.056 D, base G range 0.122 D
+ds-199910 2 ['TRUE'] clear G range 0.007 D, base G range 0.000 D
+      201.15 real       135.53 user        21.02 sys
+          2436448256  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             5363523  page reclaims
+                1135  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1214  voluntary context switches
+              355507  involuntary context switches
+       2759712728528  instructions retired
+        559345138516  cycles elapsed
+          2777549248  peak memory footprint
