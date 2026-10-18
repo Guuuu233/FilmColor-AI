@@ -62,8 +62,8 @@ def test_real_manifest_covers_the_frozen_rolls_and_misses_every_development_roll
     in_frozen_dirs = [r for r in inv if r.get("orig_dir") in FROZEN_DIRS]
     in_dev_dirs = [r for r in inv if r.get("orig_dir") in DEV_DIRS]
     assert len(frozen) == 144 and len(in_frozen_dirs) == 144
-    everything = frozen_hashes()  # default: every frozen manifest, including the photo-folder addendum
-    assert len(everything) == 144 + 71 and set(frozen) <= set(everything)
+    everything = frozen_hashes()  # default: every frozen manifest (photo-folder addendum, 2026-10-18 dataset holdout)
+    assert len(everything) == 144 + 71 + 289 and set(frozen) <= set(everything)
     dev = json.loads((ROOT / "data/manifests/s3_dev_frames.json").read_text())["frames"]
     check_hashes([h for f in dev for h in (f["raw_sha256"], f["ref_sha256"])], frozen=everything)  # does not raise
     assert all(r["sha256"] in frozen for r in in_frozen_dirs)

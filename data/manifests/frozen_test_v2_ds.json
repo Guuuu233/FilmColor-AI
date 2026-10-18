@@ -1,0 +1,2950 @@
+{
+ "id": "frozen_test_v2_ds",
+ "created": "2026-10-18",
+ "decision": "2026-10-18 review: keep untouched rolls of the new material for validating the next base-estimation version; never read for development, threshold choice, failure analysis or fitting",
+ "rule": {
+  "min_paired": 5,
+  "viewed_dev_rolls": [
+   "ds-199412B",
+   "ds-199412C",
+   "ds-199608B",
+   "ds-199608D",
+   "ds-199608I",
+   "ds-199608J",
+   "ds-199807A",
+   "ds-199910"
+  ],
+  "dev_manifest_rolls": [
+   "ds-199412A",
+   "ds-199412B",
+   "ds-199412C",
+   "ds-199412D",
+   "ds-199412E",
+   "ds-199412F",
+   "ds-199608B",
+   "ds-199608D",
+   "ds-199706A",
+   "ds-199706B",
+   "ds-199706C",
+   "ds-199807A",
+   "ds-199807B",
+   "ds-199910"
+  ],
+  "candidates": [
+   "ds-199608A",
+   "ds-199608C",
+   "ds-199608E",
+   "ds-199608F",
+   "ds-199608G",
+   "ds-199608H"
+  ],
+  "sealed": [
+   "ds-199608A",
+   "ds-199608C",
+   "ds-199608E",
+   "ds-199608F",
+   "ds-199608G",
+   "ds-199608H"
+  ],
+  "seal": "every untouched candidate"
+ },
+ "source": "BlueNeg release (https://huggingface.co/datasets/ttgroup/blueneg-release), via the group pack; credit 'Copyrighted by Tien-Tsin Wong'",
+ "caveat": "all sealed rolls are Kodak Gold 100-5 from one 1996 trip: same photographer, scanner, conversion and film stock as dev rolls 199608B/D/I/J. A held-out set, not an independent population. Frames that exist elsewhere only as visually similar (non-identical) files are not detected; the original BlueNeg DNGs of these frames are frozen by name only if downloaded later.",
+ "counts": {
+  "files": 289,
+  "negatives": 146,
+  "prints": 143
+ },
+ "files": [
+  {
+   "id": "A559",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A559.tif",
+   "orig_name": "19960807A-10-new-orleans-siggraph96.dng",
+   "pair": "R469",
+   "bytes": 60438713,
+   "sha256": "e89b64facbb07778d7946fba1d2de6bd9887bd2c4344f51c96b492a1d9733a08"
+  },
+  {
+   "id": "A560",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A560.tif",
+   "orig_name": "19960805A-07-usa.dng",
+   "pair": "R470",
+   "bytes": 59500655,
+   "sha256": "b5471878b3190b1999de0d737acce6f49461ac723ccc7d145e8e601c55e06546"
+  },
+  {
+   "id": "A561",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A561.tif",
+   "orig_name": "19960805A-06-usa.dng",
+   "pair": "R471",
+   "bytes": 57937798,
+   "sha256": "1453a41e236f34f97ecd3ccce7459b22be9cd6774e23477db1b9e06a1ab945d6"
+  },
+  {
+   "id": "A562",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A562.tif",
+   "orig_name": "19960806A-09-new-orleans-siggraph96.dng",
+   "pair": "R472",
+   "bytes": 59406143,
+   "sha256": "318fa3f62e8121c4b0ba6629782c5712091db3333f57d4a783eb3cb7be78e8c7"
+  },
+  {
+   "id": "A563",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A563.tif",
+   "orig_name": "19960807A-11-new-orleans-siggraph96.dng",
+   "pair": "R473",
+   "bytes": 59549378,
+   "sha256": "a2688d964762d57c633dd38923f29ef48404f69f2d17c02ad0840d85035a912d"
+  },
+  {
+   "id": "A564",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A564.tif",
+   "orig_name": "19960807A-12-new-orleans-siggraph96.dng",
+   "pair": "R474",
+   "bytes": 59336918,
+   "sha256": "092659787ffa60a25ec9566df755cf3bd903cbcc71f782c1b8aecddec4bf68d2"
+  },
+  {
+   "id": "A565",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A565.tif",
+   "orig_name": "19960807A-16-new-orleans-siggraph96.dng",
+   "pair": "R477",
+   "bytes": 57763828,
+   "sha256": "de1b507b3872ae3da3a3e4c7ac580d5a23aecdcaa93fa96814c5e900163b7054"
+  },
+  {
+   "id": "A566",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A566.tif",
+   "orig_name": "19960807A-19-new-orleans-siggraph96.dng",
+   "pair": "R478",
+   "bytes": 58732235,
+   "sha256": "a70c7106985a82859ae87e585d0dd5579940b7f5f4cf43c01152b6b23557f56b"
+  },
+  {
+   "id": "A567",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A567.tif",
+   "orig_name": "19960807A-15-new-orleans-siggraph96.dng",
+   "pair": "R479",
+   "bytes": 58750185,
+   "sha256": "fb7a78aec5c05f6bd1cb84fa1b894f0a998e5ef9269d6c83d74f70f8626139cb"
+  },
+  {
+   "id": "A568",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A568.tif",
+   "orig_name": "19960812C-02-grand-canyon.dng",
+   "pair": "R480",
+   "bytes": 57494231,
+   "sha256": "a690a669d252d6e6b8e8d43bad2f94f6ffea00215f8705e434be520efdf32d3c"
+  },
+  {
+   "id": "A569",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A569.tif",
+   "orig_name": "19960812C-26-grand-canyon.dng",
+   "pair": "R481",
+   "bytes": 57809216,
+   "sha256": "8b3b8cdb2a9f1e4767687b4c9700f0f80693ec7ebc529b785f32417adbaa7392"
+  },
+  {
+   "id": "A570",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A570.tif",
+   "orig_name": "19960806A-08-new-orleans-siggraph96.dng",
+   "pair": "R482",
+   "bytes": 59523068,
+   "sha256": "742f46644a39505ec217e2004ee7b1de1cb378d51017c528f562775eee9c3be2"
+  },
+  {
+   "id": "A571",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A571.tif",
+   "orig_name": "19960807A-17-new-orleans-siggraph96.dng",
+   "pair": "R484",
+   "bytes": 57829222,
+   "sha256": "0d22d6470d1441ea6bf7c6ed0f6a10a4d28e99c91af25f86acd21d5c6a95b7ed"
+  },
+  {
+   "id": "A572",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A572.tif",
+   "orig_name": "19960812C-03-grand-canyon.dng",
+   "pair": "R485",
+   "bytes": 58649006,
+   "sha256": "bb42df3f5d07e7b8287b4e6243a1f3734bc5805901432472e7895efd726f3f74"
+  },
+  {
+   "id": "A573",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A573.tif",
+   "orig_name": "19960812C-12-grand-canyon.dng",
+   "pair": "R486",
+   "bytes": 59510332,
+   "sha256": "b59cb6c47f0e6fe351a202130c776289daa2b996c5aaa84e9a149dcb4365a9d9"
+  },
+  {
+   "id": "A574",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A574.tif",
+   "orig_name": "19960812C-09-grand-canyon.dng",
+   "pair": "R487",
+   "bytes": 60670652,
+   "sha256": "95cb0735b1a7d9e4b512e48d2dbb8d54471e33d90f727880a562e6d20dfe0da7"
+  },
+  {
+   "id": "A575",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A575.tif",
+   "orig_name": "19960812C-13-grand-canyon.dng",
+   "pair": "R489",
+   "bytes": 59777170,
+   "sha256": "e43ba4d004e5c0b581fd7a725094eb52b839837638efac785a50611cadc03c11"
+  },
+  {
+   "id": "A576",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A576.tif",
+   "orig_name": "19960812C-25-grand-canyon.dng",
+   "pair": "R490",
+   "bytes": 58836239,
+   "sha256": "5126b43be2fd178d7b7681bec57d6450eea2683db796101b5a0cc34492efa4eb"
+  },
+  {
+   "id": "A577",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A577.tif",
+   "orig_name": "19960812C-28-grand-canyon.dng",
+   "pair": "R491",
+   "bytes": 57834592,
+   "sha256": "d9b3a540ba2279a90f6bdc6c330ddce7a5b02456b73a94ebc7b11bec561a3c63"
+  },
+  {
+   "id": "A578",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A578.tif",
+   "orig_name": "19960812C-21-grand-canyon.dng",
+   "pair": "R492",
+   "bytes": 59550567,
+   "sha256": "f17357eebad596d75549a48f01b3fe5312036660646e5fea077b57e3ba616f88"
+  },
+  {
+   "id": "A579",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A579.tif",
+   "orig_name": "19960812C-24-grand-canyon.dng",
+   "pair": "R493",
+   "bytes": 59639831,
+   "sha256": "44903df782c6b47d0829f85fdadc975ba7ac21b83cfcaa8480030dc6df4ebfd6"
+  },
+  {
+   "id": "A580",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A580.tif",
+   "orig_name": "19960812C-22-grand-canyon.dng",
+   "pair": "R494",
+   "bytes": 61138804,
+   "sha256": "d86e087df5da6c59db1aabbb96793463285e5153df510ab9650b8d934434b469"
+  },
+  {
+   "id": "A581",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A581.tif",
+   "orig_name": "19960812C-10-grand-canyon.dng",
+   "pair": "R495",
+   "bytes": 58594743,
+   "sha256": "afa6e026e8843b6329f7b686526a722011a6da88805292847e09d031f10a0815"
+  },
+  {
+   "id": "A582",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A582.tif",
+   "orig_name": "19960812C-11-grand-canyon.dng",
+   "pair": "R496",
+   "bytes": 57093159,
+   "sha256": "364e5585406b6b6f8a968d8296893ff9e91b35d76c24f23981ef701df73f9cc3"
+  },
+  {
+   "id": "A583",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A583.tif",
+   "orig_name": "19960812C-29-grand-canyon.dng",
+   "pair": "R498",
+   "bytes": 58443873,
+   "sha256": "7b91a81337a3463b7c325fc3b8c4b364b183f93aaf30b74f3f258bbad1b2f2b1"
+  },
+  {
+   "id": "A584",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A584.tif",
+   "orig_name": "19960813E-06-las-vegas.dng",
+   "pair": "R499",
+   "bytes": 58748403,
+   "sha256": "0ae1ff0397d28fbcb92c6159f710bb814356a07c811781b5a91b583a9ebaf24b"
+  },
+  {
+   "id": "A585",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A585.tif",
+   "orig_name": "19960812C-34-grand-canyon.dng",
+   "pair": "R500",
+   "bytes": 58943480,
+   "sha256": "9248e865bf0b07dffc9ca11cb48ef32b6c63babfd0742ab286c603ee854c58ee"
+  },
+  {
+   "id": "A586",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A586.tif",
+   "orig_name": "19960813E-08-las-vegas.dng",
+   "pair": "R501",
+   "bytes": 58550957,
+   "sha256": "afdf653efb5da19dc7da053d99f4f469846ed9a357081e645f21c78919efe7e4"
+  },
+  {
+   "id": "A587",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A587.tif",
+   "orig_name": "19960813E-15-las-vegas.dng",
+   "pair": "R502",
+   "bytes": 58123698,
+   "sha256": "5da4305e3713820eda37da5a105af01d16a43b6ff18ba6c823c77dab5af10fd3"
+  },
+  {
+   "id": "A588",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A588.tif",
+   "orig_name": "19960813E-18-las-vegas.dng",
+   "pair": "R504",
+   "bytes": 57148446,
+   "sha256": "f922e7783f3963fc44d6abffe06dcaa58a886df78e3d9479971d15588f654f43"
+  },
+  {
+   "id": "A589",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A589.tif",
+   "orig_name": "19960813E-12-las-vegas.dng",
+   "pair": "R505",
+   "bytes": 58474258,
+   "sha256": "5f500da8874bb9dfe472f5fc052e8822ed3b0f90555172eb1d4aa2dc50418bbd"
+  },
+  {
+   "id": "A590",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A590.tif",
+   "orig_name": "19960813E-21-las-vegas.dng",
+   "pair": "R506",
+   "bytes": 58773300,
+   "sha256": "fea562ab2bcac6cd20ecd084035bb91fc6907509010644c7ba363fd033127535"
+  },
+  {
+   "id": "A591",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A591.tif",
+   "orig_name": "19960813E-22-las-vegas.dng",
+   "pair": "R507",
+   "bytes": 59770051,
+   "sha256": "4ee4511c562e84c4d7ddcc4ed1ef7072caf148acc6978031cbed7acc12bfc8de"
+  },
+  {
+   "id": "A592",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A592.tif",
+   "orig_name": "19960814E-30-san-francisco.dng",
+   "pair": "R508",
+   "bytes": 58517785,
+   "sha256": "bd55b6215d6e1bb7e8ef196e24223bb6478a7cb2ce882db56b9c09f2bced6ed6"
+  },
+  {
+   "id": "A593",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A593.tif",
+   "orig_name": "19960813E-24-las-vegas.dng",
+   "pair": "R509",
+   "bytes": 58310508,
+   "sha256": "26cf8cc7e2414d5e7feceabe9ef55d13877ed1b2f062ad52c03a5d1425c95a87"
+  },
+  {
+   "id": "A594",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A594.tif",
+   "orig_name": "19960813E-25-las-vegas.dng",
+   "pair": "R510",
+   "bytes": 55890442,
+   "sha256": "a4ebc75c02fc79088c022193803db221284bd08213617d00878480f7e1a8dca6"
+  },
+  {
+   "id": "A595",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A595.tif",
+   "orig_name": "19960813E-26-las-vegas.dng",
+   "pair": "R511",
+   "bytes": 59541021,
+   "sha256": "0745e996800d058e02e47b0680367b458542e3ed6294f638a5287ff1a72d05af"
+  },
+  {
+   "id": "A596",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A596.tif",
+   "orig_name": "19960813E-28-las-vegas.dng",
+   "pair": "R512",
+   "bytes": 56894141,
+   "sha256": "e4a04f11b3dc72bfeb0345a5aa3433a67ce57f27923ba8c8a1e971d0c1ff61c6"
+  },
+  {
+   "id": "A597",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A597.tif",
+   "orig_name": "19960813E-23-las-vegas.dng",
+   "pair": "R513",
+   "bytes": 58304411,
+   "sha256": "84ab02cc3f5bf5ff4cc70dc01b166295512cd443ead6f45d2f4fb2143cb842d4"
+  },
+  {
+   "id": "A598",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A598.tif",
+   "orig_name": "19960814E-34-san-francisco.dng",
+   "pair": "R516",
+   "bytes": 58366398,
+   "sha256": "4ef1eafa90f54915aa9bd2eb51bbd6ee7f45fd96952cbe09eca38db232844ba3"
+  },
+  {
+   "id": "A599",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A599.tif",
+   "orig_name": "19960814E-35-san-francisco.dng",
+   "pair": "R517",
+   "bytes": 56443143,
+   "sha256": "1c525425e5cf26065f1ab1720be1b00ca9cfc963ebbe8beb1a70f427d51351a2"
+  },
+  {
+   "id": "A600",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A600.tif",
+   "orig_name": "19960813E-29-las-vegas.dng",
+   "pair": "R518",
+   "bytes": 57012603,
+   "sha256": "32f040db6f161e0648acbf2f207c7a37f5e1fb8ff523153b88d9fb94918cea83"
+  },
+  {
+   "id": "A601",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A601.tif",
+   "orig_name": "19960814E-36-san-francisco.dng",
+   "pair": "R520",
+   "bytes": 55769691,
+   "sha256": "2461b0db4f4ea8ad723571989f2e3c48a98274a638dd4d781aab841661eb980d"
+  },
+  {
+   "id": "A602",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A602.tif",
+   "orig_name": "19960814E-31-san-francisco.dng",
+   "pair": "R521",
+   "bytes": 60588507,
+   "sha256": "d0690af66d31e070c4170e86e1ca003ae46b59863ea8c0ae44e8db06bf084af6"
+  },
+  {
+   "id": "A603",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A603.tif",
+   "orig_name": "19960814F-02-san-francisco.dng",
+   "pair": "R523",
+   "bytes": 58825300,
+   "sha256": "27453b0bea93553d505bc7ecac4681035eeec0ebcb0d52c046157f078863a4e5"
+  },
+  {
+   "id": "A604",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A604.tif",
+   "orig_name": "19960814F-05-san-francisco.dng",
+   "pair": "R524",
+   "bytes": 59411163,
+   "sha256": "1edd1f30117eef66a9cbcf4fef8ef5914fcfd75b8557d76da92fa5bdbf24c7f1"
+  },
+  {
+   "id": "A605",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A605.tif",
+   "orig_name": "19960814F-07-san-francisco.dng",
+   "pair": "R525",
+   "bytes": 58768298,
+   "sha256": "c652bc462a9392f014a0bf873276426bf99dea4e74c2096f0b4e821c62c42894"
+  },
+  {
+   "id": "A606",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A606.tif",
+   "orig_name": "19960814F-08-san-francisco.dng",
+   "pair": "R527",
+   "bytes": 60018744,
+   "sha256": "40fc0738d221c9b5646626ca67e4ba9cb1d27477119e495b5497a075dae9e2c7"
+  },
+  {
+   "id": "A607",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A607.tif",
+   "orig_name": "19960814F-14-san-francisco.dng",
+   "pair": "R529",
+   "bytes": 59655896,
+   "sha256": "d8fbe0979635ba0736be794f3d4191df8746cca3dea72ac177d3c952f0f248be"
+  },
+  {
+   "id": "A608",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A608.tif",
+   "orig_name": "19960814F-09-san-francisco.dng",
+   "pair": "R530",
+   "bytes": 59709652,
+   "sha256": "e94f2271f287b0489ce441d0c28abf813890bec5c6c4a0e669fb3efd5d42c906"
+  },
+  {
+   "id": "A609",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A609.tif",
+   "orig_name": "19960814E-32-san-francisco.dng",
+   "pair": "R532",
+   "bytes": 59101795,
+   "sha256": "6b20997035412642d61cd11797b2be22a9b4034bf4acb276328773347261057b"
+  },
+  {
+   "id": "A610",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A610.tif",
+   "orig_name": "19960814F-15-san-francisco.dng",
+   "pair": "R533",
+   "bytes": 60244550,
+   "sha256": "0adc5b410e4a19372b0bc68e7c59c47b1af4d42739179e816d8881ba5cf88719"
+  },
+  {
+   "id": "A611",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A611.tif",
+   "orig_name": "19960814F-13-san-francisco.dng",
+   "pair": "R536",
+   "bytes": 58062496,
+   "sha256": "92571cbe10982618e2d1fbfcd7215ab3e1ac4896b152eb065497ff8e694dc6eb"
+  },
+  {
+   "id": "A612",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A612.tif",
+   "orig_name": "19960814F-11-san-francisco.dng",
+   "pair": "R537",
+   "bytes": 60892572,
+   "sha256": "93a450e29e673ed26a65c8685494accec7d77fd6dee4dbc2aaac59c4cf2b7710"
+  },
+  {
+   "id": "A638",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A638.tif",
+   "orig_name": "19960814F-12-san-francisco.dng",
+   "pair": "R559",
+   "bytes": 59697487,
+   "sha256": "c38279f09f75087f43cfdd3415900304c9fae383c76921b6fc4b8f2e3c904756"
+  },
+  {
+   "id": "A639",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A639.tif",
+   "orig_name": "19960815F-21-san-francisco.dng",
+   "pair": "R560",
+   "bytes": 59524860,
+   "sha256": "b78488273b1b0c5bfd7a4e495885c973193654e11f71e860bdaa4a986bcc6e18"
+  },
+  {
+   "id": "A640",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A640.tif",
+   "orig_name": "19960815F-22-san-francisco.dng",
+   "pair": "R561",
+   "bytes": 54235461,
+   "sha256": "bfdcd193f4d415fb42de8d533b78a1ba2d4097910862233f6d137cb9ac1430b5"
+  },
+  {
+   "id": "A641",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A641.tif",
+   "orig_name": "19960815F-17-san-francisco.dng",
+   "pair": "R562",
+   "bytes": 56285692,
+   "sha256": "40985b6eb35fa10199591e1b7c5d6cb57d19fb68946469125b434df7be7f2c67"
+  },
+  {
+   "id": "A642",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A642.tif",
+   "orig_name": "19960815F-23-san-francisco.dng",
+   "pair": "R563",
+   "bytes": 60188946,
+   "sha256": "d6be68c0ae44ea1c71148a70c7940a6e8648572b6477191058f5cf1452990108"
+  },
+  {
+   "id": "A643",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A643.tif",
+   "orig_name": "19960815F-26-golden-gate.dng",
+   "pair": "R565",
+   "bytes": 54265243,
+   "sha256": "f98726218a40a625048200d1b256d705bf69e16132d2083a4c06854b227365d7"
+  },
+  {
+   "id": "A644",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A644.tif",
+   "orig_name": "19960815F-32-golden-gate.dng",
+   "pair": "R566",
+   "bytes": 58666819,
+   "sha256": "b99de6e4fe8010aaf6c2875a8940f909233c3b448c030ec62dfdb6e1770bc61b"
+  },
+  {
+   "id": "A645",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A645.tif",
+   "orig_name": "19960815F-30-golden-gate.dng",
+   "pair": "R567",
+   "bytes": 57032211,
+   "sha256": "5a952c8c0654d03430115aa84ca499d3e2226ac1daa168f4c36af3f06b5b2e9f"
+  },
+  {
+   "id": "A646",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A646.tif",
+   "orig_name": "19960815F-35-golden-gate.dng",
+   "pair": "R569",
+   "bytes": 57247202,
+   "sha256": "456e0e177cc9fc4ddba337c67ba1bd1db02e94d03d7af83a6ef1b680b2db0b21"
+  },
+  {
+   "id": "A647",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A647.tif",
+   "orig_name": "19960815F-36-golden-gate.dng",
+   "pair": "R570",
+   "bytes": 59251715,
+   "sha256": "31e59dae89ce5864e0c4939c741fb66683f117d521f1c80901bc741ffb5c9f37"
+  },
+  {
+   "id": "A648",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A648.tif",
+   "orig_name": "19960815F-34-golden-gate.dng",
+   "pair": "R571",
+   "bytes": 57491784,
+   "sha256": "c7111935f1e3a41516069e6000971b47258e4b9c93c45017c12500c5d94488d0"
+  },
+  {
+   "id": "A649",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A649.tif",
+   "orig_name": "19960815F-20-san-francisco.dng",
+   "pair": null,
+   "bytes": 60669363,
+   "sha256": "62294911b700adc221f63ef0df4988f60a67b0caec31b0a06ceb23bd4bc4a1ed"
+  },
+  {
+   "id": "A650",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A650.tif",
+   "orig_name": "19960815G-02-golden-gate-park.dng",
+   "pair": "R573",
+   "bytes": 58767700,
+   "sha256": "30bdb2c0c3d997a3f49807ce62a574dfdb0a2d95a2363859664d892dea8a9f33"
+  },
+  {
+   "id": "A651",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A651.tif",
+   "orig_name": "19960815G-03-golden-gate-park.dng",
+   "pair": "R574",
+   "bytes": 58730769,
+   "sha256": "61391e6ed1ecfc2b65ce085cc30d067bbc930081f9c5dc1a6cb89ad89f8a9f1e"
+  },
+  {
+   "id": "A652",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A652.tif",
+   "orig_name": "19960814F-04-san-francisco.dng",
+   "pair": null,
+   "bytes": 57841923,
+   "sha256": "64f0aa19376bf50dde7bad07b6394b7d7c7d03c531b982de1ff4f72a9b22fe35"
+  },
+  {
+   "id": "A653",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A653.tif",
+   "orig_name": "19960807A-21-new-orleans-siggraph96.dng",
+   "pair": null,
+   "bytes": 58895512,
+   "sha256": "2de5a7e32dd634c883a7b17408ebf5442303071016c5aa971ba1b51b4f4b8bea"
+  },
+  {
+   "id": "A654",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A654.tif",
+   "orig_name": "19960807A-20-new-orleans-siggraph96.dng",
+   "pair": null,
+   "bytes": 57169114,
+   "sha256": "c5a98f8be440e71efee4295886281b77eccbd740dc13567322a4bb517a2e708d"
+  },
+  {
+   "id": "A659",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A659.tif",
+   "orig_name": "19960815F-31-golden-gate.dng",
+   "pair": "R579",
+   "bytes": 58540419,
+   "sha256": "d5ad8e27449d0f6755173b30b64ce9354bdf329e4732e9130d959694dae6e7b6"
+  },
+  {
+   "id": "A660",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A660.tif",
+   "orig_name": "19960813E-27-las-vegas.dng",
+   "pair": null,
+   "bytes": 57881909,
+   "sha256": "5f310e963be10c0363e5fa15aea38b76b2f7c79d0dbd091398e2312452800cdc"
+  },
+  {
+   "id": "A661",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A661.tif",
+   "orig_name": "19960814F-10-san-francisco.dng",
+   "pair": null,
+   "bytes": 59417935,
+   "sha256": "02467d9156f2ceea4fab065dc994e00fca2de011de463e9640d59d586213d63c"
+  },
+  {
+   "id": "A662",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A662.tif",
+   "orig_name": "19960814F-16-san-francisco.dng",
+   "pair": null,
+   "bytes": 58563078,
+   "sha256": "538dd9654b619674c10038563c97141fc9e6f9827265115e0a149dd233efd13a"
+  },
+  {
+   "id": "A663",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A663.tif",
+   "orig_name": "19960807A-18-new-orleans-siggraph96.dng",
+   "pair": null,
+   "bytes": 58391179,
+   "sha256": "345b49a34717dc5aa807440e6003a2ed60a72ab4f1110720a19e4abf9c73fdd4"
+  },
+  {
+   "id": "A664",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A664.tif",
+   "orig_name": "19960814F-06-san-francisco.dng",
+   "pair": null,
+   "bytes": 60423556,
+   "sha256": "cf0be1d7ef4a40177888e29512f3bbb4f8ad43153d424c29499be885f542a5af"
+  },
+  {
+   "id": "A665",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A665.tif",
+   "orig_name": "19960814F-03-san-francisco.dng",
+   "pair": null,
+   "bytes": 60365390,
+   "sha256": "7858157afce4022f7f5108ad2ffa55cf1d8c204f308ee0914ef6ca03aaacd86d"
+  },
+  {
+   "id": "A666",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A666.tif",
+   "orig_name": "19960815G-06-golden-gate-park.dng",
+   "pair": "R580",
+   "bytes": 56663368,
+   "sha256": "7033250d2194508f6276e674a432449a0aedd9a70f204ad22923dd5a88bbb6d1"
+  },
+  {
+   "id": "A667",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A667.tif",
+   "orig_name": "19960815G-04-golden-gate-park.dng",
+   "pair": "R581",
+   "bytes": 58952394,
+   "sha256": "7fc3994efa05922e13d5cc191cb61ba05cbc7977ca003096e78784c017342a60"
+  },
+  {
+   "id": "A668",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A668.tif",
+   "orig_name": "19960815G-08-golden-gate-park.dng",
+   "pair": "R582",
+   "bytes": 60097609,
+   "sha256": "1d11725d577ac149fceb36e9484f3e39070fef6b83c34dd1678aaae76778fa3c"
+  },
+  {
+   "id": "A669",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A669.tif",
+   "orig_name": "19960813E-07-las-vegas.dng",
+   "pair": null,
+   "bytes": 59887782,
+   "sha256": "ebdd464243bd441ac5070510b0c4e41c2c26872b2522fb5bb682e09afcb2bb8a"
+  },
+  {
+   "id": "A670",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A670.tif",
+   "orig_name": "19960815F-18-san-francisco.dng",
+   "pair": null,
+   "bytes": 61137456,
+   "sha256": "7d899b2cfb641bcf501379695467078d06802827927fbf7cd85a1b573b9e1698"
+  },
+  {
+   "id": "A671",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A671.tif",
+   "orig_name": "19960814E-37-san-francisco.dng",
+   "pair": null,
+   "bytes": 56767569,
+   "sha256": "e2a4971ef4fdf1c7a85a3d3e8a47b7dedd721057e1864a07801baeb078eea2f8"
+  },
+  {
+   "id": "A672",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A672.tif",
+   "orig_name": "19960815G-10-golden-gate-park.dng",
+   "pair": "R584",
+   "bytes": 59712658,
+   "sha256": "0d154b5f7997005a893b5e61c3e93240a506ded55773eec9ef76ac5471ff831d"
+  },
+  {
+   "id": "A673",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A673.tif",
+   "orig_name": "19960815G-09-golden-gate-park.dng",
+   "pair": "R585",
+   "bytes": 58973471,
+   "sha256": "7dc269bcda442960dd9856254465a6ba97e810d5348657ae23756f7d3e93cf1d"
+  },
+  {
+   "id": "A674",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A674.tif",
+   "orig_name": "19960815G-11-san-francisco.dng",
+   "pair": "R586",
+   "bytes": 55452356,
+   "sha256": "6c621dc81eb63eafe44e509223e92a68484a0b08dcb594dd5e0cfb14ee5f5aef"
+  },
+  {
+   "id": "A675",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A675.tif",
+   "orig_name": "19960815F-37-golden-gate.dng",
+   "pair": null,
+   "bytes": 56743365,
+   "sha256": "2844d447f7aa7447d3efec80f46d49d1760298ce0f20c1b48d4f6cb491656ca1"
+  },
+  {
+   "id": "A676",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A676.tif",
+   "orig_name": "19960815F-19-san-francisco.dng",
+   "pair": null,
+   "bytes": 58816424,
+   "sha256": "d7bc4137327ccd0b82539387ed83cc52c162c023559b0c6557776abe42b17687"
+  },
+  {
+   "id": "A677",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A677.tif",
+   "orig_name": "19960815G-13-san-francisco.dng",
+   "pair": "R591",
+   "bytes": 57454359,
+   "sha256": "579a56fb91ec8dca62dc982d19a743e53f194b39ddf7902b26d9dd0faa044518"
+  },
+  {
+   "id": "A678",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A678.tif",
+   "orig_name": "19960812C-18-grand-canyon.dng",
+   "pair": null,
+   "bytes": 58842695,
+   "sha256": "22f1d7fb869290d7ea5bb06a49cd27d528b38291a44e63df919d7ff445a42b98"
+  },
+  {
+   "id": "A679",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A679.tif",
+   "orig_name": "19960815G-01-golden-gate.dng",
+   "pair": "R592",
+   "bytes": 56268229,
+   "sha256": "1476b7f6aa2789feee0863590e8b89a9a34297e63250537d54e1947f08aa0fee"
+  },
+  {
+   "id": "A680",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A680.tif",
+   "orig_name": "19960815F-33-golden-gate.dng",
+   "pair": null,
+   "bytes": 56933091,
+   "sha256": "265078d0b4f23db8bfe67d9080fac15e8ed7806993db5bcdc0c9dd2acdc645f9"
+  },
+  {
+   "id": "A681",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A681.tif",
+   "orig_name": "19960815G-14-san-francisco.dng",
+   "pair": "R593",
+   "bytes": 56060187,
+   "sha256": "39a269167898086c5d09cd6adb4b7624abdf29b9c70fea83f37f3198d7ef4f07"
+  },
+  {
+   "id": "A682",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A682.tif",
+   "orig_name": "19960815G-17-san-francisco.dng",
+   "pair": "R594",
+   "bytes": 60390632,
+   "sha256": "64aab9aaf01692057f2c609798e4de559d89f56b103951177e1e2497e01a0795"
+  },
+  {
+   "id": "A683",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A683.tif",
+   "orig_name": "19960815G-21-san-francisco.dng",
+   "pair": "R595",
+   "bytes": 60280633,
+   "sha256": "1a615d1d98b171c19e5560084477a9e9236fbcf497f82de1f3071fe594ff5128"
+  },
+  {
+   "id": "A684",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A684.tif",
+   "orig_name": "19960815G-05-golden-gate-park.dng",
+   "pair": null,
+   "bytes": 58120390,
+   "sha256": "84bc10b3893f1a5070045e94345b5adeb989b4a64367366a86adcc7f7efd69b4"
+  },
+  {
+   "id": "A685",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A685.tif",
+   "orig_name": "19960816G-24-stanford.dng",
+   "pair": "R597",
+   "bytes": 57998405,
+   "sha256": "3b22ff7366148a6296a377ca545560cf91a541f985ddcc0ff33e160b815a6b01"
+  },
+  {
+   "id": "A686",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A686.tif",
+   "orig_name": "19960816G-25-stanford.dng",
+   "pair": "R598",
+   "bytes": 58050657,
+   "sha256": "0b259a97400859802ac2a13980990d8f5428ea5eb9981291837441c44c936931"
+  },
+  {
+   "id": "A687",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A687.tif",
+   "orig_name": "19960816G-29-stanford.dng",
+   "pair": "R599",
+   "bytes": 58217007,
+   "sha256": "b576b38df7d7036fd6d5625011fa0ebfbedf3dbd4a0c9e2b60d2c952b2b5f7d2"
+  },
+  {
+   "id": "A688",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A688.tif",
+   "orig_name": "19960816G-27-stanford.dng",
+   "pair": "R600",
+   "bytes": 57764223,
+   "sha256": "90fe3e3cdc7bc0774bfd67a0b9d4ea555ac01c7863bd9d246aaf99bf206209e8"
+  },
+  {
+   "id": "A689",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A689.tif",
+   "orig_name": "19960816G-28-stanford.dng",
+   "pair": "R603",
+   "bytes": 58416259,
+   "sha256": "8bedfe5bafde8deacea19ea07f76100d03e7a2fbdb45334082594ead1e46cfe5"
+  },
+  {
+   "id": "A690",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A690.tif",
+   "orig_name": "19960816G-22-stanford.dng",
+   "pair": "R604",
+   "bytes": 57882861,
+   "sha256": "b59488dee68fd65d27f27903aeaf05b551aea8057a0651655ac01d8fcb933683"
+  },
+  {
+   "id": "A691",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A691.tif",
+   "orig_name": "19960816G-33-stanford.dng",
+   "pair": "R607",
+   "bytes": 56723972,
+   "sha256": "ab201147a13c7cc2aecc3d4f8a7c225e4ac677cde87cf3129f1a65546a6c83c3"
+  },
+  {
+   "id": "A692",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A692.tif",
+   "orig_name": "19960816H-01-stanford.dng",
+   "pair": "R608",
+   "bytes": 59695045,
+   "sha256": "9dd01d788608c17c68bf44092e88c46c9937cd67f1245a64af234c0634cb7d2a"
+  },
+  {
+   "id": "A693",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A693.tif",
+   "orig_name": "19960816H-03-stanford.dng",
+   "pair": "R609",
+   "bytes": 61396429,
+   "sha256": "dc5bddecadd40e98285052d70882d2791a6571a8578044affc5314f5a151d5e7"
+  },
+  {
+   "id": "A694",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A694.tif",
+   "orig_name": "19960817H-12-san-francisco.dng",
+   "pair": "R610",
+   "bytes": 56557755,
+   "sha256": "b7bc934ea1b2a40ccfc5be6e2a14960a1c6c9713084d85a956abdd12ad6d5eb7"
+  },
+  {
+   "id": "A695",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A695.tif",
+   "orig_name": "19960816G-37-stanford.dng",
+   "pair": "R611",
+   "bytes": 58688224,
+   "sha256": "6de9dc00cc0046c50494b44c020f7c18c2070dad564578f3572aa73ff280adb0"
+  },
+  {
+   "id": "A696",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A696.tif",
+   "orig_name": "19960816G-36-stanford.dng",
+   "pair": "R612",
+   "bytes": 58741450,
+   "sha256": "0b010ff2b446a8cb9a5ec264a3871a5df8955f8d6800063a82b7bf8dafac2272"
+  },
+  {
+   "id": "A697",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A697.tif",
+   "orig_name": "19960816H-05-stanford.dng",
+   "pair": "R613",
+   "bytes": 58896049,
+   "sha256": "8dc7222e22222a33f9f8e47eed86f87bc207bdcce60dc87e019a659d4a5bf110"
+  },
+  {
+   "id": "A698",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A698.tif",
+   "orig_name": "19960816H-06-stanford.dng",
+   "pair": "R615",
+   "bytes": 57527830,
+   "sha256": "67b039cd7f277a56190c81f572a4c3f5db2bfe9f504fdcc166094b5611b76c3c"
+  },
+  {
+   "id": "A699",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A699.tif",
+   "orig_name": "19960817H-11-san-francisco.dng",
+   "pair": "R616",
+   "bytes": 55823913,
+   "sha256": "1d87bd51ee30a22e213737f4791a5bcafbb09447bb606b640f23b08136e7d22c"
+  },
+  {
+   "id": "A700",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A700.tif",
+   "orig_name": "19960817H-13-san-francisco.dng",
+   "pair": "R617",
+   "bytes": 57418641,
+   "sha256": "ef7d0341164ff9b8a1c750d3bea13bb022f1e12092c96ebb98bdc281ffd455aa"
+  },
+  {
+   "id": "A701",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A701.tif",
+   "orig_name": "19960817H-17-uc-berkeley.dng",
+   "pair": "R618",
+   "bytes": 58624263,
+   "sha256": "c023219fe0ed84902e4bb1fa6f8ec3f58a2cf0960341f55bd0f4ca3c4fa142f5"
+  },
+  {
+   "id": "A702",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A702.tif",
+   "orig_name": "19960817H-14-uc-berkeley.dng",
+   "pair": "R619",
+   "bytes": 59688829,
+   "sha256": "c39f75f1304a7ab7899222d7fe974f4f5f28bfd9ad15ab489df850ecbdbd83e0"
+  },
+  {
+   "id": "A703",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A703.tif",
+   "orig_name": "19960817H-16-uc-berkeley.dng",
+   "pair": "R620",
+   "bytes": 60287993,
+   "sha256": "287d44290b9b1d94cf7e11f79c10036f950ca8876d6139b264c23ce90f322c33"
+  },
+  {
+   "id": "A704",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A704.tif",
+   "orig_name": "19960817H-18-uc-berkeley.dng",
+   "pair": "R621",
+   "bytes": 58987667,
+   "sha256": "9f766c0c1b46b6360e16fb8f24f28ed6951aad1cd1c6c2c595b6bb419a6bc459"
+  },
+  {
+   "id": "A705",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A705.tif",
+   "orig_name": "19960817H-10-san-francisco.dng",
+   "pair": "R622",
+   "bytes": 58131413,
+   "sha256": "ce65cf40939af85f6ebf1e004d90ddd01dd5f0ce7692ad0d32a8ea20972a2dcf"
+  },
+  {
+   "id": "A706",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A706.tif",
+   "orig_name": "19960817H-20-san-francisco.dng",
+   "pair": "R623",
+   "bytes": 58576365,
+   "sha256": "f63586d936b93b23ba154249b747ff84986649960cd6a0529154aeb1c06098da"
+  },
+  {
+   "id": "A707",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A707.tif",
+   "orig_name": "19960817H-19-san-francisco.dng",
+   "pair": "R624",
+   "bytes": 61157207,
+   "sha256": "be34e18d2e8bc0391bd046744ad1492afe6181d4e7337695a1bd4fd33c4daabe"
+  },
+  {
+   "id": "A708",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A708.tif",
+   "orig_name": "19960817H-21-san-francisco.dng",
+   "pair": "R625",
+   "bytes": 60346858,
+   "sha256": "1b999e9cc75b1827e16b2f5e9d9860aba42b1142ddaa936233e7d1dd732976d5"
+  },
+  {
+   "id": "A709",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A709.tif",
+   "orig_name": "19960818H-26-san-francisco.dng",
+   "pair": "R626",
+   "bytes": 58481822,
+   "sha256": "aebceb2ece5e742966fbe3f64acd7f3218411ca51b9f142170199ea2897693ae"
+  },
+  {
+   "id": "A710",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A710.tif",
+   "orig_name": "19960818H-30-san-francisco.dng",
+   "pair": "R627",
+   "bytes": 57227728,
+   "sha256": "530279bd63d19f4dbe5f98452eb927aab98fb81a5888df51b5d7484ce4e612cc"
+  },
+  {
+   "id": "A711",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A711.tif",
+   "orig_name": "19960818H-27-san-francisco.dng",
+   "pair": "R628",
+   "bytes": 56336590,
+   "sha256": "86c99931a4c98ef6a9c6a473d4bf152dacdd0f815327bd57005f7aa674cbb8e4"
+  },
+  {
+   "id": "A712",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A712.tif",
+   "orig_name": "19960818H-28-san-francisco.dng",
+   "pair": "R629",
+   "bytes": 56108107,
+   "sha256": "a93b3b0aa26e0388aeb10a27b7a1fbfc145f806729dcc123e7cf5da7450c970f"
+  },
+  {
+   "id": "A713",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A713.tif",
+   "orig_name": "19960818H-32-san-francisco.dng",
+   "pair": "R630",
+   "bytes": 57466263,
+   "sha256": "d46b0628a1d2e367175fec9287c7ff4cbd7bb86fcfd6ab455cb04ab3a264339b"
+  },
+  {
+   "id": "A714",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A714.tif",
+   "orig_name": "19960818H-31-san-francisco.dng",
+   "pair": "R631",
+   "bytes": 54909280,
+   "sha256": "ff124ba6906dd8646d695c8d7ca526e6d7f5d833b31507b1455bf46330aa21ff"
+  },
+  {
+   "id": "A715",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A715.tif",
+   "orig_name": "19960818H-33-san-francisco.dng",
+   "pair": "R632",
+   "bytes": 59550900,
+   "sha256": "95ac4038808b6297f97de04a93a74126ac48c32bb5730b23564bb2896a5eda82"
+  },
+  {
+   "id": "A716",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A716.tif",
+   "orig_name": "19960818H-34-san-francisco.dng",
+   "pair": "R633",
+   "bytes": 58279286,
+   "sha256": "c5167aae6830d94d23346fb7f03c3f30ce2eeb2aa8d78364993af6423934d58f"
+  },
+  {
+   "id": "A717",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A717.tif",
+   "orig_name": "19960818H-35-san-francisco.dng",
+   "pair": "R634",
+   "bytes": 55894916,
+   "sha256": "31e872bce2e0b503d379ce7ea8346b85a438c6497b96464289176e2dc68f8ac8"
+  },
+  {
+   "id": "A718",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A718.tif",
+   "orig_name": "19960818H-37-san-francisco.dng",
+   "pair": "R635",
+   "bytes": 59743939,
+   "sha256": "06fdd167a72ba6bf907555be3b4ecebbeb2041dbae9bd43f1ea4e37aefe5e5e2"
+  },
+  {
+   "id": "A719",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A719.tif",
+   "orig_name": "19960818H-36-san-francisco.dng",
+   "pair": "R636",
+   "bytes": 58821059,
+   "sha256": "c32da0414f7658cc2017191810b9713125202411bc87989953d205cdb0f97737"
+  },
+  {
+   "id": "A798",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A798.tif",
+   "orig_name": "19960807A-22-new-orleans-siggraph96.dng",
+   "pair": null,
+   "bytes": 57381647,
+   "sha256": "83cb9ee7e4b909adad68b0a55032bda68b5a6aeef8e980e03db08d812f615a49"
+  },
+  {
+   "id": "A800",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A800.tif",
+   "orig_name": "19960805A-05-usa.dng",
+   "pair": null,
+   "bytes": 58565253,
+   "sha256": "6cbab135ba652af4572943338fb725e16134706aade69ec88e028e42a3cb9400"
+  },
+  {
+   "id": "A801",
+   "roll": "ds-199608A",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A801.tif",
+   "orig_name": "19960805A-04-usa.dng",
+   "pair": null,
+   "bytes": 58679005,
+   "sha256": "8f4dc7a7067c6f15bff324f8621a6d6992e2e3f181adc82e347c0015bab21d55"
+  },
+  {
+   "id": "A802",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A802.tif",
+   "orig_name": "19960812C-23-grand-canyon.dng",
+   "pair": null,
+   "bytes": 60237016,
+   "sha256": "cff22fa61da5651c4b19a05c6be090bbad50f9f75b97a85c1e9555edd592254f"
+  },
+  {
+   "id": "A803",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A803.tif",
+   "orig_name": "19960812C-06-grand-canyon.dng",
+   "pair": null,
+   "bytes": 61034210,
+   "sha256": "b0b80912d6b2248719d6d6dd7092032126b1fd858e524c40033cdf67e0ea13a2"
+  },
+  {
+   "id": "A804",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A804.tif",
+   "orig_name": "19960812C-14-grand-canyon.dng",
+   "pair": null,
+   "bytes": 60391372,
+   "sha256": "93187cd0f9fc608e9c9c79983161cc20d4ed37fe42364d4787d6a4648f594a8d"
+  },
+  {
+   "id": "A805",
+   "roll": "ds-199608C",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A805.tif",
+   "orig_name": "19960812C-33-grand-canyon.dng",
+   "pair": null,
+   "bytes": 56523727,
+   "sha256": "43dc7525914779795f5dc43739844ecd8a4715b466692818eec7a7f951b60267"
+  },
+  {
+   "id": "A806",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A806.tif",
+   "orig_name": "19960813E-09-las-vegas.dng",
+   "pair": null,
+   "bytes": 58317670,
+   "sha256": "e3a0762ac1e1316aa442b4c98d0dfaf51607e2806584684b7c2896c8a323700c"
+  },
+  {
+   "id": "A807",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A807.tif",
+   "orig_name": "19960813E-13-las-vegas.dng",
+   "pair": null,
+   "bytes": 58981851,
+   "sha256": "f8eedb24498fb253780a3d641e28dd204cb7cd67a7b27e9c6630d319857dbb1c"
+  },
+  {
+   "id": "A808",
+   "roll": "ds-199608H",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A808.tif",
+   "orig_name": "19960818H-29-san-francisco.dng",
+   "pair": null,
+   "bytes": 57258262,
+   "sha256": "88e963fb2ac1643871eecb37a1c0c79cd21a96105da4918f030406f65c5eb278"
+  },
+  {
+   "id": "A809",
+   "roll": "ds-199608G",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A809.tif",
+   "orig_name": "19960815G-12-san-francisco.dng",
+   "pair": null,
+   "bytes": 55317236,
+   "sha256": "85c01d429c9ee213deffba298540891a80f7fab14509b796f30cd963137025ce"
+  },
+  {
+   "id": "A810",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A810.tif",
+   "orig_name": "19960814F-01-san-francisco.dng",
+   "pair": null,
+   "bytes": 57669988,
+   "sha256": "91ea5042212807e49c55420ac56da2edf6d01352a4756038ba03b9fb14ced181"
+  },
+  {
+   "id": "A811",
+   "roll": "ds-199608E",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A811.tif",
+   "orig_name": "19960813E-19-las-vegas.dng",
+   "pair": null,
+   "bytes": 58767283,
+   "sha256": "688b8d8e75416578c7e5a9ae242f6d67e8030d8c1e8d11e63e5fa7052bb4c244"
+  },
+  {
+   "id": "A812",
+   "roll": "ds-199608F",
+   "why": "negative of the roll",
+   "rel": "01_彩色负片_未反相/A812.tif",
+   "orig_name": "19960815F-29-golden-gate.dng",
+   "pair": null,
+   "bytes": 55686037,
+   "sha256": "dd2563f09b11d7c93d7845cd2099c21967b87feca0e958bfc57a0a781111a882"
+  },
+  {
+   "id": "R469",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R469.tif",
+   "orig_name": "19960807A-10-new-orleans-siggraph96.tif",
+   "pair": "A559",
+   "bytes": 33865654,
+   "sha256": "dbfc6c51177fb945eeb3ee21f29f3e92810d2d75ba27a848759d3e6b971872e2"
+  },
+  {
+   "id": "R470",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R470.tif",
+   "orig_name": "19960805A-07-usa.tif",
+   "pair": "A560",
+   "bytes": 33865654,
+   "sha256": "f6934767fffdb7c06c5efb0400d078f1703ece3bbff84a79a76acba7a53f63e1"
+  },
+  {
+   "id": "R471",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R471.tif",
+   "orig_name": "19960805A-06-usa.tif",
+   "pair": "A561",
+   "bytes": 36311350,
+   "sha256": "0a571fb5cc0a8ddcef0868be78aedb91867b7a78928e193af1e537c9da4929c1"
+  },
+  {
+   "id": "R472",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R472.tif",
+   "orig_name": "19960806A-09-new-orleans-siggraph96.tif",
+   "pair": "A562",
+   "bytes": 33723958,
+   "sha256": "53ca9358fccff8850d6b85f653acf95064a71e1662b196fbda7f0cb555c2772a"
+  },
+  {
+   "id": "R473",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R473.tif",
+   "orig_name": "19960807A-11-new-orleans-siggraph96.tif",
+   "pair": "A563",
+   "bytes": 36224446,
+   "sha256": "91d35ae64793ab390d477c0fe2dd3b8eca25b4db3b3efbb390fed570f441223a"
+  },
+  {
+   "id": "R474",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R474.tif",
+   "orig_name": "19960807A-12-new-orleans-siggraph96.tif",
+   "pair": "A564",
+   "bytes": 36176182,
+   "sha256": "29e556896c0a23f5e6cb4180a855eea92c7d6c0263d0631eb3791fb9d9dd8793"
+  },
+  {
+   "id": "R475",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R475.tif",
+   "orig_name": "19960807A-18-new-orleans-siggraph96.tif",
+   "pair": null,
+   "bytes": 36372790,
+   "sha256": "d92d6019cd26ba1a1dfcd075d7938ed14214b578555fd56587c968cff22b142e"
+  },
+  {
+   "id": "R476",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R476.tif",
+   "orig_name": "19960807A-21-new-orleans-siggraph96.tif",
+   "pair": null,
+   "bytes": 36656950,
+   "sha256": "61eee3e39d28455d32bc282c4514e36aeb0e8f6b3b4c253ca65b615762dc57d3"
+  },
+  {
+   "id": "R477",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R477.tif",
+   "orig_name": "19960807A-16-new-orleans-siggraph96.tif",
+   "pair": "A565",
+   "bytes": 36514870,
+   "sha256": "3fe98ec08ce30c920bc9491f26052cd39ec86732a25a0539e242aad07ecfec42"
+  },
+  {
+   "id": "R478",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R478.tif",
+   "orig_name": "19960807A-19-new-orleans-siggraph96.tif",
+   "pair": "A566",
+   "bytes": 36132790,
+   "sha256": "66e6d59efb264c584568a7f02a1b3212a83c6e7971bc6e6bc399d997c76be5f5"
+  },
+  {
+   "id": "R479",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R479.tif",
+   "orig_name": "19960807A-15-new-orleans-siggraph96.tif",
+   "pair": "A567",
+   "bytes": 36274486,
+   "sha256": "bc58b3ebc008c6dc36b78648124ee14b8f4aeb1cf1b53a120fbc901dfd58158a"
+  },
+  {
+   "id": "R480",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R480.tif",
+   "orig_name": "19960812C-02-grand-canyon.tif",
+   "pair": "A568",
+   "bytes": 36602590,
+   "sha256": "7ebd7a6243c73b9e2c53f2c512943557d212746fa16572952f4845b16233295f"
+  },
+  {
+   "id": "R481",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R481.tif",
+   "orig_name": "19960812C-26-grand-canyon.tif",
+   "pair": "A569",
+   "bytes": 36600670,
+   "sha256": "7e28169a5481fbe832073b3990c3ccfeff6460abfb7b8a33c2df85c6677cb26d"
+  },
+  {
+   "id": "R482",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R482.tif",
+   "orig_name": "19960806A-08-new-orleans-siggraph96.tif",
+   "pair": "A570",
+   "bytes": 34290742,
+   "sha256": "4450a6b15bf8deab433400834aad258d8b90e3660f19b316b7f4e66a1a7f6bff"
+  },
+  {
+   "id": "R483",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R483.tif",
+   "orig_name": "19960807A-20-new-orleans-siggraph96.tif",
+   "pair": null,
+   "bytes": 36301750,
+   "sha256": "e677a34acd71480fd62b88c714547800d64fe7ceb346796b7c6bd9235208a978"
+  },
+  {
+   "id": "R484",
+   "roll": "ds-199608A",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R484.tif",
+   "orig_name": "19960807A-17-new-orleans-siggraph96.tif",
+   "pair": "A571",
+   "bytes": 34432438,
+   "sha256": "27539a8624739be29a571563e76e0cf6acc1a8848f64fcce8d8dcfd385c3e4d0"
+  },
+  {
+   "id": "R485",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R485.tif",
+   "orig_name": "19960812C-03-grand-canyon.tif",
+   "pair": "A572",
+   "bytes": 36656950,
+   "sha256": "983cba53d05ebc120d9a5c0c73b2a711e5b9a9564ab00a48f5b63e7a795e564c"
+  },
+  {
+   "id": "R486",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R486.tif",
+   "orig_name": "19960812C-12-grand-canyon.tif",
+   "pair": "A573",
+   "bytes": 36444610,
+   "sha256": "e1f3a724319c11f13e6dc720186749742da8a052a77f6e2a9da3111a4d8f3a07"
+  },
+  {
+   "id": "R487",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R487.tif",
+   "orig_name": "19960812C-09-grand-canyon.tif",
+   "pair": "A574",
+   "bytes": 36246190,
+   "sha256": "d53a9e4d797dbecd8b69e154a8e271efd56dfe492f1e2aabef31b74cebef79e4"
+  },
+  {
+   "id": "R488",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R488.tif",
+   "orig_name": "19960812C-18-grand-canyon.tif",
+   "pair": null,
+   "bytes": 36531310,
+   "sha256": "63bfac1eb1284a51d1f1e88d0d3aa255726e6c793b29102ec931df8d55a1c314"
+  },
+  {
+   "id": "R489",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R489.tif",
+   "orig_name": "19960812C-13-grand-canyon.tif",
+   "pair": "A575",
+   "bytes": 35968270,
+   "sha256": "e700c38f813ee266261f39757e44f2bd0e06c31599008f185f4abd72fe86db7b"
+  },
+  {
+   "id": "R490",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R490.tif",
+   "orig_name": "19960812C-25-grand-canyon.tif",
+   "pair": "A576",
+   "bytes": 36096220,
+   "sha256": "e64ecc8ff5661e6904aafcdc3f55fcaee7414801c15e108ed41a68e235d9cb28"
+  },
+  {
+   "id": "R491",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R491.tif",
+   "orig_name": "19960812C-28-grand-canyon.tif",
+   "pair": "A577",
+   "bytes": 36842710,
+   "sha256": "481f1e3908bd89f9e2c490ca4afcc53fdcb198fa710a4e9aa196c03d929c7899"
+  },
+  {
+   "id": "R492",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R492.tif",
+   "orig_name": "19960812C-21-grand-canyon.tif",
+   "pair": "A578",
+   "bytes": 36335290,
+   "sha256": "dd82417ad7eede07ae7fb6d062d7b853994e16ab01e58a275979c93ffae45b59"
+  },
+  {
+   "id": "R493",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R493.tif",
+   "orig_name": "19960812C-24-grand-canyon.tif",
+   "pair": "A579",
+   "bytes": 36664210,
+   "sha256": "3c14eaec31b851993c581e52cc71253eb27b18051707023a9d0c33e094e5fe30"
+  },
+  {
+   "id": "R494",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R494.tif",
+   "orig_name": "19960812C-22-grand-canyon.tif",
+   "pair": "A580",
+   "bytes": 36479350,
+   "sha256": "e42bb51e41e3f1966e0cdfc4c27541cd2c44f409c319533fc12c7953d7c44861"
+  },
+  {
+   "id": "R495",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R495.tif",
+   "orig_name": "19960812C-10-grand-canyon.tif",
+   "pair": "A581",
+   "bytes": 36424390,
+   "sha256": "1327a118944658119e6599b313cb0c7a56c83848d4b73d6f40d90b381df573cb"
+  },
+  {
+   "id": "R496",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R496.tif",
+   "orig_name": "19960812C-11-grand-canyon.tif",
+   "pair": "A582",
+   "bytes": 36656950,
+   "sha256": "749729cfb83e996a2ddb37d7af3fe6faaa7567edfed68d96567812fe77f1e41b"
+  },
+  {
+   "id": "R497",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R497.tif",
+   "orig_name": "19960813E-07-las-vegas.tif",
+   "pair": null,
+   "bytes": 36275890,
+   "sha256": "7c2954e97f68434cf1873a3333d5450b6fffbe2e8fcd612982dfee35072722fb"
+  },
+  {
+   "id": "R498",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R498.tif",
+   "orig_name": "19960812C-29-grand-canyon.tif",
+   "pair": "A583",
+   "bytes": 36513490,
+   "sha256": "9afb507d9ae1fdf6d4f707ef9f02d26ba10b08f91c5aa4634ac480d0b8809faf"
+  },
+  {
+   "id": "R499",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R499.tif",
+   "orig_name": "19960813E-06-las-vegas.tif",
+   "pair": "A584",
+   "bytes": 36274486,
+   "sha256": "e6f8dd2745090ec102a39962c398483856ceb6129226e53349c65cd5bc699657"
+  },
+  {
+   "id": "R500",
+   "roll": "ds-199608C",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R500.tif",
+   "orig_name": "19960812C-34-grand-canyon.tif",
+   "pair": "A585",
+   "bytes": 36097126,
+   "sha256": "8b206da95ede53225036a38bdd59904c0e47b54000cca2b35d60bbb4047b40de"
+  },
+  {
+   "id": "R501",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R501.tif",
+   "orig_name": "19960813E-08-las-vegas.tif",
+   "pair": "A586",
+   "bytes": 36267430,
+   "sha256": "128ff25b2c3f01f0c1d3d5d7b15f5832acf1084cde25b7c7a69b7407669a3c61"
+  },
+  {
+   "id": "R502",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R502.tif",
+   "orig_name": "19960813E-15-las-vegas.tif",
+   "pair": "A587",
+   "bytes": 36002110,
+   "sha256": "eb58d3477feb76f341e7cdfd5c803aba8d673ff00ee59229f45b43dd6512ecdc"
+  },
+  {
+   "id": "R503",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R503.tif",
+   "orig_name": "19960813E-27-las-vegas.tif",
+   "pair": null,
+   "bytes": 36452020,
+   "sha256": "d5fc75dad9c6ec73d1c86c093c96fc8a1cb15d6d234deb649bba4780fed98053"
+  },
+  {
+   "id": "R504",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R504.tif",
+   "orig_name": "19960813E-18-las-vegas.tif",
+   "pair": "A588",
+   "bytes": 36301750,
+   "sha256": "62bb5c38d81afd6b2e60b3b09939cae97ac42941668a21656939bc109eda9b40"
+  },
+  {
+   "id": "R505",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R505.tif",
+   "orig_name": "19960813E-12-las-vegas.tif",
+   "pair": "A589",
+   "bytes": 36629920,
+   "sha256": "36cd50acea8dbe19362e6ccb042abb22a3bea1f1658d5d17e178c0e73e45f2dc"
+  },
+  {
+   "id": "R506",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R506.tif",
+   "orig_name": "19960813E-21-las-vegas.tif",
+   "pair": "A590",
+   "bytes": 36656950,
+   "sha256": "832cc91f214c8ebae46e681680cbf2e1af7ccb8dce473a264a537f8e89c153be"
+  },
+  {
+   "id": "R507",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R507.tif",
+   "orig_name": "19960813E-22-las-vegas.tif",
+   "pair": "A591",
+   "bytes": 36523180,
+   "sha256": "0ceed907db0691ea3471757af91a1e320f875e54b2c3c5ae9b9a8d7c3d04c731"
+  },
+  {
+   "id": "R508",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R508.tif",
+   "orig_name": "19960814E-30-san-francisco.tif",
+   "pair": "A592",
+   "bytes": 36718870,
+   "sha256": "9dddc979ec817bb61d0e01395613593cea5cceb20ee9c4c10792c012f8ce6e75"
+  },
+  {
+   "id": "R509",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R509.tif",
+   "orig_name": "19960813E-24-las-vegas.tif",
+   "pair": "A593",
+   "bytes": 36375334,
+   "sha256": "fccc5c32af2a895a6b8b8c345ae864a6cad861fc5cb4603b02902e4b87cdd4db"
+  },
+  {
+   "id": "R510",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R510.tif",
+   "orig_name": "19960813E-25-las-vegas.tif",
+   "pair": "A594",
+   "bytes": 36499906,
+   "sha256": "501a99148e5de7b288a8e3bb8a0d106ab1347bf0b70bed225164486ac13eb8b8"
+  },
+  {
+   "id": "R511",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R511.tif",
+   "orig_name": "19960813E-26-las-vegas.tif",
+   "pair": "A595",
+   "bytes": 36327490,
+   "sha256": "6e09f2d0cc198a82c5a6c6e1f4443b8a004b4c7a644d41e1d3e7da79341de3da"
+  },
+  {
+   "id": "R512",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R512.tif",
+   "orig_name": "19960813E-28-las-vegas.tif",
+   "pair": "A596",
+   "bytes": 36450010,
+   "sha256": "e422bc42df527b8e8ae688c1193872239957da74e2d91e48fca8a0a46d1a07e5"
+  },
+  {
+   "id": "R513",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R513.tif",
+   "orig_name": "19960813E-23-las-vegas.tif",
+   "pair": "A597",
+   "bytes": 36479350,
+   "sha256": "5a916118c4f089448796784f6e2d7ca08c3e90816ae0bf3326471627d8024681"
+  },
+  {
+   "id": "R514",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R514.tif",
+   "orig_name": "19960814F-03-san-francisco.tif",
+   "pair": null,
+   "bytes": 36442210,
+   "sha256": "a53cdf0e97d2c38a96f6e480ae57f991266b3c93db5d974b284c3395c64bfdbc"
+  },
+  {
+   "id": "R515",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R515.tif",
+   "orig_name": "19960814E-37-san-francisco.tif",
+   "pair": null,
+   "bytes": 36718870,
+   "sha256": "eb040d7f3499e339eaffcc0e6a0f0cca0dd7ee3e2fd8dbd88b902491f029b2bf"
+  },
+  {
+   "id": "R516",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R516.tif",
+   "orig_name": "19960814E-34-san-francisco.tif",
+   "pair": "A598",
+   "bytes": 36842710,
+   "sha256": "1d1afc00cb63e98bea8ffcbec9ba0495be300edc0f557b063e2673e8ef1d84dd"
+  },
+  {
+   "id": "R517",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R517.tif",
+   "orig_name": "19960814E-35-san-francisco.tif",
+   "pair": "A599",
+   "bytes": 36513490,
+   "sha256": "e231badd19657b9034de6a85b1dda3c42b737daa59720680f891e00d90bf3fb8"
+  },
+  {
+   "id": "R518",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R518.tif",
+   "orig_name": "19960813E-29-las-vegas.tif",
+   "pair": "A600",
+   "bytes": 35502352,
+   "sha256": "6d25c4e8739ba215332293f7f52fab9d09a9d805d34f5149ae332be691969bdd"
+  },
+  {
+   "id": "R519",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R519.tif",
+   "orig_name": "19960814F-04-san-francisco.tif",
+   "pair": null,
+   "bytes": 36718870,
+   "sha256": "596dc7e433d50166cd222f4e62abf32e6dc9d7079d788cc7cdfb56638f552084"
+  },
+  {
+   "id": "R520",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R520.tif",
+   "orig_name": "19960814E-36-san-francisco.tif",
+   "pair": "A601",
+   "bytes": 36148558,
+   "sha256": "534896a1cd0936641f49c94dadb41c01f4fba362e55462b2ee0551633400caa9"
+  },
+  {
+   "id": "R521",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R521.tif",
+   "orig_name": "19960814E-31-san-francisco.tif",
+   "pair": "A602",
+   "bytes": 36363070,
+   "sha256": "8ad18e60c87a8be4041a5c2630293fe6d47a3718c97b014f5017a0f23c97afa2"
+  },
+  {
+   "id": "R522",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R522.tif",
+   "orig_name": "19960814F-06-san-francisco.tif",
+   "pair": null,
+   "bytes": 36424390,
+   "sha256": "0cee00896fb66d92ad6fed7b707416b5422ccf85a517aeecac5e49634fcde79d"
+  },
+  {
+   "id": "R523",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R523.tif",
+   "orig_name": "19960814F-02-san-francisco.tif",
+   "pair": "A603",
+   "bytes": 36664210,
+   "sha256": "82db8d96e7ca6d96c24d031b04b5c66b2e7d05cd5c3b287c04329288cd50ecc2"
+  },
+  {
+   "id": "R524",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R524.tif",
+   "orig_name": "19960814F-05-san-francisco.tif",
+   "pair": "A604",
+   "bytes": 36904630,
+   "sha256": "fd3075585fcdaacb18be33ba6128f2fb716cd02576797ef8cdc63da978593a77"
+  },
+  {
+   "id": "R525",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R525.tif",
+   "orig_name": "19960814F-07-san-francisco.tif",
+   "pair": "A605",
+   "bytes": 36355030,
+   "sha256": "81a2b9477cf39c9dd13ab9483218e3dec126c355c4e3d9c7a107fcb0924b5dfd"
+  },
+  {
+   "id": "R526",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R526.tif",
+   "orig_name": "19960815F-18-san-francisco.tif",
+   "pair": null,
+   "bytes": 36780790,
+   "sha256": "e0999d41287ffbd53cd396e71bcc094879b903b3678c458590b92584e7acfc80"
+  },
+  {
+   "id": "R527",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R527.tif",
+   "orig_name": "19960814F-08-san-francisco.tif",
+   "pair": "A606",
+   "bytes": 36718870,
+   "sha256": "cb3768ac404062b8fad57f9863aa25696ef6e7cb6cac07e0c99ac5987271c0ed"
+  },
+  {
+   "id": "R528",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R528.tif",
+   "orig_name": "19960814F-10-san-francisco.tif",
+   "pair": null,
+   "bytes": 36503560,
+   "sha256": "33a8f617f140ad47fe0a7f0c4ed591d5b9121892b9071e194a98756f973fd06f"
+  },
+  {
+   "id": "R529",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R529.tif",
+   "orig_name": "19960814F-14-san-francisco.tif",
+   "pair": "A607",
+   "bytes": 36056470,
+   "sha256": "d622e29c0473d6f3ff1b0a2ad75aba759bc6f5489a670e94f034c8484421a709"
+  },
+  {
+   "id": "R530",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R530.tif",
+   "orig_name": "19960814F-09-san-francisco.tif",
+   "pair": "A608",
+   "bytes": 36725830,
+   "sha256": "013fd5c81d6615a1bd3fb69e3a71a816167edf3915764e7dde2dbffb2ff18312"
+  },
+  {
+   "id": "R531",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R531.tif",
+   "orig_name": "19960814F-16-san-francisco.tif",
+   "pair": null,
+   "bytes": 36219460,
+   "sha256": "a3e6b0321ad80fa5695ce1a67f0a558ffafa200d9f560c64f9109836fd9cea98"
+  },
+  {
+   "id": "R532",
+   "roll": "ds-199608E",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R532.tif",
+   "orig_name": "19960814E-32-san-francisco.tif",
+   "pair": "A609",
+   "bytes": 36073990,
+   "sha256": "47b2af76ac13b1fd9f4300935110434373bd992ce4ac1d91097d9d904c62dec1"
+  },
+  {
+   "id": "R533",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R533.tif",
+   "orig_name": "19960814F-15-san-francisco.tif",
+   "pair": "A610",
+   "bytes": 36070042,
+   "sha256": "b38d23b559274c2a8d11a829f4c67c15b8ae1b296890c7649ea4d7dba7d7f55b"
+  },
+  {
+   "id": "R534",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R534.tif",
+   "orig_name": "19960815F-20-san-francisco.tif",
+   "pair": null,
+   "bytes": 36514696,
+   "sha256": "1c8655cfa5f4642fee6b13abb17e143947f509a9635fc1c2c053d707628c1c3b"
+  },
+  {
+   "id": "R535",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R535.tif",
+   "orig_name": "19960815F-19-san-francisco.tif",
+   "pair": null,
+   "bytes": 36246190,
+   "sha256": "362f55f7a0340d72cb3f071f1360e027dbeef8de708734d53eea9537d3485271"
+  },
+  {
+   "id": "R536",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R536.tif",
+   "orig_name": "19960814F-13-san-francisco.tif",
+   "pair": "A611",
+   "bytes": 36780790,
+   "sha256": "4f3b408681db2f87c75e0b005ce114ca7cdfdf8d11384998270570e30213a959"
+  },
+  {
+   "id": "R537",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R537.tif",
+   "orig_name": "19960814F-11-san-francisco.tif",
+   "pair": "A612",
+   "bytes": 36230710,
+   "sha256": "4d0e0432d600a86e316acb27116a640f5e2f1175f75388574a6a9349b66a0b9e"
+  },
+  {
+   "id": "R559",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R559.tif",
+   "orig_name": "19960814F-12-san-francisco.tif",
+   "pair": "A638",
+   "bytes": 27978836,
+   "sha256": "345d19c6d9ffea13665d373d73f7c0c88bdfde17cd1bf3f48b93c77a33c2e245"
+  },
+  {
+   "id": "R560",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R560.tif",
+   "orig_name": "19960815F-21-san-francisco.tif",
+   "pair": "A639",
+   "bytes": 36904630,
+   "sha256": "5a8cd02a89dcb92116eeda06de430a6c48b8b47361b228a1875edf78e56d5686"
+  },
+  {
+   "id": "R561",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R561.tif",
+   "orig_name": "19960815F-22-san-francisco.tif",
+   "pair": "A640",
+   "bytes": 36718870,
+   "sha256": "3f552df46879c867a75504fcfc303dd2319722fdb4f4f272b7b5595ff959946a"
+  },
+  {
+   "id": "R562",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R562.tif",
+   "orig_name": "19960815F-17-san-francisco.tif",
+   "pair": "A641",
+   "bytes": 36506380,
+   "sha256": "86d83a901a7860a67c714330e967c94ef5c8e70ae2482b0698fc4399e3c24873"
+  },
+  {
+   "id": "R563",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R563.tif",
+   "orig_name": "19960815F-23-san-francisco.tif",
+   "pair": "A642",
+   "bytes": 36096220,
+   "sha256": "559f3462c092702eb22420f5e718e80d3b292885a4902f9beb87de9b204ae6d1"
+  },
+  {
+   "id": "R564",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R564.tif",
+   "orig_name": "19960815F-33-golden-gate.tif",
+   "pair": null,
+   "bytes": 36734230,
+   "sha256": "053aa95ecd8d36a48fd242e28d0db29be05703c7d722476fee4745fb35202a14"
+  },
+  {
+   "id": "R565",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R565.tif",
+   "orig_name": "19960815F-26-golden-gate.tif",
+   "pair": "A643",
+   "bytes": 35740420,
+   "sha256": "4de24a1feb5f2543133917f2cca0610998d63247872db66bf8f4df53102a0809"
+  },
+  {
+   "id": "R566",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R566.tif",
+   "orig_name": "19960815F-32-golden-gate.tif",
+   "pair": "A644",
+   "bytes": 36513490,
+   "sha256": "03a697fd7c9393517f7e7750da5f076bb155458f36c43b64b815df562cea2b3f"
+  },
+  {
+   "id": "R567",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R567.tif",
+   "orig_name": "19960815F-30-golden-gate.tif",
+   "pair": "A645",
+   "bytes": 36151780,
+   "sha256": "28526d4a0ffd3727d439ad9459506f6a79e7219bea92fc5b2ecd018ded643a54"
+  },
+  {
+   "id": "R568",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R568.tif",
+   "orig_name": "19960815F-37-golden-gate.tif",
+   "pair": null,
+   "bytes": 36877000,
+   "sha256": "82f61a07662c96dc20a0815e78618a15e911ea1604105358b3d1ee79d5658114"
+  },
+  {
+   "id": "R569",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R569.tif",
+   "orig_name": "19960815F-35-golden-gate.tif",
+   "pair": "A646",
+   "bytes": 36574960,
+   "sha256": "039d720d0b57e33740785fe95d7f927891fdd74085ddf3c4e788b6bdbfb377e4"
+  },
+  {
+   "id": "R570",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R570.tif",
+   "orig_name": "19960815F-36-golden-gate.tif",
+   "pair": "A647",
+   "bytes": 36317470,
+   "sha256": "524d64e77570a177382b27001e7e755e4f3ff338001ab66cd843ff9ccd74a0d4"
+  },
+  {
+   "id": "R571",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R571.tif",
+   "orig_name": "19960815F-34-golden-gate.tif",
+   "pair": "A648",
+   "bytes": 36311350,
+   "sha256": "6c87c68612f641a7668a4f294d2cb909634b980c822920fac21ded332f812fbd"
+  },
+  {
+   "id": "R572",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R572.tif",
+   "orig_name": "19960815G-05-golden-gate-park.tif",
+   "pair": null,
+   "bytes": 34432438,
+   "sha256": "beff913a1ff4c8181e561ac14a42737d672349488987a9411e85fde6d1b509b8"
+  },
+  {
+   "id": "R573",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R573.tif",
+   "orig_name": "19960815G-02-golden-gate-park.tif",
+   "pair": "A650",
+   "bytes": 36780790,
+   "sha256": "055f3b8309dd642f7ba140aafdda3a3cf029f3179d0f83afb91163c6653f1cb3"
+  },
+  {
+   "id": "R574",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R574.tif",
+   "orig_name": "19960815G-03-golden-gate-park.tif",
+   "pair": "A651",
+   "bytes": 36602590,
+   "sha256": "ae0a53f8b59d89b071b878c6598ba209fc613f3704a9d15c39e7fb1016ff8e5c"
+  },
+  {
+   "id": "R579",
+   "roll": "ds-199608F",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R579.tif",
+   "orig_name": "19960815F-31-golden-gate.tif",
+   "pair": "A659",
+   "bytes": 36450682,
+   "sha256": "a418e6feeb9da2af9a980437a2ec817b65eaf7f33d7d9ab2e418e652196fe56d"
+  },
+  {
+   "id": "R580",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R580.tif",
+   "orig_name": "19960815G-06-golden-gate-park.tif",
+   "pair": "A666",
+   "bytes": 36372790,
+   "sha256": "a4513ab77b9722ff124748cea16c30f83cdc06c0a2c1102877a4c21c41a46059"
+  },
+  {
+   "id": "R581",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R581.tif",
+   "orig_name": "19960815G-04-golden-gate-park.tif",
+   "pair": "A667",
+   "bytes": 34149046,
+   "sha256": "47aa179b160fd486f922f2541bb2ecab937751f6a8cfb1deb4f8c371bae51105"
+  },
+  {
+   "id": "R582",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R582.tif",
+   "orig_name": "19960815G-08-golden-gate-park.tif",
+   "pair": "A668",
+   "bytes": 36396460,
+   "sha256": "f62af6df6a1a650078939e52961c18a40c0f7981dff80512894657e3ec2910eb"
+  },
+  {
+   "id": "R583",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R583.tif",
+   "orig_name": "19960815G-07-golden-gate-park.tif",
+   "pair": null,
+   "bytes": 36426550,
+   "sha256": "b3dcd1622cc0c3bd8a441d7df6a249abd79a90c7a0dbdd15c9b1071525183b12"
+  },
+  {
+   "id": "R584",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R584.tif",
+   "orig_name": "19960815G-10-golden-gate-park.tif",
+   "pair": "A672",
+   "bytes": 36780790,
+   "sha256": "096fe1d62cf1ab9f8c620d5ebf80ec89a3f66881a2f8b96202a845536c284c17"
+  },
+  {
+   "id": "R585",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R585.tif",
+   "orig_name": "19960815G-09-golden-gate-park.tif",
+   "pair": "A673",
+   "bytes": 36396460,
+   "sha256": "3f19c4a8337d6f8accc1a3b3eaf3fc883231ed1748c86e9865524756464d0bb3"
+  },
+  {
+   "id": "R586",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R586.tif",
+   "orig_name": "19960815G-11-san-francisco.tif",
+   "pair": "A674",
+   "bytes": 36335290,
+   "sha256": "66fdbbaf21895d9503cae4cdbdb778ea6771ef25355a1d08dd764a700c7feeb9"
+  },
+  {
+   "id": "R587",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R587.tif",
+   "orig_name": "19960815G-19-san-francisco.tif",
+   "pair": null,
+   "bytes": 37000966,
+   "sha256": "7494e08d18760f280131e2daa22257331205b9df62a820c2083bcc4ecad98b47"
+  },
+  {
+   "id": "R588",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R588.tif",
+   "orig_name": "19960815G-16-san-francisco.tif",
+   "pair": null,
+   "bytes": 36223630,
+   "sha256": "550b33f7602786e112b1408ba3c90022e811fc3858df8a9c8a1bd7aa8876cb92"
+  },
+  {
+   "id": "R589",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R589.tif",
+   "orig_name": "19960816G-26-stanford.tif",
+   "pair": null,
+   "bytes": 36691690,
+   "sha256": "fbf163a2e116beaedb9dd365ac2f7dd88b2bb787c040a2efeefc28a80b8e92d8"
+  },
+  {
+   "id": "R590",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R590.tif",
+   "orig_name": "19960815G-15-san-francisco.tif",
+   "pair": null,
+   "bytes": 36904630,
+   "sha256": "584ac369f71db4498dedc034ab9c8e5b0d6c59a6bfb722d614924bb3958fc32a"
+  },
+  {
+   "id": "R591",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R591.tif",
+   "orig_name": "19960815G-13-san-francisco.tif",
+   "pair": "A677",
+   "bytes": 36479350,
+   "sha256": "9b81027274b3d830e2253afb757fea92bb5baa78d45fe50214a02f58d76979be"
+  },
+  {
+   "id": "R592",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R592.tif",
+   "orig_name": "19960815G-01-golden-gate.tif",
+   "pair": "A679",
+   "bytes": 36837238,
+   "sha256": "e5261c6a498c3e3f87685af6e87e8f45efc1c11f168403e791274cdcd0132ec6"
+  },
+  {
+   "id": "R593",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R593.tif",
+   "orig_name": "19960815G-14-san-francisco.tif",
+   "pair": "A681",
+   "bytes": 35946550,
+   "sha256": "ed3a67633d5e6df8adc42d09a4e2be7902c01be4d56075231ba4f1f0f4f7bb3a"
+  },
+  {
+   "id": "R594",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R594.tif",
+   "orig_name": "19960815G-17-san-francisco.tif",
+   "pair": "A682",
+   "bytes": 35888422,
+   "sha256": "3028f9ec1cbf9487c7d9b083ded04c5764998203ba10c024ca9aea1f0d27680c"
+  },
+  {
+   "id": "R595",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R595.tif",
+   "orig_name": "19960815G-21-san-francisco.tif",
+   "pair": "A683",
+   "bytes": 36842710,
+   "sha256": "fae7d0737b9cfdc708bb1be53eadb987361d747efb664429ba103b3900c3b467"
+  },
+  {
+   "id": "R596",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R596.tif",
+   "orig_name": "19960816G-32-stanford.tif",
+   "pair": null,
+   "bytes": 34432438,
+   "sha256": "7e5f0fb46c02ac96cfc6842e2e9062eec2ad43b141d84ed2bfca5687f222c241"
+  },
+  {
+   "id": "R597",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R597.tif",
+   "orig_name": "19960816G-24-stanford.tif",
+   "pair": "A685",
+   "bytes": 36753460,
+   "sha256": "c0da812aa55ad214178d6748e27f95367558f92c6b4578fc660db2501ca60c9f"
+  },
+  {
+   "id": "R598",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R598.tif",
+   "orig_name": "19960816G-25-stanford.tif",
+   "pair": "A686",
+   "bytes": 36335290,
+   "sha256": "7c216f37166ef94c1ce32f099bf5bd5725533dea8d60cc930f9f5cb939a4f4e6"
+  },
+  {
+   "id": "R599",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R599.tif",
+   "orig_name": "19960816G-29-stanford.tif",
+   "pair": "A687",
+   "bytes": 34432438,
+   "sha256": "44a7ece6bd967e6bdbac84b4d0e90734b0c0e3d747019cc731fdfa5548493776"
+  },
+  {
+   "id": "R600",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R600.tif",
+   "orig_name": "19960816G-27-stanford.tif",
+   "pair": "A688",
+   "bytes": 36842710,
+   "sha256": "bdb07342b030e52da0c95d809e4b8a146cfbf79ebec6073732a906db6eb142f1"
+  },
+  {
+   "id": "R601",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R601.tif",
+   "orig_name": "19960816G-34-stanford.tif",
+   "pair": null,
+   "bytes": 36372790,
+   "sha256": "18447eadc8feb088cadf992a9fcc08ef866194bc8a1cee0834ffb1d3d317915b"
+  },
+  {
+   "id": "R602",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R602.tif",
+   "orig_name": "19960816G-35-stanford.tif",
+   "pair": null,
+   "bytes": 34290742,
+   "sha256": "566360f94ff7de10f2ef23d0ed0ade1bc9beecb25e4f8b55d9feff2325c7c646"
+  },
+  {
+   "id": "R603",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R603.tif",
+   "orig_name": "19960816G-28-stanford.tif",
+   "pair": "A689",
+   "bytes": 36157090,
+   "sha256": "cfd0b4abaa02a2fb5488c88f2efdc93563224eba75a496918b31e295c2154fff"
+  },
+  {
+   "id": "R604",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R604.tif",
+   "orig_name": "19960816G-22-stanford.tif",
+   "pair": "A690",
+   "bytes": 36823270,
+   "sha256": "f1c379f51ba9c94a9b4b143a1c1d968a0692c2dd334ee1676330807e2237a7c2"
+  },
+  {
+   "id": "R605",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R605.tif",
+   "orig_name": "19960816H-04-stanford.tif",
+   "pair": null,
+   "bytes": 36753460,
+   "sha256": "8c8efeffbb659d727a9bb5c500b80ac41bb572908c4d90634b2ca2c288dc073a"
+  },
+  {
+   "id": "R606",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R606.tif",
+   "orig_name": "19960816H-02-stanford.tif",
+   "pair": null,
+   "bytes": 36298588,
+   "sha256": "11b000eab622d60c0a0dd16d6f98aedc4db06a78f5e995a37c511fc4c43736dc"
+  },
+  {
+   "id": "R607",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R607.tif",
+   "orig_name": "19960816G-33-stanford.tif",
+   "pair": "A691",
+   "bytes": 31190926,
+   "sha256": "7e7f437cbd7fa61a902064a214de3fbbb860e1541c93679d2306257a09177e55"
+  },
+  {
+   "id": "R608",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R608.tif",
+   "orig_name": "19960816H-01-stanford.tif",
+   "pair": "A692",
+   "bytes": 36629920,
+   "sha256": "66b08310ec657ba99842e39b3d5974e883f8fe97d91b55b46c5f377011c8e57e"
+  },
+  {
+   "id": "R609",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R609.tif",
+   "orig_name": "19960816H-03-stanford.tif",
+   "pair": "A693",
+   "bytes": 34007350,
+   "sha256": "e9cec86bad6de863d79c6d3e0e4f7a2cce4ec4874339662a72bb01ed6a236939"
+  },
+  {
+   "id": "R610",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R610.tif",
+   "orig_name": "19960817H-12-san-francisco.tif",
+   "pair": "A694",
+   "bytes": 34432438,
+   "sha256": "a939c8c0e6af61a0db31ca041d5961c4c48881631244497cf4aa5ba8b4956116"
+  },
+  {
+   "id": "R611",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R611.tif",
+   "orig_name": "19960816G-37-stanford.tif",
+   "pair": "A695",
+   "bytes": 36217960,
+   "sha256": "79d13b670c43d9b75df317ef1f75cfc6a4044d4e570149524334754c0103547d"
+  },
+  {
+   "id": "R612",
+   "roll": "ds-199608G",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R612.tif",
+   "orig_name": "19960816G-36-stanford.tif",
+   "pair": "A696",
+   "bytes": 36761440,
+   "sha256": "b3756a182950b85e503cc7976eb9dac17903d408c55899c3148314d77529f91a"
+  },
+  {
+   "id": "R613",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R613.tif",
+   "orig_name": "19960816H-05-stanford.tif",
+   "pair": "A697",
+   "bytes": 34432438,
+   "sha256": "7ba9c0823f59f69409442c95274812a992159f20984b4e6d348f9c3ab21ef748"
+  },
+  {
+   "id": "R614",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R614.tif",
+   "orig_name": "19960817H-15-uc-berkeley.tif",
+   "pair": null,
+   "bytes": 36372790,
+   "sha256": "bd2f336eaadce8bc8b1a7f59189d2bc145a9aa8504686774ec1d1f3991e2d954"
+  },
+  {
+   "id": "R615",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R615.tif",
+   "orig_name": "19960816H-06-stanford.tif",
+   "pair": "A698",
+   "bytes": 34574134,
+   "sha256": "9285fd7fb92be86460b612371c695cd598ca689ba845d37edb7054e5c53692a8"
+  },
+  {
+   "id": "R616",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R616.tif",
+   "orig_name": "19960817H-11-san-francisco.tif",
+   "pair": "A699",
+   "bytes": 36524470,
+   "sha256": "3f7f8942d4998c79408f5d364c84ea2689a2cc780066eea53a43a9754f4c8f32"
+  },
+  {
+   "id": "R617",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R617.tif",
+   "orig_name": "19960817H-13-san-francisco.tif",
+   "pair": "A700",
+   "bytes": 36557878,
+   "sha256": "9991a902455b15e83c1ec82ff1cad13467ea64ee212d18e618261eba7c5942bd"
+  },
+  {
+   "id": "R618",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R618.tif",
+   "orig_name": "19960817H-17-uc-berkeley.tif",
+   "pair": "A701",
+   "bytes": 33865654,
+   "sha256": "38481d2a38aa877149cd8caf30c8e2197029f11bf191f5de0f0913e2bfcfaa4f"
+  },
+  {
+   "id": "R619",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R619.tif",
+   "orig_name": "19960817H-14-uc-berkeley.tif",
+   "pair": "A702",
+   "bytes": 36274486,
+   "sha256": "196049ab3a4c423273c465f4a4c0c07e1c9456aa26e4cf57931ca0b5b28605d5"
+  },
+  {
+   "id": "R620",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R620.tif",
+   "orig_name": "19960817H-16-uc-berkeley.tif",
+   "pair": "A703",
+   "bytes": 34056502,
+   "sha256": "f8b40c0e60e098d7f183171d54c58f8429dac9b63e44243fa6c182380646bc48"
+  },
+  {
+   "id": "R621",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R621.tif",
+   "orig_name": "19960817H-18-uc-berkeley.tif",
+   "pair": "A704",
+   "bytes": 36372790,
+   "sha256": "4b7828d50c3b03ec8799589c9d573ecdae4332530a7c35c9011f3d19ed23f449"
+  },
+  {
+   "id": "R622",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R622.tif",
+   "orig_name": "19960817H-10-san-francisco.tif",
+   "pair": "A705",
+   "bytes": 34432438,
+   "sha256": "7c422b87318067a0036c0f19f6191d24745b54ed19014c718e2316ecf618f06e"
+  },
+  {
+   "id": "R623",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R623.tif",
+   "orig_name": "19960817H-20-san-francisco.tif",
+   "pair": "A706",
+   "bytes": 34480438,
+   "sha256": "f89adc69ea3690486ee01c8ed3dbb5413bff18bbefb8257261096ac313b0c1c2"
+  },
+  {
+   "id": "R624",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R624.tif",
+   "orig_name": "19960817H-19-san-francisco.tif",
+   "pair": "A707",
+   "bytes": 36274486,
+   "sha256": "7b3118f79aa7332ada46bac50c34651885ec64ed98b30f3e8daeac7588c2fe62"
+  },
+  {
+   "id": "R625",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R625.tif",
+   "orig_name": "19960817H-21-san-francisco.tif",
+   "pair": "A708",
+   "bytes": 34574134,
+   "sha256": "c4c235ce3e7cd5a20bb149f25c66b84bc89a6c96fa0590baf0a91af4409f9642"
+  },
+  {
+   "id": "R626",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R626.tif",
+   "orig_name": "19960818H-26-san-francisco.tif",
+   "pair": "A709",
+   "bytes": 36132790,
+   "sha256": "4c6f391b7520dd937070b8d1d7860d03c43a3cf36844666641435e7e89f263d0"
+  },
+  {
+   "id": "R627",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R627.tif",
+   "orig_name": "19960818H-30-san-francisco.tif",
+   "pair": "A710",
+   "bytes": 36372790,
+   "sha256": "a5c705dedfc16753976bb61fac3827d4079dfadaad2d7781ee30d2af564bf1f2"
+  },
+  {
+   "id": "R628",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R628.tif",
+   "orig_name": "19960818H-27-san-francisco.tif",
+   "pair": "A711",
+   "bytes": 36169510,
+   "sha256": "43b68e0b8b3d9f5d04804636fd02f65f024f491df5df4293c4de461d280d126b"
+  },
+  {
+   "id": "R629",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R629.tif",
+   "orig_name": "19960818H-28-san-francisco.tif",
+   "pair": "A712",
+   "bytes": 26434315,
+   "sha256": "0c709d6904b7b90ff45fa2e43ceadca3d7b0c1e22179fc7df5e08f5db79228d8"
+  },
+  {
+   "id": "R630",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R630.tif",
+   "orig_name": "19960818H-32-san-francisco.tif",
+   "pair": "A713",
+   "bytes": 34574134,
+   "sha256": "226dd52430ffb7564c523da73199f05d3a2ecb5090f861c6671d80ad202bcd85"
+  },
+  {
+   "id": "R631",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R631.tif",
+   "orig_name": "19960818H-31-san-francisco.tif",
+   "pair": "A714",
+   "bytes": 34574134,
+   "sha256": "7d102d1433a9e42af63f4c987dcff03b0c078148ae66d8a7fe796d77b093be55"
+  },
+  {
+   "id": "R632",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R632.tif",
+   "orig_name": "19960818H-33-san-francisco.tif",
+   "pair": "A715",
+   "bytes": 36307210,
+   "sha256": "f56a1da93ade7ee05b4901a7429ad69dceec0e9898b4612f1d879dd37c1bf133"
+  },
+  {
+   "id": "R633",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R633.tif",
+   "orig_name": "19960818H-34-san-francisco.tif",
+   "pair": "A716",
+   "bytes": 36485710,
+   "sha256": "f65dcf411dc7d87fade0b478e941ca96fd01e447f24f899afeb5a153fb1f55d6"
+  },
+  {
+   "id": "R634",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R634.tif",
+   "orig_name": "19960818H-35-san-francisco.tif",
+   "pair": "A717",
+   "bytes": 36191776,
+   "sha256": "6a6ba37c92f3829cbd064b9ebb4ebd046df0e8c5ad769711e5b73a630d4d6ad0"
+  },
+  {
+   "id": "R635",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R635.tif",
+   "orig_name": "19960818H-37-san-francisco.tif",
+   "pair": "A718",
+   "bytes": 36533110,
+   "sha256": "cfc29c92dd1da33bb762ac63ed1ff1201aa38636df636fff537ab499ae16005e"
+  },
+  {
+   "id": "R636",
+   "roll": "ds-199608H",
+   "why": "file of the roll",
+   "rel": "04_已反转成品_对照答案/R636.tif",
+   "orig_name": "19960818H-36-san-francisco.tif",
+   "pair": "A719",
+   "bytes": 36664210,
+   "sha256": "e0fb265a6ef468bd5b5784cfb6a2e8f8ddef013ec2ed43ae7b2030a1bd84c165"
+  }
+ ]
+}
