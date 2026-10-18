@@ -1,0 +1,106 @@
+ext:A002 user B0 fl 20.78 p4 10.13 ub7 12.07
+ext:A008 shop B0 fl 25.28 p4 21.51 ub7 14.33
+ext:A019 shop B0 fl 37.64 p4 7.81 ub7 3.22
+ext:A008 user B0 fl 28.64 p4 24.58 ub7 16.33
+ext:A002 shop B0 fl 15.45 p4 4.89 ub7 7.13
+ext:A019 user B0 fl 37.37 p4 10.05 ub7 7.50
+ext:A002 user B1 fl 10.07 p4 4.98 ub7 3.60
+ext:A008 shop B1 fl 11.68 p4 5.37 ub7 3.55
+ext:A019 shop B1 fl 26.90 p4 3.17 ub7 2.18
+ext:A002 shop B1 fl 3.59 p4 2.78 ub7 2.69
+ext:A008 user B1 fl 12.99 p4 5.55 ub7 3.19
+ext:A019 user B1 fl 25.35 p4 5.98 ub7 4.55
+ext:A019 shop B1c fl 46.13 p4 24.94 ub7 9.90
+ext:A002 shop B1c fl 22.86 p4 21.41 ub7 10.30
+ext:A008 shop B1c fl 20.93 p4 20.31 ub7 15.31
+ext:A008 user B1c fl 19.86 p4 17.32 ub7 14.20
+ext:A002 user B1c fl 19.80 p4 17.30 ub7 5.54
+ext:A019 shop B0w4 fl 37.22 p4 7.85 ub7 3.18
+ext:A019 user B1c fl 43.86 p4 26.52 ub7 10.90
+ext:A008 shop B0w4 fl 22.33 p4 20.64 ub7 14.37
+ext:A008 user B0w4 fl 25.72 p4 23.65 ub7 16.50
+ext:A002 shop B0w4 fl 13.80 p4 4.77 ub7 6.86
+ext:A002 user B0w4 fl 18.65 p4 8.98 ub7 12.44
+ext:A019 shop MCt_B0 fl 40.06 p4 13.84 ub7 2.85
+ext:A019 user B0w4 fl 36.90 p4 9.96 ub7 7.50
+ext:A008 shop MCt_B0 fl 28.95 p4 25.69 ub7 14.82
+ext:A002 shop MCt_B0 fl 18.53 p4 8.05 ub7 5.38
+ext:A008 user MCt_B0 fl 31.68 p4 27.40 ub7 16.53
+ext:A002 user MCt_B0 fl 22.53 p4 13.67 ub7 10.91
+ext:A019 shop B1cw4 fl 45.86 p4 25.00 ub7 9.90
+ext:A019 user MCt_B0 fl 39.61 p4 16.67 ub7 7.40
+ext:A008 user B1cw4 fl 18.85 p4 17.22 ub7 14.19
+ext:A002 shop B1cw4 fl 22.42 p4 21.34 ub7 10.30
+ext:A008 shop B1cw4 fl 20.48 p4 20.23 ub7 15.23
+ext:A008 user MCt_B1c fl 52.70 p4 52.70 ub7 43.82
+ext:A002 user B1cw4 fl 19.13 p4 17.23 ub7 5.40
+ext:A008 shop MCt_B1c fl 48.06 p4 48.07 ub7 38.69
+ext:A019 shop MCt_B1c fl 47.14 p4 27.84 ub7 9.88
+ext:A002 shop MCt_B1c fl 25.33 p4 24.40 ub7 10.36
+done ext:A002 shop 684.0
+ext:A019 user B1cw4 fl 43.58 p4 26.37 ub7 10.87
+ext:A002 user MCt_B1c fl 23.59 p4 22.57 ub7 12.89
+done ext:A002 user 738.9
+done ext:A008 shop 654.8
+done ext:A008 user 643.9
+done ext:A019 shop 661.8
+ext:A019 user MCt_B1c fl 45.20 p4 28.00 ub7 10.83
+done ext:A019 user 785.4
+ext:A023 shop B0 fl 6.76 p4 3.19 ub7 2.44
+ext:A023 user B0 fl 8.36 p4 4.65 ub7 3.77
+ext:A140 shop B0 fl 33.80 p4 13.68 ub7 8.51
+ext:A023 shop B1 fl 6.30 p4 3.73 ub7 2.89
+ext:A023 user B1 fl 8.43 p4 4.84 ub7 4.27
+ext:A196 shop B0 fl 16.09 p4 11.69 ub7 5.58
+ext:A140 shop B1 fl 16.52 p4 3.44 ub7 3.07
+ext:A196 user B0 fl 13.20 p4 7.13 ub7 4.62
+ext:A196 user B1 fl 19.24 p4 5.19 ub7 4.07
+ext:A196 shop B1 fl 12.13 p4 3.59 ub7 3.26
+ext:A023 shop B1c fl 6.33 p4 3.83 ub7 3.00
+ext:A023 user B1c fl 8.44 p4 4.94 ub7 4.29
+ext:A140 shop B1c fl 39.84 p4 24.44 ub7 8.69
+ext:A023 shop B0w4 fl 5.22 p4 2.87 ub7 1.82
+ext:A140 shop B0w4 fl 32.98 p4 13.63 ub7 8.46
+ext:A023 user B0w4 fl 7.69 p4 4.53 ub7 3.25
+ext:A196 user B1c fl 13.45 p4 5.14 ub7 3.82
+ext:A140 shop MCt_B0 fl 36.93 p4 17.82 ub7 7.96
+ext:A023 shop MCt_B0 fl 14.03 p4 3.54 ub7 2.77
+ext:A196 shop B1c fl 9.45 p4 4.15 ub7 3.46
+ext:A196 user B0w4 fl 13.30 p4 7.09 ub7 4.77
+ext:A023 user MCt_B0 fl 15.07 p4 5.33 ub7 3.97
+ext:A140 shop B1cw4 fl 38.98 p4 24.44 ub7 8.64
+ext:A023 shop B1cw4 fl 5.51 p4 3.36 ub7 2.50
+ext:A196 shop B0w4 fl 15.40 p4 11.71 ub7 5.81
+ext:A196 user MCt_B0 fl 13.57 p4 11.37 ub7 4.66
+ext:A023 user B1cw4 fl 8.40 p4 4.75 ub7 3.86
+ext:A023 shop MCt_B1c fl 14.66 p4 4.16 ub7 3.30
+done ext:A023 shop 608.0
+ext:A140 shop MCt_B1c fl 40.01 p4 25.58 ub7 9.13
+ext:A023 user MCt_B1c fl 15.66 p4 5.33 ub7 4.56
+done ext:A023 user 644.1
+done ext:A140 shop 592.8
+ext:A196 user B1cw4 fl 13.99 p4 4.94 ub7 3.84
+ext:A196 shop MCt_B0 fl 19.54 p4 17.68 ub7 5.88
+ext:A196 user MCt_B1c fl 7.60 p4 6.49 ub7 4.65
+ext:A196 shop B1cw4 fl 9.10 p4 4.24 ub7 3.60
+ext:A196 shop MCt_B1c fl 11.27 p4 8.39 ub7 3.93
+done ext:A196 shop 717.5
+done ext:A196 user 605.3
+     1403.48 real      5487.39 user       116.00 sys
+           629866496  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             5562801  page reclaims
+                4339  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+               28862  voluntary context switches
+            21325491  involuntary context switches
+          3114083103  instructions retired
+          1749951203  cycles elapsed
+            55542264  peak memory footprint
