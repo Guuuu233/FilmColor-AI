@@ -103,7 +103,12 @@ def task(args):
     target = None
     for name, b in bases(b0, broll).items():
         d_hi = full + np.log10(b)
-        P = positive_T(T, b, (0, 0, 0), d_hi)
+        with np.errstate(over="ignore"):
+            P = positive_T(T, b, (0, 0, 0), d_hi)
+        if not np.isfinite(P).all():  # e.g. L0C1 on ext:A034: R white point 0.02 D above black, the curve overflows
+            out["variants"][name] = dict(base=b.tolist(), d_hi=d_hi.tolist(), undefined=True,
+                                         reason="positive not finite (white point too close to black in a channel)")
+            continue
         res = dict(base=b.tolist(), d_hi=d_hi.tolist(), below_black=[float(x) for x in (P < 0).mean(0)],
                    below_black_any=float((P < 0).any(-1).mean()))
         res["fixed_look"], _ = evaluate(P, R, LOOK["params"], LG)
@@ -124,7 +129,20 @@ def task(args):
     out["seconds"] = round(time.time() - t0, 1)
     (Path(out_dir) / f"{stem}_{ref_kind}.json").write_text(json.dumps(out, indent=1, default=float))
     v = out["variants"]
-    return f["id"], ref_kind, " ".join("%s m %.2f" % (k, v[k]["matched"]["de2000_median"]) for k in v), out["seconds"]
+    return f["id"], ref_kind, " ".join("%s m %s" % (k, "undefined" if v[k].get("undefined") else
+                                                     "%.2f" % v[k]["matched"]["de2000_median"]) for k in v), out["seconds"]
+
+
+def safe_task(args):
+    """One failing task is recorded (OUT_DIR/errors/) and does not stop the others."""
+    try:
+        return task(args)
+    except Exception as e:  # noqa: BLE001
+        f, ref_kind, _, out_dir = args
+        err = Path(out_dir).parent / "errors"
+        err.mkdir(exist_ok=True)
+        (err / f"{f['stem']}_{ref_kind}.txt").write_text(f"{type(e).__name__}: {e}\n")
+        return f["id"], ref_kind, f"ERROR {type(e).__name__}: {e}", 0
 
 
 def main(frames_json, roll_base, out_dir, workers, *rolls):
@@ -137,7 +155,7 @@ def main(frames_json, roll_base, out_dir, workers, *rolls):
         jobs += [(f, k, roll_base, out_dir) for k in kinds if not (Path(out_dir) / f"{f['stem']}_{k}.json").exists()]
     print(len(jobs), "tasks to do", flush=True)
     with ProcessPoolExecutor(int(workers)) as ex:
-        for r in ex.map(task, jobs):
+        for r in ex.map(safe_task, jobs):
             print(*r, flush=True)
 
 

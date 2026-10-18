@@ -34,17 +34,30 @@ def med(x):
     return round(float(np.median(x)), 3) if len(x) else None
 
 
+def defined(r, v):
+    return not r["variants"][v].get("undefined")
+
+
+def de(r, v, rd):
+    """dE of a variant; an undefined inversion counts as infinitely worse."""
+    return r["variants"][v][rd]["de2000_median"] if defined(r, v) else float("inf")
+
+
 def stats(rows):
+    """Medians over the frames where the variant is defined; undefined ones are counted, and count as worse > 2."""
     out = {}
     for v in VARIANTS:
+        ok = [r for r in rows if defined(r, v)]
         for rd in READINGS:
-            de = [r["variants"][v][rd]["de2000_median"] for r in rows]
-            out[f"{v}/{rd}"] = dict(n=len(rows), dE=med(de), ab=med([r["variants"][v][rd]["ab_median"] for r in rows]),
-                                    dL=med([r["variants"][v][rd]["dL_median"] for r in rows]),
-                                    below_black=med([r["variants"][v]["below_black_any"] for r in rows]))
+            out[f"{v}/{rd}"] = dict(n=len(rows), undefined=len(rows) - len(ok),
+                                    dE=med([de(r, v, rd) for r in ok]),
+                                    ab=med([r["variants"][v][rd]["ab_median"] for r in ok]),
+                                    dL=med([r["variants"][v][rd]["dL_median"] for r in ok]),
+                                    below_black=med([r["variants"][v]["below_black_any"] for r in ok]))
             if v != "B0":
-                d = [r["variants"][v][rd]["de2000_median"] - r["variants"]["B0"][rd]["de2000_median"] for r in rows]
-                out[f"{v}/{rd}"].update(d_vs_B0=med(d), better=int(sum(x < 0 for x in d)), worse2=int(sum(x > 2 for x in d)))
+                d = [de(r, v, rd) - de(r, "B0", rd) for r in rows]
+                out[f"{v}/{rd}"].update(d_vs_B0=med([x for x in d if np.isfinite(x)]), better=int(sum(x < 0 for x in d)),
+                                        worse2=int(sum(x > 2 for x in d)))
     return out
 
 
@@ -78,10 +91,9 @@ def main(check_dir, a7_json, out_json, out_md):
         }
         res["groups"][g] = {k: dict(n=len(v), stats=stats(v) if v else None,
                                    rule=reading_rule(stats(v)) if v else None) for k, v in subsets.items()}
-        worst = sorted(rs, key=lambda r: -max(r["variants"][v]["matched"]["de2000_median"]
-                                              - r["variants"]["B0"]["matched"]["de2000_median"] for v in VARIANTS[1:]))[:5]
+        worst = sorted(rs, key=lambda r: -max(de(r, v, "matched") - de(r, "B0", "matched") for v in VARIANTS[1:]))[:5]
         res["groups"][g]["worst_matched"] = [dict(id=r["id"], ref=r["ref_kind"], **{
-            v: round(r["variants"][v]["matched"]["de2000_median"], 2) for v in VARIANTS}) for r in worst]
+            v: round(de(r, v, "matched"), 2) if defined(r, v) else "undefined" for v in VARIANTS}) for r in worst]
     a7 = json.loads(Path(a7_json).read_text())
     res["a7r5"] = {s: {v: {k: round(x, 3) for k, x in fr[v].items()
                            if k.endswith(("dE_vs_BM", "ab_vs_BM", "below_black_any"))} | dict(D_vs_BM=fr[v]["D_vs_BM"])
@@ -97,13 +109,13 @@ def main(check_dir, a7_json, out_json, out_md):
                 L += [f"- {k}：0 帧", ""]
                 continue
             L += [f"**{k}**（{s['n']} 帧；明度对齐口径的解读：{s['rule']}）", "",
-                  "| 变体 | 读法 | ΔE 中位数 | a\\*b\\* 中位数 | ΔL\\* 中位数 | 黑点以下 | 相对 B0 的 Δ 中位数 | 变好 | 变差 > 2 |",
-                  "|---|---|---|---|---|---|---|---|---|"]
+                  "| 变体 | 读法 | ΔE 中位数 | a\\*b\\* 中位数 | ΔL\\* 中位数 | 黑点以下 | 相对 B0 的 Δ 中位数 | 变好 | 变差 > 2（含无定义） | 无定义 |",
+                  "|---|---|---|---|---|---|---|---|---|---|"]
             for v in VARIANTS:
                 for rd in READINGS:
                     x = s["stats"][f"{v}/{rd}"]
                     L.append(f"| {v} | {rd} | {x['dE']} | {x['ab']} | {x['dL']} | {x['below_black']} | "
-                             f"{x.get('d_vs_B0', '–')} | {x.get('better', '–')} | {x.get('worse2', '–')} |")
+                             f"{x.get('d_vs_B0', '–')} | {x.get('better', '–')} | {x.get('worse2', '–')} | {x['undefined']} |")
             L.append("")
         L += ["明度对齐口径下相对 B0 变差最多的帧：", "", "| 帧 | 参考 | B0 | B1 | L0C1 | L1C0 |", "|---|---|---|---|---|---|"]
         L += [f"| {w['id']} | {w['ref']} | {w['B0']} | {w['B1']} | {w['L0C1']} | {w['L1C0']} |" for w in sub["worst_matched"]]
