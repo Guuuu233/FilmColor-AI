@@ -14,6 +14,7 @@ difference is reported by diag_variants.py).
   diag_build_T.py FRAMES_JSON [--t8] (ID [ID ...] | --roll ROLL)
 """
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -31,7 +32,7 @@ from filmcolor.paths import data_dir
 from filmcolor.raw import saturation_mask
 from filmcolor.rawpy_io import demosaic_linear, load_raw
 
-ROLL_BASE = Path("experiments/s3_diag/roll_base.json")
+ROLL_BASE = Path(os.environ.get("DIAG_ROLL_BASE", "experiments/s3_diag/roll_base.json"))  # later rounds: own file
 PCTS = (0.01, 0.1, 0.5, 1, 2, 5, 10, 25, 50, 75, 90, 95, 99, 99.5, 99.9, 99.99)
 
 

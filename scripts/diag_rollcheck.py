@@ -15,6 +15,7 @@ Reads the T8 caches (diag_build_T.py --t8); the shop grid is the full-frame 1/8 
   diag_rollcheck.py FRAMES_JSON OUT_DIR [WORKERS] ROLL [ROLL ...]
 """
 import json
+import os
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
@@ -30,7 +31,7 @@ from filmcolor.frozen import check_source, load_cache  # noqa: E402
 from filmcolor.invert import EPS  # noqa: E402
 from filmcolor.paths import data_dir  # noqa: E402
 
-ROLL_BASE = Path("experiments/s3_diag/roll_base.json")
+ROLL_BASE = Path(os.environ.get("DIAG_ROLL_BASE", "experiments/s3_diag/roll_base.json"))  # later rounds: own file
 
 
 def task(args):

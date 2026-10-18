@@ -17,11 +17,13 @@ REPO = "https://huggingface.co/datasets/ttgroup/blueneg-release"
 API = "https://huggingface.co/api/datasets/ttgroup/blueneg-release/paths-info/main"
 
 
-def lfs_records(paths):
-    data = urllib.parse.urlencode([("paths", p) for p in paths]).encode()
-    with urllib.request.urlopen(urllib.request.Request(API, data=data), timeout=60) as r:
-        info = json.load(r)
-    return {e["path"]: e for e in info}
+def lfs_records(paths, batch=50):
+    out = {}
+    for i in range(0, len(paths), batch):  # the endpoint rejects long path lists (HTTP 400 at 302 paths)
+        data = urllib.parse.urlencode([("paths", p) for p in paths[i:i + batch]]).encode()
+        with urllib.request.urlopen(urllib.request.Request(API, data=data), timeout=60) as r:
+            out |= {e["path"]: e for e in json.load(r)}
+    return out
 
 
 def sha256(p):
