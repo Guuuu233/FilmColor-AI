@@ -6,8 +6,9 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from filmcolor.frozen import (FrozenDataError, check_hashes, check_source, frozen_hashes, load_cache, save_cache,
-                              sha256_file)
+from filmcolor.frozen import (FrozenDataError, check_hashes, check_name, check_roll, check_source, frozen_blocks,
+                              frozen_hashes, load_cache, save_cache, sha256_file)
+from filmcolor.scanner import load_scanner
 
 ROOT = Path(__file__).resolve().parents[1]
 FROZEN_DIRS = ("Eastman 5219(ecn-2次抛冲洗 尼康数字化)-", "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2")
@@ -63,7 +64,8 @@ def test_real_manifest_covers_the_frozen_rolls_and_misses_every_development_roll
     in_dev_dirs = [r for r in inv if r.get("orig_dir") in DEV_DIRS]
     assert len(frozen) == 144 and len(in_frozen_dirs) == 144
     everything = frozen_hashes()  # default: every frozen manifest (photo-folder addendum, 2026-10-18 dataset holdout)
-    assert len(everything) == 144 + 71 + 289 and set(frozen) <= set(everything)
+    # + 289 group-pack files of the sealed BlueNeg rolls + 475 further official files (LFS sha256, not downloaded)
+    assert len(everything) == 144 + 71 + 289 + 475 and set(frozen) <= set(everything)
     dev = json.loads((ROOT / "data/manifests/s3_dev_frames.json").read_text())["frames"]
     check_hashes([h for f in dev for h in (f["raw_sha256"], f["ref_sha256"])], frozen=everything)  # does not raise
     assert all(r["sha256"] in frozen for r in in_frozen_dirs)
@@ -73,3 +75,33 @@ def test_real_manifest_covers_the_frozen_rolls_and_misses_every_development_roll
         check_hashes([r["sha256"] for r in in_dev_dirs + in_frozen_dirs[:1]], frozen=frozen)
     m = json.loads((ROOT / "data/manifests/frozen_test_v1.json").read_text())
     assert sum(r["scored_pairs"] for r in m["rolls"]) == 69
+
+
+def test_sealed_blueneg_rolls_are_refused_by_name_and_roll_before_any_download(tmp_path):
+    blocks = frozen_blocks()
+    assert len(blocks["names"]) == 164
+    sealed = "19960815F-23-san-francisco"  # roll 199608F, sealed in frozen_test_v2_ds
+    for p in (f"negative-16bit/blue-corrupted/{sealed}.dng", f"printed-16bit/blue-corrupted/{sealed}.tif",
+              f"https://huggingface.co/x/resolve/main/negative-preview-8bit/{sealed}.preview.png"):
+        with pytest.raises(FrozenDataError, match="by name"):
+            check_name(p)
+    check_name(p, allow_frozen=True)  # final-test entry point only
+    for r in ("ds-199608F", "19960815F", "19960814F"):
+        with pytest.raises(FrozenDataError, match="held-out test roll"):
+            check_roll(r)
+    check_roll("19960808B")  # dev roll 199608B: allowed
+    f = tmp_path / f"{sealed}.dng"  # not a real scan: the name alone must stop the reader and the hasher
+    f.write_bytes(b"x")
+    with pytest.raises(FrozenDataError):
+        load_scanner(f)
+    with pytest.raises(FrozenDataError):
+        check_source(f)
+    # nothing on the development side is blocked: dev manifest frames, the BlueNeg download selection
+    dev = json.loads((ROOT / "data/manifests/s3_dev_frames.json").read_text())["frames"]
+    for fr in dev:
+        check_name(fr["raw"])
+        check_roll(fr["roll"])
+    sel = json.loads((ROOT / "experiments/s3_blueneg/selection_intact_dev.json").read_text())["frames"]
+    for fr in sel:
+        check_name(fr["negative_path"])
+        check_name(fr["printed_path"])

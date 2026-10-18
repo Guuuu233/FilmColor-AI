@@ -13,6 +13,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from filmcolor.frozen import check_name
+
 REPO = "https://huggingface.co/datasets/ttgroup/blueneg-release"
 API = "https://huggingface.co/api/datasets/ttgroup/blueneg-release/paths-info/main"
 
@@ -37,6 +39,8 @@ def sha256(p):
 def main():
     sel, root, out = json.load(open(sys.argv[1])), Path(sys.argv[2]), sys.argv[3]
     paths = [p for fr in sel["frames"] for p in (fr["negative_path"], fr["printed_path"])]
+    for p in paths:  # sealed rolls (frozen_test_v2_ds) are refused by name before anything is fetched
+        check_name(p)
     recs = lfs_records(paths)
     results = []
     for rel in paths:

@@ -24,6 +24,7 @@ import numpy as np
 import tifffile
 
 from .base import estimate_base_blocks
+from .frozen import check_name
 
 LINEAR_RAW = 34892
 SILVERFAST_KEYS = ("General_NegativeMode", "isWithIR", "MultiExposure", "General_HdrMode",
@@ -87,8 +88,9 @@ def silverfast_settings(xmp) -> dict:
     return out
 
 
-def load_scanner(path) -> ScannerFrame:
+def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
     path = Path(path)
+    check_name(path, allow_frozen=allow_frozen)  # sealed dataset frames, also before any hash exists
     if not path.is_file():
         raise FileNotFoundError(path)
     with tifffile.TiffFile(path) as tf:
