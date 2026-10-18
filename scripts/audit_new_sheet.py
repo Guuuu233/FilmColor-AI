@@ -29,6 +29,10 @@ def tile(path):
                     inner_p999=np.percentile(inner, 99.9, axis=0).round(0).tolist(),
                     max=a.reshape(-1, 3).max(0).tolist())
         img = Image.fromarray((np.clip(a / a.max(), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8))
+    elif path.suffix.lower() in (".jpg", ".jpeg", ".png"):
+        img = Image.open(path)
+        img.draft("RGB", (TILE * 2, TILE * 2))
+        info = {}
     else:
         with rawpy.imread(str(path)) as r:
             t = r.extract_thumb()

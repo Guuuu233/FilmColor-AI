@@ -1,0 +1,30 @@
+{
+ "what": "By-eye judgements for the 2026-10-18 dataset report, made on the contact sheets of scripts/audit_dataset_sheets.py (220 px tiles of the camera preview / TIFF / JPEG; frozen files not shown). Judged: is unexposed film visible next to the picture (rebate, gap to the next frame, edge print or sprocket holes in film; a black holder or a film-free white background does not count), and is the file a negative at all. Tile size limits the call; 'unclear' is kept separate and not counted as rebate.",
+ "reviewer": "Claude (session of 2026-10-18), not yet checked by the user",
+ "rebate_visible": {
+  "colour_group": ["A1005", "A1006", "A1007", "A1008", "A1009", "A1010", "A1011", "A1012", "A1013", "A1014", "A1015", "A1016", "A1017", "A1018", "A1019", "A1020", "A1021", "A1030", "A1049", "A1051", "A1052", "A1053", "A1060", "A1061", "A1062", "A1066", "A1069", "A1071", "A1072", "A1073", "A1074", "A230", "A231", "A232", "A234", "A235", "A236", "A237", "A238", "A239", "A242", "A249", "A250", "A251", "A252", "A253", "A262", "A263", "A264", "A267", "A268", "A269", "A271", "A273", "A320", "A322", "A323", "A324", "A327", "A331", "A617", "A618", "A619", "A620", "A621", "A622", "A623", "A624", "A625", "A626", "A627", "A628", "A629", "A630", "A631", "A632", "A633", "A636", "A637", "A655", "A656", "A657", "A658", "A7R5_RAW/DSC01683", "A7R5_RAW/DSC01684", "A7R5_RAW/DSC01688", "A7R5_RAW/DSC01692", "A7R5_RAW/DSC01694", "A7R5_RAW/DSC01695"],
+  "bw_group": ["B035", "B036", "B037", "B043", "B092", "B2116"]
+ },
+ "rebate_unclear": {
+  "colour_group": ["A1001", "A1002", "A1036", "A1055", "A1056", "A1063", "A270", "A301", "A302", "A303"],
+  "bw": ["B028", "B029", "B031", "B033", "B044", "B045", "B046", "B089"]
+ },
+ "samples_without_rebate": {
+  "own_colour": "48 of 48 sampled (12 per non-frozen own roll, seed 0): picture cropped inside the frame",
+  "own_bw": "APX 400 and Acros II, all shown: cropped inside the frame (B028 / B029 show sprocket holes at the very edge, listed as unclear)",
+  "blueneg": "48 of 48 sampled (2 per roll, seed 0): cropped inside the frame",
+  "auckland_museum": "72 of 72 seen on the screen samples and 24 of 24 on a larger sheet: the whole plate / sheet with its margins is in the scan; whether a margin is unexposed emulsion or holder shadow is not decidable at this size"
+ },
+ "not_a_negative": {
+  "positive_certain": ["A279", "A299", "A321", "A850", "A851", "A852"],
+  "positive_likely": ["A229", "A260", "A849"],
+  "unclear_maybe_reversal_or_odd_colour": ["A262", "A281", "B034"],
+  "not_film": {"B091": "photo of a phone screen", "A273": "annotated figure (boxes 'Exposed' / 'Base' drawn on a frame)"},
+  "folders_of_positives": {"foma pan100(d67 尼康数字化)-": "38 NEF of reversal-processed Fomapan 100 + 27 edited JPEGs of the same frames", "foma pan100(d67 负片正冲 尼康数字化)-": "12 JPEG positives"}
+ },
+ "other": {
+  "same_scene_versions": ["A313", "A314", "A315", "A316", "A317", "A318"],
+  "bw_negative_in_colour_folder": ["A1049"],
+  "same_picture_bw": [["B038", "B093"], ["B037", "B092"]]
+ }
+}
