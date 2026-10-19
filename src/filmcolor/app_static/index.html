@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>FilmColor</title>
+<style>
+  :root { --bg:#1d1d1f; --panel:#26262a; --fg:#e6e6e6; --dim:#9a9aa0; --acc:#e0a040; --warn:#ff8a65; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:13px -apple-system, "PingFang SC", sans-serif;
+         display:grid; grid-template-columns: 240px 1fr 300px; height:100vh; }
+  aside, section { overflow:auto; }
+  #files { background:var(--panel); padding:8px; }
+  #files .f { padding:3px 6px; cursor:pointer; border-radius:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #files .f:hover { background:#333; } #files .f.on { background:var(--acc); color:#000; }
+  #main { display:flex; flex-direction:column; }
+  #bar { display:flex; gap:6px; padding:6px; background:var(--panel); align-items:center; flex-wrap:wrap; }
+  button, select { background:#3a3a40; color:var(--fg); border:1px solid #555; border-radius:4px; padding:4px 9px; cursor:pointer; }
+  button.on { background:var(--acc); color:#000; } button:disabled { opacity:.4; cursor:default; }
+  #stage { flex:1; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  #wrap { position:relative; max-width:100%; max-height:100%; }
+  #img { display:block; max-width:100%; max-height:calc(100vh - 90px); user-select:none; -webkit-user-drag:none; }
+  #ov { position:absolute; left:0; top:0; width:100%; height:100%; cursor:crosshair; }
+  #status { padding:4px 8px; color:var(--dim); background:var(--panel); min-height:22px; }
+  #side { background:var(--panel); padding:10px; }
+  .row { margin:8px 0; } .row label { display:flex; justify-content:space-between; color:var(--dim); }
+  input[type=range] { width:100%; }
+  .box { margin-top:12px; padding:8px; background:#1f1f22; border-radius:4px; line-height:1.6; }
+  .warn { color:var(--warn); }
+  #crop { position:fixed; inset:30px; background:#000c; display:none; align-items:center; justify-content:center; flex-direction:column; }
+  #crop img { max-width:95%; max-height:85%; image-rendering:pixelated; }
+  @media (max-width: 1000px) { body { grid-template-columns: 1fr; height:auto; } #files { max-height:160px; } #img { max-height:70vh; } }
+</style>
+</head>
+<body>
+<aside id="files"><div style="color:var(--dim);margin-bottom:6px">负片（相机 RAW / 扫描仪 DNG）</div><div id="list"></div></aside>
+<section id="main">
+  <div id="bar">
+    <select id="film"><option value="color">彩色负片</option><option value="bw">黑白负片</option></select>
+    <button id="bPos" class="on">正片</button><button id="bNeg">负片</button>
+    <span style="width:10px"></span>
+    <button id="bAuto">自动参数</button><button id="bReset">重置</button>
+    <span style="width:10px"></span>
+    <button id="bPick">框选片基</button><button id="bAutoBase">自动片基</button>
+    <button id="b11">1:1 局部</button>
+    <span style="flex:1"></span>
+    <button id="bExport">导出 16 位 TIFF</button>
+  </div>
+  <div id="stage"><div id="wrap"><img id="img" alt=""><canvas id="ov"></canvas></div></div>
+  <div id="status">选择左侧的一张负片。预览是缩小后的近似；用“1:1 局部”检查饱和与裁切。</div>
+</section>
+<aside id="side"><div id="sliders"></div><div class="box" id="info">未打开照片</div><div class="box" id="exp" style="display:none"></div></aside>
+<div id="crop"><img id="cropImg" alt=""><div style="margin-top:8px"><span id="cropInfo"></span> <button id="cropClose">关闭</button></div></div>
+<script>
+const $ = id => document.getElementById(id);
+const NAMES = {ev:"曝光 ev", temp:"色温（暖 +）", tint:"色调（品 +）", sat:"饱和度", contrast:"反差", midtone:"中灰", shoulder:"高光肩部"};
+const STEP = {ev:0.05, temp:0.02, tint:0.02, sat:0.02, contrast:0.02, midtone:0.005, shoulder:0.01};
+let meta = null, params = {}, mode = "pos", tool = null, seq = 0, timer = null, drag = null;
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {});
+  const ct = r.headers.get("Content-Type") || "";
+  if (ct.startsWith("application/json")) { const j = await r.json(); if (!r.ok) throw new Error(j.error); return j; }
+  if (!r.ok) throw new Error(r.status);
+  return r;
+}
+function status(t, warn) { $("status").textContent = t; $("status").className = warn ? "warn" : ""; }
+function pq() { const p = {}; for (const k in NAMES) p[k] = params[k]; return encodeURIComponent(JSON.stringify(p)); }
+
+async function loadFiles() {
+  const j = await api("/api/files");
+  $("list").innerHTML = "";
+  if (!j.files.length) $("list").textContent = "（没有可打开的文件）";
+  for (const f of j.files) {
+    const d = document.createElement("div"); d.className = "f"; d.textContent = f; d.title = f;
+    d.onclick = () => openFile(f, d); $("list").appendChild(d);
+  }
+}
+async function openFile(f, el) {
+  document.querySelectorAll(".f").forEach(x => x.classList.remove("on")); if (el) el.classList.add("on");
+  status("正在解码、估计片基、反转（全分辨率，一次）……");
+  try { meta = await api("/api/open", {path:f, film:$("film").value}); }
+  catch (e) { status("打不开：" + e.message, true); return; }
+  if (!Object.keys(params).length) params = Object.assign({}, meta.defaults);
+  buildSliders(); showInfo(); refresh(); status("已打开 " + meta.path);
+}
+function buildSliders() {
+  const box = $("sliders"); box.innerHTML = "";
+  for (const k in NAMES) {
+    const [lo, hi] = meta.sliders[k];
+    const row = document.createElement("div"); row.className = "row";
+    row.innerHTML = `<label><span>${NAMES[k]}</span><span id="v_${k}"></span></label>
+      <input type="range" id="s_${k}" min="${lo}" max="${hi}" step="${STEP[k]}" value="${params[k]}">`;
+    box.appendChild(row);
+    const s = row.querySelector("input");
+    s.oninput = () => { params[k] = parseFloat(s.value); $("v_" + k).textContent = params[k].toFixed(3); schedule(); };
+    $("v_" + k).textContent = Number(params[k]).toFixed(3);
+  }
+}
+function setParams(p) { for (const k in NAMES) params[k] = p[k]; buildSliders(); refresh(); }
+function schedule() { clearTimeout(timer); timer = setTimeout(refresh, 90); }
+async function refresh() {
+  if (!meta) return;
+  const my = ++seq;
+  try {
+    const r = await api(mode === "pos" ? "/api/render?p=" + pq() : "/api/negative");
+    if (my !== seq) return;  // a newer request superseded this one
+    const blob = await r.blob(); const url = URL.createObjectURL(blob);
+    const old = $("img").src; $("img").src = url; if (old.startsWith("blob:")) URL.revokeObjectURL(old);
+    if (mode === "pos") {
+      const bb = parseFloat(r.headers.get("X-Below-Black")), ch = parseFloat(r.headers.get("X-Clip-High"));
+      $("stats").innerHTML = `黑点以下（至少一个通道）：<span class="${bb > 0.1 ? "warn" : ""}">${(bb*100).toFixed(2)}%</span><br>` +
+        `高光裁切（至少一个通道）：<span class="${ch > 0.005 ? "warn" : ""}">${(ch*100).toFixed(2)}%</span>`;
+    }
+  } catch (e) { status("渲染失败：" + e.message, true); }
+  $("img").onload = drawOverlay;
+}
+function showInfo() {
+  const b = meta.base, w = b.warnings || [];
+  $("info").innerHTML = `<b>${meta.path}</b><br>胶片：${meta.film === "bw" ? "黑白" : "彩色"}；预览 ${meta.preview_shape[1]}×${meta.preview_shape[0]}（1/${meta.factor}）<br>` +
+    `片基：${b.method === "manual" ? "手动区域" : b.method === "auto" ? "自动估计" : b.method}` +
+    (b.inside_image != null ? `，候选块在画面内 ${(b.inside_image*100).toFixed(0)}%` + (b.inside_image > 0.5 ? ` <span class="warn">（可能没有片边，片基可能落在景物上）</span>` : "") : "") +
+    (w.length ? `<br><span class="warn">片基警告：${w.join("；")}</span>` : "") +
+    `<br>自动参数：${meta.auto ? meta.auto.status + (meta.auto.flags && meta.auto.flags.length ? "（" + meta.auto.flags.join("，") + "）" : "") : "无"}` +
+    `<div id="stats" style="margin-top:6px"></div>`;
+}
+function drawOverlay() {
+  const c = $("ov"), im = $("img"); c.width = im.clientWidth; c.height = im.clientHeight;
+  const g = c.getContext("2d"); g.clearRect(0, 0, c.width, c.height);
+  if (!meta) return;
+  const sx = c.width / meta.preview_shape[1], sy = c.height / meta.preview_shape[0];
+  g.strokeStyle = "#40e0ff"; g.lineWidth = 2;
+  for (const [t, l, h, w] of meta.base.regions_preview) g.strokeRect(l * sx, t * sy, w * sx, h * sy);
+  if (drag) { g.strokeStyle = "#e0a040"; g.strokeRect(drag.x0, drag.y0, drag.x1 - drag.x0, drag.y1 - drag.y0); }
+}
+function toPreview(ev) {
+  const r = $("ov").getBoundingClientRect();
+  return [(ev.clientX - r.left) * meta.preview_shape[1] / r.width, (ev.clientY - r.top) * meta.preview_shape[0] / r.height, ev.clientX - r.left, ev.clientY - r.top];
+}
+// picking and 1:1 work on the positive view only (the negative view is the camera's own JPEG, not sensor-aligned)
+$("ov").onmousedown = ev => { if (!meta || tool !== "pick" || mode !== "pos") return; const [, , x, y] = toPreview(ev); drag = {x0:x, y0:y, x1:x, y1:y}; };
+$("ov").onmousemove = ev => { if (!drag) return; const [, , x, y] = toPreview(ev); drag.x1 = x; drag.y1 = y; drawOverlay(); };
+$("ov").onmouseup = async ev => {
+  if (!meta || mode !== "pos") { drag = null; return; }
+  if (tool === "11") { const [px, py] = toPreview(ev); return showCrop(px, py); }
+  if (!drag) return;
+  const r = $("ov").getBoundingClientRect(), s = meta.preview_shape[1] / r.width;
+  const l = Math.round(Math.min(drag.x0, drag.x1) * s), t = Math.round(Math.min(drag.y0, drag.y1) * s);
+  const w = Math.round(Math.abs(drag.x1 - drag.x0) * s), h = Math.round(Math.abs(drag.y1 - drag.y0) * s);
+  drag = null;
+  if (w < 2 || h < 2) { drawOverlay(); return; }
+  status("用框选区域重新估计片基并反转……");
+  try { meta = await api("/api/base", {region:[t, l, h, w]}); showInfo(); refresh(); status("片基：手动区域"); }
+  catch (e) { status("片基设置失败：" + e.message, true); drawOverlay(); }
+};
+async function showCrop(px, py) {
+  const size = 600, f = meta.factor;
+  const t = Math.max(0, Math.round(py * f - size / 2)), l = Math.max(0, Math.round(px * f - size / 2));
+  status("渲染 1:1 局部……");
+  try {
+    const r = await api(`/api/crop?t=${t}&l=${l}&size=${size}&p=${pq()}`);
+    $("cropImg").src = URL.createObjectURL(await r.blob());
+    $("cropInfo").textContent = `传感器像素 (${t}, ${l})，${size}×${size}，与导出图同一像素`;
+    $("crop").style.display = "flex"; status("1:1 局部");
+  } catch (e) { status("1:1 失败：" + e.message, true); }
+}
+function setTool(t) { tool = tool === t ? null : t; $("bPick").classList.toggle("on", tool === "pick"); $("b11").classList.toggle("on", tool === "11"); }
+$("bPick").onclick = () => setTool("pick");
+$("b11").onclick = () => setTool("11");
+$("cropClose").onclick = () => { $("crop").style.display = "none"; };
+$("bPos").onclick = () => { mode = "pos"; $("bPos").classList.add("on"); $("bNeg").classList.remove("on"); refresh(); };
+$("bNeg").onclick = () => { mode = "neg"; $("bNeg").classList.add("on"); $("bPos").classList.remove("on"); refresh(); };
+$("bAuto").onclick = () => { if (meta && meta.auto) setParams(meta.auto.params); };
+$("bReset").onclick = () => { if (meta) setParams(meta.defaults); };
+$("bAutoBase").onclick = async () => {
+  if (!meta) return; status("自动估计片基并反转……");
+  try { meta = await api("/api/base", {auto:true}); showInfo(); refresh(); status("片基：自动估计"); } catch (e) { status(e.message, true); }
+};
+$("film").onchange = () => { const on = document.querySelector(".f.on"); if (on) openFile(on.title, on); };
+$("bExport").onclick = async () => {
+  if (!meta) return; status("导出全分辨率 16 位 TIFF……");
+  try {
+    const p = {}; for (const k in NAMES) p[k] = params[k];
+    const j = await api("/api/export", {params:p, encoding:"srgb"});
+    $("exp").style.display = "block";
+    $("exp").innerHTML = `已导出：${j.path}<br>sidecar：${j.sidecar}<br>质量检查：<span class="${j.qc.status === "pass" ? "" : "warn"}">${j.qc.status}</span>` +
+      j.qc.failing.map(c => `<br>· ${c.name}：${c.status}`).join("");
+    status("导出完成");
+  } catch (e) { status("导出失败：" + e.message, true); }
+};
+window.onresize = drawOverlay;
+loadFiles().catch(e => status(e.message, true));
+</script>
+</body>
+</html>

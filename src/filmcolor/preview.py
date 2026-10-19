@@ -48,6 +48,19 @@ class Preview:
     full_shape: tuple
     auto: dict | None = field(default=None)   # noref estimate on the full-resolution positive, if requested
     load_kwargs: dict = field(default_factory=dict)  # what load_preview was called with (besides path)
+    full_positive: np.ndarray | None = field(default=None, repr=False)  # kept with keep_full=True (1:1 view)
+
+    def render_crop(self, region, params=None) -> np.ndarray:
+        """1:1 render of a sensor-pixel region (top, left, height, width) of the full-resolution positive,
+        exactly the export's pixels there (needs keep_full=True)."""
+        if self.full_positive is None:
+            raise ValueError("load_preview(..., keep_full=True) is needed for a 1:1 view")
+        t, l, h, w = (int(v) for v in region)
+        H, W = self.full_positive.shape[:2]
+        t, l = max(0, min(t, H - 1)), max(0, min(l, W - 1))
+        crop = self.full_positive[t:t + h, l:l + w]
+        rp = params if isinstance(params, RenderParams) else RenderParams.from_dict(params or {})
+        return render(crop, rp, None)[0]
 
     def reload(self, **changes) -> "Preview":
         """A new preview with some load arguments changed (base, region, film, ...): decode and invert again."""
@@ -77,7 +90,7 @@ class Preview:
 
 def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, base_rgb=None, image_region=None,
                  d_hi=None, white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0,
-                 film: str = "color") -> Preview:
+                 film: str = "color", keep_full: bool = False) -> Preview:
     """Full-resolution decode / base / inversion once; keep a block-mean copy of at most ``max_side`` pixels.
     ``auto``: a noref config (noref.NOREF_V2) estimated here on the full-resolution positive, exactly as
     ``convert(auto=...)`` does; the result is in ``Preview.auto`` (render with ``Preview.auto['params']``)."""
@@ -95,6 +108,7 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
     f = max(1, math.ceil(max(full_shape) / max_side))
     small = block_mean(pos, f).astype(np.float32) if f > 1 else pos
     msk = block_mean(mask.astype(np.float32), f) > 0.5 if f > 1 else mask
+    full = pos if keep_full else None
     del pos
     res = p["inversion"]
     return Preview(path=path, sha256=sha256(path), factor=f, positive=small, mask=msk,
@@ -103,4 +117,5 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
                    base_inside_image=p["base_inside_image"], full_shape=tuple(full_shape), auto=auto_info,
                    load_kwargs=dict(max_side=max_side, auto=auto, base_regions=base_regions, base_rgb=base_rgb,
                                     image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,
-                                    exposure=exposure, film=film))
+                                    exposure=exposure, film=film, keep_full=keep_full),
+                   full_positive=full)
