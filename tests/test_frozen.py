@@ -65,7 +65,11 @@ def test_real_manifest_covers_the_frozen_rolls_and_misses_every_development_roll
     assert len(frozen) == 144 and len(in_frozen_dirs) == 144
     everything = frozen_hashes()  # default: every frozen manifest (photo-folder addendum, 2026-10-18 dataset holdout)
     # + 289 group-pack files of the sealed BlueNeg rolls + 475 further official files (LFS sha256, not downloaded)
-    assert len(everything) == 144 + 71 + 289 + 475 and set(frozen) <= set(everything)
+    # + 7 copies of sealed BlueNeg frames added to the material folder under new names (addendum, 2026-10-22, T1b)
+    assert len(everything) == 144 + 71 + 289 + 475 + 7 and set(frozen) <= set(everything)
+    add = json.loads((ROOT / "data/manifests/frozen_test_v2_ds_addendum_20261022.json").read_text())["files"]
+    with pytest.raises(FrozenDataError, match="frozen_test_v2_ds_addendum_20261022"):
+        check_hashes([add[0]["sha256"]], frozen=everything)
     dev = json.loads((ROOT / "data/manifests/s3_dev_frames.json").read_text())["frames"]
     check_hashes([h for f in dev for h in (f["raw_sha256"], f["ref_sha256"])], frozen=everything)  # does not raise
     assert all(r["sha256"] in frozen for r in in_frozen_dirs)

@@ -1,0 +1,50 @@
+{
+ "id": "frozen_test_v2_ds_addendum_20261022",
+ "created": "2026-10-22",
+ "addendum_to": "frozen_test_v2_ds",
+ "rule": "Copies of frames sealed in frozen_test_v2_ds that were added to the material folder after 2026-10-18 under new names (other format, other bytes); found by the original name the material index records (scripts/t1b_increment.py). Not opened. Copies without a recorded original name are not found by this rule.",
+ "files": [
+  {
+   "id": "material:01_彩色负片_未反相/A1180.tif",
+   "sha256": "9387699464bdd1380b0b658d802e4bed657534551736db1e3e2e24040bdbbe94",
+   "orig_name": "19960807A-14-new-orleans-siggraph96.dng",
+   "roll": "ds-199608A"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1181.tif",
+   "sha256": "5e0ac2d117dbec48ffd70bb834e83c06c29ada4f6f3446127c2a95b93ff6e9fc",
+   "orig_name": "19960812C-01-grand-canyon.dng",
+   "roll": "ds-199608C"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1182.tif",
+   "sha256": "d1457db73d5b337108bbb4ad6e3a1dca35d019b8dfe48562652b3a5203e69dfd",
+   "orig_name": "19960812C-36-grand-canyon.dng",
+   "roll": "ds-199608C"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1183.tif",
+   "sha256": "63dfe6327f54cb23137585d525baf6e1dc555ca9fb868f4d03e2cebe200ec3cd",
+   "orig_name": "19960813E-02-las-vegas.dng",
+   "roll": "ds-199608E"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1184.tif",
+   "sha256": "75d0cce85273fc94a9adcf7686be34966620430342b9fcb87c387d78f159c041",
+   "orig_name": "19960813E-05-las-vegas.dng",
+   "roll": "ds-199608E"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1185.tif",
+   "sha256": "50ad08cbd80b5b7f3deca3e264945bbff07625dfc9bbb3b8d75b8555e2837260",
+   "orig_name": "19960814E-33-san-francisco.dng",
+   "roll": "ds-199608E"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1186.tif",
+   "sha256": "414aef9a2ccd2c7bf8aa0adb7b468ed4ed1470e03ee3c4df033ce2524fddfadf",
+   "orig_name": "19960815F-27-golden-gate.dng",
+   "roll": "ds-199608F"
+  }
+ ]
+}

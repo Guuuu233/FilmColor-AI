@@ -1,0 +1,2066 @@
+[
+ {
+  "unit": "ds-199301",
+  "level": "verified",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "blueneg:other",
+   "copy:dev"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "ds-199412B",
+  "level": "verified",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "blueneg:dev"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "ds-199608A",
+  "level": "verified",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "frozen:name"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "ds-199608C",
+  "level": "verified",
+  "files": 2,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "frozen:name"
+  ],
+  "cameras": {
+   "null": 2
+  },
+  "exts": {
+   ".tif": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "ds-199608E",
+  "level": "verified",
+  "files": 3,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "frozen:name"
+  ],
+  "cameras": {
+   "null": 3
+  },
+  "exts": {
+   ".tif": 3
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "ds-199608F",
+  "level": "verified",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "frozen:name"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "ds-199608I",
+  "level": "verified",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "blueneg:dev"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "ds-199608J",
+  "level": "verified",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "blueneg:dev"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "ds-199908",
+  "level": "verified",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "blueneg:other"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1080.tif",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1086.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1089.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Plustek OpticFilm 135i": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1090.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1093.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1098.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Reflecta RPS 7200": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1107.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "EPSON Perfection V600": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1108.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "EPSON Perfection V600": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1125.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1126.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Reflecta RPS 10M": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1128.ARW",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-1M2": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1129.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Plustek OpticFilm 7300": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1130.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Plustek OpticFilm 7300": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1228.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1230.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "PIE PrimeFilm XA Plus": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1231.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "PIE PrimeFilm XA Plus": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1232.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "PIE PrimeFilm XA Plus": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1233.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "PIE PrimeFilm XA Plus": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1234.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "EPSON Perfection V600": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1236.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson Perfection4990": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1245.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Plustek OpticFilm 7400": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1246.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Plustek OpticFilm 7400": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1283.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Plustek OpticFilm 8200i": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1286.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson PerfectionV700": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1287.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson PerfectionV700": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1288.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson PerfectionV700": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1301.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "EPSON Perfection V700/V750": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1302.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "EPSON Perfection V700/V750": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1303.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "EPSON Perfection V700/V750": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1304.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "EPSON Perfection V700/V750": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1305.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson PerfectionV700": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1306.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson PerfectionV700": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1307.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson PerfectionV700": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1308.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson PerfectionV700": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1309.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Epson PerfectionV700": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1310.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Nikon LS-5000": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1311.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Nikon LS-5000": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1312.JPG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "EPSON Perfection V600": 1
+  },
+  "exts": {
+   ".jpg": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1314.JPG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NORITSU KOKI EZ Controller": 1
+  },
+  "exts": {
+   ".jpg": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1315.JPG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NORITSU KOKI EZ Controller": 1
+  },
+  "exts": {
+   ".jpg": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1316.JPG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NORITSU KOKI EZ Controller": 1
+  },
+  "exts": {
+   ".jpg": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1318.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Nikon Nikon COOLSCAN V ED": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1319.TIF",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Nikon LS-50": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1323.PNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".png": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1324.JPG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".jpg": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1325.JPG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "null": 1
+  },
+  "exts": {
+   ".jpg": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:01_彩色负片_未反相/A1326.DNG",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Plustek OpticFilm 8200i": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:03_正片幻灯片_已反相/C0038.tif",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "SONY ILCE-7": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:03_正片幻灯片_已反相/C0039.tif",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "SONY ILCE-7": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:03_正片幻灯片_已反相/C0040.tif",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "SONY ILCE-7": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:03_正片幻灯片_已反相/C0041.tif",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "SONY ILCE-7": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "file:03_正片幻灯片_已反相/C0042.tif",
+  "level": "unknown",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "SONY ILCE-7": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 10D|body30|2009:05:21",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS 10D": 1
+  },
+  "exts": {
+   ".jpg": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 5D Mark III|body08|2020:06:07",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS 5D Mark III": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 5D Mark III|body10|2024:07:05",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS 5D Mark III": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 5D Mark III|body10|2024:07:10",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Canon Canon EOS 5D Mark III": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 5D Mark III|body24|2022:11:23",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS 5D Mark III": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 5DS R|body39|2023:01:21",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS 5DS R": 2
+  },
+  "exts": {
+   ".cr2": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 5D|body21|2020:02:24",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:not in T1"
+  ],
+  "cameras": {
+   "Canon Canon EOS 5D": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 60D|body07|2014:03:08",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS 60D": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 6D|body09|2022:12:22",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS 6D": 2
+  },
+  "exts": {
+   ".cr2": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS 80D|body31|2020:09:17",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Canon Canon EOS 80D": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS R5|body15|2024:12:19",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS R5": 1
+  },
+  "exts": {
+   ".cr3": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS R5|body18|2023:05:22",
+  "level": "inferred",
+  "files": 14,
+  "normal_readable": 14,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS R5": 14
+  },
+  "exts": {
+   ".cr3": 14
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS R5|body18|2023:06:06",
+  "level": "inferred",
+  "files": 5,
+  "normal_readable": 5,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS R5": 5
+  },
+  "exts": {
+   ".cr3": 5
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS R5|body18|2023:06:22",
+  "level": "inferred",
+  "files": 7,
+  "normal_readable": 7,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS R5": 7
+  },
+  "exts": {
+   ".cr3": 7
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS R6m2|body06|2024:12:11",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Canon Canon EOS R6m2": 1
+  },
+  "exts": {
+   ".cr3": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS REBEL T3i|body20|2014:10:01",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS REBEL T3i": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS REBEL T3i|body20|2014:10:22",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS REBEL T3i": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS REBEL T3i|body20|2018:02:14",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS REBEL T3i": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS REBEL T3i|body20|2018:02:23",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS REBEL T3i": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS REBEL T3i|body20|2021:07:13",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Canon Canon EOS REBEL T3i": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS REBEL T3i|body20|2021:08:08",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Canon Canon EOS REBEL T3i": 1
+  },
+  "exts": {
+   ".cr2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS R|body22|2022:07:20",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Canon Canon EOS R": 2
+  },
+  "exts": {
+   ".cr3": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS R|body22|2023:01:13",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Canon Canon EOS R": 1
+  },
+  "exts": {
+   ".cr3": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Canon Canon EOS R|body22|2024:06:19",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Canon Canon EOS R": 2
+  },
+  "exts": {
+   ".cr3": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-E3|body40|2026:02:06",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "FUJIFILM X-E3": 1
+  },
+  "exts": {
+   ".raf": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-Pro3|body44|2026:09:11",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "FUJIFILM X-Pro3": 2
+  },
+  "exts": {
+   ".raf": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-S10|body25|2026:08:02",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "FUJIFILM X-S10": 1
+  },
+  "exts": {
+   ".raf": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T1|body47|2021:10:15",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "FUJIFILM X-T1": 1
+  },
+  "exts": {
+   ".raf": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T1|body47|2021:10:17",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "FUJIFILM X-T1": 1
+  },
+  "exts": {
+   ".raf": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T3|body42|2019:08:29",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "FUJIFILM X-T3": 1
+  },
+  "exts": {
+   ".raf": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T3|body43|2026:01:22",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "FUJIFILM X-T3": 1
+  },
+  "exts": {
+   ".raf": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T3|body43|2026:03:20",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "FUJIFILM X-T3": 1
+  },
+  "exts": {
+   ".raf": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T3|body45|2024:09:26",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "FUJIFILM X-T3": 2
+  },
+  "exts": {
+   ".raf": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T3|body46|2020:10:17",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 0,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "FUJIFILM X-T3": 1
+  },
+  "exts": {
+   ".tif": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T5|body26|2024:01:12",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "FUJIFILM X-T5": 1
+  },
+  "exts": {
+   ".raf": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:FUJIFILM X-T5|body27|2026:02:28",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "FUJIFILM X-T5": 1
+  },
+  "exts": {
+   ".dng": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D3200|body29|2020:08:08",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON D3200": 2
+  },
+  "exts": {
+   ".nef": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D7100|body23|2020:09:05",
+  "level": "inferred",
+  "files": 4,
+  "normal_readable": 4,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON D7100": 4
+  },
+  "exts": {
+   ".nef": 4
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D7100|body32|2019:10:05",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "NIKON CORPORATION NIKON D7100": 1
+  },
+  "exts": {
+   ".nef": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D750|body36|2021:07:02",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON D750": 1
+  },
+  "exts": {
+   ".nef": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D750|body36|2021:07:03",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON D750": 2
+  },
+  "exts": {
+   ".nef": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D750|body36|2021:07:04",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON D750": 2
+  },
+  "exts": {
+   ".nef": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D750|body36|2021:07:07",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON D750": 1
+  },
+  "exts": {
+   ".nef": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D750|body37|2020:05:11",
+  "level": "inferred",
+  "files": 3,
+  "normal_readable": 3,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON D750": 3
+  },
+  "exts": {
+   ".nef": 3
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D750|body38|2024:05:01",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "NIKON CORPORATION NIKON D750": 2
+  },
+  "exts": {
+   ".nef": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D780|body34|2025:02:28",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "NIKON CORPORATION NIKON D780": 2
+  },
+  "exts": {
+   ".nef": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON D780|body34|2025:03:06",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON D780": 1
+  },
+  "exts": {
+   ".nef": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON Z 6_2|body28|2025:08:23",
+  "level": "inferred",
+  "files": 5,
+  "normal_readable": 5,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON Z 6_2": 5
+  },
+  "exts": {
+   ".nef": 5
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON Z 6_2|body35|2026:08:22",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "NIKON CORPORATION NIKON Z 6_2": 1
+  },
+  "exts": {
+   ".nef": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:NIKON CORPORATION NIKON Z 7_2|body41|2024:03:30",
+  "level": "inferred",
+  "files": 37,
+  "normal_readable": 37,
+  "with_reference": 0,
+  "links": [
+   "copy_repo:dev",
+   "own_body"
+  ],
+  "cameras": {
+   "NIKON CORPORATION NIKON Z 7_2": 37
+  },
+  "exts": {
+   ".nef": 37
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Panasonic DC-G9|body51|2023:01:24",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Panasonic DC-G9": 1
+  },
+  "exts": {
+   ".rw2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Panasonic DC-G9|body51|2023:01:27",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Panasonic DC-G9": 1
+  },
+  "exts": {
+   ".rw2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Panasonic DC-G9|body51|2023:02:14",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Panasonic DC-G9": 1
+  },
+  "exts": {
+   ".rw2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Panasonic DC-GX9|body52|2025:04:20",
+  "level": "inferred",
+  "files": 29,
+  "normal_readable": 29,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Panasonic DC-GX9": 29
+  },
+  "exts": {
+   ".rw2": 29
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Panasonic DC-S1R|body50|2026:05:09",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Panasonic DC-S1R": 1
+  },
+  "exts": {
+   ".rw2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Panasonic DC-S5M2|body49|2026:04:03",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy_repo:dev"
+  ],
+  "cameras": {
+   "Panasonic DC-S5M2": 1
+  },
+  "exts": {
+   ".rw2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Panasonic DC-S5|body48|2023:11:28",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "Panasonic DC-S5": 1
+  },
+  "exts": {
+   ".rw2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:Panasonic DMC-GX80|body53|2025:03:18",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "Panasonic DMC-GX80": 1
+  },
+  "exts": {
+   ".rw2": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-1|body02|2021:04:13",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-1": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-6000|body14|2026:09:27",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-6000": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7C|body01|2023:02:28",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "SONY ILCE-7C": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7M2|body33|2025:10:26",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7M2": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7M3|body16|2025:11:05",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7M3": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7M4|body11|2025:06:10",
+  "level": "inferred",
+  "files": 5,
+  "normal_readable": 5,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7M4": 5
+  },
+  "exts": {
+   ".arw": 5
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7M4|body13|2026:01:29",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7M4": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7RM2|body12|2021:06:20",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7RM2": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7RM4A|body04|2024:11:18",
+  "level": "inferred",
+  "files": 6,
+  "normal_readable": 6,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7RM4A": 6
+  },
+  "exts": {
+   ".arw": 6
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7RM4|body05|2025:08:22",
+  "level": "inferred",
+  "files": 3,
+  "normal_readable": 3,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7RM4": 3
+  },
+  "exts": {
+   ".arw": 3
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7RM4|body17|2025:09:20",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7RM4": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7RM4|body19|2024:02:03",
+  "level": "inferred",
+  "files": 2,
+  "normal_readable": 2,
+  "with_reference": 0,
+  "links": [
+   "copy:dev"
+  ],
+  "cameras": {
+   "SONY ILCE-7RM4": 2
+  },
+  "exts": {
+   ".arw": 2
+  },
+  "seal_candidate": false
+ },
+ {
+  "unit": "session:SONY ILCE-7RM5|body03|2026:09:14",
+  "level": "inferred",
+  "files": 1,
+  "normal_readable": 1,
+  "with_reference": 0,
+  "links": [],
+  "cameras": {
+   "SONY ILCE-7RM5": 1
+  },
+  "exts": {
+   ".arw": 1
+  },
+  "seal_candidate": false
+ }
+]

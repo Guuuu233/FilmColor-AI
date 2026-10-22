@@ -1,0 +1,133 @@
+{
+ "date": "2026-10-22",
+ "viewer": "Claude (sheets experiments/t1b_increment/outputs/spot_pairs_*.jpg, inverted embedded negative preview next to the reference; luminance and layout only, colour not judged)",
+ "sheets_sha256": {
+  "spot_pairs_01-05.jpg": "efed038313226d67a7de54ca4372be097f5a01f703b0581063311db8dbac71f0",
+  "spot_pairs_06-10.jpg": "8d8a16573a2e104a443c3a9dfe912da86eb13fd74d3733a9cd078488485c832e",
+  "spot_pairs_11-15.jpg": "68974f1d15c146d2862d93b5a519fab91604c04181153f3cf57ed2850c52a61a",
+  "spot_pairs_16-20.jpg": "ecd13b80249d89ad742d3d205b6d8c543e18f2add953b4dfd292a7d3a5a659e0"
+ },
+ "pairs": [
+  {
+   "n": 1,
+   "id": "blueneg:19960811B-36-laughlin",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 2,
+   "id": "blueneg:199807A-29-orlando-disney",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 3,
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4915",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 4,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-1/dsc_6262",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 5,
+   "id": "blueneg:19941217A-15-tokyo",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 6,
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4914",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 7,
+   "id": "blueneg:19960811B-35-laughlin",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 8,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-/dsc_8267",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 9,
+   "id": "blueneg:19960812D-15-las-vegas",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 10,
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4912",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 11,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-/dsc_8257",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 12,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-3/dsc_6165",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 13,
+   "id": "blueneg:19941222E-10-nara",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 14,
+   "id": "blueneg:19941223E-17-osaka",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 15,
+   "id": "blueneg:19960812D-22-las-vegas",
+   "same_picture": true,
+   "note": "same picture, reference rotated 90 degrees (painted-sky ceiling, columns)"
+  },
+  {
+   "n": 16,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-1/dsc_6266",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 17,
+   "id": "blueneg:19941224E-21-nagasaki",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 18,
+   "id": "blueneg:19960811B-28-arizona-london-bridge",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 19,
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4901",
+   "same_picture": true,
+   "note": "same picture"
+  },
+  {
+   "n": 20,
+   "id": "blueneg:199807A-33-orlando-disney",
+   "same_picture": true,
+   "note": "same picture, reference rotated 90 degrees; fireworks, few distinctive shapes"
+  }
+ ],
+ "same_picture": 20
+}

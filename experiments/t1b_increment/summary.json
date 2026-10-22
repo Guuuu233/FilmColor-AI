@@ -1,0 +1,238 @@
+{
+ "root_files_now": 3729,
+ "root_files_1018": 3481,
+ "unchanged": 3473,
+ "new_paths": 254,
+ "new_contents": 218,
+ "copies_of_registered": 36,
+ "paths_of_1018_gone": {
+  "01_彩色负片_未反相/A629.tif": [
+   "01_彩色负片_未反相/A842.tif",
+   "03_正片幻灯片_已反相/C0038.tif"
+  ],
+  "01_彩色负片_未反相/A630.tif": [
+   "01_彩色负片_未反相/A843.tif",
+   "03_正片幻灯片_已反相/C0039.tif"
+  ],
+  "01_彩色负片_未反相/A631.tif": [
+   "01_彩色负片_未反相/A844.tif",
+   "03_正片幻灯片_已反相/C0040.tif"
+  ],
+  "01_彩色负片_未反相/A632.tif": [
+   "01_彩色负片_未反相/A845.tif",
+   "03_正片幻灯片_已反相/C0041.tif"
+  ],
+  "01_彩色负片_未反相/A633.tif": [
+   "01_彩色负片_未反相/A846.tif",
+   "03_正片幻灯片_已反相/C0042.tif"
+  ],
+  "01_彩色负片_未反相/A636.tif": [
+   "01_彩色负片_未反相/A848.tif"
+  ],
+  "01_彩色负片_未反相/A637.tif": [
+   "04_已反转成品_对照答案/R735.tif"
+  ]
+ },
+ "contents_gone": [
+  "索引.csv"
+ ],
+ "manifest_checks": {
+  "n": 697,
+  "bad": []
+ },
+ "new_by_top": {
+  "01_彩色负片_未反相": 249,
+  "03_正片幻灯片_已反相": 5
+ },
+ "new_by_ext": {
+  ".arw": 23,
+  ".nef": 59,
+  ".tif": 31,
+  ".raf": 5,
+  ".dng": 17,
+  ".rw2": 34,
+  ".cr2": 13,
+  ".cr3": 28,
+  ".jpg": 7,
+  ".png": 1
+ },
+ "index": {
+  "rows_for_new_paths": 254,
+  "layouts": {
+   "collected": 104,
+   "header": 139,
+   "format_in_type": 11
+  },
+  "pairing_column_raw_non_empty": 104,
+  "pairing_ids_valid": 0,
+  "with_reference_on_disk": 0
+ },
+ "engine_readable_new": 179,
+ "possible_positive": 5,
+ "possible_bw": 0,
+ "frozen_hash_overlap": 0,
+ "links": {
+  "copy:dev": 35,
+  "copy:not in T1": 1,
+  "copy_repo:dev": 38,
+  "own_body": 37,
+  "blueneg:other": 2,
+  "blueneg:dev": 3,
+  "frozen:name": 7
+ },
+ "files_with_any_link": 85,
+ "blueneg_named": [
+  {
+   "rel": "01_彩色负片_未反相/A1178.tif",
+   "stem": "19930125-05-hk",
+   "roll": "ds-199301",
+   "in_release": true,
+   "release_roll": "19930125",
+   "partition": "blue-corrupted",
+   "links": [
+    "copy:dev",
+    "blueneg:other"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1179.tif",
+   "stem": "19941218B-32-tokyo",
+   "roll": "ds-199412B",
+   "in_release": true,
+   "release_roll": "19941218B",
+   "partition": "blue-corrupted",
+   "links": [
+    "blueneg:dev"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1180.tif",
+   "stem": "19960807A-14-new-orleans-siggraph96",
+   "roll": "ds-199608A",
+   "in_release": true,
+   "release_roll": "19960807A",
+   "partition": "blue-corrupted",
+   "links": [
+    "frozen:name"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1181.tif",
+   "stem": "19960812C-01-grand-canyon",
+   "roll": "ds-199608C",
+   "in_release": true,
+   "release_roll": "19960812C",
+   "partition": "blue-corrupted",
+   "links": [
+    "frozen:name"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1182.tif",
+   "stem": "19960812C-36-grand-canyon",
+   "roll": "ds-199608C",
+   "in_release": true,
+   "release_roll": "19960812C",
+   "partition": "blue-corrupted",
+   "links": [
+    "frozen:name"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1183.tif",
+   "stem": "19960813E-02-las-vegas",
+   "roll": "ds-199608E",
+   "in_release": true,
+   "release_roll": "19960813E",
+   "partition": "blue-corrupted",
+   "links": [
+    "frozen:name"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1184.tif",
+   "stem": "19960813E-05-las-vegas",
+   "roll": "ds-199608E",
+   "in_release": true,
+   "release_roll": "19960813E",
+   "partition": "blue-corrupted",
+   "links": [
+    "frozen:name"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1185.tif",
+   "stem": "19960814E-33-san-francisco",
+   "roll": "ds-199608E",
+   "in_release": true,
+   "release_roll": "19960814E",
+   "partition": "blue-corrupted",
+   "links": [
+    "frozen:name"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1186.tif",
+   "stem": "19960815F-27-golden-gate",
+   "roll": "ds-199608F",
+   "in_release": true,
+   "release_roll": "19960815F",
+   "partition": "blue-corrupted",
+   "links": [
+    "frozen:name"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1187.tif",
+   "stem": "19960820I-31-yokohama",
+   "roll": "ds-199608I",
+   "in_release": true,
+   "release_roll": "19960820I",
+   "partition": "blue-corrupted",
+   "links": [
+    "blueneg:dev"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1188.tif",
+   "stem": "19960820J-10-yokohama",
+   "roll": "ds-199608J",
+   "in_release": true,
+   "release_roll": "19960820J",
+   "partition": "blue-corrupted",
+   "links": [
+    "blueneg:dev"
+   ]
+  },
+  {
+   "rel": "01_彩色负片_未反相/A1189.tif",
+   "stem": "19990806-02-san-francisco",
+   "roll": "ds-199908",
+   "in_release": true,
+   "release_roll": "19990806",
+   "partition": "blue-corrupted",
+   "links": [
+    "blueneg:other"
+   ]
+  }
+ ],
+ "own_body_serials_compared": 1,
+ "bodies_new": 53,
+ "units": {
+  "verified": 9,
+  "unknown": 52,
+  "inferred": 71
+ },
+ "units_with_reference": 0,
+ "seal": {
+  "rule": "units with >= 5 referenced normal readable colour negatives and no link; sorted by sha256(unit name); every other one sealed starting at position 0",
+  "candidates": [],
+  "proposed_sealed": [],
+  "proposed_dev": [],
+  "status": "proposal only; nothing sealed"
+ },
+ "frozen_addendum": {
+  "path": "data/manifests/frozen_test_v2_ds_addendum_20261022.json",
+  "files": 7
+ }
+}

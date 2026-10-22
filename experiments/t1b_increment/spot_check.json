@@ -1,0 +1,499 @@
+{
+ "seed": 20261022,
+ "key_frames": 344,
+ "key_frames_with_relation": 337,
+ "relations_by_kind": {
+  "BlueNeg official print": 151,
+  "NLP default output": 11,
+  "forum attachment": 3,
+  "material partner": 275,
+  "photo folder": 21,
+  "shop list": 23
+ },
+ "rolls": [
+  {
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-/dsc_8261",
+   "roll": "own-e5207-20240323-dsc8242",
+   "level": "verified",
+   "source": "own",
+   "method": "exif: body and capture time vs the other frames of the roll",
+   "same_body": true,
+   "time": "2024:03:23 14:36:12",
+   "session": [
+    "2024:03:23 14:35:37",
+    "2024:03:23 14:36:50"
+   ],
+   "inside_session": true,
+   "agrees": true
+  },
+  {
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4911",
+   "roll": "own-g200-20240320-dsc4889",
+   "level": "verified",
+   "source": "own",
+   "method": "exif: body and capture time vs the other frames of the roll",
+   "same_body": true,
+   "time": "2024:03:20 20:01:16",
+   "session": [
+    "2024:03:20 20:00:42",
+    "2024:03:20 20:01:35"
+   ],
+   "inside_session": true,
+   "agrees": true
+  },
+  {
+   "id": "blueneg:199910-07-korea",
+   "roll": "ds-199910",
+   "level": "inferred",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Kodak Gold 400",
+   "roll_films": [
+    "Kodak Gold 400"
+   ],
+   "date": "199910-0",
+   "roll_dates": [
+    "199910-0",
+    "199910-2"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:19970619A-15-white-chapel",
+   "roll": "ds-199706A",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Kodak Gold 400-5",
+   "roll_films": [
+    "Kodak Gold 400-5"
+   ],
+   "date": "19970619",
+   "roll_dates": [
+    "19970619",
+    "19970619"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:19941222D-32-kyoto",
+   "roll": "ds-199412D",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji 100",
+   "roll_films": [
+    "Fuji 100"
+   ],
+   "date": "19941222",
+   "roll_dates": [
+    "19941220",
+    "19941221"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:199807B-05-orlando-seaworld",
+   "roll": "ds-199807B",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji 400",
+   "roll_films": [
+    "Fuji 400"
+   ],
+   "date": "199807B-",
+   "roll_dates": [
+    "199807B-",
+    "199807B-"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:199807A-36-orlando-disney",
+   "roll": "ds-199807A",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji 400",
+   "roll_films": [
+    "Fuji 400"
+   ],
+   "date": "199807A-",
+   "roll_dates": [
+    "199807A-",
+    "199807A-"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:199807B-02-orlando-seaworld",
+   "roll": "ds-199807B",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji 400",
+   "roll_films": [
+    "Fuji 400"
+   ],
+   "date": "199807B-",
+   "roll_dates": [
+    "199807B-",
+    "199807B-"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:19941217A-10-tokyo",
+   "roll": "ds-199412A",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji 100",
+   "roll_films": [
+    "Fuji 100"
+   ],
+   "date": "19941217",
+   "roll_dates": [
+    "19941217",
+    "19941217"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4894",
+   "roll": "own-g200-20240320-dsc4889",
+   "level": "verified",
+   "source": "own",
+   "method": "exif: body and capture time vs the other frames of the roll",
+   "same_body": true,
+   "time": "2024:03:20 20:00:54",
+   "session": [
+    "2024:03:20 20:00:42",
+    "2024:03:20 20:01:35"
+   ],
+   "inside_session": true,
+   "agrees": true
+  },
+  {
+   "id": "blueneg:19960812D-10-las-vegas",
+   "roll": "ds-199608D",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji NPH400",
+   "roll_films": [
+    "Fuji NPH400"
+   ],
+   "date": "19960812",
+   "roll_dates": [
+    "19960812",
+    "19960812"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:19941223E-13-osaka",
+   "roll": "ds-199412E",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Konica Super XG 100",
+   "roll_films": [
+    "Konica Super XG 100"
+   ],
+   "date": "19941223",
+   "roll_dates": [
+    "19941222",
+    "19941225"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:199807A-17-orlando-universal-studio",
+   "roll": "ds-199807A",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji 400",
+   "roll_films": [
+    "Fuji 400"
+   ],
+   "date": "199807A-",
+   "roll_dates": [
+    "199807A-",
+    "199807A-"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:199807A-13-orlando-universal-studio",
+   "roll": "ds-199807A",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji 400",
+   "roll_films": [
+    "Fuji 400"
+   ],
+   "date": "199807A-",
+   "roll_dates": [
+    "199807A-",
+    "199807A-"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "nlp:_DSF9235",
+   "roll": "nlp-20180729",
+   "level": "inferred",
+   "source": "nlp_official",
+   "method": "none independent of the assigning rule (capture day)",
+   "agrees": null
+  },
+  {
+   "id": "shop_r01:DSC_3846",
+   "roll": "shop_r01",
+   "level": "verified",
+   "source": "shop_r01",
+   "method": "exif: body and capture time vs the other frames of the roll",
+   "same_body": true,
+   "time": "2024:03:30 20:34:19",
+   "session": [
+    "2024:03:30 20:33:39",
+    "2024:03:30 20:34:41"
+   ],
+   "inside_session": true,
+   "agrees": true
+  },
+  {
+   "id": "shop_r01:DSC_3831",
+   "roll": "shop_r01",
+   "level": "verified",
+   "source": "shop_r01",
+   "method": "exif: body and capture time vs the other frames of the roll",
+   "same_body": true,
+   "time": "2024:03:30 20:34:01",
+   "session": [
+    "2024:03:30 20:33:39",
+    "2024:03:30 20:34:41"
+   ],
+   "inside_session": true,
+   "agrees": true
+  },
+  {
+   "id": "blueneg:19960811B-25-arizona-london-bridge",
+   "roll": "ds-199608B",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji NPH400",
+   "roll_films": [
+    "Fuji NPH400"
+   ],
+   "date": "19960811",
+   "roll_dates": [
+    "19960808",
+    "19960811"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "blueneg:19960812D-25-las-vegas",
+   "roll": "ds-199608D",
+   "level": "verified",
+   "source": "blueneg",
+   "method": "release metadata: film type and date vs the other frames of the roll",
+   "film": "Fuji NPH400",
+   "roll_films": [
+    "Fuji NPH400"
+   ],
+   "date": "19960812",
+   "roll_dates": [
+    "19960812",
+    "19960812"
+   ],
+   "agrees": true
+  },
+  {
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-3/dsc_6184",
+   "roll": "own-e5207-20240401-dsc6161",
+   "level": "verified",
+   "source": "own",
+   "method": "exif: body and capture time vs the other frames of the roll",
+   "same_body": true,
+   "time": "2024:04:01 19:16:03",
+   "session": [
+    "2024:04:01 19:15:32",
+    "2024:04:01 19:16:24"
+   ],
+   "inside_session": true,
+   "agrees": true
+  }
+ ],
+ "rolls_agree": 19,
+ "rolls_disagree": 0,
+ "rolls_no_independent_evidence": 1,
+ "pairs": [
+  {
+   "n": 1,
+   "id": "blueneg:19960811B-36-laughlin",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19960811B-36-laughlin.dng",
+   "relation": "BlueNeg official print",
+   "reference": "data/raw/public/blueneg/printed-16bit/blue-intact/19960811B-36-laughlin.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 2,
+   "id": "blueneg:199807A-29-orlando-disney",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/199807A-29-orlando-disney.dng",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R405.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 3,
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4915",
+   "negative": "01_彩色负片_未反相/A217.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R209.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 4,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-1/dsc_6262",
+   "negative": "01_彩色负片_未反相/A102.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R102.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 5,
+   "id": "blueneg:19941217A-15-tokyo",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19941217A-15-tokyo.dng",
+   "relation": "BlueNeg official print",
+   "reference": "data/raw/public/blueneg/printed-16bit/blue-intact/19941217A-15-tokyo.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 6,
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4914",
+   "negative": "01_彩色负片_未反相/A216.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R208.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 7,
+   "id": "blueneg:19960811B-35-laughlin",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19960811B-35-laughlin.dng",
+   "relation": "BlueNeg official print",
+   "reference": "data/raw/public/blueneg/printed-16bit/blue-intact/19960811B-35-laughlin.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 8,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-/dsc_8267",
+   "negative": "01_彩色负片_未反相/A137.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R086.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 9,
+   "id": "blueneg:19960812D-15-las-vegas",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19960812D-15-las-vegas.dng",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R373.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 10,
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4912",
+   "negative": "01_彩色负片_未反相/A214.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R206.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 11,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-/dsc_8257",
+   "negative": "01_彩色负片_未反相/A127.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R050.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 12,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-3/dsc_6165",
+   "negative": "01_彩色负片_未反相/A005.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R013.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 13,
+   "id": "blueneg:19941222E-10-nara",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19941222E-10-nara.dng",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R333.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 14,
+   "id": "blueneg:19941223E-17-osaka",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19941223E-17-osaka.dng",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R336.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 15,
+   "id": "blueneg:19960812D-22-las-vegas",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19960812D-22-las-vegas.dng",
+   "relation": "BlueNeg official print",
+   "reference": "data/raw/public/blueneg/printed-16bit/blue-intact/19960812D-22-las-vegas.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 16,
+   "id": "own:Eastman 5207(ecn-2次抛冲洗 尼康数字化)-1/dsc_6266",
+   "negative": "01_彩色负片_未反相/A106.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R118.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 17,
+   "id": "blueneg:19941224E-21-nagasaki",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19941224E-21-nagasaki.dng",
+   "relation": "BlueNeg official print",
+   "reference": "data/raw/public/blueneg/printed-16bit/blue-intact/19941224E-21-nagasaki.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 18,
+   "id": "blueneg:19960811B-28-arizona-london-bridge",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/19960811B-28-arizona-london-bridge.dng",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R356.tif",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 19,
+   "id": "own:Kodak G200（尼康数字化）-/dsc_4901",
+   "negative": "01_彩色负片_未反相/A203.NEF",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R195.jpg",
+   "ref_strength": "strong"
+  },
+  {
+   "n": 20,
+   "id": "blueneg:199807A-33-orlando-disney",
+   "negative": "data/raw/public/blueneg/negative-16bit/blue-intact/199807A-33-orlando-disney.dng",
+   "relation": "material partner",
+   "reference": "04_已反转成品_对照答案/R409.tif",
+   "ref_strength": "strong"
+  }
+ ]
+}
