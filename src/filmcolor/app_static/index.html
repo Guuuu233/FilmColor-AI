@@ -54,17 +54,25 @@
 const $ = id => document.getElementById(id);
 const NAMES = {ev:"曝光 ev", temp:"色温（暖 +）", tint:"色调（品 +）", sat:"饱和度", contrast:"反差", midtone:"中灰", shoulder:"高光肩部"};
 const STEP = {ev:0.05, temp:0.02, tint:0.02, sat:0.02, contrast:0.02, midtone:0.005, shoulder:0.01};
-let meta = null, params = {}, mode = "pos", tool = null, seq = 0, timer = null, drag = null;
+let meta = null, params = {}, mode = "pos", tool = null, seq = 0, timer = null, drag = null, busy = false;
+const DEP = ["bPos", "bNeg", "bAuto", "bReset", "bPick", "bAutoBase", "b11", "bExport", "film"];
+// while a photo is loading (or the base is re-estimated) nothing may act on the previous one
+function setBusy(b) { busy = b; for (const id of DEP) $(id).disabled = b; document.querySelectorAll("#sliders input").forEach(x => x.disabled = b); $("list").style.pointerEvents = b ? "none" : ""; }
+function tok() { return meta ? meta.token : ""; }
 
 async function api(path, body) {
   const r = await fetch(path, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {});
   const ct = r.headers.get("Content-Type") || "";
-  if (ct.startsWith("application/json")) { const j = await r.json(); if (!r.ok) throw new Error(j.error); return j; }
+  if (ct.startsWith("application/json")) {
+    const j = await r.json();
+    if (r.status === 409) throw new Error("这张图已在别的窗口被换掉或源文件已改动，请在本窗口重新打开（" + j.error + "）");
+    if (!r.ok) throw new Error(j.error); return j;
+  }
   if (!r.ok) throw new Error(r.status);
   return r;
 }
 function status(t, warn) { $("status").textContent = t; $("status").className = warn ? "warn" : ""; }
-function pq() { const p = {}; for (const k in NAMES) p[k] = params[k]; return encodeURIComponent(JSON.stringify(p)); }
+function pq() { const p = {}; for (const k in NAMES) p[k] = params[k]; return "token=" + tok() + "&p=" + encodeURIComponent(JSON.stringify(p)); }
 
 async function loadFiles() {
   const j = await api("/api/files");
@@ -78,9 +86,13 @@ async function loadFiles() {
 async function openFile(f, el) {
   document.querySelectorAll(".f").forEach(x => x.classList.remove("on")); if (el) el.classList.add("on");
   status("正在解码、估计片基、反转（全分辨率，一次）……");
+  const same = meta && meta.path === f;
+  setBusy(true); ++seq;  // responses of earlier requests are dropped
   try { meta = await api("/api/open", {path:f, film:$("film").value}); }
-  catch (e) { status("打不开：" + e.message, true); return; }
-  if (!Object.keys(params).length) params = Object.assign({}, meta.defaults);
+  catch (e) { meta = null; $("img").removeAttribute("src"); setBusy(false); status("打不开：" + e.message, true); return; }
+  setBusy(false);
+  // a different photo starts from the defaults; re-opening the same one (film switch) keeps the sliders
+  if (!same || !Object.keys(params).length) params = Object.assign({}, meta.defaults);
   buildSliders(); showInfo(); refresh(); status("已打开 " + meta.path);
 }
 function buildSliders() {
@@ -99,19 +111,19 @@ function buildSliders() {
 function setParams(p) { for (const k in NAMES) params[k] = p[k]; buildSliders(); refresh(); }
 function schedule() { clearTimeout(timer); timer = setTimeout(refresh, 90); }
 async function refresh() {
-  if (!meta) return;
-  const my = ++seq;
+  if (!meta || busy) return;
+  const my = ++seq, token = tok();
   try {
-    const r = await api(mode === "pos" ? "/api/render?p=" + pq() : "/api/negative");
-    if (my !== seq) return;  // a newer request superseded this one
+    const r = await api(mode === "pos" ? "/api/render?" + pq() : "/api/negative?token=" + token);
+    if (my !== seq || token !== tok()) return;  // a newer request or another photo superseded this one
     const blob = await r.blob(); const url = URL.createObjectURL(blob);
     const old = $("img").src; $("img").src = url; if (old.startsWith("blob:")) URL.revokeObjectURL(old);
     if (mode === "pos") {
       const bb = parseFloat(r.headers.get("X-Below-Black")), ch = parseFloat(r.headers.get("X-Clip-High"));
-      $("stats").innerHTML = `黑点以下（至少一个通道）：<span class="${bb > 0.1 ? "warn" : ""}">${(bb*100).toFixed(2)}%</span><br>` +
+      $("stats").innerHTML = `画面区域内，按预览像素统计<br>黑点以下（至少一个通道）：<span class="${bb > 0.1 ? "warn" : ""}">${(bb*100).toFixed(2)}%</span><br>` +
         `高光裁切（至少一个通道）：<span class="${ch > 0.005 ? "warn" : ""}">${(ch*100).toFixed(2)}%</span>`;
     }
-  } catch (e) { status("渲染失败：" + e.message, true); }
+  } catch (e) { if (my === seq) status("渲染失败：" + e.message, true); }
   $("img").onload = drawOverlay;
 }
 function showInfo() {
@@ -149,15 +161,16 @@ $("ov").onmouseup = async ev => {
   drag = null;
   if (w < 2 || h < 2) { drawOverlay(); return; }
   status("用框选区域重新估计片基并反转……");
-  try { meta = await api("/api/base", {region:[t, l, h, w]}); showInfo(); refresh(); status("片基：手动区域"); }
-  catch (e) { status("片基设置失败：" + e.message, true); drawOverlay(); }
+  setBusy(true); ++seq;
+  try { const m = await api("/api/base", {region:[t, l, h, w], token:tok()}); meta = m; setBusy(false); showInfo(); refresh(); status("片基：手动区域"); }
+  catch (e) { setBusy(false); status("片基设置失败：" + e.message, true); drawOverlay(); }
 };
 async function showCrop(px, py) {
   const size = 600, f = meta.factor;
   const t = Math.max(0, Math.round(py * f - size / 2)), l = Math.max(0, Math.round(px * f - size / 2));
   status("渲染 1:1 局部……");
   try {
-    const r = await api(`/api/crop?t=${t}&l=${l}&size=${size}&p=${pq()}`);
+    const r = await api(`/api/crop?t=${t}&l=${l}&size=${size}&${pq()}`);
     $("cropImg").src = URL.createObjectURL(await r.blob());
     $("cropInfo").textContent = `传感器像素 (${t}, ${l})，${size}×${size}，与导出图同一像素`;
     $("crop").style.display = "flex"; status("1:1 局部");
@@ -173,16 +186,18 @@ $("bAuto").onclick = () => { if (meta && meta.auto) setParams(meta.auto.params);
 $("bReset").onclick = () => { if (meta) setParams(meta.defaults); };
 $("bAutoBase").onclick = async () => {
   if (!meta) return; status("自动估计片基并反转……");
-  try { meta = await api("/api/base", {auto:true}); showInfo(); refresh(); status("片基：自动估计"); } catch (e) { status(e.message, true); }
+  setBusy(true); ++seq;
+  try { const m = await api("/api/base", {auto:true, token:tok()}); meta = m; setBusy(false); showInfo(); refresh(); status("片基：自动估计"); }
+  catch (e) { setBusy(false); status(e.message, true); }
 };
 $("film").onchange = () => { const on = document.querySelector(".f.on"); if (on) openFile(on.title, on); };
 $("bExport").onclick = async () => {
   if (!meta) return; status("导出全分辨率 16 位 TIFF……");
   try {
     const p = {}; for (const k in NAMES) p[k] = params[k];
-    const j = await api("/api/export", {params:p, encoding:"srgb"});
+    const j = await api("/api/export", {params:p, encoding:"srgb", token:tok()});
     $("exp").style.display = "block";
-    $("exp").innerHTML = `已导出：${j.path}<br>sidecar：${j.sidecar}<br>质量检查：<span class="${j.qc.status === "pass" ? "" : "warn"}">${j.qc.status}</span>` +
+    $("exp").innerHTML = `已导出（不会覆盖已有文件）：${j.path}<br>sidecar：${j.sidecar}<br>质量检查：<span class="${j.qc.status === "pass" ? "" : "warn"}">${j.qc.status}</span>` +
       j.qc.failing.map(c => `<br>· ${c.name}：${c.status}`).join("");
     status("导出完成");
   } catch (e) { status("导出失败：" + e.message, true); }

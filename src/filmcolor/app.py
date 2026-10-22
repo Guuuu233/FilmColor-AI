@@ -6,16 +6,23 @@ page, Python standard library only (http.server; previews are PNG written with z
 Only files under ROOT with a supported extension can be opened (camera RAW read by LibRaw, scanner LinearRaw DNG);
 paths outside ROOT are refused. Files of the sealed test sets (filmcolor.frozen) are refused unless --allow-frozen.
 One photo is open at a time: its full-resolution positive is kept for the 1:1 view (about 0.5 GB for 45 MP).
+Every open and base change issues a new token; requests about the open photo must carry it (query ``token`` or body
+field ``token``) and are refused with 409 when another window has opened something else since. Exports go to
+OUT/<sub-folder of the source>/<stem>.tif + .json and never replace an existing pair (<stem>-2, -3, ...); the export
+is refused (409) when the source file changed since it was opened.
 
-API (JSON unless noted): GET /api/files; POST /api/open {path, film}; GET /api/render?p=PARAMS (PNG, headers
-X-Below-Black, X-Clip-High); GET /api/negative (JPEG or PNG); GET /api/crop?t=&l=&size=&p= (PNG, sensor pixels);
-POST /api/base {region: [top, left, height, width] in preview pixels} or {auto: true}; POST /api/export {params,
-encoding}. PARAMS is a JSON object of render parameters (render.RenderParams).
+API (JSON unless noted): GET /api/files; POST /api/open {path, film} (-> meta with token); GET
+/api/render?token=&p=PARAMS (PNG, headers X-Below-Black, X-Clip-High: shares of the image region, at least one
+channel, clip measured before the white clip); GET /api/negative?token= (JPEG or PNG); GET
+/api/crop?token=&t=&l=&size=&p= (PNG, sensor pixels); POST /api/base {token, region: [top, left, height, width] in
+preview pixels} or {token, auto: true}; POST /api/export {token, params, encoding}. PARAMS is a JSON object of
+render parameters (render.RenderParams).
 """
 from __future__ import annotations
 
 import argparse
 import json
+import secrets
 import struct
 import threading
 import zlib
@@ -29,8 +36,8 @@ import rawpy
 from .compare import block_mean
 from .frozen import FrozenDataError, check_source
 from .noref import NOREF_V2
-from .pipeline import FILM_MODES
-from .preview import Preview, load_preview
+from .pipeline import FILM_MODES, free_stem
+from .preview import Preview, SourceChangedError, load_preview
 from .render import BOUNDS, RenderParams
 from .scanner import is_scanner_dng, load_scanner
 
@@ -70,10 +77,15 @@ def negative_view(path: Path, max_side: int = 1600) -> tuple[bytes, str]:
     return png_bytes(to8((small / max(np.percentile(small, 99.9), 1e-6)) ** (1 / 2.2))), "image/png"
 
 
+class StaleError(RuntimeError):
+    """The request names a photo / base that is no longer the open one (another window changed it)."""
+
+
 class State:
     def __init__(self, root: Path, out: Path, allow_frozen: bool, max_side: int = 1600):
         self.root, self.out, self.allow_frozen, self.max_side = root.resolve(), out, allow_frozen, max_side
         self.preview: Preview | None = None
+        self.token: str | None = None
         self.negative: tuple[bytes, str] | None = None
         self.lock = threading.Lock()
 
@@ -94,7 +106,7 @@ class State:
     def meta(self) -> dict:
         pv = self.preview
         est = pv.base_info.get("estimate", {})
-        return dict(path=str(pv.path.relative_to(self.root)), film=pv.film, factor=pv.factor,
+        return dict(token=self.token, path=str(pv.path.relative_to(self.root)), film=pv.film, factor=pv.factor,
                     preview_shape=list(pv.positive.shape[:2]), full_shape=list(pv.full_shape),
                     base=dict(method=pv.base_info.get("method"), rgb=pv.base_info.get("rgb_render"),
                               warnings=est.get("warnings", []), inside_image=pv.base_inside_image,
@@ -109,17 +121,21 @@ class State:
             raise ValueError(f"film must be one of {FILM_MODES}")
         p = self.resolve(rel)
         self.preview = None  # free the previous full-resolution positive first
+        self.token = None
         self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V2, film=film, keep_full=True)
+        self.token = secrets.token_hex(8)
         self.negative = None
         return self.meta()
 
-    def need(self) -> Preview:
+    def need(self, token) -> Preview:
         if self.preview is None:
             raise ValueError("no photo open")
+        if token != self.token:
+            raise StaleError("another window opened a different photo or changed the base; open it again here")
         return self.preview
 
     def set_base(self, body: dict) -> dict:
-        pv = self.need()
+        pv = self.need(body.get("token"))
         if body.get("auto"):
             self.preview = pv.reload(base_regions=None, base_rgb=None)
         else:
@@ -127,7 +143,18 @@ class State:
             if h < 1 or w < 1:
                 raise ValueError("empty base region")
             self.preview = pv.reload(base_regions=[pv.to_sensor((t, l, h, w))], base_rgb=None)
+        self.token = secrets.token_hex(8)
         return self.meta()
+
+    def export(self, body: dict) -> dict:
+        pv = self.need(body.get("token"))
+        rel = pv.path.relative_to(self.root)
+        out_dir = self.out / rel.parent
+        sc = pv.export(out_dir, RenderParams.from_dict(body.get("params") or {}), body.get("encoding", "srgb"),
+                       stem=free_stem(out_dir, pv.path.stem), overwrite=False)
+        return dict(path=sc["output"]["path"], sha256=sc["output"]["sha256"],
+                    sidecar=str(Path(sc["output"]["path"]).with_suffix(".json")),
+                    qc=dict(status=sc["qc"]["status"], failing=[c for c in sc["qc"]["checks"] if c["status"] != "pass"]))
 
 
 def params_of(q: dict) -> RenderParams:
@@ -154,7 +181,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send(code, json.dumps(obj, ensure_ascii=False).encode(), "application/json; charset=utf-8")
 
     def fail(self, e: Exception):
-        code = 403 if isinstance(e, (PermissionError, FrozenDataError)) else 400
+        code = (403 if isinstance(e, (PermissionError, FrozenDataError))
+                else 409 if isinstance(e, (StaleError, SourceChangedError, FileExistsError)) else 400)
         self.json(dict(error=f"{type(e).__name__}: {e}"), code)
 
     def body(self) -> dict:
@@ -171,21 +199,20 @@ class Handler(BaseHTTPRequestHandler):
             if u.path == "/api/files":
                 return self.json(dict(root=str(st.root), files=st.files()))
             with st.lock:
+                token = q.get("token", [None])[0]
                 if u.path == "/api/render":
-                    pv = st.need()
-                    rp = params_of(q)
-                    disp = pv.render(rp)
-                    below = float((pv.positive < 0).any(-1).mean())
-                    clip = float((disp >= 1).any(-1).mean())
+                    pv = st.need(token)
+                    disp, stats = pv.render_stats(params_of(q))
                     return self.send(200, png_bytes(to8(disp)), "image/png",
-                                     {"X-Below-Black": f"{below:.5f}", "X-Clip-High": f"{clip:.5f}"})
+                                     {"X-Below-Black": f"{stats['below_black']:.6f}",
+                                      "X-Clip-High": f"{stats['above_white']:.6f}", "X-Token": st.token})
                 if u.path == "/api/negative":
-                    pv = st.need()
+                    pv = st.need(token)
                     if st.negative is None:
                         st.negative = negative_view(pv.path, st.max_side)
                     return self.send(200, st.negative[0], st.negative[1])
                 if u.path == "/api/crop":
-                    pv = st.need()
+                    pv = st.need(token)
                     size = min(int(q.get("size", ["600"])[0]), 2000)
                     region = (int(q["t"][0]), int(q["l"][0]), size, size)
                     return self.send(200, png_bytes(to8(pv.render_crop(region, params_of(q)))), "image/png")
@@ -204,12 +231,7 @@ class Handler(BaseHTTPRequestHandler):
                 if u.path == "/api/base":
                     return self.json(st.set_base(b))
                 if u.path == "/api/export":
-                    pv = st.need()
-                    sc = pv.export(st.out, RenderParams.from_dict(b.get("params") or {}), b.get("encoding", "srgb"))
-                    return self.json(dict(path=sc["output"]["path"], sha256=sc["output"]["sha256"],
-                                          sidecar=str(Path(sc["output"]["path"]).with_suffix(".json")),
-                                          qc=dict(status=sc["qc"]["status"],
-                                                  failing=[c for c in sc["qc"]["checks"] if c["status"] != "pass"])))
+                    return self.json(st.export(b))
             self.json(dict(error="not found"), 404)
         except Exception as e:  # noqa: BLE001
             self.fail(e)

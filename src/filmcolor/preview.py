@@ -27,7 +27,7 @@ import numpy as np
 from .compare import block_mean
 from .noref import CONFIG_DIR, estimate_params_v2, estimation_input
 from .pipeline import BW_NEUTRAL, positive, sha256, write
-from .render import RenderParams, render
+from .render import RenderParams, render, render_full
 
 
 @dataclass
@@ -71,6 +71,18 @@ class Preview:
         rp = params if isinstance(params, RenderParams) else RenderParams.from_dict(params or {})
         return render(self.positive, rp, self.mask)[0]
 
+    def render_stats(self, params=None) -> tuple[np.ndarray, dict]:
+        """``render`` plus per-pixel shares over ``mask`` (image region, unsaturated) of the preview: below_black
+        (positive < 0 in at least one channel, i.e. denser than the base) and above_white (display-linear value
+        before the white clip > 1 in at least one channel). Measured on the block-mean copy, so isolated clipped
+        pixels averaged into a block are not counted (use render_crop to inspect)."""
+        rp = params if isinstance(params, RenderParams) else RenderParams.from_dict(params or {})
+        e, _, pre = render_full(self.positive, rp)
+        m = self.mask
+        n = int(m.sum())
+        share = (lambda flags: float(flags[m].sum() / n)) if n else (lambda flags: float("nan"))
+        return e, dict(below_black=share((self.positive < 0).any(-1)), above_white=share((pre > 1).any(-1)))
+
     def to_sensor(self, region):
         """(top, left, height, width) in preview pixels -> sensor pixels."""
         return tuple(int(v) * self.factor for v in region)
@@ -79,13 +91,29 @@ class Preview:
         """(top, left, height, width) in sensor pixels -> preview pixels (rounded down)."""
         return tuple(int(v) // self.factor for v in region)
 
-    def export(self, out_dir, params=None, encoding: str = "srgb") -> dict:
-        """Write the full-resolution TIFF + sidecar with this preview's base and white point."""
+    def base_source(self) -> dict:
+        """How this preview's base was found, for the export sidecar (``base.source``)."""
+        regions = self.load_kwargs.get("base_regions")
+        return dict(method=self.base_info.get("method"), estimate=self.base_info.get("estimate"),
+                    regions=[list(map(int, r)) for r in regions] if regions else None,
+                    base_inside_image=self.base_inside_image, previewed_input_sha256=self.sha256)
+
+    def export(self, out_dir, params=None, encoding: str = "srgb", *, stem: str | None = None,
+               overwrite: bool = True) -> dict:
+        """Write the full-resolution TIFF + sidecar with this preview's base and white point. Refuses
+        (SourceChangedError) when the source file no longer has the SHA256 it had when previewed."""
+        if sha256(self.path) != self.sha256:
+            raise SourceChangedError(f"{self.path} changed since it was opened; open it again")
         base = self.base_info["rgb_render"] if self.film == "bw" else self.inversion["base"]
         rp = params.to_dict() if isinstance(params, RenderParams) else params
-        return write(self.path, out_dir, base_rgb=base, d_hi=self.inversion["d_hi"], image_region=self.image_region,
-                     white_pct=self.white_pct, gamma=self.inversion["gamma"], exposure=self.inversion["exposure"],
-                     encoding=encoding, render_params=rp, film=self.film)
+        return write(self.path, out_dir, stem=stem, overwrite=overwrite, base_rgb=base, d_hi=self.inversion["d_hi"],
+                     image_region=self.image_region, white_pct=self.white_pct, gamma=self.inversion["gamma"],
+                     exposure=self.inversion["exposure"], encoding=encoding, render_params=rp, film=self.film,
+                     base_source=self.base_source())
+
+
+class SourceChangedError(RuntimeError):
+    """The previewed source file changed on disk; its previewed base no longer applies."""
 
 
 def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, base_rgb=None, image_region=None,

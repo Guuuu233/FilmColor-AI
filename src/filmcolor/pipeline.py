@@ -161,8 +161,12 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
 
 def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
-            render_params=None, auto=None, film: str = "color"):
+            render_params=None, auto=None, film: str = "color", base_source: dict | None = None):
     """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
+
+    ``base_source``: for a ``base_rgb`` replayed from an earlier estimate (preview export), how that base was
+    found (method, estimate / regions, base_inside_image); stored as ``base.source``, and its base_inside_image
+    feeds the QC check that a given base would otherwise skip. Pixels do not depend on it.
 
     ``render_params``: RenderParams or its dict (Sprint 2 colour parameters); None = defaults,
     which reproduce the Sprint 1 output. ``auto``: a reference-free estimator config (``noref.NOREF_V2``)
@@ -187,6 +191,10 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     base_info, input_info, decode_info = p["base_info"], p["input_info"], p["decode_info"]
     region_source, inside = p["region_source"], p["base_inside_image"]
     del p
+    if base_source is not None:
+        base_info = dict(base_info, source=base_source)
+        if inside is None:
+            inside = base_source.get("base_inside_image")
     auto_info = None
     if auto is not None:  # estimated from this frame's positive only (no reference, no roll context)
         est = estimate_params_v2(*estimation_input(pos, image_region), auto)
@@ -225,15 +233,28 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     return out, sidecar
 
 
-def write(path, out_dir, **kwargs) -> dict:
-    """Convert and write <stem>.tif plus <stem>.json; return the sidecar."""
+def free_stem(out_dir, stem: str) -> str:
+    """``stem``, or ``stem-2``, ``stem-3``, ... : the first name whose .tif and .json are both unused."""
+    out_dir, name, n = Path(out_dir), stem, 1
+    while (out_dir / f"{name}.tif").exists() or (out_dir / f"{name}.json").exists():
+        n += 1
+        name = f"{stem}-{n}"
+    return name
+
+
+def write(path, out_dir, *, stem: str | None = None, overwrite: bool = True, **kwargs) -> dict:
+    """Convert and write <stem>.tif plus <stem>.json (default stem: the input's); return the sidecar.
+    ``overwrite=False`` refuses (FileExistsError) when either file of the pair already exists."""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    stem = stem or Path(path).stem
+    tif, js = out_dir / f"{stem}.tif", out_dir / f"{stem}.json"
+    if not overwrite and (tif.exists() or js.exists()):
+        raise FileExistsError(f"{tif} or {js.name} already exists")
     img, sidecar = convert(path, **kwargs)
-    tif = out_dir / f"{Path(path).stem}.tif"
     write_tiff16(tif, img, sidecar["output"]["encoding"])
     sidecar["output"].update(path=str(tif), sha256=sha256(tif))
-    (out_dir / f"{Path(path).stem}.json").write_text(json.dumps(sidecar, indent=1))
+    js.write_text(json.dumps(sidecar, indent=1))
     return sidecar
 
 
