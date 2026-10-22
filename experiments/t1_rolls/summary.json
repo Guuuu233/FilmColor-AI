@@ -1,0 +1,694 @@
+{
+ "reconciliation": {
+  "material_colour_negatives": 881,
+  "material_colour_with_reference": 642,
+  "material_colour_with_reference_dev": 439,
+  "material_colour_with_reference_frozen": 203,
+  "data_raw_colour_negatives_not_in_material": 39,
+  "data_raw_duplicates_of_material": 13,
+  "all_colour_negatives": 920,
+  "all_colour_with_reference": 666,
+  "bw_negatives": 1293,
+  "bw_with_reference": 65,
+  "blueneg_release_frames": 491,
+  "blueneg_release_frames_not_in_material": 39,
+  "photo_folder_files": 947,
+  "photo_folder_same_frame_as_material": 121,
+  "excluded": {
+   "卷标帧（JPEG）": 9,
+   "正像（疑似）": 3,
+   "不是胶片：annotated figure (boxes 'Exposed' / 'Base' drawn on a frame)": 1,
+   "正像（确定）": 6,
+   "不是胶片：photo of a phone screen": 1
+  }
+ },
+ "key_number": {
+  "definition": "彩负，不在排除之列，开发侧（非冻结），引擎现在能读（素材或 data/raw 的 RAW / DNG），至少 1 个参考",
+  "frames": 344,
+  "by_roll_level": {
+   "verified": 311,
+   "unknown": 9,
+   "inferred": 24
+  },
+  "by_source": {
+   "own": 150,
+   "group_pack": 7,
+   "blueneg": 151,
+   "shop_r01": 23,
+   "nlp_official": 11,
+   "nlp_forum_2023": 1,
+   "nlp_forum_9652": 1
+  },
+  "verified_rolls": [
+   "ds-199412A",
+   "ds-199412B",
+   "ds-199412C",
+   "ds-199412D",
+   "ds-199412E",
+   "ds-199412F",
+   "ds-199608B",
+   "ds-199608D",
+   "ds-199706A",
+   "ds-199706B",
+   "ds-199706C",
+   "ds-199807A",
+   "ds-199807B",
+   "own-e5207-20240323-dsc8242",
+   "own-e5207-20240401-dsc6161",
+   "own-e5207-20240401-dsc6233",
+   "own-g200-20240320-dsc4889",
+   "shop_r01"
+  ],
+  "inferred_rolls": [
+   "ds-199910",
+   "nlp-20180518",
+   "nlp-20180613",
+   "nlp-20180728",
+   "nlp-20180729"
+  ],
+  "frames_without_roll": 9,
+  "with_ageing": 0,
+  "with_two_graders": 56,
+  "used_in_research": 317,
+  "s3_design_excluded_or_failed": 4,
+  "in_untouched_verified_rolls": 0
+ },
+ "blueneg_dev_with_reference": {
+  "蓝层完好、DNG 已下载": 151,
+  "蓝层变质": 97
+ },
+ "roll_labels": {
+  "colour_nonempty_labels": 39,
+  "note": "非空卷标签只数素材目录里 catalog 的卷字段（含按目录名推测的分组），与 10-18 报告同一口径",
+  "colour_rolls_by_level": {
+   "verified": 34,
+   "inferred": 9
+  },
+  "bw_nonempty_labels": 3,
+  "bw_rolls_by_level": {
+   "verified": 2,
+   "inferred": 1
+  },
+  "frames_by_level_colour": {
+   "verified": 683,
+   "unknown": 192,
+   "inferred": 45
+  },
+  "frames_by_level_bw": {
+   "verified": 64,
+   "unknown": 1228,
+   "inferred": 1
+  }
+ },
+ "photo_folders": {
+  "#001 全能400迫800  不夜城2024.2": {
+   "files": 38,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#002 APX400 2024.2": {
+   "files": 36,
+   "same_frame_as_material": 21,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#003 foma100 d67 2024.3小寨": {
+   "files": 38,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#005 5219 小寨华山": {
+   "files": 39,
+   "same_frame_as_material": 20,
+   "user_edit": 0,
+   "frozen_copy": 39
+  },
+  "#006 5207 华山小雁塔": {
+   "files": 38,
+   "same_frame_as_material": 11,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#013 5207 兴庆公园2023": {
+   "files": 38,
+   "same_frame_as_material": 35,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#014 fuji Acros2 2023": {
+   "files": 28,
+   "same_frame_as_material": 13,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#015 延安 梁家河 foma400按200拍0.9冲 2024.5": {
+   "files": 37,
+   "same_frame_as_material": 2,
+   "user_edit": 0,
+   "frozen_copy": 3
+  },
+  "#016 新疆 高中毕业 全能400 2023-2024.5.20": {
+   "files": 36,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#017 成都 世界线 2025.1 富士400": {
+   "files": 36,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#018 2025.1 成都 富士400 2": {
+   "files": 39,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 1
+  },
+  "#019 2025.1 成都 5219": {
+   "files": 30,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 0
+  },
+  "#020 2024.9 甘南 大画幅 foma100&rvp100": {
+   "files": 12,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 1
+  },
+  "寻微映像 最早三卷": {
+   "files": 116,
+   "same_frame_as_material": 1,
+   "user_edit": 0,
+   "frozen_copy": 5
+  },
+  "新疆/#004 5294": {
+   "files": 38,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 3
+  },
+  "新疆/#007 金200": {
+   "files": 37,
+   "same_frame_as_material": 8,
+   "user_edit": 1,
+   "frozen_copy": 0
+  },
+  "新疆/#008 全能400": {
+   "files": 37,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 3
+  },
+  "新疆/#009 5294": {
+   "files": 39,
+   "same_frame_as_material": 2,
+   "user_edit": 0,
+   "frozen_copy": 10
+  },
+  "新疆/#010 5294": {
+   "files": 39,
+   "same_frame_as_material": 0,
+   "user_edit": 0,
+   "frozen_copy": 10
+  },
+  "新疆/#011 5207": {
+   "files": 32,
+   "same_frame_as_material": 3,
+   "user_edit": 32,
+   "frozen_copy": 32
+  },
+  "新疆/#012 5207": {
+   "files": 37,
+   "same_frame_as_material": 4,
+   "user_edit": 36,
+   "frozen_copy": 0
+  },
+  "老照片": {
+   "files": 119,
+   "same_frame_as_material": 1,
+   "user_edit": 0,
+   "frozen_copy": 7
+  },
+  "（根目录的散文件）": {
+   "files": 8,
+   "same_frame_as_material": 0,
+   "user_edit": 6,
+   "frozen_copy": 0
+  }
+ },
+ "blueneg_groups": {
+  "ds-198802B": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19880215B",
+   "release_roll_ids": [
+    "19880215B"
+   ],
+   "films": [
+    "Kodak GA 100 5095"
+   ],
+   "dates": 1,
+   "release_frames": 13,
+   "dup_numbers": 0
+  },
+  "ds-198802C": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19880215C",
+   "release_roll_ids": [
+    "19880215C"
+   ],
+   "films": [
+    "Kodak GA 100 5095"
+   ],
+   "dates": 1,
+   "release_frames": 1,
+   "dup_numbers": 0
+  },
+  "ds-198802G": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19880220G",
+   "release_roll_ids": [
+    "19880220G"
+   ],
+   "films": [
+    "Kodak GA 100 5095"
+   ],
+   "dates": 1,
+   "release_frames": 2,
+   "dup_numbers": 0
+  },
+  "ds-19921210": {
+   "level": "inferred",
+   "basis": "官方 roll_id ['19921210'] 没有卷字母；胶片型号唯一，帧号不重复（跨 1 天）",
+   "release_roll_ids": [
+    "19921210"
+   ],
+   "films": [
+    "Kodak Gold 100-3"
+   ],
+   "dates": 1,
+   "release_frames": 3,
+   "dup_numbers": 0
+  },
+  "ds-19930125": {
+   "level": "inferred",
+   "basis": "官方 roll_id ['19930125'] 没有卷字母；胶片型号唯一，帧号不重复（跨 1 天）",
+   "release_roll_ids": [
+    "19930125"
+   ],
+   "films": [
+    "Kodak Gold 100-3"
+   ],
+   "dates": 1,
+   "release_frames": 1,
+   "dup_numbers": 0
+  },
+  "ds-199412A": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19941217A",
+   "release_roll_ids": [
+    "19941217A"
+   ],
+   "films": [
+    "Fuji 100"
+   ],
+   "dates": 1,
+   "release_frames": 9,
+   "dup_numbers": 0
+  },
+  "ds-199412B": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19941217B",
+    "19941218B"
+   ],
+   "films": [
+    "Konica Super XG 100"
+   ],
+   "dates": 2,
+   "release_frames": 12,
+   "dup_numbers": 0
+  },
+  "ds-199412C": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19941218C",
+    "19941219C"
+   ],
+   "films": [
+    "Kodak Gold 100"
+   ],
+   "dates": 2,
+   "release_frames": 25,
+   "dup_numbers": 0
+  },
+  "ds-199412D": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 3 个（同字母跨 3 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19941220D",
+    "19941221D",
+    "19941222D"
+   ],
+   "films": [
+    "Fuji 100"
+   ],
+   "dates": 3,
+   "release_frames": 8,
+   "dup_numbers": 0
+  },
+  "ds-199412E": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 4 个（同字母跨 4 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19941222E",
+    "19941223E",
+    "19941224E",
+    "19941225E"
+   ],
+   "films": [
+    "Konica Super XG 100"
+   ],
+   "dates": 4,
+   "release_frames": 12,
+   "dup_numbers": 0
+  },
+  "ds-199412F": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19941225F",
+    "19941228F"
+   ],
+   "films": [
+    "Konica Super XG 100"
+   ],
+   "dates": 2,
+   "release_frames": 6,
+   "dup_numbers": 0
+  },
+  "ds-19960101": {
+   "level": "inferred",
+   "basis": "官方 roll_id ['19960101'] 没有卷字母；胶片型号唯一，帧号不重复（跨 0 天）",
+   "release_roll_ids": [
+    "19960101"
+   ],
+   "films": [
+    "Fuji 100"
+   ],
+   "dates": 0,
+   "release_frames": 6,
+   "dup_numbers": 0
+  },
+  "ds-199602E": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19960204E",
+   "release_roll_ids": [
+    "19960204E"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 1,
+   "release_frames": 2,
+   "dup_numbers": 0
+  },
+  "ds-199608A": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 3 个（同字母跨 3 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19960805A",
+    "19960806A",
+    "19960807A"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 3,
+   "release_frames": 18,
+   "dup_numbers": 0
+  },
+  "ds-199608B": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 3 个（同字母跨 3 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19960808B",
+    "19960809B",
+    "19960811B"
+   ],
+   "films": [
+    "Fuji NPH400"
+   ],
+   "dates": 3,
+   "release_frames": 21,
+   "dup_numbers": 0
+  },
+  "ds-199608C": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19960812C",
+   "release_roll_ids": [
+    "19960812C"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 1,
+   "release_frames": 22,
+   "dup_numbers": 0
+  },
+  "ds-199608D": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19960812D",
+   "release_roll_ids": [
+    "19960812D"
+   ],
+   "films": [
+    "Fuji NPH400"
+   ],
+   "dates": 1,
+   "release_frames": 32,
+   "dup_numbers": 0
+  },
+  "ds-199608E": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19960813E",
+    "19960814E"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 2,
+   "release_frames": 28,
+   "dup_numbers": 0
+  },
+  "ds-199608F": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19960814F",
+    "19960815F"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 2,
+   "release_frames": 34,
+   "dup_numbers": 0
+  },
+  "ds-199608G": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19960815G",
+    "19960816G"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 2,
+   "release_frames": 32,
+   "dup_numbers": 0
+  },
+  "ds-199608H": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 3 个（同字母跨 3 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19960816H",
+    "19960817H",
+    "19960818H"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 3,
+   "release_frames": 30,
+   "dup_numbers": 0
+  },
+  "ds-199608I": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19960818I",
+    "19960820I"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 2,
+   "release_frames": 27,
+   "dup_numbers": 0
+  },
+  "ds-199608J": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19960820J",
+   "release_roll_ids": [
+    "19960820J"
+   ],
+   "films": [
+    "Kodak Gold 400-5"
+   ],
+   "dates": 1,
+   "release_frames": 25,
+   "dup_numbers": 0
+  },
+  "ds-199706A": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19970617A",
+    "19970619A"
+   ],
+   "films": [
+    "Kodak Gold 400-5"
+   ],
+   "dates": 2,
+   "release_frames": 13,
+   "dup_numbers": 0
+  },
+  "ds-199706B": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+   "release_roll_ids": [
+    "19970619B",
+    "19970620B"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 2,
+   "release_frames": 20,
+   "dup_numbers": 0
+  },
+  "ds-199706C": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19970620C",
+   "release_roll_ids": [
+    "19970620C"
+   ],
+   "films": [
+    "Kodak Gold 100-5"
+   ],
+   "dates": 1,
+   "release_frames": 13,
+   "dup_numbers": 0
+  },
+  "ds-199807A": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 199807A",
+   "release_roll_ids": [
+    "199807A"
+   ],
+   "films": [
+    "Fuji 400"
+   ],
+   "dates": 1,
+   "release_frames": 26,
+   "dup_numbers": 0
+  },
+  "ds-199807B": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 199807B",
+   "release_roll_ids": [
+    "199807B"
+   ],
+   "films": [
+    "Fuji 400"
+   ],
+   "dates": 1,
+   "release_frames": 19,
+   "dup_numbers": 0
+  },
+  "ds-199906B": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 19990613B",
+   "release_roll_ids": [
+    "19990613B"
+   ],
+   "films": [
+    "Kodak Gold 100-6"
+   ],
+   "dates": 1,
+   "release_frames": 2,
+   "dup_numbers": 0
+  },
+  "ds-19990806": {
+   "level": "inferred",
+   "basis": "官方 roll_id ['19990806'] 没有卷字母；胶片型号唯一，帧号不重复（跨 1 天）",
+   "release_roll_ids": [
+    "19990806"
+   ],
+   "films": [
+    "Kodak Gold 400-6"
+   ],
+   "dates": 1,
+   "release_frames": 3,
+   "dup_numbers": 0
+  },
+  "ds-19990807": {
+   "level": "inferred",
+   "basis": "官方 roll_id ['19990807'] 没有卷字母；胶片型号唯一，帧号不重复（跨 1 天）",
+   "release_roll_ids": [
+    "19990807"
+   ],
+   "films": [
+    "Kodak Gold 400-6"
+   ],
+   "dates": 1,
+   "release_frames": 4,
+   "dup_numbers": 0
+  },
+  "ds-199910": {
+   "level": "inferred",
+   "basis": "官方 roll_id ['199910'] 没有卷字母；胶片型号唯一，帧号不重复（跨 3 天）",
+   "release_roll_ids": [
+    "199910"
+   ],
+   "films": [
+    "Kodak Gold 400"
+   ],
+   "dates": 3,
+   "release_frames": 19,
+   "dup_numbers": 0
+  },
+  "ds-200207D": {
+   "level": "verified",
+   "basis": "BlueNeg 官方 roll_id 20020731D",
+   "release_roll_ids": [
+    "20020731D"
+   ],
+   "films": [
+    "Kodak GC 400-8"
+   ],
+   "dates": 1,
+   "release_frames": 3,
+   "dup_numbers": 0
+  }
+ }
+}

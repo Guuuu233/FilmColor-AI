@@ -1,0 +1,1717 @@
+[
+ {
+  "roll": "ds-198802B",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19880215B",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 12
+  },
+  "films": [
+   "Kodak GA 100 5095"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 12,
+  "negatives": 12,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 2,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19880215B"
+   ],
+   "dates": 1,
+   "release_frames": 13,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-198802C",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19880215C",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 1
+  },
+  "films": [
+   "Kodak GA 100 5095"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 1,
+  "negatives": 1,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19880215C"
+   ],
+   "dates": 1,
+   "release_frames": 1,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-198802G",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19880220G",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 2
+  },
+  "films": [
+   "Kodak GA 100 5095"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 2,
+  "negatives": 2,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19880220G"
+   ],
+   "dates": 1,
+   "release_frames": 2,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-19921210",
+  "level": "inferred",
+  "basis": "官方 roll_id ['19921210'] 没有卷字母；胶片型号唯一，帧号不重复（跨 1 天）",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 3
+  },
+  "films": [
+   "Kodak Gold 100-3"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 3,
+  "negatives": 3,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19921210"
+   ],
+   "dates": 1,
+   "release_frames": 3,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199412A",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19941217A",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 9
+  },
+  "films": [
+   "Fuji 100"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 9,
+  "negatives": 9,
+  "engine_readable": 6,
+  "with_reference": 6,
+  "dev_readable_with_reference": 6,
+  "graders": {
+   "当年冲印店（印相扫描）": 6
+  },
+  "two_graders": 0,
+  "p4_labels": 1,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19941217A"
+   ],
+   "dates": 1,
+   "release_frames": 9,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199412B",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 11
+  },
+  "films": [
+   "Konica Super XG 100"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 11,
+  "negatives": 11,
+  "engine_readable": 5,
+  "with_reference": 10,
+  "dev_readable_with_reference": 5,
+  "graders": {
+   "当年冲印店（印相扫描）": 10
+  },
+  "two_graders": 0,
+  "p4_labels": 2,
+  "user_labels": 0,
+  "ageing": 5,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19941217B",
+    "19941218B"
+   ],
+   "dates": 2,
+   "release_frames": 12,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199412C",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 25
+  },
+  "films": [
+   "Kodak Gold 100"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 25,
+  "negatives": 25,
+  "engine_readable": 6,
+  "with_reference": 23,
+  "dev_readable_with_reference": 6,
+  "graders": {
+   "当年冲印店（印相扫描）": 23
+  },
+  "two_graders": 0,
+  "p4_labels": 1,
+  "user_labels": 0,
+  "ageing": 19,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19941218C",
+    "19941219C"
+   ],
+   "dates": 2,
+   "release_frames": 25,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199412D",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 3 个（同字母跨 3 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 8
+  },
+  "films": [
+   "Fuji 100"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 8,
+  "negatives": 8,
+  "engine_readable": 8,
+  "with_reference": 8,
+  "dev_readable_with_reference": 8,
+  "graders": {
+   "当年冲印店（印相扫描）": 8
+  },
+  "two_graders": 0,
+  "p4_labels": 3,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19941220D",
+    "19941221D",
+    "19941222D"
+   ],
+   "dates": 3,
+   "release_frames": 8,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199412E",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 4 个（同字母跨 4 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 12
+  },
+  "films": [
+   "Konica Super XG 100"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 12,
+  "negatives": 12,
+  "engine_readable": 12,
+  "with_reference": 12,
+  "dev_readable_with_reference": 12,
+  "graders": {
+   "当年冲印店（印相扫描）": 12
+  },
+  "two_graders": 0,
+  "p4_labels": 4,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19941222E",
+    "19941223E",
+    "19941224E",
+    "19941225E"
+   ],
+   "dates": 4,
+   "release_frames": 12,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199412F",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 6
+  },
+  "films": [
+   "Konica Super XG 100"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 6,
+  "negatives": 6,
+  "engine_readable": 3,
+  "with_reference": 4,
+  "dev_readable_with_reference": 3,
+  "graders": {
+   "当年冲印店（印相扫描）": 4
+  },
+  "two_graders": 0,
+  "p4_labels": 2,
+  "user_labels": 0,
+  "ageing": 1,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19941225F",
+    "19941228F"
+   ],
+   "dates": 2,
+   "release_frames": 6,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199602E",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19960204E",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 2
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 2,
+  "negatives": 2,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960204E"
+   ],
+   "dates": 1,
+   "release_frames": 2,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608A",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 3 个（同字母跨 3 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 17
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "frozen",
+  "frames": 17,
+  "negatives": 17,
+  "engine_readable": 0,
+  "with_reference": 14,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 17,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960805A",
+    "19960806A",
+    "19960807A"
+   ],
+   "dates": 3,
+   "release_frames": 18,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608B",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 3 个（同字母跨 3 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 21
+  },
+  "films": [
+   "Fuji NPH400"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 21,
+  "negatives": 21,
+  "engine_readable": 20,
+  "with_reference": 20,
+  "dev_readable_with_reference": 20,
+  "graders": {
+   "当年冲印店（印相扫描）": 20
+  },
+  "two_graders": 0,
+  "p4_labels": 3,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960808B",
+    "19960809B",
+    "19960811B"
+   ],
+   "dates": 3,
+   "release_frames": 21,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608C",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19960812C",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 20
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "frozen",
+  "frames": 20,
+  "negatives": 20,
+  "engine_readable": 0,
+  "with_reference": 16,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 20,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960812C"
+   ],
+   "dates": 1,
+   "release_frames": 22,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608D",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19960812D",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 32
+  },
+  "films": [
+   "Fuji NPH400"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 32,
+  "negatives": 32,
+  "engine_readable": 27,
+  "with_reference": 27,
+  "dev_readable_with_reference": 27,
+  "graders": {
+   "当年冲印店（印相扫描）": 27
+  },
+  "two_graders": 0,
+  "p4_labels": 2,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960812D"
+   ],
+   "dates": 1,
+   "release_frames": 32,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608E",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 25
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "frozen",
+  "frames": 25,
+  "negatives": 25,
+  "engine_readable": 0,
+  "with_reference": 22,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 25,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960813E",
+    "19960814E"
+   ],
+   "dates": 2,
+   "release_frames": 28,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608F",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 33
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "frozen",
+  "frames": 33,
+  "negatives": 33,
+  "engine_readable": 0,
+  "with_reference": 31,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 33,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960814F",
+    "19960815F"
+   ],
+   "dates": 2,
+   "release_frames": 34,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608G",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 24
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "frozen",
+  "frames": 24,
+  "negatives": 24,
+  "engine_readable": 0,
+  "with_reference": 23,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 24,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960815G",
+    "19960816G"
+   ],
+   "dates": 2,
+   "release_frames": 32,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608H",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 3 个（同字母跨 3 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 27
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "frozen",
+  "frames": 27,
+  "negatives": 27,
+  "engine_readable": 0,
+  "with_reference": 26,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 27,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960816H",
+    "19960817H",
+    "19960818H"
+   ],
+   "dates": 3,
+   "release_frames": 30,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608I",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 23
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 23,
+  "negatives": 23,
+  "engine_readable": 0,
+  "with_reference": 23,
+  "dev_readable_with_reference": 0,
+  "graders": {
+   "当年冲印店（印相扫描）": 23
+  },
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 23,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960818I",
+    "19960820I"
+   ],
+   "dates": 2,
+   "release_frames": 27,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199608J",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19960820J",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 24
+  },
+  "films": [
+   "Kodak Gold 400-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 24,
+  "negatives": 24,
+  "engine_readable": 0,
+  "with_reference": 20,
+  "dev_readable_with_reference": 0,
+  "graders": {
+   "当年冲印店（印相扫描）": 20
+  },
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 24,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19960820J"
+   ],
+   "dates": 1,
+   "release_frames": 25,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199706A",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 11
+  },
+  "films": [
+   "Kodak Gold 400-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 11,
+  "negatives": 11,
+  "engine_readable": 2,
+  "with_reference": 10,
+  "dev_readable_with_reference": 2,
+  "graders": {
+   "当年冲印店（印相扫描）": 10
+  },
+  "two_graders": 0,
+  "p4_labels": 1,
+  "user_labels": 0,
+  "ageing": 9,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19970617A",
+    "19970619A"
+   ],
+   "dates": 2,
+   "release_frames": 13,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199706B",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 2 个（同字母跨 2 天），胶片型号唯一，帧号按日期递增、不重复",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 17
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 17,
+  "negatives": 17,
+  "engine_readable": 3,
+  "with_reference": 10,
+  "dev_readable_with_reference": 3,
+  "graders": {
+   "当年冲印店（印相扫描）": 10
+  },
+  "two_graders": 0,
+  "p4_labels": 1,
+  "user_labels": 0,
+  "ageing": 12,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19970619B",
+    "19970620B"
+   ],
+   "dates": 2,
+   "release_frames": 20,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199706C",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19970620C",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 12
+  },
+  "films": [
+   "Kodak Gold 100-5"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 12,
+  "negatives": 12,
+  "engine_readable": 1,
+  "with_reference": 12,
+  "dev_readable_with_reference": 1,
+  "graders": {
+   "当年冲印店（印相扫描）": 12
+  },
+  "two_graders": 0,
+  "p4_labels": 1,
+  "user_labels": 0,
+  "ageing": 11,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19970620C"
+   ],
+   "dates": 1,
+   "release_frames": 13,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199807A",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 199807A",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 26
+  },
+  "films": [
+   "Fuji 400"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 26,
+  "negatives": 26,
+  "engine_readable": 26,
+  "with_reference": 26,
+  "dev_readable_with_reference": 26,
+  "graders": {
+   "当年冲印店（印相扫描）": 26
+  },
+  "two_graders": 0,
+  "p4_labels": 2,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "199807A"
+   ],
+   "dates": 1,
+   "release_frames": 26,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199807B",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 199807B",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 19
+  },
+  "films": [
+   "Fuji 400"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 19,
+  "negatives": 19,
+  "engine_readable": 19,
+  "with_reference": 19,
+  "dev_readable_with_reference": 19,
+  "graders": {
+   "当年冲印店（印相扫描）": 19
+  },
+  "two_graders": 0,
+  "p4_labels": 2,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "199807B"
+   ],
+   "dates": 1,
+   "release_frames": 19,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199906B",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 19990613B",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 2
+  },
+  "films": [
+   "Kodak Gold 100-6"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 2,
+  "negatives": 2,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 2,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19990613B"
+   ],
+   "dates": 1,
+   "release_frames": 2,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-19990806",
+  "level": "inferred",
+  "basis": "官方 roll_id ['19990806'] 没有卷字母；胶片型号唯一，帧号不重复（跨 1 天）",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 2
+  },
+  "films": [
+   "Kodak Gold 400-6"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 2,
+  "negatives": 2,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19990806"
+   ],
+   "dates": 1,
+   "release_frames": 3,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-19990807",
+  "level": "inferred",
+  "basis": "官方 roll_id ['19990807'] 没有卷字母；胶片型号唯一，帧号不重复（跨 1 天）",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 4
+  },
+  "films": [
+   "Kodak Gold 400-6"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 4,
+  "negatives": 4,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 1,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "19990807"
+   ],
+   "dates": 1,
+   "release_frames": 4,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-199910",
+  "level": "inferred",
+  "basis": "官方 roll_id ['199910'] 没有卷字母；胶片型号唯一，帧号不重复（跨 3 天）",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 19
+  },
+  "films": [
+   "Kodak Gold 400"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 19,
+  "negatives": 19,
+  "engine_readable": 13,
+  "with_reference": 18,
+  "dev_readable_with_reference": 13,
+  "graders": {
+   "当年冲印店（印相扫描）": 18
+  },
+  "two_graders": 0,
+  "p4_labels": 2,
+  "user_labels": 0,
+  "ageing": 6,
+  "used_in_research": true,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "199910"
+   ],
+   "dates": 3,
+   "release_frames": 19,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "ds-200207D",
+  "level": "verified",
+  "basis": "BlueNeg 官方 roll_id 20020731D",
+  "source": "blueneg",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 3
+  },
+  "films": [
+   "Kodak GC 400-8"
+  ],
+  "cameras": [
+   "None"
+  ],
+  "partition": "dev",
+  "frames": 3,
+  "negatives": 3,
+  "engine_readable": 0,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 3,
+  "used_in_research": false,
+  "frame_order": "BlueNeg 官方 number_in_roll",
+  "release": {
+   "release_roll_ids": [
+    "20020731D"
+   ],
+   "dates": 1,
+   "release_frames": 3,
+   "dup_numbers": 0
+  }
+ },
+ {
+  "roll": "loose:A7R5_RAW",
+  "level": "inferred",
+  "basis": "同一个未入索引的目录、同一台相机（未核实是同一卷）",
+  "source": "loose:A7R5_RAW",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 6
+  },
+  "films": [
+   "None"
+  ],
+  "cameras": [
+   "SONY ILCE-7RM5"
+  ],
+  "partition": "dev",
+  "frames": 6,
+  "negatives": 6,
+  "engine_readable": 6,
+  "with_reference": 0,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": null
+ },
+ {
+  "roll": "nlp-20180518",
+  "level": "inferred",
+  "basis": "只有翻拍日期（同日翻拍）",
+  "source": "nlp_official",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 1
+  },
+  "films": [
+   "unknown"
+  ],
+  "cameras": [
+   "X-T2"
+  ],
+  "partition": "dev",
+  "frames": 1,
+  "negatives": 1,
+  "engine_readable": 1,
+  "with_reference": 1,
+  "dev_readable_with_reference": 1,
+  "graders": {
+   "NLP 默认输出（用户在 LR 里操作，不是人工调色）": 1
+  },
+  "two_graders": 0,
+  "p4_labels": 1,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号"
+ },
+ {
+  "roll": "nlp-20180613",
+  "level": "inferred",
+  "basis": "只有翻拍日期（同日翻拍）",
+  "source": "nlp_official",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 3
+  },
+  "films": [
+   "Kodak Portra 400",
+   "unknown"
+  ],
+  "cameras": [
+   "X-T2"
+  ],
+  "partition": "dev",
+  "frames": 3,
+  "negatives": 3,
+  "engine_readable": 3,
+  "with_reference": 3,
+  "dev_readable_with_reference": 3,
+  "graders": {
+   "NLP 默认输出（用户在 LR 里操作，不是人工调色）": 3
+  },
+  "two_graders": 0,
+  "p4_labels": 3,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号"
+ },
+ {
+  "roll": "nlp-20180728",
+  "level": "inferred",
+  "basis": "只有翻拍日期（同日翻拍）",
+  "source": "nlp_official",
+  "kind": "colour_neg",
+  "kinds": {
+   "bw_neg": 1,
+   "colour_neg": 2
+  },
+  "films": [
+   "unknown"
+  ],
+  "cameras": [
+   "X-T2"
+  ],
+  "partition": "dev",
+  "frames": 3,
+  "negatives": 3,
+  "engine_readable": 3,
+  "with_reference": 3,
+  "dev_readable_with_reference": 2,
+  "graders": {
+   "NLP 默认输出（用户在 LR 里操作，不是人工调色）": 3
+  },
+  "two_graders": 0,
+  "p4_labels": 2,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号"
+ },
+ {
+  "roll": "nlp-20180729",
+  "level": "inferred",
+  "basis": "只有翻拍日期（同日翻拍）",
+  "source": "nlp_official",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 5
+  },
+  "films": [
+   "Kodak Portra 400",
+   "unknown"
+  ],
+  "cameras": [
+   "X-T2"
+  ],
+  "partition": "dev",
+  "frames": 5,
+  "negatives": 5,
+  "engine_readable": 5,
+  "with_reference": 5,
+  "dev_readable_with_reference": 5,
+  "graders": {
+   "NLP 默认输出（用户在 LR 里操作，不是人工调色）": 5
+  },
+  "two_graders": 0,
+  "p4_labels": 5,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号"
+ },
+ {
+  "roll": "own-acros2-20240331-dsc4899",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "own",
+  "kind": "bw_neg",
+  "kinds": {
+   "bw_neg": 28
+  },
+  "films": [
+   "Fuji Acros ll"
+  ],
+  "cameras": [
+   "NIKON CORPORATION NIKON Z 7_2"
+  ],
+  "partition": "dev",
+  "frames": 29,
+  "negatives": 28,
+  "engine_readable": 28,
+  "with_reference": 28,
+  "dev_readable_with_reference": 28,
+  "graders": {
+   "冲扫店调色师": 18,
+   "照片文件夹的其他成片（店家或冲印店）": 12
+  },
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）",
+  "own_folder_check": {
+   "folder": "Fuji Acros ll(xtol 尼康数字化)-",
+   "first": "DSC_4899.JPG",
+   "files": 29,
+   "first_no": 4899,
+   "last_no": 4927,
+   "missing_numbers": 0,
+   "id_matches_first": true,
+   "first_is_jpeg_label": true
+  }
+ },
+ {
+  "roll": "own-apx400-20240310-dsc6548",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "own",
+  "kind": "bw_neg",
+  "kinds": {
+   "bw_neg": 36
+  },
+  "films": [
+   "Agfa APX 400（黑白负片，Xtol 次抛冲洗，尼康数字化）"
+  ],
+  "cameras": [
+   "NIKON CORPORATION NIKON Z 7_2"
+  ],
+  "partition": "dev",
+  "frames": 37,
+  "negatives": 36,
+  "engine_readable": 36,
+  "with_reference": 36,
+  "dev_readable_with_reference": 36,
+  "graders": {
+   "冲扫店调色师": 36
+  },
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）",
+  "own_folder_check": {
+   "folder": "APX 400(xtol次抛冲洗 尼康数字化)",
+   "first": "DSC_6548.JPG",
+   "files": 37,
+   "first_no": 6548,
+   "last_no": 6585,
+   "missing_numbers": 1,
+   "id_matches_first": true,
+   "first_is_jpeg_label": true
+  }
+ },
+ {
+  "roll": "own-e5207-20240323-dsc8242",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "own",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 38
+  },
+  "films": [
+   "Eastman 5207"
+  ],
+  "cameras": [
+   "NIKON CORPORATION NIKON Z 7_2"
+  ],
+  "partition": "dev",
+  "frames": 39,
+  "negatives": 38,
+  "engine_readable": 38,
+  "with_reference": 38,
+  "dev_readable_with_reference": 38,
+  "graders": {
+   "冲扫店调色师": 38
+  },
+  "two_graders": 0,
+  "p4_labels": 37,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）",
+  "own_folder_check": {
+   "folder": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-",
+   "first": "DSC_8242.JPG",
+   "files": 39,
+   "first_no": 8242,
+   "last_no": 8280,
+   "missing_numbers": 0,
+   "id_matches_first": true,
+   "first_is_jpeg_label": true
+  }
+ },
+ {
+  "roll": "own-e5207-20240401-dsc6161",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "own",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 37
+  },
+  "films": [
+   "Eastman 5207"
+  ],
+  "cameras": [
+   "NIKON CORPORATION NIKON Z 7_2"
+  ],
+  "partition": "dev",
+  "frames": 38,
+  "negatives": 37,
+  "engine_readable": 37,
+  "with_reference": 37,
+  "dev_readable_with_reference": 37,
+  "graders": {
+   "冲扫店调色师": 37,
+   "用户（Lightroom）": 37
+  },
+  "two_graders": 37,
+  "p4_labels": 37,
+  "user_labels": 37,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）",
+  "own_folder_check": {
+   "folder": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-3",
+   "first": "DSC_6161.JPG",
+   "files": 38,
+   "first_no": 6161,
+   "last_no": 6198,
+   "missing_numbers": 0,
+   "id_matches_first": true,
+   "first_is_jpeg_label": true
+  }
+ },
+ {
+  "roll": "own-e5207-20240401-dsc6199",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "own",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 33
+  },
+  "films": [
+   "Eastman 5207"
+  ],
+  "cameras": [
+   "NIKON CORPORATION NIKON Z 7_2"
+  ],
+  "partition": "frozen",
+  "frames": 34,
+  "negatives": 33,
+  "engine_readable": 33,
+  "with_reference": 33,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）",
+  "own_folder_check": {
+   "folder": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-2",
+   "first": "DSC_6199.JPG",
+   "files": 34,
+   "first_no": 6199,
+   "last_no": 6232,
+   "missing_numbers": 0,
+   "id_matches_first": true,
+   "first_is_jpeg_label": true
+  }
+ },
+ {
+  "roll": "own-e5207-20240401-dsc6233",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "own",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 38
+  },
+  "films": [
+   "Eastman 5207"
+  ],
+  "cameras": [
+   "NIKON CORPORATION NIKON Z 7_2"
+  ],
+  "partition": "dev",
+  "frames": 39,
+  "negatives": 38,
+  "engine_readable": 38,
+  "with_reference": 38,
+  "dev_readable_with_reference": 38,
+  "graders": {
+   "照片文件夹的其他成片（店家或冲印店）": 16,
+   "冲扫店调色师": 22
+  },
+  "two_graders": 0,
+  "p4_labels": 21,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）",
+  "own_folder_check": {
+   "folder": "Eastman 5207(ecn-2次抛冲洗 尼康数字化)-1",
+   "first": "DSC_6233.JPG",
+   "files": 39,
+   "first_no": 6233,
+   "last_no": 6271,
+   "missing_numbers": 0,
+   "id_matches_first": true,
+   "first_is_jpeg_label": true
+  }
+ },
+ {
+  "roll": "own-e5219-20240323-dsc8202",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "own",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 39
+  },
+  "films": [
+   "Eastman 5219"
+  ],
+  "cameras": [
+   "NIKON CORPORATION NIKON Z 7_2"
+  ],
+  "partition": "frozen",
+  "frames": 40,
+  "negatives": 39,
+  "engine_readable": 39,
+  "with_reference": 38,
+  "dev_readable_with_reference": 0,
+  "graders": {},
+  "two_graders": 0,
+  "p4_labels": 0,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": false,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）",
+  "own_folder_check": {
+   "folder": "Eastman 5219(ecn-2次抛冲洗 尼康数字化)-",
+   "first": "DSC_8202.JPG",
+   "files": 40,
+   "first_no": 8202,
+   "last_no": 8241,
+   "missing_numbers": 0,
+   "id_matches_first": true,
+   "first_is_jpeg_label": true
+  }
+ },
+ {
+  "roll": "own-g200-20240320-dsc4889",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "own",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 37
+  },
+  "films": [
+   "Kodak G200"
+  ],
+  "cameras": [
+   "NIKON CORPORATION NIKON Z 7_2"
+  ],
+  "partition": "dev",
+  "frames": 38,
+  "negatives": 37,
+  "engine_readable": 37,
+  "with_reference": 37,
+  "dev_readable_with_reference": 37,
+  "graders": {
+   "冲扫店调色师": 37,
+   "用户（Lightroom）": 19,
+   "照片文件夹的其他成片（店家或冲印店）": 1
+  },
+  "two_graders": 19,
+  "p4_labels": 35,
+  "user_labels": 19,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）",
+  "own_folder_check": {
+   "folder": "Kodak G200（尼康数字化）-",
+   "first": "DSC_4889.JPG",
+   "files": 38,
+   "first_no": 4889,
+   "last_no": 4926,
+   "missing_numbers": 0,
+   "id_matches_first": true,
+   "first_is_jpeg_label": true
+  }
+ },
+ {
+  "roll": "shop_r01",
+  "level": "verified",
+  "basis": "一卷一个翻拍目录，首个文件是卷标 JPEG（S3_EXT_DATA_AUDIT §2）",
+  "source": "shop_r01",
+  "kind": "colour_neg",
+  "kinds": {
+   "colour_neg": 37
+  },
+  "films": [
+   "Kodak UltraMax 400"
+  ],
+  "cameras": [
+   "NIKON Z 7_2"
+  ],
+  "partition": "dev",
+  "frames": 38,
+  "negatives": 37,
+  "engine_readable": 37,
+  "with_reference": 23,
+  "dev_readable_with_reference": 23,
+  "graders": {
+   "冲扫店调色师": 23
+  },
+  "two_graders": 0,
+  "p4_labels": 21,
+  "user_labels": 0,
+  "ageing": 0,
+  "used_in_research": true,
+  "frame_order": "翻拍文件号（与底片帧号一致与否未核实）"
+ }
+]
