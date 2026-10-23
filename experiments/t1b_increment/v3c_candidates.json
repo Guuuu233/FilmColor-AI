@@ -1,0 +1,1359 @@
+{
+ "rule": "v3c (docs/T1B_INCREMENT_20261022.md section 9); unit code body-sha256(model|serial)[:10]",
+ "older_files_read": 4732,
+ "older_files_with_serial": 2310,
+ "new_contents": 180,
+ "bodies": 38,
+ "no_serial_files": 54,
+ "status": {
+  "candidate": 6,
+  "development": 33
+ },
+ "candidates": [
+  {
+   "unit": "body-e60dbcf684",
+   "run_label": [
+    "body18"
+   ],
+   "camera": [
+    "Canon Canon EOS R5"
+   ],
+   "normal_readable": 26,
+   "stratum": "large",
+   "position": 1,
+   "sort_key": "0b18a601bfd83c53b7ea48028e1ffc7f60900b56e1e6f4549dcc856c56534e79",
+   "proposal": "seal",
+   "index_sources": {
+    "群友分享": 26
+   },
+   "index_layouts": {
+    "header": 26
+   },
+   "sessions": [
+    "2023:05:22",
+    "2023:06:06",
+    "2023:06:22"
+   ]
+  },
+  {
+   "unit": "body-0fc45abd72",
+   "run_label": [
+    "body52"
+   ],
+   "camera": [
+    "Panasonic DC-GX9"
+   ],
+   "normal_readable": 29,
+   "stratum": "large",
+   "position": 2,
+   "sort_key": "32278a43714e601d8f7b0dd8bf0f5ebab631da9fc7c8b08f7db24c5eaa67e8b6",
+   "proposal": "development",
+   "index_sources": {
+    "drive.google.com": 27,
+    "群友分享": 2
+   },
+   "index_layouts": {
+    "header": 29
+   },
+   "sessions": [
+    "2025:04:20"
+   ]
+  },
+  {
+   "unit": "body-d19097ecea",
+   "run_label": [
+    "body11"
+   ],
+   "camera": [
+    "SONY ILCE-7M4"
+   ],
+   "normal_readable": 5,
+   "stratum": "small",
+   "position": 1,
+   "sort_key": "040fe3dba182cc712d94440acfbfbfa28487b1ac932779a0d8e53157c8c1d9b8",
+   "proposal": "seal",
+   "index_sources": {
+    "群友分享": 5
+   },
+   "index_layouts": {
+    "header": 5
+   },
+   "sessions": [
+    "2025:06:10"
+   ]
+  },
+  {
+   "unit": "body-5d5af94fb3",
+   "run_label": [
+    "body36"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON D750"
+   ],
+   "normal_readable": 6,
+   "stratum": "small",
+   "position": 2,
+   "sort_key": "3bb7b7da3166667783a5df2c4d9b67dd4dfe1bc3448b713af7a2087e7dcef547",
+   "proposal": "development",
+   "index_sources": {
+    "(none recorded)": 1,
+    "群友分享": 5
+   },
+   "index_layouts": {
+    "collected": 1,
+    "header": 4,
+    "format_in_type": 1
+   },
+   "sessions": [
+    "2021:07:02",
+    "2021:07:03",
+    "2021:07:04",
+    "2021:07:07"
+   ]
+  },
+  {
+   "unit": "body-e8199a65dd",
+   "run_label": [
+    "body28"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON Z 6_2"
+   ],
+   "normal_readable": 5,
+   "stratum": "small",
+   "position": 3,
+   "sort_key": "55de531964330ce3d3ae5be6df3ff7fc34292a6dc3008a3fa8425d658a886db4",
+   "proposal": "seal",
+   "index_sources": {
+    "群友分享": 5
+   },
+   "index_layouts": {
+    "header": 5
+   },
+   "sessions": [
+    "2025:08:23"
+   ]
+  },
+  {
+   "unit": "body-356ddb58d3",
+   "run_label": [
+    "body04"
+   ],
+   "camera": [
+    "SONY ILCE-7RM4A"
+   ],
+   "normal_readable": 6,
+   "stratum": "small",
+   "position": 4,
+   "sort_key": "e2d6785ebc9edbcfe06795ae096b41de83aa34ffd5f0b5fcedd58ced8d18b077",
+   "proposal": "development",
+   "index_sources": {
+    "(none recorded)": 6
+   },
+   "index_layouts": {
+    "collected": 6
+   },
+   "sessions": [
+    "2024:11:18"
+   ]
+  }
+ ],
+ "proposed_seal_frames": 36,
+ "proposed_dev_frames_from_candidates": 41,
+ "note": "proposal only: source / licence of every candidate to be confirmed by the user; a candidate moved to development changes the order of its stratum, so the selection is recomputed after confirmation",
+ "units": [
+  {
+   "unit": "body-0fc45abd72",
+   "run_label": [
+    "body52"
+   ],
+   "camera": [
+    "Panasonic DC-GX9"
+   ],
+   "files": 29,
+   "normal_readable": 29,
+   "sessions": [
+    "2025:04:20"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "candidate",
+   "index_layouts": {
+    "header": 29
+   },
+   "index_sources": {
+    "drive.google.com": 27,
+    "群友分享": 2
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1249.RW2",
+    "01_彩色负片_未反相/A1250.RW2",
+    "01_彩色负片_未反相/A1251.RW2",
+    "01_彩色负片_未反相/A1252.RW2",
+    "01_彩色负片_未反相/A1253.RW2",
+    "01_彩色负片_未反相/A1254.RW2",
+    "01_彩色负片_未反相/A1255.RW2",
+    "01_彩色负片_未反相/A1256.RW2",
+    "01_彩色负片_未反相/A1257.RW2",
+    "01_彩色负片_未反相/A1258.RW2",
+    "01_彩色负片_未反相/A1259.RW2",
+    "01_彩色负片_未反相/A1260.RW2",
+    "01_彩色负片_未反相/A1261.RW2",
+    "01_彩色负片_未反相/A1262.RW2",
+    "01_彩色负片_未反相/A1263.RW2",
+    "01_彩色负片_未反相/A1264.RW2",
+    "01_彩色负片_未反相/A1265.RW2",
+    "01_彩色负片_未反相/A1266.RW2",
+    "01_彩色负片_未反相/A1267.RW2",
+    "01_彩色负片_未反相/A1268.RW2",
+    "01_彩色负片_未反相/A1269.RW2",
+    "01_彩色负片_未反相/A1270.RW2",
+    "01_彩色负片_未反相/A1271.RW2",
+    "01_彩色负片_未反相/A1272.RW2",
+    "01_彩色负片_未反相/A1273.RW2",
+    "01_彩色负片_未反相/A1274.RW2",
+    "01_彩色负片_未反相/A1275.RW2",
+    "01_彩色负片_未反相/A1292.RW2",
+    "01_彩色负片_未反相/A1293.RW2"
+   ],
+   "stratum": "large",
+   "sort_key": "32278a43714e601d8f7b0dd8bf0f5ebab631da9fc7c8b08f7db24c5eaa67e8b6",
+   "position": 2,
+   "proposal": "development"
+  },
+  {
+   "unit": "body-12ea9c5c9b",
+   "run_label": [
+    "body37"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON D750"
+   ],
+   "files": 3,
+   "normal_readable": 3,
+   "sessions": [
+    "2020:05:11"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 3
+   },
+   "index_sources": {
+    "群友分享": 3
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1238.NEF",
+    "01_彩色负片_未反相/A1239.NEF",
+    "01_彩色负片_未反相/A1248.NEF"
+   ]
+  },
+  {
+   "unit": "body-16b8888064",
+   "run_label": [
+    "body29"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON D3200"
+   ],
+   "files": 2,
+   "normal_readable": 2,
+   "sessions": [
+    "2020:08:08"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 2
+   },
+   "index_sources": {
+    "群友分享": 2
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1227.NEF",
+    "01_彩色负片_未反相/A1229.NEF"
+   ]
+  },
+  {
+   "unit": "body-170f66b08d",
+   "run_label": [
+    "body23"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON D7100"
+   ],
+   "files": 4,
+   "normal_readable": 4,
+   "sessions": [
+    "2020:09:05"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 4
+   },
+   "index_sources": {
+    "drive.google.com": 4
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1278.NEF",
+    "01_彩色负片_未反相/A1280.NEF",
+    "01_彩色负片_未反相/A1281.NEF",
+    "01_彩色负片_未反相/A1282.NEF"
+   ]
+  },
+  {
+   "unit": "body-1a27d0d5fe",
+   "run_label": [
+    "body22"
+   ],
+   "camera": [
+    "Canon Canon EOS R"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2024:06:19"
+   ],
+   "links": [],
+   "older_material": {
+    "dev": 10
+   },
+   "status": "development (body on older dev data)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1247.CR3"
+   ]
+  },
+  {
+   "unit": "body-1e9be1979a",
+   "run_label": [
+    "body14"
+   ],
+   "camera": [
+    "SONY ILCE-6000"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2026:09:27"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1313.ARW"
+   ]
+  },
+  {
+   "unit": "body-28c09fe820",
+   "run_label": [
+    "body43"
+   ],
+   "camera": [
+    "FUJIFILM X-T3"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2026:03:20"
+   ],
+   "links": [],
+   "older_material": {
+    "dev": 6
+   },
+   "status": "development (body on older dev data)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1295.RAF"
+   ]
+  },
+  {
+   "unit": "body-2e445eb419",
+   "run_label": [
+    "body16"
+   ],
+   "camera": [
+    "SONY ILCE-7M3"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2025:11:05"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1079.ARW"
+   ]
+  },
+  {
+   "unit": "body-356ddb58d3",
+   "run_label": [
+    "body04"
+   ],
+   "camera": [
+    "SONY ILCE-7RM4A"
+   ],
+   "files": 6,
+   "normal_readable": 6,
+   "sessions": [
+    "2024:11:18"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "candidate",
+   "index_layouts": {
+    "collected": 6
+   },
+   "index_sources": {
+    "(none recorded)": 6
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1100.ARW",
+    "01_彩色负片_未反相/A1101.ARW",
+    "01_彩色负片_未反相/A1102.ARW",
+    "01_彩色负片_未反相/A1103.ARW",
+    "01_彩色负片_未反相/A1104.ARW",
+    "01_彩色负片_未反相/A1105.ARW"
+   ],
+   "stratum": "small",
+   "sort_key": "e2d6785ebc9edbcfe06795ae096b41de83aa34ffd5f0b5fcedd58ced8d18b077",
+   "position": 4,
+   "proposal": "development"
+  },
+  {
+   "unit": "body-3a4d4fe80d",
+   "run_label": [
+    "body09"
+   ],
+   "camera": [
+    "Canon Canon EOS 6D"
+   ],
+   "files": 2,
+   "normal_readable": 2,
+   "sessions": [
+    "2022:12:22"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 2
+   },
+   "index_sources": {
+    "drive.google.com": 2
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1276.CR2",
+    "01_彩色负片_未反相/A1277.CR2"
+   ]
+  },
+  {
+   "unit": "body-44b907e5d3",
+   "run_label": [
+    "body20"
+   ],
+   "camera": [
+    "Canon Canon EOS REBEL T3i"
+   ],
+   "files": 5,
+   "normal_readable": 5,
+   "sessions": [
+    "2014:10:01",
+    "2014:10:22",
+    "2018:02:14",
+    "2018:02:23",
+    "2021:08:08"
+   ],
+   "links": [],
+   "older_material": {
+    "dev": 5
+   },
+   "status": "development (body on older dev data)",
+   "index_layouts": {
+    "collected": 3,
+    "format_in_type": 2
+   },
+   "index_sources": {
+    "(none recorded)": 3,
+    "群友分享": 2
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1134.CR2",
+    "01_彩色负片_未反相/A1135.CR2",
+    "01_彩色负片_未反相/A1136.CR2",
+    "01_彩色负片_未反相/A1320.CR2",
+    "01_彩色负片_未反相/A1321.CR2"
+   ]
+  },
+  {
+   "unit": "body-4ce921753b",
+   "run_label": [
+    "body24"
+   ],
+   "camera": [
+    "Canon Canon EOS 5D Mark III"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2022:11:23"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "drive.google.com": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1290.CR2"
+   ]
+  },
+  {
+   "unit": "body-4d1677ee5e",
+   "run_label": [
+    "body15"
+   ],
+   "camera": [
+    "Canon Canon EOS R5"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2024:12:19"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1244.CR3"
+   ]
+  },
+  {
+   "unit": "body-54de5099dd",
+   "run_label": [
+    "body39"
+   ],
+   "camera": [
+    "Canon Canon EOS 5DS R"
+   ],
+   "files": 2,
+   "normal_readable": 2,
+   "sessions": [
+    "2023:01:21"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 1,
+    "header": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1,
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1119.CR2",
+    "01_彩色负片_未反相/A1291.CR2"
+   ]
+  },
+  {
+   "unit": "body-5d15a2ece2",
+   "run_label": [
+    "body08"
+   ],
+   "camera": [
+    "Canon Canon EOS 5D Mark III"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2020:06:07"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1195.CR2"
+   ]
+  },
+  {
+   "unit": "body-5d5af94fb3",
+   "run_label": [
+    "body36"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON D750"
+   ],
+   "files": 6,
+   "normal_readable": 6,
+   "sessions": [
+    "2021:07:02",
+    "2021:07:03",
+    "2021:07:04",
+    "2021:07:07"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "candidate",
+   "index_layouts": {
+    "collected": 1,
+    "header": 4,
+    "format_in_type": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1,
+    "群友分享": 5
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1081.NEF",
+    "01_彩色负片_未反相/A1240.NEF",
+    "01_彩色负片_未反相/A1241.NEF",
+    "01_彩色负片_未反相/A1242.NEF",
+    "01_彩色负片_未反相/A1243.NEF",
+    "01_彩色负片_未反相/A1327.NEF"
+   ],
+   "stratum": "small",
+   "sort_key": "3bb7b7da3166667783a5df2c4d9b67dd4dfe1bc3448b713af7a2087e7dcef547",
+   "position": 2,
+   "proposal": "development"
+  },
+  {
+   "unit": "body-5f3d8d36a0",
+   "run_label": [
+    "body02"
+   ],
+   "camera": [
+    "SONY ILCE-1"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2021:04:13"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1235.ARW"
+   ]
+  },
+  {
+   "unit": "body-6169b04e0b",
+   "run_label": [
+    "body33"
+   ],
+   "camera": [
+    "SONY ILCE-7M2"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2025:10:26"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1297.ARW"
+   ]
+  },
+  {
+   "unit": "body-6bf1d034c7",
+   "run_label": [
+    "body13"
+   ],
+   "camera": [
+    "SONY ILCE-7M4"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2026:01:29"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "dropbox.com": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1284.ARW"
+   ]
+  },
+  {
+   "unit": "body-6e829e95ca",
+   "run_label": [
+    "body44"
+   ],
+   "camera": [
+    "FUJIFILM X-Pro3"
+   ],
+   "files": 2,
+   "normal_readable": 2,
+   "sessions": [
+    "2026:09:11"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 2
+   },
+   "index_sources": {
+    "(none recorded)": 2
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1131.RAF",
+    "01_彩色负片_未反相/A1132.RAF"
+   ]
+  },
+  {
+   "unit": "body-739ec105df",
+   "run_label": [
+    "body30"
+   ],
+   "camera": [
+    "Canon Canon EOS 10D"
+   ],
+   "files": 1,
+   "normal_readable": 0,
+   "sessions": [
+    "2009:05:21"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "format_in_type": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": []
+  },
+  {
+   "unit": "body-7c6e4d77c5",
+   "run_label": [
+    "body27"
+   ],
+   "camera": [
+    "FUJIFILM X-T5"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2026:02:28"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "drive.google.com": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1279.DNG"
+   ]
+  },
+  {
+   "unit": "body-81afda1604",
+   "run_label": [
+    "body34"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON D780"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2025:03:06"
+   ],
+   "links": [],
+   "older_material": {
+    "dev": 3
+   },
+   "status": "development (body on older dev data)",
+   "index_layouts": {
+    "collected": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1138.NEF"
+   ]
+  },
+  {
+   "unit": "body-84423aace0",
+   "run_label": [
+    "body35"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON Z 6_2"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2026:08:22"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1094.NEF"
+   ]
+  },
+  {
+   "unit": "body-995e0f718c",
+   "run_label": [
+    "body07"
+   ],
+   "camera": [
+    "Canon Canon EOS 60D"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2014:03:08"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1137.CR2"
+   ]
+  },
+  {
+   "unit": "body-9d912abb82",
+   "run_label": [
+    "body51"
+   ],
+   "camera": [
+    "Panasonic DC-G9"
+   ],
+   "files": 3,
+   "normal_readable": 3,
+   "sessions": [
+    "2023:01:24",
+    "2023:01:27",
+    "2023:02:14"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 2,
+    "header": 1
+   },
+   "index_sources": {
+    "(none recorded)": 2,
+    "drive.google.com": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1109.RW2",
+    "01_彩色负片_未反相/A1133.RW2",
+    "01_彩色负片_未反相/A1285.RW2"
+   ]
+  },
+  {
+   "unit": "body-a5a751feed",
+   "run_label": [
+    "body40"
+   ],
+   "camera": [
+    "FUJIFILM X-E3"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2026:02:06"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1096.RAF"
+   ]
+  },
+  {
+   "unit": "body-b0dbeec031",
+   "run_label": [
+    "body12"
+   ],
+   "camera": [
+    "SONY ILCE-7RM2"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2021:06:20"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "format_in_type": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1322.ARW"
+   ]
+  },
+  {
+   "unit": "body-c28af9a8c0",
+   "run_label": [
+    "body53"
+   ],
+   "camera": [
+    "Panasonic DMC-GX80"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2025:03:18"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1110.RW2"
+   ]
+  },
+  {
+   "unit": "body-d19097ecea",
+   "run_label": [
+    "body11"
+   ],
+   "camera": [
+    "SONY ILCE-7M4"
+   ],
+   "files": 5,
+   "normal_readable": 5,
+   "sessions": [
+    "2025:06:10"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "candidate",
+   "index_layouts": {
+    "header": 5
+   },
+   "index_sources": {
+    "群友分享": 5
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1190.ARW",
+    "01_彩色负片_未反相/A1191.ARW",
+    "01_彩色负片_未反相/A1192.ARW",
+    "01_彩色负片_未反相/A1193.ARW",
+    "01_彩色负片_未反相/A1194.ARW"
+   ],
+   "stratum": "small",
+   "sort_key": "040fe3dba182cc712d94440acfbfbfa28487b1ac932779a0d8e53157c8c1d9b8",
+   "position": 1,
+   "proposal": "seal"
+  },
+  {
+   "unit": "body-d1d6e424b1",
+   "run_label": [
+    "body17"
+   ],
+   "camera": [
+    "SONY ILCE-7RM4"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2025:09:20"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "drive.google.com": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1289.ARW"
+   ]
+  },
+  {
+   "unit": "body-daa890d9c7",
+   "run_label": [
+    "body46"
+   ],
+   "camera": [
+    "FUJIFILM X-T3"
+   ],
+   "files": 1,
+   "normal_readable": 0,
+   "sessions": [
+    "2020:10:17"
+   ],
+   "links": [],
+   "older_material": {
+    "dev": 1
+   },
+   "status": "development (body on older dev data)",
+   "index_layouts": {
+    "collected": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1
+   },
+   "frames": []
+  },
+  {
+   "unit": "body-e3fa27fc21",
+   "run_label": [
+    "body05"
+   ],
+   "camera": [
+    "SONY ILCE-7RM4"
+   ],
+   "files": 3,
+   "normal_readable": 3,
+   "sessions": [
+    "2025:08:22"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "header": 3
+   },
+   "index_sources": {
+    "群友分享": 3
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1298.ARW",
+    "01_彩色负片_未反相/A1299.ARW",
+    "01_彩色负片_未反相/A1300.ARW"
+   ]
+  },
+  {
+   "unit": "body-e60dbcf684",
+   "run_label": [
+    "body18"
+   ],
+   "camera": [
+    "Canon Canon EOS R5"
+   ],
+   "files": 26,
+   "normal_readable": 26,
+   "sessions": [
+    "2023:05:22",
+    "2023:06:06",
+    "2023:06:22"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "candidate",
+   "index_layouts": {
+    "header": 26
+   },
+   "index_sources": {
+    "群友分享": 26
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1196.CR3",
+    "01_彩色负片_未反相/A1197.CR3",
+    "01_彩色负片_未反相/A1198.CR3",
+    "01_彩色负片_未反相/A1199.CR3",
+    "01_彩色负片_未反相/A1200.CR3",
+    "01_彩色负片_未反相/A1201.CR3",
+    "01_彩色负片_未反相/A1202.CR3",
+    "01_彩色负片_未反相/A1203.CR3",
+    "01_彩色负片_未反相/A1204.CR3",
+    "01_彩色负片_未反相/A1205.CR3",
+    "01_彩色负片_未反相/A1206.CR3",
+    "01_彩色负片_未反相/A1207.CR3",
+    "01_彩色负片_未反相/A1208.CR3",
+    "01_彩色负片_未反相/A1209.CR3",
+    "01_彩色负片_未反相/A1210.CR3",
+    "01_彩色负片_未反相/A1211.CR3",
+    "01_彩色负片_未反相/A1212.CR3",
+    "01_彩色负片_未反相/A1213.CR3",
+    "01_彩色负片_未反相/A1214.CR3",
+    "01_彩色负片_未反相/A1215.CR3",
+    "01_彩色负片_未反相/A1216.CR3",
+    "01_彩色负片_未反相/A1217.CR3",
+    "01_彩色负片_未反相/A1218.CR3",
+    "01_彩色负片_未反相/A1219.CR3",
+    "01_彩色负片_未反相/A1220.CR3",
+    "01_彩色负片_未反相/A1221.CR3"
+   ],
+   "stratum": "large",
+   "sort_key": "0b18a601bfd83c53b7ea48028e1ffc7f60900b56e1e6f4549dcc856c56534e79",
+   "position": 1,
+   "proposal": "seal"
+  },
+  {
+   "unit": "body-e8199a65dd",
+   "run_label": [
+    "body28"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON Z 6_2"
+   ],
+   "files": 5,
+   "normal_readable": 5,
+   "sessions": [
+    "2025:08:23"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "candidate",
+   "index_layouts": {
+    "header": 5
+   },
+   "index_sources": {
+    "群友分享": 5
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1222.NEF",
+    "01_彩色负片_未反相/A1223.NEF",
+    "01_彩色负片_未反相/A1224.NEF",
+    "01_彩色负片_未反相/A1225.NEF",
+    "01_彩色负片_未反相/A1226.NEF"
+   ],
+   "stratum": "small",
+   "sort_key": "55de531964330ce3d3ae5be6df3ff7fc34292a6dc3008a3fa8425d658a886db4",
+   "position": 3,
+   "proposal": "seal"
+  },
+  {
+   "unit": "body-f1240f1c88",
+   "run_label": [
+    "body03"
+   ],
+   "camera": [
+    "SONY ILCE-7RM5"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2026:09:14"
+   ],
+   "links": [],
+   "older_material": {},
+   "status": "development (< 5 frames)",
+   "index_layouts": {
+    "collected": 1
+   },
+   "index_sources": {
+    "(none recorded)": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1127.ARW"
+   ]
+  },
+  {
+   "unit": "body-f3947b6670",
+   "run_label": [
+    "body10"
+   ],
+   "camera": [
+    "Canon Canon EOS 5D Mark III"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2024:07:05"
+   ],
+   "links": [],
+   "older_material": {
+    "dev": 1
+   },
+   "status": "development (body on older dev data)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1296.CR2"
+   ]
+  },
+  {
+   "unit": "body-fd349b27ff",
+   "run_label": [
+    "body42"
+   ],
+   "camera": [
+    "FUJIFILM X-T3"
+   ],
+   "files": 1,
+   "normal_readable": 1,
+   "sessions": [
+    "2019:08:29"
+   ],
+   "links": [],
+   "older_material": {
+    "dev": 1
+   },
+   "status": "development (body on older dev data)",
+   "index_layouts": {
+    "header": 1
+   },
+   "index_sources": {
+    "群友分享": 1
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1237.RAF"
+   ]
+  },
+  {
+   "unit": "no-serial",
+   "run_label": null,
+   "camera": [
+    "-",
+    "EPSON Perfection V600",
+    "EPSON Perfection V700/V750",
+    "Epson Perfection4990",
+    "Epson PerfectionV700",
+    "NORITSU KOKI EZ Controller",
+    "Nikon LS-50",
+    "Nikon LS-5000",
+    "Nikon Nikon COOLSCAN V ED",
+    "PIE PrimeFilm XA Plus",
+    "Plustek OpticFilm 7300",
+    "Plustek OpticFilm 7400",
+    "Plustek OpticFilm 8200i",
+    "Reflecta RPS 10M",
+    "Reflecta RPS 7200",
+    "SONY ILCE-1M2"
+   ],
+   "files": 54,
+   "normal_readable": 17,
+   "sessions": [],
+   "links": [
+    "blueneg:dev",
+    "blueneg:other",
+    "frozen:name"
+   ],
+   "older_material": {},
+   "status": "development (no body serial)",
+   "index_layouts": {
+    "collected": 9,
+    "header": 39,
+    "format_in_type": 6
+   },
+   "index_sources": {
+    "(none recorded)": 9,
+    "群友分享": 41,
+    "cloud.lokke.io": 1,
+    "drive.google.com": 3
+   },
+   "frames": [
+    "01_彩色负片_未反相/A1098.DNG",
+    "01_彩色负片_未反相/A1107.DNG",
+    "01_彩色负片_未反相/A1108.DNG",
+    "01_彩色负片_未反相/A1126.DNG",
+    "01_彩色负片_未反相/A1128.ARW",
+    "01_彩色负片_未反相/A1129.DNG",
+    "01_彩色负片_未反相/A1130.DNG",
+    "01_彩色负片_未反相/A1230.DNG",
+    "01_彩色负片_未反相/A1231.DNG",
+    "01_彩色负片_未反相/A1232.DNG",
+    "01_彩色负片_未反相/A1233.DNG",
+    "01_彩色负片_未反相/A1234.DNG",
+    "01_彩色负片_未反相/A1283.DNG",
+    "01_彩色负片_未反相/A1286.DNG",
+    "01_彩色负片_未反相/A1287.DNG",
+    "01_彩色负片_未反相/A1288.DNG",
+    "01_彩色负片_未反相/A1326.DNG"
+   ]
+  }
+ ]
+}

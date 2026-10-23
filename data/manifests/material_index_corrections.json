@@ -1,0 +1,3006 @@
+{
+ "id": "material_index_corrections",
+ "created": "2026-10-23",
+ "index_sha256": "05271f8848fafac14f293164ac2616e6c1620f66eee4e6e653717a1ee66e6abf",
+ "index_rows": 3301,
+ "layouts": {
+  "header": 3125,
+  "collected": 165,
+  "format_in_type": 11
+ },
+ "rows": [
+  {
+   "id": "A1034",
+   "file": "A1034.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1034.TIF"
+   ],
+   "film": "柯达 Portra (120)",
+   "film_format": "120中画幅(6x7)",
+   "size": "204.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1035",
+   "file": "A1035.PNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1035.PNG"
+   ],
+   "film": "柯达 Portra / Ektar",
+   "film_format": "4x5大画幅/120中画幅",
+   "size": "28.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1036",
+   "file": "A1036.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1036.RW2"
+   ],
+   "film": "柯达 Portra 160 (120)",
+   "film_format": "120中画幅(6x6)",
+   "size": "66.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1037",
+   "file": "A1037.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1037.TIF"
+   ],
+   "film": "柯达 ColorPlus / Gold 200",
+   "film_format": "135全画幅(35mm)",
+   "size": "39.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "高"
+  },
+  {
+   "id": "C0036",
+   "file": "C0036.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "03_正片幻灯片_已反相/C0036.RAF"
+   ],
+   "film": "富士 Velvia / Provia (正片)",
+   "film_format": "135全画幅(35mm)",
+   "size": "32.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1038",
+   "file": "A1038.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1038.NEF"
+   ],
+   "film": "柯达 Ektar 100 (120)",
+   "film_format": "120中画幅(645)",
+   "size": "17.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1039",
+   "file": "A1039.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1039.NEF"
+   ],
+   "film": "富士 Pro 400H (120)",
+   "film_format": "120中画幅(6x7)",
+   "size": "17.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1040",
+   "file": "A1040.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1040.TIF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "74.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1041",
+   "file": "A1041.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1041.TIF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "78.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1042",
+   "file": "A1042.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1042.RAF"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "55.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1043",
+   "file": "A1043.DNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1043.DNG"
+   ],
+   "film": "专业彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "66.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1044",
+   "file": "A1044.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1044.RAF"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "48.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1045",
+   "file": "A1045.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1045.RAF"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "48.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1046",
+   "file": "A1046.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1046.RAF"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "48.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1047",
+   "file": "A1047.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1047.RAF"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "48.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1048",
+   "file": "A1048.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1048.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "21.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1049",
+   "file": "A1049.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1049.RAF"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "31.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1050",
+   "file": "A1050.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1050.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "25.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1051",
+   "file": "A1051.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1051.RW2"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "18.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1052",
+   "file": "A1052.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1052.RW2"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "14.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1053",
+   "file": "A1053.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1053.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "22.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1054",
+   "file": "A1054.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1054.TIF"
+   ],
+   "film": "民用彩色负片",
+   "film_format": "中画幅/135高精扫描",
+   "size": "47.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "C0037",
+   "file": "C0037.JPG",
+   "layout": "collected",
+   "on_disk": [
+    "03_正片幻灯片_已反相/C0037.JPG"
+   ],
+   "film": "柯达反转片 (Kodak Safety Film)",
+   "film_format": "126/135正片底片条",
+   "size": "34.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1055",
+   "file": "A1055.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1055.CR2"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "24.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1056",
+   "file": "A1056.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1056.CR2"
+   ],
+   "film": "民用彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "25.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1057",
+   "file": "A1057.JPG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1057.JPG"
+   ],
+   "film": "CineStill 50D (135电影负片)",
+   "film_format": "135全画幅(35mm)",
+   "size": "5.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1058",
+   "file": "A1058.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1058.TIF"
+   ],
+   "film": "CineStill 800T (135电影负片)",
+   "film_format": "135全画幅(35mm)",
+   "size": "20.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1059",
+   "file": "A1059.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1059.TIF"
+   ],
+   "film": "Kodak Aerochrome (C-41工艺)",
+   "film_format": "135全画幅(35mm)",
+   "size": "20.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1060",
+   "file": "A1060.JPG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1060.JPG"
+   ],
+   "film": "柯达/富士彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "0.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1061",
+   "file": "A1061.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1061.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "23.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1062",
+   "file": "A1062.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1062.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "27.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1063",
+   "file": "A1063.CR3",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1063.CR3"
+   ],
+   "film": "柯达专业彩色负片",
+   "film_format": "4x5大画幅/120中画幅",
+   "size": "30.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1064",
+   "file": "A1064.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1064.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "27.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1065",
+   "file": "A1065.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1065.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "27.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1066",
+   "file": "A1066.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1066.NEF"
+   ],
+   "film": "Kodak Portra 160 (120中画幅)",
+   "film_format": "120中画幅(6x7)",
+   "size": "28.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1067",
+   "file": "A1067.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1067.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "24.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1068",
+   "file": "A1068.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1068.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "25.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1069",
+   "file": "A1069.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1069.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "25.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1070",
+   "file": "A1070.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1070.RAF"
+   ],
+   "film": "富士彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "47.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1071",
+   "file": "A1071.CR3",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1071.CR3"
+   ],
+   "film": "Kodak Gold 200 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "32.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1072",
+   "file": "A1072.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1072.ARW"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "23.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1073",
+   "file": "A1073.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1073.NEF"
+   ],
+   "film": "Kodak Vision3 500T 5219 (ECN-2)",
+   "film_format": "135全画幅(35mm电影卷)",
+   "size": "84.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1074",
+   "file": "A1074.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1074.NEF"
+   ],
+   "film": "Kodak Vision3 500T 5219 (ECN-2)",
+   "film_format": "135全画幅(35mm电影卷)",
+   "size": "85.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1075",
+   "file": "A1075.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1075.tif"
+   ],
+   "film": "柯达彩色负片 (120)",
+   "film_format": "120中画幅(6x4.5)",
+   "size": "74.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1076",
+   "file": "A1076.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1076.tif"
+   ],
+   "film": "柯达彩色负片 (120)",
+   "film_format": "120中画幅(6x4.5)",
+   "size": "78.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1077",
+   "file": "A1077.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1077.tif"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "54.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1078",
+   "file": "A1078.dng",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1078.dng"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "130.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1079",
+   "file": "A1079.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1079.ARW"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "47.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1080",
+   "file": "A1080.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1080.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "47.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1081",
+   "file": "A1081.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1081.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "31.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "C0038",
+   "file": "C0038.tif",
+   "layout": "collected",
+   "on_disk": [
+    "03_正片幻灯片_已反相/C0038.tif"
+   ],
+   "film": "彩色反转片 (135)",
+   "film_format": "135全画幅(35mm反转片)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "C0039",
+   "file": "C0039.tif",
+   "layout": "collected",
+   "on_disk": [
+    "03_正片幻灯片_已反相/C0039.tif"
+   ],
+   "film": "彩色反转片 (135)",
+   "film_format": "135全画幅(35mm反转片)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "C0040",
+   "file": "C0040.tif",
+   "layout": "collected",
+   "on_disk": [
+    "03_正片幻灯片_已反相/C0040.tif"
+   ],
+   "film": "彩色反转片 (135)",
+   "film_format": "135全画幅(35mm反转片)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "C0041",
+   "file": "C0041.tif",
+   "layout": "collected",
+   "on_disk": [
+    "03_正片幻灯片_已反相/C0041.tif"
+   ],
+   "film": "彩色反转片 (135)",
+   "film_format": "135全画幅(35mm反转片)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "C0042",
+   "file": "C0042.tif",
+   "layout": "collected",
+   "on_disk": [
+    "03_正片幻灯片_已反相/C0042.tif"
+   ],
+   "film": "彩色反转片 (135)",
+   "film_format": "135全画幅(35mm反转片)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A617",
+   "file": "A617.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A617.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A618",
+   "file": "A618.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A618.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A619",
+   "file": "A619.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A619.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A620",
+   "file": "A620.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A620.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A621",
+   "file": "A621.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A621.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A622",
+   "file": "A622.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A622.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A623",
+   "file": "A623.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A623.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A624",
+   "file": "A624.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A624.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A625",
+   "file": "A625.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A625.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A626",
+   "file": "A626.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A626.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A627",
+   "file": "A627.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A627.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A628",
+   "file": "A628.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A628.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A634",
+   "file": "A634.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A634.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A635",
+   "file": "A635.tif",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A635.tif"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1082",
+   "file": "A1082.CR3",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1082.CR3"
+   ],
+   "film": "Kodak Portra 160 (120中画幅)",
+   "film_format": "120中画幅(6x9)",
+   "size": "31.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1083",
+   "file": "A1083.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1083.NEF"
+   ],
+   "film": "Kodak Gold 200 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "26.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1084",
+   "file": "A1084.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1084.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "54.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1085",
+   "file": "A1085.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1085.RW2"
+   ],
+   "film": "Kodak Portra 160 (120中画幅)",
+   "film_format": "120中画幅(6x6)",
+   "size": "66.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1086",
+   "file": "A1086.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1086.TIF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "56.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1087",
+   "file": "A1087.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1087.ARW"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "117.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1088",
+   "file": "A1088.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1088.ARW"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "117.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1089",
+   "file": "A1089.DNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1089.DNG"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "130.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1090",
+   "file": "A1090.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1090.TIF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "74.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1091",
+   "file": "A1091.CR3",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1091.CR3"
+   ],
+   "film": "Kodak Portra 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "24.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1092",
+   "file": "A1092.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1092.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "81.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1093",
+   "file": "A1093.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1093.TIF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "56.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1094",
+   "file": "A1094.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1094.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "29.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1095",
+   "file": "A1095.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1095.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "55.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1096",
+   "file": "A1096.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1096.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "48.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1097",
+   "file": "A1097.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1097.RW2"
+   ],
+   "film": "Kodak Gold 200 (120中画幅)",
+   "film_format": "120中画幅(6x6)",
+   "size": "164.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1098",
+   "file": "A1098.DNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1098.DNG"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "102.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1099",
+   "file": "A1099.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1099.TIF"
+   ],
+   "film": "柯达彩色负片 (120中画幅)",
+   "film_format": "120中画幅(6x6)",
+   "size": "522.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1100",
+   "file": "A1100.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1100.ARW"
+   ],
+   "film": "Kodak Ektar 100 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "117.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1101",
+   "file": "A1101.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1101.ARW"
+   ],
+   "film": "Kodak Ektar 100 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "117.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1102",
+   "file": "A1102.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1102.ARW"
+   ],
+   "film": "Kodak Ektar 100 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "117.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1103",
+   "file": "A1103.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1103.ARW"
+   ],
+   "film": "Kodak Ektar 100 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "117.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1104",
+   "file": "A1104.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1104.ARW"
+   ],
+   "film": "Kodak Ektar 100 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "117.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1105",
+   "file": "A1105.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1105.ARW"
+   ],
+   "film": "Kodak Ektar 100 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "117.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1106",
+   "file": "A1106.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1106.CR2"
+   ],
+   "film": "Fujicolor C200 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "23.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1107",
+   "file": "A1107.DNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1107.DNG"
+   ],
+   "film": "Kodak Gold 200 (120中画幅)",
+   "film_format": "120中画幅(6x8)",
+   "size": "27.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1108",
+   "file": "A1108.DNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1108.DNG"
+   ],
+   "film": "Kodak Gold 200 (120中画幅)",
+   "film_format": "120中画幅(6x8)",
+   "size": "27.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1109",
+   "file": "A1109.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1109.RW2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "22.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1110",
+   "file": "A1110.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1110.RW2"
+   ],
+   "film": "Kodak Gold 200 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "18.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1111",
+   "file": "A1111.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1111.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "25.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1112",
+   "file": "A1112.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1112.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "23.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1113",
+   "file": "A1113.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1113.ARW"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "23.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1114",
+   "file": "A1114.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1114.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "27.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1115",
+   "file": "A1115.CR3",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1115.CR3"
+   ],
+   "film": "Kodak Gold 200 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "32.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1116",
+   "file": "A1116.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1116.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "27.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1117",
+   "file": "A1117.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1117.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "31.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1118",
+   "file": "A1118.CR3",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1118.CR3"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "30.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1119",
+   "file": "A1119.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1119.CR2"
+   ],
+   "film": "Kodak Gold 200 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1120",
+   "file": "A1120.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1120.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "26.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1121",
+   "file": "A1121.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1121.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "54.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1122",
+   "file": "A1122.CR3",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1122.CR3"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "31.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1123",
+   "file": "A1123.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1123.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "31.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1124",
+   "file": "A1124.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1124.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "31.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1125",
+   "file": "A1125.TIF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1125.TIF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "50.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1126",
+   "file": "A1126.DNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1126.DNG"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "197.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1127",
+   "file": "A1127.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1127.ARW"
+   ],
+   "film": "柯达彩色负片 (120)",
+   "film_format": "120中画幅",
+   "size": "68.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1128",
+   "file": "A1128.ARW",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1128.ARW"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "61.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1129",
+   "file": "A1129.DNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1129.DNG"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "96.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1130",
+   "file": "A1130.DNG",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1130.DNG"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "97.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1131",
+   "file": "A1131.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1131.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "29.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1132",
+   "file": "A1132.RAF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1132.RAF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "27.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1133",
+   "file": "A1133.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1133.RW2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "23.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1134",
+   "file": "A1134.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1134.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "22.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1135",
+   "file": "A1135.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1135.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "22.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1136",
+   "file": "A1136.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1136.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "22.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1137",
+   "file": "A1137.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1137.CR2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "25.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1138",
+   "file": "A1138.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1138.NEF"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "26.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1139",
+   "file": "A1139.CR2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1139.CR2"
+   ],
+   "film": "Fuji P800 Color Negative (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "14.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1140",
+   "file": "A1140.RW2",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1140.RW2"
+   ],
+   "film": "柯达彩色负片 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "110.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1141",
+   "file": "A1141.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1141.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "49.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1142",
+   "file": "A1142.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1142.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1143",
+   "file": "A1143.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1143.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "51.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1144",
+   "file": "A1144.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1144.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "51.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1145",
+   "file": "A1145.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1145.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1146",
+   "file": "A1146.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1146.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1147",
+   "file": "A1147.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1147.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1148",
+   "file": "A1148.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1148.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1149",
+   "file": "A1149.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1149.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "51.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1150",
+   "file": "A1150.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1150.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1151",
+   "file": "A1151.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1151.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1152",
+   "file": "A1152.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1152.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "51.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1153",
+   "file": "A1153.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1153.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "54.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1154",
+   "file": "A1154.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1154.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1155",
+   "file": "A1155.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1155.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "54.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1156",
+   "file": "A1156.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1156.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1157",
+   "file": "A1157.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1157.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1158",
+   "file": "A1158.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1158.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "51.7 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1159",
+   "file": "A1159.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1159.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1160",
+   "file": "A1160.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1160.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1161",
+   "file": "A1161.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1161.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1162",
+   "file": "A1162.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1162.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.9 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1163",
+   "file": "A1163.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1163.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.3 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1164",
+   "file": "A1164.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1164.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1165",
+   "file": "A1165.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1165.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1166",
+   "file": "A1166.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1166.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1167",
+   "file": "A1167.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1167.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.2 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1168",
+   "file": "A1168.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1168.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1169",
+   "file": "A1169.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1169.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "54.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1170",
+   "file": "A1170.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1170.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1171",
+   "file": "A1171.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1171.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "55.8 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1172",
+   "file": "A1172.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1172.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "54.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1173",
+   "file": "A1173.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1173.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.0 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1174",
+   "file": "A1174.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1174.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.4 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1175",
+   "file": "A1175.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1175.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "51.6 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1176",
+   "file": "A1176.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1176.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "52.1 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1177",
+   "file": "A1177.NEF",
+   "layout": "collected",
+   "on_disk": [
+    "01_彩色负片_未反相/A1177.NEF"
+   ],
+   "film": "Kodak UltraMax 400 (135)",
+   "film_format": "135全画幅(35mm)",
+   "size": "53.5 MB",
+   "original_name": null,
+   "original_path": null,
+   "pairing": [],
+   "pairing_cell_as_recorded": "群友提供，已明确授权",
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "极高"
+  },
+  {
+   "id": "A1317",
+   "file": "A1317.JPG",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1317.JPG"
+   ],
+   "film": null,
+   "film_format": "135全画幅(35mm)",
+   "size": "0.52",
+   "original_name": "Farbnegativ.jpg",
+   "original_path": "群友分享/Farbnegativ.jpg",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1318",
+   "file": "A1318.TIF",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1318.TIF"
+   ],
+   "film": null,
+   "film_format": "135全画幅(35mm)",
+   "size": "8.28",
+   "original_name": "NikonScan_Photoshop_Exiftool_women-entering-shop.tif",
+   "original_path": "群友分享/women-entering-shop.tif",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1319",
+   "file": "A1319.TIF",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1319.TIF"
+   ],
+   "film": null,
+   "film_format": "135全画幅(35mm)",
+   "size": "6.25",
+   "original_name": "Vuescan_people_in_bus_RAW.tif",
+   "original_path": "群友分享/people_in_bus_RAW.tif",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1320",
+   "file": "A1320.CR2",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1320.CR2"
+   ],
+   "film": null,
+   "film_format": "120中画幅(6x7)",
+   "size": "21.43",
+   "original_name": "Cornwall 1988-012.CR2",
+   "original_path": "群友分享/Cornwall 1988-012.CR2",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1321",
+   "file": "A1321.CR2",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1321.CR2"
+   ],
+   "film": null,
+   "film_format": "135全画幅(35mm)",
+   "size": "23.47",
+   "original_name": "Mex - Samoa - Roll 1-4.CR2",
+   "original_path": "群友分享/Mex - Samoa - Roll 1-4.CR2",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1322",
+   "file": "A1322.ARW",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1322.ARW"
+   ],
+   "film": null,
+   "film_format": "120中画幅(6x7)",
+   "size": "81.62",
+   "original_name": "3ahLuL3fkylWC4zEltNrIGqd9MK.ARW",
+   "original_path": "群友分享/3ahLuL3fkylWC4zEltNrIGqd9MK.ARW",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1323",
+   "file": "A1323.PNG",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1323.PNG"
+   ],
+   "film": null,
+   "film_format": "35mm电影卷",
+   "size": "2.61",
+   "original_name": "Sailornegative.png",
+   "original_path": "群友分享/Sailornegative.png",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1324",
+   "file": "A1324.JPG",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1324.JPG"
+   ],
+   "film": null,
+   "film_format": "135全画幅(35mm)",
+   "size": "0.15",
+   "original_name": "ektar100_frame22.jpg",
+   "original_path": "群友分享/ektar100_frame22.jpg",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1325",
+   "file": "A1325.JPG",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1325.JPG"
+   ],
+   "film": null,
+   "film_format": "135全画幅(35mm)",
+   "size": "0.1",
+   "original_name": "ektar100_frame23.jpg",
+   "original_path": "群友分享/ektar100_frame23.jpg",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1326",
+   "file": "A1326.DNG",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1326.DNG"
+   ],
+   "film": null,
+   "film_format": "135全画幅(35mm)",
+   "size": "54.57",
+   "original_name": "2026_001-AgfaPhoto-Color-400-crop2.dng",
+   "original_path": "群友分享/2026_001-AgfaPhoto-Color-400-crop2.dng",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  },
+  {
+   "id": "A1327",
+   "file": "A1327.NEF",
+   "layout": "format_in_type",
+   "on_disk": [
+    "01_彩色负片_未反相/A1327.NEF"
+   ],
+   "film": null,
+   "film_format": "135全画幅(35mm)",
+   "size": "32.49",
+   "original_name": "D75_2641.NEF",
+   "original_path": "群友分享/D75_2641.NEF",
+   "pairing": [],
+   "pairing_cell_as_recorded": null,
+   "licence_as_recorded": "群友提供，已明确授权",
+   "review": "否"
+  }
+ ],
+ "note": "licence_as_recorded is the index text; for rows whose source is a link it is not a verified licence (T1b review 2026-10-22, item 4)"
+}
