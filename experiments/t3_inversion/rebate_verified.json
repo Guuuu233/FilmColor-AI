@@ -1,0 +1,7044 @@
+{
+ "summary": {
+  "candidates_linear": 57,
+  "skipped": {
+   "A232": "same capture as A1069 (model and capture time)",
+   "A237": "same capture as A1062 (model and capture time)",
+   "A238": "same capture as A1061 (model and capture time)",
+   "A239": "excluded: cross-processed Kodak E100 slide film (edge print; index of the same capture A327 says cross-processed): not a masked colour negative",
+   "A242": "same capture as A1072 (model and capture time)",
+   "A249": "same capture as A1071 (model and capture time)",
+   "A322": "same capture as A250 (model and capture time)",
+   "A323": "same capture as A253 (model and capture time)",
+   "A324": "same capture as A235 (model and capture time)",
+   "A327": "same capture as A239 (model and capture time)"
+  },
+  "measured": 47,
+  "usable": 25,
+  "usable_absolute": 4,
+  "fails_by_criterion": {
+   "C1": 8,
+   "C2": 2,
+   "C3": 16
+  },
+  "by_source": {
+   "group_pack": {
+    "measured": 11,
+    "usable": 6
+   },
+   "group_single": {
+    "measured": 29,
+    "usable": 16
+   },
+   "loose:A7R5_RAW": {
+    "measured": 6,
+    "usable": 3
+   },
+   "pixls": {
+    "measured": 1,
+    "usable": 0
+   }
+  },
+  "by_camera": {
+   "Canon EOS 5D": {
+    "measured": 7,
+    "usable": 2
+   },
+   "Canon EOS 6D Mark II": {
+    "measured": 3,
+    "usable": 1
+   },
+   "Canon EOS 80D": {
+    "measured": 1,
+    "usable": 1
+   },
+   "Canon EOS R": {
+    "measured": 1,
+    "usable": 1
+   },
+   "Canon EOS R6m2": {
+    "measured": 1,
+    "usable": 0
+   },
+   "Canon EOS REBEL T3i": {
+    "measured": 3,
+    "usable": 2
+   },
+   "DMC-G1": {
+    "measured": 1,
+    "usable": 0
+   },
+   "DMC-G3": {
+    "measured": 1,
+    "usable": 0
+   },
+   "ILCE-6000": {
+    "measured": 1,
+    "usable": 1
+   },
+   "ILCE-7C": {
+    "measured": 1,
+    "usable": 0
+   },
+   "ILCE-7RM5": {
+    "measured": 6,
+    "usable": 3
+   },
+   "NIKON D7100": {
+    "measured": 1,
+    "usable": 0
+   },
+   "NIKON D750": {
+    "measured": 3,
+    "usable": 2
+   },
+   "NIKON Z 7": {
+    "measured": 2,
+    "usable": 0
+   },
+   "X-T1": {
+    "measured": 2,
+    "usable": 1
+   },
+   "X-T2": {
+    "measured": 11,
+    "usable": 10
+   },
+   "X-T3": {
+    "measured": 2,
+    "usable": 1
+   }
+  },
+  "roll_groups": {
+   "group1": {
+    "frames": [
+     "A7R5_RAW_DSC01683",
+     "A7R5_RAW_DSC01684",
+     "A7R5_RAW_DSC01695"
+    ],
+    "used": [
+     "A7R5_RAW_DSC01695",
+     "A7R5_RAW_DSC01684"
+    ],
+    "warnings": [
+     "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "t_ref": 0.025
+   },
+   "group2": {
+    "frames": [
+     "A1010",
+     "A1011",
+     "A1012"
+    ],
+    "used": [
+     "A1012"
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "t_ref": 0.2
+   },
+   "group3": {
+    "frames": [
+     "A1015",
+     "A1016",
+     "A1017",
+     "A1019"
+    ],
+    "error": "no frames form a consistent minimum-density cluster; specify the base manually"
+   }
+  },
+  "deviation": {
+   "int_vs_meas": {
+    "level": {
+     "n": 25,
+     "median": 0.1178,
+     "iqr": [
+      0.046,
+      0.2375
+     ],
+     "share_ge_0_1": 0.56
+    },
+    "level_part": {
+     "n": 25,
+     "median": 0.1178,
+     "iqr": [
+      0.046,
+      0.2375
+     ],
+     "share_ge_0_1": 0.56
+    },
+    "chroma_part": {
+     "n": 25,
+     "median": 0.0464,
+     "iqr": [
+      0.0114,
+      0.0801
+     ],
+     "share_ge_0_1": 0.16
+    },
+    "R_minus_G": {
+     "n": 25,
+     "median": -0.0107,
+     "iqr": [
+      -0.0805,
+      0.0017
+     ],
+     "share_ge_0_1": 0.12
+    },
+    "B_minus_G": {
+     "n": 25,
+     "median": 0.0045,
+     "iqr": [
+      -0.0151,
+      0.0649
+     ],
+     "share_ge_0_1": 0.2
+    }
+   },
+   "own_vs_meas": {
+    "level": {
+     "n": 25,
+     "median": -0.0108,
+     "iqr": [
+      -0.0336,
+      -0.0054
+     ],
+     "share_ge_0_1": 0.12
+    },
+    "level_part": {
+     "n": 25,
+     "median": 0.012,
+     "iqr": [
+      0.0061,
+      0.0336
+     ],
+     "share_ge_0_1": 0.12
+    },
+    "chroma_part": {
+     "n": 25,
+     "median": 0.0016,
+     "iqr": [
+      0.0005,
+      0.0053
+     ],
+     "share_ge_0_1": 0.12
+    },
+    "R_minus_G": {
+     "n": 25,
+     "median": 0.0005,
+     "iqr": [
+      -0.0001,
+      0.0022
+     ],
+     "share_ge_0_1": 0.08
+    },
+    "B_minus_G": {
+     "n": 25,
+     "median": 0.0,
+     "iqr": [
+      -0.0028,
+      0.0002
+     ],
+     "share_ge_0_1": 0.12
+    }
+   },
+   "roll_int_vs_meas": {
+    "level": {
+     "n": 6,
+     "median": 0.026,
+     "iqr": [
+      -0.0025,
+      0.0469
+     ],
+     "share_ge_0_1": 0.0
+    },
+    "level_part": {
+     "n": 6,
+     "median": 0.0344,
+     "iqr": [
+      0.0117,
+      0.0469
+     ],
+     "share_ge_0_1": 0.0
+    },
+    "chroma_part": {
+     "n": 6,
+     "median": 0.0112,
+     "iqr": [
+      0.0067,
+      0.0162
+     ],
+     "share_ge_0_1": 0.0
+    },
+    "R_minus_G": {
+     "n": 6,
+     "median": 0.0047,
+     "iqr": [
+      -0.002,
+      0.0126
+     ],
+     "share_ge_0_1": 0.0
+    },
+    "B_minus_G": {
+     "n": 6,
+     "median": -0.006,
+     "iqr": [
+      -0.0174,
+      0.0077
+     ],
+     "share_ge_0_1": 0.0
+    }
+   }
+  },
+  "int_ge_0_1_either_part": 0.56,
+  "thresholds": {
+   "FLOOR": 0.01,
+   "MAX_CV": 0.05,
+   "MAX_DD": 0.05,
+   "SPLIT": 0.1
+  }
+ },
+ "frames": {
+  "A1005": {
+   "id": "A1005",
+   "rel": "01_彩色负片_未反相/A1005.CR2",
+   "source": "group_single",
+   "camera": "Canon EOS 6D Mark II",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {},
+   "backlight_box": null,
+   "image_box": [
+    20,
+    80,
+    20,
+    80
+   ],
+   "placement_note": null,
+   "fails": [
+    "C1: a pale field surrounds a tilted dense rectangle up to the holder; the pale field continues into the picture, so unexposed scene and rebate cannot be told apart"
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "session": "body-4e1dd224cc|Canon EOS 6D Mark II|200|8|EF100mm f/2.8L Macro IS USM|2020:10:23|群友提供，已明确授权",
+   "exposure_time": 0.3
+  },
+  "A1006": {
+   "id": "A1006",
+   "rel": "01_彩色负片_未反相/A1006.CR2",
+   "source": "group_single",
+   "camera": "Canon EOS 6D Mark II",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     30,
+     78,
+     3.4,
+     4.4
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    4,
+    94,
+    7,
+    94
+   ],
+   "placement_note": "left / right / bottom strips under 1 % wide or merging with a pale picture edge; top strip only",
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 1880,
+     "median": [
+      0.1767781302332878,
+      0.23335488885641098,
+      0.09669055789709091
+     ],
+     "cv": [
+      0.0244,
+      0.0235,
+      0.0228
+     ],
+     "min": [
+      0.10943818092346191,
+      0.14205478131771088,
+      0.06037352234125137
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.1767781302332878,
+    0.23335488885641098,
+    0.09669055789709091
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.16920728981494904,
+    0.22511635720729828,
+    0.0946211963891983
+   ],
+   "b_int": [
+    0.16903944313526154,
+    0.22405584156513214,
+    0.0941176488995552
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.74415,
+     0.62617,
+     0.967115
+    ],
+    "0.1": [
+     0.754832,
+     0.636347,
+     0.988071
+    ],
+    "0.5": [
+     0.765051,
+     0.647475,
+     1.002359
+    ],
+    "1": [
+     0.77115,
+     0.654956,
+     1.009209
+    ],
+    "50": [
+     0.945543,
+     0.853347,
+     1.068053
+    ],
+    "99": [
+     1.629235,
+     1.393227,
+     1.119331
+    ],
+    "99.9": [
+     1.71783,
+     1.445221,
+     1.140878
+    ]
+   },
+   "box_pixels": {
+    "n": 20496132,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     0.019,
+     0.0156,
+     0.0094
+    ],
+    "level": 0.0147,
+    "chroma": [
+     0.0043,
+     0.0009,
+     -0.0053
+    ],
+    "chroma_part": 0.0053,
+    "level_part": 0.0147,
+    "R_minus_G": 0.0034,
+    "B_minus_G": -0.0062
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0194,
+     0.0177,
+     0.0117
+    ],
+    "level": 0.0163,
+    "chroma": [
+     0.0031,
+     0.0014,
+     -0.0046
+    ],
+    "chroma_part": 0.0046,
+    "level_part": 0.0163,
+    "R_minus_G": 0.0017,
+    "B_minus_G": -0.006
+   },
+   "session": "body-4e1dd224cc|Canon EOS 6D Mark II|200|8|EF100mm f/2.8L Macro IS USM|2020:10:23|群友提供，已明确授权",
+   "exposure_time": 0.3
+  },
+  "A1007": {
+   "id": "A1007",
+   "rel": "01_彩色负片_未反相/A1007.CR2",
+   "source": "group_single",
+   "camera": "Canon EOS 6D Mark II",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left": [
+     5.9,
+     6.7,
+     16,
+     38
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    9,
+    97,
+    8,
+    94
+   ],
+   "placement_note": "left gap next to a saturated film-free sliver (x 5.3-5.6); top strip slanted and under 0.5 %",
+   "fails": [
+    "C2: saturated samples in a rebate box",
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "left": {
+     "n": 690,
+     "median": [
+      0.18352673947811127,
+      0.2717556655406952,
+      0.11725550144910812
+     ],
+     "cv": [
+      0.0792,
+      0.1123,
+      0.2991
+     ],
+     "min": [
+      0.11480554938316345,
+      0.18422335386276245,
+      0.07829666882753372
+     ],
+     "sat_blocks": 6
+    }
+   },
+   "b_meas": [
+    0.18352673947811127,
+    0.2717556655406952,
+    0.11725550144910812
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.18309299647808075,
+    0.268970787525177,
+    0.11650263518095016
+   ],
+   "b_int": [
+    0.16624704003334045,
+    0.23430228233337402,
+    0.10212863236665726
+   ],
+   "own_warnings": [
+    "130 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "130 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.744665,
+     0.596889,
+     0.943734
+    ],
+    "0.1": [
+     0.75953,
+     0.611134,
+     0.961257
+    ],
+    "0.5": [
+     0.773386,
+     0.62603,
+     0.977058
+    ],
+    "1": [
+     0.781124,
+     0.63523,
+     0.985308
+    ],
+    "50": [
+     1.221639,
+     1.105426,
+     1.061208
+    ],
+    "99": [
+     1.489933,
+     1.295728,
+     1.151549
+    ],
+    "99.9": [
+     1.534758,
+     1.330752,
+     1.216263
+    ]
+   },
+   "box_pixels": {
+    "n": 19810128,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     0.001,
+     0.0045,
+     0.0028
+    ],
+    "level": 0.0028,
+    "chroma": [
+     -0.0018,
+     0.0017,
+     0.0
+    ],
+    "chroma_part": 0.0018,
+    "level_part": 0.0028,
+    "R_minus_G": -0.0035,
+    "B_minus_G": -0.0017
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0429,
+     0.0644,
+     0.06
+    ],
+    "level": 0.0558,
+    "chroma": [
+     -0.0129,
+     0.0086,
+     0.0042
+    ],
+    "chroma_part": 0.0129,
+    "level_part": 0.0558,
+    "R_minus_G": -0.0215,
+    "B_minus_G": -0.0044
+   },
+   "session": "body-4e1dd224cc|Canon EOS 6D Mark II|200|8|EF100mm f/2.8L Macro IS USM|2020:10:23|群友提供，已明确授权",
+   "exposure_time": 0.3
+  },
+  "A1008": {
+   "id": "A1008",
+   "rel": "01_彩色负片_未反相/A1008.NEF",
+   "source": "group_single",
+   "camera": "NIKON D750",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left_gap": [
+     4,
+     8,
+     20,
+     90
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    12,
+    78,
+    16,
+    94
+   ],
+   "placement_note": "the gaps between frames are saturated in the preview; box placed on the gap, C2 decides",
+   "fails": [
+    "C2: saturated samples in a rebate box"
+   ],
+   "rebate": {
+    "left_gap": {
+     "n": 10590,
+     "median": [
+      0.9998016357421875,
+      0.9999847412109375,
+      0.9999237060546875
+     ],
+     "cv": [
+      0.0309,
+      0.0002,
+      0.0004
+     ],
+     "min": [
+      0.4681559205055237,
+      0.9853655099868774,
+      0.971294105052948
+     ],
+     "sat_blocks": 10590
+    }
+   },
+   "b_meas": [
+    0.9998016357421875,
+    0.9999847412109375,
+    0.9999237060546875
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.6422064304351807,
+    0.9251850247383118,
+    0.5876706838607788
+   ],
+   "b_int": [
+    0.46668192744255066,
+    0.6012130975723267,
+    0.4523766040802002
+   ],
+   "own_warnings": [
+    "21% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "6513 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "6513 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.197199,
+     0.064333,
+     0.222412
+    ],
+    "0.1": [
+     0.228605,
+     0.112726,
+     0.260932
+    ],
+    "0.5": [
+     0.291079,
+     0.170521,
+     0.304857
+    ],
+    "1": [
+     0.330496,
+     0.207188,
+     0.335662
+    ],
+    "50": [
+     0.681277,
+     0.631583,
+     0.790881
+    ],
+    "99": [
+     0.970879,
+     0.954939,
+     1.206026
+    ],
+    "99.9": [
+     1.030716,
+     1.001228,
+     1.257285
+    ]
+   },
+   "box_pixels": {
+    "n": 12516249,
+    "sat_in_box": 1.19844068485612e-06
+   },
+   "own_vs_meas": {
+    "dD": [
+     0.1922,
+     0.0338,
+     0.2308
+    ],
+    "level": 0.1523,
+    "chroma": [
+     0.0399,
+     -0.1185,
+     0.0785
+    ],
+    "chroma_part": 0.1185,
+    "level_part": 0.1523,
+    "R_minus_G": 0.1584,
+    "B_minus_G": 0.197
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.3309,
+     0.221,
+     0.3445
+    ],
+    "level": 0.2988,
+    "chroma": [
+     0.0321,
+     -0.0778,
+     0.0457
+    ],
+    "chroma_part": 0.0778,
+    "level_part": 0.2988,
+    "R_minus_G": 0.1099,
+    "B_minus_G": 0.1235
+   },
+   "session": "body-2b61961984|NIKON D750|100|11|None|2020:06:26|群友提供，已明确授权",
+   "exposure_time": 1.3
+  },
+  "A1009": {
+   "id": "A1009",
+   "rel": "01_彩色负片_未反相/A1009.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     25,
+     70,
+     1.5,
+     6.5
+    ]
+   },
+   "backlight_box": [
+    36,
+    44,
+    99.2,
+    99.9
+   ],
+   "image_box": [
+    20,
+    75,
+    11,
+    93
+   ],
+   "placement_note": "6x6 on a black background; bottom rebate thin and slanted, not used",
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 8475,
+     "median": [
+      0.37699487805366516,
+      0.35247644782066345,
+      0.11918826401233673
+     ],
+     "cv": [
+      0.0124,
+      0.0132,
+      0.0141
+     ],
+     "min": [
+      0.3435090482234955,
+      0.3197225332260132,
+      0.1069321483373642
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.37699487805366516,
+    0.35247644782066345,
+    0.11918826401233673
+   ],
+   "backlight": {
+    "median": [
+     0.5890735983848572,
+     0.9419088065624237,
+     0.5937033593654633
+    ],
+    "sat_blocks": 0
+   },
+   "D_meas_abs": [
+    0.1938,
+    0.4269,
+    0.6973
+   ],
+   "reference_kind": "absolute (unsaturated backlight)",
+   "usable": true,
+   "b_own": [
+    0.3818264901638031,
+    0.35725948214530945,
+    0.12048523873090744
+   ],
+   "b_int": [
+    0.2084077149629593,
+    0.16189822554588318,
+    0.04275577887892723
+   ],
+   "own_warnings": [
+    "57 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "57 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.570541,
+     0.658292,
+     1.156367
+    ],
+    "0.1": [
+     0.598306,
+     0.69148,
+     1.211707
+    ],
+    "0.5": [
+     0.634201,
+     0.731897,
+     1.267102
+    ],
+    "1": [
+     0.653491,
+     0.753967,
+     1.29717
+    ],
+    "50": [
+     0.964298,
+     1.128232,
+     1.788716
+    ],
+    "99": [
+     1.10416,
+     1.295728,
+     2.102983
+    ],
+    "99.9": [
+     1.120817,
+     1.314866,
+     2.206879
+    ]
+   },
+   "box_pixels": {
+    "n": 10966002,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0055,
+     -0.0059,
+     -0.0047
+    ],
+    "level": -0.0054,
+    "chroma": [
+     -0.0001,
+     -0.0005,
+     0.0007
+    ],
+    "chroma_part": 0.0007,
+    "level_part": 0.0054,
+    "R_minus_G": 0.0004,
+    "B_minus_G": 0.0012
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.2574,
+     0.3379,
+     0.4452
+    ],
+    "level": 0.3468,
+    "chroma": [
+     -0.0894,
+     -0.0089,
+     0.0984
+    ],
+    "chroma_part": 0.0984,
+    "level_part": 0.3468,
+    "R_minus_G": -0.0805,
+    "B_minus_G": 0.1073
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:05:18|群友提供，已明确授权",
+   "exposure_time": 0.125
+  },
+  "A1010": {
+   "id": "A1010",
+   "rel": "01_彩色负片_未反相/A1010.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     28,
+     75,
+     2.8,
+     5.0
+    ],
+    "bottom": [
+     28,
+     60,
+     96.3,
+     99.3
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    26,
+    81,
+    8,
+    93
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 3894,
+     "median": [
+      0.8480132222175598,
+      0.7533060312271118,
+      0.24679825454950333
+     ],
+     "cv": [
+      0.0143,
+      0.0156,
+      0.0192
+     ],
+     "min": [
+      0.7905293107032776,
+      0.6955422163009644,
+      0.21692562103271484
+     ],
+     "sat_blocks": 0
+    },
+    "bottom": {
+     "n": 3615,
+     "median": [
+      0.8614612221717834,
+      0.7644844651222229,
+      0.2514794170856476
+     ],
+     "cv": [
+      0.0102,
+      0.0111,
+      0.0145
+     ],
+     "min": [
+      0.8058390021324158,
+      0.7149674892425537,
+      0.23221294581890106
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0082,
+   "b_meas": [
+    0.8551634550094604,
+    0.7593565583229065,
+    0.24933311343193054
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.8788281083106995,
+    0.7844815850257874,
+    0.2567482888698578
+   ],
+   "b_int": [
+    0.34294652938842773,
+    0.2209353744983673,
+    0.03657587617635727
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.242685,
+     0.336009,
+     0.935317
+    ],
+    "0.1": [
+     0.290237,
+     0.402041,
+     1.032213
+    ],
+    "0.5": [
+     0.327486,
+     0.443543,
+     1.101139
+    ],
+    "1": [
+     0.356102,
+     0.475653,
+     1.140787
+    ],
+    "50": [
+     0.698109,
+     0.887617,
+     1.673458
+    ],
+    "99": [
+     1.043053,
+     1.209233,
+     2.018514
+    ],
+    "99.9": [
+     1.104919,
+     1.273523,
+     2.162297
+    ]
+   },
+   "box_pixels": {
+    "n": 11367359,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0119,
+     -0.0141,
+     -0.0127
+    ],
+    "level": -0.0129,
+    "chroma": [
+     0.001,
+     -0.0012,
+     0.0002
+    ],
+    "chroma_part": 0.0012,
+    "level_part": 0.0129,
+    "R_minus_G": 0.0022,
+    "B_minus_G": 0.0014
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.3968,
+     0.5362,
+     0.8336
+    ],
+    "level": 0.5889,
+    "chroma": [
+     -0.1921,
+     -0.0527,
+     0.2447
+    ],
+    "chroma_part": 0.2447,
+    "level_part": 0.5889,
+    "R_minus_G": -0.1394,
+    "B_minus_G": 0.2974
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:06:13|群友提供，已明确授权",
+   "exposure_time": 0.3333333333,
+   "roll_group": "group2",
+   "b_roll_int": [
+    0.9143968422293204,
+    0.8073294161942913,
+    0.2596068382003576
+   ],
+   "roll_int_vs_meas": {
+    "dD": [
+     -0.0291,
+     -0.0266,
+     -0.0175
+    ],
+    "level": -0.0244,
+    "chroma": [
+     -0.0047,
+     -0.0022,
+     0.0069
+    ],
+    "chroma_part": 0.0069,
+    "level_part": 0.0244,
+    "R_minus_G": -0.0025,
+    "B_minus_G": 0.0091
+   }
+  },
+  "A1011": {
+   "id": "A1011",
+   "rel": "01_彩色负片_未反相/A1011.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     28,
+     75,
+     2.8,
+     4.6
+    ],
+    "bottom": [
+     28,
+     75,
+     96.2,
+     99.3
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    25,
+    81,
+    7,
+    93
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 3186,
+     "median": [
+      0.5443050861358643,
+      0.48316267132759094,
+      0.15867097675800323
+     ],
+     "cv": [
+      0.0101,
+      0.0109,
+      0.0148
+     ],
+     "min": [
+      0.5231949090957642,
+      0.45837050676345825,
+      0.14831602573394775
+     ],
+     "sat_blocks": 0
+    },
+    "bottom": {
+     "n": 5664,
+     "median": [
+      0.5559388697147369,
+      0.49353155493736267,
+      0.16203653812408447
+     ],
+     "cv": [
+      0.0098,
+      0.0107,
+      0.0144
+     ],
+     "min": [
+      0.5119768381118774,
+      0.4520390033721924,
+      0.1456337869167328
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0092,
+   "b_meas": [
+    0.5524048507213593,
+    0.49031713604927063,
+    0.1609102040529251
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.5622339248657227,
+    0.5002212524414062,
+    0.16398870944976807
+   ],
+   "b_int": [
+    0.46721598505973816,
+    0.32721447944641113,
+    0.06871137768030167
+   ],
+   "own_warnings": [
+    "126 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "24% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "126 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.27912,
+     0.370135,
+     0.93755
+    ],
+    "0.1": [
+     0.304817,
+     0.40309,
+     0.998049
+    ],
+    "0.5": [
+     0.329533,
+     0.47597,
+     1.098886
+    ],
+    "1": [
+     0.338513,
+     0.488033,
+     1.125038
+    ],
+    "50": [
+     0.735054,
+     0.900862,
+     1.601629
+    ],
+    "99": [
+     1.144098,
+     1.293247,
+     2.086499
+    ],
+    "99.9": [
+     1.264292,
+     1.412153,
+     2.340802
+    ]
+   },
+   "box_pixels": {
+    "n": 11708059,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0077,
+     -0.0087,
+     -0.0082
+    ],
+    "level": -0.0082,
+    "chroma": [
+     0.0005,
+     -0.0005,
+     -0.0
+    ],
+    "chroma_part": 0.0005,
+    "level_part": 0.0082,
+    "R_minus_G": 0.001,
+    "B_minus_G": 0.0005
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0727,
+     0.1756,
+     0.3696
+    ],
+    "level": 0.206,
+    "chroma": [
+     -0.1333,
+     -0.0304,
+     0.1636
+    ],
+    "chroma_part": 0.1636,
+    "level_part": 0.206,
+    "R_minus_G": -0.1029,
+    "B_minus_G": 0.194
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:06:13|群友提供，已明确授权",
+   "exposure_time": 0.2,
+   "roll_group": "group2",
+   "b_roll_int": [
+    0.548638105392456,
+    0.48439764976501465,
+    0.15576410293579102
+   ],
+   "roll_int_vs_meas": {
+    "dD": [
+     0.003,
+     0.0053,
+     0.0141
+    ],
+    "level": 0.0075,
+    "chroma": [
+     -0.0045,
+     -0.0022,
+     0.0066
+    ],
+    "chroma_part": 0.0066,
+    "level_part": 0.0075,
+    "R_minus_G": -0.0023,
+    "B_minus_G": 0.0088
+   }
+  },
+  "A1012": {
+   "id": "A1012",
+   "rel": "01_彩色负片_未反相/A1012.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     28,
+     75,
+     0.8,
+     3.0
+    ],
+    "bottom": [
+     28,
+     75,
+     94.5,
+     99.3
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    25,
+    80,
+    6,
+    91
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 3894,
+     "median": [
+      0.5352858006954193,
+      0.4749895930290222,
+      0.15435120463371277
+     ],
+     "cv": [
+      0.009,
+      0.0088,
+      0.0133
+     ],
+     "min": [
+      0.5171605348587036,
+      0.45783841609954834,
+      0.14660745859146118
+     ],
+     "sat_blocks": 0
+    },
+    "bottom": {
+     "n": 8496,
+     "median": [
+      0.5398465096950531,
+      0.4776664674282074,
+      0.15514912456274033
+     ],
+     "cv": [
+      0.0117,
+      0.0112,
+      0.0147
+     ],
+     "min": [
+      0.4151337742805481,
+      0.37208232283592224,
+      0.11907261610031128
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0037,
+   "b_meas": [
+    0.538411021232605,
+    0.4767773747444153,
+    0.1548917070031166
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.547814130783081,
+    0.48674753308296204,
+    0.1577477753162384
+   ],
+   "b_int": [
+    0.548638105392456,
+    0.48439764976501465,
+    0.15576410293579102
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.239315,
+     0.296449,
+     0.754822
+    ],
+    "0.1": [
+     0.246655,
+     0.306076,
+     0.776584
+    ],
+    "0.5": [
+     0.253645,
+     0.315853,
+     0.796485
+    ],
+    "1": [
+     0.257597,
+     0.321554,
+     0.80732
+    ],
+    "50": [
+     0.613658,
+     0.677602,
+     1.199893
+    ],
+    "99": [
+     1.294421,
+     1.461022,
+     2.201576
+    ],
+    "99.9": [
+     1.404013,
+     1.563378,
+     2.354075
+    ]
+   },
+   "box_pixels": {
+    "n": 11367359,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0075,
+     -0.009,
+     -0.0079
+    ],
+    "level": -0.0081,
+    "chroma": [
+     0.0006,
+     -0.0009,
+     0.0002
+    ],
+    "chroma_part": 0.0009,
+    "level_part": 0.0081,
+    "R_minus_G": 0.0015,
+    "B_minus_G": 0.0011
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.0082,
+     -0.0069,
+     -0.0024
+    ],
+    "level": -0.0058,
+    "chroma": [
+     -0.0024,
+     -0.0011,
+     0.0034
+    ],
+    "chroma_part": 0.0034,
+    "level_part": 0.0058,
+    "R_minus_G": -0.0013,
+    "B_minus_G": 0.0045
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:06:13|群友提供，已明确授权",
+   "exposure_time": 0.2,
+   "roll_group": "group2",
+   "b_roll_int": [
+    0.548638105392456,
+    0.48439764976501465,
+    0.15576410293579102
+   ],
+   "roll_int_vs_meas": {
+    "dD": [
+     -0.0082,
+     -0.0069,
+     -0.0024
+    ],
+    "level": -0.0058,
+    "chroma": [
+     -0.0024,
+     -0.0011,
+     0.0034
+    ],
+    "chroma_part": 0.0034,
+    "level_part": 0.0058,
+    "R_minus_G": -0.0013,
+    "B_minus_G": 0.0045
+   }
+  },
+  "A1013": {
+   "id": "A1013",
+   "rel": "01_彩色负片_未反相/A1013.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "gap": [
+     14.3,
+     15.5,
+     45,
+     88
+    ],
+    "top": [
+     36,
+     74,
+     1.4,
+     2.6
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    18,
+    76,
+    5,
+    92
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "gap": {
+     "n": 1953,
+     "median": [
+      0.7016124129295349,
+      0.5167883038520813,
+      0.16436880826950073
+     ],
+     "cv": [
+      0.0074,
+      0.0093,
+      0.0133
+     ],
+     "min": [
+      0.6810265779495239,
+      0.5010478496551514,
+      0.15640760958194733
+     ],
+     "sat_blocks": 0
+    },
+    "top": {
+     "n": 1716,
+     "median": [
+      0.6486131548881531,
+      0.4781596213579178,
+      0.15218284726142883
+     ],
+     "cv": [
+      0.0261,
+      0.0216,
+      0.022
+     ],
+     "min": [
+      0.4485137164592743,
+      0.37729334831237793,
+      0.1360735297203064
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0341,
+   "b_meas": [
+    0.693107008934021,
+    0.5089030861854553,
+    0.16082869470119476
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.7052567601203918,
+    0.5202715992927551,
+    0.16537727415561676
+   ],
+   "b_int": [
+    0.6435874104499817,
+    0.46831464767456055,
+    0.13694971799850464
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.17388,
+     0.306334,
+     0.797108
+    ],
+    "0.1": [
+     0.181472,
+     0.316086,
+     0.822817
+    ],
+    "0.5": [
+     0.18961,
+     0.326388,
+     0.846266
+    ],
+    "1": [
+     0.195089,
+     0.333157,
+     0.859058
+    ],
+    "50": [
+     0.626702,
+     0.781765,
+     1.368231
+    ],
+    "99": [
+     0.994698,
+     1.256567,
+     1.954939
+    ],
+    "99.9": [
+     1.019067,
+     1.283974,
+     2.035436
+    ]
+   },
+   "box_pixels": {
+    "n": 12267486,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0075,
+     -0.0096,
+     -0.0121
+    ],
+    "level": -0.0097,
+    "chroma": [
+     0.0022,
+     0.0001,
+     -0.0024
+    ],
+    "chroma_part": 0.0024,
+    "level_part": 0.0097,
+    "R_minus_G": 0.0021,
+    "B_minus_G": -0.0025
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0322,
+     0.0361,
+     0.0698
+    ],
+    "level": 0.046,
+    "chroma": [
+     -0.0138,
+     -0.0099,
+     0.0238
+    ],
+    "chroma_part": 0.0238,
+    "level_part": 0.046,
+    "R_minus_G": -0.0039,
+    "B_minus_G": 0.0337
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:07:28|群友提供，已明确授权",
+   "exposure_time": 0.25
+  },
+  "A1014": {
+   "id": "A1014",
+   "rel": "01_彩色负片_未反相/A1014.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left_gap": [
+     15.3,
+     16.3,
+     40,
+     90
+    ],
+    "right_gap": [
+     79.3,
+     80.4,
+     35,
+     90
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    19,
+    77,
+    4,
+    94
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "left_gap": {
+     "n": 1764,
+     "median": [
+      0.6576907932758331,
+      0.4836738556623459,
+      0.1524771749973297
+     ],
+     "cv": [
+      0.0079,
+      0.0093,
+      0.0129
+     ],
+     "min": [
+      0.639528214931488,
+      0.4660343527793884,
+      0.14555269479751587
+     ],
+     "sat_blocks": 0
+    },
+    "right_gap": {
+     "n": 2493,
+     "median": [
+      0.6612510681152344,
+      0.48570701479911804,
+      0.1538802981376648
+     ],
+     "cv": [
+      0.0091,
+      0.0098,
+      0.012
+     ],
+     "min": [
+      0.6317797899246216,
+      0.46426308155059814,
+      0.14301754534244537
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.004,
+   "b_meas": [
+    0.6596455574035645,
+    0.48480236530303955,
+    0.15336892008781433
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.6648813486099243,
+    0.4892271161079407,
+    0.15474173426628113
+   ],
+   "b_int": [
+    0.5246814489364624,
+    0.35886168479919434,
+    0.11541923880577087
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "47% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "G base blocks spread 11.4% (p05-p95)",
+    "B base blocks spread 10.5% (p05-p95)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.195089,
+     0.327824,
+     0.796734
+    ],
+    "0.1": [
+     0.211805,
+     0.347196,
+     0.832171
+    ],
+    "0.5": [
+     0.233566,
+     0.373163,
+     0.868207
+    ],
+    "1": [
+     0.250755,
+     0.392883,
+     0.89044
+    ],
+    "50": [
+     0.700996,
+     0.901919,
+     1.488502
+    ],
+    "99": [
+     0.872534,
+     1.118895,
+     1.801953
+    ],
+    "99.9": [
+     0.921161,
+     1.163647,
+     1.893229
+    ]
+   },
+   "box_pixels": {
+    "n": 12690744,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0034,
+     -0.0039,
+     -0.0039
+    ],
+    "level": -0.0037,
+    "chroma": [
+     0.0003,
+     -0.0002,
+     -0.0002
+    ],
+    "chroma_part": 0.0003,
+    "level_part": 0.0037,
+    "R_minus_G": 0.0005,
+    "B_minus_G": 0.0
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0994,
+     0.1306,
+     0.1235
+    ],
+    "level": 0.1178,
+    "chroma": [
+     -0.0184,
+     0.0128,
+     0.0057
+    ],
+    "chroma_part": 0.0184,
+    "level_part": 0.1178,
+    "R_minus_G": -0.0312,
+    "B_minus_G": -0.0071
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:07:28|群友提供，已明确授权",
+   "exposure_time": 0.25
+  },
+  "A1015": {
+   "id": "A1015",
+   "rel": "01_彩色负片_未反相/A1015.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "gap": [
+     15.5,
+     16.5,
+     40,
+     90
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    19,
+    76,
+    5,
+    94
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "gap": {
+     "n": 2016,
+     "median": [
+      0.5491060018539429,
+      0.406162291765213,
+      0.12582719326019287
+     ],
+     "cv": [
+      0.0091,
+      0.0105,
+      0.014
+     ],
+     "min": [
+      0.5272822380065918,
+      0.392055869102478,
+      0.12039585411548615
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.5491060018539429,
+    0.406162291765213,
+    0.12582719326019287
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.5523307919502258,
+    0.40849927067756653,
+    0.1265430748462677
+   ],
+   "b_int": [
+    0.5476157665252686,
+    0.40468451380729675,
+    0.12104982137680054
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.236793,
+     0.36175,
+     0.846452
+    ],
+    "0.1": [
+     0.245044,
+     0.372023,
+     0.871695
+    ],
+    "0.5": [
+     0.253289,
+     0.382288,
+     0.894527
+    ],
+    "1": [
+     0.258005,
+     0.388193,
+     0.906757
+    ],
+    "50": [
+     0.571553,
+     0.755247,
+     1.305392
+    ],
+    "99": [
+     0.814999,
+     1.042979,
+     1.693602
+    ],
+    "99.9": [
+     0.926052,
+     1.175694,
+     1.863681
+    ]
+   },
+   "box_pixels": {
+    "n": 12335544,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0025,
+     -0.0025,
+     -0.0025
+    ],
+    "level": -0.0025,
+    "chroma": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "chroma_part": 0.0,
+    "level_part": 0.0025,
+    "R_minus_G": 0.0,
+    "B_minus_G": 0.0
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0012,
+     0.0016,
+     0.0168
+    ],
+    "level": 0.0065,
+    "chroma": [
+     -0.0053,
+     -0.0049,
+     0.0103
+    ],
+    "chroma_part": 0.0103,
+    "level_part": 0.0065,
+    "R_minus_G": -0.0004,
+    "B_minus_G": 0.0152
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:07:29|群友提供，已明确授权",
+   "exposure_time": 0.2,
+   "roll_group": "group3"
+  },
+  "A1016": {
+   "id": "A1016",
+   "rel": "01_彩色负片_未反相/A1016.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left_gap": [
+     15.0,
+     16.3,
+     45,
+     88
+    ],
+    "right_gap": [
+     80.2,
+     82.4,
+     25,
+     75
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    19,
+    77,
+    4,
+    94
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "left_gap": {
+     "n": 1953,
+     "median": [
+      0.5450991988182068,
+      0.40316060185432434,
+      0.1253979355096817
+     ],
+     "cv": [
+      0.0082,
+      0.0098,
+      0.0133
+     ],
+     "min": [
+      0.5226447582244873,
+      0.38792723417282104,
+      0.1192125752568245
+     ],
+     "sat_blocks": 0
+    },
+    "right_gap": {
+     "n": 4284,
+     "median": [
+      0.5526629388332367,
+      0.4082992523908615,
+      0.12734808772802353
+     ],
+     "cv": [
+      0.0076,
+      0.0087,
+      0.0124
+     ],
+     "min": [
+      0.5329012870788574,
+      0.3948420286178589,
+      0.12065788358449936
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0067,
+   "b_meas": [
+    0.550534725189209,
+    0.4068649411201477,
+    0.12677766382694244
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.5555504560470581,
+    0.4107118248939514,
+    0.1281910389661789
+   ],
+   "b_int": [
+    0.5103685259819031,
+    0.37267109751701355,
+    0.10757610201835632
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.267605,
+     0.396072,
+     0.884918
+    ],
+    "0.1": [
+     0.276394,
+     0.407267,
+     0.912624
+    ],
+    "0.5": [
+     0.286222,
+     0.419385,
+     0.936919
+    ],
+    "1": [
+     0.292857,
+     0.42713,
+     0.949891
+    ],
+    "50": [
+     0.677193,
+     0.868109,
+     1.394048
+    ],
+    "99": [
+     1.125746,
+     1.393391,
+     2.131628
+    ],
+    "99.9": [
+     1.146785,
+     1.418012,
+     2.233275
+    ]
+   },
+   "box_pixels": {
+    "n": 12690744,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0039,
+     -0.0041,
+     -0.0048
+    ],
+    "level": -0.0043,
+    "chroma": [
+     0.0004,
+     0.0002,
+     -0.0005
+    ],
+    "chroma_part": 0.0005,
+    "level_part": 0.0043,
+    "R_minus_G": 0.0002,
+    "B_minus_G": -0.0007
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0329,
+     0.0381,
+     0.0713
+    ],
+    "level": 0.0474,
+    "chroma": [
+     -0.0145,
+     -0.0093,
+     0.0239
+    ],
+    "chroma_part": 0.0239,
+    "level_part": 0.0474,
+    "R_minus_G": -0.0052,
+    "B_minus_G": 0.0332
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:07:29|群友提供，已明确授权",
+   "exposure_time": 0.2,
+   "roll_group": "group3"
+  },
+  "A1017": {
+   "id": "A1017",
+   "rel": "01_彩色负片_未反相/A1017.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left_gap": [
+     15.5,
+     16.6,
+     45,
+     88
+    ],
+    "right_gap": [
+     79.7,
+     80.8,
+     25,
+     75
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    19,
+    77,
+    4,
+    95
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "left_gap": {
+     "n": 1953,
+     "median": [
+      0.5609660148620605,
+      0.41134709119796753,
+      0.12901046872138977
+     ],
+     "cv": [
+      0.0066,
+      0.0078,
+      0.0118
+     ],
+     "min": [
+      0.5463775396347046,
+      0.3987404406070709,
+      0.12407874315977097
+     ],
+     "sat_blocks": 0
+    },
+    "right_gap": {
+     "n": 2268,
+     "median": [
+      0.5622471272945404,
+      0.4146634638309479,
+      0.13014832139015198
+     ],
+     "cv": [
+      0.0084,
+      0.0098,
+      0.0131
+     ],
+     "min": [
+      0.5407079458236694,
+      0.398762971162796,
+      0.12367413192987442
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0038,
+   "b_meas": [
+    0.5615397691726685,
+    0.4128980338573456,
+    0.1295490711927414
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.5640802383422852,
+    0.4156405031681061,
+    0.13034255802631378
+   ],
+   "b_int": [
+    0.3641870617866516,
+    0.2740672826766968,
+    0.08741893619298935
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.261137,
+     0.388322,
+     0.863778
+    ],
+    "0.1": [
+     0.27181,
+     0.400816,
+     0.891626
+    ],
+    "0.5": [
+     0.290625,
+     0.421199,
+     0.925438
+    ],
+    "1": [
+     0.342242,
+     0.464863,
+     0.968901
+    ],
+    "50": [
+     0.744003,
+     0.939851,
+     1.540701
+    ],
+    "99": [
+     0.941065,
+     1.1749,
+     1.898968
+    ],
+    "99.9": [
+     0.991437,
+     1.229549,
+     1.995615
+    ]
+   },
+   "box_pixels": {
+    "n": 12834162,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.002,
+     -0.0029,
+     -0.0027
+    ],
+    "level": -0.0025,
+    "chroma": [
+     0.0005,
+     -0.0004,
+     -0.0002
+    ],
+    "chroma_part": 0.0005,
+    "level_part": 0.0025,
+    "R_minus_G": 0.0009,
+    "B_minus_G": 0.0002
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.1881,
+     0.178,
+     0.1708
+    ],
+    "level": 0.179,
+    "chroma": [
+     0.0091,
+     -0.001,
+     -0.0082
+    ],
+    "chroma_part": 0.0091,
+    "level_part": 0.179,
+    "R_minus_G": 0.0101,
+    "B_minus_G": -0.0072
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:07:29|群友提供，已明确授权",
+   "exposure_time": 0.2,
+   "roll_group": "group3"
+  },
+  "A1018": {
+   "id": "A1018",
+   "rel": "01_彩色负片_未反相/A1018.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left_gap": [
+     15.9,
+     16.8,
+     25,
+     88
+    ],
+    "right_gap": [
+     80.1,
+     81.0,
+     28,
+     62
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    19,
+    77,
+    4,
+    95
+   ],
+   "placement_note": "high-key picture; the picture edge is not visible on the right, the right box sits in the brightest band next to the following frame",
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "left_gap": {
+     "n": 2219,
+     "median": [
+      0.5297619700431824,
+      0.39065659046173096,
+      0.12191982567310333
+     ],
+     "cv": [
+      0.2413,
+      0.2553,
+      0.2716
+     ],
+     "min": [
+      0.13278687000274658,
+      0.07920625060796738,
+      0.018721867352724075
+     ],
+     "sat_blocks": 0
+    },
+    "right_gap": {
+     "n": 1197,
+     "median": [
+      0.5455629229545593,
+      0.40122243762016296,
+      0.12621235847473145
+     ],
+     "cv": [
+      0.0073,
+      0.0084,
+      0.0115
+     ],
+     "min": [
+      0.5249097347259521,
+      0.38642391562461853,
+      0.12027852982282639
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.015,
+   "b_meas": [
+    0.5363567173480988,
+    0.39469408988952637,
+    0.12347529828548431
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.5581597685813904,
+    0.4109101891517639,
+    0.1280231922864914
+   ],
+   "b_int": [
+    0.5592278838157654,
+    0.4116731584072113,
+    0.1282825917005539
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.234244,
+     0.362498,
+     0.827469
+    ],
+    "0.1": [
+     0.240167,
+     0.369517,
+     0.846778
+    ],
+    "0.5": [
+     0.245767,
+     0.376462,
+     0.863245
+    ],
+    "1": [
+     0.248894,
+     0.380247,
+     0.871596
+    ],
+    "50": [
+     0.429867,
+     0.578553,
+     1.099719
+    ],
+    "99": [
+     0.808512,
+     1.005435,
+     1.657508
+    ],
+    "99.9": [
+     0.894579,
+     1.139323,
+     1.832396
+    ]
+   },
+   "box_pixels": {
+    "n": 12834162,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0173,
+     -0.0175,
+     -0.0157
+    ],
+    "level": -0.0168,
+    "chroma": [
+     -0.0005,
+     -0.0007,
+     0.0011
+    ],
+    "chroma_part": 0.0011,
+    "level_part": 0.0168,
+    "R_minus_G": 0.0002,
+    "B_minus_G": 0.0018
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.0181,
+     -0.0183,
+     -0.0166
+    ],
+    "level": -0.0177,
+    "chroma": [
+     -0.0004,
+     -0.0006,
+     0.0011
+    ],
+    "chroma_part": 0.0011,
+    "level_part": 0.0177,
+    "R_minus_G": 0.0002,
+    "B_minus_G": 0.0017
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:07:29|群友提供，已明确授权",
+   "exposure_time": 0.2
+  },
+  "A1019": {
+   "id": "A1019",
+   "rel": "01_彩色负片_未反相/A1019.RAF",
+   "source": "group_single",
+   "camera": "X-T2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left_gap": [
+     11.0,
+     15.5,
+     40,
+     88
+    ],
+    "right_gap": [
+     80.5,
+     84.0,
+     20,
+     70
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    19,
+    77,
+    5,
+    94
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "left_gap": {
+     "n": 8228,
+     "median": [
+      0.6734272837638855,
+      0.5810608565807343,
+      0.19152477383613586
+     ],
+     "cv": [
+      0.0072,
+      0.0071,
+      0.0103
+     ],
+     "min": [
+      0.6527776122093201,
+      0.5646857023239136,
+      0.1818181872367859
+     ],
+     "sat_blocks": 0
+    },
+    "right_gap": {
+     "n": 6804,
+     "median": [
+      0.6649327278137207,
+      0.5747268795967102,
+      0.19010689109563828
+     ],
+     "cv": [
+      0.0078,
+      0.0075,
+      0.0102
+     ],
+     "min": [
+      0.602491557598114,
+      0.5201742053031921,
+      0.17420680820941925
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0055,
+   "b_meas": [
+    0.6696229577064514,
+    0.5781609416007996,
+    0.19088687747716904
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.6792401075363159,
+    0.5862821340560913,
+    0.19353017210960388
+   ],
+   "b_int": [
+    0.6052643656730652,
+    0.48632028698921204,
+    0.13829252123832703
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.197224,
+     0.285186,
+     0.789491
+    ],
+    "0.1": [
+     0.207466,
+     0.299145,
+     0.817212
+    ],
+    "0.5": [
+     0.217606,
+     0.312696,
+     0.843715
+    ],
+    "1": [
+     0.223875,
+     0.321151,
+     0.858818
+    ],
+    "50": [
+     0.531614,
+     0.644221,
+     1.210522
+    ],
+    "99": [
+     0.843946,
+     1.012129,
+     1.754268
+    ],
+    "99.9": [
+     0.871103,
+     1.038902,
+     1.828807
+    ]
+   },
+   "box_pixels": {
+    "n": 12550824,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0062,
+     -0.0061,
+     -0.006
+    ],
+    "level": -0.0061,
+    "chroma": [
+     -0.0001,
+     0.0,
+     0.0001
+    ],
+    "chroma_part": 0.0001,
+    "level_part": 0.0061,
+    "R_minus_G": -0.0001,
+    "B_minus_G": 0.0001
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0439,
+     0.0751,
+     0.14
+    ],
+    "level": 0.0863,
+    "chroma": [
+     -0.0424,
+     -0.0112,
+     0.0537
+    ],
+    "chroma_part": 0.0537,
+    "level_part": 0.0863,
+    "R_minus_G": -0.0312,
+    "B_minus_G": 0.0649
+   },
+   "session": "body-7f66733e71|X-T2|200|8|XF80mmF2.8 R LM OIS WR Macro|2018:07:29|群友提供，已明确授权",
+   "exposure_time": 0.2,
+   "roll_group": "group3"
+  },
+  "A1020": {
+   "id": "A1020",
+   "rel": "01_彩色负片_未反相/A1020.RAF",
+   "source": "group_single",
+   "camera": "X-T1",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left": [
+     0.8,
+     3.0,
+     25,
+     80
+    ],
+    "right": [
+     97.3,
+     99.2,
+     25,
+     80
+    ],
+    "bottom": [
+     25,
+     75,
+     96.6,
+     97.8
+    ]
+   },
+   "backlight_box": [
+    54,
+    56.5,
+    99.0,
+    99.6
+   ],
+   "image_box": [
+    6,
+    94,
+    5,
+    93
+   ],
+   "placement_note": "picture nearly uniform (sky or blank frame)",
+   "fails": [],
+   "rebate": {
+    "left": {
+     "n": 3164,
+     "median": [
+      0.29575906693935394,
+      0.2962047904729843,
+      0.12199114263057709
+     ],
+     "cv": [
+      0.0135,
+      0.0131,
+      0.0187
+     ],
+     "min": [
+      0.27506908774375916,
+      0.26949718594551086,
+      0.10726971179246902
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 2712,
+     "median": [
+      0.3104812204837799,
+      0.30372563004493713,
+      0.12510192394256592
+     ],
+     "cv": [
+      0.0141,
+      0.0135,
+      0.0177
+     ],
+     "min": [
+      0.28874316811561584,
+      0.2816104590892792,
+      0.11453738063573837
+     ],
+     "sat_blocks": 0
+    },
+    "bottom": {
+     "n": 1540,
+     "median": [
+      0.2975752204656601,
+      0.2943786233663559,
+      0.12191735208034515
+     ],
+     "cv": [
+      0.0183,
+      0.0163,
+      0.0207
+     ],
+     "min": [
+      0.273399293422699,
+      0.2669307589530945,
+      0.1083538681268692
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0211,
+   "b_meas": [
+    0.29965531826019287,
+    0.2981255352497101,
+    0.12309776619076729
+   ],
+   "backlight": {
+    "median": [
+     0.22739017009735107,
+     0.3762902170419693,
+     0.24107873439788818
+    ],
+    "sat_blocks": 0
+   },
+   "D_meas_abs": [
+    -0.1199,
+    0.1011,
+    0.2919
+   ],
+   "reference_kind": "absolute (unsaturated backlight)",
+   "usable": true,
+   "b_own": [
+    0.31139084696769714,
+    0.3048752546310425,
+    0.1258716732263565
+   ],
+   "b_int": [
+    0.10449378192424774,
+    0.08484016358852386,
+    0.02862592600286007
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "R base blocks spread 14.0% (p05-p95)",
+    "G base blocks spread 15.7% (p05-p95)",
+    "B base blocks spread 16.9% (p05-p95)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.848037,
+     0.888077,
+     1.292337
+    ],
+    "0.1": [
+     0.919782,
+     0.997852,
+     1.439167
+    ],
+    "0.5": [
+     0.953388,
+     1.03666,
+     1.492809
+    ],
+    "1": [
+     0.973677,
+     1.060675,
+     1.522669
+    ],
+    "50": [
+     1.116896,
+     1.270672,
+     1.798606
+    ],
+    "99": [
+     1.277021,
+     1.477221,
+     2.074534
+    ],
+    "99.9": [
+     1.302324,
+     1.508977,
+     2.14902
+    ]
+   },
+   "box_pixels": {
+    "n": 12588900,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0167,
+     -0.0097,
+     -0.0097
+    ],
+    "level": -0.012,
+    "chroma": [
+     -0.0047,
+     0.0023,
+     0.0023
+    ],
+    "chroma_part": 0.0047,
+    "level_part": 0.012,
+    "R_minus_G": -0.007,
+    "B_minus_G": 0.0
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.4575,
+     0.5458,
+     0.6335
+    ],
+    "level": 0.5456,
+    "chroma": [
+     -0.0881,
+     0.0002,
+     0.0879
+    ],
+    "chroma_part": 0.0881,
+    "level_part": 0.5456,
+    "R_minus_G": -0.0883,
+    "B_minus_G": 0.0877
+   },
+   "session": "body-1d121981c3|X-T1|200|undef||2021:10:15|群友提供，已明确授权",
+   "exposure_time": 0.06666666667
+  },
+  "A1021": {
+   "id": "A1021",
+   "rel": "01_彩色负片_未反相/A1021.RAF",
+   "source": "group_single",
+   "camera": "X-T1",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     25,
+     75,
+     1.8,
+     3.3
+    ],
+    "bottom": [
+     25,
+     75,
+     97.4,
+     98.8
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    5,
+    95,
+    7,
+    94
+   ],
+   "placement_note": null,
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)",
+    "C3: rebate boxes disagree by 0.224 D (> 0.05)"
+   ],
+   "rebate": {
+    "top": {
+     "n": 1848,
+     "median": [
+      0.16871115565299988,
+      0.17517390847206116,
+      0.07370404526591301
+     ],
+     "cv": [
+      0.2505,
+      0.2545,
+      0.263
+     ],
+     "min": [
+      0.125904843211174,
+      0.1262710690498352,
+      0.05186231806874275
+     ],
+     "sat_blocks": 0
+    },
+    "bottom": {
+     "n": 1848,
+     "median": [
+      0.2827763855457306,
+      0.2920992821455002,
+      0.12282131239771843
+     ],
+     "cv": [
+      0.1118,
+      0.1139,
+      0.1447
+     ],
+     "min": [
+      0.1862611323595047,
+      0.19049887359142303,
+      0.05719415843486786
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.2243,
+   "b_meas": [
+    0.2330559864640236,
+    0.2446468472480774,
+    0.10410433635115623
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.3025406301021576,
+    0.3159227967262268,
+    0.13330282270908356
+   ],
+   "b_int": [
+    0.1109941229224205,
+    0.07734797894954681,
+    0.01925688609480858
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "26% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.855575,
+     0.964298,
+     1.432479
+    ],
+    "0.1": [
+     0.889103,
+     1.003493,
+     1.487482
+    ],
+    "0.5": [
+     0.914525,
+     1.037888,
+     1.53544
+    ],
+    "1": [
+     0.926388,
+     1.055523,
+     1.561925
+    ],
+    "50": [
+     1.079838,
+     1.281686,
+     1.912841
+    ],
+    "99": [
+     1.184421,
+     1.391428,
+     2.089746
+    ],
+    "99.9": [
+     1.2116,
+     1.4201,
+     2.167138
+    ]
+   },
+   "box_pixels": {
+    "n": 12729480,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.1133,
+     -0.111,
+     -0.1074
+    ],
+    "level": -0.1106,
+    "chroma": [
+     -0.0027,
+     -0.0004,
+     0.0032
+    ],
+    "chroma_part": 0.0032,
+    "level_part": 0.1106,
+    "R_minus_G": -0.0023,
+    "B_minus_G": 0.0036
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.3222,
+     0.5001,
+     0.7329
+    ],
+    "level": 0.5184,
+    "chroma": [
+     -0.1962,
+     -0.0183,
+     0.2145
+    ],
+    "chroma_part": 0.2145,
+    "level_part": 0.5184,
+    "R_minus_G": -0.1779,
+    "B_minus_G": 0.2328
+   },
+   "session": "body-1d121981c3|X-T1|200|undef||2021:10:17|群友提供，已明确授权",
+   "exposure_time": 0.06666666667
+  },
+  "A1030": {
+   "id": "A1030",
+   "rel": "01_彩色负片_未反相/A1030.CR3",
+   "source": "group_single",
+   "camera": "Canon EOS R6m2",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     36,
+     55,
+     2.4,
+     5.0
+    ],
+    "bottom": [
+     40,
+     58,
+     94.8,
+     96.6
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    7,
+    92,
+    7,
+    92
+   ],
+   "placement_note": "boxes between the edge-print glyphs",
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "top": {
+     "n": 1859,
+     "median": [
+      0.07311192899942398,
+      0.0577821284532547,
+      0.024039866402745247
+     ],
+     "cv": [
+      0.0282,
+      0.0286,
+      0.0333
+     ],
+     "min": [
+      0.057464756071567535,
+      0.04829787462949753,
+      0.018338726833462715
+     ],
+     "sat_blocks": 0
+    },
+    "bottom": {
+     "n": 1224,
+     "median": [
+      0.07217076793313026,
+      0.05873749032616615,
+      0.02422226034104824
+     ],
+     "cv": [
+      0.0382,
+      0.0583,
+      0.113
+     ],
+     "min": [
+      0.05080395191907883,
+      0.034767430275678635,
+      0.009182829409837723
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0071,
+   "b_meas": [
+    0.07259932160377502,
+    0.058229655027389526,
+    0.024088986217975616
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.08622873574495316,
+    0.07023727893829346,
+    0.028976881876587868
+   ],
+   "b_int": [
+    0.08555733412504196,
+    0.06727702915668488,
+    0.02510109171271324
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     1.047465,
+     1.152584,
+     1.543009
+    ],
+    "0.1": [
+     1.054997,
+     1.161239,
+     1.568255
+    ],
+    "0.5": [
+     1.062048,
+     1.169678,
+     1.587816
+    ],
+    "1": [
+     1.065888,
+     1.174603,
+     1.5982
+    ],
+    "50": [
+     1.218449,
+     1.357533,
+     1.860786
+    ],
+    "99": [
+     1.760713,
+     1.978254,
+     2.695899
+    ],
+    "99.9": [
+     1.839207,
+     2.070618,
+     2.897395
+    ]
+   },
+   "box_pixels": {
+    "n": 17503560,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0747,
+     -0.0814,
+     -0.0802
+    ],
+    "level": -0.0788,
+    "chroma": [
+     0.0041,
+     -0.0026,
+     -0.0014
+    ],
+    "chroma_part": 0.0041,
+    "level_part": 0.0788,
+    "R_minus_G": 0.0067,
+    "B_minus_G": 0.0012
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.0713,
+     -0.0627,
+     -0.0179
+    ],
+    "level": -0.0506,
+    "chroma": [
+     -0.0207,
+     -0.0121,
+     0.0327
+    ],
+    "chroma_part": 0.0327,
+    "level_part": 0.0506,
+    "R_minus_G": -0.0086,
+    "B_minus_G": 0.0448
+   },
+   "session": "body-f0026baf0b|Canon EOS R6m2|100|8||2024:12:11|群友提供，已明确授权",
+   "exposure_time": 0.0125
+  },
+  "A1051": {
+   "id": "A1051",
+   "rel": "01_彩色负片_未反相/A1051.RW2",
+   "source": "group_single",
+   "camera": "DMC-G3",
+   "film_index": "民用彩色负片 (135)",
+   "rebate_boxes": {},
+   "backlight_box": null,
+   "image_box": [
+    10,
+    90,
+    10,
+    85
+   ],
+   "placement_note": null,
+   "fails": [
+    "C1: the picture is exposed over the sprocket area; no unexposed film"
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "session": "body-2aa58c6c4f|DMC-G3|160|0|None|2025:05:27|民用彩色负片 (135)",
+   "exposure_time": 0.04
+  },
+  "A1052": {
+   "id": "A1052",
+   "rel": "01_彩色负片_未反相/A1052.RW2",
+   "source": "group_single",
+   "camera": "DMC-G1",
+   "film_index": "民用彩色负片 (135)",
+   "rebate_boxes": {},
+   "backlight_box": null,
+   "image_box": [
+    10,
+    90,
+    10,
+    82
+   ],
+   "placement_note": null,
+   "fails": [
+    "C1: the frame is surrounded by the dark holder; the band above the sprocket shapes is dark, not unexposed film"
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "session": "body-ed7e8fcf64|DMC-G1|100|0|None|0000:00:00|民用彩色负片 (135)",
+   "exposure_time": 0.01666666667
+  },
+  "A1053": {
+   "id": "A1053",
+   "rel": "01_彩色负片_未反相/A1053.CR2",
+   "source": "group_single",
+   "camera": "Canon EOS REBEL T3i",
+   "film_index": "柯达彩色负片 (135)",
+   "rebate_boxes": {},
+   "backlight_box": null,
+   "image_box": [
+    12,
+    86,
+    10,
+    82
+   ],
+   "placement_note": null,
+   "fails": [
+    "C1: pale bars at the left and top edge; a matching bar on the right lies inside the picture, so they may be scene, not rebate"
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "session": "body-44b907e5d3|Canon EOS REBEL T3i|100|9|EF-S60mm f/2.8 Macro USM|2018:02:14|柯达彩色负片 (135)",
+   "exposure_time": 0.8
+  },
+  "A1061": {
+   "id": "A1061",
+   "rel": "01_彩色负片_未反相/A1061.CR2",
+   "source": "group_single",
+   "camera": "Canon EOS REBEL T3i",
+   "film_index": "柯达彩色负片 (135)",
+   "rebate_boxes": {
+    "left": [
+     10.6,
+     11.8,
+     52,
+     80
+    ],
+    "right": [
+     95.5,
+     97.6,
+     20,
+     70
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    16,
+    90,
+    9,
+    82
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "left": {
+     "n": 968,
+     "median": [
+      0.23210417479276657,
+      0.27192753553390503,
+      0.1314716935157776
+     ],
+     "cv": [
+      0.0147,
+      0.0156,
+      0.0162
+     ],
+     "min": [
+      0.222128763794899,
+      0.2594371736049652,
+      0.12469194084405899
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 3038,
+     "median": [
+      0.24653086811304092,
+      0.28802254796028137,
+      0.13771002739667892
+     ],
+     "cv": [
+      0.0144,
+      0.0145,
+      0.0161
+     ],
+     "min": [
+      0.22620365023612976,
+      0.260871022939682,
+      0.12374373525381088
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0262,
+   "b_meas": [
+    0.24504777044057846,
+    0.2863466590642929,
+    0.13675549626350403
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.6851910948753357,
+    0.999908447265625,
+    0.999908447265625
+   ],
+   "b_int": [
+    0.1292439103126526,
+    0.16122682392597198,
+    0.09665064513683319
+   ],
+   "own_warnings": [
+    "1 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "1 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.601815,
+     0.542108,
+     0.829522
+    ],
+    "0.1": [
+     0.622403,
+     0.565395,
+     0.854057
+    ],
+    "0.5": [
+     0.654238,
+     0.603142,
+     0.878004
+    ],
+    "1": [
+     0.674679,
+     0.628107,
+     0.892142
+    ],
+    "50": [
+     1.162971,
+     1.180387,
+     1.394705
+    ],
+    "99": [
+     1.428017,
+     1.525549,
+     2.017133
+    ],
+    "99.9": [
+     1.514142,
+     1.579433,
+     2.10047
+    ]
+   },
+   "box_pixels": {
+    "n": 9730271,
+    "sat_in_box": 1.0277204994886062e-07
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.4466,
+     -0.5431,
+     -0.864
+    ],
+    "level": -0.6179,
+    "chroma": [
+     0.1713,
+     0.0748,
+     -0.2461
+    ],
+    "chroma_part": 0.2461,
+    "level_part": 0.6179,
+    "R_minus_G": 0.0965,
+    "B_minus_G": -0.3209
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.2778,
+     0.2495,
+     0.1507
+    ],
+    "level": 0.226,
+    "chroma": [
+     0.0518,
+     0.0235,
+     -0.0753
+    ],
+    "chroma_part": 0.0753,
+    "level_part": 0.226,
+    "R_minus_G": 0.0283,
+    "B_minus_G": -0.0988
+   },
+   "session": "body-44b907e5d3|Canon EOS REBEL T3i|100|9|EF-S60mm f/2.8 Macro USM|2021:07:13|柯达彩色负片 (135)",
+   "exposure_time": 0.8
+  },
+  "A1062": {
+   "id": "A1062",
+   "rel": "01_彩色负片_未反相/A1062.CR2",
+   "source": "group_single",
+   "camera": "Canon EOS 80D",
+   "film_index": "柯达彩色负片 (135)",
+   "rebate_boxes": {
+    "top": [
+     23.5,
+     28.5,
+     0.8,
+     3.6
+    ]
+   },
+   "backlight_box": [
+    41.5,
+    44.5,
+    0.3,
+    2.8
+   ],
+   "image_box": [
+    6,
+    90,
+    7,
+    91
+   ],
+   "placement_note": "rebate between sprocket holes; between the bottom holes the film looks darker (edge zone or holder), not used",
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 532,
+     "median": [
+      0.09715595096349716,
+      0.10812804102897644,
+      0.05600373260676861
+     ],
+     "cv": [
+      0.0131,
+      0.0153,
+      0.021
+     ],
+     "min": [
+      0.09154244512319565,
+      0.10165509581565857,
+      0.04625987634062767
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.09715595096349716,
+    0.10812804102897644,
+    0.05600373260676861
+   ],
+   "backlight": {
+    "median": [
+     0.2703928053379059,
+     0.5079572796821594,
+     0.34320369362831116
+    ],
+    "sat_blocks": 0
+   },
+   "D_meas_abs": [
+    0.4445,
+    0.6719,
+    0.7873
+   ],
+   "reference_kind": "absolute (unsaturated backlight)",
+   "usable": true,
+   "b_own": [
+    0.2893415689468384,
+    0.5464560985565186,
+    0.37396809458732605
+   ],
+   "b_int": [
+    0.08101014792919159,
+    0.0800640881061554,
+    0.03759822994470596
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "38% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     1.002292,
+     0.960167,
+     1.205707
+    ],
+    "0.1": [
+     1.0315,
+     0.996272,
+     1.235776
+    ],
+    "0.5": [
+     1.059685,
+     1.033929,
+     1.267593
+    ],
+    "1": [
+     1.075558,
+     1.054846,
+     1.287428
+    ],
+    "50": [
+     1.338629,
+     1.358138,
+     1.682934
+    ],
+    "99": [
+     1.843808,
+     1.948417,
+     2.434456
+    ],
+    "99.9": [
+     1.891161,
+     1.999569,
+     2.530916
+    ]
+   },
+   "box_pixels": {
+    "n": 17082560,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.4739,
+     -0.7036,
+     -0.8246
+    ],
+    "level": -0.6674,
+    "chroma": [
+     0.1935,
+     -0.0362,
+     -0.1572
+    ],
+    "chroma_part": 0.1935,
+    "level_part": 0.6674,
+    "R_minus_G": 0.2297,
+    "B_minus_G": -0.121
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0789,
+     0.1305,
+     0.173
+    ],
+    "level": 0.1275,
+    "chroma": [
+     -0.0486,
+     0.003,
+     0.0455
+    ],
+    "chroma_part": 0.0486,
+    "level_part": 0.1275,
+    "R_minus_G": -0.0516,
+    "B_minus_G": 0.0425
+   },
+   "session": "body-b53e2d1947|Canon EOS 80D|100|8|TAMRON SP 90mm F/2.8 Di VC USD MACRO1:1 F004|2020:09:17|柯达彩色负片 (135)",
+   "exposure_time": 0.4
+  },
+  "A1066": {
+   "id": "A1066",
+   "rel": "01_彩色负片_未反相/A1066.NEF",
+   "source": "group_single",
+   "camera": "NIKON D750",
+   "film_index": "Kodak Portra 160 (120中画幅)",
+   "rebate_boxes": {
+    "bottom": [
+     33,
+     57,
+     95.3,
+     99.0
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    4,
+    96,
+    4,
+    92
+   ],
+   "placement_note": "between the edge-print glyphs",
+   "fails": [],
+   "rebate": {
+    "bottom": {
+     "n": 3258,
+     "median": [
+      0.12315497919917107,
+      0.11622324958443642,
+      0.05980775132775307
+     ],
+     "cv": [
+      0.0305,
+      0.0273,
+      0.0277
+     ],
+     "min": [
+      0.11230619251728058,
+      0.1067751944065094,
+      0.05452929064631462
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.12315497919917107,
+    0.11622324958443642,
+    0.05980775132775307
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.1292744278907776,
+    0.12126344442367554,
+    0.062470436096191406
+   ],
+   "b_int": [
+    0.09893950074911118,
+    0.07672236114740372,
+    0.03361562639474869
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "50% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "G base blocks spread 11.0% (p05-p95)",
+    "B base blocks spread 12.8% (p05-p95)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.782567,
+     0.823213,
+     1.122044
+    ],
+    "0.1": [
+     0.81065,
+     0.855812,
+     1.158462
+    ],
+    "0.5": [
+     0.848785,
+     0.898705,
+     1.205388
+    ],
+    "1": [
+     0.874068,
+     0.928013,
+     1.237262
+    ],
+    "50": [
+     1.160567,
+     1.306733,
+     1.717484
+    ],
+    "99": [
+     1.507056,
+     1.751267,
+     2.329335
+    ],
+    "99.9": [
+     1.562409,
+     1.813013,
+     2.432658
+    ]
+   },
+   "box_pixels": {
+    "n": 19687852,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0211,
+     -0.0184,
+     -0.0189
+    ],
+    "level": -0.0195,
+    "chroma": [
+     -0.0016,
+     0.0011,
+     0.0006
+    ],
+    "chroma_part": 0.0016,
+    "level_part": 0.0195,
+    "R_minus_G": -0.0027,
+    "B_minus_G": -0.0005
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0951,
+     0.1804,
+     0.2502
+    ],
+    "level": 0.1752,
+    "chroma": [
+     -0.0801,
+     0.0052,
+     0.075
+    ],
+    "chroma_part": 0.0801,
+    "level_part": 0.1752,
+    "R_minus_G": -0.0853,
+    "B_minus_G": 0.0698
+   },
+   "session": "body-12ea9c5c9b|NIKON D750|100|5.6|None|2020:11:08|Kodak Portra 160 (120中画幅)",
+   "exposure_time": 0.004
+  },
+  "A1069": {
+   "id": "A1069",
+   "rel": "01_彩色负片_未反相/A1069.NEF",
+   "source": "group_single",
+   "camera": "NIKON D7100",
+   "film_index": "柯达彩色负片 (135)",
+   "rebate_boxes": {
+    "top": [
+     42.2,
+     44.4,
+     23.2,
+     24.6
+    ],
+    "bottom": [
+     35.4,
+     37.6,
+     76.0,
+     77.4
+    ]
+   },
+   "backlight_box": [
+    33.0,
+    34.5,
+    22.9,
+    24.0
+   ],
+   "image_box": [
+    28.5,
+    74,
+    28,
+    73
+   ],
+   "placement_note": "small strip in the middle of the scan; rebate between sprocket holes",
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "top": {
+     "n": 112,
+     "median": [
+      0.2616167664527893,
+      0.15000470727682114,
+      0.038142185658216476
+     ],
+     "cv": [
+      0.4638,
+      0.0867,
+      0.0487
+     ],
+     "min": [
+      0.04683876037597656,
+      0.12119340151548386,
+      0.03408006578683853
+     ],
+     "sat_blocks": 0
+    },
+    "bottom": {
+     "n": 119,
+     "median": [
+      0.2561712861061096,
+      0.146308034658432,
+      0.03792915493249893
+     ],
+     "cv": [
+      0.019,
+      0.0291,
+      0.0801
+     ],
+     "min": [
+      0.24284791946411133,
+      0.13224779069423676,
+      0.02848382294178009
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0108,
+   "b_meas": [
+    0.2565973103046417,
+    0.14706499874591827,
+    0.03807602450251579
+   ],
+   "backlight": {
+    "median": [
+     0.5161386728286743,
+     0.669274628162384,
+     0.2383975312113762
+    ],
+    "sat_blocks": 0
+   },
+   "D_meas_abs": [
+    0.3035,
+    0.6581,
+    0.7967
+   ],
+   "reference_kind": "absolute (unsaturated backlight)",
+   "usable": false,
+   "b_own": [
+    0.29358357191085815,
+    0.1593804806470871,
+    0.03833066299557686
+   ],
+   "b_int": [
+    0.30719462037086487,
+    0.1682383418083191,
+    0.040314335376024246
+   ],
+   "own_warnings": [
+    "34% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "G base blocks spread 10.6% (p05-p95)",
+    "2 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "2 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.491841,
+     0.745033,
+     1.301527
+    ],
+    "0.1": [
+     0.503176,
+     0.760178,
+     1.338773
+    ],
+    "0.5": [
+     0.515205,
+     0.775871,
+     1.372585
+    ],
+    "1": [
+     0.523022,
+     0.785752,
+     1.390287
+    ],
+    "50": [
+     0.994829,
+     1.271909,
+     1.878955
+    ],
+    "99": [
+     1.349606,
+     1.667871,
+     2.296645
+    ],
+    "99.9": [
+     1.434997,
+     1.74903,
+     2.422022
+    ]
+   },
+   "box_pixels": {
+    "n": 4967514,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0585,
+     -0.0349,
+     -0.0029
+    ],
+    "level": -0.0321,
+    "chroma": [
+     -0.0264,
+     -0.0028,
+     0.0292
+    ],
+    "chroma_part": 0.0292,
+    "level_part": 0.0321,
+    "R_minus_G": -0.0236,
+    "B_minus_G": 0.032
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.0782,
+     -0.0584,
+     -0.0248
+    ],
+    "level": -0.0538,
+    "chroma": [
+     -0.0244,
+     -0.0046,
+     0.029
+    ],
+    "chroma_part": 0.029,
+    "level_part": 0.0538,
+    "R_minus_G": -0.0198,
+    "B_minus_G": 0.0336
+   },
+   "session": "body-6f8b8b050d|NIKON D7100|100|7.1|None|2019:10:05|柯达彩色负片 (135)",
+   "exposure_time": 0.004
+  },
+  "A1071": {
+   "id": "A1071",
+   "rel": "01_彩色负片_未反相/A1071.CR3",
+   "source": "group_single",
+   "camera": "Canon EOS R",
+   "film_index": "Kodak Gold 200 (135)",
+   "rebate_boxes": {
+    "top": [
+     29,
+     71,
+     1.4,
+     3.2
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    5,
+    95,
+    6,
+    95
+   ],
+   "placement_note": "sprocket holes saturated; bottom: picture runs into the hole row",
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 3530,
+     "median": [
+      0.2511214017868042,
+      0.27946797013282776,
+      0.13855724781751633
+     ],
+     "cv": [
+      0.0132,
+      0.0135,
+      0.0157
+     ],
+     "min": [
+      0.22686520218849182,
+      0.2545309364795685,
+      0.12450981140136719
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.2511214017868042,
+    0.27946797013282776,
+    0.13855724781751633
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.2524605095386505,
+    0.28099489212036133,
+    0.13929961621761322
+   ],
+   "b_int": [
+    0.2227969765663147,
+    0.2230868935585022,
+    0.09042496234178543
+   ],
+   "own_warnings": [
+    "949 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "949 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.567397,
+     0.561153,
+     0.896957
+    ],
+    "0.1": [
+     0.586919,
+     0.581981,
+     0.93646
+    ],
+    "0.5": [
+     0.607898,
+     0.604046,
+     0.973241
+    ],
+    "1": [
+     0.619358,
+     0.619358,
+     0.996666
+    ],
+    "50": [
+     1.049614,
+     1.151831,
+     1.645625
+    ],
+    "99": [
+     1.207306,
+     1.303656,
+     1.825247
+    ],
+    "99.9": [
+     1.229324,
+     1.325392,
+     1.86465
+    ]
+   },
+   "box_pixels": {
+    "n": 24286201,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0023,
+     -0.0024,
+     -0.0023
+    ],
+    "level": -0.0023,
+    "chroma": [
+     0.0,
+     -0.0001,
+     0.0
+    ],
+    "chroma_part": 0.0001,
+    "level_part": 0.0023,
+    "R_minus_G": 0.0001,
+    "B_minus_G": 0.0001
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.052,
+     0.0979,
+     0.1853
+    ],
+    "level": 0.1117,
+    "chroma": [
+     -0.0597,
+     -0.0138,
+     0.0736
+    ],
+    "chroma_part": 0.0736,
+    "level_part": 0.1117,
+    "R_minus_G": -0.0459,
+    "B_minus_G": 0.0874
+   },
+   "session": "body-1a27d0d5fe|Canon EOS R|100|6.3|EF100mm f/2.8L Macro IS USM|2024:06:19|Kodak Gold 200 (135)",
+   "exposure_time": 2.5
+  },
+  "A1072": {
+   "id": "A1072",
+   "rel": "01_彩色负片_未反相/A1072.ARW",
+   "source": "group_single",
+   "camera": "ILCE-7C",
+   "film_index": "柯达彩色负片 (135)",
+   "rebate_boxes": {
+    "left": [
+     8.3,
+     9.3,
+     35,
+     60
+    ],
+    "right": [
+     88.3,
+     89.2,
+     30,
+     70
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    12,
+    84,
+    14,
+    86
+   ],
+   "placement_note": "thin (pale) negative, picture close to the rebate tone",
+   "fails": [
+    "C3: rebate boxes disagree by 0.055 D (> 0.05)"
+   ],
+   "rebate": {
+    "left": {
+     "n": 1000,
+     "median": [
+      0.24286968261003494,
+      0.25379399955272675,
+      0.12582684308290482
+     ],
+     "cv": [
+      0.0182,
+      0.017,
+      0.0206
+     ],
+     "min": [
+      0.226239413022995,
+      0.2339872121810913,
+      0.11616555601358414
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 1414,
+     "median": [
+      0.2751147300004959,
+      0.28699660301208496,
+      0.14270370453596115
+     ],
+     "cv": [
+      0.0153,
+      0.0124,
+      0.0155
+     ],
+     "min": [
+      0.25945669412612915,
+      0.27381423115730286,
+      0.1350291669368744
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0547,
+   "b_meas": [
+    0.27050359547138214,
+    0.28322382271289825,
+    0.14034287631511688
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.28619059920310974,
+    0.2990768253803253,
+    0.14752422273159027
+   ],
+   "b_int": [
+    0.2864881455898285,
+    0.2999160885810852,
+    0.14802777767181396
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.501995,
+     0.484945,
+     0.76351
+    ],
+    "0.1": [
+     0.51291,
+     0.496805,
+     0.781164
+    ],
+    "0.5": [
+     0.523,
+     0.506545,
+     0.796319
+    ],
+    "1": [
+     0.528157,
+     0.511488,
+     0.803847
+    ],
+    "50": [
+     0.627151,
+     0.611784,
+     0.918242
+    ],
+    "99": [
+     1.296383,
+     1.323713,
+     1.813444
+    ],
+    "99.9": [
+     1.579181,
+     1.69557,
+     2.266245
+    ]
+   },
+   "box_pixels": {
+    "n": 12564289,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0245,
+     -0.0237,
+     -0.0217
+    ],
+    "level": -0.0233,
+    "chroma": [
+     -0.0012,
+     -0.0004,
+     0.0016
+    ],
+    "chroma_part": 0.0016,
+    "level_part": 0.0233,
+    "R_minus_G": -0.0008,
+    "B_minus_G": 0.002
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.0249,
+     -0.0249,
+     -0.0232
+    ],
+    "level": -0.0243,
+    "chroma": [
+     -0.0006,
+     -0.0006,
+     0.0011
+    ],
+    "chroma_part": 0.0011,
+    "level_part": 0.0243,
+    "R_minus_G": 0.0,
+    "B_minus_G": 0.0017
+   },
+   "session": "body-3add4761d2|ILCE-7C|100|0|----|2023:02:28|柯达彩色负片 (135)",
+   "exposure_time": 1
+  },
+  "A1073": {
+   "id": "A1073",
+   "rel": "01_彩色负片_未反相/A1073.NEF",
+   "source": "group_single",
+   "camera": "NIKON Z 7",
+   "film_index": "Kodak Vision3 500T 5219 (ECN-2)",
+   "rebate_boxes": {
+    "left": [
+     10.8,
+     12.2,
+     25,
+     75
+    ],
+    "right": [
+     84.8,
+     86.5,
+     25,
+     75
+    ],
+    "bottom": [
+     25,
+     75,
+     81.0,
+     83.8
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    15,
+    82,
+    14,
+    78
+   ],
+   "placement_note": null,
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)",
+    "C3: rebate boxes disagree by 0.387 D (> 0.05)"
+   ],
+   "rebate": {
+    "left": {
+     "n": 5175,
+     "median": [
+      0.4179533123970032,
+      0.3136037588119507,
+      0.0876695066690445
+     ],
+     "cv": [
+      0.0278,
+      0.0524,
+      0.0789
+     ],
+     "min": [
+      0.36959120631217957,
+      0.2541501820087433,
+      0.06341124325990677
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 6210,
+     "median": [
+      0.43806472420692444,
+      0.33015768229961395,
+      0.09511854872107506
+     ],
+     "cv": [
+      0.0217,
+      0.0433,
+      0.0685
+     ],
+     "min": [
+      0.4068841338157654,
+      0.2820127010345459,
+      0.07468337565660477
+     ],
+     "sat_blocks": 0
+    },
+    "bottom": {
+     "n": 10360,
+     "median": [
+      0.2533506751060486,
+      0.15023969858884811,
+      0.0390087328851223
+     ],
+     "cv": [
+      0.4933,
+      0.5974,
+      0.6342
+     ],
+     "min": [
+      0.06607988476753235,
+      0.030100325122475624,
+      0.006900177802890539
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.3871,
+   "b_meas": [
+    0.41627001762390137,
+    0.30336377024650574,
+    0.08327611535787582
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.4471503794193268,
+    0.34340429306030273,
+    0.09892424196004868
+   ],
+   "b_int": [
+    0.42470434308052063,
+    0.3001754879951477,
+    0.07550164312124252
+   ],
+   "own_warnings": [
+    "884 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "884 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.327429,
+     0.440188,
+     0.948417
+    ],
+    "0.1": [
+     0.345505,
+     0.471727,
+     1.018237
+    ],
+    "0.5": [
+     0.363997,
+     0.505355,
+     1.081194
+    ],
+    "1": [
+     0.375548,
+     0.526617,
+     1.114819
+    ],
+    "50": [
+     0.935431,
+     1.231238,
+     1.84799
+    ],
+    "99": [
+     1.557836,
+     1.959141,
+     2.575924
+    ],
+    "99.9": [
+     1.644162,
+     2.053795,
+     2.737292
+    ]
+   },
+   "box_pixels": {
+    "n": 19609664,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0311,
+     -0.0538,
+     -0.0748
+    ],
+    "level": -0.0532,
+    "chroma": [
+     0.0221,
+     -0.0006,
+     -0.0216
+    ],
+    "chroma_part": 0.0221,
+    "level_part": 0.0532,
+    "R_minus_G": 0.0227,
+    "B_minus_G": -0.021
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.0087,
+     0.0046,
+     0.0426
+    ],
+    "level": 0.0128,
+    "chroma": [
+     -0.0215,
+     -0.0082,
+     0.0298
+    ],
+    "chroma_part": 0.0298,
+    "level_part": 0.0128,
+    "R_minus_G": -0.0133,
+    "B_minus_G": 0.038
+   },
+   "session": "body-bf8cbcf9bc|NIKON Z 7|64|8|NIKKOR Z MC 105mm f/2.8 VR S|2023:03:23|Kodak Vision3 500T 5219 (ECN-2)",
+   "exposure_time": 0.025
+  },
+  "A1074": {
+   "id": "A1074",
+   "rel": "01_彩色负片_未反相/A1074.NEF",
+   "source": "group_single",
+   "camera": "NIKON Z 7",
+   "film_index": "Kodak Vision3 500T 5219 (ECN-2)",
+   "rebate_boxes": {
+    "left": [
+     11.0,
+     13.5,
+     25,
+     75
+    ],
+    "right": [
+     85.6,
+     87.3,
+     25,
+     75
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    16,
+    84,
+    14,
+    82
+   ],
+   "placement_note": null,
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "left": {
+     "n": 8970,
+     "median": [
+      0.43454189598560333,
+      0.334746778011322,
+      0.09880168363451958
+     ],
+     "cv": [
+      0.0265,
+      0.0441,
+      0.0706
+     ],
+     "min": [
+      0.3031788170337677,
+      0.2768935263156891,
+      0.0728253498673439
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 6210,
+     "median": [
+      0.44101421535015106,
+      0.3369145095348358,
+      0.09696953743696213
+     ],
+     "cv": [
+      0.0238,
+      0.0428,
+      0.0686
+     ],
+     "min": [
+      0.39944469928741455,
+      0.28574132919311523,
+      0.0744449570775032
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0081,
+   "b_meas": [
+    0.4371362179517746,
+    0.3356390595436096,
+    0.09800202026963234
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.4474402964115143,
+    0.3484092354774475,
+    0.10251010954380035
+   ],
+   "b_int": [
+    0.41998931765556335,
+    0.29469749331474304,
+    0.07537956535816193
+   ],
+   "own_warnings": [
+    "899 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "899 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.311405,
+     0.419525,
+     0.866401
+    ],
+    "0.1": [
+     0.33483,
+     0.458767,
+     0.946538
+    ],
+    "0.5": [
+     0.358349,
+     0.499832,
+     1.023032
+    ],
+    "1": [
+     0.372116,
+     0.52435,
+     1.063887
+    ],
+    "50": [
+     0.684855,
+     0.946831,
+     1.589358
+    ],
+    "99": [
+     1.207733,
+     1.604819,
+     2.257765
+    ],
+    "99.9": [
+     1.431046,
+     1.851272,
+     2.53544
+    ]
+   },
+   "box_pixels": {
+    "n": 21148155,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0101,
+     -0.0162,
+     -0.0195
+    ],
+    "level": -0.0153,
+    "chroma": [
+     0.0052,
+     -0.0009,
+     -0.0042
+    ],
+    "chroma_part": 0.0052,
+    "level_part": 0.0153,
+    "R_minus_G": 0.0061,
+    "B_minus_G": -0.0033
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0174,
+     0.0565,
+     0.114
+    ],
+    "level": 0.0626,
+    "chroma": [
+     -0.0452,
+     -0.0061,
+     0.0514
+    ],
+    "chroma_part": 0.0514,
+    "level_part": 0.0626,
+    "R_minus_G": -0.0391,
+    "B_minus_G": 0.0575
+   },
+   "session": "body-bf8cbcf9bc|NIKON Z 7|64|8|NIKKOR Z MC 105mm f/2.8 VR S|2023:03:23|Kodak Vision3 500T 5219 (ECN-2)",
+   "exposure_time": 0.025
+  },
+  "A230": {
+   "id": "A230",
+   "rel": "01_彩色负片_未反相/A230.RAF",
+   "source": "group_pack",
+   "camera": "X-T3",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     25,
+     75,
+     2.4,
+     4.2
+    ]
+   },
+   "backlight_box": [
+    53.5,
+    56.5,
+    0.2,
+    1.2
+   ],
+   "image_box": [
+    6,
+    95,
+    7,
+    95
+   ],
+   "placement_note": "bottom: picture runs into the hole row",
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 3510,
+     "median": [
+      0.26780255138874054,
+      0.2221519574522972,
+      0.08804147318005562
+     ],
+     "cv": [
+      0.0288,
+      0.0281,
+      0.0456
+     ],
+     "min": [
+      0.23176147043704987,
+      0.19291691482067108,
+      0.06896957755088806
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.26780255138874054,
+    0.2221519574522972,
+    0.08804147318005562
+   ],
+   "backlight": {
+    "median": [
+     0.6778041124343872,
+     0.9998016357421875,
+     0.632330060005188
+    ],
+    "sat_blocks": 0
+   },
+   "D_meas_abs": [
+    0.4033,
+    0.6533,
+    0.8563
+   ],
+   "reference_kind": "absolute (unsaturated backlight)",
+   "usable": true,
+   "b_own": [
+    0.2863050401210785,
+    0.239581897854805,
+    0.0963302031159401
+   ],
+   "b_int": [
+    0.2836194336414337,
+    0.22993819415569305,
+    0.09013504534959793
+   ],
+   "own_warnings": [
+    "24% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "106 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "106 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.506609,
+     0.590906,
+     0.947946
+    ],
+    "0.1": [
+     0.521192,
+     0.607066,
+     0.979264
+    ],
+    "0.5": [
+     0.535895,
+     0.623404,
+     1.006981
+    ],
+    "1": [
+     0.544446,
+     0.633004,
+     1.021985
+    ],
+    "50": [
+     0.807831,
+     0.943734,
+     1.456448
+    ],
+    "99": [
+     1.096811,
+     1.249565,
+     1.827023
+    ],
+    "99.9": [
+     1.144745,
+     1.298354,
+     1.901601
+    ]
+   },
+   "box_pixels": {
+    "n": 20392302,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.029,
+     -0.0328,
+     -0.0391
+    ],
+    "level": -0.0336,
+    "chroma": [
+     0.0046,
+     0.0008,
+     -0.0055
+    ],
+    "chroma_part": 0.0055,
+    "level_part": 0.0336,
+    "R_minus_G": 0.0038,
+    "B_minus_G": -0.0063
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.0249,
+     -0.015,
+     -0.0102
+    ],
+    "level": -0.0167,
+    "chroma": [
+     -0.0082,
+     0.0017,
+     0.0065
+    ],
+    "chroma_part": 0.0082,
+    "level_part": 0.0167,
+    "R_minus_G": -0.0099,
+    "B_minus_G": 0.0048
+   },
+   "session": "body-fd349b27ff|X-T3|160|undef||2019:08:29|群友提供，已明确授权",
+   "exposure_time": 0.06666666667
+  },
+  "A231": {
+   "id": "A231",
+   "rel": "01_彩色负片_未反相/A231.CR2",
+   "source": "group_pack",
+   "camera": "Canon EOS REBEL T3i",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "top": [
+     28.8,
+     32.2,
+     7.8,
+     10.2
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    14,
+    86,
+    14,
+    84
+   ],
+   "placement_note": "film between saturated sprocket holes; bottom sprocket area carries an exposed triangle pattern",
+   "fails": [],
+   "rebate": {
+    "top": {
+     "n": 242,
+     "median": [
+      0.26347947120666504,
+      0.2570928931236267,
+      0.14816605299711227
+     ],
+     "cv": [
+      0.0211,
+      0.0247,
+      0.0229
+     ],
+     "min": [
+      0.2418573796749115,
+      0.23302605748176575,
+      0.13537226617336273
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.26347947120666504,
+    0.2570928931236267,
+    0.14816605299711227
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.28157472610473633,
+    0.27850767970085144,
+    0.1597467064857483
+   ],
+   "b_int": [
+    0.2739681005477905,
+    0.26082247495651245,
+    0.14891278743743896
+   ],
+   "own_warnings": [
+    "1390 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "1390 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.503108,
+     0.515639,
+     0.734219
+    ],
+    "0.1": [
+     0.526773,
+     0.541462,
+     0.765823
+    ],
+    "0.5": [
+     0.553145,
+     0.569492,
+     0.791045
+    ],
+    "1": [
+     0.569581,
+     0.58582,
+     0.803678
+    ],
+    "50": [
+     1.010158,
+     1.044225,
+     1.216372
+    ],
+    "99": [
+     1.374778,
+     1.494047,
+     1.813875
+    ],
+    "99.9": [
+     1.506843,
+     1.535895,
+     1.872979
+    ]
+   },
+   "box_pixels": {
+    "n": 9077880,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0288,
+     -0.0347,
+     -0.0327
+    ],
+    "level": -0.0321,
+    "chroma": [
+     0.0033,
+     -0.0026,
+     -0.0006
+    ],
+    "chroma_part": 0.0033,
+    "level_part": 0.0321,
+    "R_minus_G": 0.0059,
+    "B_minus_G": 0.002
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.017,
+     -0.0063,
+     -0.0022
+    ],
+    "level": -0.0085,
+    "chroma": [
+     -0.0085,
+     0.0022,
+     0.0063
+    ],
+    "chroma_part": 0.0085,
+    "level_part": 0.0085,
+    "R_minus_G": -0.0107,
+    "B_minus_G": 0.0041
+   },
+   "session": "body-44b907e5d3|Canon EOS REBEL T3i|100|5.6|EF-S60mm f/2.8 Macro USM|2014:10:22|群友提供，已明确授权",
+   "exposure_time": 1
+  },
+  "A234": {
+   "id": "A234",
+   "rel": "01_彩色负片_未反相/A234.cr2",
+   "source": "group_pack",
+   "camera": "Canon EOS 5D",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {},
+   "backlight_box": null,
+   "image_box": [
+    18,
+    86,
+    20,
+    88
+   ],
+   "placement_note": null,
+   "fails": [
+    "C1: rounded picture inside a wide uniform field with straight lines, darker than the thinnest picture areas: mount or backing, not unexposed film"
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "session": "body-ac0c67c9ac|Canon EOS 5D|100|8|EF35-80mm f/4-5.6|2020:02:29|群友提供，已明确授权",
+   "exposure_time": 1.6
+  },
+  "A235": {
+   "id": "A235",
+   "rel": "01_彩色负片_未反相/A235.cr2",
+   "source": "group_pack",
+   "camera": "Canon EOS 5D",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {},
+   "backlight_box": null,
+   "image_box": [
+    20,
+    88,
+    16,
+    84
+   ],
+   "placement_note": null,
+   "fails": [
+    "C1: the surround shows the texture of the light source (film-free), no rebate between it and the picture"
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "session": "body-ac0c67c9ac|Canon EOS 5D|100|11|EF35-80mm f/4-5.6|2020:02:24|群友提供，已明确授权",
+   "exposure_time": 2.5
+  },
+  "A236": {
+   "id": "A236",
+   "rel": "01_彩色负片_未反相/A236.cr2",
+   "source": "group_pack",
+   "camera": "Canon EOS 5D",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {},
+   "backlight_box": null,
+   "image_box": [
+    14,
+    86,
+    22,
+    86
+   ],
+   "placement_note": null,
+   "fails": [
+    "C1: the band between picture and cut sprocket holes is not separable from the picture at the preview size; the surround is film-free light"
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "session": "body-ac0c67c9ac|Canon EOS 5D|100|11|EF35-80mm f/4-5.6|2020:02:24|群友提供，已明确授权",
+   "exposure_time": 2
+  },
+  "A250": {
+   "id": "A250",
+   "rel": "01_彩色负片_未反相/A250.cr2",
+   "source": "group_pack",
+   "camera": "Canon EOS 5D",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {},
+   "backlight_box": null,
+   "image_box": [
+    18,
+    86,
+    20,
+    88
+   ],
+   "placement_note": null,
+   "fails": [
+    "C1: as A234: the surround is darker than the thinnest picture areas, mount or backing"
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "session": "body-ac0c67c9ac|Canon EOS 5D|100|8|EF35-80mm f/4-5.6|2020:02:29|群友提供，已明确授权",
+   "exposure_time": 1.6
+  },
+  "A251": {
+   "id": "A251",
+   "rel": "01_彩色负片_未反相/A251.cr2",
+   "source": "group_pack",
+   "camera": "Canon EOS 5D",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "right": [
+     95.0,
+     96.2,
+     20,
+     75
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    16,
+    92,
+    12,
+    90
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "right": {
+     "n": 1400,
+     "median": [
+      0.2729202210903168,
+      0.37538743019104004,
+      0.18213266879320145
+     ],
+     "cv": [
+      0.0187,
+      0.0248,
+      0.0384
+     ],
+     "min": [
+      0.23466423153877258,
+      0.295908659696579,
+      0.12133260816335678
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.2729202210903168,
+    0.37538743019104004,
+    0.18213266879320145
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.30948346853256226,
+    0.43546196818351746,
+    0.21676966547966003
+   ],
+   "b_int": [
+    0.2825360596179962,
+    0.3984283208847046,
+    0.19855038821697235
+   ],
+   "own_warnings": [
+    "697 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "23% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "R base blocks spread 11.4% (p05-p95)",
+    "G base blocks spread 12.2% (p05-p95)",
+    "B base blocks spread 12.4% (p05-p95)",
+    "697 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.15539,
+     7e-06,
+     7e-06
+    ],
+    "0.1": [
+     0.512565,
+     0.363231,
+     0.659985
+    ],
+    "0.5": [
+     0.525415,
+     0.375564,
+     0.678613
+    ],
+    "1": [
+     0.534736,
+     0.384917,
+     0.689045
+    ],
+    "50": [
+     1.059229,
+     1.067665,
+     1.288972
+    ],
+    "99": [
+     1.27129,
+     1.291947,
+     1.466807
+    ],
+    "99.9": [
+     2.123626,
+     2.061361,
+     2.342257
+    ]
+   },
+   "box_pixels": {
+    "n": 7580437,
+    "sat_in_box": 0.0011600633054082746
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0546,
+     -0.0645,
+     -0.0756
+    ],
+    "level": -0.0649,
+    "chroma": [
+     0.0103,
+     0.0004,
+     -0.0107
+    ],
+    "chroma_part": 0.0107,
+    "level_part": 0.0649,
+    "R_minus_G": 0.0099,
+    "B_minus_G": -0.0111
+   },
+   "int_vs_meas": {
+    "dD": [
+     -0.015,
+     -0.0259,
+     -0.0375
+    ],
+    "level": -0.0261,
+    "chroma": [
+     0.0111,
+     0.0002,
+     -0.0114
+    ],
+    "chroma_part": 0.0114,
+    "level_part": 0.0261,
+    "R_minus_G": 0.0109,
+    "B_minus_G": -0.0116
+   },
+   "session": "body-ac0c67c9ac|Canon EOS 5D|100|11|EF35-80mm f/4-5.6|2020:03:08|群友提供，已明确授权",
+   "exposure_time": 2
+  },
+  "A252": {
+   "id": "A252",
+   "rel": "01_彩色负片_未反相/A252.cr2",
+   "source": "group_pack",
+   "camera": "Canon EOS 5D",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "unexposed_band": [
+     17.5,
+     23.5,
+     30,
+     65
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    30,
+    88,
+    15,
+    85
+   ],
+   "placement_note": "unexposed film band at the left inside the mask window, uneven light along it",
+   "fails": [],
+   "rebate": {
+    "unexposed_band": {
+     "n": 4224,
+     "median": [
+      0.49669669568538666,
+      0.7490252256393433,
+      0.3736156225204468
+     ],
+     "cv": [
+      0.0115,
+      0.0123,
+      0.0135
+     ],
+     "min": [
+      0.4646017551422119,
+      0.7000329494476318,
+      0.34570297598838806
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.49669669568538666,
+    0.7490252256393433,
+    0.3736156225204468
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.5072861909866333,
+    0.766826868057251,
+    0.3849546015262604
+   ],
+   "b_int": [
+    0.23399710655212402,
+    0.329671174287796,
+    0.252231627702713
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "41% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.3927,
+     0.194767,
+     0.475771
+    ],
+    "0.1": [
+     0.42188,
+     0.213046,
+     0.488236
+    ],
+    "0.5": [
+     0.460639,
+     0.228235,
+     0.501175
+    ],
+    "1": [
+     0.484217,
+     0.242002,
+     0.511531
+    ],
+    "50": [
+     0.93669,
+     0.773465,
+     0.747064
+    ],
+    "99": [
+     1.119331,
+     0.960894,
+     0.899704
+    ],
+    "99.9": [
+     1.472299,
+     1.287171,
+     1.350496
+    ]
+   },
+   "box_pixels": {
+    "n": 5197892,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0092,
+     -0.0102,
+     -0.013
+    ],
+    "level": -0.0108,
+    "chroma": [
+     0.0016,
+     0.0006,
+     -0.0022
+    ],
+    "chroma_part": 0.0022,
+    "level_part": 0.0108,
+    "R_minus_G": 0.001,
+    "B_minus_G": -0.0028
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.3269,
+     0.3564,
+     0.1706
+    ],
+    "level": 0.2846,
+    "chroma": [
+     0.0423,
+     0.0718,
+     -0.114
+    ],
+    "chroma_part": 0.114,
+    "level_part": 0.2846,
+    "R_minus_G": -0.0295,
+    "B_minus_G": -0.1858
+   },
+   "session": "body-ac0c67c9ac|Canon EOS 5D|100|8|EF35-80mm f/4-5.6|2020:03:01|群友提供，已明确授权",
+   "exposure_time": 1.6
+  },
+  "A253": {
+   "id": "A253",
+   "rel": "01_彩色负片_未反相/A253.cr2",
+   "source": "group_pack",
+   "camera": "Canon EOS 5D",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "gap": [
+     72.6,
+     74.2,
+     30,
+     80
+    ],
+    "top": [
+     17.2,
+     20.8,
+     8.5,
+     11.5
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    14,
+    69,
+    20,
+    82
+   ],
+   "placement_note": null,
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "gap": {
+     "n": 1647,
+     "median": [
+      0.3881836533546448,
+      0.5265883803367615,
+      0.24312445521354675
+     ],
+     "cv": [
+      0.0127,
+      0.0145,
+      0.0142
+     ],
+     "min": [
+      0.37175488471984863,
+      0.49899983406066895,
+      0.23057155311107635
+     ],
+     "sat_blocks": 0
+    },
+    "top": {
+     "n": 190,
+     "median": [
+      0.3529147803783417,
+      0.4805648624897003,
+      0.23078804463148117
+     ],
+     "cv": [
+      0.2818,
+      0.4325,
+      0.02
+     ],
+     "min": [
+      0.15960179269313812,
+      0.12002990394830704,
+      0.22214075922966003
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0414,
+   "b_meas": [
+    0.3874710202217102,
+    0.5254407525062561,
+    0.24261759221553802
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.3956206738948822,
+    0.539559006690979,
+    0.24824902415275574
+   ],
+   "b_int": [
+    0.1573968082666397,
+    0.1827191561460495,
+    0.1597772240638733
+   ],
+   "own_warnings": [
+    "670 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "70% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "670 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.545891,
+     0.432507,
+     0.677211
+    ],
+    "0.1": [
+     0.583833,
+     0.481537,
+     0.692491
+    ],
+    "0.5": [
+     0.620629,
+     0.527866,
+     0.708416
+    ],
+    "1": [
+     0.640243,
+     0.552814,
+     0.716965
+    ],
+    "50": [
+     0.836788,
+     0.798397,
+     0.820487
+    ],
+    "99": [
+     1.038612,
+     0.999305,
+     0.992087
+    ],
+    "99.9": [
+     1.165292,
+     1.098304,
+     1.084723
+    ]
+   },
+   "box_pixels": {
+    "n": 4365720,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.009,
+     -0.0115,
+     -0.01
+    ],
+    "level": -0.0102,
+    "chroma": [
+     0.0012,
+     -0.0013,
+     0.0002
+    ],
+    "chroma_part": 0.0013,
+    "level_part": 0.0102,
+    "R_minus_G": 0.0025,
+    "B_minus_G": 0.0015
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.3912,
+     0.4587,
+     0.1814
+    ],
+    "level": 0.3438,
+    "chroma": [
+     0.0474,
+     0.1149,
+     -0.1624
+    ],
+    "chroma_part": 0.1624,
+    "level_part": 0.3438,
+    "R_minus_G": -0.0675,
+    "B_minus_G": -0.2773
+   },
+   "session": "body-ac0c67c9ac|Canon EOS 5D|100|8|EF35-80mm f/4-5.6|2020:02:29|群友提供，已明确授权",
+   "exposure_time": 1.3
+  },
+  "A263": {
+   "id": "A263",
+   "rel": "01_彩色负片_未反相/A263.arw",
+   "source": "group_pack",
+   "camera": "ILCE-6000",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "left_gap": [
+     13.7,
+     15.0,
+     25,
+     75
+    ],
+    "right_gap": [
+     85.9,
+     88.0,
+     25,
+     75
+    ]
+   },
+   "backlight_box": [
+    26.8,
+    28.8,
+    8,
+    12
+   ],
+   "image_box": [
+    17,
+    83,
+    19,
+    84
+   ],
+   "placement_note": null,
+   "fails": [],
+   "rebate": {
+    "left_gap": {
+     "n": 2268,
+     "median": [
+      0.5138865411281586,
+      0.8590601980686188,
+      0.389652818441391
+     ],
+     "cv": [
+      0.0401,
+      0.0423,
+      0.049
+     ],
+     "min": [
+      0.09795670956373215,
+      0.12391804903745651,
+      0.04681539535522461
+     ],
+     "sat_blocks": 0
+    },
+    "right_gap": {
+     "n": 4032,
+     "median": [
+      0.5191895961761475,
+      0.8684951663017273,
+      0.39850611984729767
+     ],
+     "cv": [
+      0.0291,
+      0.0283,
+      0.0295
+     ],
+     "min": [
+      0.475956529378891,
+      0.801656186580658,
+      0.36774155497550964
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0098,
+   "b_meas": [
+    0.5164087414741516,
+    0.8633393347263336,
+    0.39490537345409393
+   ],
+   "backlight": {
+    "median": [
+     0.9986504316329956,
+     0.9986672401428223,
+     0.9991370439529419
+    ],
+    "sat_blocks": 44
+   },
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.999298095703125,
+    0.999298095703125,
+    0.999298095703125
+   ],
+   "b_int": [
+    0.1415732055902481,
+    0.17344930768013,
+    0.13559167087078094
+   ],
+   "own_warnings": [
+    "1065 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "1065 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.58508,
+     0.355395,
+     0.644308
+    ],
+    "0.1": [
+     0.655525,
+     0.440499,
+     0.692401
+    ],
+    "0.5": [
+     0.734047,
+     0.522272,
+     0.779007
+    ],
+    "1": [
+     0.789695,
+     0.591655,
+     0.827602
+    ],
+    "50": [
+     1.095157,
+     1.00752,
+     1.434276
+    ],
+    "99": [
+     1.265634,
+     1.171739,
+     1.681977
+    ],
+    "99.9": [
+     1.325672,
+     1.275894,
+     1.819087
+    ]
+   },
+   "box_pixels": {
+    "n": 10394625,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.2867,
+     -0.0635,
+     -0.4032
+    ],
+    "level": -0.2511,
+    "chroma": [
+     -0.0356,
+     0.1876,
+     -0.1521
+    ],
+    "chroma_part": 0.1876,
+    "level_part": 0.2511,
+    "R_minus_G": -0.2232,
+    "B_minus_G": -0.3397
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.562,
+     0.697,
+     0.4643
+    ],
+    "level": 0.5744,
+    "chroma": [
+     -0.0124,
+     0.1226,
+     -0.1101
+    ],
+    "chroma_part": 0.1226,
+    "level_part": 0.5744,
+    "R_minus_G": -0.135,
+    "B_minus_G": -0.2327
+   },
+   "session": "body-5b4e841982|ILCE-6000|100|0|----|2019:09:10|群友提供，已明确授权",
+   "exposure_time": 0.05
+  },
+  "A264": {
+   "id": "A264",
+   "rel": "01_彩色负片_未反相/A264.NEF",
+   "source": "group_pack",
+   "camera": "NIKON D750",
+   "film_index": "群友提供，已明确授权",
+   "rebate_boxes": {
+    "unexposed_band": [
+     13.0,
+     16.5,
+     20,
+     80
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    20,
+    98,
+    3,
+    97
+   ],
+   "placement_note": "unexposed film at the left, light falls off towards the edge",
+   "fails": [],
+   "rebate": {
+    "unexposed_band": {
+     "n": 7878,
+     "median": [
+      0.3999139815568924,
+      0.3820332884788513,
+      0.16967644542455673
+     ],
+     "cv": [
+      0.0097,
+      0.0099,
+      0.0142
+     ],
+     "min": [
+      0.3454062044620514,
+      0.32591918110847473,
+      0.1422456055879593
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.3999139815568924,
+    0.3820332884788513,
+    0.16967644542455673
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.40553903579711914,
+    0.38744181394577026,
+    0.17225909233093262
+   ],
+   "b_int": [
+    0.1907682865858078,
+    0.14708171784877777,
+    0.07171740382909775
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.462596,
+     0.557214,
+     0.804522
+    ],
+    "0.1": [
+     0.503556,
+     0.61135,
+     0.837517
+    ],
+    "0.5": [
+     0.548387,
+     0.667223,
+     0.873523
+    ],
+    "1": [
+     0.574653,
+     0.697283,
+     0.894995
+    ],
+    "50": [
+     0.85113,
+     1.000962,
+     1.325392
+    ],
+    "99": [
+     1.281306,
+     1.490752,
+     2.028305
+    ],
+    "99.9": [
+     1.32204,
+     1.542315,
+     2.095488
+    ]
+   },
+   "box_pixels": {
+    "n": 17828160,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0061,
+     -0.0061,
+     -0.0066
+    ],
+    "level": -0.0063,
+    "chroma": [
+     0.0002,
+     0.0002,
+     -0.0003
+    ],
+    "chroma_part": 0.0003,
+    "level_part": 0.0063,
+    "R_minus_G": 0.0,
+    "B_minus_G": -0.0005
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.3215,
+     0.4145,
+     0.374
+    ],
+    "level": 0.37,
+    "chroma": [
+     -0.0485,
+     0.0445,
+     0.004
+    ],
+    "chroma_part": 0.0485,
+    "level_part": 0.37,
+    "R_minus_G": -0.093,
+    "B_minus_G": -0.0405
+   },
+   "session": "body-12ea9c5c9b|NIKON D750|100|11|None|2020:05:11|群友提供，已明确授权",
+   "exposure_time": 0.05
+  },
+  "A331": {
+   "id": "A331",
+   "rel": "01_彩色负片_未反相/A331.RAF",
+   "source": "pixls",
+   "camera": "X-T3",
+   "film_index": "Color Negative",
+   "rebate_boxes": {
+    "left": [
+     4,
+     10,
+     20,
+     80
+    ],
+    "top": [
+     37.3,
+     40.3,
+     8.5,
+     11.0
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    14,
+    87,
+    15,
+    87
+   ],
+   "placement_note": null,
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)",
+    "C3: rebate boxes disagree by 0.090 D (> 0.05)"
+   ],
+   "rebate": {
+    "left": {
+     "n": 14664,
+     "median": [
+      0.2400633841753006,
+      0.19749588519334793,
+      0.06514408066868782
+     ],
+     "cv": [
+      0.1073,
+      0.1363,
+      0.1974
+     ],
+     "min": [
+      0.1775190383195877,
+      0.13950051367282867,
+      0.04433700814843178
+     ],
+     "sat_blocks": 0
+    },
+    "top": {
+     "n": 312,
+     "median": [
+      0.2514217048883438,
+      0.21854160726070404,
+      0.08022121340036392
+     ],
+     "cv": [
+      0.2045,
+      0.0503,
+      0.0372
+     ],
+     "min": [
+      0.08961509168148041,
+      0.1828761100769043,
+      0.07213177531957626
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0904,
+   "b_meas": [
+    0.2402508705854416,
+    0.19772274792194366,
+    0.06529596820473671
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.3161669373512268,
+    0.27815669775009155,
+    0.10298313945531845
+   ],
+   "b_int": [
+    0.19835202395915985,
+    0.14756999909877777,
+    0.03614862263202667
+   ],
+   "own_warnings": [
+    "3015 blocks contain saturated samples (excluded)"
+   ],
+   "int_warnings": [
+    "52% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "G base blocks spread 10.8% (p05-p95)",
+    "B base blocks spread 13.4% (p05-p95)",
+    "3015 blocks contain saturated samples (excluded)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.589152,
+     0.700185,
+     1.260171
+    ],
+    "0.1": [
+     0.61135,
+     0.725229,
+     1.303805
+    ],
+    "0.5": [
+     0.645977,
+     0.76648,
+     1.357533
+    ],
+    "1": [
+     0.671308,
+     0.795325,
+     1.392082
+    ],
+    "50": [
+     1.31391,
+     1.544167,
+     2.123626
+    ],
+    "99": [
+     1.556879,
+     1.813013,
+     2.524217
+    ],
+    "99.9": [
+     1.580188,
+     1.838293,
+     2.670345
+    ]
+   },
+   "box_pixels": {
+    "n": 13686118,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.1193,
+     -0.1482,
+     -0.1979
+    ],
+    "level": -0.1551,
+    "chroma": [
+     0.0358,
+     0.0069,
+     -0.0428
+    ],
+    "chroma_part": 0.0428,
+    "level_part": 0.1551,
+    "R_minus_G": 0.0289,
+    "B_minus_G": -0.0497
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0832,
+     0.1271,
+     0.2568
+    ],
+    "level": 0.1557,
+    "chroma": [
+     -0.0725,
+     -0.0286,
+     0.1011
+    ],
+    "chroma_part": 0.1011,
+    "level_part": 0.1557,
+    "R_minus_G": -0.0439,
+    "B_minus_G": 0.1297
+   },
+   "session": "body-0476811043|X-T3|200|undef||2024:09:26|Color Negative",
+   "exposure_time": 0.06666666667
+  },
+  "A7R5_RAW_DSC01683": {
+   "id": "A7R5_RAW/DSC01683",
+   "rel": "A7R5_RAW/DSC01683.ARW",
+   "source": "loose:A7R5_RAW",
+   "camera": "ILCE-7RM5",
+   "film_index": null,
+   "rebate_boxes": {
+    "left": [
+     2.0,
+     6.0,
+     10,
+     85
+    ],
+    "right": [
+     97.0,
+     99.0,
+     10,
+     85
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    10,
+    93,
+    6,
+    90
+   ],
+   "placement_note": "boxes of scripts/a7_measure.py (placed 2026-10-18)",
+   "fails": [],
+   "rebate": {
+    "left": {
+     "n": 28704,
+     "median": [
+      0.1037520058453083,
+      0.14807771891355515,
+      0.060336099937558174
+     ],
+     "cv": [
+      0.0259,
+      0.0224,
+      0.0262
+     ],
+     "min": [
+      0.09138007462024689,
+      0.12814120948314667,
+      0.05117422714829445
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 14352,
+     "median": [
+      0.10154397785663605,
+      0.1449180394411087,
+      0.058714352548122406
+     ],
+     "cv": [
+      0.0282,
+      0.0238,
+      0.0292
+     ],
+     "min": [
+      0.08885166049003601,
+      0.12897635996341705,
+      0.0505555123090744
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0118,
+   "b_meas": [
+    0.10307179018855095,
+    0.14707884192466736,
+    0.05985257588326931
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.11366445571184158,
+    0.1592736691236496,
+    0.0643930733203888
+   ],
+   "b_int": [
+    0.05578698590397835,
+    0.08177309483289719,
+    0.03854428976774216
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "52% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "R base blocks spread 10.1% (p05-p95)",
+    "G base blocks spread 12.2% (p05-p95)",
+    "B base blocks spread 11.4% (p05-p95)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     1.145949,
+     0.965093,
+     1.295597
+    ],
+    "0.1": [
+     1.192191,
+     1.015413,
+     1.357835
+    ],
+    "0.5": [
+     1.232142,
+     1.052073,
+     1.39867
+    ],
+    "1": [
+     1.248272,
+     1.069683,
+     1.417839
+    ],
+    "50": [
+     1.423952,
+     1.316511,
+     1.630082
+    ],
+    "99": [
+     1.675024,
+     1.605353,
+     2.019206
+    ],
+    "99.9": [
+     1.70757,
+     1.639514,
+     2.077693
+    ]
+   },
+   "box_pixels": {
+    "n": 42507990,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0425,
+     -0.0346,
+     -0.0318
+    ],
+    "level": -0.0363,
+    "chroma": [
+     -0.0062,
+     0.0017,
+     0.0045
+    ],
+    "chroma_part": 0.0062,
+    "level_part": 0.0363,
+    "R_minus_G": -0.0079,
+    "B_minus_G": 0.0028
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.2666,
+     0.2549,
+     0.1911
+    ],
+    "level": 0.2375,
+    "chroma": [
+     0.0291,
+     0.0174,
+     -0.0464
+    ],
+    "chroma_part": 0.0464,
+    "level_part": 0.2375,
+    "R_minus_G": 0.0117,
+    "B_minus_G": -0.0638
+   },
+   "session": "body-66cd015c4a|ILCE-7RM5|100|9|FE 90mm F2.8 Macro G OSS|2026:06:11|None",
+   "exposure_time": 0.025,
+   "roll_group": "group1",
+   "b_roll_int": [
+    0.08963149413466454,
+    0.13107499480247498,
+    0.05555810034275055
+   ],
+   "roll_int_vs_meas": {
+    "dD": [
+     0.0607,
+     0.05,
+     0.0323
+    ],
+    "level": 0.0477,
+    "chroma": [
+     0.013,
+     0.0023,
+     -0.0154
+    ],
+    "chroma_part": 0.0154,
+    "level_part": 0.0477,
+    "R_minus_G": 0.0107,
+    "B_minus_G": -0.0177
+   }
+  },
+  "A7R5_RAW_DSC01684": {
+   "id": "A7R5_RAW/DSC01684",
+   "rel": "A7R5_RAW/DSC01684.ARW",
+   "source": "loose:A7R5_RAW",
+   "camera": "ILCE-7RM5",
+   "film_index": null,
+   "rebate_boxes": {
+    "left": [
+     1.0,
+     5.0,
+     10,
+     85
+    ],
+    "right": [
+     96.5,
+     99.0,
+     10,
+     85
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    9,
+    92,
+    5,
+    91
+   ],
+   "placement_note": "boxes of scripts/a7_measure.py (placed 2026-10-18)",
+   "fails": [],
+   "rebate": {
+    "left": {
+     "n": 28704,
+     "median": [
+      0.10239775851368904,
+      0.14527233690023422,
+      0.05907115712761879
+     ],
+     "cv": [
+      0.0382,
+      0.0283,
+      0.0323
+     ],
+     "min": [
+      0.07368724793195724,
+      0.12799455225467682,
+      0.05078558251261711
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 17940,
+     "median": [
+      0.10311803221702576,
+      0.14644048362970352,
+      0.05928429961204529
+     ],
+     "cv": [
+      0.0199,
+      0.0203,
+      0.0272
+     ],
+     "min": [
+      0.0880696251988411,
+      0.125962033867836,
+      0.051061663776636124
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0035,
+   "b_meas": [
+    0.10280785709619522,
+    0.14583572000265121,
+    0.05916294455528259
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.11363393813371658,
+    0.1590295284986496,
+    0.0644998848438263
+   ],
+   "b_int": [
+    0.08969253301620483,
+    0.1293049454689026,
+    0.05432211980223656
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "55% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+    "R base blocks spread 10.1% (p05-p95)"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.969024,
+     0.826712,
+     1.205069
+    ],
+    "0.1": [
+     1.008735,
+     0.85586,
+     1.229436
+    ],
+    "0.5": [
+     1.045033,
+     0.882581,
+     1.251689
+    ],
+    "1": [
+     1.057032,
+     0.89354,
+     1.263805
+    ],
+    "50": [
+     1.323015,
+     1.239902,
+     1.601629
+    ],
+    "99": [
+     1.959141,
+     2.061361,
+     2.623349
+    ],
+    "99.9": [
+     1.993652,
+     2.10047,
+     2.748287
+    ]
+   },
+   "box_pixels": {
+    "n": 43524054,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0435,
+     -0.0376,
+     -0.0375
+    ],
+    "level": -0.0395,
+    "chroma": [
+     -0.004,
+     0.0019,
+     0.002
+    ],
+    "chroma_part": 0.004,
+    "level_part": 0.0395,
+    "R_minus_G": -0.0059,
+    "B_minus_G": 0.0001
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0593,
+     0.0522,
+     0.0371
+    ],
+    "level": 0.0495,
+    "chroma": [
+     0.0098,
+     0.0027,
+     -0.0124
+    ],
+    "chroma_part": 0.0124,
+    "level_part": 0.0495,
+    "R_minus_G": 0.0071,
+    "B_minus_G": -0.0151
+   },
+   "session": "body-66cd015c4a|ILCE-7RM5|100|9|FE 90mm F2.8 Macro G OSS|2026:06:11|None",
+   "exposure_time": 0.025,
+   "roll_group": "group1",
+   "b_roll_int": [
+    0.08963149413466454,
+    0.13107499480247498,
+    0.05555810034275055
+   ],
+   "roll_int_vs_meas": {
+    "dD": [
+     0.0596,
+     0.0463,
+     0.0273
+    ],
+    "level": 0.0444,
+    "chroma": [
+     0.0152,
+     0.0019,
+     -0.0171
+    ],
+    "chroma_part": 0.0171,
+    "level_part": 0.0444,
+    "R_minus_G": 0.0133,
+    "B_minus_G": -0.019
+   }
+  },
+  "A7R5_RAW_DSC01688": {
+   "id": "A7R5_RAW/DSC01688",
+   "rel": "A7R5_RAW/DSC01688.ARW",
+   "source": "loose:A7R5_RAW",
+   "camera": "ILCE-7RM5",
+   "film_index": null,
+   "rebate_boxes": {
+    "left": [
+     1.5,
+     4.0,
+     10,
+     90
+    ],
+    "right": [
+     96.0,
+     99.0,
+     10,
+     90
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    8,
+    92,
+    8,
+    92
+   ],
+   "placement_note": "boxes of scripts/a7_measure.py (placed 2026-10-18)",
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "left": {
+     "n": 19140,
+     "median": [
+      0.09967856854200363,
+      0.14245736598968506,
+      0.058001838624477386
+     ],
+     "cv": [
+      0.1257,
+      0.1008,
+      0.0911
+     ],
+     "min": [
+      0.05829044431447983,
+      0.08924028277397156,
+      0.03745303675532341
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 22968,
+     "median": [
+      0.10347650200128555,
+      0.1468496024608612,
+      0.0595375020056963
+     ],
+     "cv": [
+      0.0235,
+      0.0237,
+      0.0297
+     ],
+     "min": [
+      0.09081099182367325,
+      0.12747812271118164,
+      0.0514870211482048
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0162,
+   "b_meas": [
+    0.10175534337759018,
+    0.14499051123857498,
+    0.058901987969875336
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.11567864567041397,
+    0.16305790841579437,
+    0.06620889902114868
+   ],
+   "b_int": [
+    0.09848172962665558,
+    0.13885709643363953,
+    0.05899138003587723
+   ],
+   "own_warnings": [
+    "31% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+   ],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     0.962958,
+     0.808982,
+     1.171739
+    ],
+    "0.1": [
+     0.981036,
+     0.826623,
+     1.192398
+    ],
+    "0.5": [
+     1.003026,
+     0.848645,
+     1.214739
+    ],
+    "1": [
+     1.018514,
+     0.864553,
+     1.229324
+    ],
+    "50": [
+     1.475237,
+     1.316237,
+     1.66541
+    ],
+    "99": [
+     1.909062,
+     1.9096,
+     2.339352
+    ],
+    "99.9": [
+     2.021985,
+     2.042687,
+     2.540011
+    ]
+   },
+   "box_pixels": {
+    "n": 43016715,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0557,
+     -0.051,
+     -0.0508
+    ],
+    "level": -0.0525,
+    "chroma": [
+     -0.0032,
+     0.0015,
+     0.0017
+    ],
+    "chroma_part": 0.0032,
+    "level_part": 0.0525,
+    "R_minus_G": -0.0047,
+    "B_minus_G": 0.0002
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0142,
+     0.0188,
+     -0.0007
+    ],
+    "level": 0.0108,
+    "chroma": [
+     0.0034,
+     0.008,
+     -0.0115
+    ],
+    "chroma_part": 0.0115,
+    "level_part": 0.0108,
+    "R_minus_G": -0.0046,
+    "B_minus_G": -0.0195
+   },
+   "session": "body-66cd015c4a|ILCE-7RM5|100|9|FE 90mm F2.8 Macro G OSS|2026:06:11|None",
+   "exposure_time": 0.025
+  },
+  "A7R5_RAW_DSC01692": {
+   "id": "A7R5_RAW/DSC01692",
+   "rel": "A7R5_RAW/DSC01692.ARW",
+   "source": "loose:A7R5_RAW",
+   "camera": "ILCE-7RM5",
+   "film_index": null,
+   "rebate_boxes": {
+    "left": [
+     2.0,
+     5.0,
+     10,
+     85
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    9,
+    94,
+    5,
+    90
+   ],
+   "placement_note": "boxes of scripts/a7_measure.py (placed 2026-10-18)",
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "left": {
+     "n": 21528,
+     "median": [
+      0.10355900973081589,
+      0.14711616188287735,
+      0.05989454127848148
+     ],
+     "cv": [
+      0.2244,
+      0.2281,
+      0.2178
+     ],
+     "min": [
+      0.014381865039467812,
+      0.015836479142308235,
+      0.00551565969362855
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.10355900973081589,
+    0.14711616188287735,
+    0.05989454127848148
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.24617379903793335,
+    0.6625772714614868,
+    0.4168459475040436
+   ],
+   "b_int": [
+    0.08455023914575577,
+    0.11467155069112778,
+    0.054932478815317154
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "43% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     1.03796,
+     0.891006,
+     1.2155
+    ],
+    "0.1": [
+     1.057561,
+     0.912841,
+     1.238982
+    ],
+    "0.5": [
+     1.081034,
+     0.939621,
+     1.26417
+    ],
+    "1": [
+     1.096811,
+     0.954163,
+     1.280167
+    ],
+    "50": [
+     1.430331,
+     1.345769,
+     1.659319
+    ],
+    "99": [
+     1.976367,
+     1.980783,
+     2.394869
+    ],
+    "99.9": [
+     2.008938,
+     2.0137,
+     2.494254
+    ]
+   },
+   "box_pixels": {
+    "n": 44051051,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.3761,
+     -0.6536,
+     -0.8426
+    ],
+    "level": -0.6241,
+    "chroma": [
+     0.248,
+     -0.0295,
+     -0.2185
+    ],
+    "chroma_part": 0.248,
+    "level_part": 0.6241,
+    "R_minus_G": 0.2775,
+    "B_minus_G": -0.189
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0881,
+     0.1082,
+     0.0376
+    ],
+    "level": 0.078,
+    "chroma": [
+     0.0101,
+     0.0302,
+     -0.0404
+    ],
+    "chroma_part": 0.0404,
+    "level_part": 0.078,
+    "R_minus_G": -0.0201,
+    "B_minus_G": -0.0706
+   },
+   "session": "body-66cd015c4a|ILCE-7RM5|100|9|FE 90mm F2.8 Macro G OSS|2026:06:11|None",
+   "exposure_time": 0.025
+  },
+  "A7R5_RAW_DSC01694": {
+   "id": "A7R5_RAW/DSC01694",
+   "rel": "A7R5_RAW/DSC01694.ARW",
+   "source": "loose:A7R5_RAW",
+   "camera": "ILCE-7RM5",
+   "film_index": null,
+   "rebate_boxes": {
+    "left": [
+     4.0,
+     7.0,
+     10,
+     85
+    ],
+    "right": [
+     98.0,
+     99.5,
+     10,
+     85
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    11,
+    95,
+    5,
+    91
+   ],
+   "placement_note": "boxes of scripts/a7_measure.py (placed 2026-10-18)",
+   "fails": [
+    "C3: rebate box not uniform (CV > 0.05)"
+   ],
+   "rebate": {
+    "left": {
+     "n": 21528,
+     "median": [
+      0.10446202754974365,
+      0.147818922996521,
+      0.060206638649106026
+     ],
+     "cv": [
+      0.0432,
+      0.0326,
+      0.0361
+     ],
+     "min": [
+      0.08204157650470734,
+      0.12215183675289154,
+      0.049249909818172455
+     ],
+     "sat_blocks": 0
+    },
+    "right": {
+     "n": 10764,
+     "median": [
+      0.10226878151297569,
+      0.14524051547050476,
+      0.05923626013100147
+     ],
+     "cv": [
+      0.1166,
+      0.149,
+      0.1211
+     ],
+     "min": [
+      0.0194059070199728,
+      0.020547468215227127,
+      0.009198805317282677
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "between_boxes_max_dD": 0.0092,
+   "b_meas": [
+    0.10344265028834343,
+    0.14681396633386612,
+    0.0598506648093462
+   ],
+   "reference_kind": "relative only",
+   "usable": false,
+   "b_own": [
+    0.11447317898273468,
+    0.16255435347557068,
+    0.06640726327896118
+   ],
+   "b_int": [
+    0.08792248368263245,
+    0.11497672647237778,
+    0.056458380073308945
+   ],
+   "own_warnings": [],
+   "int_warnings": [],
+   "L_percentiles_box": {
+    "0.01": [
+     1.03093,
+     0.892711,
+     1.209555
+    ],
+    "0.1": [
+     1.05327,
+     0.926612,
+     1.232821
+    ],
+    "0.5": [
+     1.083116,
+     0.961075,
+     1.258846
+    ],
+    "1": [
+     1.101641,
+     0.982753,
+     1.275394
+    ],
+    "50": [
+     1.466031,
+     1.410786,
+     1.719563
+    ],
+    "99": [
+     1.858387,
+     1.791167,
+     2.18503
+    ],
+    "99.9": [
+     1.912299,
+     1.908525,
+     2.343717
+    ]
+   },
+   "box_pixels": {
+    "n": 44044939,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.044,
+     -0.0442,
+     -0.0451
+    ],
+    "level": -0.0444,
+    "chroma": [
+     0.0004,
+     0.0002,
+     -0.0007
+    ],
+    "chroma_part": 0.0007,
+    "level_part": 0.0444,
+    "R_minus_G": 0.0002,
+    "B_minus_G": -0.0009
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0706,
+     0.1062,
+     0.0253
+    ],
+    "level": 0.0674,
+    "chroma": [
+     0.0032,
+     0.0388,
+     -0.0421
+    ],
+    "chroma_part": 0.0421,
+    "level_part": 0.0674,
+    "R_minus_G": -0.0356,
+    "B_minus_G": -0.0809
+   },
+   "session": "body-66cd015c4a|ILCE-7RM5|100|9|FE 90mm F2.8 Macro G OSS|2026:06:11|None",
+   "exposure_time": 0.025
+  },
+  "A7R5_RAW_DSC01695": {
+   "id": "A7R5_RAW/DSC01695",
+   "rel": "A7R5_RAW/DSC01695.ARW",
+   "source": "loose:A7R5_RAW",
+   "camera": "ILCE-7RM5",
+   "film_index": null,
+   "rebate_boxes": {
+    "left": [
+     3.5,
+     7.0,
+     10,
+     85
+    ]
+   },
+   "backlight_box": null,
+   "image_box": [
+    11,
+    95,
+    5,
+    91
+   ],
+   "placement_note": "boxes of scripts/a7_measure.py (placed 2026-10-18)",
+   "fails": [],
+   "rebate": {
+    "left": {
+     "n": 25116,
+     "median": [
+      0.10699894651770592,
+      0.1506817638874054,
+      0.06148302182555199
+     ],
+     "cv": [
+      0.0216,
+      0.0214,
+      0.0266
+     ],
+     "min": [
+      0.09422896057367325,
+      0.13018541038036346,
+      0.052103377878665924
+     ],
+     "sat_blocks": 0
+    }
+   },
+   "b_meas": [
+    0.10699894651770592,
+    0.1506817638874054,
+    0.06148302182555199
+   ],
+   "reference_kind": "relative only",
+   "usable": true,
+   "b_own": [
+    0.11316090822219849,
+    0.1590295284986496,
+    0.06500343233346939
+   ],
+   "b_int": [
+    0.08957045525312424,
+    0.13284504413604736,
+    0.05679408088326454
+   ],
+   "own_warnings": [],
+   "int_warnings": [
+    "22% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+   ],
+   "L_percentiles_box": {
+    "0.01": [
+     0.991307,
+     0.821145,
+     1.174405
+    ],
+    "0.1": [
+     1.017202,
+     0.842054,
+     1.198111
+    ],
+    "0.5": [
+     1.043053,
+     0.866449,
+     1.220316
+    ],
+    "1": [
+     1.057561,
+     0.879256,
+     1.232821
+    ],
+    "50": [
+     1.435358,
+     1.331462,
+     1.677539
+    ],
+    "99": [
+     2.054545,
+     2.137045,
+     2.620574
+    ],
+    "99.9": [
+     2.107203,
+     2.210092,
+     2.78709
+    ]
+   },
+   "box_pixels": {
+    "n": 44044939,
+    "sat_in_box": 0.0
+   },
+   "own_vs_meas": {
+    "dD": [
+     -0.0243,
+     -0.0234,
+     -0.0242
+    ],
+    "level": -0.024,
+    "chroma": [
+     -0.0003,
+     0.0006,
+     -0.0002
+    ],
+    "chroma_part": 0.0006,
+    "level_part": 0.024,
+    "R_minus_G": -0.0009,
+    "B_minus_G": -0.0008
+   },
+   "int_vs_meas": {
+    "dD": [
+     0.0772,
+     0.0547,
+     0.0345
+    ],
+    "level": 0.0555,
+    "chroma": [
+     0.0217,
+     -0.0008,
+     -0.021
+    ],
+    "chroma_part": 0.0217,
+    "level_part": 0.0555,
+    "R_minus_G": 0.0225,
+    "B_minus_G": -0.0202
+   },
+   "session": "body-66cd015c4a|ILCE-7RM5|100|9|FE 90mm F2.8 Macro G OSS|2026:06:11|None",
+   "exposure_time": 0.025,
+   "roll_group": "group1",
+   "b_roll_int": [
+    0.08963149413466454,
+    0.13107499480247498,
+    0.05555810034275055
+   ],
+   "roll_int_vs_meas": {
+    "dD": [
+     0.0769,
+     0.0605,
+     0.044
+    ],
+    "level": 0.0605,
+    "chroma": [
+     0.0164,
+     0.0,
+     -0.0165
+    ],
+    "chroma_part": 0.0165,
+    "level_part": 0.0605,
+    "R_minus_G": 0.0164,
+    "B_minus_G": -0.0165
+   }
+  }
+ }
+}

@@ -85,8 +85,15 @@ def boxes(stem, rois):
     return rois[stem]
 
 
-def estimates(path, box):
+def estimates(path, box, cache_file, sha):
     """b_own and b_int (render-path medians over the estimator's blocks), warnings, full-res L percentiles."""
+    box = list(box)
+    if cache_file.exists():
+        d = json.loads(cache_file.read_text())
+        if d.get("sha256") == sha and d.get("image_box") == box:
+            return ((None if d["b_own"] is None else np.array(d["b_own"])), d["own_warnings"],
+                    (None if d["b_int"] is None else np.array(d["b_int"])), d["int_warnings"],
+                    d["L_percentiles_box"], d["box_pixels"])
     f = load_raw(path)
     lin, col, sat = linearize(f), f.colors, saturation_mask(f)
     est = {}
@@ -107,7 +114,13 @@ def estimates(path, box):
     px = rgb[t:t + h, l:l + w][~sat[t:t + h, l:l + w]]
     L = -np.log10(np.maximum(px.astype(np.float64), EPS))
     pct = {str(q): np.percentile(L, q, 0).round(6).tolist() for q in PCTS}
-    return (*out["own"], *out["int"], pct, dict(n=int(len(px)), sat_in_box=float(sat[t:t + h, l:l + w].mean())))
+    pinfo = dict(n=int(len(px)), sat_in_box=float(sat[t:t + h, l:l + w].mean()))
+    cache_file.write_text(json.dumps(dict(
+        sha256=sha, image_box=box,
+        b_own=None if out["own"][0] is None else out["own"][0].tolist(), own_warnings=out["own"][1],
+        b_int=None if out["int"][0] is None else out["int"][0].tolist(), int_warnings=out["int"][1],
+        L_percentiles_box=pct, box_pixels=pinfo)))
+    return (*out["own"], *out["int"], pct, pinfo)
 
 
 def sheet(T8, S8, b, path, title):
@@ -191,7 +204,8 @@ def main(mat, candidates, rois_json, out_json, sheet_dir):
         r["reference_kind"] = ("absolute (unsaturated backlight)" if "D_meas_abs" in r else "relative only")
         r["usable"] = not r["fails"]
         if b.get("image_box") and "b_meas" in r:
-            b_own, w_own, b_int, w_int, pct, pinfo = estimates(mat / c["rel"], b["image_box"])
+            b_own, w_own, b_int, w_int, pct, pinfo = estimates(
+                mat / c["rel"], b["image_box"], cache / f"{stem}_est.json", c["sha256"])
             r.update(b_own=None if b_own is None else b_own.tolist(), b_int=None if b_int is None else b_int.tolist(),
                      own_warnings=w_own, int_warnings=w_int, L_percentiles_box=pct, box_pixels=pinfo)
             if "b_meas" in r:
@@ -214,8 +228,15 @@ def main(mat, candidates, rois_json, out_json, sheet_dir):
     for key, stems in sorted(groups.items()):
         if len(stems) < 3:
             continue
-        rb = estimate_base_roll({s: rows[s]["b_int"] for s in stems}, {s: float(rows[s]["exposure_time"]) for s in stems})
         gid = f"group{len(roll) + 1}"
+        try:
+            rb = estimate_base_roll({s: rows[s]["b_int"] for s in stems},
+                                    {s: float(rows[s]["exposure_time"]) for s in stems})
+        except ValueError as e:
+            roll[gid] = dict(frames=sorted(stems), error=str(e))
+            for s in stems:
+                rows[s]["roll_group"] = gid
+            continue
         roll[gid] = dict(frames=sorted(stems), used=rb.used, warnings=rb.warnings, t_ref=rb.t_ref)
         for s in stems:
             r = rows[s]
