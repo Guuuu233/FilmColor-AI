@@ -202,6 +202,55 @@ def test_sidecar_keeps_the_previewed_base_source(server):
     assert src.get("method") == "manual" and src.get("regions") == [[0, 0, 240, 24]]
 
 
+def test_roll_base_and_decoupled_dq_modes_export_and_replay(server):
+    """T3b / F5 (2026-10-23): /api/roll computes the roll base and per-frame DQ(c_roll) on 48x48 full-frame
+    blocks; switching to roll_dq or roll_b1 records the full base.source in the sidecar, keeps base_inside_image
+    in QC, and exports bytes identical to direct conversion and sidecar replay."""
+    from filmcolor.pipeline import replay_kwargs
+
+    call, root, tmp = server
+    rgb, irl = scan()
+    # Second frame in the same folder with a coloured scene shadow so its own auto base differs in chromaticity
+    rgb2 = (rgb * np.array([0.55, 0.65, 0.75])).astype(rgb.dtype)
+    write_dng(root / "t.dng", rgb2, irl)
+
+    roll, code, _ = call("/api/roll")
+    assert code == 200 and roll["n_files"] == 2 and roll["roll"] is not None
+    assert set(roll["frames"]) == {"s.dng", "t.dng"}
+    ft = roll["frames"]["t.dng"]
+    assert ft["chroma_part"] is not None and ft["d_lo_shared"] is not None
+    assert len(ft["dq_rgb"]) == 3 and len(ft["roll_rgb"]) == 3
+
+    m = call("/api/open", dict(path="t.dng"))[0]
+    assert m["base"]["method"] == "auto" and m["base"]["chroma_part"] == pytest.approx(ft["chroma_part"])
+
+    # Switch to ③ DQ(c_roll)
+    m_dq, code, _ = call("/api/base", dict(mode="roll_dq", token=m["token"]))
+    assert code == 200 and m_dq["base"]["method"] == "roll_dq"
+    assert m_dq["base"]["d_lo_shared"] == pytest.approx(ft["d_lo_shared"])
+    out_dq, code, _ = call("/api/export", dict(params=dict(ev=0.1), token=m_dq["token"]))
+    assert code == 200
+    sc_dq = json.loads(open(out_dq["sidecar"]).read())
+    src_dq = sc_dq["base"]["source"]
+    assert src_dq["method"] == "roll_dq" and src_dq["d_lo_shared"] == pytest.approx(ft["d_lo_shared"])
+    assert len(src_dq["block48_L_p01"]) == 3 and src_dq["base_inside_image"] == m["base"]["inside_image"]
+    assert "base_inside_image" in [c["name"] for c in sc_dq["qc"]["checks"]]
+    ref_dq = write(root / "t.dng", tmp / "direct_dq", **replay_kwargs(sc_dq))
+    assert out_dq["sha256"] == ref_dq["output"]["sha256"]
+
+    # Switch to ④ B1 (roll_b1)
+    m_b1, code, _ = call("/api/base", dict(mode="roll_b1", token=m_dq["token"]))
+    assert code == 200 and m_b1["base"]["method"] == "roll_b1"
+    out_b1, code, _ = call("/api/export", dict(params={}, token=m_b1["token"]))
+    sc_b1 = json.loads(open(out_b1["sidecar"]).read())
+    assert sc_b1["base"]["source"]["method"] == "roll_b1"
+    assert sc_b1["base"]["source"]["base_inside_image"] == m["base"]["inside_image"]
+
+    # Switch back to ① B0 (auto)
+    m_a, code, _ = call("/api/base", dict(mode="auto", token=m_b1["token"]))
+    assert code == 200 and m_a["base"]["method"] == "auto"
+
+
 def test_png_roundtrip():
     img = (np.arange(4 * 5 * 3) % 256).astype(np.uint8).reshape(4, 5, 3)
     assert np.array_equal(decode_png(app.png_bytes(img)), img)

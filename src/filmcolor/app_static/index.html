@@ -7,11 +7,16 @@
   :root { --bg:#1d1d1f; --panel:#26262a; --fg:#e6e6e6; --dim:#9a9aa0; --acc:#e0a040; --warn:#ff8a65; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--fg); font:13px -apple-system, "PingFang SC", sans-serif;
-         display:grid; grid-template-columns: 240px 1fr 300px; height:100vh; }
+         display:grid; grid-template-columns: 270px 1fr 310px; height:100vh; }
   aside, section { overflow:auto; }
   #files { background:var(--panel); padding:8px; }
-  #files .f { padding:3px 6px; cursor:pointer; border-radius:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  #files .f:hover { background:#333; } #files .f.on { background:var(--acc); color:#000; }
+  #files .f { padding:3px 6px; cursor:pointer; border-radius:3px; display:flex; justify-content:space-between; gap:6px; align-items:center; }
+  #files .f .fn { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #files .f .tag { font-size:11px; color:var(--dim); white-space:nowrap; }
+  #files .f .tag.warn { color:var(--warn); font-weight:600; }
+  #files .f:hover { background:#333; }
+  #files .f.on { background:var(--acc); color:#000; }
+  #files .f.on .tag, #files .f.on .tag.warn { color:#000; }
   #main { display:flex; flex-direction:column; }
   #bar { display:flex; gap:6px; padding:6px; background:var(--panel); align-items:center; flex-wrap:wrap; }
   button, select { background:#3a3a40; color:var(--fg); border:1px solid #555; border-radius:4px; padding:4px 9px; cursor:pointer; }
@@ -32,15 +37,27 @@
 </style>
 </head>
 <body>
-<aside id="files"><div style="color:var(--dim);margin-bottom:6px">负片（相机 RAW / 扫描仪 DNG）</div><div id="list"></div></aside>
+<aside id="files">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+    <span style="color:var(--dim)">负片（RAW / DNG）</span>
+    <button id="bScanRoll" style="padding:2px 6px;font-size:11px">分析整卷片基</button>
+  </div>
+  <div id="rollSummary" style="font-size:11px;color:var(--dim);margin-bottom:6px"></div>
+  <div id="list"></div>
+</aside>
 <section id="main">
   <div id="bar">
     <select id="film"><option value="color">彩色负片</option><option value="bw">黑白负片</option></select>
     <button id="bPos" class="on">正片</button><button id="bNeg">负片</button>
-    <span style="width:10px"></span>
+    <span style="width:8px"></span>
     <button id="bAuto">自动参数</button><button id="bReset">重置</button>
-    <span style="width:10px"></span>
-    <button id="bPick">框选片基</button><button id="bAutoBase">自动片基</button>
+    <span style="width:8px"></span>
+    <span style="color:var(--dim);font-size:12px">片基：</span>
+    <button id="bAutoBase" class="on" title="① 本帧自动片基（B0，默认）">① 本帧 B0</button>
+    <button id="bPick" title="② 在预览图上拖拽框选未曝光片边/片基（Manual）">② 框选片边</button>
+    <button id="bRollDQ" title="③ 整卷片基色度 + 48×48 全幅块分位数解耦黑点（DQ(c_roll)）">③ 整卷解耦 DQ</button>
+    <button id="bRollB1" title="④ 整卷完整片基向量（B1）">④ 整卷 B1</button>
+    <span style="width:8px"></span>
     <button id="b11">1:1 局部</button>
     <span style="flex:1"></span>
     <button id="bExport">导出 16 位 TIFF</button>
@@ -54,11 +71,14 @@
 const $ = id => document.getElementById(id);
 const NAMES = {ev:"曝光 ev", temp:"色温（暖 +）", tint:"色调（品 +）", sat:"饱和度", contrast:"反差", midtone:"中灰", shoulder:"高光肩部"};
 const STEP = {ev:0.05, temp:0.02, tint:0.02, sat:0.02, contrast:0.02, midtone:0.005, shoulder:0.01};
+const BASE_LABELS = {auto:"① 本帧自动（B0）", manual:"② 手动框选区域（Manual）", roll_dq:"③ 整卷色度 + 解耦黑点（DQ(c_roll)）", roll_b1:"④ 整卷完整片基（B1）"};
 let meta = null, params = {}, mode = "pos", tool = null, seq = 0, timer = null, drag = null, busy = false;
-const DEP = ["bPos", "bNeg", "bAuto", "bReset", "bPick", "bAutoBase", "b11", "bExport", "film"];
+let rollData = {}, currentRel = null;
+const DEP = ["bPos", "bNeg", "bAuto", "bReset", "bPick", "bAutoBase", "bRollDQ", "bRollB1", "b11", "bExport", "film"];
 // while a photo is loading (or the base is re-estimated) nothing may act on the previous one
 function setBusy(b) { busy = b; for (const id of DEP) $(id).disabled = b; document.querySelectorAll("#sliders input").forEach(x => x.disabled = b); $("list").style.pointerEvents = b ? "none" : ""; }
 function tok() { return meta ? meta.token : ""; }
+function folderOf(rel) { const i = rel ? rel.lastIndexOf("/") : -1; return i >= 0 ? rel.slice(0, i) : "."; }
 
 async function api(path, body) {
   const r = await fetch(path, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {});
@@ -74,23 +94,90 @@ async function api(path, body) {
 function status(t, warn) { $("status").textContent = t; $("status").className = warn ? "warn" : ""; }
 function pq() { const p = {}; for (const k in NAMES) p[k] = params[k]; return "token=" + tok() + "&p=" + encodeURIComponent(JSON.stringify(p)); }
 
+function syncBaseButtons() {
+  const m = meta && meta.base ? meta.base.method : null;
+  $("bAutoBase").classList.toggle("on", m === "auto");
+  $("bPick").classList.toggle("on", tool === "pick" || m === "manual");
+  $("bRollDQ").classList.toggle("on", m === "roll_dq");
+  $("bRollB1").classList.toggle("on", m === "roll_b1");
+}
+
+function updateFileBadges() {
+  document.querySelectorAll("#list .f").forEach(el => {
+    const rel = el.dataset.rel;
+    const fd = rollData[folderOf(rel)];
+    const fr = fd && fd.frames ? fd.frames[rel] : null;
+    const tag = el.querySelector(".tag");
+    if (!fr) { tag.textContent = ""; tag.className = "tag"; return; }
+    if (fr.own_error) {
+      tag.textContent = "B0失败!";
+      tag.className = "tag warn";
+    } else if (fr.chroma_part != null) {
+      const dc = fr.chroma_part, dl = fr.level_diff;
+      const hi = dc >= 0.1 || (fr.inside_image != null && fr.inside_image > 0.5);
+      tag.textContent = `ΔC ${dc.toFixed(2)}${hi ? "!" : ""}`;
+      tag.title = `相对整卷片基：色度差 ΔC = ${dc.toFixed(3)} D，水平差 Δℓ = ${dl >= 0 ? "+" : ""}${dl.toFixed(3)} D`;
+      tag.className = hi ? "tag warn" : "tag";
+    }
+  });
+}
+
+async function scanRoll(folder) {
+  folder = folder || (currentRel ? folderOf(currentRel) : ".");
+  $("bScanRoll").disabled = true;
+  $("rollSummary").textContent = `正在计算整卷片基（${folder}）……`;
+  try {
+    const j = await api("/api/roll?folder=" + encodeURIComponent(folder));
+    rollData[folder] = j;
+    if (j.roll) {
+      const nWarn = Object.values(j.frames).filter(x => x.flag).length;
+      $("rollSummary").innerHTML = `整卷片基已就绪（${j.n_files} 帧，采用 ${j.roll.used.join(", ")}）` +
+        (nWarn ? `<br><span class="warn">提示：${nWarn} 帧 ΔC ≥ 0.10 D 或片基在画面内</span>` : "");
+    } else {
+      $("rollSummary").innerHTML = `<span class="warn">整卷片基不可用：${j.error || "未知"}</span>`;
+    }
+    updateFileBadges();
+    if (meta) showInfo();
+  } catch (e) {
+    $("rollSummary").innerHTML = `<span class="warn">整卷计算失败：${e.message}</span>`;
+  } finally {
+    $("bScanRoll").disabled = false;
+  }
+}
+
 async function loadFiles() {
   const j = await api("/api/files");
   $("list").innerHTML = "";
-  if (!j.files.length) $("list").textContent = "（没有可打开的文件）";
+  if (!j.files.length) { $("list").textContent = "（没有可打开的文件）"; return; }
   for (const f of j.files) {
-    const d = document.createElement("div"); d.className = "f"; d.textContent = f; d.title = f;
+    const d = document.createElement("div"); d.className = "f"; d.dataset.rel = f; d.title = f;
+    d.innerHTML = `<span class="fn">${f}</span><span class="tag"></span>`;
     d.onclick = () => openFile(f, d); $("list").appendChild(d);
   }
+  // Auto-compute roll base in the background when the root folder is a single roll (<= 60 files)
+  const folders = new Set(j.files.map(folderOf));
+  if (folders.size === 1 && j.files.length >= 2 && j.files.length <= 60) {
+    scanRoll([...folders][0]);
+  }
 }
-async function openFile(f, el) {
-  document.querySelectorAll(".f").forEach(x => x.classList.remove("on")); if (el) el.classList.add("on");
-  status("正在解码、估计片基、反转（全分辨率，一次）……");
+
+async function openFile(f, el, baseMode) {
+  document.querySelectorAll(".f").forEach(x => x.classList.remove("on"));
+  if (!el) el = [...document.querySelectorAll(".f")].find(x => x.dataset.rel === f);
+  if (el) el.classList.add("on");
+  currentRel = f;
+  baseMode = baseMode || "auto";
+  status(`正在解码、估计片基（${BASE_LABELS[baseMode] || baseMode}）、反转……`);
   const same = meta && meta.path === f;
   setBusy(true); ++seq;  // responses of earlier requests are dropped
-  try { meta = await api("/api/open", {path:f, film:$("film").value}); }
-  catch (e) { meta = null; $("img").removeAttribute("src"); setBusy(false); status("打不开：" + e.message, true); return; }
-  setBusy(false);
+  try { meta = await api("/api/open", {path:f, film:$("film").value, base_mode:baseMode}); }
+  catch (e) {
+    meta = null; $("img").removeAttribute("src"); setBusy(false); syncBaseButtons();
+    $("info").innerHTML = `<b>${f}</b><br><span class="warn">本帧自动片基失败：${e.message}</span><br>可点击上方 <b>③ 整卷解耦 DQ</b> 或 <b>④ 整卷 B1</b> 使用整卷片基打开。`;
+    status("打不开（可切换至 ③ 整卷解耦 DQ 或 ④ 整卷 B1 重试）：" + e.message, true);
+    return;
+  }
+  setBusy(false); syncBaseButtons();
   // a different photo starts from the defaults; re-opening the same one (film switch) keeps the sliders
   if (!same || !Object.keys(params).length) params = Object.assign({}, meta.defaults);
   buildSliders(); showInfo(); refresh(); status("已打开 " + meta.path);
@@ -128,9 +215,22 @@ async function refresh() {
 }
 function showInfo() {
   const b = meta.base, w = b.warnings || [];
+  const fd = rollData[folderOf(meta.path)];
+  const fr = fd && fd.frames ? fd.frames[meta.path] : null;
+  const dc = b.chroma_part != null ? b.chroma_part : (fr ? fr.chroma_part : null);
+  const dl = b.level_diff != null ? b.level_diff : (fr ? fr.level_diff : null);
+  let rollLine = "";
+  if (dc != null && dl != null) {
+    const warnC = dc >= 0.1;
+    rollLine = `<br>相对整卷片基：色度差 ΔC = <span class="${warnC ? "warn" : ""}">${dc.toFixed(3)} D</span>，` +
+      `水平差 Δℓ = ${dl >= 0 ? "+" : ""}${dl.toFixed(3)} D` +
+      (warnC && b.method === "auto" ? `<br><span class="warn">提示：ΔC ≥ 0.10 D（本帧片基可能误取有色景物），建议点「③ 整卷解耦 DQ」对比</span>` : "");
+  }
+  const dloLine = b.d_lo_shared != null ? `<br>解耦共享黑点 d_lo：${b.d_lo_shared.toFixed(3)} D（48×48 全幅块 0.1%）` : "";
   $("info").innerHTML = `<b>${meta.path}</b><br>胶片：${meta.film === "bw" ? "黑白" : "彩色"}；预览 ${meta.preview_shape[1]}×${meta.preview_shape[0]}（1/${meta.factor}）<br>` +
-    `片基：${b.method === "manual" ? "手动区域" : b.method === "auto" ? "自动估计" : b.method}` +
-    (b.inside_image != null ? `，候选块在画面内 ${(b.inside_image*100).toFixed(0)}%` + (b.inside_image > 0.5 ? ` <span class="warn">（可能没有片边，片基可能落在景物上）</span>` : "") : "") +
+    `片基模式：<b>${BASE_LABELS[b.method] || b.method}</b>` +
+    (b.inside_image != null ? `<br>B0 候选块在画面内 ${(b.inside_image*100).toFixed(0)}%` + (b.inside_image > 0.5 ? ` <span class="warn">（可能没有片边，片基可能落在景物上）</span>` : "") : "") +
+    rollLine + dloLine +
     (w.length ? `<br><span class="warn">片基警告：${w.join("；")}</span>` : "") +
     `<br>自动参数：${meta.auto ? meta.auto.status + (meta.auto.flags && meta.auto.flags.length ? "（" + meta.auto.flags.join("，") + "）" : "") : "无"}` +
     `<div id="stats" style="margin-top:6px"></div>`;
@@ -162,8 +262,10 @@ $("ov").onmouseup = async ev => {
   if (w < 2 || h < 2) { drawOverlay(); return; }
   status("用框选区域重新估计片基并反转……");
   setBusy(true); ++seq;
-  try { const m = await api("/api/base", {region:[t, l, h, w], token:tok()}); meta = m; setBusy(false); showInfo(); refresh(); status("片基：手动区域"); }
-  catch (e) { setBusy(false); status("片基设置失败：" + e.message, true); drawOverlay(); }
+  try {
+    const m = await api("/api/base", {region:[t, l, h, w], token:tok()});
+    meta = m; tool = null; setBusy(false); syncBaseButtons(); showInfo(); refresh(); status("片基：② 手动框选区域");
+  } catch (e) { setBusy(false); syncBaseButtons(); status("片基设置失败：" + e.message, true); drawOverlay(); }
 };
 async function showCrop(px, py) {
   const size = 600, f = meta.factor;
@@ -176,21 +278,32 @@ async function showCrop(px, py) {
     $("crop").style.display = "flex"; status("1:1 局部");
   } catch (e) { status("1:1 失败：" + e.message, true); }
 }
-function setTool(t) { tool = tool === t ? null : t; $("bPick").classList.toggle("on", tool === "pick"); $("b11").classList.toggle("on", tool === "11"); }
+function setTool(t) { tool = tool === t ? null : t; syncBaseButtons(); $("b11").classList.toggle("on", tool === "11"); }
 $("bPick").onclick = () => setTool("pick");
 $("b11").onclick = () => setTool("11");
+$("bScanRoll").onclick = () => scanRoll();
 $("cropClose").onclick = () => { $("crop").style.display = "none"; };
 $("bPos").onclick = () => { mode = "pos"; $("bPos").classList.add("on"); $("bNeg").classList.remove("on"); refresh(); };
 $("bNeg").onclick = () => { mode = "neg"; $("bNeg").classList.add("on"); $("bPos").classList.remove("on"); refresh(); };
 $("bAuto").onclick = () => { if (meta && meta.auto) setParams(meta.auto.params); };
 $("bReset").onclick = () => { if (meta) setParams(meta.defaults); };
-$("bAutoBase").onclick = async () => {
-  if (!meta) return; status("自动估计片基并反转……");
+
+async function switchBaseMode(bm) {
+  tool = null;
+  if (!meta && currentRel) { return openFile(currentRel, null, bm); }
+  if (!meta) return;
+  status(`切换片基模式：${BASE_LABELS[bm]}……`);
   setBusy(true); ++seq;
-  try { const m = await api("/api/base", {auto:true, token:tok()}); meta = m; setBusy(false); showInfo(); refresh(); status("片基：自动估计"); }
-  catch (e) { setBusy(false); status(e.message, true); }
-};
-$("film").onchange = () => { const on = document.querySelector(".f.on"); if (on) openFile(on.title, on); };
+  try {
+    const m = await api("/api/base", {mode:bm, token:tok()});
+    meta = m; setBusy(false); syncBaseButtons(); updateFileBadges(); showInfo(); refresh();
+    status(`片基模式：${BASE_LABELS[bm]}`);
+  } catch (e) { setBusy(false); syncBaseButtons(); status("片基切换失败：" + e.message, true); }
+}
+$("bAutoBase").onclick = () => switchBaseMode("auto");
+$("bRollDQ").onclick = () => switchBaseMode("roll_dq");
+$("bRollB1").onclick = () => switchBaseMode("roll_b1");
+$("film").onchange = () => { const on = document.querySelector(".f.on"); if (on) openFile(on.dataset.rel, on); };
 $("bExport").onclick = async () => {
   if (!meta) return; status("导出全分辨率 16 位 TIFF……");
   try {

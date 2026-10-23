@@ -11,19 +11,29 @@ field ``token``) and are refused with 409 when another window has opened somethi
 OUT/<sub-folder of the source>/<stem>.tif + .json and never replace an existing pair (<stem>-2, -3, ...); the export
 is refused (409) when the source file changed since it was opened.
 
-API (JSON unless noted): GET /api/files; POST /api/open {path, film} (-> meta with token); GET
-/api/render?token=&p=PARAMS (PNG, headers X-Below-Black, X-Clip-High: shares of the image region, at least one
-channel, clip measured before the white clip); GET /api/negative?token= (JPEG or PNG); GET
+Base modes (POST /api/base):
+  auto      per-frame automatic base (B0, the default)
+  manual    user-drawn rectangle on the preview (region: [top, left, height, width])
+  roll_dq   roll base chromaticity c_roll + decoupled 0.1 % quantile black point on full-frame 48x48 blocks (DQ(c_roll))
+  roll_b1   full roll base vector (B1)
+
+API (JSON unless noted): GET /api/files; GET /api/roll[?folder=]; POST /api/open {path, film[, base_mode]} (-> meta
+with token); GET /api/render?token=&p=PARAMS (PNG, headers X-Below-Black, X-Clip-High: shares of the image region, at
+least one channel, clip measured before the white clip); GET /api/negative?token= (JPEG or PNG); GET
 /api/crop?token=&t=&l=&size=&p= (PNG, sensor pixels); POST /api/base {token, region: [top, left, height, width] in
-preview pixels} or {token, auto: true}; POST /api/export {token, params, encoding}. PARAMS is a JSON object of
-render parameters (render.RenderParams).
+preview pixels} or {token, auto: true} or {token, mode: "auto"|"roll_dq"|"roll_b1"}; POST /api/export {token, params,
+encoding}. PARAMS is a JSON object of render parameters (render.RenderParams).
 """
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
+from fractions import Fraction
 import json
+import os
 import secrets
 import struct
+import subprocess
 import threading
 import zlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -33,17 +43,23 @@ from urllib.parse import parse_qs, urlparse
 import numpy as np
 import rawpy
 
+from .base import (base_deviation, block48_L_p01, decoupled_quantile_base,
+                   estimate_base_blocks, estimate_base_roll)
 from .compare import block_mean
 from .frozen import FrozenDataError, check_source
+from .invert import central_region
 from .noref import NOREF_V2
 from .pipeline import FILM_MODES, free_stem
 from .preview import Preview, SourceChangedError, load_preview
+from .raw import linearize, saturation_mask, superpixel
+from .rawpy_io import load_raw
 from .render import BOUNDS, RenderParams
-from .scanner import is_scanner_dng, load_scanner
+from .scanner import block_means, is_scanner_dng, load_scanner
 
 STATIC = Path(__file__).parent / "app_static"
 EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".pef", ".srw", ".dng"}
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
+BASE_MODES = ("auto", "roll_dq", "roll_b1")
 
 
 def png_bytes(img: np.ndarray) -> bytes:
@@ -77,6 +93,46 @@ def negative_view(path: Path, max_side: int = 1600) -> tuple[bytes, str]:
     return png_bytes(to8((small / max(np.percentile(small, 99.9), 1e-6)) ** (1 / 2.2))), "image/png"
 
 
+def _exposures(paths: list[Path]) -> dict[Path, float]:
+    """EXIF ExposureTime per file (defaults to 1.0 when absent, e.g. scanner DNGs)."""
+    out: dict[Path, float] = {}
+    need_tool: list[Path] = []
+    try:
+        import exifread
+    except ImportError:
+        exifread = None
+    for p in paths:
+        val = None
+        if exifread is not None:
+            try:
+                with open(p, "rb") as fh:
+                    tags = exifread.process_file(fh, details=False, stop_tag="ExposureTime")
+                r = tags.get("EXIF ExposureTime")
+                if r and r.values:
+                    v = float(Fraction(r.values[0].num, r.values[0].den))
+                    if np.isfinite(v) and v > 0:
+                        val = v
+            except Exception:  # noqa: BLE001
+                val = None
+        if val is not None:
+            out[p] = val
+        else:
+            need_tool.append(p)
+    if need_tool:
+        try:
+            proc = subprocess.run(
+                ["exiftool", "-j", "-n", "-q", "-q", "-ExposureTime", *(str(p) for p in need_tool)],
+                capture_output=True, text=True, check=False,
+            )
+            by_src = {Path(d["SourceFile"]): d.get("ExposureTime") for d in json.loads(proc.stdout or "[]")}
+        except Exception:  # noqa: BLE001
+            by_src = {}
+        for p in need_tool:
+            v = by_src.get(p)
+            out[p] = float(v) if isinstance(v, (int, float)) and np.isfinite(v) and v > 0 else 1.0
+    return out
+
+
 class StaleError(RuntimeError):
     """The request names a photo / base that is no longer the open one (another window changed it)."""
 
@@ -88,41 +144,192 @@ class State:
         self.token: str | None = None
         self.negative: tuple[bytes, str] | None = None
         self.lock = threading.Lock()
+        self.roll_lock = threading.Lock()
+        self.frame_scans: dict[str, dict] = {}
+        self.roll_cache: dict[str, dict] = {}
 
     def resolve(self, rel: str) -> Path:
-        p = (self.root / rel).resolve()
-        if self.root not in p.parents or not p.is_file():
+        cand = Path(os.path.abspath(self.root / rel))
+        if self.root not in cand.parents or not cand.is_file():
             raise PermissionError(f"not a file under the root folder: {rel}")
-        if p.suffix.lower() not in EXTENSIONS:
-            raise ValueError(f"unsupported file type {p.suffix} (camera RAW or scanner DNG only)")
+        if cand.suffix.lower() not in EXTENSIONS:
+            raise ValueError(f"unsupported file type {cand.suffix} (camera RAW or scanner DNG only)")
         if not self.allow_frozen:
-            check_source(p)  # sealed test sets: refused unless --allow-frozen
-        return p
+            check_source(cand)  # sealed test sets: refused unless --allow-frozen
+        return cand
 
     def files(self) -> list[str]:
         return sorted(str(p.relative_to(self.root)) for p in self.root.rglob("*")
-                      if p.is_file() and p.suffix.lower() in EXTENSIONS and not p.name.startswith("."))
+                      if (p.is_file() or p.is_symlink()) and p.suffix.lower() in EXTENSIONS
+                      and not p.name.startswith(".") and p.exists())
+
+    def _scan_one(self, rel: str) -> dict:
+        p = self.resolve(rel)
+        mtime = p.stat().st_mtime_ns
+        cached = self.frame_scans.get(rel)
+        if cached is not None and cached.get("mtime_ns") == mtime:
+            return cached
+        if is_scanner_dng(p):
+            fr = load_scanner(p, allow_frozen=self.allow_frozen)
+            sp, sp_sat = block_means(fr.rgb, fr.sat, 24)
+            crop, shape = None, fr.sat.shape
+            del fr
+        else:
+            f = load_raw(p)
+            sp, sp_sat = superpixel(linearize(f), f.colors, saturation_mask(f), f.pattern.shape[0], 24)
+            crop, shape = f.crop, f.cfa.shape
+            del f
+        p01 = block48_L_p01(sp, sp_sat, block=24, crop=crop)
+        try:
+            est = estimate_base_blocks(sp, sp_sat, block=24, crop=crop)
+            t, l, h, w = central_region(shape)
+            centres = [(r + rh / 2, c + rw / 2) for r, c, rh, rw in est.regions]
+            inside = float(np.mean([t <= y < t + h and l <= x < l + w for y, x in centres]))
+            res = dict(rel=rel, mtime_ns=mtime, own_rgb=list(est.rgb), estimate=est.to_dict(),
+                       warnings=list(est.warnings), inside_image=inside, block48_L_p01=p01, error=None)
+        except ValueError as e:
+            res = dict(rel=rel, mtime_ns=mtime, own_rgb=None, estimate=None,
+                       warnings=[str(e)], inside_image=None, block48_L_p01=p01, error=str(e))
+        self.frame_scans[rel] = res
+        return res
+
+    def roll_info(self, folder: str = ".") -> dict:
+        """Compute (and cache) the roll base B1 and per-frame DQ(c_roll) effective bases for ``folder``."""
+        folder = "." if not folder or folder == "." else str(Path(folder))
+        with self.roll_lock:
+            all_rels = [r for r in self.files() if str(Path(r).parent) == folder]
+            if not all_rels:
+                raise ValueError(f"no supported files in folder {folder!r}")
+            cached = self.roll_cache.get(folder)
+            if cached is not None and cached.get("file_list") == all_rels:
+                return cached
+            paths = [self.resolve(r) for r in all_rels]
+            exps_by_path = _exposures(paths)
+            with ThreadPoolExecutor(min(4, len(all_rels))) as ex:
+                scans = dict(zip(all_rels, ex.map(self._scan_one, all_rels)))
+            cand = {r: scans[r]["own_rgb"] for r in all_rels if scans[r]["own_rgb"] is not None}
+            exp_map = {r: exps_by_path[p] for r, p in zip(all_rels, paths) if r in cand}
+            roll_err = None
+            rb = None
+            if cand:
+                try:
+                    rb = estimate_base_roll(cand, exp_map)
+                except ValueError as e:
+                    roll_err = str(e)
+            else:
+                roll_err = "no frame in the folder produced a valid automatic base"
+            frames_out = {}
+            for r, p in zip(all_rels, paths):
+                sc = scans[r]
+                t = exps_by_path[p]
+                entry = dict(
+                    exposure=t,
+                    own_rgb=sc["own_rgb"],
+                    inside_image=sc["inside_image"],
+                    own_warnings=sc["warnings"],
+                    own_error=sc["error"],
+                    block48_L_p01=sc["block48_L_p01"],
+                )
+                if rb is not None:
+                    b_roll = list(rb.for_exposure(t))
+                    b_dq, d_lo_dq = decoupled_quantile_base(b_roll, sc["block48_L_p01"])
+                    dev = base_deviation(sc["own_rgb"], b_roll) if sc["own_rgb"] is not None else None
+                    warn = bool(
+                        sc["error"]
+                        or (dev is not None and dev["chroma_part"] >= 0.1)
+                        or (sc["inside_image"] is not None and sc["inside_image"] > 0.5)
+                    )
+                    entry.update(
+                        roll_rgb=b_roll,
+                        dq_rgb=list(b_dq),
+                        d_lo_shared=d_lo_dq,
+                        deviation=dev,
+                        chroma_part=dev["chroma_part"] if dev else None,
+                        level_diff=dev["level_diff"] if dev else None,
+                        flag=warn,
+                    )
+                else:
+                    entry.update(roll_rgb=None, dq_rgb=None, d_lo_shared=None, deviation=None,
+                                 chroma_part=None, level_diff=None, flag=bool(sc["error"]))
+                frames_out[r] = entry
+            info = dict(
+                folder=folder,
+                file_list=all_rels,
+                n_files=len(all_rels),
+                roll=rb.to_dict() if rb is not None else None,
+                error=roll_err,
+                frames=frames_out,
+            )
+            self.roll_cache[folder] = info
+            return info
+
+    def _roll_base_kwargs(self, rel: str, mode: str) -> dict:
+        folder = str(Path(rel).parent)
+        rinfo = self.roll_info(folder)
+        if rinfo.get("roll") is None:
+            raise ValueError(f"roll base unavailable for {folder}: {rinfo.get('error')}")
+        fe = rinfo["frames"][rel]
+        rb = rinfo["roll"]
+        dev = fe["deviation"] or {}
+        common = dict(
+            method=mode,
+            roll_rgb=fe["roll_rgb"],
+            own_rgb=fe["own_rgb"],
+            chroma_part=fe["chroma_part"],
+            level_diff=fe["level_diff"],
+            chroma_diff=dev.get("chroma_diff"),
+            roll_used=rb["used"],
+            roll_members=rb["members"],
+            roll_warnings=rb["warnings"],
+            base_inside_image=fe["inside_image"],
+        )
+        if mode == "roll_dq":
+            src = dict(common, effective_rgb=fe["dq_rgb"], d_lo_shared=fe["d_lo_shared"],
+                       block48_L_p01=fe["block48_L_p01"])
+            return dict(base_regions=None, base_rgb=fe["dq_rgb"], base_source=src)
+        if mode == "roll_b1":
+            return dict(base_regions=None, base_rgb=fe["roll_rgb"], base_source=common)
+        raise ValueError(f"unknown roll base mode {mode!r}")
 
     def meta(self) -> dict:
         pv = self.preview
+        rel = str(pv.path.relative_to(self.root))
+        src = pv._base_source or {}
         est = pv.base_info.get("estimate", {})
-        return dict(token=self.token, path=str(pv.path.relative_to(self.root)), film=pv.film, factor=pv.factor,
-                    preview_shape=list(pv.positive.shape[:2]), full_shape=list(pv.full_shape),
-                    base=dict(method=pv.base_info.get("method"), rgb=pv.base_info.get("rgb_render"),
-                              warnings=est.get("warnings", []), inside_image=pv.base_inside_image,
-                              regions_preview=[pv.to_preview(r) for r in (pv.load_kwargs.get("base_regions") or [])]),
-                    auto=dict(params=pv.auto["params"], status=pv.auto.get("status"), flags=pv.auto.get("flags"))
-                    if pv.auto else None,
-                    image_region=list(pv.image_region), region_source=pv.region_source,
-                    sliders={k: list(BOUNDS[k]) for k in SLIDERS}, defaults=RenderParams().to_dict())
+        method = src.get("method") or pv.base_info.get("method")
+        folder = str(Path(rel).parent)
+        f_roll = self.roll_cache.get(folder, {}).get("frames", {}).get(rel) or {}
+        return dict(
+            token=self.token, path=rel, film=pv.film, factor=pv.factor,
+            preview_shape=list(pv.positive.shape[:2]), full_shape=list(pv.full_shape),
+            base=dict(
+                method=method,
+                rgb=pv.base_info.get("rgb_render"),
+                warnings=est.get("warnings", []) or src.get("roll_warnings", []),
+                inside_image=pv.base_inside_image,
+                regions_preview=[pv.to_preview(r) for r in (pv.load_kwargs.get("base_regions") or [])],
+                chroma_part=src.get("chroma_part", f_roll.get("chroma_part")),
+                level_diff=src.get("level_diff", f_roll.get("level_diff")),
+                d_lo_shared=src.get("d_lo_shared"),
+                roll_rgb=src.get("roll_rgb", f_roll.get("roll_rgb")),
+                own_rgb=src.get("own_rgb", f_roll.get("own_rgb")),
+            ),
+            auto=dict(params=pv.auto["params"], status=pv.auto.get("status"), flags=pv.auto.get("flags"))
+            if pv.auto else None,
+            image_region=list(pv.image_region), region_source=pv.region_source,
+            sliders={k: list(BOUNDS[k]) for k in SLIDERS}, defaults=RenderParams().to_dict(),
+        )
 
-    def open(self, rel: str, film: str) -> dict:
+    def open(self, rel: str, film: str, base_mode: str = "auto") -> dict:
         if film not in FILM_MODES:
             raise ValueError(f"film must be one of {FILM_MODES}")
+        if base_mode not in BASE_MODES:
+            raise ValueError(f"base_mode must be one of {BASE_MODES}")
         p = self.resolve(rel)
         self.preview = None  # free the previous full-resolution positive first
         self.token = None
-        self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V2, film=film, keep_full=True)
+        extra = self._roll_base_kwargs(rel, base_mode) if base_mode != "auto" else {}
+        self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V2, film=film, keep_full=True, **extra)
         self.token = secrets.token_hex(8)
         self.negative = None
         return self.meta()
@@ -136,13 +343,19 @@ class State:
 
     def set_base(self, body: dict) -> dict:
         pv = self.need(body.get("token"))
-        if body.get("auto"):
-            self.preview = pv.reload(base_regions=None, base_rgb=None)
-        else:
+        rel = str(pv.path.relative_to(self.root))
+        mode = body.get("mode") or ("auto" if body.get("auto") else None)
+        if mode == "auto":
+            self.preview = pv.reload(base_regions=None, base_rgb=None, base_source=None)
+        elif mode in ("roll_dq", "roll_b1"):
+            self.preview = pv.reload(**self._roll_base_kwargs(rel, mode))
+        elif "region" in body:
             t, l, h, w = (int(v) for v in body["region"])
             if h < 1 or w < 1:
                 raise ValueError("empty base region")
-            self.preview = pv.reload(base_regions=[pv.to_sensor((t, l, h, w))], base_rgb=None)
+            self.preview = pv.reload(base_regions=[pv.to_sensor((t, l, h, w))], base_rgb=None, base_source=None)
+        else:
+            raise ValueError("set_base requires mode ('auto'|'roll_dq'|'roll_b1') or region")
         self.token = secrets.token_hex(8)
         return self.meta()
 
@@ -198,6 +411,9 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send(200, (STATIC / "index.html").read_bytes(), "text/html; charset=utf-8")
             if u.path == "/api/files":
                 return self.json(dict(root=str(st.root), files=st.files()))
+            if u.path == "/api/roll":
+                folder = q.get("folder", ["."])[0]
+                return self.json(st.roll_info(folder))
             with st.lock:
                 token = q.get("token", [None])[0]
                 if u.path == "/api/render":
@@ -227,7 +443,7 @@ class Handler(BaseHTTPRequestHandler):
             b = self.body()
             with st.lock:
                 if u.path == "/api/open":
-                    return self.json(st.open(b["path"], b.get("film", "color")))
+                    return self.json(st.open(b["path"], b.get("film", "color"), b.get("base_mode", "auto")))
                 if u.path == "/api/base":
                     return self.json(st.set_base(b))
                 if u.path == "/api/export":
@@ -247,10 +463,16 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="FilmColor local interface")
     ap.add_argument("--root", required=True, help="folder with the negatives to open")
     ap.add_argument("--out", default="filmcolor_export", help="export folder (default ./filmcolor_export)")
-    ap.add_argument("--port", type=int, default=8765)
+    ap.add_argument("--port", type=int, default=None, help="port on 127.0.0.1 (default: try 8765, else any free port)")
     ap.add_argument("--allow-frozen", action="store_true", help="also open files of the sealed test sets")
     a = ap.parse_args(argv)
-    srv = serve(a.root, a.out, a.port, a.allow_frozen)
+    if a.port is not None:
+        srv = serve(a.root, a.out, a.port, a.allow_frozen)
+    else:
+        try:
+            srv = serve(a.root, a.out, 8765, a.allow_frozen)
+        except OSError:
+            srv = serve(a.root, a.out, 0, a.allow_frozen)
     print(f"FilmColor: http://127.0.0.1:{srv.server_address[1]}/  (root {Path(a.root).resolve()}, export to "
           f"{Path(a.out).resolve()})", flush=True)
     try:

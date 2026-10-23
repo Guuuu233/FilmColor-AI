@@ -49,6 +49,7 @@ class Preview:
     auto: dict | None = field(default=None)   # noref estimate on the full-resolution positive, if requested
     load_kwargs: dict = field(default_factory=dict)  # what load_preview was called with (besides path)
     full_positive: np.ndarray | None = field(default=None, repr=False)  # kept with keep_full=True (1:1 view)
+    _base_source: dict | None = field(default=None, repr=False)
 
     def render_crop(self, region, params=None) -> np.ndarray:
         """1:1 render of a sensor-pixel region (top, left, height, width) of the full-resolution positive,
@@ -93,6 +94,9 @@ class Preview:
 
     def base_source(self) -> dict:
         """How this preview's base was found, for the export sidecar (``base.source``)."""
+        if self._base_source is not None:
+            return dict(self._base_source, base_inside_image=self.base_inside_image,
+                        previewed_input_sha256=self.sha256)
         regions = self.load_kwargs.get("base_regions")
         return dict(method=self.base_info.get("method"), estimate=self.base_info.get("estimate"),
                     regions=[list(map(int, r)) for r in regions] if regions else None,
@@ -118,7 +122,7 @@ class SourceChangedError(RuntimeError):
 
 def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, base_rgb=None, image_region=None,
                  d_hi=None, white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0,
-                 film: str = "color", keep_full: bool = False) -> Preview:
+                 film: str = "color", keep_full: bool = False, base_source: dict | None = None) -> Preview:
     """Full-resolution decode / base / inversion once; keep a block-mean copy of at most ``max_side`` pixels.
     ``auto``: a noref config (noref.NOREF_V2) estimated here on the full-resolution positive, exactly as
     ``convert(auto=...)`` does; the result is in ``Preview.auto`` (render with ``Preview.auto['params']``)."""
@@ -139,11 +143,14 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
     full = pos if keep_full else None
     del pos
     res = p["inversion"]
+    inside = p["base_inside_image"]
+    if inside is None and base_source is not None:
+        inside = base_source.get("base_inside_image")
     return Preview(path=path, sha256=sha256(path), factor=f, positive=small, mask=msk,
                    image_region=p["image_region"], region_source=p["region_source"], film=film,
                    base_info=p["base_info"], inversion=res.params.to_dict(), white_pct=white_pct, report=res.report,
-                   base_inside_image=p["base_inside_image"], full_shape=tuple(full_shape), auto=auto_info,
+                   base_inside_image=inside, full_shape=tuple(full_shape), auto=auto_info,
                    load_kwargs=dict(max_side=max_side, auto=auto, base_regions=base_regions, base_rgb=base_rgb,
                                     image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,
-                                    exposure=exposure, film=film, keep_full=keep_full),
-                   full_positive=full)
+                                    exposure=exposure, film=film, keep_full=keep_full, base_source=base_source),
+                   full_positive=full, _base_source=base_source)

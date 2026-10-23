@@ -122,6 +122,68 @@ def estimate_base_auto(
                                 chroma_tol=chroma_tol, crop=crop)
 
 
+def block48_L_p01(
+    sp, sp_sat, *, block: int = 24, crop: tuple[int, int, int, int] | None = None, pct: float = 0.1,
+) -> list[float]:
+    """Per-channel low percentile of ``L = -log10(sp48)`` over valid unsaturated 48x48 blocks inside ``crop``.
+
+    When ``sp`` is at ``block=24`` and has at least 2x2 blocks, pools adjacent 2x2 blocks into 48x48 blocks
+    (same scale as the base-estimator superpixels, suppresses single-pixel blue-channel shot noise); otherwise
+    uses ``sp`` directly.
+    """
+    if block == 24 and sp.shape[0] >= 2 and sp.shape[1] >= 2:
+        hb, wb = (sp.shape[0] // 2) * 2, (sp.shape[1] // 2) * 2
+        sp48 = sp[:hb, :wb].reshape(hb // 2, 2, wb // 2, 2, 3).mean((1, 3), dtype=np.float64)
+        sat48 = sp_sat[:hb, :wb].reshape(hb // 2, 2, wb // 2, 2).any((1, 3))
+        bsize = 48
+    else:
+        sp48, sat48, bsize = np.asarray(sp, np.float64), sp_sat, block
+    hb, wb, _ = sp48.shape
+    valid = ~sat48 & np.all(sp48 > 0, -1)
+    if crop is not None:
+        t, l, h, w = crop
+        rows, cols = np.arange(hb) * bsize, np.arange(wb) * bsize
+        inside = ((rows >= t) & (rows + bsize <= t + h))[:, None] & ((cols >= l) & (cols + bsize <= l + w))[None, :]
+        if (valid & inside).any():
+            valid &= inside
+    vals = sp48[valid]
+    if len(vals) == 0:
+        raise ValueError("no valid unsaturated blocks for quantile black point")
+    L = -np.log10(vals)
+    return [float(x) for x in np.percentile(L, pct, axis=0)]
+
+
+def split_log_base(rgb) -> tuple[float, np.ndarray]:
+    """Decompose ``log10(rgb)`` into ``(level, chroma)`` with ``sum(chroma) == 0``."""
+    lb = np.log10(np.asarray(rgb, np.float64))
+    lvl = float(lb.mean())
+    return lvl, lb - lvl
+
+
+def base_deviation(own_rgb, ref_rgb) -> dict:
+    """Log-density deviation of ``own_rgb`` relative to ``ref_rgb``: ``dD = -log10(own / ref)`` (+ = own denser)."""
+    d = np.log10(np.asarray(ref_rgb, np.float64) / np.asarray(own_rgb, np.float64))
+    lvl = float(d.mean())
+    ch = d - lvl
+    return dict(
+        dD=[float(x) for x in d],
+        level_diff=lvl,
+        chroma_diff=[float(x) for x in ch],
+        level_part=float(abs(lvl)),
+        chroma_part=float(np.max(np.abs(ch))),
+    )
+
+
+def decoupled_quantile_base(roll_rgb, block_L_p01) -> tuple[tuple[float, float, float], float]:
+    """Effective base ``b_eff`` for DQ(c_roll) (T3b): chroma from ``roll_rgb``, shared black point ``d_lo`` from
+    the minimum of ``block_L_p01 + c_roll`` across R, G, B. Returns ``(b_eff, d_lo)``."""
+    _, c_roll = split_log_base(roll_rgb)
+    p01 = np.asarray(block_L_p01, np.float64)
+    d_lo = float(np.min(p01 + c_roll))
+    b_eff = tuple(float(x) for x in (10.0 ** (c_roll - d_lo)))
+    return b_eff, d_lo
+
+
 def estimate_base_blocks(
     sp, sp_sat, *, block: int, top_frac: float = 0.01, max_rel_std: float = 0.03,
     chroma_tol: float = 0.05, crop: tuple[int, int, int, int] | None = None,
