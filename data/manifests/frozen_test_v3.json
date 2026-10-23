@@ -1,0 +1,470 @@
+{
+ "id": "frozen_test_v3",
+ "created": "2026-10-23",
+ "decision": "2026-10-23 T1b/T3 review and user confirmation: seal 3 camera-body units (36 frames) under rule v3c for held-out validation of base estimation and inversion across unseen camera bodies; never decode during development",
+ "rule": "v3c (docs/T1B_INCREMENT_20261022.md section 9); unit code body-sha256(model|serial)[:10]",
+ "v3c_candidates_sha256": "6277b2a4999c3f06151993ef920f5bc20c998d8d5cad4b88b11e3fccced10c01",
+ "new_files_sha256": "bb138ce8fb798c9672659c7225f65a6b6b84ea728388f5623393f238a602130f",
+ "units": [
+  {
+   "unit": "body-e60dbcf684",
+   "run_label": [
+    "body18"
+   ],
+   "camera": [
+    "Canon Canon EOS R5"
+   ],
+   "stratum": "large",
+   "position": 1,
+   "sort_key": "0b18a601bfd83c53b7ea48028e1ffc7f60900b56e1e6f4549dcc856c56534e79",
+   "sessions": [
+    "2023:05:22",
+    "2023:06:06",
+    "2023:06:22"
+   ],
+   "frames": 26,
+   "source_confirmed": "group member provided, confirmed usable for research (2026-10-23)"
+  },
+  {
+   "unit": "body-d19097ecea",
+   "run_label": [
+    "body11"
+   ],
+   "camera": [
+    "SONY ILCE-7M4"
+   ],
+   "stratum": "small",
+   "position": 1,
+   "sort_key": "040fe3dba182cc712d94440acfbfbfa28487b1ac932779a0d8e53157c8c1d9b8",
+   "sessions": [
+    "2025:06:10"
+   ],
+   "frames": 5,
+   "source_confirmed": "group member provided, confirmed usable for research (2026-10-23)"
+  },
+  {
+   "unit": "body-e8199a65dd",
+   "run_label": [
+    "body28"
+   ],
+   "camera": [
+    "NIKON CORPORATION NIKON Z 6_2"
+   ],
+   "stratum": "small",
+   "position": 3,
+   "sort_key": "55de531964330ce3d3ae5be6df3ff7fc34292a6dc3008a3fa8425d658a886db4",
+   "sessions": [
+    "2025:08:23"
+   ],
+   "frames": 5,
+   "source_confirmed": "group member provided, confirmed usable for research (2026-10-23)"
+  }
+ ],
+ "blocked": {
+  "names": [
+   "2023-05-22 Negative Scan-010",
+   "2023-05-22 Negative Scan-012",
+   "2023-05-22 Negative Scan-019",
+   "2023-05-22 Negative Scan-020",
+   "2023-05-22 Negative Scan-076",
+   "2023-05-22 Negative Scan-077",
+   "2023-05-22 Negative Scan-078",
+   "2023-05-22 Negative Scan-079",
+   "2023-05-22 Negative Scan-080",
+   "2023-05-22 Negative Scan-081",
+   "2023-05-22 Negative Scan-082",
+   "2023-05-22 Negative Scan-083",
+   "2023-05-22 Negative Scan-084",
+   "2023-05-22 Negative Scan-092",
+   "2023-06 HexarAF Kodak Portra 400 35mm-1",
+   "2023-06 HexarAF Kodak Portra 400 35mm-15",
+   "2023-06 HexarAF Kodak Portra 400 35mm-2",
+   "2023-06 HexarAF Kodak Portra 400 35mm-30",
+   "2023-06-06 Negative Scan-003",
+   "2023-06-06 Negative Scan-004",
+   "2023-06-06 Negative Scan-006",
+   "2023-06-06 Negative Scan-008",
+   "2023-06-06 Negative Scan-009",
+   "2023-06-22 Negative Scan-005",
+   "2023-06-22 Negative Scan-007",
+   "2023-06-22 Negative Scan-008",
+   "A1190",
+   "A1191",
+   "A1192",
+   "A1193",
+   "A1194",
+   "A1196",
+   "A1197",
+   "A1198",
+   "A1199",
+   "A1200",
+   "A1201",
+   "A1202",
+   "A1203",
+   "A1204",
+   "A1205",
+   "A1206",
+   "A1207",
+   "A1208",
+   "A1209",
+   "A1210",
+   "A1211",
+   "A1212",
+   "A1213",
+   "A1214",
+   "A1215",
+   "A1216",
+   "A1217",
+   "A1218",
+   "A1219",
+   "A1220",
+   "A1221",
+   "A1222",
+   "A1223",
+   "A1224",
+   "A1225",
+   "A1226",
+   "Cinestill400D-023",
+   "Cinestill400D-025",
+   "Cinestill400D-029",
+   "Cinestill400D-031",
+   "Cinestill400D-032",
+   "MAN_5274",
+   "MAN_5279",
+   "MAN_5282",
+   "MAN_5292",
+   "MAN_5295"
+  ],
+  "roll_ids": [
+   "body-d19097ecea",
+   "body-e60dbcf684",
+   "body-e8199a65dd"
+  ]
+ },
+ "files": [
+  {
+   "id": "material:01_彩色负片_未反相/A1190.ARW",
+   "file_id": "A1190",
+   "rel": "01_彩色负片_未反相/A1190.ARW",
+   "orig_name": "Cinestill400D-023.ARW",
+   "unit": "body-d19097ecea",
+   "camera": "SONY ILCE-7M4",
+   "sha256": "95a6a7576c1475f7041841c18eac690f3c4fb309cd1d0f9b6f6351b83829cf97"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1191.ARW",
+   "file_id": "A1191",
+   "rel": "01_彩色负片_未反相/A1191.ARW",
+   "orig_name": "Cinestill400D-025.ARW",
+   "unit": "body-d19097ecea",
+   "camera": "SONY ILCE-7M4",
+   "sha256": "2a2d154902f35cabbdd730b60c4bbfa0e9e7b34ca62474d25f73226e3238281b"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1192.ARW",
+   "file_id": "A1192",
+   "rel": "01_彩色负片_未反相/A1192.ARW",
+   "orig_name": "Cinestill400D-029.ARW",
+   "unit": "body-d19097ecea",
+   "camera": "SONY ILCE-7M4",
+   "sha256": "e8a4ad0aeb118cc8094ead60eacb5e72cdb660dba8ad55de21b3d53467b117ec"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1193.ARW",
+   "file_id": "A1193",
+   "rel": "01_彩色负片_未反相/A1193.ARW",
+   "orig_name": "Cinestill400D-031.ARW",
+   "unit": "body-d19097ecea",
+   "camera": "SONY ILCE-7M4",
+   "sha256": "e6265ba7735e8d95c81440af063cec3feccaab549d40e961fe69bce8ce400ab9"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1194.ARW",
+   "file_id": "A1194",
+   "rel": "01_彩色负片_未反相/A1194.ARW",
+   "orig_name": "Cinestill400D-032.ARW",
+   "unit": "body-d19097ecea",
+   "camera": "SONY ILCE-7M4",
+   "sha256": "fd2112d9ef51ac352d6a5c8941a4a3e2bdcf44230aeb4ec2a641581fa5a37242"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1196.CR3",
+   "file_id": "A1196",
+   "rel": "01_彩色负片_未反相/A1196.CR3",
+   "orig_name": "2023-05-22 Negative Scan-076.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "33e35fbce8772d1af40cffeeacc2d8e24742fc27d108007ff8ebbb04042b13ce"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1197.CR3",
+   "file_id": "A1197",
+   "rel": "01_彩色负片_未反相/A1197.CR3",
+   "orig_name": "2023-05-22 Negative Scan-077.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "d97623d26b325820af103c418585780fb2a6b32bea324f29354eb579fd5062a7"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1198.CR3",
+   "file_id": "A1198",
+   "rel": "01_彩色负片_未反相/A1198.CR3",
+   "orig_name": "2023-05-22 Negative Scan-092.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "b685ff9470f2df7c0fa165259a575358a923093b5ede5a4ac70bb0a9a5467693"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1199.CR3",
+   "file_id": "A1199",
+   "rel": "01_彩色负片_未反相/A1199.CR3",
+   "orig_name": "2023-06-06 Negative Scan-003.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "1cc48b9a4444241ce0f6598cc9607257f265b074a4edf948e7c93304a2dc987a"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1200.CR3",
+   "file_id": "A1200",
+   "rel": "01_彩色负片_未反相/A1200.CR3",
+   "orig_name": "2023-06-06 Negative Scan-004.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "8ceb3f75c94498650e3569fee74d60da5a0ce3f4f413a9f82be43aed5f1a33be"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1201.CR3",
+   "file_id": "A1201",
+   "rel": "01_彩色负片_未反相/A1201.CR3",
+   "orig_name": "2023-06-06 Negative Scan-006.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "3fdd16890fcd385354177f3b2cf09756c682e4f606887e2c89be43ab4679a86c"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1202.CR3",
+   "file_id": "A1202",
+   "rel": "01_彩色负片_未反相/A1202.CR3",
+   "orig_name": "2023-06-06 Negative Scan-008.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "51e6294e0fbc63034db4e65134e0b0a3917f889cec170c98c4c430aeba024cac"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1203.CR3",
+   "file_id": "A1203",
+   "rel": "01_彩色负片_未反相/A1203.CR3",
+   "orig_name": "2023-06-06 Negative Scan-009.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "b56bd0285017ddd2736df717547d4db9324c1f8ad167eaf7422f24615155e852"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1204.CR3",
+   "file_id": "A1204",
+   "rel": "01_彩色负片_未反相/A1204.CR3",
+   "orig_name": "2023-06-22 Negative Scan-005.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "2c90f60949206bbaf1e009d8c97ae9d96f5c964b1b454031dba60ab8fb561e1e"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1205.CR3",
+   "file_id": "A1205",
+   "rel": "01_彩色负片_未反相/A1205.CR3",
+   "orig_name": "2023-06-22 Negative Scan-007.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "830e867e01b3047230e0f6ed786c488e689ce92970aa732ef54c01eb0ddfbf86"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1206.CR3",
+   "file_id": "A1206",
+   "rel": "01_彩色负片_未反相/A1206.CR3",
+   "orig_name": "2023-06-22 Negative Scan-008.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "dd951ab7da6efa4815640801ed715d0b62e7e4b81063870fcb27a2b136f8342f"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1207.CR3",
+   "file_id": "A1207",
+   "rel": "01_彩色负片_未反相/A1207.CR3",
+   "orig_name": "2023-05-22 Negative Scan-010.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "5b423591f65e3a171d066fdbb841960b577208cd389428828fe10461281300b2"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1208.CR3",
+   "file_id": "A1208",
+   "rel": "01_彩色负片_未反相/A1208.CR3",
+   "orig_name": "2023-05-22 Negative Scan-012.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "b51048411fa57b2764d7582fd77c79515bfc091acffae612d5d8a77dfd58731f"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1209.CR3",
+   "file_id": "A1209",
+   "rel": "01_彩色负片_未反相/A1209.CR3",
+   "orig_name": "2023-05-22 Negative Scan-019.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "193b743fb67844bd1ce8b9bea22144dce2fbcb276f8137c8dde8b38bfd9a7c99"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1210.CR3",
+   "file_id": "A1210",
+   "rel": "01_彩色负片_未反相/A1210.CR3",
+   "orig_name": "2023-05-22 Negative Scan-020.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "baeea56197b4a424d222c766d38c25cfd12f077cf383e6b7a782c1c0f1323d69"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1211.CR3",
+   "file_id": "A1211",
+   "rel": "01_彩色负片_未反相/A1211.CR3",
+   "orig_name": "2023-06 HexarAF Kodak Portra 400 35mm-1.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "6919a1096cd221e895fd7af569818405c022b47dae366beda474b727a4af28fb"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1212.CR3",
+   "file_id": "A1212",
+   "rel": "01_彩色负片_未反相/A1212.CR3",
+   "orig_name": "2023-06 HexarAF Kodak Portra 400 35mm-2.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "d53baa2ecc743edd0424326c64ab1f45435c4f17a29e680593e63efc72e695d5"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1213.CR3",
+   "file_id": "A1213",
+   "rel": "01_彩色负片_未反相/A1213.CR3",
+   "orig_name": "2023-06 HexarAF Kodak Portra 400 35mm-15.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "870ff6eb1d23af52d44182b28ca525e9e5c6233a4940012062110117513d8f31"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1214.CR3",
+   "file_id": "A1214",
+   "rel": "01_彩色负片_未反相/A1214.CR3",
+   "orig_name": "2023-06 HexarAF Kodak Portra 400 35mm-30.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "c1c84911e9b60c348fa24005fc3a232978919bb19f936f3cce2eac95946eb03b"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1215.CR3",
+   "file_id": "A1215",
+   "rel": "01_彩色负片_未反相/A1215.CR3",
+   "orig_name": "2023-05-22 Negative Scan-078.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "7e318af49bc9488ea366886e1e67b641c03a369b23d5e2bf3ded84fac246010c"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1216.CR3",
+   "file_id": "A1216",
+   "rel": "01_彩色负片_未反相/A1216.CR3",
+   "orig_name": "2023-05-22 Negative Scan-079.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "d1143087ff1d7333ddc7aa64f32bdfd7856282b758c1a4a936ef118cdee235aa"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1217.CR3",
+   "file_id": "A1217",
+   "rel": "01_彩色负片_未反相/A1217.CR3",
+   "orig_name": "2023-05-22 Negative Scan-080.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "2c0140cceab62e24560ba8cbaefbcbf6ab3a973e9315fc36c738e13dccdbfb12"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1218.CR3",
+   "file_id": "A1218",
+   "rel": "01_彩色负片_未反相/A1218.CR3",
+   "orig_name": "2023-05-22 Negative Scan-081.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "169e08b7c860538615e29224dbbdeab0ef7b5765fd9824d471c49fed0b420743"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1219.CR3",
+   "file_id": "A1219",
+   "rel": "01_彩色负片_未反相/A1219.CR3",
+   "orig_name": "2023-05-22 Negative Scan-082.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "5e3646b5eb7add5938a016a2ef77cd078163f5ea6ff966b6de42974ba91c53a1"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1220.CR3",
+   "file_id": "A1220",
+   "rel": "01_彩色负片_未反相/A1220.CR3",
+   "orig_name": "2023-05-22 Negative Scan-083.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "f4259e5972519fa5ed177e45e99304023018f6695753e2f1cc85ee52d082e6ec"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1221.CR3",
+   "file_id": "A1221",
+   "rel": "01_彩色负片_未反相/A1221.CR3",
+   "orig_name": "2023-05-22 Negative Scan-084.CR3",
+   "unit": "body-e60dbcf684",
+   "camera": "Canon Canon EOS R5",
+   "sha256": "d6f19de0119fb9606ec6524eb281d95fee2683b621b997f897a650faedf98157"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1222.NEF",
+   "file_id": "A1222",
+   "rel": "01_彩色负片_未反相/A1222.NEF",
+   "orig_name": "MAN_5274.NEF",
+   "unit": "body-e8199a65dd",
+   "camera": "NIKON CORPORATION NIKON Z 6_2",
+   "sha256": "dd9ec76d66b1cb1180af6254d823f16a571e273c9491fd3eee86ea5100877d55"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1223.NEF",
+   "file_id": "A1223",
+   "rel": "01_彩色负片_未反相/A1223.NEF",
+   "orig_name": "MAN_5279.NEF",
+   "unit": "body-e8199a65dd",
+   "camera": "NIKON CORPORATION NIKON Z 6_2",
+   "sha256": "c5459bfda457fa5d8d5d8adff132608eea3fe5d9ea8339110986e614e267069a"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1224.NEF",
+   "file_id": "A1224",
+   "rel": "01_彩色负片_未反相/A1224.NEF",
+   "orig_name": "MAN_5282.NEF",
+   "unit": "body-e8199a65dd",
+   "camera": "NIKON CORPORATION NIKON Z 6_2",
+   "sha256": "1c9773afcdf7cb673c9796b347ce3a0c83ef002d7c03f13116bd134a34fb33fb"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1225.NEF",
+   "file_id": "A1225",
+   "rel": "01_彩色负片_未反相/A1225.NEF",
+   "orig_name": "MAN_5292.NEF",
+   "unit": "body-e8199a65dd",
+   "camera": "NIKON CORPORATION NIKON Z 6_2",
+   "sha256": "b3b72d967bf1da5ab7445996eba2250fd7d6565fd70297c654b791bc327ba194"
+  },
+  {
+   "id": "material:01_彩色负片_未反相/A1226.NEF",
+   "file_id": "A1226",
+   "rel": "01_彩色负片_未反相/A1226.NEF",
+   "orig_name": "MAN_5295.NEF",
+   "unit": "body-e8199a65dd",
+   "camera": "NIKON CORPORATION NIKON Z 6_2",
+   "sha256": "35e82afda452bec0a39482e1b97cb8d7ed3c1c625f3a502cd21b7f73cf32efdf"
+  }
+ ]
+}

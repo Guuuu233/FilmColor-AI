@@ -58,7 +58,7 @@ def main(mat, photo_root, t1b_dir, t1_frames, out_json):
     inc = json.loads((t1b / "outputs/inc/increment.json").read_text())
     t1 = json.loads(Path(t1_frames).read_text())
     t1_part = {f: r["partition"] for r in t1 for f in r["files"]}
-    fz = frozen.frozen_hashes()
+    fz = frozen.frozen_hashes([m for m in frozen.MANIFESTS if m.name != "frozen_test_v3.json"])
 
     # older material: files of the 10-18 list still in place, repo camera raws, photo folder
     old_sha = {}

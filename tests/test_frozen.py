@@ -66,10 +66,24 @@ def test_real_manifest_covers_the_frozen_rolls_and_misses_every_development_roll
     everything = frozen_hashes()  # default: every frozen manifest (photo-folder addendum, 2026-10-18 dataset holdout)
     # + 289 group-pack files of the sealed BlueNeg rolls + 475 further official files (LFS sha256, not downloaded)
     # + 7 copies of sealed BlueNeg frames added to the material folder under new names (addendum, 2026-10-22, T1b)
-    assert len(everything) == 144 + 71 + 289 + 475 + 7 and set(frozen) <= set(everything)
+    # + 36 camera-body holdout frames sealed under rule v3c (frozen_test_v3, 2026-10-23)
+    assert len(everything) == 144 + 71 + 289 + 475 + 7 + 36 and set(frozen) <= set(everything)
     add = json.loads((ROOT / "data/manifests/frozen_test_v2_ds_addendum_20261022.json").read_text())["files"]
     with pytest.raises(FrozenDataError, match="frozen_test_v2_ds_addendum_20261022"):
         check_hashes([add[0]["sha256"]], frozen=everything)
+    v3 = json.loads((ROOT / "data/manifests/frozen_test_v3.json").read_text())
+    assert len(v3["files"]) == 36 and len(v3["units"]) == 3
+    for f in v3["files"]:
+        with pytest.raises(FrozenDataError, match="frozen_test_v3"):
+            check_hashes([f["sha256"]], frozen=everything)
+        with pytest.raises(FrozenDataError, match="frozen_test_v3"):
+            check_name(f["rel"])
+        with pytest.raises(FrozenDataError, match="frozen_test_v3"):
+            check_name(f["orig_name"])
+    for u in ("body-e60dbcf684", "body-d19097ecea", "body-e8199a65dd"):
+        with pytest.raises(FrozenDataError, match="frozen_test_v3"):
+            check_roll(u)
+    check_roll("body-0fc45abd72")  # unsealed v3c candidate (GX9): allowed on development side
     dev = json.loads((ROOT / "data/manifests/s3_dev_frames.json").read_text())["frames"]
     check_hashes([h for f in dev for h in (f["raw_sha256"], f["ref_sha256"])], frozen=everything)  # does not raise
     assert all(r["sha256"] in frozen for r in in_frozen_dirs)
@@ -83,7 +97,7 @@ def test_real_manifest_covers_the_frozen_rolls_and_misses_every_development_roll
 
 def test_sealed_blueneg_rolls_are_refused_by_name_and_roll_before_any_download(tmp_path):
     blocks = frozen_blocks()
-    assert len(blocks["names"]) == 164
+    assert len(blocks["names"]) == 164 + 72
     sealed = "19960815F-23-san-francisco"  # roll 199608F, sealed in frozen_test_v2_ds
     for p in (f"negative-16bit/blue-corrupted/{sealed}.dng", f"printed-16bit/blue-corrupted/{sealed}.tif",
               f"https://huggingface.co/x/resolve/main/negative-preview-8bit/{sealed}.preview.png"):

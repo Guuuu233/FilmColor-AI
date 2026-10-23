@@ -95,7 +95,7 @@ def main(root, inc_dir, t1_frames, out_dir, addendum=True):
 
     t1 = json.loads(Path(t1_frames).read_text())
     t1_by_file = {f: r for r in t1 for f in r["files"]}
-    sealed = [m for m in frozen.MANIFESTS if m.resolve() != ADDENDUM.resolve()]  # not the addendum this writes
+    sealed = [m for m in frozen.MANIFESTS if m.name not in (ADDENDUM.name, "frozen_test_v3.json")]
     fz_hash = frozen.frozen_hashes(sealed)
     blocks = frozen.frozen_blocks(sealed)
     meta = json.loads((REPO / "data/raw/public/blueneg/meta.json").read_text())
