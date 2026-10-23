@@ -181,3 +181,55 @@ def test_diagnostics_respect_mask():
     _, img_px = render(P, RenderParams(sat=2.0), mask=np.array([[True, False, False]]))
     assert all_px["below_zero_after_colour"] > 0 and all_px["above_white"] > 0
     assert img_px["below_zero_after_colour"] == 0 and img_px["above_white"] == 0
+
+
+def test_extended_darkroom_controls_and_tone_curve():
+    """T4 (2026-10-23): highlights, shadows, whites, blacks, vibrance, slope_r/b and tone_curve are
+    deterministic, serialisable, monotone on grey ramps, and preserve exact Sprint 1 defaults when zero."""
+    from filmcolor.render import CURVE_PRESETS
+
+    r = ramp(500, 1.5)
+    base, _ = render(r, RenderParams())
+
+    # Shadows lift darks more than highlights; highlights pull down brights more than darks
+    sh_up, _ = render(r, RenderParams(shadows=0.5))
+    hl_dn, _ = render(r, RenderParams(highlights=-0.6))
+    assert float(sh_up[0, 50, 1] - base[0, 50, 1]) > float(sh_up[0, 300, 1] - base[0, 300, 1]) > 0
+    assert float(hl_dn[0, 300, 1] - base[0, 300, 1]) < float(hl_dn[0, 50, 1] - base[0, 50, 1]) <= 0
+
+    # Positive blacks lift pure black > 0 (paper-black margin); whites shift upper tones
+    bk_up, _ = render(r, RenderParams(blacks=0.4))
+    assert float(bk_up[0, 0, 1]) > 0.02 and is_grey(bk_up)
+
+    # Vibrance boosts low-chroma pixels more than already-saturated pixels
+    low_c = np.array([[[0.30, 0.28, 0.26]]], np.float32)
+    high_c = np.array([[[0.55, 0.20, 0.10]]], np.float32)
+    l0, _ = render(low_c, RenderParams())
+    l1, _ = render(low_c, RenderParams(vibrance=0.8))
+    h0, _ = render(high_c, RenderParams())
+    h1, _ = render(high_c, RenderParams(vibrance=0.8))
+    gain_low = float((l1.max() - l1.min()) / (l0.max() - l0.min()))
+    gain_high = float((h1.max() - h1.min()) / (h0.max() - h0.min()))
+    assert gain_low > gain_high >= 1.0
+
+    # Per-channel slope ratios (slope_r, slope_b) pivot at MID_GREY
+    piv = np.array([[[MID_GREY] * 3]], np.float32)
+    sr, _ = render(piv, RenderParams(slope_r=0.3, slope_b=-0.2))
+    assert is_grey(sr, atol=1e-5)
+
+    # Monotone spline tone curve and presets round-trip through JSON
+    p_tc = RenderParams(
+        ev=0.1, highlights=-0.3, shadows=0.25, whites=0.1, blacks=0.15, vibrance=0.2,
+        slope_r=0.1, slope_b=-0.1,
+        tone_curve={"rgb": CURVE_PRESETS["standard"]["rgb"], "b": [[0.0, 0.02], [0.5, 0.52], [1.0, 0.98]]},
+    )
+    d = p_tc.to_dict()
+    assert "highlights" in d and "tone_curve" in d
+    p_rt = RenderParams.from_dict(json.loads(json.dumps(d)))
+    assert p_rt == p_tc
+    P = scene()
+    assert np.array_equal(render(P, p_tc)[0], render(P, p_rt)[0])
+
+    for bad in (dict(highlights=1.5), dict(slope_r=0.8), dict(tone_curve={"rgb": [[0.5, 0.2], [0.5, 0.8]]})):
+        with pytest.raises(ValueError):
+            RenderParams(**bad)

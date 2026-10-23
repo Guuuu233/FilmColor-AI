@@ -251,6 +251,50 @@ def test_roll_base_and_decoupled_dq_modes_export_and_replay(server):
     assert code == 200 and m_a["base"]["method"] == "auto"
 
 
+def test_roll_nat_wb_pick_thumbnails_and_extended_export(server):
+    """T4 (2026-10-23): /api/thumb returns a cached PNG thumbnail, /api/wb_pick computes neutralising temp/tint,
+    roll_nat blends paper-black with DQ according to softness, and exporting with extended parameters + tone_curve
+    replays byte-for-byte via replay_kwargs."""
+    from filmcolor.pipeline import replay_kwargs
+
+    call, root, tmp = server
+    rgb, irl = scan()
+    rgb2 = (rgb * np.array([0.55, 0.65, 0.75])).astype(rgb.dtype)
+    write_dng(root / "t.dng", rgb2, irl)
+
+    roll, code, _ = call("/api/roll")
+    assert code == 200 and "nat_rgb" in roll["frames"]["t.dng"]
+
+    # Thumbnail endpoint
+    th, code, _ = call("/api/thumb?path=t.dng&film=color")
+    assert code == 200 and decode_png(th).shape[2] == 3
+
+    # Open t.dng in roll_nat mode with softness=0.6
+    m = call("/api/open", dict(path="t.dng", base_mode="roll_nat", softness=0.6))[0]
+    assert m["base"]["method"] == "roll_nat" and m["base"]["softness"] == pytest.approx(0.6)
+    assert m["auto"]["config"] == "noref_v3" and 0.95 <= m["auto"]["params"]["contrast"] <= 1.38
+
+    # White balance eyedropper
+    wb, code, _ = call("/api/wb_pick", dict(token=m["token"], x=180, y=120))
+    assert code == 200 and -1.0 <= wb["temp"] <= 1.0 and -1.0 <= wb["tint"] <= 1.0
+
+    # Export with extended darkroom parameters and tone_curve, and verify byte-identical replay
+    ext_params = dict(
+        ev=0.15, temp=wb["temp"], tint=wb["tint"], contrast=1.2, sat=1.05,
+        highlights=-0.25, shadows=0.2, whites=0.1, blacks=0.08, vibrance=0.15,
+        slope_r=0.05, slope_b=-0.05,
+        tone_curve={"rgb": [[0.0, 0.02], [0.5, 0.51], [1.0, 0.99]]},
+    )
+    out, code, _ = call("/api/export", dict(params=ext_params, token=m["token"]))
+    assert code == 200
+    sc = json.loads(open(out["sidecar"]).read())
+    assert sc["base"]["source"]["method"] == "roll_nat"
+    assert sc["render"]["params"]["highlights"] == pytest.approx(-0.25)
+    assert "tone_curve" in sc["render"]["params"]
+    ref = write(root / "t.dng", tmp / "replay_ext", **replay_kwargs(sc))
+    assert out["sha256"] == ref["output"]["sha256"]
+
+
 def test_png_roundtrip():
     img = (np.arange(4 * 5 * 3) % 256).astype(np.uint8).reshape(4, 5, 3)
     assert np.array_equal(decode_png(app.png_bytes(img)), img)

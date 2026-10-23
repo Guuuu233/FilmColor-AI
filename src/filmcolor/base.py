@@ -184,6 +184,44 @@ def decoupled_quantile_base(roll_rgb, block_L_p01) -> tuple[tuple[float, float, 
     return b_eff, d_lo
 
 
+def natural_roll_base(
+    roll_rgb, block_L_p01, *, own_rgb=None, paper_black_d: float = 0.02,
+    softness: float = 0.5, ramp_lo: float = 0.04, ramp_hi: float = 0.10,
+) -> tuple[tuple[float, float, float], dict]:
+    """Natural roll-base fusion (T4, inspired by Darktable negadoctor paper-black + DQ anti-truncation):
+
+    - Uses the roll chromaticity ``c_roll`` to remove the orange mask.
+    - Blends the black point smoothly between the roll's physical base density ``-l_roll`` (which preserves
+      a restrained paper-black margin on normal / high-key frames) and the frame's anti-truncation quantile
+      floor ``d_lo_min - paper_black_d`` according to the frame's base chroma error ``chroma_part`` and
+      ``softness`` in [0, 1] (0 = crisp DQ black point, 1 = full B1 roll black point unless ``d_lo_min < -l_roll``).
+    """
+    l_roll, c_roll = split_log_base(roll_rgb)
+    d_lo_b1 = float(-l_roll)
+    p01 = np.asarray(block_L_p01, np.float64)
+    d_lo_min = float(np.min(p01 + c_roll))
+    d_lo_dq = d_lo_min - float(paper_black_d)
+    if d_lo_min < d_lo_b1:
+        # Frame is thinner than the roll base in at least one channel: must lower d_lo to avoid negative clipping
+        w = 0.0
+        d_lo = d_lo_dq
+    else:
+        if own_rgb is not None:
+            dc = base_deviation(own_rgb, roll_rgb)["chroma_part"]
+            alpha = float(np.clip((dc - ramp_lo) / max(ramp_hi - ramp_lo, 1e-6), 0.0, 1.0))
+        else:
+            dc = None
+            alpha = 1.0
+        # w is the weight on the restrained roll-floor black point d_lo_b1
+        w = float(np.clip(1.0 - alpha * (1.0 - 0.35 * float(softness)), 0.0, 1.0))
+        if softness >= 0.999 and alpha == 0.0:
+            w = 1.0
+        d_lo = w * d_lo_b1 + (1.0 - w) * d_lo_dq
+    b_eff = tuple(float(x) for x in (10.0 ** (c_roll - d_lo)))
+    return b_eff, dict(d_lo_used=float(d_lo), d_lo_b1=d_lo_b1, d_lo_min=d_lo_min,
+                       paper_black_d=float(paper_black_d), b1_weight=w)
+
+
 def estimate_base_blocks(
     sp, sp_sat, *, block: int, top_frac: float = 0.01, max_rel_std: float = 0.03,
     chroma_tol: float = 0.05, crop: tuple[int, int, int, int] | None = None,

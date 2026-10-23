@@ -283,10 +283,11 @@ def load_look(name: str = "global_look_v1") -> dict:
 
 
 def estimate_params_v2(P, mask=None, cfg=NOREF_V2, roll=None, look=None) -> dict:
-    """noref_v2: start from the fixed look (``look``, default ``cfg["look"]``) and adjust only the groups in
-    ``cfg["groups"]``. Frames whose input statistics make the base inversion untrustworthy (too little
-    tonal range, or highlights far past the inversion white point) get status ``manual_review_required``
-    and the look unchanged: no per-frame enhancement on top of a suspect inversion."""
+    """noref_v2 / noref_v3 dispatcher: when ``cfg["id"] == "noref_v3"``, runs the adaptive print estimator
+    ``estimate_params_v3``; otherwise runs ``noref_v2`` (start from the fixed look and adjust only the groups in
+    ``cfg["groups"]``)."""
+    if cfg.get("id") == "noref_v3":
+        return estimate_params_v3(P, mask, cfg, roll, look)
     P = np.asarray(P, np.float32)
     if mask is not None and mask.shape != P.shape[:2]:
         raise ValueError(f"mask shape {mask.shape} != image shape {P.shape[:2]}")
@@ -377,3 +378,244 @@ def estimation_input(P, image_region, f: int = 4):
 def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
     """Encoded p2..p98 luminance spread of a frame under ``params`` (input statistic, no reference)."""
     return _encoded_spread(_sample(P, mask, cfg["n_sample"] // 4, seed=1), RenderParams(**params))
+
+
+# --- noref_v3: NegPy (marcinz606/NegPy) + Darktable negadoctor inspired textured-cell auto estimator (T4 v2) ---
+
+NOREF_V3 = dict(
+    NOREF_V1,
+    id="noref_v3",
+    look="global_look_v1",
+    low_info_range_stops=0.6,      # allow open-sky / desert / snow frames with paper-black floor (p99/p1 >= 1.5x)
+    cell_size=8,                   # grid cell side for textured-cell activity metering
+    activity_thr_d=0.05,           # NegPy activity threshold: within-cell std(-log10 Y) >= 0.05 D
+    min_textured_share=0.08,       # fallback to top 25% most active cells when fewer than 8% exceed activity_thr_d
+    anchor_target_density=0.75,    # NegPy print target density 0.75 D (reflectance 10^-0.75 ≈ 0.178 = 18% grey)
+    anchor_band_d=0.08,            # comfort band around target density (preserves high-key / low-key mood)
+    base_contrast=1.15,            # restrained natural film contrast center (replaces fixed contrast=2.0)
+    contrast_bounds_v3=(0.95, 1.38),  # Auto Grade range from textured P10..P90 span
+    target_span_d=0.68,            # reference P10..P90 density span of textured cells
+    base_sat=1.02,                 # restrained saturation
+    base_midtone=0.22,             # comfortable mid-grey placement
+    base_shoulder=0.15,            # gentle baseline highlight roll-off
+    target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance band
+    target_p2_band=(0.03, 0.14),   # paper-black floor vs haze ceiling for encoded p2
+    clip_budget=0.002,             # <= 0.2 % highlight clipping
+    headroom=1.2,                  # max stops p99.5 may exceed white before shoulder
+    ev_limits=(-2.0, 2.5),
+    wb_prior_weight=0.55,          # mild prior from global_look_v1, blended with textured midtone neutral evidence
+    wb_max_shift=0.35,
+    wp_invalid_stops=1.5,
+)
+
+
+def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
+    """NegPy-style textured-cell metering: partition ``P`` into ``cell_size x cell_size`` cells inside ``mask``,
+    measure within-cell log-density activity ``std(-log10 Y)``, and return textured cell means and quantiles."""
+    cs = int(cfg.get("cell_size", 8))
+    h, w = P.shape[:2]
+    if h < cs * 2 or w < cs * 2:
+        cs = max(1, min(h, w) // 4)
+    hc, wc = h // cs, w // cs
+    Pc = np.asarray(P[: hc * cs, : wc * cs], np.float32).reshape(hc, cs, wc, cs, 3)
+    Y = np.maximum(Pc @ LUMA.astype(np.float32), 1e-4)
+    D = -np.log10(Y)
+    std_D = D.std(axis=(1, 3))
+    mean_D = D.mean(axis=(1, 3))
+    mean_rgb = Pc.mean(axis=(1, 3))
+    if mask is not None:
+        mc = mask[: hc * cs, : wc * cs].reshape(hc, cs, wc, cs).mean(axis=(1, 3)) > 0.5
+    else:
+        mc = np.ones((hc, wc), bool)
+    valid = mc & np.isfinite(std_D) & (mean_rgb.max(axis=-1) > cfg["min_luma"])
+    if not valid.any():
+        valid = np.ones((hc, wc), bool)
+    thr = float(cfg.get("activity_thr_d", 0.05))
+    tex = valid & (std_D >= thr)
+    tex_share = float(tex.sum() / max(valid.sum(), 1))
+    if tex_share < float(cfg.get("min_textured_share", 0.08)):
+        q75 = float(np.percentile(std_D[valid], 75))
+        tex = valid & (std_D >= q75)
+    dt = mean_D[tex]
+    p2, p5, p10, p50, p90, p95, p98 = (float(x) for x in np.percentile(dt, [2, 5, 10, 50, 90, 95, 98]))
+    in_5_95 = dt[(dt >= p5) & (dt <= p95)]
+    mean_5_95 = float(in_5_95.mean()) if len(in_5_95) else p50
+    anchor_d = 0.5 * (mean_5_95 + 0.5 * (p5 + p95))
+    return dict(
+        textured_share=tex_share,
+        n_textured=int(tex.sum()),
+        anchor_d=anchor_d,
+        span_10_90_d=float(p90 - p10),
+        p2_bright_d=p2,
+        p10_d=p10,
+        p50_d=p50,
+        p90_d=p90,
+        p98_dark_d=p98,
+        textured_rgb=mean_rgb[tex],
+    )
+
+
+def _encoded_quantiles(px, p: RenderParams, qs=(2, 50, 98)):
+    e, _, _ = render_full(px, p)
+    y = e @ LUMA.astype(np.float32)
+    return [float(x) for x in np.percentile(y, qs)]
+
+
+def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict:
+    """Textured-cell adaptive print estimator (NOREF_V3, T4 v2, inspired by marcinz606/NegPy & negadoctor):
+
+    1. **Textured Cells**: filters grid cells by local density activity ``std(-log10 Y) >= 0.05 D`` so large
+       uniform skies, water or borders do not bias metering.
+    2. **Auto Density (ev)**: pulls the textured P5..P95 anchor density towards ``anchor_target_density = 0.75 D``
+       (18 % mid-grey) with a comfort band, then refines so sRGB-encoded median luminance lands in the target band.
+    3. **Auto Grade (contrast)**: sets a restrained contrast in ``[0.95, 1.38]`` (centered at ``1.15``, never 2.0)
+       from the textured P10..P90 density span (Shadow Reach on flat negatives, softened on wide-span negatives).
+    4. **Highlight Hold (highlights & shoulder) & Shadow Hold (shadows & blacks)**:
+       - when bright textured cells ``P2`` approach paper white or full-frame ``above_white`` exceeds
+         ``clip_budget`` (0.2 %), writes an explicit negative ``highlights`` burn and/or raised ``shoulder``;
+       - when dark textured cells ``P98`` are crushed, writes an explicit positive ``shadows`` lift and
+         paper-black ``blacks`` floor.
+    """
+    P = np.asarray(P, np.float32)
+    if mask is not None and mask.shape != P.shape[:2]:
+        raise ValueError(f"mask shape {mask.shape} != image shape {P.shape[:2]}")
+    look = look or load_look(cfg["look"])
+    lp = dict(look["params"])
+    st = frame_stats(P, mask, cfg)
+    out = dict(config=cfg["id"], look=look["id"], groups=["brightness", "wb", "tone", "sat"],
+               stats=st, diagnostics={})
+    reasons = []
+    if st["range_stops"] < cfg["low_info_range_stops"]:
+        reasons.append(f"low_information: tonal range {st['range_stops']:.2f} stops")
+    if st["p99"] > 2 ** cfg["wp_invalid_stops"]:
+        reasons.append(f"white_point_invalid: p99 {np.log2(st['p99']):.2f} stops past the inversion white point")
+    base_p = dict(
+        ev=0.0,
+        temp=float(lp["temp"] * cfg["wb_prior_weight"]),
+        tint=float(lp["tint"] * cfg["wb_prior_weight"]),
+        sat=float(cfg["base_sat"]),
+        contrast=float(cfg["base_contrast"]),
+        midtone=float(cfg["base_midtone"]),
+        shoulder=float(cfg["base_shoulder"]),
+        highlights=0.0, shadows=0.0, whites=0.0, blacks=0.0, vibrance=0.0,
+    )
+    if reasons:
+        return dict(out, status="manual_review_required", params=RenderParams(**base_p).to_dict(),
+                    flags=reasons, confidence=dict(overall=0.0))
+
+    flags = ["white_point_unrepresentative"] if st["above_white"] > 0.05 else []
+    px = _sample(P, mask, cfg["n_sample"] // 4, seed=1)
+    tc = _textured_cells(P, mask, cfg)
+    out["diagnostics"]["textured_cells"] = {k: v for k, v in tc.items() if k != "textured_rgb"}
+
+    # 1. White balance: mild prior + textured midtone neutral evidence
+    wb = estimate_wb(P, mask, cfg, roll)
+    m_wb = cfg["wb_max_shift"]
+    base_p["temp"] = float(np.clip(base_p["temp"] + wb["temp"], -m_wb, m_wb))
+    base_p["tint"] = float(np.clip(base_p["tint"] + wb["tint"], -m_wb, m_wb))
+    out["diagnostics"]["wb"] = wb
+
+    # 2. Saturation / vibrance: reduce saturation slightly on already high-chroma frames
+    c_all = _chroma(px[(px @ LUMA.astype(np.float32)) > cfg["min_luma"]])
+    p90 = float(np.percentile(np.linalg.norm(c_all, axis=1), 90)) if len(c_all) else 0.3
+    if p90 > cfg["sat_colourful"]:
+        base_p["sat"] = float(1.0 + (cfg["base_sat"] - 1.0) * (cfg["sat_colourful"] / p90))
+    else:
+        base_p["vibrance"] = 0.08
+    out["diagnostics"]["chroma_p90"] = p90
+
+    # 3. Auto Grade (contrast from textured P10..P90 span, bounded to [0.95, 1.38])
+    c_lo, c_hi = cfg["contrast_bounds_v3"]
+    span_d = max(tc["span_10_90_d"], 0.18)
+    target_span = float(cfg["target_span_d"])
+    # Gentle inverse scaling: flat textured span (< 0.68 D) gets slightly higher contrast (Shadow Reach);
+    # wide textured span (> 0.68 D) gets softer contrast so shadows & highlights both fit.
+    auto_c = float(cfg["base_contrast"]) * ((target_span / span_d) ** 0.18)
+    base_p["contrast"] = float(np.clip(round(auto_c, 3), c_lo, c_hi))
+
+    # 4. Auto Density (NegPy textured anchor_d vs anchor_target_density = 0.75 D, with high-key protection)
+    target_d = float(cfg["anchor_target_density"])
+    band_d = float(cfg["anchor_band_d"])
+    anc_d = tc["anchor_d"]
+    if anc_d > target_d + band_d:
+        # Underexposed / dark textured cells: lift strongly towards target_d
+        ev_anc = (anc_d - (target_d + band_d * 0.4)) / 0.30103
+    elif anc_d < target_d - band_d:
+        # High-key open sky / desert / snow (anc_d < 0.67 D): preserve high-key mood, pull back at most -0.25 EV
+        ev_anc = max(-0.25, (anc_d - (target_d - band_d)) * 0.35 / 0.30103)
+    else:
+        ev_anc = (anc_d - target_d) * 0.4 / 0.30103
+    base_p["ev"] = float(np.clip(ev_anc, *cfg["ev_limits"]))
+
+    # Refine EV: lift dark frames into target_encoded_band (0.45..0.52); high-key frames allowed up to 0.76
+    t_lo, t_hi = cfg["target_encoded_band"]
+    p2_0, med0, p98_0 = _encoded_quantiles(px, RenderParams(**base_p))
+    t_hi_eff = 0.76 if anc_d < 0.65 else t_hi
+    if med0 < t_lo or med0 > t_hi_eff:
+        target_m = t_lo + 0.03 if med0 < t_lo else t_hi_eff - 0.02
+        lo_ev, hi_ev = cfg["ev_limits"]
+        for _ in range(18):
+            mid_ev = 0.5 * (lo_ev + hi_ev)
+            _, m_cur, _ = _encoded_quantiles(px, RenderParams(**dict(base_p, ev=mid_ev)))
+            if m_cur < target_m:
+                lo_ev = mid_ev
+            else:
+                hi_ev = mid_ev
+        base_p["ev"] = float(np.clip(0.5 * (lo_ev + hi_ev), *cfg["ev_limits"]))
+
+    # 5. NegPy Highlight Hold: check bright textured cells P2 after EV shift, plus full-frame clip_budget
+    p2_shifted_d = tc["p2_bright_d"] - 0.30103 * base_p["ev"]
+    if p2_shifted_d < 0.12:
+        # Automatic highlight burn written directly to the highlights slider
+        base_p["highlights"] = float(np.clip(-1.8 * (0.12 - p2_shifted_d), -0.65, 0.0))
+
+    s_grid = np.linspace(base_p["shoulder"], 0.85, 15)
+    hl_grid = sorted({round(base_p["highlights"], 3), -0.20, -0.40, -0.65}, reverse=True)
+    found = False
+    for hl in hl_grid:
+        if hl > base_p["highlights"]:
+            continue
+        for s in s_grid:
+            cand_p = RenderParams(**dict(base_p, shoulder=float(s), highlights=float(hl)))
+            if _clip_share(px, cand_p) <= cfg["clip_budget"]:
+                base_p["shoulder"], base_p["highlights"] = float(s), float(hl)
+                found = True
+                break
+        if found:
+            break
+    ev_lowered = 0.0
+    if not found:
+        base_p["shoulder"], base_p["highlights"] = 0.85, -0.65
+        for _ in range(30):
+            if _clip_share(px, RenderParams(**base_p)) <= cfg["clip_budget"] or base_p["ev"] <= cfg["ev_limits"][0]:
+                break
+            base_p["ev"] = float(max(base_p["ev"] - 0.1, cfg["ev_limits"][0]))
+            ev_lowered += 0.1
+    if ev_lowered > 0:
+        flags.append(f"ev_lowered_for_highlights:{ev_lowered:.1f}")
+
+    # 6. NegPy Shadow Hold / Paper Black: check dark textured cells P98 and encoded p2
+    p2, p50, p98 = _encoded_quantiles(px, RenderParams(**base_p))
+    p98_shifted_d = tc["p98_dark_d"] - 0.30103 * base_p["ev"]
+    p2_lo, p2_hi = cfg["target_p2_band"]
+    if p2 < p2_lo or p98_shifted_d > 1.75:
+        lift_need = max(p2_lo - p2, 0.04 * (p98_shifted_d - 1.75))
+        base_p["shadows"] = float(np.clip(base_p["shadows"] + lift_need * 2.8, 0.0, 0.55))
+        base_p["blacks"] = float(np.clip(lift_need * 1.8, 0.0, 0.22))
+    elif p2 > p2_hi and (p98 - p2) < 0.55:
+        base_p["blacks"] = float(np.clip(-(p2 - p2_hi) * 1.3, -0.28, 0.0))
+
+    # Round slider-visible values cleanly
+    for k in ("ev", "temp", "tint", "sat", "contrast", "shoulder", "highlights", "shadows", "whites", "blacks", "vibrance"):
+        base_p[k] = round(float(base_p[k]), 4)
+
+    params = RenderParams(**base_p)
+    _check_bounds(params)
+    p2_f, p50_f, p98_f = _encoded_quantiles(px, params)
+    clip_f = _clip_share(px, params)
+    out["diagnostics"].update(
+        encoded_p2=p2_f, encoded_median=p50_f, encoded_p98=p98_f,
+        spread_before=float(p98 - p2), clip_share=clip_f,
+    )
+    conf = dict(wb=wb["confidence"], exposure=float(1.0 - _ramp(st["above_white"], 0.05, 0.25)), overall=1.0)
+    return dict(out, status="ok", params=params.to_dict(), flags=flags, confidence=conf)

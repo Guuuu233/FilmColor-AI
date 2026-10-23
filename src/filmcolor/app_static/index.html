@@ -2,115 +2,335 @@
 <html lang="zh">
 <head>
 <meta charset="utf-8">
-<title>FilmColor</title>
+<title>FilmColor Darkroom</title>
 <style>
-  :root { --bg:#1d1d1f; --panel:#26262a; --fg:#e6e6e6; --dim:#9a9aa0; --acc:#e0a040; --warn:#ff8a65; }
+  :root {
+    --bg:#161618; --panel:#202024; --panel2:#28282e; --border:#383842;
+    --fg:#e8e8ec; --dim:#9898a2; --acc:#e0a040; --warn:#ff8a65; --ok:#66bb6a;
+  }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--fg); font:13px -apple-system, "PingFang SC", sans-serif;
-         display:grid; grid-template-columns: 270px 1fr 310px; height:100vh; }
-  aside, section { overflow:auto; }
-  #files { background:var(--panel); padding:8px; }
-  #files .f { padding:3px 6px; cursor:pointer; border-radius:3px; display:flex; justify-content:space-between; gap:6px; align-items:center; }
-  #files .f .fn { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  #files .f .tag { font-size:11px; color:var(--dim); white-space:nowrap; }
-  #files .f .tag.warn { color:var(--warn); font-weight:600; }
-  #files .f:hover { background:#333; }
-  #files .f.on { background:var(--acc); color:#000; }
-  #files .f.on .tag, #files .f.on .tag.warn { color:#000; }
-  #main { display:flex; flex-direction:column; }
-  #bar { display:flex; gap:6px; padding:6px; background:var(--panel); align-items:center; flex-wrap:wrap; }
-  button, select { background:#3a3a40; color:var(--fg); border:1px solid #555; border-radius:4px; padding:4px 9px; cursor:pointer; }
-  button.on { background:var(--acc); color:#000; } button:disabled { opacity:.4; cursor:default; }
-  #stage { flex:1; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  body {
+    margin:0; background:var(--bg); color:var(--fg);
+    font:12.5px -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    display:grid; grid-template-columns: 280px 1fr 340px; height:100vh; overflow:hidden;
+  }
+  aside, section { overflow-y:auto; }
+  #files { background:var(--panel); padding:10px; border-right:1px solid var(--border); }
+  .fcard {
+    display:grid; grid-template-columns: 64px 1fr; gap:8px; align-items:center;
+    padding:5px; margin-bottom:5px; border-radius:5px; cursor:pointer;
+    background:var(--panel2); border:1px solid transparent;
+  }
+  .fcard:hover { border-color:#555; }
+  .fcard.on { border-color:var(--acc); background:#322a1e; }
+  .fthumb {
+    width:64px; height:44px; object-fit:cover; border-radius:3px; background:#111; display:block;
+  }
+  .fmeta { overflow:hidden; }
+  .fn { font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fsub { display:flex; justify-content:space-between; align-items:center; margin-top:3px; font-size:11px; color:var(--dim); }
+  .tag { padding:1px 5px; border-radius:3px; background:#1b1b1f; color:var(--dim); font-size:10.5px; }
+  .tag.warn { color:var(--warn); background:#3a221e; font-weight:600; }
+  .tag.edited { color:var(--acc); }
+
+  #main { display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+  #bar {
+    display:flex; gap:5px; padding:7px 10px; background:var(--panel);
+    border-bottom:1px solid var(--border); align-items:center; flex-wrap:wrap;
+  }
+  button, select {
+    background:var(--panel2); color:var(--fg); border:1px solid var(--border);
+    border-radius:4px; padding:4px 8px; font-size:12px; cursor:pointer;
+  }
+  button:hover:not(:disabled) { border-color:#666; }
+  button.on { background:var(--acc); color:#111; border-color:var(--acc); font-weight:600; }
+  button:disabled { opacity:.4; cursor:default; }
+  .sep { width:1px; height:18px; background:var(--border); margin:0 3px; }
+
+  #stage {
+    flex:1; position:relative; display:flex; align-items:center; justify-content:center;
+    overflow:hidden; background:#101012;
+  }
   #wrap { position:relative; max-width:100%; max-height:100%; }
-  #img { display:block; max-width:100%; max-height:calc(100vh - 90px); user-select:none; -webkit-user-drag:none; }
+  #img { display:block; max-width:100%; max-height:calc(100vh - 88px); user-select:none; -webkit-user-drag:none; }
   #ov { position:absolute; left:0; top:0; width:100%; height:100%; cursor:crosshair; }
-  #status { padding:4px 8px; color:var(--dim); background:var(--panel); min-height:22px; }
-  #side { background:var(--panel); padding:10px; }
-  .row { margin:8px 0; } .row label { display:flex; justify-content:space-between; color:var(--dim); }
-  input[type=range] { width:100%; }
-  .box { margin-top:12px; padding:8px; background:#1f1f22; border-radius:4px; line-height:1.6; }
+  #status {
+    padding:5px 10px; color:var(--dim); background:var(--panel);
+    border-top:1px solid var(--border); min-height:24px; font-size:12px;
+  }
+
+  #side { background:var(--panel); padding:10px; border-left:1px solid var(--border); }
+  .sec-title {
+    font-size:11.5px; font-weight:600; color:var(--dim); text-transform:uppercase;
+    letter-spacing:0.5px; margin:12px 0 6px 0; display:flex; justify-content:space-between; align-items:center;
+  }
+  .sec-title:first-child { margin-top:0; }
+  .hist-box {
+    background:#141417; border:1px solid var(--border); border-radius:5px; padding:6px;
+  }
+  #histCanvas { width:100%; height:96px; display:block; }
+  .hist-meta { display:flex; justify-content:space-between; font-size:11px; color:var(--dim); margin-top:4px; }
+
+  .row { margin:7px 0; }
+  .row label {
+    display:flex; justify-content:space-between; color:var(--fg); font-size:12px;
+    margin-bottom:2px; cursor:pointer; user-select:none;
+  }
+  .row label span.v { color:var(--dim); font-variant-numeric:tabular-nums; }
+  input[type=range] {
+    -webkit-appearance:none; appearance:none; width:100%; height:6px;
+    border-radius:3px; background:#383842; outline:none; margin:3px 0;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance:none; appearance:none; width:13px; height:13px;
+    border-radius:50%; background:#e8e8ec; border:1.5px solid #111; cursor:pointer;
+  }
+  input[type=range].wb-temp { background:linear-gradient(to right, #3a7bd5, #dcdcdc 50%, #f39c12); }
+  input[type=range].wb-tint { background:linear-gradient(to right, #2ecc71, #dcdcdc 50%, #e056fd); }
+
+  .curve-wrap {
+    background:#141417; border:1px solid var(--border); border-radius:5px; padding:8px;
+  }
+  .curve-bars { display:flex; justify-content:space-between; gap:4px; margin-bottom:6px; flex-wrap:wrap; }
+  .curve-bars button { padding:2px 6px; font-size:11px; }
+  #curveCanvas {
+    width:220px; height:220px; display:block; margin:0 auto;
+    background:#19191d; border:1px solid #333; cursor:crosshair; border-radius:3px;
+  }
+
+  .box { margin-top:10px; padding:8px; background:#18181c; border:1px solid var(--border); border-radius:5px; line-height:1.55; font-size:12px; }
   .warn { color:var(--warn); }
-  #crop { position:fixed; inset:30px; background:#000c; display:none; align-items:center; justify-content:center; flex-direction:column; }
+  #crop { position:fixed; inset:30px; background:#000d; display:none; align-items:center; justify-content:center; flex-direction:column; z-index:20; }
   #crop img { max-width:95%; max-height:85%; image-rendering:pixelated; }
-  @media (max-width: 1000px) { body { grid-template-columns: 1fr; height:auto; } #files { max-height:160px; } #img { max-height:70vh; } }
+  @media (max-width: 1050px) { body { grid-template-columns: 1fr; height:auto; overflow:auto; } #files { max-height:200px; } #img { max-height:65vh; } }
 </style>
 </head>
 <body>
 <aside id="files">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-    <span style="color:var(--dim)">负片（RAW / DNG）</span>
-    <button id="bScanRoll" style="padding:2px 6px;font-size:11px">分析整卷片基</button>
+    <span style="color:var(--dim);font-weight:600">胶片画格列表</span>
+    <button id="bScanRoll" style="padding:2px 7px;font-size:11px">重算整卷片基</button>
   </div>
-  <div id="rollSummary" style="font-size:11px;color:var(--dim);margin-bottom:6px"></div>
+  <div id="rollSummary" style="font-size:11px;color:var(--dim);margin-bottom:8px;line-height:1.4"></div>
   <div id="list"></div>
 </aside>
+
 <section id="main">
   <div id="bar">
     <select id="film"><option value="color">彩色负片</option><option value="bw">黑白负片</option></select>
     <button id="bPos" class="on">正片</button><button id="bNeg">负片</button>
-    <span style="width:8px"></span>
-    <button id="bAuto">自动参数</button><button id="bReset">重置</button>
-    <span style="width:8px"></span>
-    <span style="color:var(--dim);font-size:12px">片基：</span>
-    <button id="bAutoBase" class="on" title="① 本帧自动片基（B0，默认）">① 本帧 B0</button>
+    <button id="bCompare" title="按住对比（或按住键盘空格键）：在当前调整结果与初始自动起点之间切换">按住对比(Space)</button>
+    <span class="sep"></span>
+    <button id="bAuto" title="应用 NOREF_V3 自适应冲印参数（自动曝光 + 高光保护 + 柔和反差）">自动校色</button>
+    <button id="bReset" title="全部滑条与曲线归零/恢复默认">重置</button>
+    <span class="sep"></span>
+    <span style="color:var(--dim);font-size:11.5px">片基：</span>
+    <button id="bAutoBase" title="① 本帧自动片基（B0）">① 本帧 B0</button>
     <button id="bPick" title="② 在预览图上拖拽框选未曝光片边/片基（Manual）">② 框选片边</button>
-    <button id="bRollDQ" title="③ 整卷片基色度 + 48×48 全幅块分位数解耦黑点（DQ(c_roll)）">③ 整卷解耦 DQ</button>
-    <button id="bRollB1" title="④ 整卷完整片基向量（B1）">④ 整卷 B1</button>
-    <span style="width:8px"></span>
+    <button id="bRollNat" class="on" title="③ 整卷自然融合（推荐：纸黑余量 + 防截断解耦，偏色/失败帧自动启用）">③ 整卷自然(推荐)</button>
+    <button id="bRollDQ" title="④ 整卷色度 + 48×48 全幅块 0.1% 分位数解耦黑点（DQ(c_roll)）">④ 整卷 DQ</button>
+    <button id="bRollB1" title="⑤ 整卷完整片基向量（B1）">⑤ 整卷 B1</button>
+    <span class="sep"></span>
     <button id="b11">1:1 局部</button>
     <span style="flex:1"></span>
-    <button id="bExport">导出 16 位 TIFF</button>
+    <button id="bExport" style="background:#2e5c38;border-color:#438452">导出 16 位 TIFF</button>
   </div>
   <div id="stage"><div id="wrap"><img id="img" alt=""><canvas id="ov"></canvas></div></div>
-  <div id="status">选择左侧的一张负片。预览是缩小后的近似；用“1:1 局部”检查饱和与裁切。</div>
+  <div id="status">选择左侧的一张负片。双击任意滑条或标签可立即归零；按住空格键对比调整前后。</div>
 </section>
-<aside id="side"><div id="sliders"></div><div class="box" id="info">未打开照片</div><div class="box" id="exp" style="display:none"></div></aside>
+
+<aside id="side">
+  <div class="sec-title"><span>实时 RGB 直方图</span><span id="lumaMed" style="font-weight:400"></span></div>
+  <div class="hist-box">
+    <canvas id="histCanvas" width="300" height="96"></canvas>
+    <div class="hist-meta">
+      <span id="clipBlack">黑位裁切: 0.00%</span>
+      <span id="clipWhite">高光裁切: 0.00%</span>
+    </div>
+  </div>
+
+  <div class="sec-title">
+    <span>白平衡（White Balance）</span>
+    <button id="bWbPick" style="padding:2px 7px;font-size:11px" title="点击画面中的中性灰/白区域自动吸取白平衡">吸管吸取</button>
+  </div>
+  <div id="wbSliders"></div>
+
+  <div class="sec-title"><span>影调（Tone · 双击归零）</span></div>
+  <div id="toneSliders"></div>
+
+  <div id="softnessBox" class="row" style="display:none;margin-top:6px;padding-top:4px;border-top:1px dashed var(--border)">
+    <label id="lbl_softness"><span>整卷黑位柔和度（DQ ↔ B1）</span><span class="v" id="v_softness">50</span></label>
+    <input type="range" id="s_softness" min="0" max="100" step="5" value="50">
+  </div>
+
+  <div class="sec-title"><span>色彩与乳剂斜率（Color &amp; Slope）</span></div>
+  <div id="colorSliders"></div>
+
+  <div class="sec-title"><span>色调曲线（Tone Curve）</span></div>
+  <div class="curve-wrap">
+    <div class="curve-bars">
+      <div>
+        <button id="ch_rgb" class="on">RGB</button>
+        <button id="ch_r">R</button>
+        <button id="ch_g">G</button>
+        <button id="ch_b">B</button>
+      </div>
+      <div>
+        <button id="cp_linear">线性</button>
+        <button id="cp_soft">柔和</button>
+        <button id="cp_standard">标准</button>
+        <button id="cp_matte" title="纸黑克制托底（Matte Paper Black）">纸黑</button>
+        <button id="cp_classic">浓郁</button>
+      </div>
+    </div>
+    <canvas id="curveCanvas" width="220" height="220"></canvas>
+    <div style="font-size:11px;color:var(--dim);margin-top:5px;text-align:center">点击添加控制点，拖拽调整，双击控制点删除</div>
+  </div>
+
+  <div class="sec-title"><span>参数复制与局部同步</span></div>
+  <div style="display:flex;gap:5px;flex-wrap:wrap">
+    <button id="bCopy" style="flex:1">复制参数</button>
+    <button id="bPaste" style="flex:1" disabled>粘贴参数</button>
+    <button id="bSync3" style="flex:1" title="将当前白平衡与影调参数同步到相邻后 3 帧（不做一键整卷同步）">同步后 3 帧</button>
+  </div>
+
+  <div class="box" id="info">未打开照片</div>
+  <div class="box" id="exp" style="display:none"></div>
+</aside>
+
 <div id="crop"><img id="cropImg" alt=""><div style="margin-top:8px"><span id="cropInfo"></span> <button id="cropClose">关闭</button></div></div>
+
 <script>
 const $ = id => document.getElementById(id);
-const NAMES = {ev:"曝光 ev", temp:"色温（暖 +）", tint:"色调（品 +）", sat:"饱和度", contrast:"反差", midtone:"中灰", shoulder:"高光肩部"};
-const STEP = {ev:0.05, temp:0.02, tint:0.02, sat:0.02, contrast:0.02, midtone:0.005, shoulder:0.01};
-const BASE_LABELS = {auto:"① 本帧自动（B0）", manual:"② 手动框选区域（Manual）", roll_dq:"③ 整卷色度 + 解耦黑点（DQ(c_roll)）", roll_b1:"④ 整卷完整片基（B1）"};
-let meta = null, params = {}, mode = "pos", tool = null, seq = 0, timer = null, drag = null, busy = false;
-let rollData = {}, currentRel = null;
-const DEP = ["bPos", "bNeg", "bAuto", "bReset", "bPick", "bAutoBase", "bRollDQ", "bRollB1", "b11", "bExport", "film"];
-// while a photo is loading (or the base is re-estimated) nothing may act on the previous one
-function setBusy(b) { busy = b; for (const id of DEP) $(id).disabled = b; document.querySelectorAll("#sliders input").forEach(x => x.disabled = b); $("list").style.pointerEvents = b ? "none" : ""; }
+const BASE_LABELS = {
+  auto:"① 本帧自动（B0）", manual:"② 手动框选片边（Manual）",
+  roll_nat:"③ 整卷自然融合（推荐）", roll_dq:"④ 整卷解耦（DQ）", roll_b1:"⑤ 整卷完整片基（B1）"
+};
+
+// UI slider specifications: mapping between user-facing Lightroom scale (-100..+100) and internal RenderParams
+const UI_SLIDERS = [
+  {group:"wbSliders", key:"temp", label:"色温 Temp（冷 ↔ 暖）", cls:"wb-temp", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"wbSliders", key:"tint", label:"色调 Tint（绿 ↔ 洋红）", cls:"wb-tint", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+
+  {group:"toneSliders", key:"ev", label:"曝光 Exposure (EV)", cls:"", min:-3.0, max:3.0, step:0.05, def:0.0,
+   toUI: v => Number(v.toFixed(2)), fromUI: u => u, fmt: u => (u >= 0 ? "+" : "") + Number(u).toFixed(2)},
+  {group:"toneSliders", key:"contrast", label:"对比度 Contrast", cls:"", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round((v >= 1.15 ? (v - 1.15) / 0.85 : (v - 1.15) / 0.65) * 100),
+   fromUI: u => u >= 0 ? 1.15 + (u / 100) * 0.85 : 1.15 + (u / 100) * 0.65,
+   fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"toneSliders", key:"highlights", label:"高光 Highlights", cls:"", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"toneSliders", key:"shadows", label:"阴影 Shadows", cls:"", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"toneSliders", key:"whites", label:"白色色阶 Whites", cls:"", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"toneSliders", key:"blacks", label:"黑色色阶 Blacks（+柔和 / −压实）", cls:"", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"toneSliders", key:"shoulder", label:"高光滚降肩部 Shoulder", cls:"", min:0, max:100, step:1, def:15,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => "" + u},
+
+  {group:"colorSliders", key:"vibrance", label:"自然饱和度 Vibrance", cls:"", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"colorSliders", key:"sat", label:"饱和度 Saturation", cls:"", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round((v - 1.0) * 100), fromUI: u => 1.0 + u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"colorSliders", key:"slope_r", label:"红层反差斜率 Red Ratio", cls:"", min:-50, max:50, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"colorSliders", key:"slope_b", label:"蓝层反差斜率 Blue Ratio", cls:"", min:-50, max:50, step:1, def:0,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+];
+
+let meta = null, params = {}, autoStartParams = {}, savedPerFile = {}, clipboardParams = null;
+let mode = "pos", tool = null, seq = 0, timer = null, drag = null, busy = false, comparing = false;
+let rollData = {}, fileList = [], currentRel = null, softness = 0.5;
+let curveChan = "rgb", curves = {rgb:[[0,0],[1,1]], r:[[0,0],[1,1]], g:[[0,0],[1,1]], b:[[0,0],[1,1]]};
+let dragCurveIdx = -1, lastHistBins = null;
+
+const DEP = ["bPos", "bNeg", "bCompare", "bAuto", "bReset", "bPick", "bAutoBase", "bRollNat", "bRollDQ", "bRollB1", "b11", "bWbPick", "bExport", "film"];
+function setBusy(b) {
+  busy = b;
+  for (const id of DEP) if ($(id)) $(id).disabled = b;
+  document.querySelectorAll("#side input").forEach(x => x.disabled = b);
+  $("list").style.pointerEvents = b ? "none" : "";
+}
 function tok() { return meta ? meta.token : ""; }
 function folderOf(rel) { const i = rel ? rel.lastIndexOf("/") : -1; return i >= 0 ? rel.slice(0, i) : "."; }
+
+function defaultNaturalParams() {
+  return {
+    ev:0.0, temp:0.0, tint:0.0, sat:1.0, contrast:1.15, midtone:0.22, shoulder:0.15,
+    highlights:0.0, shadows:0.0, whites:0.0, blacks:0.0, vibrance:0.0, slope_r:0.0, slope_b:0.0,
+    tone_curve:{}
+  };
+}
+
+function serializeParams(src) {
+  const p = Object.assign({}, src || params);
+  const tc = {};
+  for (const ch of ["rgb", "r", "g", "b"]) {
+    const pts = curves[ch];
+    if (pts && !(pts.length === 2 && pts[0][0] === 0 && pts[0][1] === 0 && pts[1][0] === 1 && pts[1][1] === 1)) {
+      tc[ch] = pts.map(pt => [Number(pt[0].toFixed(4)), Number(pt[1].toFixed(4))]);
+    }
+  }
+  p.tone_curve = tc;
+  return p;
+}
+
+function loadCurvesFromParams(p) {
+  curves = {rgb:[[0,0],[1,1]], r:[[0,0],[1,1]], g:[[0,0],[1,1]], b:[[0,0],[1,1]]};
+  if (p && p.tone_curve) {
+    for (const ch of ["rgb", "r", "g", "b"]) {
+      if (p.tone_curve[ch] && p.tone_curve[ch].length >= 2) {
+        curves[ch] = p.tone_curve[ch].map(pt => [Number(pt[0]), Number(pt[1])]);
+      }
+    }
+  }
+  drawCurveCanvas();
+}
 
 async function api(path, body) {
   const r = await fetch(path, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {});
   const ct = r.headers.get("Content-Type") || "";
   if (ct.startsWith("application/json")) {
     const j = await r.json();
-    if (r.status === 409) throw new Error("这张图已在别的窗口被换掉或源文件已改动，请在本窗口重新打开（" + j.error + "）");
-    if (!r.ok) throw new Error(j.error); return j;
+    if (r.status === 409) throw new Error("这张图已在别的窗口被换掉或源文件已改动，请重新打开（" + j.error + "）");
+    if (!r.ok) throw new Error(j.error);
+    return j;
   }
   if (!r.ok) throw new Error(r.status);
   return r;
 }
 function status(t, warn) { $("status").textContent = t; $("status").className = warn ? "warn" : ""; }
-function pq() { const p = {}; for (const k in NAMES) p[k] = params[k]; return "token=" + tok() + "&p=" + encodeURIComponent(JSON.stringify(p)); }
+function pq(overrideParams) {
+  const p = serializeParams(overrideParams);
+  return "token=" + tok() + "&p=" + encodeURIComponent(JSON.stringify(p));
+}
 
 function syncBaseButtons() {
   const m = meta && meta.base ? meta.base.method : null;
   $("bAutoBase").classList.toggle("on", m === "auto");
   $("bPick").classList.toggle("on", tool === "pick" || m === "manual");
+  $("bRollNat").classList.toggle("on", m === "roll_nat");
   $("bRollDQ").classList.toggle("on", m === "roll_dq");
   $("bRollB1").classList.toggle("on", m === "roll_b1");
+  $("bWbPick").classList.toggle("on", tool === "wb");
+  $("b11").classList.toggle("on", tool === "11");
+  $("softnessBox").style.display = m === "roll_nat" ? "block" : "none";
 }
 
 function updateFileBadges() {
-  document.querySelectorAll("#list .f").forEach(el => {
+  document.querySelectorAll("#list .fcard").forEach(el => {
     const rel = el.dataset.rel;
     const fd = rollData[folderOf(rel)];
     const fr = fd && fd.frames ? fd.frames[rel] : null;
     const tag = el.querySelector(".tag");
+    const ed = el.querySelector(".ed");
+    if (ed) ed.textContent = savedPerFile[rel] ? "已调" : "";
     if (!fr) { tag.textContent = ""; tag.className = "tag"; return; }
     if (fr.own_error) {
-      tag.textContent = "B0失败!";
+      tag.textContent = "B0失败→自动整卷";
       tag.className = "tag warn";
     } else if (fr.chroma_part != null) {
       const dc = fr.chroma_part, dl = fr.level_diff;
@@ -125,18 +345,23 @@ function updateFileBadges() {
 async function scanRoll(folder) {
   folder = folder || (currentRel ? folderOf(currentRel) : ".");
   $("bScanRoll").disabled = true;
-  $("rollSummary").textContent = `正在计算整卷片基（${folder}）……`;
+  $("rollSummary").textContent = `正在加载整卷片基与缓存（${folder}）……`;
   try {
     const j = await api("/api/roll?folder=" + encodeURIComponent(folder));
     rollData[folder] = j;
     if (j.roll) {
       const nWarn = Object.values(j.frames).filter(x => x.flag).length;
-      $("rollSummary").innerHTML = `整卷片基已就绪（${j.n_files} 帧，采用 ${j.roll.used.join(", ")}）` +
-        (nWarn ? `<br><span class="warn">提示：${nWarn} 帧 ΔC ≥ 0.10 D 或片基在画面内</span>` : "");
+      $("rollSummary").innerHTML = `整卷片基已就绪（${j.n_files} 帧，基准 ${j.roll.used.map(x => x.split("_")[0]).join(", ")}）` +
+        (nWarn ? `<br><span class="warn">已标出 ${nWarn} 帧异常（点击时自动启用「③ 整卷自然」）</span>` : "");
     } else {
       $("rollSummary").innerHTML = `<span class="warn">整卷片基不可用：${j.error || "未知"}</span>`;
     }
     updateFileBadges();
+    // Refresh thumbnails now that roll base is ready
+    document.querySelectorAll("#list .fcard img.fthumb").forEach(img => {
+      const rel = img.dataset.rel;
+      if (rel && !img.src) img.src = `/api/thumb?path=${encodeURIComponent(rel)}&film=${$("film").value}`;
+    });
     if (meta) showInfo();
   } catch (e) {
     $("rollSummary").innerHTML = `<span class="warn">整卷计算失败：${e.message}</span>`;
@@ -147,72 +372,191 @@ async function scanRoll(folder) {
 
 async function loadFiles() {
   const j = await api("/api/files");
+  fileList = j.files || [];
   $("list").innerHTML = "";
-  if (!j.files.length) { $("list").textContent = "（没有可打开的文件）"; return; }
-  for (const f of j.files) {
-    const d = document.createElement("div"); d.className = "f"; d.dataset.rel = f; d.title = f;
-    d.innerHTML = `<span class="fn">${f}</span><span class="tag"></span>`;
-    d.onclick = () => openFile(f, d); $("list").appendChild(d);
+  if (!fileList.length) { $("list").textContent = "（没有可打开的文件）"; return; }
+  for (const f of fileList) {
+    const d = document.createElement("div"); d.className = "fcard"; d.dataset.rel = f; d.title = f;
+    const shortName = f.split("/").pop();
+    d.innerHTML = `<img class="fthumb" data-rel="${f}" loading="lazy" alt="">
+      <div class="fmeta">
+        <div class="fn">${shortName}</div>
+        <div class="fsub"><span class="tag"></span><span class="ed" style="color:var(--acc)"></span></div>
+      </div>`;
+    d.onclick = () => openFile(f, d);
+    $("list").appendChild(d);
   }
-  // Auto-compute roll base in the background when the root folder is a single roll (<= 60 files)
-  const folders = new Set(j.files.map(folderOf));
-  if (folders.size === 1 && j.files.length >= 2 && j.files.length <= 60) {
-    scanRoll([...folders][0]);
+  const folders = new Set(fileList.map(folderOf));
+  if (folders.size === 1 && fileList.length >= 2 && fileList.length <= 60) {
+    await scanRoll([...folders][0]);
+  } else {
+    document.querySelectorAll("#list .fcard img.fthumb").forEach(img => {
+      img.src = `/api/thumb?path=${encodeURIComponent(img.dataset.rel)}&film=${$("film").value}`;
+    });
   }
 }
 
-async function openFile(f, el, baseMode) {
-  document.querySelectorAll(".f").forEach(x => x.classList.remove("on"));
-  if (!el) el = [...document.querySelectorAll(".f")].find(x => x.dataset.rel === f);
+async function openFile(f, el, explicitBaseMode) {
+  if (currentRel && meta) {
+    savedPerFile[currentRel] = JSON.parse(JSON.stringify(serializeParams()));
+  }
+  document.querySelectorAll(".fcard").forEach(x => x.classList.remove("on"));
+  if (!el) el = [...document.querySelectorAll(".fcard")].find(x => x.dataset.rel === f);
   if (el) el.classList.add("on");
   currentRel = f;
-  baseMode = baseMode || "auto";
-  status(`正在解码、估计片基（${BASE_LABELS[baseMode] || baseMode}）、反转……`);
-  const same = meta && meta.path === f;
-  setBusy(true); ++seq;  // responses of earlier requests are dropped
-  try { meta = await api("/api/open", {path:f, film:$("film").value, base_mode:baseMode}); }
-  catch (e) {
+  status(`正在打开 ${f} ……`);
+  setBusy(true); ++seq;
+  try {
+    const body = {path:f, film:$("film").value, softness:softness};
+    if (explicitBaseMode) body.base_mode = explicitBaseMode;
+    meta = await api("/api/open", body);
+  } catch (e) {
     meta = null; $("img").removeAttribute("src"); setBusy(false); syncBaseButtons();
-    $("info").innerHTML = `<b>${f}</b><br><span class="warn">本帧自动片基失败：${e.message}</span><br>可点击上方 <b>③ 整卷解耦 DQ</b> 或 <b>④ 整卷 B1</b> 使用整卷片基打开。`;
-    status("打不开（可切换至 ③ 整卷解耦 DQ 或 ④ 整卷 B1 重试）：" + e.message, true);
+    status("打不开：" + e.message, true);
     return;
   }
-  setBusy(false); syncBaseButtons();
-  // a different photo starts from the defaults; re-opening the same one (film switch) keeps the sliders
-  if (!same || !Object.keys(params).length) params = Object.assign({}, meta.defaults);
-  buildSliders(); showInfo(); refresh(); status("已打开 " + meta.path);
+  setBusy(false);
+  softness = meta.base && meta.base.softness != null ? meta.base.softness : 0.5;
+  $("s_softness").value = Math.round(softness * 100);
+  $("v_softness").textContent = Math.round(softness * 100);
+  syncBaseButtons();
+
+  // Default to NOREF_V3 adaptive auto parameters on first open of each photo!
+  autoStartParams = meta.auto && meta.auto.params ? Object.assign(defaultNaturalParams(), meta.auto.params) : defaultNaturalParams();
+  if (savedPerFile[f]) {
+    params = Object.assign(defaultNaturalParams(), savedPerFile[f]);
+    loadCurvesFromParams(params);
+  } else {
+    params = Object.assign({}, autoStartParams);
+    loadCurvesFromParams(params);
+  }
+  buildSliders(); updateFileBadges(); showInfo(); refresh();
+  status(`已打开 ${meta.path}（${BASE_LABELS[meta.base.method] || meta.base.method} + 自动校色起点）`);
 }
+
 function buildSliders() {
-  const box = $("sliders"); box.innerHTML = "";
-  for (const k in NAMES) {
-    const [lo, hi] = meta.sliders[k];
+  for (const gid of ["wbSliders", "toneSliders", "colorSliders"]) $(gid).innerHTML = "";
+  for (const spec of UI_SLIDERS) {
+    const box = $(spec.group);
+    const valInt = params[spec.key] != null ? params[spec.key] : spec.fromUI(spec.def);
+    const uiVal = spec.toUI(valInt);
     const row = document.createElement("div"); row.className = "row";
-    row.innerHTML = `<label><span>${NAMES[k]}</span><span id="v_${k}"></span></label>
-      <input type="range" id="s_${k}" min="${lo}" max="${hi}" step="${STEP[k]}" value="${params[k]}">`;
+    row.innerHTML = `<label title="双击归零/恢复默认值"><span>${spec.label}</span><span class="v" id="v_${spec.key}">${spec.fmt(uiVal)}</span></label>
+      <input type="range" class="${spec.cls}" id="s_${spec.key}" min="${spec.min}" max="${spec.max}" step="${spec.step}" value="${uiVal}">`;
     box.appendChild(row);
     const s = row.querySelector("input");
-    s.oninput = () => { params[k] = parseFloat(s.value); $("v_" + k).textContent = params[k].toFixed(3); schedule(); };
-    $("v_" + k).textContent = Number(params[k]).toFixed(3);
+    const lbl = row.querySelector("label");
+    s.oninput = () => {
+      const u = parseFloat(s.value);
+      params[spec.key] = spec.fromUI(u);
+      $("v_" + spec.key).textContent = spec.fmt(u);
+      schedule();
+    };
+    const resetOne = () => {
+      s.value = spec.def;
+      params[spec.key] = spec.fromUI(spec.def);
+      $("v_" + spec.key).textContent = spec.fmt(spec.def);
+      schedule();
+    };
+    s.ondblclick = resetOne;
+    lbl.ondblclick = resetOne;
   }
 }
-function setParams(p) { for (const k in NAMES) params[k] = p[k]; buildSliders(); refresh(); }
-function schedule() { clearTimeout(timer); timer = setTimeout(refresh, 90); }
+
+$("s_softness").oninput = () => {
+  softness = parseFloat($("s_softness").value) / 100;
+  $("v_softness").textContent = Math.round(softness * 100);
+};
+$("s_softness").onchange = () => { if (meta && meta.base.method === "roll_nat") switchBaseMode("roll_nat"); };
+$("lbl_softness").ondblclick = () => {
+  softness = 0.5; $("s_softness").value = 50; $("v_softness").textContent = "50";
+  if (meta && meta.base.method === "roll_nat") switchBaseMode("roll_nat");
+};
+
+function setParams(p) {
+  params = Object.assign(defaultNaturalParams(), p);
+  loadCurvesFromParams(params);
+  buildSliders();
+  if (currentRel) savedPerFile[currentRel] = JSON.parse(JSON.stringify(serializeParams()));
+  updateFileBadges();
+  refresh();
+}
+function schedule() { clearTimeout(timer); timer = setTimeout(refresh, 75); }
+
+function updateHistogramFromImage(imgEl, bb, ch) {
+  const hc = $("histCanvas");
+  const ctx = hc.getContext("2d");
+  const W = hc.width, H = hc.height;
+  ctx.clearRect(0, 0, W, H);
+  if (!imgEl || !imgEl.naturalWidth) return;
+  const off = document.createElement("canvas");
+  const sw = Math.min(320, imgEl.naturalWidth), sh = Math.min(240, imgEl.naturalHeight);
+  off.width = sw; off.height = sh;
+  const octx = off.getContext("2d");
+  octx.drawImage(imgEl, 0, 0, sw, sh);
+  const data = octx.getImageData(0, 0, sw, sh).data;
+  const rB = new Uint32Array(256), gB = new Uint32Array(256), bB = new Uint32Array(256), yB = new Uint32Array(256);
+  let ySum = 0, nPx = data.length >> 2;
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i + 1], b = data[i + 2];
+    const y = (r * 54 + g * 183 + b * 19) >> 8;
+    rB[r]++; gB[g]++; bB[b]++; yB[y]++;
+    ySum += y;
+  }
+  lastHistBins = yB;
+  drawCurveCanvas();
+  // Smooth and normalise (ignore extreme 0 and 255 spikes for vertical scaling)
+  let peak = 1;
+  for (let i = 2; i < 254; i++) {
+    peak = Math.max(peak, rB[i], gB[i], bB[i], yB[i]);
+  }
+  const drawCh = (bins, fill, stroke) => {
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    for (let i = 0; i < 256; i++) {
+      const v = Math.min(1.0, ((bins[Math.max(0, i - 1)] + 2 * bins[i] + bins[Math.min(255, i + 1)]) * 0.25) / peak);
+      ctx.lineTo((i / 255) * W, H - v * (H - 6));
+    }
+    ctx.lineTo(W, H);
+    ctx.closePath();
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.strokeStyle = stroke; ctx.lineWidth = 1.2; ctx.stroke();
+  };
+  ctx.globalCompositeOperation = "screen";
+  drawCh(rB, "rgba(235, 75, 75, 0.35)", "rgba(255, 95, 95, 0.85)");
+  drawCh(gB, "rgba(75, 220, 100, 0.35)", "rgba(95, 240, 120, 0.85)");
+  drawCh(bB, "rgba(75, 140, 245, 0.35)", "rgba(100, 165, 255, 0.85)");
+  ctx.globalCompositeOperation = "source-over";
+  drawCh(yB, "rgba(220, 220, 230, 0.12)", "rgba(230, 230, 240, 0.6)");
+
+  $("lumaMed").textContent = `均值 ${(ySum / Math.max(nPx, 1) / 255 * 100).toFixed(0)}%`;
+  if (bb != null && ch != null) {
+    $("clipBlack").innerHTML = `黑位: <span class="${bb > 0.05 ? "warn" : ""}">${(bb * 100).toFixed(2)}%</span>`;
+    $("clipWhite").innerHTML = `高光: <span class="${ch > 0.005 ? "warn" : ""}">${(ch * 100).toFixed(2)}%</span>`;
+  }
+}
+
 async function refresh() {
   if (!meta || busy) return;
   const my = ++seq, token = tok();
+  const activeParams = comparing ? autoStartParams : params;
+  if (!comparing && currentRel) savedPerFile[currentRel] = JSON.parse(JSON.stringify(serializeParams()));
   try {
-    const r = await api(mode === "pos" ? "/api/render?" + pq() : "/api/negative?token=" + token);
-    if (my !== seq || token !== tok()) return;  // a newer request or another photo superseded this one
+    const r = await api(mode === "pos" ? "/api/render?" + pq(activeParams) : "/api/negative?token=" + token);
+    if (my !== seq || token !== tok()) return;
+    const bb = mode === "pos" ? parseFloat(r.headers.get("X-Below-Black")) : null;
+    const ch = mode === "pos" ? parseFloat(r.headers.get("X-Clip-High")) : null;
     const blob = await r.blob(); const url = URL.createObjectURL(blob);
-    const old = $("img").src; $("img").src = url; if (old.startsWith("blob:")) URL.revokeObjectURL(old);
-    if (mode === "pos") {
-      const bb = parseFloat(r.headers.get("X-Below-Black")), ch = parseFloat(r.headers.get("X-Clip-High"));
-      $("stats").innerHTML = `画面区域内，按预览像素统计<br>黑点以下（至少一个通道）：<span class="${bb > 0.1 ? "warn" : ""}">${(bb*100).toFixed(2)}%</span><br>` +
-        `高光裁切（至少一个通道）：<span class="${ch > 0.005 ? "warn" : ""}">${(ch*100).toFixed(2)}%</span>`;
-    }
+    const old = $("img").src;
+    $("img").onload = () => {
+      drawOverlay();
+      updateHistogramFromImage($("img"), bb, ch);
+      if (old && old.startsWith("blob:")) URL.revokeObjectURL(old);
+    };
+    $("img").src = url;
   } catch (e) { if (my === seq) status("渲染失败：" + e.message, true); }
-  $("img").onload = drawOverlay;
 }
+
 function showInfo() {
   const b = meta.base, w = b.warnings || [];
   const fd = rollData[folderOf(meta.path)];
@@ -222,19 +566,16 @@ function showInfo() {
   let rollLine = "";
   if (dc != null && dl != null) {
     const warnC = dc >= 0.1;
-    rollLine = `<br>相对整卷片基：色度差 ΔC = <span class="${warnC ? "warn" : ""}">${dc.toFixed(3)} D</span>，` +
-      `水平差 Δℓ = ${dl >= 0 ? "+" : ""}${dl.toFixed(3)} D` +
-      (warnC && b.method === "auto" ? `<br><span class="warn">提示：ΔC ≥ 0.10 D（本帧片基可能误取有色景物），建议点「③ 整卷解耦 DQ」对比</span>` : "");
+    rollLine = `<br>相对整卷片基：ΔC = <span class="${warnC ? "warn" : ""}">${dc.toFixed(3)} D</span>，` +
+      `Δℓ = ${dl >= 0 ? "+" : ""}${dl.toFixed(3)} D`;
   }
-  const dloLine = b.d_lo_shared != null ? `<br>解耦共享黑点 d_lo：${b.d_lo_shared.toFixed(3)} D（48×48 全幅块 0.1%）` : "";
-  $("info").innerHTML = `<b>${meta.path}</b><br>胶片：${meta.film === "bw" ? "黑白" : "彩色"}；预览 ${meta.preview_shape[1]}×${meta.preview_shape[0]}（1/${meta.factor}）<br>` +
-    `片基模式：<b>${BASE_LABELS[b.method] || b.method}</b>` +
-    (b.inside_image != null ? `<br>B0 候选块在画面内 ${(b.inside_image*100).toFixed(0)}%` + (b.inside_image > 0.5 ? ` <span class="warn">（可能没有片边，片基可能落在景物上）</span>` : "") : "") +
+  const dloLine = b.d_lo_shared != null ? `<br>锚定黑点 d_lo：${b.d_lo_shared.toFixed(3)} D` : "";
+  $("info").innerHTML = `<b>${meta.path}</b><br>预览 ${meta.preview_shape[1]}×${meta.preview_shape[0]}（1/${meta.factor}） · ` +
+    `片基：<b>${BASE_LABELS[b.method] || b.method}</b>` +
     rollLine + dloLine +
-    (w.length ? `<br><span class="warn">片基警告：${w.join("；")}</span>` : "") +
-    `<br>自动参数：${meta.auto ? meta.auto.status + (meta.auto.flags && meta.auto.flags.length ? "（" + meta.auto.flags.join("，") + "）" : "") : "无"}` +
-    `<div id="stats" style="margin-top:6px"></div>`;
+    (w.length ? `<br><span class="warn">片基提示：${w.join("；")}</span>` : "");
 }
+
 function drawOverlay() {
   const c = $("ov"), im = $("img"); c.width = im.clientWidth; c.height = im.clientHeight;
   const g = c.getContext("2d"); g.clearRect(0, 0, c.width, c.height);
@@ -248,12 +589,26 @@ function toPreview(ev) {
   const r = $("ov").getBoundingClientRect();
   return [(ev.clientX - r.left) * meta.preview_shape[1] / r.width, (ev.clientY - r.top) * meta.preview_shape[0] / r.height, ev.clientX - r.left, ev.clientY - r.top];
 }
-// picking and 1:1 work on the positive view only (the negative view is the camera's own JPEG, not sensor-aligned)
-$("ov").onmousedown = ev => { if (!meta || tool !== "pick" || mode !== "pos") return; const [, , x, y] = toPreview(ev); drag = {x0:x, y0:y, x1:x, y1:y}; };
+
+$("ov").onmousedown = ev => {
+  if (!meta || mode !== "pos") return;
+  if (tool === "pick") { const [, , x, y] = toPreview(ev); drag = {x0:x, y0:y, x1:x, y1:y}; }
+};
 $("ov").onmousemove = ev => { if (!drag) return; const [, , x, y] = toPreview(ev); drag.x1 = x; drag.y1 = y; drawOverlay(); };
 $("ov").onmouseup = async ev => {
   if (!meta || mode !== "pos") { drag = null; return; }
   if (tool === "11") { const [px, py] = toPreview(ev); return showCrop(px, py); }
+  if (tool === "wb") {
+    const [px, py] = toPreview(ev);
+    status("正在吸取中性灰白平衡……");
+    try {
+      const res = await api("/api/wb_pick", {token:tok(), x:px, y:py});
+      params.temp = res.temp; params.tint = res.tint;
+      tool = null; syncBaseButtons(); buildSliders(); refresh();
+      status(`已吸取白平衡：色温 ${Math.round(res.temp * 100)}，色调 ${Math.round(res.tint * 100)}`);
+    } catch (e) { status("白平衡吸取失败：" + e.message, true); }
+    return;
+  }
   if (!drag) return;
   const r = $("ov").getBoundingClientRect(), s = meta.preview_shape[1] / r.width;
   const l = Math.round(Math.min(drag.x0, drag.x1) * s), t = Math.round(Math.min(drag.y0, drag.y1) * s);
@@ -267,6 +622,7 @@ $("ov").onmouseup = async ev => {
     meta = m; tool = null; setBusy(false); syncBaseButtons(); showInfo(); refresh(); status("片基：② 手动框选区域");
   } catch (e) { setBusy(false); syncBaseButtons(); status("片基设置失败：" + e.message, true); drawOverlay(); }
 };
+
 async function showCrop(px, py) {
   const size = 600, f = meta.factor;
   const t = Math.max(0, Math.round(py * f - size / 2)), l = Math.max(0, Math.round(px * f - size / 2));
@@ -278,44 +634,238 @@ async function showCrop(px, py) {
     $("crop").style.display = "flex"; status("1:1 局部");
   } catch (e) { status("1:1 失败：" + e.message, true); }
 }
-function setTool(t) { tool = tool === t ? null : t; syncBaseButtons(); $("b11").classList.toggle("on", tool === "11"); }
+
+function setTool(t) { tool = tool === t ? null : t; syncBaseButtons(); }
 $("bPick").onclick = () => setTool("pick");
+$("bWbPick").onclick = () => { setTool("wb"); if (tool === "wb") status("请在画面中点击您认为应当是中性灰/白色的位置"); };
 $("b11").onclick = () => setTool("11");
 $("bScanRoll").onclick = () => scanRoll();
 $("cropClose").onclick = () => { $("crop").style.display = "none"; };
 $("bPos").onclick = () => { mode = "pos"; $("bPos").classList.add("on"); $("bNeg").classList.remove("on"); refresh(); };
 $("bNeg").onclick = () => { mode = "neg"; $("bNeg").classList.add("on"); $("bPos").classList.remove("on"); refresh(); };
 $("bAuto").onclick = () => { if (meta && meta.auto) setParams(meta.auto.params); };
-$("bReset").onclick = () => { if (meta) setParams(meta.defaults); };
+$("bReset").onclick = () => { if (meta) setParams(defaultNaturalParams()); };
+
+// Hold-to-compare (button or Space key)
+function startCompare() { if (!meta || comparing) return; comparing = true; $("bCompare").classList.add("on"); status("对比：正在显示初始自动起点（松开恢复当前调整）"); refresh(); }
+function stopCompare() { if (!comparing) return; comparing = false; $("bCompare").classList.remove("on"); status("已恢复当前调整结果"); refresh(); }
+$("bCompare").onmousedown = startCompare;
+$("bCompare").onmouseup = stopCompare;
+$("bCompare").onmouseleave = stopCompare;
+window.addEventListener("keydown", ev => {
+  if (ev.code === "Space" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "BUTTON") {
+    ev.preventDefault(); startCompare();
+  }
+});
+window.addEventListener("keyup", ev => { if (ev.code === "Space") stopCompare(); });
 
 async function switchBaseMode(bm) {
   tool = null;
-  if (!meta && currentRel) { return openFile(currentRel, null, bm); }
+  if (!meta && currentRel) return openFile(currentRel, null, bm);
   if (!meta) return;
   status(`切换片基模式：${BASE_LABELS[bm]}……`);
   setBusy(true); ++seq;
   try {
-    const m = await api("/api/base", {mode:bm, token:tok()});
-    meta = m; setBusy(false); syncBaseButtons(); updateFileBadges(); showInfo(); refresh();
-    status(`片基模式：${BASE_LABELS[bm]}`);
+    const m = await api("/api/base", {mode:bm, softness:softness, token:tok()});
+    meta = m; setBusy(false);
+    if (meta.auto && meta.auto.params) {
+      autoStartParams = Object.assign(defaultNaturalParams(), meta.auto.params);
+      setParams(autoStartParams);
+    }
+    syncBaseButtons(); updateFileBadges(); showInfo(); refresh();
+    status(`片基模式：${BASE_LABELS[bm]}（已同步更新自适应曝光起点）`);
   } catch (e) { setBusy(false); syncBaseButtons(); status("片基切换失败：" + e.message, true); }
 }
 $("bAutoBase").onclick = () => switchBaseMode("auto");
+$("bRollNat").onclick = () => switchBaseMode("roll_nat");
 $("bRollDQ").onclick = () => switchBaseMode("roll_dq");
 $("bRollB1").onclick = () => switchBaseMode("roll_b1");
-$("film").onchange = () => { const on = document.querySelector(".f.on"); if (on) openFile(on.dataset.rel, on); };
+$("film").onchange = () => { const on = document.querySelector(".fcard.on"); if (on) openFile(on.dataset.rel, on); };
+
+// Copy / Paste / Sync adjacent 3 frames
+$("bCopy").onclick = () => {
+  if (!meta) return;
+  clipboardParams = JSON.parse(JSON.stringify(serializeParams()));
+  $("bPaste").disabled = false;
+  status("已复制当前画格参数");
+};
+$("bPaste").onclick = () => {
+  if (!meta || !clipboardParams) return;
+  setParams(clipboardParams);
+  status("已粘贴参数到当前画格");
+};
+$("bSync3").onclick = () => {
+  if (!meta || !currentRel) return;
+  const idx = fileList.indexOf(currentRel);
+  if (idx < 0) return;
+  const snap = JSON.parse(JSON.stringify(serializeParams()));
+  const targets = fileList.slice(idx + 1, idx + 4);
+  for (const t of targets) savedPerFile[t] = JSON.parse(JSON.stringify(snap));
+  updateFileBadges();
+  status(`已将当前调色参数同步到相邻后 ${targets.length} 帧（点开即生效）`);
+};
+
+// Interactive Tone Curve Canvas (monotone cubic Hermite spline in JS for display)
+function evalCurveJS(pts, x) {
+  const n = pts.length;
+  if (n < 2) return x;
+  if (x <= pts[0][0]) return pts[0][1];
+  if (x >= pts[n - 1][0]) return pts[n - 1][1];
+  if (n === 2) {
+    const t = (x - pts[0][0]) / Math.max(pts[1][0] - pts[0][0], 1e-6);
+    return pts[0][1] + t * (pts[1][1] - pts[0][1]);
+  }
+  const dx = [], dy = [], delta = [], m = new Array(n).fill(0);
+  for (let i = 0; i < n - 1; i++) {
+    dx.push(pts[i + 1][0] - pts[i][0]);
+    dy.push(pts[i + 1][1] - pts[i][1]);
+    delta.push(dy[i] / Math.max(dx[i], 1e-6));
+  }
+  m[0] = delta[0]; m[n - 1] = delta[n - 2];
+  for (let i = 1; i < n - 1; i++) {
+    if (delta[i - 1] * delta[i] <= 0) m[i] = 0;
+    else {
+      const w1 = 2 * dx[i] + dx[i - 1], w2 = dx[i] + 2 * dx[i - 1];
+      m[i] = (w1 + w2) / (w1 / delta[i - 1] + w2 / delta[i]);
+    }
+  }
+  let k = 0;
+  while (k < n - 2 && x > pts[k + 1][0]) k++;
+  const h = Math.max(dx[k], 1e-6), t = (x - pts[k][0]) / h, t2 = t * t, t3 = t2 * t;
+  const y = (2 * t3 - 3 * t2 + 1) * pts[k][1] + (t3 - 2 * t2 + t) * h * m[k] + (-2 * t3 + 3 * t2) * pts[k + 1][1] + (t3 - t2) * h * m[k + 1];
+  return Math.max(0, Math.min(1, y));
+}
+
+function drawCurveCanvas() {
+  const cv = $("curveCanvas"), ctx = cv.getContext("2d");
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  // Subtle backdrop histogram
+  if (lastHistBins) {
+    let pk = 1;
+    for (let i = 2; i < 254; i++) pk = Math.max(pk, lastHistBins[i]);
+    ctx.beginPath(); ctx.moveTo(0, H);
+    for (let i = 0; i < 256; i++) {
+      const v = Math.min(1, lastHistBins[i] / pk);
+      ctx.lineTo((i / 255) * W, H - v * (H * 0.85));
+    }
+    ctx.lineTo(W, H); ctx.closePath();
+    ctx.fillStyle = "rgba(255,255,255,0.06)"; ctx.fill();
+  }
+  // Quarter grid + diagonal
+  ctx.strokeStyle = "#2c2c34"; ctx.lineWidth = 1;
+  for (let i = 1; i <= 3; i++) {
+    const p = (i / 4) * W;
+    ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(W, p); ctx.stroke();
+  }
+  ctx.strokeStyle = "#3a3a44";
+  ctx.beginPath(); ctx.moveTo(0, H); ctx.lineTo(W, 0); ctx.stroke();
+
+  const colors = {rgb:"#e8e8ec", r:"#ff6b6b", g:"#51cf66", b:"#4dabf7"};
+  for (const ch of ["r", "g", "b", "rgb"]) {
+    if (ch !== curveChan && curves[ch].length === 2 && curves[ch][0][1] === 0 && curves[ch][1][1] === 1) continue;
+    const pts = curves[ch];
+    ctx.strokeStyle = colors[ch];
+    ctx.lineWidth = ch === curveChan ? 2.2 : 1.1;
+    ctx.globalAlpha = ch === curveChan ? 1.0 : 0.45;
+    ctx.beginPath();
+    for (let px = 0; px <= W; px += 2) {
+      const x = px / W, y = evalCurveJS(pts, x);
+      const py = (1 - y) * H;
+      if (px === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1.0;
+  const activePts = curves[curveChan];
+  for (let i = 0; i < activePts.length; i++) {
+    const cx = activePts[i][0] * W, cy = (1 - activePts[i][1]) * H;
+    ctx.beginPath(); ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
+    ctx.fillStyle = i === dragCurveIdx ? "#e0a040" : colors[curveChan];
+    ctx.fill(); ctx.strokeStyle = "#111"; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+}
+
+function curveCoords(ev) {
+  const r = $("curveCanvas").getBoundingClientRect();
+  const x = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width));
+  const y = Math.max(0, Math.min(1, 1 - (ev.clientY - r.top) / r.height));
+  return [x, y];
+}
+
+$("curveCanvas").onmousedown = ev => {
+  const [x, y] = curveCoords(ev);
+  const pts = curves[curveChan];
+  let best = -1, bestD = 0.06;
+  for (let i = 0; i < pts.length; i++) {
+    const d = Math.hypot(pts[i][0] - x, pts[i][1] - y);
+    if (d < bestD) { bestD = d; best = i; }
+  }
+  if (best >= 0) {
+    dragCurveIdx = best;
+  } else {
+    pts.push([x, y]);
+    pts.sort((a, b) => a[0] - b[0]);
+    dragCurveIdx = pts.findIndex(pt => pt[0] === x && pt[1] === y);
+  }
+  drawCurveCanvas(); schedule();
+};
+window.addEventListener("mousemove", ev => {
+  if (dragCurveIdx < 0) return;
+  const [x, y] = curveCoords(ev);
+  const pts = curves[curveChan];
+  if (dragCurveIdx === 0) {
+    pts[0][0] = 0.0; pts[0][1] = y;
+  } else if (dragCurveIdx === pts.length - 1) {
+    pts[pts.length - 1][0] = 1.0; pts[pts.length - 1][1] = y;
+  } else {
+    const lo = pts[dragCurveIdx - 1][0] + 0.02, hi = pts[dragCurveIdx + 1][0] - 0.02;
+    pts[dragCurveIdx][0] = Math.max(lo, Math.min(hi, x));
+    pts[dragCurveIdx][1] = y;
+  }
+  drawCurveCanvas(); schedule();
+});
+window.addEventListener("mouseup", () => { dragCurveIdx = -1; });
+$("curveCanvas").ondblclick = ev => {
+  const [x, y] = curveCoords(ev);
+  const pts = curves[curveChan];
+  for (let i = 1; i < pts.length - 1; i++) {
+    if (Math.hypot(pts[i][0] - x, pts[i][1] - y) < 0.07) {
+      pts.splice(i, 1); drawCurveCanvas(); schedule(); return;
+    }
+  }
+};
+
+for (const ch of ["rgb", "r", "g", "b"]) {
+  $("ch_" + ch).onclick = () => {
+    curveChan = ch;
+    for (const c of ["rgb", "r", "g", "b"]) $("ch_" + c).classList.toggle("on", c === ch);
+    drawCurveCanvas();
+  };
+}
+for (const preset of ["linear", "soft", "standard", "matte", "classic"]) {
+  $("cp_" + preset).onclick = () => {
+    if (!meta || !meta.curve_presets || !meta.curve_presets[preset]) return;
+    curves = {rgb:[[0,0],[1,1]], r:[[0,0],[1,1]], g:[[0,0],[1,1]], b:[[0,0],[1,1]]};
+    const pr = meta.curve_presets[preset];
+    for (const ch in pr) curves[ch] = pr[ch].map(pt => [pt[0], pt[1]]);
+    drawCurveCanvas(); schedule();
+  };
+}
+
 $("bExport").onclick = async () => {
   if (!meta) return; status("导出全分辨率 16 位 TIFF……");
   try {
-    const p = {}; for (const k in NAMES) p[k] = params[k];
-    const j = await api("/api/export", {params:p, encoding:"srgb", token:tok()});
+    const j = await api("/api/export", {params:serializeParams(), encoding:"srgb", token:tok()});
     $("exp").style.display = "block";
-    $("exp").innerHTML = `已导出（不会覆盖已有文件）：${j.path}<br>sidecar：${j.sidecar}<br>质量检查：<span class="${j.qc.status === "pass" ? "" : "warn"}">${j.qc.status}</span>` +
+    $("exp").innerHTML = `已导出（不会覆盖已有文件）：<br><b>${j.path}</b><br>sidecar：${j.sidecar}<br>质量检查：<span class="${j.qc.status === "pass" ? "" : "warn"}">${j.qc.status}</span>` +
       j.qc.failing.map(c => `<br>· ${c.name}：${c.status}`).join("");
-    status("导出完成");
+    status("导出完成：" + j.path);
   } catch (e) { status("导出失败：" + e.message, true); }
 };
 window.onresize = drawOverlay;
+drawCurveCanvas();
 loadFiles().catch(e => status(e.message, true));
 </script>
 </body>

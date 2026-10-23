@@ -117,3 +117,27 @@ def test_information_isolation():
         a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
     assert not mods & {"fit", "compare", "colorimetry", "filmcolor.fit", "filmcolor.compare"}
     assert mods <= {"__future__", "json", "pathlib", "numpy", "render"}
+
+
+def test_noref_v3_adapts_exposure_and_protects_highlights_without_max_contrast():
+    """T4 v2 (2026-10-23): NOREF_V3 (NegPy textured-cell Auto Density / Auto Grade / Highlight Hold / Shadow Hold)
+    replaces fixed contrast=2.0 with adaptive contrast in [0.95, 1.38], lifts underexposed frames into the target
+    encoded median band (0.45..0.52), and protects highlights within clip_budget."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    dark = scene(median=0.03, stops=5.0, seed=10)
+    ed = estimate_params_v3(dark, None, NOREF_V3)
+    assert ed["status"] == "ok"
+    assert 0.95 <= ed["params"]["contrast"] <= 1.38
+    assert ed["params"]["ev"] > 0.8
+    assert 0.43 <= ed["diagnostics"]["encoded_median"] <= 0.55
+    assert ed["diagnostics"]["clip_share"] <= NOREF_V3["clip_budget"]
+    assert "textured_cells" in ed["diagnostics"]
+
+    bright = scene(median=0.18, stops=4.0, seed=11).reshape(-1, 3)
+    bright[: len(bright) // 120] = 3.5  # ~0.8% bright highlights well above white
+    eb = estimate_params_v3(bright.reshape(400, -1, 3), None, NOREF_V3)
+    assert eb["status"] == "ok"
+    assert 0.95 <= eb["params"]["contrast"] <= 1.38
+    assert eb["diagnostics"]["clip_share"] <= NOREF_V3["clip_budget"]
+    assert eb["params"]["shoulder"] > NOREF_V3["base_shoulder"] or eb["params"].get("highlights", 0.0) < 0.0
