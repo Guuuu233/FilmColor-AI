@@ -1,0 +1,1867 @@
+{
+ "created": "2026-10-23",
+ "material_root_note": "paths relative to the material folder",
+ "candidates": 89,
+ "kept": 57,
+ "excluded": {
+  "B&W negative in the colour folder (visual review)": 1,
+  "not a linear input (jpeg)": 2,
+  "not a linear input (tiff8)": 27,
+  "not film (visual review)": 1,
+  "unclear: maybe reversal or odd colour (visual review)": 1
+ },
+ "frames": [
+  {
+   "id": "A1005",
+   "rel": "01_彩色负片_未反相/A1005.CR2",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "9820b786663fdd284d9a5771b6da834496f1374642414b4f5f54663bd51b5c19",
+   "stem": "A1005",
+   "cfa_shape": [
+    4180,
+    6264
+   ],
+   "render_shape": [
+    4180,
+    6264
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS 6D Mark II",
+    "DateTimeOriginal": "2020:10:23 13:23:39",
+    "ExposureTime": 0.3,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "EF100mm f/2.8L Macro IS USM",
+    "LensID": 254,
+    "body": "body-4e1dd224cc"
+   }
+  },
+  {
+   "id": "A1006",
+   "rel": "01_彩色负片_未反相/A1006.CR2",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "115d9ca9da3c790f2d882709e5fd22b2d4e459763b01345c8970ff34d5a22679",
+   "stem": "A1006",
+   "cfa_shape": [
+    4180,
+    6264
+   ],
+   "render_shape": [
+    4180,
+    6264
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS 6D Mark II",
+    "DateTimeOriginal": "2020:10:23 13:23:34",
+    "ExposureTime": 0.3,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "EF100mm f/2.8L Macro IS USM",
+    "LensID": 254,
+    "body": "body-4e1dd224cc"
+   }
+  },
+  {
+   "id": "A1007",
+   "rel": "01_彩色负片_未反相/A1007.CR2",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "99459d0684c66881dc8028e2b2404873cc4e36bffadb3aa069ae8c6607f0d1d8",
+   "stem": "A1007",
+   "cfa_shape": [
+    4180,
+    6264
+   ],
+   "render_shape": [
+    4180,
+    6264
+   ],
+   "sat_frac": 0.00044016236166871377,
+   "exif": {
+    "Model": "Canon EOS 6D Mark II",
+    "DateTimeOriginal": "2020:10:23 14:19:59",
+    "ExposureTime": 0.3,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "EF100mm f/2.8L Macro IS USM",
+    "LensID": 254,
+    "body": "body-4e1dd224cc"
+   }
+  },
+  {
+   "id": "A1008",
+   "rel": "01_彩色负片_未反相/A1008.NEF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "8c696fdfaa6c7bcfcaeec5a5c522d8f4ba0400798e4484d38694773bd9eeeba0",
+   "stem": "A1008",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.06532977394372869,
+   "exif": {
+    "Model": "NIKON D750",
+    "DateTimeOriginal": "2020:06:26 17:27:10",
+    "ExposureTime": 1.3,
+    "FNumber": 11,
+    "ISO": 100,
+    "LensModel": null,
+    "LensID": "31 54 56 56 24 24 25 02",
+    "body": "body-2b61961984"
+   }
+  },
+  {
+   "id": "A1009",
+   "rel": "01_彩色负片_未反相/A1009.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "50c5bf7bf26d0cc536af69ddf8a0120a2a4ad9d3b852d1d181ff55b7c08bb444",
+   "stem": "A1009",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 3.807405477664098e-05,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:05:18 21:46:13",
+    "ExposureTime": 0.125,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1010",
+   "rel": "01_彩色负片_未反相/A1010.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "644375ef0652998341a34ba0ddc904901a4b13ea5232aeca119c822201754326",
+   "stem": "A1010",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:06:13 15:37:44",
+    "ExposureTime": 0.3333333333,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1011",
+   "rel": "01_彩色负片_未反相/A1011.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "d52ce3a32f13ae3b0e6f9917b438f6c00ffc580a5398f1522bbf76b4001e0f99",
+   "stem": "A1011",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.00019242610837438425,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:06:13 15:41:28",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1012",
+   "rel": "01_彩色负片_未反相/A1012.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "9d96173891843d780cbd0abcad40be5c613dfdcd9de3334faccfceb94aee2d53",
+   "stem": "A1012",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:06:13 16:22:18",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1013",
+   "rel": "01_彩色负片_未反相/A1013.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "43bfc84fa67b2c9457aba48515245f2aaae5a6fd50c8dd4923a8c2840f1ee783",
+   "stem": "A1013",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:07:28 19:55:50",
+    "ExposureTime": 0.25,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1014",
+   "rel": "01_彩色负片_未反相/A1014.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "cd2575f8f65ebf4f8c2e2850bebb6c73ff8b47dc86eb97313e5625c5ae7858c5",
+   "stem": "A1014",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:07:28 19:57:06",
+    "ExposureTime": 0.25,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1015",
+   "rel": "01_彩色负片_未反相/A1015.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "ae289e8118ffc91321b19c145c5e815b3562fe4b47fda5c2eae5517439ab0094",
+   "stem": "A1015",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:07:29 16:30:16",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1016",
+   "rel": "01_彩色负片_未反相/A1016.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "37df5503bc615791d60e946553847de1e56c5fa188c24022a525d44893527fce",
+   "stem": "A1016",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:07:29 16:32:08",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1017",
+   "rel": "01_彩色负片_未反相/A1017.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "be99fa6a39acb700a08686b07a5231658f5b4f037e4b8bf41e6b6a3281e182e2",
+   "stem": "A1017",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:07:29 16:36:45",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1018",
+   "rel": "01_彩色负片_未反相/A1018.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "62426373bbbf4240113c6dc5a750758d2745aa1f8f9d2de80fbe542e9433e3f7",
+   "stem": "A1018",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:07:29 16:37:38",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1019",
+   "rel": "01_彩色负片_未反相/A1019.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "1aa2cad3bbbb315de5ff03c9ff8e284af4657d4ccd89b21a14b47314d132fdc0",
+   "stem": "A1019",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T2",
+    "DateTimeOriginal": "2018:07:29 18:56:56",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "XF80mmF2.8 R LM OIS WR Macro",
+    "LensID": "XF80mmF2.8 R LM OIS WR Macro",
+    "body": "body-7f66733e71"
+   }
+  },
+  {
+   "id": "A1020",
+   "rel": "01_彩色负片_未反相/A1020.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "fc131cc3e597fa36af8a5df36c6aa003ff297a7ceeb3b0bd7eb581ee21839d7e",
+   "stem": "A1020",
+   "cfa_shape": [
+    3296,
+    4934
+   ],
+   "render_shape": [
+    3296,
+    4934
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T1",
+    "DateTimeOriginal": "2021:10:15 17:52:08",
+    "ExposureTime": 0.06666666667,
+    "FNumber": "undef",
+    "ISO": 200,
+    "LensModel": "",
+    "LensID": null,
+    "body": "body-1d121981c3"
+   }
+  },
+  {
+   "id": "A1021",
+   "rel": "01_彩色负片_未反相/A1021.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "d4b7eef80dc5bec9d89cfed688b15f47bafdb4ac9db65aaf501758d258f45e9c",
+   "stem": "A1021",
+   "cfa_shape": [
+    3296,
+    4934
+   ],
+   "render_shape": [
+    3296,
+    4934
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "X-T1",
+    "DateTimeOriginal": "2021:10:17 13:02:40",
+    "ExposureTime": 0.06666666667,
+    "FNumber": "undef",
+    "ISO": 200,
+    "LensModel": "",
+    "LensID": null,
+    "body": "body-1d121981c3"
+   }
+  },
+  {
+   "id": "A1030",
+   "rel": "01_彩色负片_未反相/A1030.CR3",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "edb62349184e2ae69f9a9f92e9a73c3fff13c6496e9e5763eb923b36da50e4df",
+   "stem": "A1030",
+   "cfa_shape": [
+    4024,
+    6022
+   ],
+   "render_shape": [
+    4024,
+    6022
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS R6m2",
+    "DateTimeOriginal": "2024:12:11 20:21:51",
+    "ExposureTime": 0.0125,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "",
+    "LensID": 183,
+    "body": "body-f0026baf0b"
+   }
+  },
+  {
+   "id": "A1049",
+   "rel": "01_彩色负片_未反相/A1049.RAF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "民用彩色负片 (135)",
+   "excluded": "B&W negative in the colour folder (visual review)"
+  },
+  {
+   "id": "A1051",
+   "rel": "01_彩色负片_未反相/A1051.RW2",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "民用彩色负片 (135)",
+   "sha256": "3e5e33ea8c456ded19b3f9ec49332da6a336f970f2d52feb9f2dc9996233f3a3",
+   "stem": "A1051",
+   "cfa_shape": [
+    3464,
+    4608
+   ],
+   "render_shape": [
+    3464,
+    4608
+   ],
+   "sat_frac": 0.009966788856011034,
+   "exif": {
+    "Model": "DMC-G3",
+    "DateTimeOriginal": "2025:05:27 18:37:31",
+    "ExposureTime": 0.04,
+    "FNumber": 0,
+    "ISO": 160,
+    "LensModel": null,
+    "LensID": null,
+    "body": "body-2aa58c6c4f"
+   }
+  },
+  {
+   "id": "A1052",
+   "rel": "01_彩色负片_未反相/A1052.RW2",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "民用彩色负片 (135)",
+   "sha256": "300f28a777a93395673f0e23ef891995cce94a8171aa78e9543de76a6e96d3f4",
+   "stem": "A1052",
+   "cfa_shape": [
+    3016,
+    4016
+   ],
+   "render_shape": [
+    3016,
+    4016
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "DMC-G1",
+    "DateTimeOriginal": "0000:00:00 00:00:00",
+    "ExposureTime": 0.01666666667,
+    "FNumber": 0,
+    "ISO": 100,
+    "LensModel": null,
+    "LensID": null,
+    "body": "body-ed7e8fcf64"
+   }
+  },
+  {
+   "id": "A1053",
+   "rel": "01_彩色负片_未反相/A1053.CR2",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "柯达彩色负片 (135)",
+   "sha256": "8223fb9ee1ace5ebf1a92abbcee5dd24a38245871f3f1dedcad8fb12a71d438d",
+   "stem": "A1053",
+   "cfa_shape": [
+    3464,
+    5202
+   ],
+   "render_shape": [
+    3464,
+    5202
+   ],
+   "sat_frac": 0.0039407920030757404,
+   "exif": {
+    "Model": "Canon EOS REBEL T3i",
+    "DateTimeOriginal": "2018:02:14 16:12:34",
+    "ExposureTime": 0.8,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "EF-S60mm f/2.8 Macro USM",
+    "LensID": 236,
+    "body": "body-44b907e5d3"
+   }
+  },
+  {
+   "id": "A1060",
+   "rel": "01_彩色负片_未反相/A1060.JPG",
+   "fmt": "jpeg",
+   "source": "group_single",
+   "film_index": "柯达/富士彩色负片 (135)",
+   "excluded": "not a linear input (jpeg)"
+  },
+  {
+   "id": "A1061",
+   "rel": "01_彩色负片_未反相/A1061.CR2",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "柯达彩色负片 (135)",
+   "sha256": "79a1c8ddcdb842c95389e394c2da3ec36e9326b2686e54b36cbecae2d513d72c",
+   "stem": "A1061",
+   "cfa_shape": [
+    3464,
+    5202
+   ],
+   "render_shape": [
+    3464,
+    5202
+   ],
+   "sat_frac": 5.549473332782825e-08,
+   "exif": {
+    "Model": "Canon EOS REBEL T3i",
+    "DateTimeOriginal": "2021:07:13 11:20:13",
+    "ExposureTime": 0.8,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "EF-S60mm f/2.8 Macro USM",
+    "LensID": 236,
+    "body": "body-44b907e5d3"
+   }
+  },
+  {
+   "id": "A1062",
+   "rel": "01_彩色负片_未反相/A1062.CR2",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "柯达彩色负片 (135)",
+   "sha256": "56f30d06a9b85de00b99ac092533321502a59c8ffa096c516330e17f56c76749",
+   "stem": "A1062",
+   "cfa_shape": [
+    4020,
+    6024
+   ],
+   "render_shape": [
+    4020,
+    6024
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS 80D",
+    "DateTimeOriginal": "2020:09:17 18:56:19",
+    "ExposureTime": 0.4,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "TAMRON SP 90mm F/2.8 Di VC USD MACRO1:1 F004",
+    "LensID": 254,
+    "body": "body-b53e2d1947"
+   }
+  },
+  {
+   "id": "A1066",
+   "rel": "01_彩色负片_未反相/A1066.NEF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "Kodak Portra 160 (120中画幅)",
+   "sha256": "cfe5823942377cff2b1c438b37dd7c954a37fbd8e874e56740f09d03c0f4b18a",
+   "stem": "A1066",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "NIKON D750",
+    "DateTimeOriginal": "2020:11:08 16:25:54",
+    "ExposureTime": 0.004,
+    "FNumber": 5.6,
+    "ISO": 100,
+    "LensModel": null,
+    "LensID": "E3 54 50 50 24 24 35 02",
+    "body": "body-12ea9c5c9b"
+   }
+  },
+  {
+   "id": "A1069",
+   "rel": "01_彩色负片_未反相/A1069.NEF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "柯达彩色负片 (135)",
+   "sha256": "269d77bed5e821cfb9c21e4dcece60b0a551f3cb41bd77bf43359a9c6f318a2f",
+   "stem": "A1069",
+   "cfa_shape": [
+    4020,
+    6036
+   ],
+   "render_shape": [
+    4020,
+    6036
+   ],
+   "sat_frac": 8.242419446834747e-08,
+   "exif": {
+    "Model": "NIKON D7100",
+    "DateTimeOriginal": "2019:10:05 14:51:21",
+    "ExposureTime": 0.004,
+    "FNumber": 7.1,
+    "ISO": 100,
+    "LensModel": null,
+    "LensID": "9A 40 2D 53 2C 3C 9C 0E",
+    "body": "body-6f8b8b050d"
+   }
+  },
+  {
+   "id": "A1071",
+   "rel": "01_彩色负片_未反相/A1071.CR3",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "Kodak Gold 200 (135)",
+   "sha256": "fafe4596248408e77d3295f7586f90706cf379ba0ea80da925798032918f4f2b",
+   "stem": "A1071",
+   "cfa_shape": [
+    4498,
+    6742
+   ],
+   "render_shape": [
+    4498,
+    6742
+   ],
+   "sat_frac": 0.008885388792724913,
+   "exif": {
+    "Model": "Canon EOS R",
+    "DateTimeOriginal": "2024:06:19 19:19:36",
+    "ExposureTime": 2.5,
+    "FNumber": 6.3,
+    "ISO": 100,
+    "LensModel": "EF100mm f/2.8L Macro IS USM",
+    "LensID": 254,
+    "body": "body-1a27d0d5fe"
+   }
+  },
+  {
+   "id": "A1072",
+   "rel": "01_彩色负片_未反相/A1072.ARW",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "柯达彩色负片 (135)",
+   "sha256": "88d2600ee239f73fee6300f9caacdb6612d825b21a2eade28a6238b40193dccf",
+   "stem": "A1072",
+   "cfa_shape": [
+    4024,
+    6024
+   ],
+   "render_shape": [
+    4024,
+    6024
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "ILCE-7C",
+    "DateTimeOriginal": "2023:02:28 17:53:55",
+    "ExposureTime": 1,
+    "FNumber": 0,
+    "ISO": 100,
+    "LensModel": "----",
+    "LensID": 65535,
+    "body": "body-3add4761d2"
+   }
+  },
+  {
+   "id": "A1073",
+   "rel": "01_彩色负片_未反相/A1073.NEF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "Kodak Vision3 500T 5219 (ECN-2)",
+   "sha256": "15c56d5c96873079f9660232595b2422c3e7468ad3a5dd3c9a19ed612ce46863",
+   "stem": "A1073",
+   "cfa_shape": [
+    5520,
+    8288
+   ],
+   "render_shape": [
+    5520,
+    8288
+   ],
+   "sat_frac": 0.00731734986150747,
+   "exif": {
+    "Model": "NIKON Z 7",
+    "DateTimeOriginal": "2023:03:23 23:09:25",
+    "ExposureTime": 0.025,
+    "FNumber": 8,
+    "ISO": 64,
+    "LensModel": "NIKKOR Z MC 105mm f/2.8 VR S",
+    "LensID": "NIKKOR Z MC 105mm f/2.8 VR S",
+    "body": "body-bf8cbcf9bc"
+   }
+  },
+  {
+   "id": "A1074",
+   "rel": "01_彩色负片_未反相/A1074.NEF",
+   "fmt": "camera_raw",
+   "source": "group_single",
+   "film_index": "Kodak Vision3 500T 5219 (ECN-2)",
+   "sha256": "6ca15c0ddd2c80365445968611d81574f072fd72a6aea6d83d68996b18229250",
+   "stem": "A1074",
+   "cfa_shape": [
+    5520,
+    8288
+   ],
+   "render_shape": [
+    5520,
+    8288
+   ],
+   "sat_frac": 0.0074155143108947455,
+   "exif": {
+    "Model": "NIKON Z 7",
+    "DateTimeOriginal": "2023:03:23 23:09:19",
+    "ExposureTime": 0.025,
+    "FNumber": 8,
+    "ISO": 64,
+    "LensModel": "NIKKOR Z MC 105mm f/2.8 VR S",
+    "LensID": "NIKKOR Z MC 105mm f/2.8 VR S",
+    "body": "body-bf8cbcf9bc"
+   }
+  },
+  {
+   "id": "A230",
+   "rel": "01_彩色负片_未反相/A230.RAF",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "6c6408120de03485b99b59338fbbef9896c45745c1c5ab997e4900c584093bcd",
+   "stem": "A230",
+   "cfa_shape": [
+    4170,
+    6246
+   ],
+   "render_shape": [
+    4170,
+    6246
+   ],
+   "sat_frac": 1.3092311933354373e-05,
+   "exif": {
+    "Model": "X-T3",
+    "DateTimeOriginal": "2019:08:29 15:55:46",
+    "ExposureTime": 0.06666666667,
+    "FNumber": "undef",
+    "ISO": 160,
+    "LensModel": "",
+    "LensID": null,
+    "body": "body-fd349b27ff"
+   }
+  },
+  {
+   "id": "A231",
+   "rel": "01_彩色负片_未反相/A231.CR2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "c49b6f0997214afbc5c9b8e6934d98546592813452fb6ffdf0efab31243c8bb7",
+   "stem": "A231",
+   "cfa_shape": [
+    3464,
+    5202
+   ],
+   "render_shape": [
+    3464,
+    5202
+   ],
+   "sat_frac": 0.014818647651063324,
+   "exif": {
+    "Model": "Canon EOS REBEL T3i",
+    "DateTimeOriginal": "2014:10:22 10:25:36",
+    "ExposureTime": 1,
+    "FNumber": 5.6,
+    "ISO": 100,
+    "LensModel": "EF-S60mm f/2.8 Macro USM",
+    "LensID": 236,
+    "body": "body-44b907e5d3"
+   }
+  },
+  {
+   "id": "A232",
+   "rel": "01_彩色负片_未反相/A232.NEF",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "400fd9c59af6d8bfda1a6decbeff3940b1aa868237c002e539d650e89d5d7acf",
+   "stem": "A232",
+   "cfa_shape": [
+    4020,
+    6036
+   ],
+   "render_shape": [
+    4020,
+    6036
+   ],
+   "sat_frac": 8.242419446834747e-08,
+   "exif": {
+    "Model": "NIKON D7100",
+    "DateTimeOriginal": "2019:10:05 14:51:21",
+    "ExposureTime": 0.004,
+    "FNumber": 7.1,
+    "ISO": 100,
+    "LensModel": null,
+    "LensID": "9A 40 2D 53 2C 3C 9C 0E",
+    "body": "body-6f8b8b050d"
+   }
+  },
+  {
+   "id": "A234",
+   "rel": "01_彩色负片_未反相/A234.cr2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "82bc71b36b0b8d980c8e88a51877b9f1da676afbe65329ae893960d8d62a711d",
+   "stem": "A234",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:02:29 18:11:58",
+    "ExposureTime": 1.6,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A235",
+   "rel": "01_彩色负片_未反相/A235.cr2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "e25fd773637b027972d4bf7ff74a0d02199324c383a9b9c1e392b030344bc06c",
+   "stem": "A235",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 6.894602377427556e-05,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:02:24 09:28:10",
+    "ExposureTime": 2.5,
+    "FNumber": 11,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A236",
+   "rel": "01_彩色负片_未反相/A236.cr2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "6639d6b508ad530ff11db20e288e60ce6d4d8723fafd99bf69ed3cfadafb3e54",
+   "stem": "A236",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 0.0033831181405343277,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:02:24 09:15:56",
+    "ExposureTime": 2,
+    "FNumber": 11,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A237",
+   "rel": "01_彩色负片_未反相/A237.cr2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "962215bb7917a836145cbf751abab823ac728a8799c54259e915cd7f9af5b26c",
+   "stem": "A237",
+   "cfa_shape": [
+    4020,
+    6024
+   ],
+   "render_shape": [
+    4020,
+    6024
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS 80D",
+    "DateTimeOriginal": "2020:09:17 18:56:19",
+    "ExposureTime": 0.4,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "TAMRON SP 90mm F/2.8 Di VC USD MACRO1:1 F004",
+    "LensID": 254,
+    "body": "body-b53e2d1947"
+   }
+  },
+  {
+   "id": "A238",
+   "rel": "01_彩色负片_未反相/A238.CR2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "b50ecf0dd038d1854ffcbe6408a7b32bd65cae3db58a3946e7e111a3df10674f",
+   "stem": "A238",
+   "cfa_shape": [
+    3464,
+    5202
+   ],
+   "render_shape": [
+    3464,
+    5202
+   ],
+   "sat_frac": 5.549473332782825e-08,
+   "exif": {
+    "Model": "Canon EOS REBEL T3i",
+    "DateTimeOriginal": "2021:07:13 11:20:13",
+    "ExposureTime": 0.8,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "EF-S60mm f/2.8 Macro USM",
+    "LensID": 236,
+    "body": "body-44b907e5d3"
+   }
+  },
+  {
+   "id": "A239",
+   "rel": "01_彩色负片_未反相/A239.ORF",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "5e5fe39f6616dc6d24721579db64c1e4b87fa10def384c6879f072c32ae354f8",
+   "stem": "A239",
+   "cfa_shape": [
+    3912,
+    5240
+   ],
+   "render_shape": [
+    3912,
+    5240
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "E-M5MarkIII",
+    "DateTimeOriginal": "2022:03:22 17:02:08",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "OLYMPUS M.60mm F2.8 Macro",
+    "LensID": "0 12 10",
+    "body": "body-9b15577546"
+   }
+  },
+  {
+   "id": "A242",
+   "rel": "01_彩色负片_未反相/A242.arw",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "c2703cd0821f7a3d039e4c4d40b6e0c1f4873f35ea25dd3567265f1814c4725f",
+   "stem": "A242",
+   "cfa_shape": [
+    4024,
+    6024
+   ],
+   "render_shape": [
+    4024,
+    6024
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "ILCE-7C",
+    "DateTimeOriginal": "2023:02:28 17:53:55",
+    "ExposureTime": 1,
+    "FNumber": 0,
+    "ISO": 100,
+    "LensModel": "----",
+    "LensID": 6553,
+    "body": "body-51533de0b8"
+   }
+  },
+  {
+   "id": "A249",
+   "rel": "01_彩色负片_未反相/A249.CR3",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "b43fa9aa153df693965f7019f4d3173b4729233fda050084fcfcea9256b28410",
+   "stem": "A249",
+   "cfa_shape": [
+    4498,
+    6742
+   ],
+   "render_shape": [
+    4498,
+    6742
+   ],
+   "sat_frac": 0.008885388792724913,
+   "exif": {
+    "Model": "Canon EOS R",
+    "DateTimeOriginal": "2024:06:19 19:19:36",
+    "ExposureTime": 2.5,
+    "FNumber": 6.3,
+    "ISO": 100,
+    "LensModel": "EF100mm f/2.8L Macro IS USM",
+    "LensID": 254,
+    "body": "body-1a27d0d5fe"
+   }
+  },
+  {
+   "id": "A250",
+   "rel": "01_彩色负片_未反相/A250.cr2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "7cbeb78e052ef3861810ab34e87813ca8d654f81e6f829826be4a6c069c923c1",
+   "stem": "A250",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:02:29 18:13:27",
+    "ExposureTime": 1.6,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A251",
+   "rel": "01_彩色负片_未反相/A251.cr2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "6d9df7e89f7ffb9598ee7de7bac927d36d1a8c45588bf29295c7fb5efb07d66b",
+   "stem": "A251",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 0.01824446089362792,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:03:08 18:42:04",
+    "ExposureTime": 2,
+    "FNumber": 11,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A252",
+   "rel": "01_彩色负片_未反相/A252.cr2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "65fb38bc106fc028754c087bfe4c5efa35fe245cd3aa0d97fb5d0d68c89a1b15",
+   "stem": "A252",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:03:01 08:47:23",
+    "ExposureTime": 1.6,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A253",
+   "rel": "01_彩色负片_未反相/A253.cr2",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "47b779c1c86f7c5489287e85b25fb5249abbb842bc3e8e7ca5735d62443bc0c8",
+   "stem": "A253",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 0.02309160841781759,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:02:29 18:05:44",
+    "ExposureTime": 1.3,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A262",
+   "rel": "01_彩色负片_未反相/A262.arw",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "excluded": "unclear: maybe reversal or odd colour (visual review)"
+  },
+  {
+   "id": "A263",
+   "rel": "01_彩色负片_未反相/A263.arw",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "d5d1e42ca5b333c2e150a566e1d3697721445967a20c44f011621ea4c2744804",
+   "stem": "A263",
+   "cfa_shape": [
+    4024,
+    6024
+   ],
+   "render_shape": [
+    4024,
+    6024
+   ],
+   "sat_frac": 0.0030664700376756724,
+   "exif": {
+    "Model": "ILCE-6000",
+    "DateTimeOriginal": "2019:09:10 22:25:37",
+    "ExposureTime": 0.05,
+    "FNumber": 0,
+    "ISO": 100,
+    "LensModel": "----",
+    "LensID": 6553,
+    "body": "body-5b4e841982"
+   }
+  },
+  {
+   "id": "A264",
+   "rel": "01_彩色负片_未反相/A264.NEF",
+   "fmt": "camera_raw",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "sha256": "82d7ea24f4fe29727679bfa44bee9b6bd512d916872a8da8ffc091e65c2a8a2d",
+   "stem": "A264",
+   "cfa_shape": [
+    4032,
+    6032
+   ],
+   "render_shape": [
+    4032,
+    6032
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "NIKON D750",
+    "DateTimeOriginal": "2020:05:11 13:59:46",
+    "ExposureTime": 0.05,
+    "FNumber": 11,
+    "ISO": 100,
+    "LensModel": null,
+    "LensID": "00 00 00 00 00 00 00 01",
+    "body": "body-12ea9c5c9b"
+   }
+  },
+  {
+   "id": "A267",
+   "rel": "01_彩色负片_未反相/A267.tif",
+   "fmt": "tiff8",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A268",
+   "rel": "01_彩色负片_未反相/A268.tif",
+   "fmt": "tiff8",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A269",
+   "rel": "01_彩色负片_未反相/A269.tif",
+   "fmt": "tiff8",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A271",
+   "rel": "01_彩色负片_未反相/A271.tif",
+   "fmt": "tiff8",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A273",
+   "rel": "01_彩色负片_未反相/A273.jpg",
+   "fmt": "jpeg",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "excluded": "not film (visual review)"
+  },
+  {
+   "id": "A320",
+   "rel": "01_彩色负片_未反相/A320.JPG",
+   "fmt": "jpeg",
+   "source": "group_pack",
+   "film_index": "群友提供，已明确授权",
+   "excluded": "not a linear input (jpeg)"
+  },
+  {
+   "id": "A322",
+   "rel": "01_彩色负片_未反相/A322.cr2",
+   "fmt": "camera_raw",
+   "source": "pixls",
+   "film_index": "Color Negative",
+   "sha256": "01afa93f2901e6ca7e83483b0b500b1f6b2a362e45e8186d3df592cb4572f6c6",
+   "stem": "A322",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:02:29 18:13:27",
+    "ExposureTime": 1.6,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A323",
+   "rel": "01_彩色负片_未反相/A323.cr2",
+   "fmt": "camera_raw",
+   "source": "pixls",
+   "film_index": "Color Negative",
+   "sha256": "a8c34f0c43fc50101f1ac1aaf638f6dcfa7c20ece1f2937e16b978df3ed803f0",
+   "stem": "A323",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 0.02309160841781759,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:02:29 18:05:44",
+    "ExposureTime": 1.3,
+    "FNumber": 8,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A324",
+   "rel": "01_彩色负片_未反相/A324.cr2",
+   "fmt": "camera_raw",
+   "source": "pixls",
+   "film_index": "Fuji P800 Color Negative",
+   "sha256": "a806677e8be4857beca3780ca3d9bdcda06f26a71148d5f1f1fd4743a4f6cd01",
+   "stem": "A324",
+   "cfa_shape": [
+    2920,
+    4386
+   ],
+   "render_shape": [
+    2920,
+    4386
+   ],
+   "sat_frac": 6.894602377427556e-05,
+   "exif": {
+    "Model": "Canon EOS 5D",
+    "DateTimeOriginal": "2020:02:24 09:28:10",
+    "ExposureTime": 2.5,
+    "FNumber": 11,
+    "ISO": 100,
+    "LensModel": "EF35-80mm f/4-5.6",
+    "LensID": 37,
+    "body": "body-ac0c67c9ac"
+   }
+  },
+  {
+   "id": "A327",
+   "rel": "01_彩色负片_未反相/A327.ORF",
+   "fmt": "camera_raw",
+   "source": "pixls",
+   "film_index": "Cross-processed Negative",
+   "sha256": "e0724397a3509b7d304d279ca13f4c468cea71aafd1375cd8ee56c162c40a440",
+   "stem": "A327",
+   "cfa_shape": [
+    3912,
+    5240
+   ],
+   "render_shape": [
+    3912,
+    5240
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "E-M5MarkIII",
+    "DateTimeOriginal": "2022:03:22 17:02:08",
+    "ExposureTime": 0.2,
+    "FNumber": 8,
+    "ISO": 200,
+    "LensModel": "OLYMPUS M.60mm F2.8 Macro",
+    "LensID": "0 12 10",
+    "body": "body-9b15577546"
+   }
+  },
+  {
+   "id": "A331",
+   "rel": "01_彩色负片_未反相/A331.RAF",
+   "fmt": "camera_raw",
+   "source": "pixls",
+   "film_index": "Color Negative",
+   "sha256": "e1ec1de2d88cb35244167a2335c4918d31654dc1d6e054c34178b1360ba71e3d",
+   "stem": "A331",
+   "cfa_shape": [
+    4170,
+    6246
+   ],
+   "render_shape": [
+    4170,
+    6246
+   ],
+   "sat_frac": 0.05416235695401412,
+   "exif": {
+    "Model": "X-T3",
+    "DateTimeOriginal": "2024:09:26 23:48:15",
+    "ExposureTime": 0.06666666667,
+    "FNumber": "undef",
+    "ISO": 200,
+    "LensModel": "",
+    "LensID": null,
+    "body": "body-0476811043"
+   }
+  },
+  {
+   "id": "A617",
+   "rel": "01_彩色负片_未反相/A617.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A618",
+   "rel": "01_彩色负片_未反相/A618.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A619",
+   "rel": "01_彩色负片_未反相/A619.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A620",
+   "rel": "01_彩色负片_未反相/A620.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A621",
+   "rel": "01_彩色负片_未反相/A621.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A622",
+   "rel": "01_彩色负片_未反相/A622.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A623",
+   "rel": "01_彩色负片_未反相/A623.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A624",
+   "rel": "01_彩色负片_未反相/A624.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A625",
+   "rel": "01_彩色负片_未反相/A625.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A626",
+   "rel": "01_彩色负片_未反相/A626.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A627",
+   "rel": "01_彩色负片_未反相/A627.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A628",
+   "rel": "01_彩色负片_未反相/A628.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A629",
+   "rel": "01_彩色负片_未反相/A629.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A630",
+   "rel": "01_彩色负片_未反相/A630.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A631",
+   "rel": "01_彩色负片_未反相/A631.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A632",
+   "rel": "01_彩色负片_未反相/A632.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A633",
+   "rel": "01_彩色负片_未反相/A633.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A636",
+   "rel": "01_彩色负片_未反相/A636.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A637",
+   "rel": "01_彩色负片_未反相/A637.tif",
+   "fmt": "tiff8",
+   "source": "loose:01_彩色负片_未反相",
+   "film_index": null,
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A655",
+   "rel": "01_彩色负片_未反相/A655.tif",
+   "fmt": "tiff8",
+   "source": "group_single",
+   "film_index": "Canon AE-1 + Kodak Portra 400 (Sony A6700 翻拍 RAW)",
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A656",
+   "rel": "01_彩色负片_未反相/A656.tif",
+   "fmt": "tiff8",
+   "source": "group_single",
+   "film_index": "Canon AE-1 + Kodak Portra 400 (Sony A6700 翻拍 RAW)",
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A657",
+   "rel": "01_彩色负片_未反相/A657.tif",
+   "fmt": "tiff8",
+   "source": "group_single",
+   "film_index": "Canon AE-1 + Kodak Portra 400 (Sony A6700 翻拍 RAW)",
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A658",
+   "rel": "01_彩色负片_未反相/A658.tif",
+   "fmt": "tiff8",
+   "source": "group_single",
+   "film_index": "Canon AE-1 + Kodak Portra 400 (Sony A6700 翻拍 RAW)",
+   "excluded": "not a linear input (tiff8)"
+  },
+  {
+   "id": "A7R5_RAW/DSC01683",
+   "rel": "A7R5_RAW/DSC01683.ARW",
+   "fmt": "camera_raw",
+   "source": "loose:A7R5_RAW",
+   "film_index": null,
+   "sha256": "04a4bdac6718dc180cd01b4ad6aeec0115379129016e17acfd512cc0219aae0b",
+   "stem": "A7R5_RAW_DSC01683",
+   "cfa_shape": [
+    6376,
+    9564
+   ],
+   "render_shape": [
+    6376,
+    9564
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "ILCE-7RM5",
+    "DateTimeOriginal": "2026:06:11 12:36:04",
+    "ExposureTime": 0.025,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "FE 90mm F2.8 Macro G OSS",
+    "LensID": 65535,
+    "body": "body-66cd015c4a"
+   }
+  },
+  {
+   "id": "A7R5_RAW/DSC01684",
+   "rel": "A7R5_RAW/DSC01684.ARW",
+   "fmt": "camera_raw",
+   "source": "loose:A7R5_RAW",
+   "film_index": null,
+   "sha256": "93e9af542653dfc78d0351ad5faa11beb64450fcf5d0190af5d7fa0e9bdd6180",
+   "stem": "A7R5_RAW_DSC01684",
+   "cfa_shape": [
+    6376,
+    9564
+   ],
+   "render_shape": [
+    6376,
+    9564
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "ILCE-7RM5",
+    "DateTimeOriginal": "2026:06:11 12:36:14",
+    "ExposureTime": 0.025,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "FE 90mm F2.8 Macro G OSS",
+    "LensID": 65535,
+    "body": "body-66cd015c4a"
+   }
+  },
+  {
+   "id": "A7R5_RAW/DSC01688",
+   "rel": "A7R5_RAW/DSC01688.ARW",
+   "fmt": "camera_raw",
+   "source": "loose:A7R5_RAW",
+   "film_index": null,
+   "sha256": "4913327896ba79dace7058dde98fc00f1176fb715038bd56e9401fbb3a4bf5a9",
+   "stem": "A7R5_RAW_DSC01688",
+   "cfa_shape": [
+    6376,
+    9564
+   ],
+   "render_shape": [
+    6376,
+    9564
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "ILCE-7RM5",
+    "DateTimeOriginal": "2026:06:11 12:37:28",
+    "ExposureTime": 0.025,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "FE 90mm F2.8 Macro G OSS",
+    "LensID": 65535,
+    "body": "body-66cd015c4a"
+   }
+  },
+  {
+   "id": "A7R5_RAW/DSC01692",
+   "rel": "A7R5_RAW/DSC01692.ARW",
+   "fmt": "camera_raw",
+   "source": "loose:A7R5_RAW",
+   "film_index": null,
+   "sha256": "4003b0891e408c2147584ad1e1fca3b0636d33d8c20c8a51d9fb8b9a5664878a",
+   "stem": "A7R5_RAW_DSC01692",
+   "cfa_shape": [
+    6376,
+    9564
+   ],
+   "render_shape": [
+    6376,
+    9564
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "ILCE-7RM5",
+    "DateTimeOriginal": "2026:06:11 12:38:29",
+    "ExposureTime": 0.025,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "FE 90mm F2.8 Macro G OSS",
+    "LensID": 65535,
+    "body": "body-66cd015c4a"
+   }
+  },
+  {
+   "id": "A7R5_RAW/DSC01694",
+   "rel": "A7R5_RAW/DSC01694.ARW",
+   "fmt": "camera_raw",
+   "source": "loose:A7R5_RAW",
+   "film_index": null,
+   "sha256": "cd1152242c8bc9d831c06277ab5392fe7bff44d7bc9a1497d12ffa32fc9dcbfd",
+   "stem": "A7R5_RAW_DSC01694",
+   "cfa_shape": [
+    6376,
+    9564
+   ],
+   "render_shape": [
+    6376,
+    9564
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "ILCE-7RM5",
+    "DateTimeOriginal": "2026:06:11 12:39:12",
+    "ExposureTime": 0.025,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "FE 90mm F2.8 Macro G OSS",
+    "LensID": 65535,
+    "body": "body-66cd015c4a"
+   }
+  },
+  {
+   "id": "A7R5_RAW/DSC01695",
+   "rel": "A7R5_RAW/DSC01695.ARW",
+   "fmt": "camera_raw",
+   "source": "loose:A7R5_RAW",
+   "film_index": null,
+   "sha256": "c59ab4a86841027a4a34f1b2f4c0601fa8e8ac224b333806cf4a2e541b848e6a",
+   "stem": "A7R5_RAW_DSC01695",
+   "cfa_shape": [
+    6376,
+    9564
+   ],
+   "render_shape": [
+    6376,
+    9564
+   ],
+   "sat_frac": 0.0,
+   "exif": {
+    "Model": "ILCE-7RM5",
+    "DateTimeOriginal": "2026:06:11 12:39:20",
+    "ExposureTime": 0.025,
+    "FNumber": 9,
+    "ISO": 100,
+    "LensModel": "FE 90mm F2.8 Macro G OSS",
+    "LensID": 65535,
+    "body": "body-66cd015c4a"
+   }
+  }
+ ]
+}
