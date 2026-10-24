@@ -1,8 +1,9 @@
 """Three-column before / after / reference sheet from t4b_render_frame.py outputs (T4b deliverables).
 
-  t4b_sheets.py [--tile-h=PX] OUT_JPG BEFORE_DIR AFTER_DIR STEM=REF_JPG [STEM=REF_JPG ...]
+  t4b_sheets.py [--tile-h=PX] [--labels=BEFORE,AFTER] OUT_JPG BEFORE_DIR AFTER_DIR STEM=REF_JPG [STEM=REF_JPG ...]
 
-``--tile-h``: tile height in pixels (default 520; the renders are 1000 px on their long side).
+``--tile-h``: tile height in pixels (default 520; the renders are 1000 px on their long side). ``--labels``: the two
+column titles (default ``BEFORE 4eb2678,AFTER T4b``).
 
 Each row: BEFORE_DIR/<stem>.png | AFTER_DIR/<stem>.png | the reference print. Our renders are turned upright to the
 reference: by ``alignment.rot90`` of experiments/s3_ml/user_labels/<frame>.json when it exists (the reference turned
@@ -22,6 +23,7 @@ from filmcolor.frozen import check_source
 
 REPO = Path(__file__).resolve().parents[1]
 TILE_H = 520
+LABELS = ("BEFORE 4eb2678", "AFTER T4b")
 LUMA = np.array([0.2126, 0.7152, 0.0722], np.float32)
 
 
@@ -58,7 +60,7 @@ def tile(im: Image.Image, title: str, sub: str) -> Image.Image:
 
 def params_line(info: dict) -> str:
     p = info["params"]
-    keys = ("ev", "temp", "tint", "contrast", "shadows", "blacks", "highlights")
+    keys = ("ev", "temp", "tint", "contrast", "midtone", "shoulder", "shadows", "highlights")
     return f"{info['base_method']} | " + " ".join(f"{k}={p.get(k, 0.0):+.2f}" for k in keys) + \
         " | d_hi=" + ",".join(f"{v:.3f}" for v in info["d_hi"])
 
@@ -71,7 +73,7 @@ def main(out_jpg: str, before_dir: str, after_dir: str, pairs: list[str]):
         ref = Image.open(ref_path).convert("RGB")
         cols = []
         k = src = None
-        for label, d in (("BEFORE 4eb2678", before_dir), ("AFTER T4b", after_dir)):
+        for label, d in zip(LABELS, (before_dir, after_dir)):
             ours = Image.open(Path(d) / f"{stem}.png").convert("RGB")
             info = json.loads((Path(d) / f"{stem}.json").read_text())
             if k is None:
@@ -101,6 +103,13 @@ def main(out_jpg: str, before_dir: str, after_dir: str, pairs: list[str]):
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    if args[0].startswith("--tile-h="):
-        TILE_H = int(args.pop(0).split("=", 1)[1])
+    while args[0].startswith("--"):
+        opt = args.pop(0)
+        if opt.startswith("--tile-h="):
+            TILE_H = int(opt.split("=", 1)[1])
+        elif opt.startswith("--labels="):
+            LABELS = tuple(opt.split("=", 1)[1].split(","))
+            assert len(LABELS) == 2, LABELS
+        else:
+            raise SystemExit(f"unknown option {opt}")
     main(args[0], args[1], args[2], args[3:])
