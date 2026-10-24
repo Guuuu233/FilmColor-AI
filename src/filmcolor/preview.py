@@ -19,7 +19,7 @@ an averaged block differs from the average of the rendered block, most at strong
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import numpy as np
@@ -102,11 +102,19 @@ class Preview:
                     regions=[list(map(int, r)) for r in regions] if regions else None,
                     base_inside_image=self.base_inside_image, previewed_input_sha256=self.sha256)
 
+    def with_auto(self, auto) -> "Preview":
+        """The same preview with the automatic estimate redone for noref config ``auto`` (a style preset), on the
+        kept full-resolution positive exactly as ``load_preview`` does; no decode or inversion (needs keep_full)."""
+        if self.full_positive is None:
+            raise ValueError("load_preview(..., keep_full=True) is needed to re-estimate")
+        return replace(self, auto=auto_estimate(self.full_positive, self.image_region, auto, self.film),
+                       load_kwargs=dict(self.load_kwargs, auto=auto))
+
     def export(self, out_dir, params=None, encoding: str = "srgb", *, stem: str | None = None,
-               overwrite: bool = True, rot90: int = 0) -> dict:
+               overwrite: bool = True, rot90: int = 0, render_source: dict | None = None) -> dict:
         """Write the full-resolution TIFF + sidecar with this preview's base and white point, turned ``rot90``
         quarter turns counter-clockwise. Refuses (SourceChangedError) when the source file no longer has the SHA256
-        it had when previewed."""
+        it had when previewed. ``render_source``: recorded as the sidecar's ``render.source``."""
         if sha256(self.path) != self.sha256:
             raise SourceChangedError(f"{self.path} changed since it was opened; open it again")
         base = self.base_info["rgb_render"] if self.film == "bw" else self.inversion["base"]
@@ -114,11 +122,20 @@ class Preview:
         return write(self.path, out_dir, stem=stem, overwrite=overwrite, base_rgb=base, d_hi=self.inversion["d_hi"],
                      image_region=self.image_region, white_pct=self.white_pct, gamma=self.inversion["gamma"],
                      exposure=self.inversion["exposure"], encoding=encoding, render_params=rp, film=self.film,
-                     base_source=self.base_source(), white_point_source=self.report.get("white_point"), rot90=rot90)
+                     base_source=self.base_source(), white_point_source=self.report.get("white_point"), rot90=rot90,
+                     render_source=render_source)
 
 
 class SourceChangedError(RuntimeError):
     """The previewed source file changed on disk; its previewed base no longer applies."""
+
+
+def auto_estimate(pos, image_region, auto, film: str = "color") -> dict:
+    """noref estimate (``Preview.auto``) of full-resolution positive ``pos`` for config ``auto``, as ``convert``."""
+    est = estimate_params_v2(*estimation_input(pos, image_region), auto)
+    if film == "bw":
+        est = dict(est, params=dict(est["params"], **BW_NEUTRAL), bw_neutralised=sorted(BW_NEUTRAL))
+    return dict(est, look_file=dict(name=f"{est['look']}.json", sha256=sha256(CONFIG_DIR / f"{est['look']}.json")))
 
 
 def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, base_rgb=None, image_region=None,
@@ -137,12 +154,7 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
                  white_ratio=white_ratio)
     pos, mask = p["positive"], p["mask"]
     full_shape = pos.shape[:2]
-    auto_info = None
-    if auto is not None:
-        est = estimate_params_v2(*estimation_input(pos, p["image_region"]), auto)
-        if film == "bw":
-            est = dict(est, params=dict(est["params"], **BW_NEUTRAL), bw_neutralised=sorted(BW_NEUTRAL))
-        auto_info = dict(est, look_file=dict(name=f"{est['look']}.json", sha256=sha256(CONFIG_DIR / f"{est['look']}.json")))
+    auto_info = auto_estimate(pos, p["image_region"], auto, film) if auto is not None else None
     f = max(1, math.ceil(max(full_shape) / max_side))
     small = block_mean(pos, f).astype(np.float32) if f > 1 else pos
     msk = block_mean(mask.astype(np.float32), f) > 0.5 if f > 1 else mask

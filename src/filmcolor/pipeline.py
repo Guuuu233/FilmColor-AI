@@ -165,7 +165,8 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
 def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
             render_params=None, auto=None, film: str = "color", base_source: dict | None = None,
-            white_block: int | None = None, white_point_source: dict | None = None, rot90: int = 0):
+            white_block: int | None = None, white_point_source: dict | None = None, rot90: int = 0,
+            render_source: dict | None = None):
     """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
 
     ``base_source``: for a ``base_rgb`` replayed from an earlier estimate (preview export), how that base was
@@ -175,6 +176,8 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     replayed from an earlier estimate (preview export), how it was estimated; stored as ``inversion.white_point``.
     ``rot90``: output turned by that many quarter turns counter-clockwise (numpy.rot90) after rendering; QC and all
     statistics are measured before the turn. 0 (default) keeps the sensor orientation and the previous sidecar.
+    ``render_source``: where the given ``render_params`` started from (the app: style preset and estimator config of
+    the automatic starting point); stored as ``render.source``. Pixels do not depend on it.
 
     ``render_params``: RenderParams or its dict (Sprint 2 colour parameters); None = defaults,
     which reproduce the Sprint 1 output. ``auto``: a reference-free estimator config (``noref.NOREF_V2``)
@@ -241,6 +244,8 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
                                                       "(numpy.rot90; meta.flip not applied)")
     if auto_info is not None:
         sidecar["auto"] = auto_info
+    if render_source is not None:
+        sidecar["render"]["source"] = render_source
     if film == "bw":  # colour sidecars keep their previous field set
         sidecar["film"] = dict(mode="bw", source="given",
                                inversion="neutral_transmission: geometric mean of base-normalised channel "

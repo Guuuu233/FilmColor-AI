@@ -122,13 +122,14 @@ def test_information_isolation():
 def test_noref_v3_adapts_exposure_and_protects_highlights_without_max_contrast():
     """T4 v2 (2026-10-23): NOREF_V3 (NegPy textured-cell Auto Density / Auto Grade / Highlight Hold / Shadow Hold)
     replaces fixed contrast=2.0 with adaptive contrast in [0.95, 1.38], lifts underexposed frames into the target
-    encoded median band (0.45..0.52), and protects highlights within clip_budget."""
+    encoded median band (0.45..0.52), and protects highlights within clip_budget. T4d: up to backlit_contrast on
+    frames with a backlit weight (the 5-stop dark scene has a wide p25..p90 gap)."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3
 
     dark = scene(median=0.03, stops=5.0, seed=10)
     ed = estimate_params_v3(dark, None, NOREF_V3)
     assert ed["status"] == "ok"
-    assert 0.95 <= ed["params"]["contrast"] <= 1.38
+    assert 0.95 <= ed["params"]["contrast"] <= NOREF_V3["backlit_contrast"]
     assert ed["params"]["ev"] > 0.8
     assert 0.43 <= ed["diagnostics"]["encoded_median"] <= 0.55
     assert ed["diagnostics"]["clip_share"] <= NOREF_V3["clip_budget"]
@@ -138,7 +139,7 @@ def test_noref_v3_adapts_exposure_and_protects_highlights_without_max_contrast()
     bright[: len(bright) // 120] = 3.5  # ~0.8% bright highlights well above white
     eb = estimate_params_v3(bright.reshape(400, -1, 3), None, NOREF_V3)
     assert eb["status"] == "ok"
-    assert 0.95 <= eb["params"]["contrast"] <= 1.38
+    assert 0.95 <= eb["params"]["contrast"] <= NOREF_V3["backlit_contrast"]
     assert eb["diagnostics"]["clip_share"] <= NOREF_V3["clip_budget"]
     assert eb["params"]["shoulder"] > NOREF_V3["base_shoulder"] or eb["params"].get("highlights", 0.0) < 0.0
 
@@ -147,13 +148,14 @@ def test_noref_v3_t4b_keeps_print_contrast_and_never_sets_blacks():
     """T4b (2026-10-24): contrast and shadow decisions are measured on the encoded output. A normal frame keeps the
     print contrast centre 1.30 with no shadow lift and blacks 0 (T4 v2 gave contrast 0.95, shadows +0.15, blacks +0.10
     on such frames by comparing -log10 of the positive with print-density thresholds); a crushed frame gets a
-    positive shadows lift and still blacks 0."""
+    positive shadows lift and still blacks 0. T4d: the centre is base_contrast (1.35); the normal frame spans 4 stops
+    (a 5-stop log-uniform scene has encoded p90 - p25 above backlit_span and gets some backlit weight)."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3
 
-    normal = estimate_params_v3(scene(median=0.18, stops=5.0, seed=21), None, NOREF_V3)
+    normal = estimate_params_v3(scene(median=0.18, stops=4.0, seed=21), None, NOREF_V3)
     assert normal["status"] == "ok" and normal["config_rev"] == NOREF_V3["rev"]
     assert "backlit_midtone" not in normal["flags"]  # T4c: a 7-stop log-uniform scene counts as backlit
-    assert normal["params"]["contrast"] == pytest.approx(1.30)
+    assert normal["params"]["contrast"] == pytest.approx(NOREF_V3["base_contrast"])
     assert normal["params"].get("blacks", 0.0) == 0.0 and normal["params"].get("shadows", 0.0) == 0.0
     assert normal["diagnostics"]["encoded_p25"] >= NOREF_V3["shadow_p25_floor"]
 
@@ -210,3 +212,74 @@ def test_noref_v3_t4c_backlit_frame_lifts_midtone_and_renders_the_given_matrix()
     assert e["params"]["matrix"] == [list(r) for r in m]
     assert e["params"]["chroma_preserve"] == NOREF_V3["chroma_preserve"]
     assert estimate_params_v3(P, None, NOREF_V3)["params"]["matrix"] == [list(r) for r in IDENTITY]
+
+
+def test_t4d_style_presets_are_overrides_of_noref_v3_and_standard_is_noref_v3():
+    """T4d: every style preset only overrides existing NOREF_V3 entries, standard is NOREF_V3 itself, unknown names
+    are refused, and every preset gives a valid estimate whose blacks is the preset's constant."""
+    from filmcolor.noref import NOREF_V3, STYLE_PRESETS, estimate_params_v3, preset_config
+
+    assert list(STYLE_PRESETS) == ["standard", "natural", "portrait", "vivid", "print_classic"]
+    assert preset_config("standard") == NOREF_V3
+    with pytest.raises(ValueError, match="unknown style preset"):
+        preset_config("frontier")
+    P = scene(median=0.18, stops=4.0, seed=31)
+    for name, spec in STYLE_PRESETS.items():
+        assert set(spec["cfg"]) <= set(NOREF_V3) and spec["label"]
+        cfg = preset_config(name)
+        e = estimate_params_v3(P, None, cfg)
+        assert e["status"] == "ok" and e["preset"] == name
+        assert e["params"].get("blacks", 0.0) == cfg["base_blacks"] and e["params"]["chroma_preserve"] == cfg["chroma_preserve"]
+        RenderParams.from_dict(e["params"])  # inside the slider bounds
+
+
+def test_t4d_presets_order_brightness_contrast_and_colour():
+    """T4d preset expectations on a plain 4-stop scene (no backlit weight): portrait brighter and print darker than
+    standard; vivid more contrast and colour than standard, natural less; print and vivid crush blacks a little.
+    (On a 4-stop scene the darker print preset already gets some backlit weight: encoded p25 < 0.36.)"""
+    from filmcolor.noref import estimate_params_v3, preset_config
+
+    P = scene(median=0.18, stops=3.5, chroma=0.12, seed=32)
+    e = {n: estimate_params_v3(P, None, preset_config(n)) for n in ("standard", "natural", "portrait", "vivid",
+                                                                     "print_classic")}
+    assert all(x["diagnostics"]["backlit_check"]["weight"] == 0 for x in e.values())
+    med = {n: x["diagnostics"]["encoded_median"] for n, x in e.items()}
+    assert med["portrait"] > med["standard"] > med["print_classic"]
+    c = {n: x["params"]["contrast"] for n, x in e.items()}
+    assert c["vivid"] > c["print_classic"] > c["standard"] > c["portrait"] > c["natural"]
+    for k in ("sat", "vibrance"):
+        assert e["vivid"]["params"][k] > e["standard"]["params"][k] > e["natural"]["params"][k]
+    b = {n: x["params"].get("blacks", 0.0) for n, x in e.items()}
+    assert b["print_classic"] < b["vivid"] < b["standard"] == 0
+
+
+def test_t4d_white_balance_falls_back_to_neutral_and_presets_add_their_offsets():
+    """T4d: with no near-neutral evidence (wb confidence 0) NOREF_V3 stays at temp = tint = 0 instead of 0.55 x the
+    global_look_v1 prior (T4b-T4c); portrait adds its +0.03 / -0.02 offsets to the same estimate."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3, preset_config
+
+    P = scene(median=0.18, stops=4.0, cast=(0.9, -0.9), chroma=0.05, seed=33)  # every pixel strongly coloured
+    e = estimate_params_v3(P, None, NOREF_V3)
+    assert e["diagnostics"]["wb"]["confidence"] == 0
+    assert e["params"]["temp"] == 0 and e["params"]["tint"] == 0
+    old = estimate_params_v3(P, None, dict(NOREF_V3, wb_prior_weight=0.55))
+    assert old["params"]["temp"] == pytest.approx(0.55 * LOOK["params"]["temp"], abs=1e-3)
+    pt = estimate_params_v3(P, None, preset_config("portrait"))
+    assert pt["params"]["temp"] == pytest.approx(0.03) and pt["params"]["tint"] == pytest.approx(-0.02)
+
+
+def test_t4d_backlit_weight_is_continuous():
+    """T4d: the backlit weight grows continuously with the encoded p90 / p25 (no switch); contrast and shoulder move
+    that share of the way to backlit_contrast / backlit_shoulder; a weight of 1 is the T4c treatment."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    ws, cs = [], []
+    for stops in (4.0, 4.5, 5.0, 5.5, 6.0, 7.0):
+        e = estimate_params_v3(scene(median=0.18, stops=stops, seed=34), None, NOREF_V3)
+        w = e["diagnostics"]["backlit_check"]["weight"]
+        ws.append(w), cs.append(e["params"]["contrast"])
+        assert 0.0 <= w <= 1.0
+        if not (set(e["flags"]) & {"contrast_lowered_wide_frame"}):
+            exp = NOREF_V3["base_contrast"] + w * (NOREF_V3["backlit_contrast"] - NOREF_V3["base_contrast"])
+            assert e["params"]["contrast"] == pytest.approx(exp, abs=1e-3)
+    assert ws == sorted(ws) and ws[0] == 0 and ws[-1] == 1 and any(0 < w < 1 for w in ws)

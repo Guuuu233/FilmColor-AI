@@ -275,7 +275,7 @@ def test_roll_nat_wb_pick_thumbnails_and_extended_export(server):
     # Open t.dng in roll_nat mode with softness=0.6
     m = call("/api/open", dict(path="t.dng", base_mode="roll_nat", softness=0.6))[0]
     assert m["base"]["method"] == "roll_nat" and m["base"]["softness"] == pytest.approx(0.6)
-    assert m["auto"]["config"] == "noref_v3" and 0.95 <= m["auto"]["params"]["contrast"] <= 1.38
+    assert m["auto"]["config"] == "noref_v3" and 0.95 <= m["auto"]["params"]["contrast"] <= app.NOREF_V3["backlit_contrast"]
 
     # White balance eyedropper
     wb, code, _ = call("/api/wb_pick", dict(token=m["token"], x=180, y=120))
@@ -346,3 +346,28 @@ def test_t4c_scanner_dng_has_no_camera_matrix_and_roll_reports_neutral_ratio(ser
     assert m["auto"]["params"]["matrix"] == [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
     assert m["auto"]["params"]["chroma_preserve"] == app.NOREF_V3["chroma_preserve"]
     assert "neutral_ratio" not in (m["white_point"] or {})
+
+
+def test_t4d_style_preset_re_estimates_the_open_photo_and_is_recorded_in_the_export(server):
+    """T4d: /api/open starts from the standard preset; /api/preset re-estimates the open photo for another preset
+    exactly as opening with it would (same token and positive, no reload), keeps it for the next photo, refuses
+    unknown names, and the export sidecar records the preset in render.source."""
+    call, root, tmp = server
+    m, code, _ = call("/api/open", dict(path="s.dng"))
+    assert code == 200 and m["preset"] == "standard" and [p["id"] for p in m["presets"]] == list(app.STYLE_PRESETS)
+    std = m["auto"]["params"]
+    v, code, _ = call("/api/preset", dict(preset="vivid", token=m["token"]))
+    assert code == 200 and v["preset"] == "vivid" and v["token"] == m["token"] and v["white_point"] == m["white_point"]
+    assert v["auto"]["params"]["chroma_preserve"] > std["chroma_preserve"] and v["auto"]["params"]["sat"] > std["sat"]
+    assert v["auto"]["params"]["blacks"] == app.STYLE_PRESETS["vivid"]["cfg"]["base_blacks"]
+    direct = load_preview(root / "s.dng", max_side=1600, auto=app.preset_config("vivid"), **APP_WP)
+    assert v["auto"]["params"] == direct.auto["params"]
+    bad, code, _ = call("/api/preset", dict(preset="noritsu", token=m["token"]))
+    assert code == 400 and "unknown style preset" in bad["error"]
+    out, code, _ = call("/api/export", dict(params=v["auto"]["params"], token=v["token"]))
+    sc = json.loads(open(out["sidecar"]).read())
+    assert code == 200 and sc["render"]["source"]["preset"] == "vivid" and sc["render"]["source"]["auto_rev"] == app.NOREF_V3["rev"]
+    again = call("/api/open", dict(path="s.dng"))[0]
+    assert again["preset"] == "vivid" and again["auto"]["params"] == v["auto"]["params"]
+    p, code, _ = call("/api/open", dict(path="s.dng", preset="portrait"))
+    assert code == 200 and p["preset"] == "portrait"

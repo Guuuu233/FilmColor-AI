@@ -32,11 +32,18 @@ at ``WHITE_PCT`` % (``invert.block_white_point``), not on single pixels, whose h
 read / shot noise (experiments/t4_auto_ui/t4b_whitepoint.json). The export replays the previewed white point.
 
 Colour (T4c): camera RAW opens with the camera's colour matrix (``render.camera_color_matrix`` of the file's
-``rgb_xyz_matrix``) mixed ``CAMERA_MATRIX_MIX`` with the identity, and NOREF_V3's ``chroma_preserve``. Scanner DNGs keep
+``rgb_xyz_matrix``) mixed with the identity at the style preset's ``camera_matrix_mix`` (standard:
+``CAMERA_MATRIX_MIX``), and the preset's ``chroma_preserve``. Scanner DNGs keep
 the identity. ``/api/roll`` also reports each frame's and the roll's 0.25 <= D_G <= 0.75 density ratios (roll base B1,
 cached thumbnail-resolution blocks), the statistic T4c proposed for ``invert.neutral_ratio_white_point``. It is not
 applied: on dsc6161 the roll median is pulled to blue sky (0.678 : 1 : 1.214) and on dsc6233 to foliage
 (0.748 : 1 : 0.904, which would move every frame's white point towards blue); experiments/t4_auto_ui/T4C_REPORT.md.
+
+Style presets (T4d): the automatic starting point is estimated for the selected ``noref.STYLE_PRESETS`` entry
+(default ``standard`` = NOREF_V3; POST /api/open with ``preset``, or POST /api/preset to re-estimate the open photo on
+its kept full-resolution positive without decoding or inverting again). The camera matrix share is the preset's
+``camera_matrix_mix``. The selection stays for the next photos; thumbnails always use ``standard``. The export
+records the preset in the sidecar's ``render.source``.
 
 Orientation (T4b): each photo opens turned by the orientation last set for it here (POST /api/orient, kept in
 ``orientation.json`` of the cache folder), else by the RAW file's orientation flag. Display rotation is done by the
@@ -68,7 +75,7 @@ from .base import (base_deviation, block48_L_p01, decoupled_quantile_base,
 from .compare import block_mean
 from .frozen import FrozenDataError, check_source
 from .invert import central_region, invert_negative, neutral_transmission, region_mask
-from .noref import NOREF_V3, estimate_params_v3, wb_from_chroma
+from .noref import NOREF_V3, STYLE_PRESETS, estimate_params_v3, preset_config, wb_from_chroma
 from .pipeline import FILM_MODES, free_stem
 from .preview import Preview, SourceChangedError, load_preview
 from .raw import linearize, saturation_mask, superpixel
@@ -82,10 +89,10 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4c"  # thumbnails rendered with the T4c NOREF_V3, camera matrix and white point
+THUMB_REV = "t4d"  # thumbnails rendered with the T4d NOREF_V3 (standard preset), camera matrix and white point
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
-CAMERA_MATRIX_MIX = 0.35  # default share of the camera colour matrix (UI slider 0..100)
+CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)
 RATIO_D_G = (0.25, 0.75)  # density band (G, above the roll base) of the per-frame neutral-ratio statistic
 RATIO_MIN_PX = 200        # blocks a frame needs in that band to contribute
 
@@ -188,6 +195,7 @@ class State:
         self.cache_dir = _cache_root()
         self.orient_file = self.cache_dir / "orientation.json"
         self.raw_meta: dict[str, dict] = {}
+        self.preset = "standard"  # style preset of the automatic starting point (T4d)
 
     def resolve(self, rel: str) -> Path:
         cand = Path(os.path.abspath(self.root / rel))
@@ -378,12 +386,14 @@ class State:
         except ValueError:
             return None
 
-    def _colour_kwargs(self, p: Path, film: str) -> dict:
-        """NOREF_V3 config for opening ``p``: colour film from a camera RAW renders with its camera matrix at
-        CAMERA_MATRIX_MIX."""
+    def _colour_kwargs(self, p: Path, film: str, preset: str = "standard") -> dict:
+        """NOREF_V3 config of style preset ``preset`` for opening ``p``: colour film from a camera RAW renders with
+        its camera matrix at the preset's ``camera_matrix_mix``."""
+        cfg = preset_config(preset)
         if film != "color" or self.camera_matrix(p) is None:
-            return dict(auto=NOREF_V3)
-        return dict(auto=dict(NOREF_V3, matrix=camera_color_matrix(self._raw_meta(p)["rgb_xyz_matrix"], CAMERA_MATRIX_MIX)))
+            return dict(auto=cfg)
+        m = camera_color_matrix(self._raw_meta(p)["rgb_xyz_matrix"], cfg["camera_matrix_mix"])
+        return dict(auto=dict(cfg, matrix=m))
 
     def thumbnail_png(self, rel: str, film: str = "color") -> bytes:
         """Fast 240 px positive thumbnail of ``rel`` (cached on disk)."""
@@ -503,7 +513,9 @@ class State:
         return dict(
             token=self.token, path=rel, film=pv.film, factor=pv.factor, rot90=rot, rot90_source=rot_src,
             camera_matrix=[list(r) for r in self.camera_matrix(pv.path)] if self.camera_matrix(pv.path) else None,
-            camera_matrix_mix=CAMERA_MATRIX_MIX,
+            camera_matrix_mix=(pv.load_kwargs.get("auto") or NOREF_V3).get("camera_matrix_mix", CAMERA_MATRIX_MIX),
+            preset=pv.auto.get("preset") if pv.auto else None,
+            presets=[dict(id=k, label=v["label"]) for k, v in STYLE_PRESETS.items()],
             white_point=dict(pv.report.get("white_point") or dict(method="pixel", pct=pv.white_pct),
                              d_hi=list(pv.inversion["d_hi"])),
             preview_shape=list(pv.positive.shape[:2]), full_shape=list(pv.full_shape),
@@ -528,9 +540,13 @@ class State:
             defaults=RenderParams().to_dict(full=True),
         )
 
-    def open(self, rel: str, film: str, base_mode: str | None = None, softness: float = 0.5) -> dict:
+    def open(self, rel: str, film: str, base_mode: str | None = None, softness: float = 0.5,
+             preset: str | None = None) -> dict:
         if film not in FILM_MODES:
             raise ValueError(f"film must be one of {FILM_MODES}")
+        if preset is not None:
+            preset_config(preset)  # ValueError for an unknown name
+            self.preset = preset
         p = self.resolve(rel)
         folder = str(Path(rel).parent)
         # Smart default: when no explicit base_mode was given and the roll cache is ready, auto-select
@@ -549,7 +565,7 @@ class State:
         self.preview = None  # free the previous full-resolution positive first
         self.token = None
         extra = self._roll_base_kwargs(rel, base_mode, softness) if base_mode != "auto" else {}
-        ck = self._colour_kwargs(p, film)
+        ck = self._colour_kwargs(p, film, self.preset)
         try:
             self.preview = load_preview(p, max_side=self.max_side, film=film, keep_full=True,
                                         white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **ck, **extra)
@@ -591,6 +607,16 @@ class State:
         self.token = secrets.token_hex(8)
         return self.meta()
 
+    def set_preset(self, body: dict) -> dict:
+        """Re-estimate the open photo's automatic starting point for style preset ``body["preset"]`` on its kept
+        full-resolution positive (no decode, base or inversion); the preset stays selected for the next photos."""
+        pv = self.need(body.get("token"))
+        name = body.get("preset")
+        ck = self._colour_kwargs(pv.path, pv.film, name)  # ValueError for an unknown name
+        self.preview = pv.with_auto(ck["auto"])
+        self.preset = name
+        return self.meta()
+
     def wb_pick(self, body: dict) -> dict:
         """Compute (temp, tint) that neutralises a 5x5 patch around preview pixel (x, y) on the open positive."""
         pv = self.need(body.get("token"))
@@ -618,8 +644,11 @@ class State:
         pv = self.need(body.get("token"))
         rel = pv.path.relative_to(self.root)
         out_dir = self.out / rel.parent
+        src = dict(preset=pv.auto.get("preset"), auto_config=pv.auto.get("config"), auto_rev=pv.auto.get("config_rev"),
+                   note="style preset of the automatic starting point; the exported parameters are the page's")
         sc = pv.export(out_dir, RenderParams.from_dict(body.get("params") or {}), body.get("encoding", "srgb"),
-                       stem=free_stem(out_dir, pv.path.stem), overwrite=False, rot90=int(body.get("rot90", 0)))
+                       stem=free_stem(out_dir, pv.path.stem), overwrite=False, rot90=int(body.get("rot90", 0)),
+                       render_source=src if pv.auto else None)
         return dict(path=sc["output"]["path"], sha256=sc["output"]["sha256"], rot90=sc["output"].get("rot90", 0),
                     sidecar=str(Path(sc["output"]["path"]).with_suffix(".json")),
                     qc=dict(status=sc["qc"]["status"], failing=[c for c in sc["qc"]["checks"] if c["status"] != "pass"]))
@@ -703,7 +732,9 @@ class Handler(BaseHTTPRequestHandler):
             with st.lock:
                 if u.path == "/api/open":
                     return self.json(st.open(b["path"], b.get("film", "color"), b.get("base_mode"),
-                                             float(b.get("softness", 0.5))))
+                                             float(b.get("softness", 0.5)), b.get("preset")))
+                if u.path == "/api/preset":
+                    return self.json(st.set_preset(b))
                 if u.path == "/api/base":
                     return self.json(st.set_base(b))
                 if u.path == "/api/wb_pick":

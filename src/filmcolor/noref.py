@@ -385,28 +385,35 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4c-2026-10-24",          # T4c: camera matrix, chroma_preserve, backlit midtone; T4b: encoded-output decisions
-    look="global_look_v1",
+    rev="t4d-2026-10-24",          # T4d: neutral wb fallback, standard preset values, continuous backlit weight;
+                                   # T4c: camera matrix, chroma_preserve, backlit midtone; T4b: encoded-output decisions
+    look="global_look_v1",         # recorded only: wb_prior_weight 0 (T4d) applies none of it
+    preset="standard",             # STYLE_PRESETS name this config is (NOREF_V3 itself is the standard preset)
     low_info_range_stops=0.6,      # allow open-sky / desert / snow frames with paper-black floor (p99/p1 >= 1.5x)
     cell_size=8,                   # grid cell side for textured-cell activity metering
     activity_thr_d=0.05,           # NegPy activity threshold: within-cell std(-log10 Y) >= 0.05 D
     min_textured_share=0.08,       # fallback to top 25% most active cells when fewer than 8% exceed activity_thr_d
     anchor_target_density=0.75,    # NegPy print target density 0.75 D (reflectance 10^-0.75 ≈ 0.178 = 18% grey)
     anchor_band_d=0.08,            # comfort band around target density (preserves high-key / low-key mood)
-    base_contrast=1.30,            # natural print contrast centre (UI contrast 0); replaces fixed contrast=2.0
-    contrast_bounds_v3=(1.05, 1.38),  # contrast is only lowered (to >= 1.05) for very wide, both-ends-clipped frames
+    base_contrast=1.35,            # print contrast centre (T4b 1.30, T4d 1.35); replaces fixed contrast=2.0
+    contrast_bounds_v3=(1.05, 1.38),  # contrast is only lowered (to >= 1.05) for very wide, both-ends-clipped frames;
+                                   # the upper bound never cuts a preset's base_contrast
     contrast_spread_max=0.78,      # encoded luminance p90 - p10 above this, with both ends clipped: lower contrast
     end_clip_share=0.005,          # "clipped end": share of encoded luminance <= 0.02 (black) or >= 0.98 (white)
-    base_sat=1.02,                 # restrained saturation
-    base_midtone=0.22,             # comfortable mid-grey placement
-    base_shoulder=0.15,            # gentle baseline highlight roll-off
-    target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance band
+    base_sat=1.04,                 # restrained saturation (T4b 1.02)
+    base_vibrance=0.08,            # vibrance on frames that are not already colourful (chroma p90 <= sat_colourful)
+    base_midtone=0.25,             # mid-grey placement (T4b 0.22; UI midtone 0)
+    base_shoulder=0.25,            # baseline highlight roll-off (T4b 0.15)
+    base_blacks=0.0,               # blacks of the preset (a constant; never estimated from the frame)
+    temp_offset=0.0, tint_offset=0.0,  # preset colour offsets added after the white balance estimate
+    target_encoded_band=(0.48, 0.55),  # target sRGB-encoded median luminance band (T4b 0.45..0.52)
     shadow_p25_floor=0.12,         # shadows lifted only when encoded luminance p25 is below this (crushed frame)
     shadow_gain=2.5, shadow_max=0.35,  # shadows = min(shadow_max, shadow_gain * (floor - p25)); blacks stay 0
     clip_budget=0.002,             # <= 0.2 % highlight clipping
     headroom=1.2,                  # max stops p99.5 may exceed white before shoulder
     ev_limits=(-2.0, 2.5),
-    wb_prior_weight=0.55,          # prior from global_look_v1, applied for the share (1 - wb confidence)
+    wb_prior_weight=0.0,           # T4d: the share (1 - wb confidence) falls back to neutral (0, 0), not to
+                                   # global_look_v1 (fitted on nlp_official + shop_r01 references; T4b-T4c used 0.55)
     wb_max_shift=0.35,
     wb_v3_zones=(((70, 96), 0.35, 0.6), ((25, 75), 0.25, 0.4)),  # (luma pct range, chroma radius log2, weight):
                                    # bright near-neutral (cloud, road, white surfaces) and low-saturation mid-grey
@@ -417,15 +424,50 @@ NOREF_V3 = dict(
     wb_v3_conflict_factor=0.75,    # quadrant disagreement lowers confidence by this factor (never to 0)
     wb_v3_strength=0.85,           # share of the measured residual cast removed at full confidence
     wp_invalid_stops=1.5,
-    matrix=None,                   # colour matrix rendered with (app: camera_color_matrix of the RAW, mix 0.35); None = identity
-    chroma_preserve=0.35,          # T4c: shoulder & midtone partly on luminance (RenderParams.chroma_preserve)
-    backlit_p90=0.80,              # T4c backlit frame: encoded luminance p90 at or above this (bright sky / background) ...
-    backlit_p25=0.30,              # ... and p25 at or below this (dark foreground)
-    backlit_p25_target=0.30,       # midtone raised until encoded p25 reaches this ...
+    matrix=None,                   # colour matrix rendered with (app: camera_color_matrix of the RAW); None = identity
+    camera_matrix_mix=0.40,        # share of the camera matrix the app renders camera RAW with (T4c 0.35)
+    chroma_preserve=0.40,          # shoulder & midtone partly on luminance (RenderParams.chroma_preserve; T4c 0.35)
+    # Backlit weight (T4d, continuous; T4c was 1 when p90 >= 0.80 and p25 <= 0.30, else 0), on the encoded luminance:
+    # w = ramp(p90; backlit_p90, + backlit_ramp) x max(ramp(backlit_p25 - p25; 0, backlit_ramp),
+    #                                               ramp(p90 - p25 - backlit_span; 0, backlit_ramp))
+    backlit_p90=0.72,              # bright background: weight starts at this p90, full at p90 + backlit_ramp
+    backlit_p25=0.36,              # dark foreground: starts below this p25, full at p25 - backlit_ramp
+    backlit_span=0.42,             # or a wide frame: starts at this p90 - p25, full at + backlit_ramp
+    backlit_ramp=0.06,
+    backlit_p25_target=0.30,       # full weight: midtone raised until encoded p25 reaches this ...
     backlit_midtone_max=0.35,      # ... at most to this
-    backlit_shoulder=0.40,         # shoulder at least this on backlit frames (keeps the sky off white)
-    backlit_contrast=1.55,         # contrast on backlit frames (outside contrast_bounds_v3, which apply to the others)
+    backlit_shoulder=0.42,         # full weight: shoulder at least this (keeps the sky off white; T4c 0.40)
+    backlit_contrast=1.55,         # full weight: this contrast (outside contrast_bounds_v3, which apply to the others)
 )
+
+
+# Style presets (T4d): overrides of NOREF_V3 for the automatic starting point; the estimate itself (exposure, white
+# balance, highlight / shadow hold, backlit weight) runs the same way on each. Values from the T4d task list; they are
+# named after looks the task list associates with them (NLP tone profiles, Frontier / Noritsu scans, optical prints),
+# not measured against those systems.
+STYLE_PRESETS = {
+    "standard": dict(label="标准 Standard", cfg=dict()),
+    "natural": dict(label="自然 Natural", cfg=dict(
+        target_encoded_band=(0.47, 0.54), base_midtone=0.24, base_contrast=1.20, base_shoulder=0.35, base_sat=0.96,
+        base_vibrance=0.04, chroma_preserve=0.35, camera_matrix_mix=0.35)),
+    "portrait": dict(label="人像 Portrait", cfg=dict(
+        target_encoded_band=(0.52, 0.59), base_midtone=0.28, base_contrast=1.28, base_shoulder=0.40, base_sat=1.02,
+        base_vibrance=0.14, chroma_preserve=0.50, camera_matrix_mix=0.45, temp_offset=0.03, tint_offset=-0.02,
+        backlit_p25_target=0.34)),
+    "vivid": dict(label="鲜明 Vivid", cfg=dict(
+        target_encoded_band=(0.48, 0.55), base_midtone=0.25, base_contrast=1.48, base_shoulder=0.30, base_sat=1.12,
+        base_vibrance=0.15, chroma_preserve=0.55, camera_matrix_mix=0.55, base_blacks=-0.03)),
+    "print_classic": dict(label="经典印相 Print", cfg=dict(
+        target_encoded_band=(0.43, 0.50), base_midtone=0.22, base_contrast=1.42, base_shoulder=0.20, base_sat=1.02,
+        base_vibrance=0.05, chroma_preserve=0.35, camera_matrix_mix=0.35, base_blacks=-0.05)),
+}
+
+
+def preset_config(name: str, cfg: dict | None = None) -> dict:
+    """NOREF_V3 (or ``cfg``) with the overrides of style preset ``name`` (ValueError for an unknown name)."""
+    if name not in STYLE_PRESETS:
+        raise ValueError(f"unknown style preset {name!r}; one of {sorted(STYLE_PRESETS)}")
+    return dict(cfg or NOREF_V3, **STYLE_PRESETS[name]["cfg"], preset=name)
 
 
 def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
@@ -565,12 +607,16 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
        full-frame clipping exceeds ``clip_budget`` (0.2 %), writes an explicit negative ``highlights`` burn and/or a
        raised ``shoulder``.
     5. **Shadow Hold** (T4b): positive ``shadows`` only when the encoded luminance p25 is below ``shadow_p25_floor``;
-       ``blacks`` is never set automatically.
+       ``blacks`` is never estimated: it is the preset's constant ``base_blacks`` (0 for standard).
     6. **White balance** (T4b, ``estimate_wb_v3``): robust residual cast of bright near-neutral and low-saturation
-       mid-grey pixels; the look's prior covers only the share the evidence does not.
-    7. **Colour and backlit frames** (T4c): renders with ``cfg["matrix"]`` (the app passes the RAW's camera matrix)
-       and ``chroma_preserve``; a backlit frame (bright background, dark foreground on the encoded output) gets a
-       higher midtone, a raised shoulder and ``backlit_contrast`` instead of more exposure.
+       mid-grey pixels; the share the evidence does not cover gets ``wb_prior_weight`` x the look (0 since T4d:
+       neutral), then the preset's ``temp_offset`` / ``tint_offset``.
+    7. **Colour and backlit frames** (T4c, T4d): renders with ``cfg["matrix"]`` (the app passes the RAW's camera
+       matrix) and ``chroma_preserve``; a backlit frame (bright background with a dark foreground or a wide gap on
+       the encoded output; continuous weight since T4d) gets a higher midtone, a raised shoulder and
+       ``backlit_contrast`` in proportion to the weight, instead of more exposure.
+    8. **Style presets** (T4d): ``preset_config(name)`` overrides the base values (band, midtone, contrast, shoulder,
+       saturation, vibrance, blacks, colour offsets, camera matrix share, chroma_preserve); steps 1-7 are the same.
 
     T4b (2026-10-24) replaced the T4 v2 contrast / shadow / paper-black rules, which compared ``-log10`` of the
     scene-linear positive (``_textured_cells``) with print-density thresholds and so lowered contrast to its floor
@@ -582,8 +628,8 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     look = look or load_look(cfg["look"])
     lp = dict(look["params"])
     st = frame_stats(P, mask, cfg)
-    out = dict(config=cfg["id"], config_rev=cfg.get("rev"), look=look["id"], groups=["brightness", "wb", "tone", "sat"],
-               stats=st, diagnostics={})
+    out = dict(config=cfg["id"], config_rev=cfg.get("rev"), preset=cfg.get("preset"), look=look["id"],
+               groups=["brightness", "wb", "tone", "sat"], stats=st, diagnostics={})
     reasons = []
     if st["range_stops"] < cfg["low_info_range_stops"]:
         reasons.append(f"low_information: tonal range {st['range_stops']:.2f} stops")
@@ -597,7 +643,7 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
         contrast=float(cfg["base_contrast"]),
         midtone=float(cfg["base_midtone"]),
         shoulder=float(cfg["base_shoulder"]),
-        highlights=0.0, shadows=0.0, whites=0.0, blacks=0.0, vibrance=0.0,
+        highlights=0.0, shadows=0.0, whites=0.0, blacks=float(cfg.get("base_blacks", 0.0)), vibrance=0.0,
         matrix=cfg.get("matrix") or IDENTITY, chroma_preserve=float(cfg.get("chroma_preserve", 0.0)),
     )
     if reasons:
@@ -615,6 +661,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     m_wb = cfg["wb_max_shift"]
     base_p["temp"] = float(np.clip((1 - wb["confidence"]) * base_p["temp"] + wb["temp"], -m_wb, m_wb))
     base_p["tint"] = float(np.clip((1 - wb["confidence"]) * base_p["tint"] + wb["tint"], -m_wb, m_wb))
+    # the preset's colour offsets (T4d) come on top of the estimate, inside the slider bounds
+    base_p["temp"] = float(np.clip(base_p["temp"] + cfg.get("temp_offset", 0.0), *BOUNDS["temp"]))
+    base_p["tint"] = float(np.clip(base_p["tint"] + cfg.get("tint_offset", 0.0), *BOUNDS["tint"]))
     out["diagnostics"]["wb"] = wb
 
     # 2. Saturation / vibrance: reduce saturation slightly on already high-chroma frames
@@ -623,12 +672,12 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     if p90 > cfg["sat_colourful"]:
         base_p["sat"] = float(1.0 + (cfg["base_sat"] - 1.0) * (cfg["sat_colourful"] / p90))
     else:
-        base_p["vibrance"] = 0.08
+        base_p["vibrance"] = float(cfg.get("base_vibrance", 0.08))
     out["diagnostics"]["chroma_p90"] = p90
 
     # 3. Contrast starts at the print centre base_contrast (T4b); lowered after exposure only for very wide frames
     c_lo, c_hi = cfg["contrast_bounds_v3"]
-    base_p["contrast"] = float(np.clip(cfg["base_contrast"], c_lo, c_hi))
+    base_p["contrast"] = float(np.clip(cfg["base_contrast"], c_lo, max(c_hi, cfg["base_contrast"])))
 
     # 4. Auto Density (NegPy textured anchor_d vs anchor_target_density = 0.75 D, with high-key protection)
     target_d = float(cfg["anchor_target_density"])
@@ -660,18 +709,23 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
                 hi_ev = mid_ev
         base_p["ev"] = float(np.clip(0.5 * (lo_ev + hi_ev), *cfg["ev_limits"]))
 
-    # 4b. Backlit midtone (T4c): bright background (encoded p90 >= backlit_p90) with a dark foreground (p25 <=
-    #     backlit_p25) gets a higher midtone (bisection up to backlit_midtone_max until p25 reaches the target), a
-    #     shoulder of at least backlit_shoulder and backlit_contrast, instead of more ev pushing the sky into white
+    # 4b. Backlit midtone (T4d continuous weight w in [0, 1]; T4c switched at p90 >= 0.80 and p25 <= 0.30): a bright
+    #     background with a dark foreground or a wide p25..p90 gap moves shoulder and contrast w of the way to
+    #     backlit_shoulder / backlit_contrast and the midtone w of the way to the midtone (bisection up to
+    #     backlit_midtone_max) that lifts p25 to backlit_p25_target, instead of more ev pushing the sky into white
     q25, q90 = _encoded_quantiles(px, RenderParams(**base_p), qs=(25, 90))
-    out["diagnostics"]["backlit_check"] = dict(p25=q25, p90=q90)
-    backlit = q90 >= cfg["backlit_p90"] and q25 <= cfg["backlit_p25"]
+    rmp = float(cfg["backlit_ramp"])
+    w_bl = _ramp(q90, cfg["backlit_p90"], cfg["backlit_p90"] + rmp) * max(
+        _ramp(cfg["backlit_p25"] - q25, 0.0, rmp), _ramp(q90 - q25 - cfg["backlit_span"], 0.0, rmp))
+    out["diagnostics"]["backlit_check"] = dict(p25=q25, p90=q90, weight=w_bl)
+    backlit = w_bl > 0
     if backlit:
-        base_p["shoulder"] = max(base_p["shoulder"], float(cfg["backlit_shoulder"]))
-        base_p["contrast"] = float(cfg["backlit_contrast"])
-        lo_m, hi_m = base_p["midtone"], float(cfg["backlit_midtone_max"])
+        base_p["shoulder"] += w_bl * max(0.0, float(cfg["backlit_shoulder"]) - base_p["shoulder"])
+        base_p["contrast"] += w_bl * (float(cfg["backlit_contrast"]) - base_p["contrast"])
+        lo_m = m0 = base_p["midtone"]
+        hi_m = max(m0, float(cfg["backlit_midtone_max"]))
         if _encoded_quantiles(px, RenderParams(**dict(base_p, midtone=hi_m)), qs=(25,))[0] <= cfg["backlit_p25_target"]:
-            base_p["midtone"] = hi_m
+            m_t = hi_m
         else:
             for _ in range(14):  # p25 increases with midtone
                 mid_m = 0.5 * (lo_m + hi_m)
@@ -679,7 +733,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
                     lo_m = mid_m
                 else:
                     hi_m = mid_m
-            base_p["midtone"] = float(hi_m)
+            m_t = float(hi_m)
+        base_p["midtone"] = float(m0 + w_bl * (m_t - m0))
+        out["diagnostics"]["backlit_check"].update(midtone_target=m_t)
         flags.append("backlit_midtone")
 
     # 5. NegPy Highlight Hold: check bright textured cells P2 after EV shift, plus full-frame clip_budget
