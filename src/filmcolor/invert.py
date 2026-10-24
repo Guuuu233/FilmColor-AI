@@ -126,6 +126,35 @@ def estimate_white_point(D, mask=None, pct: float = 99.9) -> tuple[float, float,
     return tuple(float(x) for x in np.percentile(vals, pct, 0))
 
 
+MIN_WHITE_BLOCKS = 100  # fewer valid blocks than this: the block white point falls back to single pixels
+
+
+def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[float, float, float], dict]:
+    """White point on ``block`` x ``block`` means of the linear signal (T4b): per-channel ``pct`` percentile of the
+    density of block means, over blocks whose pixels are all in ``mask``. Averaging in the linear domain removes the
+    read / shot noise that pushes single-pixel high-density quantiles up where the negative is densest and the
+    signal is a few ADU above black (blue channel behind the orange mask). Falls back to single pixels when fewer
+    than ``MIN_WHITE_BLOCKS`` blocks are valid (small images)."""
+    if block < 1:
+        raise ValueError(f"white point block must be >= 1, got {block}")
+    h, w = (rgb.shape[0] // block) * block, (rgb.shape[1] // block) * block
+    sums = np.zeros((h // block, w // block, 3), np.float64)
+    full = np.zeros((h // block, w // block), np.int64)
+    step = max(block, CHUNK_ROWS // block * block)  # whole blocks per row chunk keep the float64 copy small
+    for r0 in range(0, h, step):
+        r1, b0, b1 = min(h, r0 + step), r0 // block, min(h, r0 + step) // block
+        sums[b0:b1] = rgb[r0:r1, :w].reshape(b1 - b0, block, w // block, block, 3).sum(axis=(1, 3), dtype=np.float64)
+        full[b0:b1] = mask[r0:r1, :w].reshape(b1 - b0, block, w // block, block).sum(axis=(1, 3))
+    ok = full == block * block
+    n = int(ok.sum())
+    if n < MIN_WHITE_BLOCKS:
+        return estimate_white_point(density(rgb[mask], base), None, pct), dict(method="pixel_fallback", block=block,
+                                                                              pct=pct, n_blocks=n)
+    means = (sums[ok] / (block * block)).astype(np.float32)
+    return estimate_white_point(density(means, base), None, pct), dict(method="block_mean", block=block, pct=pct,
+                                                                      n_blocks=n)
+
+
 def invert(D, p: InversionParams) -> np.ndarray:
     lo, hi = np.asarray(p.d_lo, np.float32), np.asarray(p.d_hi, np.float32)
     s = (D - lo) / (hi - lo)
@@ -172,9 +201,11 @@ class InversionResult:
 
 
 def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: float = 0.6,
-                    exposure: float = 1.0, d_lo=None, d_hi=None) -> InversionResult:
+                    exposure: float = 1.0, d_lo=None, d_hi=None, white_block: int | None = None) -> InversionResult:
     """Full chain with automatic white point unless ``d_hi`` is given. ``mask`` selects image pixels
-    used for the white point and the report (exclude borders, rebate, holder and saturated areas)."""
+    used for the white point and the report (exclude borders, rebate, holder and saturated areas).
+    ``white_block``: estimate the automatic white point on block means of that size (``block_white_point``)
+    instead of single pixels (None, the default: single pixels, unchanged)."""
     if not np.all(np.isfinite(rgb)):
         raise ValueError("input image contains NaN or infinite values")
     if not np.all(np.isfinite(base)) or np.any(np.asarray(base) <= 0):
@@ -182,8 +213,13 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
     # global statistics only need the masked pixels; their density is computed once on that
     # selection (same values, same order as density(rgb)[mask]) and the full image in row blocks
     Dm = density(rgb[mask] if mask is not None else rgb.reshape(-1, 3), base)
+    white_info = None
     if d_hi is None:
-        d_hi = estimate_white_point(Dm, None, white_pct)
+        if white_block is not None and rgb.ndim == 3:
+            m = mask if mask is not None else np.ones(rgb.shape[:2], bool)
+            d_hi, white_info = block_white_point(rgb, base, m, int(white_block), white_pct)
+        else:
+            d_hi = estimate_white_point(Dm, None, white_pct)
         lo = d_lo or (0.0, 0.0, 0.0)
         flat = [c for c, hi, l in zip("RGB", d_hi, lo) if hi <= l]
         if flat:
@@ -206,6 +242,7 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
         D = density(rgb, base)
         P = invert(D, p)
         above_white = [float(np.mean(D[..., c] > p.d_hi[c])) for c in range(3)]
-    return InversionResult(positive=P, params=p,
-                           report=dict(white_pct=white_pct, range=range_report(Dm, invert(Dm, p), p),
-                                       full_image_above_white=above_white))
+    report = dict(white_pct=white_pct, range=range_report(Dm, invert(Dm, p), p), full_image_above_white=above_white)
+    if white_info is not None:  # reports of the default single-pixel white point keep their previous field set
+        report["white_point"] = white_info
+    return InversionResult(positive=P, params=p, report=report)

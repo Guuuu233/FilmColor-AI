@@ -24,7 +24,16 @@ in ``roll_nat`` mode so the user starts from a clean, well-balanced positive.
 
 Disk cache: per-frame analysis-path scan statistics and 240 px positive thumbnails are cached under
 ``$FILMCOLOR_DATA_ROOT/app_cache`` (or ``/tmp/filmcolor_app_cache`` when unset) keyed by path, size and mtime_ns,
-so restarting the app reopens rolls in < 1 second.
+so restarting the app reopens rolls in < 1 second. Thumbnail names carry ``THUMB_REV``: changing the automatic
+estimate or the white point needs a new revision so stale thumbnails are not shown.
+
+White point (T4b): photos are opened with the automatic white point on ``WHITE_BLOCK`` x ``WHITE_BLOCK`` block means
+at ``WHITE_PCT`` % (``invert.block_white_point``), not on single pixels, whose high-density tail in the blue channel is
+read / shot noise (experiments/t4_auto_ui/t4b_whitepoint.json). The export replays the previewed white point.
+
+Orientation (T4b): each photo opens turned by the orientation last set for it here (POST /api/orient, kept in
+``orientation.json`` of the cache folder), else by the RAW file's orientation flag. Display rotation is done by the
+page; the export writes the turned image and records ``output.rot90`` in the sidecar.
 """
 from __future__ import annotations
 
@@ -65,6 +74,9 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
+THUMB_REV = "t4b"  # thumbnails rendered with the T4b NOREF_V3 and white point
+WHITE_BLOCK, WHITE_PCT = 16, 99.8
+FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 
 
 def _cache_root() -> Path:
@@ -163,6 +175,7 @@ class State:
         self.frame_scans: dict[str, dict] = {}
         self.roll_cache: dict[str, dict] = {}
         self.cache_dir = _cache_root()
+        self.orient_file = self.cache_dir / "orientation.json"
 
     def resolve(self, rel: str) -> Path:
         cand = Path(os.path.abspath(self.root / rel))
@@ -316,7 +329,7 @@ class State:
         """Fast 240 px positive thumbnail of ``rel`` (cached on disk)."""
         p = self.resolve(rel)
         dkey = self._disk_key(p)
-        thumb_file = self.cache_dir / f"thumb_{film}_{dkey}.png"
+        thumb_file = self.cache_dir / f"thumb_{film}_{THUMB_REV}_{dkey}.png"
         if thumb_file.exists():
             return thumb_file.read_bytes()
         sc = self._scan_one(rel)
@@ -343,7 +356,7 @@ class State:
         else:
             sp_in, inv_base = sp, tuple(base)
         try:
-            inv = invert_negative(sp_in, inv_base, mask=mask)
+            inv = invert_negative(sp_in, inv_base, mask=mask, white_pct=WHITE_PCT)  # sp is already 24 px block means
             pos = inv.positive
             est = estimate_params_v3(pos, mask, NOREF_V3)
             rp = RenderParams.from_dict(est["params"])
@@ -391,6 +404,34 @@ class State:
             return dict(base_regions=None, base_rgb=fe["roll_rgb"], base_source=common)
         raise ValueError(f"unknown roll base mode {mode!r}")
 
+    def _orientations(self) -> dict:
+        try:
+            return json.loads(self.orient_file.read_text())
+        except (OSError, ValueError):
+            return {}
+
+    def orientation(self, p: Path) -> tuple[int, str]:
+        """Quarter turns (counter-clockwise) to show ``p`` upright and where that came from."""
+        saved = self._orientations().get(str(p.resolve()))
+        if saved is not None:
+            return int(saved) % 4, "saved"
+        if not is_scanner_dng(p):
+            try:
+                with rawpy.imread(str(p)) as r:
+                    k = FLIP_TO_ROT90.get(int(r.sizes.flip), 0)
+                return k, "raw_flag" if k else "none"
+            except Exception:  # noqa: BLE001
+                pass
+        return 0, "none"
+
+    def set_orientation(self, body: dict) -> dict:
+        p = self.resolve(body["path"])
+        k = int(body["rot90"]) % 4
+        d = self._orientations()
+        d[str(p.resolve())] = k
+        self.orient_file.write_text(json.dumps(d, indent=1, sort_keys=True))
+        return dict(path=body["path"], rot90=k, source="saved")
+
     def meta(self) -> dict:
         pv = self.preview
         rel = str(pv.path.relative_to(self.root))
@@ -400,8 +441,11 @@ class State:
         folder = str(Path(rel).parent)
         f_roll = self.roll_cache.get(folder, {}).get("frames", {}).get(rel) or {}
         all_bounds = {k: list(BOUNDS[k]) for k in SLIDERS} | {k: list(EXTENDED_BOUNDS[k]) for k in EXTENDED_SCALARS}
+        rot, rot_src = self.orientation(pv.path)
         return dict(
-            token=self.token, path=rel, film=pv.film, factor=pv.factor,
+            token=self.token, path=rel, film=pv.film, factor=pv.factor, rot90=rot, rot90_source=rot_src,
+            white_point=dict(pv.report.get("white_point") or dict(method="pixel", pct=pv.white_pct),
+                             d_hi=list(pv.inversion["d_hi"])),
             preview_shape=list(pv.positive.shape[:2]), full_shape=list(pv.full_shape),
             base=dict(
                 method=method,
@@ -446,12 +490,14 @@ class State:
         self.token = None
         extra = self._roll_base_kwargs(rel, base_mode, softness) if base_mode != "auto" else {}
         try:
-            self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V3, film=film, keep_full=True, **extra)
+            self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V3, film=film, keep_full=True,
+                                        white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **extra)
         except ValueError:
             # If auto B0 failed and roll base can be computed for this folder, fall back to roll_nat automatically
             if base_mode == "auto":
                 extra = self._roll_base_kwargs(rel, "roll_nat", softness)
-                self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V3, film=film, keep_full=True, **extra)
+                self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V3, film=film, keep_full=True,
+                                            white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **extra)
             else:
                 raise
         self.token = secrets.token_hex(8)
@@ -512,8 +558,8 @@ class State:
         rel = pv.path.relative_to(self.root)
         out_dir = self.out / rel.parent
         sc = pv.export(out_dir, RenderParams.from_dict(body.get("params") or {}), body.get("encoding", "srgb"),
-                       stem=free_stem(out_dir, pv.path.stem), overwrite=False)
-        return dict(path=sc["output"]["path"], sha256=sc["output"]["sha256"],
+                       stem=free_stem(out_dir, pv.path.stem), overwrite=False, rot90=int(body.get("rot90", 0)))
+        return dict(path=sc["output"]["path"], sha256=sc["output"]["sha256"], rot90=sc["output"].get("rot90", 0),
                     sidecar=str(Path(sc["output"]["path"]).with_suffix(".json")),
                     qc=dict(status=sc["qc"]["status"], failing=[c for c in sc["qc"]["checks"] if c["status"] != "pass"]))
 
@@ -601,6 +647,8 @@ class Handler(BaseHTTPRequestHandler):
                     return self.json(st.set_base(b))
                 if u.path == "/api/wb_pick":
                     return self.json(st.wb_pick(b))
+                if u.path == "/api/orient":
+                    return self.json(st.set_orientation(b))
                 if u.path == "/api/export":
                     return self.json(st.export(b))
             self.json(dict(error="not found"), 404)

@@ -129,3 +129,32 @@ def test_invert_negative_is_deterministic():
     rgb = negative_of(grey_ramp())
     a, b = invert_negative(rgb, BASE), invert_negative(rgb, BASE)
     assert np.array_equal(a.display, b.display) and a.params == b.params
+
+
+def test_block_white_point_ignores_single_pixel_noise_in_the_densest_channel():
+    """T4b: a dense, nearly uniform blue sky a few ADU above black has a single-pixel high-density tail from noise;
+    the block-mean white point stays at the scene's density, the default single-pixel one does not."""
+    from filmcolor.invert import block_white_point
+
+    rng = np.random.default_rng(3)
+    h, w = 512, 512
+    D = np.empty((h, w, 3), np.float32)
+    D[...] = rng.uniform(0.1, 1.0, (h, w, 1)) * np.array([0.8, 1.1, 1.3], np.float32)
+    D[: h // 4] = [0.8, 1.1, 1.3]                     # sky: the white point in every channel
+    T = BASE * 10.0 ** -D
+    T[..., 2] = np.maximum(T[..., 2] + rng.normal(0, 0.25 * T[..., 2].min(), (h, w)), 1e-5)  # blue noise
+    mask = np.ones((h, w), bool)
+    pix = invert_negative(T, BASE, mask=mask)
+    blk = invert_negative(T, BASE, mask=mask, white_block=16, white_pct=99.8)
+    assert pix.params.d_hi[2] > 1.3 + 0.2             # single pixels: pushed up by noise
+    assert abs(blk.params.d_hi[2] - 1.3) < 0.03       # block means: the sky's density (residual noise / 16)
+    assert abs(blk.params.d_hi[1] - 1.1) < 0.001
+    assert blk.report["white_point"] == dict(method="block_mean", block=16, pct=99.8, n_blocks=(h // 16) * (w // 16))
+    assert "white_point" not in pix.report            # default reports keep their field set
+
+    # blocks with any pixel outside the mask are not used; too few blocks fall back to single pixels
+    m2 = mask.copy()
+    m2[::16] = False
+    d_hi, info = block_white_point(T, BASE, m2, 16, 99.8)
+    assert info["method"] == "pixel_fallback" and info["n_blocks"] == 0
+    assert d_hi == estimate_white_point(density(T[m2], BASE), None, 99.8)

@@ -132,6 +132,9 @@
     <button id="bRollB1" title="⑤ 整卷完整片基向量（B1）">⑤ 整卷 B1</button>
     <span class="sep"></span>
     <button id="b11">1:1 局部</button>
+    <span class="sep"></span>
+    <button id="bRotL" title="向左（逆时针）旋转 90°，快捷键 R；记住每张照片的方向，导出时按此方向输出">↺ 左转 90°</button>
+    <button id="bRotR" title="向右（顺时针）旋转 90°，快捷键 Shift+R">↻ 右转 90°</button>
     <span style="flex:1"></span>
     <button id="bExport" style="background:#2e5c38;border-color:#438452">导出 16 位 TIFF</button>
   </div>
@@ -217,8 +220,8 @@ const UI_SLIDERS = [
   {group:"toneSliders", key:"ev", label:"曝光 Exposure (EV)", cls:"", min:-3.0, max:3.0, step:0.05, def:0.0,
    toUI: v => Number(v.toFixed(2)), fromUI: u => u, fmt: u => (u >= 0 ? "+" : "") + Number(u).toFixed(2)},
   {group:"toneSliders", key:"contrast", label:"对比度 Contrast", cls:"", min:-100, max:100, step:1, def:0,
-   toUI: v => Math.round((v >= 1.15 ? (v - 1.15) / 0.85 : (v - 1.15) / 0.65) * 100),
-   fromUI: u => u >= 0 ? 1.15 + (u / 100) * 0.85 : 1.15 + (u / 100) * 0.65,
+   toUI: v => Math.round((v >= 1.30 ? (v - 1.30) / 0.70 : (v - 1.30) / 0.80) * 100),
+   fromUI: u => u >= 0 ? 1.30 + (u / 100) * 0.70 : 1.30 + (u / 100) * 0.80,
    fmt: u => (u > 0 ? "+" + u : "" + u)},
   {group:"toneSliders", key:"highlights", label:"高光 Highlights", cls:"", min:-100, max:100, step:1, def:0,
    toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
@@ -243,11 +246,11 @@ const UI_SLIDERS = [
 
 let meta = null, params = {}, autoStartParams = {}, savedPerFile = {}, clipboardParams = null;
 let mode = "pos", tool = null, seq = 0, timer = null, drag = null, busy = false, comparing = false;
-let rollData = {}, fileList = [], currentRel = null, softness = 0.5;
+let rollData = {}, fileList = [], currentRel = null, softness = 0.5, rot = 0;
 let curveChan = "rgb", curves = {rgb:[[0,0],[1,1]], r:[[0,0],[1,1]], g:[[0,0],[1,1]], b:[[0,0],[1,1]]};
 let dragCurveIdx = -1, lastHistBins = null;
 
-const DEP = ["bPos", "bNeg", "bCompare", "bAuto", "bReset", "bPick", "bAutoBase", "bRollNat", "bRollDQ", "bRollB1", "b11", "bWbPick", "bExport", "film"];
+const DEP = ["bPos", "bNeg", "bCompare", "bAuto", "bReset", "bPick", "bAutoBase", "bRollNat", "bRollDQ", "bRollB1", "b11", "bWbPick", "bRotL", "bRotR", "bExport", "film"];
 function setBusy(b) {
   busy = b;
   for (const id of DEP) if ($(id)) $(id).disabled = b;
@@ -259,7 +262,7 @@ function folderOf(rel) { const i = rel ? rel.lastIndexOf("/") : -1; return i >= 
 
 function defaultNaturalParams() {
   return {
-    ev:0.0, temp:0.0, tint:0.0, sat:1.0, contrast:1.15, midtone:0.22, shoulder:0.15,
+    ev:0.0, temp:0.0, tint:0.0, sat:1.0, contrast:1.30, midtone:0.22, shoulder:0.15,
     highlights:0.0, shadows:0.0, whites:0.0, blacks:0.0, vibrance:0.0, slope_r:0.0, slope_b:0.0,
     tone_curve:{}
   };
@@ -416,6 +419,7 @@ async function openFile(f, el, explicitBaseMode) {
     return;
   }
   setBusy(false);
+  rot = meta.rot90 || 0;
   softness = meta.base && meta.base.softness != null ? meta.base.softness : 0.5;
   $("s_softness").value = Math.round(softness * 100);
   $("v_softness").textContent = Math.round(softness * 100);
@@ -546,7 +550,8 @@ async function refresh() {
     if (my !== seq || token !== tok()) return;
     const bb = mode === "pos" ? parseFloat(r.headers.get("X-Below-Black")) : null;
     const ch = mode === "pos" ? parseFloat(r.headers.get("X-Clip-High")) : null;
-    const blob = await r.blob(); const url = URL.createObjectURL(blob);
+    const blob = await r.blob(); const url = await rotatedURL(blob, rot);
+    if (my !== seq || token !== tok()) { URL.revokeObjectURL(url); return; }
     const old = $("img").src;
     $("img").onload = () => {
       drawOverlay();
@@ -576,18 +581,49 @@ function showInfo() {
     (w.length ? `<br><span class="warn">片基提示：${w.join("；")}</span>` : "");
 }
 
+// Display rotation: k quarter turns counter-clockwise (numpy.rot90), done here; the server keeps sensor orientation.
+async function rotatedURL(blob, k) {
+  k = ((k % 4) + 4) % 4;
+  if (!k) return URL.createObjectURL(blob);
+  const bmp = await createImageBitmap(blob);
+  const W = bmp.width, H = bmp.height, c = document.createElement("canvas");
+  c.width = k % 2 ? H : W; c.height = k % 2 ? W : H;
+  const g = c.getContext("2d");
+  if (k === 1) { g.translate(0, W); g.rotate(-Math.PI / 2); }
+  else if (k === 2) { g.translate(W, H); g.rotate(Math.PI); }
+  else { g.translate(H, 0); g.rotate(Math.PI / 2); }
+  g.drawImage(bmp, 0, 0);
+  bmp.close();
+  return URL.createObjectURL(await new Promise(res => c.toBlob(res, "image/png")));
+}
+// preview pixel (x = column, y = row) of the sensor-oriented preview <-> (u, v) of the turned display, in preview pixels
+function prevToDisp(x, y) {
+  const W = meta.preview_shape[1], H = meta.preview_shape[0];
+  return rot === 1 ? [y, W - x] : rot === 2 ? [W - x, H - y] : rot === 3 ? [H - y, x] : [x, y];
+}
+function dispToPrev(u, v) {
+  const W = meta.preview_shape[1], H = meta.preview_shape[0];
+  return rot === 1 ? [W - v, u] : rot === 2 ? [W - u, H - v] : rot === 3 ? [v, H - u] : [u, v];
+}
+function dispShape() { return rot % 2 ? [meta.preview_shape[0], meta.preview_shape[1]] : [meta.preview_shape[1], meta.preview_shape[0]]; }
+
 function drawOverlay() {
   const c = $("ov"), im = $("img"); c.width = im.clientWidth; c.height = im.clientHeight;
   const g = c.getContext("2d"); g.clearRect(0, 0, c.width, c.height);
   if (!meta) return;
-  const sx = c.width / meta.preview_shape[1], sy = c.height / meta.preview_shape[0];
+  const [dw, dh] = dispShape(), sx = c.width / dw, sy = c.height / dh;
   g.strokeStyle = "#40e0ff"; g.lineWidth = 2;
-  for (const [t, l, h, w] of meta.base.regions_preview) g.strokeRect(l * sx, t * sy, w * sx, h * sy);
+  for (const [t, l, h, w] of meta.base.regions_preview) {
+    const [u0, v0] = prevToDisp(l, t), [u1, v1] = prevToDisp(l + w, t + h);
+    g.strokeRect(Math.min(u0, u1) * sx, Math.min(v0, v1) * sy, Math.abs(u1 - u0) * sx, Math.abs(v1 - v0) * sy);
+  }
   if (drag) { g.strokeStyle = "#e0a040"; g.strokeRect(drag.x0, drag.y0, drag.x1 - drag.x0, drag.y1 - drag.y0); }
 }
+// mouse event -> [preview x, preview y (sensor orientation), overlay x, overlay y (screen pixels)]
 function toPreview(ev) {
-  const r = $("ov").getBoundingClientRect();
-  return [(ev.clientX - r.left) * meta.preview_shape[1] / r.width, (ev.clientY - r.top) * meta.preview_shape[0] / r.height, ev.clientX - r.left, ev.clientY - r.top];
+  const r = $("ov").getBoundingClientRect(), [dw, dh] = dispShape();
+  const [x, y] = dispToPrev((ev.clientX - r.left) * dw / r.width, (ev.clientY - r.top) * dh / r.height);
+  return [x, y, ev.clientX - r.left, ev.clientY - r.top];
 }
 
 $("ov").onmousedown = ev => {
@@ -610,9 +646,11 @@ $("ov").onmouseup = async ev => {
     return;
   }
   if (!drag) return;
-  const r = $("ov").getBoundingClientRect(), s = meta.preview_shape[1] / r.width;
-  const l = Math.round(Math.min(drag.x0, drag.x1) * s), t = Math.round(Math.min(drag.y0, drag.y1) * s);
-  const w = Math.round(Math.abs(drag.x1 - drag.x0) * s), h = Math.round(Math.abs(drag.y1 - drag.y0) * s);
+  const r = $("ov").getBoundingClientRect(), [dw, dh] = dispShape();
+  const [xa, ya] = dispToPrev(drag.x0 * dw / r.width, drag.y0 * dh / r.height);
+  const [xb, yb] = dispToPrev(drag.x1 * dw / r.width, drag.y1 * dh / r.height);
+  const l = Math.round(Math.min(xa, xb)), t = Math.round(Math.min(ya, yb));
+  const w = Math.round(Math.abs(xb - xa)), h = Math.round(Math.abs(yb - ya));
   drag = null;
   if (w < 2 || h < 2) { drawOverlay(); return; }
   status("用框选区域重新估计片基并反转……");
@@ -629,11 +667,27 @@ async function showCrop(px, py) {
   status("渲染 1:1 局部……");
   try {
     const r = await api(`/api/crop?t=${t}&l=${l}&size=${size}&${pq()}`);
-    $("cropImg").src = URL.createObjectURL(await r.blob());
+    $("cropImg").src = await rotatedURL(await r.blob(), rot);
     $("cropInfo").textContent = `传感器像素 (${t}, ${l})，${size}×${size}，与导出图同一像素`;
     $("crop").style.display = "flex"; status("1:1 局部");
   } catch (e) { status("1:1 失败：" + e.message, true); }
 }
+
+async function turn(dk) {
+  if (!meta || busy) return;
+  rot = (rot + dk + 4) % 4;
+  drag = null;
+  try { await api("/api/orient", {path:meta.path, rot90:rot}); } catch (e) { status("方向保存失败：" + e.message, true); }
+  refresh();
+  status(`已旋转：${["原始方向", "左转 90°", "180°", "右转 90°"][rot]}（导出按此方向输出）`);
+}
+$("bRotL").onclick = () => turn(1);
+$("bRotR").onclick = () => turn(-1);
+window.addEventListener("keydown", ev => {
+  if (ev.code !== "KeyR" || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  if (["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+  ev.preventDefault(); turn(ev.shiftKey ? -1 : 1);
+});
 
 function setTool(t) { tool = tool === t ? null : t; syncBaseButtons(); }
 $("bPick").onclick = () => setTool("pick");
@@ -857,7 +911,7 @@ for (const preset of ["linear", "soft", "standard", "matte", "classic"]) {
 $("bExport").onclick = async () => {
   if (!meta) return; status("导出全分辨率 16 位 TIFF……");
   try {
-    const j = await api("/api/export", {params:serializeParams(), encoding:"srgb", token:tok()});
+    const j = await api("/api/export", {params:serializeParams(), encoding:"srgb", token:tok(), rot90:rot});
     $("exp").style.display = "block";
     $("exp").innerHTML = `已导出（不会覆盖已有文件）：<br><b>${j.path}</b><br>sidecar：${j.sidecar}<br>质量检查：<span class="${j.qc.status === "pass" ? "" : "warn"}">${j.qc.status}</span>` +
       j.qc.failing.map(c => `<br>· ${c.name}：${c.status}`).join("");

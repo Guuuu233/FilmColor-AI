@@ -141,3 +141,47 @@ def test_noref_v3_adapts_exposure_and_protects_highlights_without_max_contrast()
     assert 0.95 <= eb["params"]["contrast"] <= 1.38
     assert eb["diagnostics"]["clip_share"] <= NOREF_V3["clip_budget"]
     assert eb["params"]["shoulder"] > NOREF_V3["base_shoulder"] or eb["params"].get("highlights", 0.0) < 0.0
+
+
+def test_noref_v3_t4b_keeps_print_contrast_and_never_sets_blacks():
+    """T4b (2026-10-24): contrast and shadow decisions are measured on the encoded output. A normal frame keeps the
+    print contrast centre 1.30 with no shadow lift and blacks 0 (T4 v2 gave contrast 0.95, shadows +0.15, blacks +0.10
+    on such frames by comparing -log10 of the positive with print-density thresholds); a crushed frame gets a
+    positive shadows lift and still blacks 0."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    normal = estimate_params_v3(scene(median=0.18, stops=7.0, seed=21), None, NOREF_V3)
+    assert normal["status"] == "ok" and normal["config_rev"] == NOREF_V3["rev"]
+    assert normal["params"]["contrast"] == pytest.approx(1.30)
+    assert normal["params"].get("blacks", 0.0) == 0.0 and normal["params"].get("shadows", 0.0) == 0.0
+    assert normal["diagnostics"]["encoded_p25"] >= NOREF_V3["shadow_p25_floor"]
+
+    crushed = scene(median=0.18, stops=7.0, seed=22).reshape(-1, 3)
+    crushed[: len(crushed) * 2 // 5] *= 1e-3        # 40 % of the frame near black
+    ec = estimate_params_v3(crushed.reshape(400, -1, 3), None, NOREF_V3)
+    assert ec["diagnostics"]["encoded_p25_before_shadows"] < NOREF_V3["shadow_p25_floor"]
+    assert 0.0 < ec["params"]["shadows"] <= NOREF_V3["shadow_max"]
+    assert ec["params"].get("blacks", 0.0) == 0.0
+    assert ec["params"]["contrast"] >= NOREF_V3["contrast_bounds_v3"][0]
+
+
+def test_wb_v3_corrects_a_cast_when_top_and_bottom_differ():
+    """T4b: a frame whose top and bottom halves have different scene colours (sky above, grass below) but share a
+    green cast on their neutral greys: estimate_wb_v3 still measures the cast with non-zero confidence and moves
+    tint towards magenta (the T4 v2 estimate_wb set confidence 0 on such frames)."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3, wb_from_chroma
+
+    rng = np.random.default_rng(5)
+    n = 100_000
+    y = 0.18 * 2.0 ** rng.uniform(-3, 3, n)
+    cast = np.array([-0.12, -0.12])                  # greens: log2 R/G and B/G both low
+    c = cast + rng.normal(0, 0.04, (n, 2))
+    c[: n // 2][rng.random(n // 2) < 0.5] += [-0.5, 0.6]   # top: half the pixels are blue sky
+    c[n // 2 :][rng.random(n - n // 2) < 0.5] += [0.1, -0.7]  # bottom: half are grass / earth
+    px = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).astype(np.float32)
+    wb = estimate_wb_v3(px, NOREF_V3)
+    assert wb["confidence"] > 0.3
+    assert np.allclose(wb["chroma"], cast, atol=0.04)
+    temp, tint = wb_from_chroma(cast)
+    assert wb["tint"] == pytest.approx(NOREF_V3["wb_v3_strength"] * wb["confidence"] * tint, abs=0.02)
+    assert wb["tint"] > 0.0

@@ -385,6 +385,7 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
+    rev="t4b-2026-10-24",          # T4b: contrast / shadow decisions on the encoded output, wb_v3, contrast centre 1.30
     look="global_look_v1",
     low_info_range_stops=0.6,      # allow open-sky / desert / snow frames with paper-black floor (p99/p1 >= 1.5x)
     cell_size=8,                   # grid cell side for textured-cell activity metering
@@ -392,26 +393,39 @@ NOREF_V3 = dict(
     min_textured_share=0.08,       # fallback to top 25% most active cells when fewer than 8% exceed activity_thr_d
     anchor_target_density=0.75,    # NegPy print target density 0.75 D (reflectance 10^-0.75 ≈ 0.178 = 18% grey)
     anchor_band_d=0.08,            # comfort band around target density (preserves high-key / low-key mood)
-    base_contrast=1.15,            # restrained natural film contrast center (replaces fixed contrast=2.0)
-    contrast_bounds_v3=(0.95, 1.38),  # Auto Grade range from textured P10..P90 span
-    target_span_d=0.68,            # reference P10..P90 density span of textured cells
+    base_contrast=1.30,            # natural print contrast centre (UI contrast 0); replaces fixed contrast=2.0
+    contrast_bounds_v3=(1.05, 1.38),  # contrast is only lowered (to >= 1.05) for very wide, both-ends-clipped frames
+    contrast_spread_max=0.78,      # encoded luminance p90 - p10 above this, with both ends clipped: lower contrast
+    end_clip_share=0.005,          # "clipped end": share of encoded luminance <= 0.02 (black) or >= 0.98 (white)
     base_sat=1.02,                 # restrained saturation
     base_midtone=0.22,             # comfortable mid-grey placement
     base_shoulder=0.15,            # gentle baseline highlight roll-off
     target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance band
-    target_p2_band=(0.03, 0.14),   # paper-black floor vs haze ceiling for encoded p2
+    shadow_p25_floor=0.12,         # shadows lifted only when encoded luminance p25 is below this (crushed frame)
+    shadow_gain=2.5, shadow_max=0.35,  # shadows = min(shadow_max, shadow_gain * (floor - p25)); blacks stay 0
     clip_budget=0.002,             # <= 0.2 % highlight clipping
     headroom=1.2,                  # max stops p99.5 may exceed white before shoulder
     ev_limits=(-2.0, 2.5),
-    wb_prior_weight=0.55,          # mild prior from global_look_v1, blended with textured midtone neutral evidence
+    wb_prior_weight=0.55,          # prior from global_look_v1, applied for the share (1 - wb confidence)
     wb_max_shift=0.35,
+    wb_v3_zones=(((70, 96), 0.35, 0.6), ((25, 75), 0.25, 0.4)),  # (luma pct range, chroma radius log2, weight):
+                                   # bright near-neutral (cloud, road, white surfaces) and low-saturation mid-grey
+    wb_v3_min_px=200,              # pixels a zone needs to count
+    wb_v3_huber=0.08,              # Huber scale (log2 chroma) of the robust zone location
+    wb_v3_share=(0.01, 0.08),      # candidate share mapping to confidence 0..1
+    wb_v3_mad=(0.10, 0.35),        # candidate MAD mapping to confidence factor 1..0.5 (never 0)
+    wb_v3_conflict_factor=0.75,    # quadrant disagreement lowers confidence by this factor (never to 0)
+    wb_v3_strength=0.85,           # share of the measured residual cast removed at full confidence
     wp_invalid_stops=1.5,
 )
 
 
 def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
     """NegPy-style textured-cell metering: partition ``P`` into ``cell_size x cell_size`` cells inside ``mask``,
-    measure within-cell log-density activity ``std(-log10 Y)``, and return textured cell means and quantiles."""
+    measure within-cell log-density activity ``std(-log10 Y)``, and return textured cell means and quantiles.
+    Units: ``-log10`` of the scene-linear positive luminance, i.e. density below the inversion white point (0 at the
+    white point, 0.75 = 17.8 % of it). A normal scene spans 1.5..2.5 of these, so they are not print densities: the
+    T4b contrast and shadow decisions use the encoded output instead (``_encoded_quantiles``)."""
     cs = int(cfg.get("cell_size", 8))
     h, w = P.shape[:2]
     if h < cs * 2 or w < cs * 2:
@@ -455,6 +469,75 @@ def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
     )
 
 
+def _huber_location(c, k: float, iters: int = 10) -> np.ndarray:
+    """Huber M-estimate of the 2-D location of chroma samples ``c`` (n, 2), starting from the median."""
+    m = np.median(c, 0)
+    for _ in range(iters):
+        r = np.linalg.norm(c - m, axis=1)
+        w = np.minimum(1.0, k / np.maximum(r, 1e-9))
+        m = (w[:, None] * c).sum(0) / w.sum()
+    return m
+
+
+def estimate_wb_v3(px, cfg=None) -> dict:
+    """T4b white balance on sample pixels ``px`` (n, 3) of the positive: in each zone of ``cfg["wb_v3_zones"]``
+    (luminance percentile range, chroma radius, weight) the near-neutral pixels give a robust (Huber) residual cast;
+    zones with at least ``wb_v3_min_px`` pixels are combined by weight. Confidence comes from the candidate share and
+    spread and is lowered, never zeroed, when image quadrants disagree (a frame with sky above and grass below is not
+    evidence against a cast). temp / tint remove ``wb_v3_strength`` x confidence of the cast."""
+    cfg = cfg or NOREF_V3
+    px = np.asarray(px, np.float32)
+    y = px @ LUMA.astype(np.float32)
+    ok = y > cfg["min_luma"]
+    px, y = px[ok], y[ok]
+    diag = dict(n=int(len(px)), zones=[])
+    if len(px) < cfg["wb_v3_min_px"]:
+        return dict(temp=0.0, tint=0.0, confidence=0.0, chroma=[0.0, 0.0], diagnostics=dict(diag, reason="too few pixels"))
+    c = _chroma(px)
+    norm = np.linalg.norm(c, axis=1)
+    ests, weights, cands = [], [], []
+    for (q_lo, q_hi), radius, weight in cfg["wb_v3_zones"]:
+        lo, hi = np.percentile(y, [q_lo, q_hi])
+        sel = (y >= lo) & (y <= hi) & (norm <= radius)
+        zd = dict(luma_pct=[q_lo, q_hi], radius=radius, n=int(sel.sum()), share=float(sel.sum() / max(len(y), 1)))
+        if sel.sum() >= cfg["wb_v3_min_px"]:
+            est = _huber_location(c[sel], cfg["wb_v3_huber"])
+            zd.update(chroma=[float(v) for v in est])
+            ests.append(est), weights.append(weight), cands.append(c[sel])
+        diag["zones"].append(zd)
+    if not ests:
+        return dict(temp=0.0, tint=0.0, confidence=0.0, chroma=[0.0, 0.0],
+                    diagnostics=dict(diag, reason="no near-neutral zone with enough pixels"))
+    w = np.asarray(weights) / np.sum(weights)
+    est = (w[:, None] * np.asarray(ests)).sum(0)
+    allc = np.concatenate(cands)
+    mad = float(np.median(np.linalg.norm(allc - est, axis=1)))
+    share = float(sum(z["share"] for z in diag["zones"] if "chroma" in z) / len(diag["zones"]))
+    conf = _ramp(share, *cfg["wb_v3_share"]) * (1 - 0.5 * _ramp(mad, *cfg["wb_v3_mad"]))
+    if len(ests) == 2:
+        diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
+    quads = []
+    n = len(px)
+    # quadrants are approximated by sample order: _sample keeps row-major order, so halves of the sample are the
+    # top and bottom of the frame; left / right are not separable here, so only top vs bottom is checked
+    for half in (slice(0, n // 2), slice(n // 2, n)):
+        ch, yh, nh = c[half], y[half], norm[half]
+        lo, hi = np.percentile(yh, [25, 96])
+        selh = (yh >= lo) & (yh <= hi) & (nh <= max(r for _, r, _ in cfg["wb_v3_zones"]))
+        if selh.sum() >= cfg["wb_v3_min_px"]:
+            quads.append(_huber_location(ch[selh], cfg["wb_v3_huber"]))
+    if len(quads) == 2:
+        diag["top_bottom_spread"] = float(np.linalg.norm(quads[0] - quads[1]))
+        if diag["top_bottom_spread"] > cfg["wb_conflict"]:
+            conf *= cfg["wb_v3_conflict_factor"]
+            diag["conflict"] = True
+    temp, tint = wb_from_chroma(cfg["wb_v3_strength"] * conf * est)
+    m = cfg["wb_max_shift"]
+    diag.update(share=share, mad=mad)
+    return dict(temp=float(np.clip(temp, -m, m)), tint=float(np.clip(tint, -m, m)), confidence=float(conf),
+                chroma=[float(v) for v in est], diagnostics=diag)
+
+
 def _encoded_quantiles(px, p: RenderParams, qs=(2, 50, 98)):
     e, _, _ = render_full(px, p)
     y = e @ LUMA.astype(np.float32)
@@ -468,13 +551,19 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
        uniform skies, water or borders do not bias metering.
     2. **Auto Density (ev)**: pulls the textured P5..P95 anchor density towards ``anchor_target_density = 0.75 D``
        (18 % mid-grey) with a comfort band, then refines so sRGB-encoded median luminance lands in the target band.
-    3. **Auto Grade (contrast)**: sets a restrained contrast in ``[0.95, 1.38]`` (centered at ``1.15``, never 2.0)
-       from the textured P10..P90 density span (Shadow Reach on flat negatives, softened on wide-span negatives).
-    4. **Highlight Hold (highlights & shoulder) & Shadow Hold (shadows & blacks)**:
-       - when bright textured cells ``P2`` approach paper white or full-frame ``above_white`` exceeds
-         ``clip_budget`` (0.2 %), writes an explicit negative ``highlights`` burn and/or raised ``shoulder``;
-       - when dark textured cells ``P98`` are crushed, writes an explicit positive ``shadows`` lift and
-         paper-black ``blacks`` floor.
+    3. **Contrast** (T4b): starts at the print centre ``base_contrast = 1.30`` (UI contrast 0); lowered (to >= 1.05)
+       only when the encoded luminance p90 - p10 exceeds ``contrast_spread_max`` and both ends clip.
+    4. **Highlight Hold (highlights & shoulder)**: when bright textured cells ``P2`` approach the white point or
+       full-frame clipping exceeds ``clip_budget`` (0.2 %), writes an explicit negative ``highlights`` burn and/or a
+       raised ``shoulder``.
+    5. **Shadow Hold** (T4b): positive ``shadows`` only when the encoded luminance p25 is below ``shadow_p25_floor``;
+       ``blacks`` is never set automatically.
+    6. **White balance** (T4b, ``estimate_wb_v3``): robust residual cast of bright near-neutral and low-saturation
+       mid-grey pixels; the look's prior covers only the share the evidence does not.
+
+    T4b (2026-10-24) replaced the T4 v2 contrast / shadow / paper-black rules, which compared ``-log10`` of the
+    scene-linear positive (``_textured_cells``) with print-density thresholds and so lowered contrast to its floor
+    and lifted shadows and blacks on almost every frame.
     """
     P = np.asarray(P, np.float32)
     if mask is not None and mask.shape != P.shape[:2]:
@@ -482,7 +571,7 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     look = look or load_look(cfg["look"])
     lp = dict(look["params"])
     st = frame_stats(P, mask, cfg)
-    out = dict(config=cfg["id"], look=look["id"], groups=["brightness", "wb", "tone", "sat"],
+    out = dict(config=cfg["id"], config_rev=cfg.get("rev"), look=look["id"], groups=["brightness", "wb", "tone", "sat"],
                stats=st, diagnostics={})
     reasons = []
     if st["range_stops"] < cfg["low_info_range_stops"]:
@@ -508,11 +597,12 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     tc = _textured_cells(P, mask, cfg)
     out["diagnostics"]["textured_cells"] = {k: v for k, v in tc.items() if k != "textured_rgb"}
 
-    # 1. White balance: mild prior + textured midtone neutral evidence
-    wb = estimate_wb(P, mask, cfg, roll)
+    # 1. White balance (T4b): robust bright-neutral + mid-grey residual cast (estimate_wb_v3); the look's prior only
+    #    for the share the evidence does not cover
+    wb = estimate_wb_v3(px, cfg)
     m_wb = cfg["wb_max_shift"]
-    base_p["temp"] = float(np.clip(base_p["temp"] + wb["temp"], -m_wb, m_wb))
-    base_p["tint"] = float(np.clip(base_p["tint"] + wb["tint"], -m_wb, m_wb))
+    base_p["temp"] = float(np.clip((1 - wb["confidence"]) * base_p["temp"] + wb["temp"], -m_wb, m_wb))
+    base_p["tint"] = float(np.clip((1 - wb["confidence"]) * base_p["tint"] + wb["tint"], -m_wb, m_wb))
     out["diagnostics"]["wb"] = wb
 
     # 2. Saturation / vibrance: reduce saturation slightly on already high-chroma frames
@@ -524,14 +614,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
         base_p["vibrance"] = 0.08
     out["diagnostics"]["chroma_p90"] = p90
 
-    # 3. Auto Grade (contrast from textured P10..P90 span, bounded to [0.95, 1.38])
+    # 3. Contrast starts at the print centre base_contrast (T4b); lowered after exposure only for very wide frames
     c_lo, c_hi = cfg["contrast_bounds_v3"]
-    span_d = max(tc["span_10_90_d"], 0.18)
-    target_span = float(cfg["target_span_d"])
-    # Gentle inverse scaling: flat textured span (< 0.68 D) gets slightly higher contrast (Shadow Reach);
-    # wide textured span (> 0.68 D) gets softer contrast so shadows & highlights both fit.
-    auto_c = float(cfg["base_contrast"]) * ((target_span / span_d) ** 0.18)
-    base_p["contrast"] = float(np.clip(round(auto_c, 3), c_lo, c_hi))
+    base_p["contrast"] = float(np.clip(cfg["base_contrast"], c_lo, c_hi))
 
     # 4. Auto Density (NegPy textured anchor_d vs anchor_target_density = 0.75 D, with high-key protection)
     target_d = float(cfg["anchor_target_density"])
@@ -594,16 +679,33 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     if ev_lowered > 0:
         flags.append(f"ev_lowered_for_highlights:{ev_lowered:.1f}")
 
-    # 6. NegPy Shadow Hold / Paper Black: check dark textured cells P98 and encoded p2
-    p2, p50, p98 = _encoded_quantiles(px, RenderParams(**base_p))
-    p98_shifted_d = tc["p98_dark_d"] - 0.30103 * base_p["ev"]
-    p2_lo, p2_hi = cfg["target_p2_band"]
-    if p2 < p2_lo or p98_shifted_d > 1.75:
-        lift_need = max(p2_lo - p2, 0.04 * (p98_shifted_d - 1.75))
-        base_p["shadows"] = float(np.clip(base_p["shadows"] + lift_need * 2.8, 0.0, 0.55))
-        base_p["blacks"] = float(np.clip(lift_need * 1.8, 0.0, 0.22))
-    elif p2 > p2_hi and (p98 - p2) < 0.55:
-        base_p["blacks"] = float(np.clip(-(p2 - p2_hi) * 1.3, -0.28, 0.0))
+    # 6. Contrast relief (T4b, encoded output): only a very wide frame (encoded luminance p90 - p10 above
+    #    contrast_spread_max) with both ends clipped gets a lower contrast, down to the lower bound
+    def ends(p):
+        e, _, _ = render_full(px, RenderParams(**p))
+        y = e @ LUMA.astype(np.float32)
+        q10, q90 = np.percentile(y, [10, 90])
+        return float(q90 - q10), float(np.mean(y <= 0.02)), float(np.mean(y >= 0.98))
+
+    spread, black_end, white_end = ends(base_p)
+    out["diagnostics"]["contrast_check"] = dict(spread_10_90=spread, black_end=black_end, white_end=white_end)
+    if spread > cfg["contrast_spread_max"] and min(black_end, white_end) > cfg["end_clip_share"]:
+        lo_c, hi_c = c_lo, base_p["contrast"]
+        if ends(dict(base_p, contrast=lo_c))[0] > cfg["contrast_spread_max"]:
+            base_p["contrast"] = lo_c
+        else:
+            for _ in range(14):  # bisection: spread increases with contrast
+                mid_c = 0.5 * (lo_c + hi_c)
+                lo_c, hi_c = (mid_c, hi_c) if ends(dict(base_p, contrast=mid_c))[0] <= cfg["contrast_spread_max"] else (lo_c, mid_c)
+            base_p["contrast"] = float(lo_c)
+        flags.append("contrast_lowered_wide_frame")
+
+    # 7. Shadow Hold (T4b, encoded output): shadows lifted only on crushed frames (encoded luminance p25 below
+    #    shadow_p25_floor); blacks are never set automatically (paper-black / matte stays a user choice)
+    p2, p25, p50, p98 = _encoded_quantiles(px, RenderParams(**base_p), qs=(2, 25, 50, 98))
+    out["diagnostics"]["encoded_p25_before_shadows"] = p25
+    if p25 < cfg["shadow_p25_floor"]:
+        base_p["shadows"] = float(np.clip(cfg["shadow_gain"] * (cfg["shadow_p25_floor"] - p25), 0.0, cfg["shadow_max"]))
 
     # Round slider-visible values cleanly
     for k in ("ev", "temp", "tint", "sat", "contrast", "shoulder", "highlights", "shadows", "whites", "blacks", "vibrance"):
@@ -611,10 +713,10 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
 
     params = RenderParams(**base_p)
     _check_bounds(params)
-    p2_f, p50_f, p98_f = _encoded_quantiles(px, params)
+    p2_f, p25_f, p50_f, p98_f = _encoded_quantiles(px, params, qs=(2, 25, 50, 98))
     clip_f = _clip_share(px, params)
     out["diagnostics"].update(
-        encoded_p2=p2_f, encoded_median=p50_f, encoded_p98=p98_f,
+        encoded_p2=p2_f, encoded_p25=p25_f, encoded_median=p50_f, encoded_p98=p98_f,
         spread_before=float(p98 - p2), clip_share=clip_f,
     )
     conf = dict(wb=wb["confidence"], exposure=float(1.0 - _ramp(st["above_white"], 0.05, 0.25)), overall=1.0)

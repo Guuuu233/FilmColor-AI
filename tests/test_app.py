@@ -18,6 +18,8 @@ from filmcolor.preview import load_preview
 
 from test_scanner import scan, write_dng
 
+APP_WP = dict(white_block=app.WHITE_BLOCK, white_pct=app.WHITE_PCT)  # the app's white point (T4b)
+
 
 def decode_png(b):
     assert b[:8] == b"\x89PNG\r\n\x1a\n"
@@ -36,7 +38,8 @@ def decode_png(b):
 
 
 @pytest.fixture
-def server(tmp_path):
+def server(tmp_path, monkeypatch):
+    monkeypatch.setenv("FILMCOLOR_DATA_ROOT", str(tmp_path))  # app cache (scans, thumbnails, orientation) per test
     root = tmp_path / "neg"
     root.mkdir()
     rgb, irl = scan()
@@ -70,14 +73,14 @@ def test_open_render_crop_export(server):
     p = dict(ev=0.2, sat=1.3)
     tok = meta["token"]
     png, code, hd = call(f"/api/render?token={tok}&p=" + urllib.request.quote(json.dumps(p)))
-    pv = load_preview(root / "s.dng")
+    pv = load_preview(root / "s.dng", **APP_WP)
     assert np.array_equal(decode_png(png), app.to8(pv.render(p)))
     assert 0 <= float(hd["X-Below-Black"]) <= 1 and 0 <= float(hd["X-Clip-High"]) <= 1
-    full, _ = convert(root / "s.dng", render_params=p)
+    full, _ = convert(root / "s.dng", render_params=p, **APP_WP)
     crop, code, _ = call(f"/api/crop?token={tok}&t=10&l=120&size=50&p=" + urllib.request.quote(json.dumps(p)))
     assert np.array_equal(decode_png(crop), app.to8(full[10:60, 120:170]))
     out, code, _ = call("/api/export", dict(params=p, token=tok))
-    ref = write(root / "s.dng", tmp / "direct", render_params=p)
+    ref = write(root / "s.dng", tmp / "direct", render_params=p, **APP_WP)
     assert code == 200 and out["sha256"] == ref["output"]["sha256"]
     neg, code, _ = call(f"/api/negative?token={tok}")
     assert code == 200 and decode_png(neg).shape[:2] == (240, 360)
@@ -89,7 +92,7 @@ def test_manual_base_region(server):
     meta, code, _ = call("/api/base", dict(region=[0, 0, 240, 24], token=tok))
     assert code == 200 and meta["base"]["method"] == "manual" and meta["base"]["regions_preview"] == [[0, 0, 240, 24]]
     out, _, _ = call("/api/export", dict(params={}, token=meta["token"]))
-    _, sc = convert(root / "s.dng", base_regions=[(0, 0, 240, 24)])
+    _, sc = convert(root / "s.dng", base_regions=[(0, 0, 240, 24)], **APP_WP)
     exported = json.loads(open(out["sidecar"]).read())
     assert exported["inversion"]["params"] == json.loads(json.dumps(sc["inversion"]["params"]))
     meta, _, _ = call("/api/base", dict(auto=True, token=meta["token"]))
@@ -298,3 +301,33 @@ def test_roll_nat_wb_pick_thumbnails_and_extended_export(server):
 def test_png_roundtrip():
     img = (np.arange(4 * 5 * 3) % 256).astype(np.uint8).reshape(4, 5, 3)
     assert np.array_equal(decode_png(app.png_bytes(img)), img)
+
+
+def test_t4b_block_white_point_orientation_and_rotated_export(server):
+    """T4b (2026-10-24): the app opens photos with the block-mean white point (recorded in meta and the export
+    sidecar), remembers a per-photo orientation set with /api/orient, and exports the turned image: output.rot90 in
+    the sidecar, pixels = the unturned conversion turned with numpy.rot90, and replay_kwargs reproduce it."""
+    import tifffile
+    from filmcolor.pipeline import replay_kwargs
+
+    call, root, tmp = server
+    m, code, _ = call("/api/open", dict(path="s.dng"))
+    assert code == 200 and m["rot90"] == 0 and m["rot90_source"] == "none"
+    assert m["white_point"]["pct"] == app.WHITE_PCT and m["white_point"]["block"] == app.WHITE_BLOCK
+    o, code, _ = call("/api/orient", dict(path="s.dng", rot90=-1))
+    assert code == 200 and o["rot90"] == 3
+    m = call("/api/open", dict(path="s.dng"))[0]
+    assert m["rot90"] == 3 and m["rot90_source"] == "saved"
+    assert call("/api/orient", dict(path="../outside.dng", rot90=1))[1] == 403
+
+    p = dict(ev=0.1, contrast=1.3)
+    out, code, _ = call("/api/export", dict(params=p, token=m["token"], rot90=m["rot90"]))
+    assert code == 200 and out["rot90"] == 3
+    sc = json.loads(open(out["sidecar"]).read())
+    assert sc["output"]["rot90"] == 3 and "counter-clockwise" in sc["output"]["orientation"]
+    assert sc["inversion"]["white_point"]["pct"] == app.WHITE_PCT
+    plain = write(root / "s.dng", tmp / "plain", render_params=p, **APP_WP)
+    assert "rot90" not in plain["output"]
+    assert np.array_equal(tifffile.imread(out["path"]), np.rot90(tifffile.imread(plain["output"]["path"]), 3))
+    ref = write(root / "s.dng", tmp / "replay_rot", **replay_kwargs(sc))
+    assert out["sha256"] == ref["output"]["sha256"]

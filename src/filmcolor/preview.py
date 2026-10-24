@@ -103,9 +103,10 @@ class Preview:
                     base_inside_image=self.base_inside_image, previewed_input_sha256=self.sha256)
 
     def export(self, out_dir, params=None, encoding: str = "srgb", *, stem: str | None = None,
-               overwrite: bool = True) -> dict:
-        """Write the full-resolution TIFF + sidecar with this preview's base and white point. Refuses
-        (SourceChangedError) when the source file no longer has the SHA256 it had when previewed."""
+               overwrite: bool = True, rot90: int = 0) -> dict:
+        """Write the full-resolution TIFF + sidecar with this preview's base and white point, turned ``rot90``
+        quarter turns counter-clockwise. Refuses (SourceChangedError) when the source file no longer has the SHA256
+        it had when previewed."""
         if sha256(self.path) != self.sha256:
             raise SourceChangedError(f"{self.path} changed since it was opened; open it again")
         base = self.base_info["rgb_render"] if self.film == "bw" else self.inversion["base"]
@@ -113,7 +114,7 @@ class Preview:
         return write(self.path, out_dir, stem=stem, overwrite=overwrite, base_rgb=base, d_hi=self.inversion["d_hi"],
                      image_region=self.image_region, white_pct=self.white_pct, gamma=self.inversion["gamma"],
                      exposure=self.inversion["exposure"], encoding=encoding, render_params=rp, film=self.film,
-                     base_source=self.base_source())
+                     base_source=self.base_source(), white_point_source=self.report.get("white_point"), rot90=rot90)
 
 
 class SourceChangedError(RuntimeError):
@@ -122,13 +123,16 @@ class SourceChangedError(RuntimeError):
 
 def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, base_rgb=None, image_region=None,
                  d_hi=None, white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0,
-                 film: str = "color", keep_full: bool = False, base_source: dict | None = None) -> Preview:
+                 film: str = "color", keep_full: bool = False, base_source: dict | None = None,
+                 white_block: int | None = None) -> Preview:
     """Full-resolution decode / base / inversion once; keep a block-mean copy of at most ``max_side`` pixels.
     ``auto``: a noref config (noref.NOREF_V2) estimated here on the full-resolution positive, exactly as
-    ``convert(auto=...)`` does; the result is in ``Preview.auto`` (render with ``Preview.auto['params']``)."""
+    ``convert(auto=...)`` does; the result is in ``Preview.auto`` (render with ``Preview.auto['params']``).
+    ``white_block``: automatic white point on block means of that size (``invert.block_white_point``; the app uses
+    it); None = single pixels as ``convert``. The export replays the white point either way."""
     path = Path(path)
     p = positive(path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region, d_hi=d_hi,
-                 white_pct=white_pct, gamma=gamma, exposure=exposure, film=film)
+                 white_pct=white_pct, gamma=gamma, exposure=exposure, film=film, white_block=white_block)
     pos, mask = p["positive"], p["mask"]
     full_shape = pos.shape[:2]
     auto_info = None
@@ -152,5 +156,6 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
                    base_inside_image=inside, full_shape=tuple(full_shape), auto=auto_info,
                    load_kwargs=dict(max_side=max_side, auto=auto, base_regions=base_regions, base_rgb=base_rgb,
                                     image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,
-                                    exposure=exposure, film=film, keep_full=keep_full, base_source=base_source),
+                                    exposure=exposure, film=film, keep_full=keep_full, base_source=base_source,
+                                    white_block=white_block),
                    full_positive=full, _base_source=base_source)

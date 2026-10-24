@@ -121,12 +121,14 @@ def _scanner_input(path, *, base_regions, base_rgb, image_region):
 
 
 def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
-             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, film: str = "color") -> dict:
+             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, film: str = "color",
+             white_block: int | None = None) -> dict:
     """The scene-linear positive of one negative before any render parameter: decode, film base, inversion,
     times the inversion exposure (``convert`` renders exactly this). Returns ``positive`` (H, W, 3 float32),
     ``mask`` (unsaturated pixels in the image region), ``image_region``, ``region_source``, ``inversion``
     (InversionResult without its positive array), ``base_info``, ``input_info``, ``decode_info`` and
-    ``base_inside_image`` (share of auto base blocks inside the image region, or None)."""
+    ``base_inside_image`` (share of auto base blocks inside the image region, or None). ``white_block``: automatic
+    white point on block means of that size (``invert.block_white_point``); None = single pixels."""
     if film not in FILM_MODES:
         raise ValueError(f"film must be one of {FILM_MODES}, got {film!r}")
     if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
@@ -145,7 +147,7 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
     if film == "bw":
         rgb, inv_base = neutral_transmission(rgb, base_rgb), (1.0, 1.0, 1.0)
     res = invert_negative(rgb, inv_base, mask=mask, white_pct=white_pct, gamma=gamma,
-                          exposure=exposure, d_hi=d_hi)
+                          exposure=exposure, d_hi=d_hi, white_block=white_block)
     del rgb
     inside = None
     if regions is not None and base_info["method"] == "auto":
@@ -161,12 +163,17 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
 
 def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
-            render_params=None, auto=None, film: str = "color", base_source: dict | None = None):
+            render_params=None, auto=None, film: str = "color", base_source: dict | None = None,
+            white_block: int | None = None, white_point_source: dict | None = None, rot90: int = 0):
     """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
 
     ``base_source``: for a ``base_rgb`` replayed from an earlier estimate (preview export), how that base was
     found (method, estimate / regions, base_inside_image); stored as ``base.source``, and its base_inside_image
     feeds the QC check that a given base would otherwise skip. Pixels do not depend on it.
+    ``white_block``: automatic white point on block means (``positive``). ``white_point_source``: for a ``d_hi``
+    replayed from an earlier estimate (preview export), how it was estimated; stored as ``inversion.white_point``.
+    ``rot90``: output turned by that many quarter turns counter-clockwise (numpy.rot90) after rendering; QC and all
+    statistics are measured before the turn. 0 (default) keeps the sensor orientation and the previous sidecar.
 
     ``render_params``: RenderParams or its dict (Sprint 2 colour parameters); None = defaults,
     which reproduce the Sprint 1 output. ``auto``: a reference-free estimator config (``noref.NOREF_V2``)
@@ -186,7 +193,7 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         raise ValueError(f"invalid parameters: white_pct={white_pct} gamma={gamma} exposure={exposure}")
     path = Path(path)
     p = positive(path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region, d_hi=d_hi,
-                 white_pct=white_pct, gamma=gamma, exposure=exposure, film=film)
+                 white_pct=white_pct, gamma=gamma, exposure=exposure, film=film, white_block=white_block)
     pos, mask, image_region, res = p["positive"], p["mask"], p["image_region"], p["inversion"]
     base_info, input_info, decode_info = p["base_info"], p["input_info"], p["decode_info"]
     region_source, inside = p["region_source"], p["base_inside_image"]
@@ -208,6 +215,9 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     del pos
     qc = quality_checks(display, mask, res.report, base_inside_image=inside)
     out = display if encoding == "srgb" else srgb_eotf(display).astype(np.float32)
+    k = int(rot90) % 4
+    if k:
+        out = np.ascontiguousarray(np.rot90(out, k))
 
     sidecar = dict(
         schema=SCHEMA,
@@ -216,7 +226,8 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         decode=decode_info,
         base=base_info,
         image_region=dict(region=list(image_region), source=region_source),
-        inversion=dict(params=res.params.to_dict(), white_pct=white_pct, d_hi_source="given" if d_hi else "auto"),
+        inversion=dict(params=res.params.to_dict(), white_pct=white_pct, d_hi_source="given" if d_hi else "auto",
+                       **({"white_point": white_point_source} if white_point_source is not None else {})),
         render=dict(params=rp.to_dict(), diagnostics=render_diag, definition="docs/SPRINT2_PARAMS.md"),
         report=res.report,
         qc=qc,
@@ -224,6 +235,9 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
                     icc_description=DESCRIPTION[encoding], bit_depth=16,
                     orientation="sensor (meta.flip not applied)"),
     )
+    if k:  # sidecars of unrotated outputs keep their previous field set
+        sidecar["output"].update(rot90=k, orientation=f"sensor turned {k} x 90 degrees counter-clockwise "
+                                                      "(numpy.rot90; meta.flip not applied)")
     if auto_info is not None:
         sidecar["auto"] = auto_info
     if film == "bw":  # colour sidecars keep their previous field set
@@ -266,4 +280,6 @@ def replay_kwargs(sidecar: dict) -> dict:
               encoding=sidecar["output"]["encoding"], render_params=sidecar.get("render", {}).get("params"))
     if sidecar.get("film", {}).get("mode") == "bw":
         kw.update(film="bw", base_rgb=sidecar["base"]["rgb_render"])
+    if sidecar["output"].get("rot90"):
+        kw["rot90"] = sidecar["output"]["rot90"]
     return kw
