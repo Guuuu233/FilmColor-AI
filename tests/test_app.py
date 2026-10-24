@@ -331,3 +331,18 @@ def test_t4b_block_white_point_orientation_and_rotated_export(server):
     assert np.array_equal(tifffile.imread(out["path"]), np.rot90(tifffile.imread(plain["output"]["path"]), 3))
     ref = write(root / "s.dng", tmp / "replay_rot", **replay_kwargs(sc))
     assert out["sha256"] == ref["output"]["sha256"]
+
+
+def test_t4c_scanner_dng_has_no_camera_matrix_and_roll_reports_neutral_ratio(server):
+    """T4c: a scanner DNG opens with the identity matrix (no camera matrix to offer), NOREF_V3's chroma_preserve in
+    its automatic parameters, and /api/roll reports the neutral-ratio statistic without the app applying it."""
+    call, root, tmp = server
+    rgb, irl = scan()
+    write_dng(root / "t.dng", (rgb * np.array([0.55, 0.65, 0.75])).astype(rgb.dtype), irl)
+    roll, code, _ = call("/api/roll")
+    assert code == 200 and "neutral_ratio" in roll
+    m, code, _ = call("/api/open", dict(path="s.dng"))
+    assert code == 200 and m["camera_matrix"] is None and m["camera_matrix_mix"] == app.CAMERA_MATRIX_MIX
+    assert m["auto"]["params"]["matrix"] == [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+    assert m["auto"]["params"]["chroma_preserve"] == app.NOREF_V3["chroma_preserve"]
+    assert "neutral_ratio" not in (m["white_point"] or {})

@@ -233,3 +233,40 @@ def test_extended_darkroom_controls_and_tone_curve():
     for bad in (dict(highlights=1.5), dict(slope_r=0.8), dict(tone_curve={"rgb": [[0.5, 0.2], [0.5, 0.8]]})):
         with pytest.raises(ValueError):
             RenderParams(**bad)
+
+
+def test_t4c_chroma_preserve_keeps_midtone_ratios_and_leaves_deep_shadows():
+    """T4c: with a midtone lift the per-channel power compresses R:G:B ratios (by the exponent g); chroma_preserve=1
+    applies the curve to luminance instead, so a mid-tone pixel keeps its display-linear ratios, while deep shadows
+    (weight 0) render as with chroma_preserve=0. chroma_preserve=0 is the previous renderer exactly."""
+    from filmcolor.render import render_full, srgb_eotf
+
+    x = np.array([[[0.06, 0.04, 0.025], [0.0004, 0.0003, 0.0005]]], np.float32)
+    p0 = RenderParams(midtone=0.34, shoulder=0.4)
+    e0, _, _ = render_full(x, p0)
+    e1, _, _ = render_full(x, RenderParams(midtone=0.34, shoulder=0.4, chroma_preserve=1.0))
+    lin0, lin1 = srgb_eotf(e0[0, 0]), srgb_eotf(e1[0, 0])
+    assert lin1[0] / lin1[1] == pytest.approx(0.06 / 0.04, rel=0.01)       # ratios kept
+    assert lin0[0] / lin0[1] < 0.06 / 0.04 * 0.95                        # compressed per channel
+    assert np.array_equal(e0[0, 1], e1[0, 1])                            # deep shadow untouched
+    assert RenderParams(chroma_preserve=0.0).to_dict() == RenderParams().to_dict()  # old sidecars unchanged
+    with pytest.raises(ValueError):
+        RenderParams(chroma_preserve=1.5)
+
+
+def test_t4c_camera_color_matrix():
+    """T4c: camera -> sRGB from LibRaw's XYZ -> camera matrix (dcraw construction), rows summing to 1, blended with
+    the identity by ``mix``; files without a matrix raise."""
+    from filmcolor.render import IDENTITY, XYZ_FROM_SRGB_D65, camera_color_matrix
+
+    rgb_cam = np.array([[1.27, -0.09, -0.18], [-0.11, 1.42, -0.31], [0.0, -0.35, 1.35]])
+    cam_rgb = np.linalg.inv(rgb_cam / rgb_cam.sum(1, keepdims=True))
+    cam_xyz = cam_rgb @ np.linalg.inv(XYZ_FROM_SRGB_D65)  # a camera whose camera -> sRGB is rgb_cam
+    full = np.array(camera_color_matrix(cam_xyz, 1.0))
+    assert np.allclose(full, rgb_cam / rgb_cam.sum(1, keepdims=True), atol=1e-9)
+    half = np.array(camera_color_matrix(cam_xyz, 0.5))
+    assert np.allclose(half.sum(1), 1.0, atol=1e-12)
+    assert np.allclose(half, 0.5 * full + 0.5 * np.eye(3), atol=1e-9)
+    assert camera_color_matrix(cam_xyz, 0.0) == IDENTITY
+    with pytest.raises(ValueError):
+        camera_color_matrix(np.zeros((3, 3)), 0.5)

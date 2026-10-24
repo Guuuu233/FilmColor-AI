@@ -158,3 +158,22 @@ def test_block_white_point_ignores_single_pixel_noise_in_the_densest_channel():
     d_hi, info = block_white_point(T, BASE, m2, 16, 99.8)
     assert info["method"] == "pixel_fallback" and info["n_blocks"] == 0
     assert d_hi == estimate_white_point(density(T[m2], BASE), None, 99.8)
+
+
+def test_t4c_neutral_ratio_white_point_moves_only_a_blue_sky_white_point():
+    """T4c: a white point with the blue-sky signature (R/G below, B/G above the roll's neutral ratio) is moved 70 %
+    towards the neutral ratio, its level set from the frame (0.94 x max_c d_hi_c / r_c); other white points stay."""
+    from filmcolor.invert import neutral_ratio_white_point
+
+    sky = (0.65, 1.0, 1.25)
+    d, info = neutral_ratio_white_point(sky, (0.72, 1.10))
+    assert info["applied"]
+    r_eff = 0.3 * np.array([0.65, 1.0, 1.25]) + 0.7 * np.array([0.72, 1.0, 1.10])
+    assert np.allclose(np.array(d) / d[1], r_eff)
+    assert d[1] == pytest.approx(0.94 * max(sky / r_eff))
+    neutral = (0.73, 1.0, 1.12)
+    d_n, info_n = neutral_ratio_white_point(neutral, (0.72, 1.10))
+    assert d_n == neutral and not info_n["applied"]
+    rgb = BASE * 10.0 ** -np.array([[[0.1, 0.2, 0.3], [0.65, 1.0, 1.25]]], np.float32)
+    res = invert_negative(rgb, BASE, white_pct=100, white_ratio=(0.72, 1.10))
+    assert res.report["white_point"]["neutral_ratio"]["applied"]

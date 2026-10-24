@@ -4,6 +4,7 @@ Fixed order, definitions and rationale in docs/SPRINT2_PARAMS.md:
 
   P (scene-linear positive) -> 1 exposure -> 2 white balance -> 3 colour matrix -> 4 saturation & vibrance
   -> clip < 0 -> 4b channel contrast slopes (slope_r, slope_b) -> 5a shoulder & whites -> 5b midtone
+  (per channel, or blended with the same curve applied to luminance: chroma_preserve, T4c)
   -> 5c contrast (sRGB-encoded) -> 5d zonal highlights / shadows / blacks -> 5e tone curve -> output
 
 Steps 1-4 work on scene-linear uncalibrated camera RGB read with sRGB primaries (Rec.709 luma
@@ -22,15 +23,22 @@ LUMA = np.array([0.2126, 0.7152, 0.0722])
 MID_GREY = 0.18
 IDENTITY = ((1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0))
 PER_IMAGE = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
-EXTENDED_SCALARS = ("highlights", "shadows", "whites", "blacks", "vibrance", "slope_r", "slope_b")
+EXTENDED_SCALARS = ("highlights", "shadows", "whites", "blacks", "vibrance", "slope_r", "slope_b", "chroma_preserve")
 BOUNDS = dict(
     ev=(-3.0, 3.0), temp=(-1.0, 1.0), tint=(-1.0, 1.0), sat=(0.0, 2.0),
     contrast=(0.5, 2.0), midtone=(0.05, 0.5), shoulder=(0.0, 1.0),
 )
 EXTENDED_BOUNDS = dict(
     highlights=(-1.0, 1.0), shadows=(-1.0, 1.0), whites=(-1.0, 1.0), blacks=(-1.0, 1.0),
-    vibrance=(-1.0, 1.0), slope_r=(-0.5, 0.5), slope_b=(-0.5, 0.5),
+    vibrance=(-1.0, 1.0), slope_r=(-0.5, 0.5), slope_b=(-0.5, 0.5), chroma_preserve=(0.0, 1.0),
 )
+# sRGB (D65) -> XYZ, the matrix dcraw / LibRaw use to turn a camera's XYZ -> camera matrix into camera -> sRGB
+XYZ_FROM_SRGB_D65 = np.array([[0.412453, 0.357580, 0.180423],
+                              [0.212671, 0.715160, 0.072169],
+                              [0.019334, 0.119193, 0.950227]])
+# chroma_preserve weight falls to 0 below / above these display-linear luminances (smoothstep edges)
+CHROMA_PRESERVE_DARK = (0.02, 0.06)
+CHROMA_PRESERVE_BRIGHT = (0.88, 0.94)
 CURVE_CHANNELS = ("rgb", "r", "g", "b")
 CURVE_PRESETS = {
     "linear": {"rgb": [[0.0, 0.0], [1.0, 1.0]]},
@@ -163,6 +171,7 @@ class RenderParams:
     vibrance: float = 0.0     # saturation boost weighted towards low-chroma pixels in [-1, 1]
     slope_r: float = 0.0      # red-vs-green contrast gamma ratio offset in [-0.5, 0.5] (RawTherapee style)
     slope_b: float = 0.0      # blue-vs-green contrast gamma ratio offset in [-0.5, 0.5]
+    chroma_preserve: float = 0.0  # 0 = shoulder & midtone per channel; 1 = on luminance, keeping R:G:B (T4c)
     tone_curve: tuple = ()    # optional monotone spline points per channel
 
     def __post_init__(self):
@@ -196,7 +205,7 @@ class RenderParams:
 
     def has_extended(self) -> bool:
         return bool(self.highlights or self.shadows or self.whites or self.blacks
-                    or self.vibrance or self.slope_r or self.slope_b or self.tone_curve)
+                    or self.vibrance or self.slope_r or self.slope_b or self.chroma_preserve or self.tone_curve)
 
     def to_dict(self, *, full: bool = False) -> dict:
         d = {k: getattr(self, k) for k in PER_IMAGE}
@@ -216,6 +225,30 @@ class RenderParams:
         if unknown:
             raise ValueError(f"unknown render parameters: {sorted(unknown)}")
         return cls(**d)
+
+
+def camera_color_matrix(rgb_xyz_matrix, mix: float = 1.0) -> tuple:
+    """Camera RGB -> sRGB matrix from a RAW file's XYZ -> camera matrix (LibRaw ``rgb_xyz_matrix``, first three rows),
+    as dcraw builds it: cam_rgb = cam_xyz @ XYZ_FROM_SRGB_D65 with rows normalised to sum 1, inverted (so rows sum
+    to 1: neutrals stay neutral). ``mix`` blends it with the identity: mix * M + (1 - mix) * I (T4c; the app's
+    default is 0.35). Applied to the inverted positive this is an approximation: the matrix describes the scanning
+    camera's crosstalk for light reaching it, the positive is a per-channel inversion of that light. Raises
+    ValueError when the result is not a valid ``RenderParams.matrix`` (bounds, condition number)."""
+    if not 0.0 <= float(mix) <= 1.0:
+        raise ValueError(f"camera matrix mix must be in [0, 1], got {mix}")
+    cam_xyz = np.asarray(rgb_xyz_matrix, np.float64)[:3, :3]
+    if not np.all(np.isfinite(cam_xyz)) or not np.any(cam_xyz):
+        raise ValueError("no camera colour matrix in this file")
+    cam_rgb = cam_xyz @ XYZ_FROM_SRGB_D65
+    cam_rgb = cam_rgb / cam_rgb.sum(1, keepdims=True)
+    m = float(mix) * np.linalg.inv(cam_rgb) + (1.0 - float(mix)) * np.eye(3)
+    m = m - (m.sum(1, keepdims=True) - 1.0) / 3.0  # exact row sums of 1 after floating point
+    return RenderParams(matrix=tuple(map(tuple, m))).matrix
+
+
+def _smoothstep(x, lo: float, hi: float):
+    t = np.clip((x - np.float32(lo)) / np.float32(hi - lo), 0.0, 1.0)
+    return t * t * (np.float32(3.0) - np.float32(2.0) * t)
 
 
 def wb_gains(temp: float, tint: float) -> np.ndarray:
@@ -342,9 +375,12 @@ def _render_core(x, p: RenderParams):
             rel_c = np.clip((x.max(-1) - x.min(-1)) / denom, 0.0, 1.5)
             vib_w = (np.float32(1.0) - np.clip(rel_c / np.float32(0.85), 0.0, 1.0)) ** 1.5
             gain = np.float32(p.sat) * (np.float32(1.0) + np.float32(0.65 * p.vibrance) * vib_w)[..., None]
-            x = y + np.maximum(gain, np.float32(0.0)) * (x - y)
         else:
-            x = y + np.float32(p.sat) * (x - y)
+            gain = np.float32(p.sat)
+        if p.chroma_preserve:  # T4c: a saturation boost fades out in deep shadows (no coloured noise in blacks)
+            dark = _smoothstep(y, 0.0, 0.02)
+            gain = np.where(gain > 1, 1 + (gain - 1) * dark, gain)
+        x = y + np.maximum(gain, np.float32(0.0)) * (x - y)
     neg = x < 0
     x = np.maximum(x, 0)
     if p.slope_r or p.slope_b:
@@ -363,7 +399,19 @@ def _render_core(x, p: RenderParams):
     v = np.minimum(pre_clip, 1)
     if eff_shoulder or p.midtone != MID_GREY:
         g = np.log(p.midtone) / np.log(float(shoulder_curve(np.float32(MID_GREY), eff_shoulder)))
-        v = np.power(v, np.float32(g))
+        v_ch = np.power(v, np.float32(g))
+        if p.chroma_preserve:
+            # T4c: the same scalar curve on luminance, applied as one gain to R, G, B (keeps their ratios, which the
+            # per-channel power compresses by g); blended in by a weight that falls to 0 in deep shadows and near
+            # white, where per-channel behaviour avoids coloured noise and channel overflow
+            y_in = np.maximum(x @ LUMA.astype(np.float32), np.float32(1e-6))[..., None]
+            v_y = np.power(np.minimum(shoulder_curve(y_in, eff_shoulder), 1), np.float32(g))
+            v_lum = np.clip(x * (v_y / y_in), 0.0, 1.0)
+            w = (np.float32(p.chroma_preserve) * _smoothstep(v_y, *CHROMA_PRESERVE_DARK)
+                 * (np.float32(1.0) - _smoothstep(v_y, *CHROMA_PRESERVE_BRIGHT)))
+            v = (np.float32(1.0) - w) * v_ch + w * v_lum
+        else:
+            v = v_ch
     e = srgb_oetf(v).astype(np.float32)
     if p.contrast != 1:
         pv, c = np.float32(srgb_oetf(p.midtone)), np.float32(p.contrast)

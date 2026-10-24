@@ -219,6 +219,10 @@ const UI_SLIDERS = [
 
   {group:"toneSliders", key:"ev", label:"曝光 Exposure (EV)", cls:"", min:-3.0, max:3.0, step:0.05, def:0.0,
    toUI: v => Number(v.toFixed(2)), fromUI: u => u, fmt: u => (u >= 0 ? "+" : "") + Number(u).toFixed(2)},
+  {group:"toneSliders", key:"midtone", label:"中灰亮度 Midtone", cls:"", min:-100, max:100, step:1, def:0,
+   toUI: v => Math.round((v >= 0.26 ? (v - 0.26) / 0.19 : (v - 0.26) / 0.16) * 100),
+   fromUI: u => u >= 0 ? 0.26 + (u / 100) * 0.19 : 0.26 + (u / 100) * 0.16,
+   fmt: u => (u > 0 ? "+" + u : "" + u)},
   {group:"toneSliders", key:"contrast", label:"对比度 Contrast", cls:"", min:-100, max:100, step:1, def:0,
    toUI: v => Math.round((v >= 1.30 ? (v - 1.30) / 0.70 : (v - 1.30) / 0.80) * 100),
    fromUI: u => u >= 0 ? 1.30 + (u / 100) * 0.70 : 1.30 + (u / 100) * 0.80,
@@ -238,6 +242,10 @@ const UI_SLIDERS = [
    toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
   {group:"colorSliders", key:"sat", label:"饱和度 Saturation", cls:"", min:-100, max:100, step:1, def:0,
    toUI: v => Math.round((v - 1.0) * 100), fromUI: u => 1.0 + u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
+  {group:"colorSliders", key:"cam_mix", label:"相机色彩校准 Camera Matrix", cls:"", min:0, max:100, step:1, def:35,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => "" + u},
+  {group:"colorSliders", key:"chroma_preserve", label:"中间调保色 Chroma Preserve", cls:"", min:0, max:100, step:1, def:35,
+   toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => "" + u},
   {group:"colorSliders", key:"slope_r", label:"红层反差斜率 Red Ratio", cls:"", min:-50, max:50, step:1, def:0,
    toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
   {group:"colorSliders", key:"slope_b", label:"蓝层反差斜率 Blue Ratio", cls:"", min:-50, max:50, step:1, def:0,
@@ -254,7 +262,7 @@ const DEP = ["bPos", "bNeg", "bCompare", "bAuto", "bReset", "bPick", "bAutoBase"
 function setBusy(b) {
   busy = b;
   for (const id of DEP) if ($(id)) $(id).disabled = b;
-  document.querySelectorAll("#side input").forEach(x => x.disabled = b);
+  document.querySelectorAll("#side input").forEach(x => x.disabled = b || (x.id === "s_cam_mix" && !(meta && meta.camera_matrix)));
   $("list").style.pointerEvents = b ? "none" : "";
 }
 function tok() { return meta ? meta.token : ""; }
@@ -262,14 +270,43 @@ function folderOf(rel) { const i = rel ? rel.lastIndexOf("/") : -1; return i >= 
 
 function defaultNaturalParams() {
   return {
-    ev:0.0, temp:0.0, tint:0.0, sat:1.0, contrast:1.30, midtone:0.22, shoulder:0.15,
+    ev:0.0, temp:0.0, tint:0.0, sat:1.0, contrast:1.30, midtone:0.26, shoulder:0.15,
     highlights:0.0, shadows:0.0, whites:0.0, blacks:0.0, vibrance:0.0, slope_r:0.0, slope_b:0.0,
-    tone_curve:{}
+    chroma_preserve:0.35, cam_mix:0.35, tone_curve:{}
   };
+}
+
+// Camera matrix share (UI only): params.matrix = mix * M_camera + (1 - mix) * I, M_camera from meta.camera_matrix
+function camMatrix(mix) {
+  const M = meta && meta.camera_matrix;
+  if (!M) return [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+  return M.map((row, i) => {
+    const r = row.map((v, j) => mix * v + (1 - mix) * (i === j ? 1 : 0));
+    const d = (r[0] + r[1] + r[2] - 1) / 3;  // exact row sum 1 after rounding
+    return r.map(v => v - d);
+  });
+}
+// the share a matrix has on the line I -> M_camera (least squares), for showing a stored matrix on the slider
+function camMixOf(m) {
+  const M = meta && meta.camera_matrix;
+  if (!M || !m) return 0;
+  let num = 0, den = 0;
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+    const a = M[i][j] - (i === j ? 1 : 0);
+    num += (m[i][j] - (i === j ? 1 : 0)) * a; den += a * a;
+  }
+  return den > 0 ? Math.max(0, Math.min(1, num / den)) : 0;
+}
+function withCamMix(p) {
+  const q = Object.assign({}, p);
+  if (q.cam_mix == null) q.cam_mix = camMixOf(q.matrix);
+  return q;
 }
 
 function serializeParams(src) {
   const p = Object.assign({}, src || params);
+  if (p.cam_mix != null) p.matrix = camMatrix(p.cam_mix);
+  delete p.cam_mix;
   const tc = {};
   for (const ch of ["rgb", "r", "g", "b"]) {
     const pts = curves[ch];
@@ -426,9 +463,9 @@ async function openFile(f, el, explicitBaseMode) {
   syncBaseButtons();
 
   // Default to NOREF_V3 adaptive auto parameters on first open of each photo!
-  autoStartParams = meta.auto && meta.auto.params ? Object.assign(defaultNaturalParams(), meta.auto.params) : defaultNaturalParams();
+  autoStartParams = meta.auto && meta.auto.params ? withCamMix(Object.assign(defaultNaturalParams(), meta.auto.params, {cam_mix:null})) : defaultNaturalParams();
   if (savedPerFile[f]) {
-    params = Object.assign(defaultNaturalParams(), savedPerFile[f]);
+    params = withCamMix(Object.assign(defaultNaturalParams(), savedPerFile[f], {cam_mix:null}));
     loadCurvesFromParams(params);
   } else {
     params = Object.assign({}, autoStartParams);
@@ -465,6 +502,8 @@ function buildSliders() {
     s.ondblclick = resetOne;
     lbl.ondblclick = resetOne;
   }
+  $("s_cam_mix").disabled = !(meta && meta.camera_matrix);  // scanner DNG: no camera matrix
+  $("s_cam_mix").title = meta && meta.camera_matrix ? "" : "扫描仪 DNG 没有相机色彩矩阵";
 }
 
 $("s_softness").oninput = () => {
@@ -479,6 +518,7 @@ $("lbl_softness").ondblclick = () => {
 
 function setParams(p) {
   params = Object.assign(defaultNaturalParams(), p);
+  if (p.cam_mix == null && p.matrix) params.cam_mix = camMixOf(p.matrix);
   loadCurvesFromParams(params);
   buildSliders();
   if (currentRel) savedPerFile[currentRel] = JSON.parse(JSON.stringify(serializeParams()));
@@ -723,7 +763,7 @@ async function switchBaseMode(bm) {
     const m = await api("/api/base", {mode:bm, softness:softness, token:tok()});
     meta = m; setBusy(false);
     if (meta.auto && meta.auto.params) {
-      autoStartParams = Object.assign(defaultNaturalParams(), meta.auto.params);
+      autoStartParams = withCamMix(Object.assign(defaultNaturalParams(), meta.auto.params, {cam_mix:null}));
       setParams(autoStartParams);
     }
     syncBaseButtons(); updateFileBadges(); showInfo(); refresh();

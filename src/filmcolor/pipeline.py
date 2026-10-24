@@ -122,13 +122,14 @@ def _scanner_input(path, *, base_regions, base_rgb, image_region):
 
 def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
              white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, film: str = "color",
-             white_block: int | None = None) -> dict:
+             white_block: int | None = None, white_ratio=None) -> dict:
     """The scene-linear positive of one negative before any render parameter: decode, film base, inversion,
     times the inversion exposure (``convert`` renders exactly this). Returns ``positive`` (H, W, 3 float32),
     ``mask`` (unsaturated pixels in the image region), ``image_region``, ``region_source``, ``inversion``
     (InversionResult without its positive array), ``base_info``, ``input_info``, ``decode_info`` and
     ``base_inside_image`` (share of auto base blocks inside the image region, or None). ``white_block``: automatic
-    white point on block means of that size (``invert.block_white_point``); None = single pixels."""
+    white point on block means of that size (``invert.block_white_point``); None = single pixels. ``white_ratio``: roll
+    neutral density ratios for ``invert.neutral_ratio_white_point`` (None = not checked)."""
     if film not in FILM_MODES:
         raise ValueError(f"film must be one of {FILM_MODES}, got {film!r}")
     if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
@@ -147,7 +148,7 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
     if film == "bw":
         rgb, inv_base = neutral_transmission(rgb, base_rgb), (1.0, 1.0, 1.0)
     res = invert_negative(rgb, inv_base, mask=mask, white_pct=white_pct, gamma=gamma,
-                          exposure=exposure, d_hi=d_hi, white_block=white_block)
+                          exposure=exposure, d_hi=d_hi, white_block=white_block, white_ratio=white_ratio)
     del rgb
     inside = None
     if regions is not None and base_info["method"] == "auto":

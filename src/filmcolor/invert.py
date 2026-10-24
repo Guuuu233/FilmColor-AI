@@ -155,6 +155,26 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
                                                                       n_blocks=n)
 
 
+def neutral_ratio_white_point(d_hi, ratio, *, anchor: float = 0.7, scale: float = 0.94,
+                              margin: tuple[float, float] = (0.0, 0.03)) -> tuple[tuple[float, float, float], dict]:
+    """T4c: keep a blue sky from being taken as white. ``ratio`` = (D_R / D_G, D_B / D_G) of neutral greys of the roll
+    (app: median over the roll of each frame's 0.25 <= D_G <= 0.75 density ratios). When the frame's white point has
+    the signature of blue sky - R / G below ``ratio[0] - margin[0]`` and B / G above ``ratio[1] + margin[1]`` - its
+    channel ratios are moved ``anchor`` of the way to ``ratio`` and the level set from the frame's own white point:
+    d_hi_G = ``scale`` * max_c(d_hi_c / r_c). Otherwise ``d_hi`` is returned unchanged."""
+    d = np.asarray(d_hi, np.float64)
+    own = np.array([d[0] / d[1], 1.0, d[2] / d[1]])
+    roll = np.array([float(ratio[0]), 1.0, float(ratio[1])])
+    info = dict(ratio_roll=[float(roll[0]), float(roll[2])], ratio_own=[float(own[0]), float(own[2])], anchor=anchor,
+                scale=scale, margin=list(margin), applied=False)
+    if not (own[0] < roll[0] - margin[0] and own[2] > roll[2] + margin[1]):
+        return tuple(float(x) for x in d), info
+    r_eff = (1 - anchor) * own + anchor * roll
+    g = scale * float(np.max(d / r_eff))
+    out = tuple(float(x) for x in r_eff * g)
+    return out, dict(info, applied=True, ratio_used=[float(r_eff[0]), float(r_eff[2])], d_hi_own=[float(x) for x in d])
+
+
 def invert(D, p: InversionParams) -> np.ndarray:
     lo, hi = np.asarray(p.d_lo, np.float32), np.asarray(p.d_hi, np.float32)
     s = (D - lo) / (hi - lo)
@@ -201,11 +221,13 @@ class InversionResult:
 
 
 def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: float = 0.6,
-                    exposure: float = 1.0, d_lo=None, d_hi=None, white_block: int | None = None) -> InversionResult:
+                    exposure: float = 1.0, d_lo=None, d_hi=None, white_block: int | None = None,
+                    white_ratio=None) -> InversionResult:
     """Full chain with automatic white point unless ``d_hi`` is given. ``mask`` selects image pixels
     used for the white point and the report (exclude borders, rebate, holder and saturated areas).
     ``white_block``: estimate the automatic white point on block means of that size (``block_white_point``)
-    instead of single pixels (None, the default: single pixels, unchanged)."""
+    instead of single pixels (None, the default: single pixels, unchanged). ``white_ratio``: roll neutral density
+    ratios (D_R / D_G, D_B / D_G) checked against the automatic white point (``neutral_ratio_white_point``)."""
     if not np.all(np.isfinite(rgb)):
         raise ValueError("input image contains NaN or infinite values")
     if not np.all(np.isfinite(base)) or np.any(np.asarray(base) <= 0):
@@ -220,6 +242,9 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
             d_hi, white_info = block_white_point(rgb, base, m, int(white_block), white_pct)
         else:
             d_hi = estimate_white_point(Dm, None, white_pct)
+        if white_ratio is not None:
+            d_hi, ratio_info = neutral_ratio_white_point(d_hi, white_ratio)
+            white_info = dict(white_info or dict(method="pixel", pct=white_pct), neutral_ratio=ratio_info)
         lo = d_lo or (0.0, 0.0, 0.0)
         flat = [c for c, hi, l in zip("RGB", d_hi, lo) if hi <= l]
         if flat:

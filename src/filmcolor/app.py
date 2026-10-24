@@ -31,6 +31,13 @@ White point (T4b): photos are opened with the automatic white point on ``WHITE_B
 at ``WHITE_PCT`` % (``invert.block_white_point``), not on single pixels, whose high-density tail in the blue channel is
 read / shot noise (experiments/t4_auto_ui/t4b_whitepoint.json). The export replays the previewed white point.
 
+Colour (T4c): camera RAW opens with the camera's colour matrix (``render.camera_color_matrix`` of the file's
+``rgb_xyz_matrix``) mixed ``CAMERA_MATRIX_MIX`` with the identity, and NOREF_V3's ``chroma_preserve``. Scanner DNGs keep
+the identity. ``/api/roll`` also reports each frame's and the roll's 0.25 <= D_G <= 0.75 density ratios (roll base B1,
+cached thumbnail-resolution blocks), the statistic T4c proposed for ``invert.neutral_ratio_white_point``. It is not
+applied: on dsc6161 the roll median is pulled to blue sky (0.678 : 1 : 1.214) and on dsc6233 to foliage
+(0.748 : 1 : 0.904, which would move every frame's white point towards blue); experiments/t4_auto_ui/T4C_REPORT.md.
+
 Orientation (T4b): each photo opens turned by the orientation last set for it here (POST /api/orient, kept in
 ``orientation.json`` of the cache folder), else by the RAW file's orientation flag. Display rotation is done by the
 page; the export writes the turned image and records ``output.rot90`` in the sidecar.
@@ -66,7 +73,8 @@ from .pipeline import FILM_MODES, free_stem
 from .preview import Preview, SourceChangedError, load_preview
 from .raw import linearize, saturation_mask, superpixel
 from .rawpy_io import load_raw
-from .render import BOUNDS, CURVE_PRESETS, EXTENDED_BOUNDS, EXTENDED_SCALARS, RenderParams, render as render_image
+from .render import (BOUNDS, CURVE_PRESETS, EXTENDED_BOUNDS, EXTENDED_SCALARS, RenderParams, camera_color_matrix,
+                     render as render_image)
 from .scanner import block_means, is_scanner_dng, load_scanner
 
 STATIC = Path(__file__).parent / "app_static"
@@ -74,9 +82,12 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4b"  # thumbnails rendered with the T4b NOREF_V3 and white point
+THUMB_REV = "t4c"  # thumbnails rendered with the T4c NOREF_V3, camera matrix and white point
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
+CAMERA_MATRIX_MIX = 0.35  # default share of the camera colour matrix (UI slider 0..100)
+RATIO_D_G = (0.25, 0.75)  # density band (G, above the roll base) of the per-frame neutral-ratio statistic
+RATIO_MIN_PX = 200        # blocks a frame needs in that band to contribute
 
 
 def _cache_root() -> Path:
@@ -176,6 +187,7 @@ class State:
         self.roll_cache: dict[str, dict] = {}
         self.cache_dir = _cache_root()
         self.orient_file = self.cache_dir / "orientation.json"
+        self.raw_meta: dict[str, dict] = {}
 
     def resolve(self, rel: str) -> Path:
         cand = Path(os.path.abspath(self.root / rel))
@@ -291,6 +303,7 @@ class State:
                 )
                 if rb is not None:
                     b_roll = list(rb.for_exposure(t))
+                    entry["density_ratio"] = self._density_ratio(sc, b_roll)
                     b_dq, d_lo_dq = decoupled_quantile_base(b_roll, sc["block48_L_p01"])
                     b_nat, nat_diag = natural_roll_base(b_roll, sc["block48_L_p01"], own_rgb=sc["own_rgb"], softness=0.5)
                     dev = base_deviation(sc["own_rgb"], b_roll) if sc["own_rgb"] is not None else None
@@ -314,16 +327,63 @@ class State:
                     entry.update(roll_rgb=None, dq_rgb=None, d_lo_shared=None, nat_rgb=None, nat_info=None,
                                  deviation=None, chroma_part=None, level_diff=None, flag=bool(sc["error"]))
                 frames_out[r] = entry
+            ratios = [e["density_ratio"] for e in frames_out.values() if e.get("density_ratio")]
+            neutral = dict(ratio=[float(np.median([r["r"] for r in ratios])), float(np.median([r["b"] for r in ratios]))],
+                           n_frames=len(ratios), d_g=list(RATIO_D_G)) if ratios else None
             info = dict(
                 folder=folder,
                 file_list=all_rels,
                 n_files=len(all_rels),
                 roll=rb.to_dict() if rb is not None else None,
+                neutral_ratio=neutral,
                 error=roll_err,
                 frames=frames_out,
             )
             self.roll_cache[folder] = info
             return info
+
+    def _density_ratio(self, sc: dict, b_roll) -> dict | None:
+        """Medians of D_R / D_G and D_B / D_G over the frame's cached thumbnail-resolution blocks with
+        RATIO_D_G[0] <= D_G <= RATIO_D_G[1], densities above the roll base ``b_roll`` (same analysis-path signal)."""
+        sp_file = self.cache_dir / f"sp_{sc.get('disk_key')}.npy"
+        if not sp_file.exists():
+            return None
+        sp = np.load(sp_file).reshape(-1, 3).astype(np.float64)
+        D = -np.log10(np.maximum(sp / np.asarray(b_roll, np.float64), 1e-6))
+        sel = (D[:, 1] >= RATIO_D_G[0]) & (D[:, 1] <= RATIO_D_G[1]) & (D[:, 0] > 0) & (D[:, 2] > 0)
+        if sel.sum() < RATIO_MIN_PX:
+            return None
+        d = D[sel]
+        return dict(r=float(np.median(d[:, 0] / d[:, 1])), b=float(np.median(d[:, 2] / d[:, 1])), n=int(sel.sum()))
+
+    def _raw_meta(self, p: Path) -> dict:
+        """Orientation flag and camera colour matrix of a camera RAW (empty for scanner DNGs), cached per path."""
+        key = str(p.resolve())
+        if key not in self.raw_meta:
+            meta = {}
+            if not is_scanner_dng(p):
+                try:
+                    with rawpy.imread(str(p)) as r:
+                        meta = dict(flip=int(r.sizes.flip), rgb_xyz_matrix=np.asarray(r.rgb_xyz_matrix)[:3].tolist())
+                except Exception:  # noqa: BLE001
+                    meta = {}
+            self.raw_meta[key] = meta
+        return self.raw_meta[key]
+
+    def camera_matrix(self, p: Path) -> tuple | None:
+        """Full camera -> sRGB matrix of a camera RAW, or None (scanner DNG, no or unusable matrix)."""
+        m = self._raw_meta(p).get("rgb_xyz_matrix")
+        try:
+            return camera_color_matrix(m, 1.0) if m is not None else None
+        except ValueError:
+            return None
+
+    def _colour_kwargs(self, p: Path, film: str) -> dict:
+        """NOREF_V3 config for opening ``p``: colour film from a camera RAW renders with its camera matrix at
+        CAMERA_MATRIX_MIX."""
+        if film != "color" or self.camera_matrix(p) is None:
+            return dict(auto=NOREF_V3)
+        return dict(auto=dict(NOREF_V3, matrix=camera_color_matrix(self._raw_meta(p)["rgb_xyz_matrix"], CAMERA_MATRIX_MIX)))
 
     def thumbnail_png(self, rel: str, film: str = "color") -> bytes:
         """Fast 240 px positive thumbnail of ``rel`` (cached on disk)."""
@@ -355,10 +415,11 @@ class State:
             sp_in, inv_base = neutral_transmission(sp, base), (1.0, 1.0, 1.0)
         else:
             sp_in, inv_base = sp, tuple(base)
-        try:
-            inv = invert_negative(sp_in, inv_base, mask=mask, white_pct=WHITE_PCT)  # sp is already 24 px block means
+        ck = self._colour_kwargs(p, film)
+        try:  # sp is already 24 px block means
+            inv = invert_negative(sp_in, inv_base, mask=mask, white_pct=WHITE_PCT)
             pos = inv.positive
-            est = estimate_params_v3(pos, mask, NOREF_V3)
+            est = estimate_params_v3(pos, mask, ck["auto"])
             rp = RenderParams.from_dict(est["params"])
             disp, _ = render_image(pos, rp)
         except Exception:  # noqa: BLE001
@@ -415,13 +476,10 @@ class State:
         saved = self._orientations().get(str(p.resolve()))
         if saved is not None:
             return int(saved) % 4, "saved"
-        if not is_scanner_dng(p):
-            try:
-                with rawpy.imread(str(p)) as r:
-                    k = FLIP_TO_ROT90.get(int(r.sizes.flip), 0)
-                return k, "raw_flag" if k else "none"
-            except Exception:  # noqa: BLE001
-                pass
+        flip = self._raw_meta(p).get("flip")
+        if flip is not None:
+            k = FLIP_TO_ROT90.get(flip, 0)
+            return k, "raw_flag" if k else "none"
         return 0, "none"
 
     def set_orientation(self, body: dict) -> dict:
@@ -444,6 +502,8 @@ class State:
         rot, rot_src = self.orientation(pv.path)
         return dict(
             token=self.token, path=rel, film=pv.film, factor=pv.factor, rot90=rot, rot90_source=rot_src,
+            camera_matrix=[list(r) for r in self.camera_matrix(pv.path)] if self.camera_matrix(pv.path) else None,
+            camera_matrix_mix=CAMERA_MATRIX_MIX,
             white_point=dict(pv.report.get("white_point") or dict(method="pixel", pct=pv.white_pct),
                              d_hi=list(pv.inversion["d_hi"])),
             preview_shape=list(pv.positive.shape[:2]), full_shape=list(pv.full_shape),
@@ -489,15 +549,16 @@ class State:
         self.preview = None  # free the previous full-resolution positive first
         self.token = None
         extra = self._roll_base_kwargs(rel, base_mode, softness) if base_mode != "auto" else {}
+        ck = self._colour_kwargs(p, film)
         try:
-            self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V3, film=film, keep_full=True,
-                                        white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **extra)
+            self.preview = load_preview(p, max_side=self.max_side, film=film, keep_full=True,
+                                        white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **ck, **extra)
         except ValueError:
             # If auto B0 failed and roll base can be computed for this folder, fall back to roll_nat automatically
             if base_mode == "auto":
                 extra = self._roll_base_kwargs(rel, "roll_nat", softness)
-                self.preview = load_preview(p, max_side=self.max_side, auto=NOREF_V3, film=film, keep_full=True,
-                                            white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **extra)
+                self.preview = load_preview(p, max_side=self.max_side, film=film, keep_full=True,
+                                            white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **ck, **extra)
             else:
                 raise
         self.token = secrets.token_hex(8)

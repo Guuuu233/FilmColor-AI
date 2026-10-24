@@ -150,8 +150,9 @@ def test_noref_v3_t4b_keeps_print_contrast_and_never_sets_blacks():
     positive shadows lift and still blacks 0."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3
 
-    normal = estimate_params_v3(scene(median=0.18, stops=7.0, seed=21), None, NOREF_V3)
+    normal = estimate_params_v3(scene(median=0.18, stops=5.0, seed=21), None, NOREF_V3)
     assert normal["status"] == "ok" and normal["config_rev"] == NOREF_V3["rev"]
+    assert "backlit_midtone" not in normal["flags"]  # T4c: a 7-stop log-uniform scene counts as backlit
     assert normal["params"]["contrast"] == pytest.approx(1.30)
     assert normal["params"].get("blacks", 0.0) == 0.0 and normal["params"].get("shadows", 0.0) == 0.0
     assert normal["diagnostics"]["encoded_p25"] >= NOREF_V3["shadow_p25_floor"]
@@ -185,3 +186,27 @@ def test_wb_v3_corrects_a_cast_when_top_and_bottom_differ():
     temp, tint = wb_from_chroma(cast)
     assert wb["tint"] == pytest.approx(NOREF_V3["wb_v3_strength"] * wb["confidence"] * tint, abs=0.02)
     assert wb["tint"] > 0.0
+
+
+def test_noref_v3_t4c_backlit_frame_lifts_midtone_and_renders_the_given_matrix():
+    """T4c: a frame with a bright background and a dark foreground (encoded p90 >= backlit_p90, p25 <= backlit_p25)
+    gets a higher midtone, at least backlit_shoulder and backlit_contrast; the estimate renders with cfg["matrix"]
+    and chroma_preserve and returns them in its parameters."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    from filmcolor.render import IDENTITY
+
+    rng = np.random.default_rng(31)
+    n = 200_000
+    y = np.where(rng.random(n) < 0.35, 0.9 * 2.0 ** rng.uniform(-0.5, 0.3, n),  # sky
+                 0.02 * 2.0 ** rng.uniform(-2.5, 1.5, n))                         # dark foreground
+    c = rng.normal(0, 0.1, (n, 2))
+    P = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).reshape(400, -1, 3).astype(np.float32)
+    m = ((1.2, -0.1, -0.1), (-0.05, 1.2, -0.15), (0.0, -0.2, 1.2))
+    e = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m))
+    assert "backlit_midtone" in e["flags"]
+    assert NOREF_V3["base_midtone"] < e["params"]["midtone"] <= NOREF_V3["backlit_midtone_max"]
+    assert e["params"]["shoulder"] >= NOREF_V3["backlit_shoulder"]
+    assert e["params"]["contrast"] == pytest.approx(NOREF_V3["backlit_contrast"])
+    assert e["params"]["matrix"] == [list(r) for r in m]
+    assert e["params"]["chroma_preserve"] == NOREF_V3["chroma_preserve"]
+    assert estimate_params_v3(P, None, NOREF_V3)["params"]["matrix"] == [list(r) for r in IDENTITY]

@@ -25,7 +25,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .render import BOUNDS, LUMA, RenderParams, render_full
+from .render import BOUNDS, IDENTITY, LUMA, RenderParams, render_full
 
 NOREF_V1 = dict(
     id="noref_v1",
@@ -385,7 +385,7 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4b-2026-10-24",          # T4b: contrast / shadow decisions on the encoded output, wb_v3, contrast centre 1.30
+    rev="t4c-2026-10-24",          # T4c: camera matrix, chroma_preserve, backlit midtone; T4b: encoded-output decisions
     look="global_look_v1",
     low_info_range_stops=0.6,      # allow open-sky / desert / snow frames with paper-black floor (p99/p1 >= 1.5x)
     cell_size=8,                   # grid cell side for textured-cell activity metering
@@ -417,6 +417,14 @@ NOREF_V3 = dict(
     wb_v3_conflict_factor=0.75,    # quadrant disagreement lowers confidence by this factor (never to 0)
     wb_v3_strength=0.85,           # share of the measured residual cast removed at full confidence
     wp_invalid_stops=1.5,
+    matrix=None,                   # colour matrix rendered with (app: camera_color_matrix of the RAW, mix 0.35); None = identity
+    chroma_preserve=0.35,          # T4c: shoulder & midtone partly on luminance (RenderParams.chroma_preserve)
+    backlit_p90=0.80,              # T4c backlit frame: encoded luminance p90 at or above this (bright sky / background) ...
+    backlit_p25=0.30,              # ... and p25 at or below this (dark foreground)
+    backlit_p25_target=0.30,       # midtone raised until encoded p25 reaches this ...
+    backlit_midtone_max=0.35,      # ... at most to this
+    backlit_shoulder=0.40,         # shoulder at least this on backlit frames (keeps the sky off white)
+    backlit_contrast=1.55,         # contrast on backlit frames (outside contrast_bounds_v3, which apply to the others)
 )
 
 
@@ -560,6 +568,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
        ``blacks`` is never set automatically.
     6. **White balance** (T4b, ``estimate_wb_v3``): robust residual cast of bright near-neutral and low-saturation
        mid-grey pixels; the look's prior covers only the share the evidence does not.
+    7. **Colour and backlit frames** (T4c): renders with ``cfg["matrix"]`` (the app passes the RAW's camera matrix)
+       and ``chroma_preserve``; a backlit frame (bright background, dark foreground on the encoded output) gets a
+       higher midtone, a raised shoulder and ``backlit_contrast`` instead of more exposure.
 
     T4b (2026-10-24) replaced the T4 v2 contrast / shadow / paper-black rules, which compared ``-log10`` of the
     scene-linear positive (``_textured_cells``) with print-density thresholds and so lowered contrast to its floor
@@ -587,6 +598,7 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
         midtone=float(cfg["base_midtone"]),
         shoulder=float(cfg["base_shoulder"]),
         highlights=0.0, shadows=0.0, whites=0.0, blacks=0.0, vibrance=0.0,
+        matrix=cfg.get("matrix") or IDENTITY, chroma_preserve=float(cfg.get("chroma_preserve", 0.0)),
     )
     if reasons:
         return dict(out, status="manual_review_required", params=RenderParams(**base_p).to_dict(),
@@ -648,6 +660,28 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
                 hi_ev = mid_ev
         base_p["ev"] = float(np.clip(0.5 * (lo_ev + hi_ev), *cfg["ev_limits"]))
 
+    # 4b. Backlit midtone (T4c): bright background (encoded p90 >= backlit_p90) with a dark foreground (p25 <=
+    #     backlit_p25) gets a higher midtone (bisection up to backlit_midtone_max until p25 reaches the target), a
+    #     shoulder of at least backlit_shoulder and backlit_contrast, instead of more ev pushing the sky into white
+    q25, q90 = _encoded_quantiles(px, RenderParams(**base_p), qs=(25, 90))
+    out["diagnostics"]["backlit_check"] = dict(p25=q25, p90=q90)
+    backlit = q90 >= cfg["backlit_p90"] and q25 <= cfg["backlit_p25"]
+    if backlit:
+        base_p["shoulder"] = max(base_p["shoulder"], float(cfg["backlit_shoulder"]))
+        base_p["contrast"] = float(cfg["backlit_contrast"])
+        lo_m, hi_m = base_p["midtone"], float(cfg["backlit_midtone_max"])
+        if _encoded_quantiles(px, RenderParams(**dict(base_p, midtone=hi_m)), qs=(25,))[0] <= cfg["backlit_p25_target"]:
+            base_p["midtone"] = hi_m
+        else:
+            for _ in range(14):  # p25 increases with midtone
+                mid_m = 0.5 * (lo_m + hi_m)
+                if _encoded_quantiles(px, RenderParams(**dict(base_p, midtone=mid_m)), qs=(25,))[0] < cfg["backlit_p25_target"]:
+                    lo_m = mid_m
+                else:
+                    hi_m = mid_m
+            base_p["midtone"] = float(hi_m)
+        flags.append("backlit_midtone")
+
     # 5. NegPy Highlight Hold: check bright textured cells P2 after EV shift, plus full-frame clip_budget
     p2_shifted_d = tc["p2_bright_d"] - 0.30103 * base_p["ev"]
     if p2_shifted_d < 0.12:
@@ -689,7 +723,7 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
 
     spread, black_end, white_end = ends(base_p)
     out["diagnostics"]["contrast_check"] = dict(spread_10_90=spread, black_end=black_end, white_end=white_end)
-    if spread > cfg["contrast_spread_max"] and min(black_end, white_end) > cfg["end_clip_share"]:
+    if not backlit and spread > cfg["contrast_spread_max"] and min(black_end, white_end) > cfg["end_clip_share"]:
         lo_c, hi_c = c_lo, base_p["contrast"]
         if ends(dict(base_p, contrast=lo_c))[0] > cfg["contrast_spread_max"]:
             base_p["contrast"] = lo_c
@@ -708,7 +742,8 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
         base_p["shadows"] = float(np.clip(cfg["shadow_gain"] * (cfg["shadow_p25_floor"] - p25), 0.0, cfg["shadow_max"]))
 
     # Round slider-visible values cleanly
-    for k in ("ev", "temp", "tint", "sat", "contrast", "shoulder", "highlights", "shadows", "whites", "blacks", "vibrance"):
+    for k in ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder", "highlights", "shadows", "whites", "blacks",
+              "vibrance"):
         base_p[k] = round(float(base_p[k]), 4)
 
     params = RenderParams(**base_p)
