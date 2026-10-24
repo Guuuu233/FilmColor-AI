@@ -1,0 +1,121 @@
+{
+ "rel": "A012_dsc_6172.NEF",
+ "folder": "data/raw/own/dsc6161",
+ "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+ "git_commit": "81a36170ce5eb1c85c3b7a28efb33f88d876ef72",
+ "src_dirty": false,
+ "base_method": "auto",
+ "d_hi": [
+  0.8004388809204102,
+  1.1395885944366455,
+  1.346383810043335
+ ],
+ "white_point": {
+  "method": "block_mean",
+  "block": 16,
+  "pct": 99.8,
+  "n_blocks": 44118
+ },
+ "auto_config": "noref_v3",
+ "auto_rev": "t4b-2026-10-24",
+ "params": {
+  "ev": 0.3626,
+  "temp": 0.0993,
+  "tint": 0.0284,
+  "sat": 1.0182,
+  "contrast": 1.3,
+  "midtone": 0.22,
+  "shoulder": 0.15,
+  "matrix": [
+   [
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "shadows": 0.0052
+ },
+ "flags": [
+  "white_point_unrepresentative"
+ ],
+ "diagnostics": {
+  "textured_cells": {
+   "textured_share": 0.4456076467910787,
+   "n_textured": 4895,
+   "anchor_d": 1.8866658955812454,
+   "span_10_90_d": 2.2764181017875678,
+   "p2_bright_d": 0.2622344720363617,
+   "p10_d": 0.7185063004493714,
+   "p50_d": 2.204073667526245,
+   "p90_d": 2.994924402236939,
+   "p98_dark_d": 3.3471606540679932
+  },
+  "wb": {
+   "temp": 0.11744616647808409,
+   "tint": 0.01496318719709398,
+   "confidence": 0.8642476571362394,
+   "chroma": [
+    -0.10030658366158604,
+    0.05956884026527404
+   ],
+   "diagnostics": {
+    "n": 45966,
+    "zones": [
+     {
+      "luma_pct": [
+       70,
+       96
+      ],
+      "radius": 0.35,
+      "n": 5602,
+      "share": 0.12187268850889788,
+      "chroma": [
+       -0.16943275928497314,
+       0.11827746778726578
+      ]
+     },
+     {
+      "luma_pct": [
+       25,
+       75
+      ],
+      "radius": 0.25,
+      "n": 2422,
+      "share": 0.05269111952312579,
+      "chroma": [
+       0.0033826797734946012,
+       -0.028494101017713547
+      ]
+     }
+    ],
+    "zone_disagreement": 0.22673127055168152,
+    "top_bottom_spread": 0.03633736073970795,
+    "share": 0.08728190401601182,
+    "mad": 0.16787617143188027
+   }
+  },
+  "chroma_p90": 0.9909325242042542,
+  "contrast_check": {
+   "spread_10_90": 0.8355072893202304,
+   "black_end": 0.03984,
+   "white_end": 0.00016
+  },
+  "encoded_p25_before_shadows": 0.11790893413126469,
+  "encoded_p2": 0.005466438606381416,
+  "encoded_p25": 0.11810563690960407,
+  "encoded_median": 0.5002425611019135,
+  "encoded_p98": 0.9192281413078308,
+  "spread_before": 0.9137603857927025,
+  "clip_share": 0.00024
+ }
+}

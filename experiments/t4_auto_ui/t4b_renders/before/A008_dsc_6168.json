@@ -1,0 +1,79 @@
+{
+ "rel": "A008_dsc_6168.NEF",
+ "folder": "data/raw/own/dsc6161",
+ "src": "/private/tmp/fc_4eb2678/src",
+ "git_commit": "4eb26789649604fb18bd667d1ce9729fc01b2556",
+ "src_dirty": false,
+ "base_method": "roll_nat",
+ "d_hi": [
+  0.4326373040676117,
+  0.7092298269271851,
+  0.9382116794586182
+ ],
+ "white_point": null,
+ "auto_config": "noref_v3",
+ "auto_rev": null,
+ "params": {
+  "ev": -0.25,
+  "temp": -0.1335,
+  "tint": 0.0988,
+  "sat": 1.0178,
+  "contrast": 1.313,
+  "midtone": 0.22,
+  "shoulder": 0.15,
+  "matrix": [
+   [
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "blacks": -0.28
+ },
+ "flags": [],
+ "diagnostics": {
+  "textured_cells": {
+   "textured_share": 0.3446006850549847,
+   "n_textured": 3823,
+   "anchor_d": 0.404220550507307,
+   "span_10_90_d": 0.3250688374042512,
+   "p2_bright_d": 0.15273161888122558,
+   "p10_d": 0.23501976132392885,
+   "p50_d": 0.40508922934532166,
+   "p90_d": 0.5600885987281801,
+   "p98_dark_d": 0.7188067889213561
+  },
+  "wb": {
+   "temp": -0.0,
+   "tint": 0.0,
+   "confidence": 0.0,
+   "roll": null,
+   "diagnostics": {
+    "share": 0.00978,
+    "n_candidates": 1467,
+    "chroma": [
+     -0.2058122158050537,
+     -0.16619554162025452
+    ],
+    "mad": 0.06364168226718903,
+    "quadrant_spread": 0.020513145253062248
+   }
+  },
+  "chroma_p90": 1.0140780210494995,
+  "encoded_p2": 0.49372164845466615,
+  "encoded_median": 0.6644011735916138,
+  "encoded_p98": 0.784732642173767,
+  "spread_before": 0.28564086914062503,
+  "clip_share": 0.0
+ }
+}

@@ -1,6 +1,8 @@
 """Three-column before / after / reference sheet from t4b_render_frame.py outputs (T4b deliverables).
 
-  t4b_sheets.py OUT_JPG BEFORE_DIR AFTER_DIR STEM=REF_JPG [STEM=REF_JPG ...]
+  t4b_sheets.py [--tile-h=PX] OUT_JPG BEFORE_DIR AFTER_DIR STEM=REF_JPG [STEM=REF_JPG ...]
+
+``--tile-h``: tile height in pixels (default 520; the renders are 1000 px on their long side).
 
 Each row: BEFORE_DIR/<stem>.png | AFTER_DIR/<stem>.png | the reference print. Our renders are turned upright to the
 reference: by ``alignment.rot90`` of experiments/s3_ml/user_labels/<frame>.json when it exists (the reference turned
@@ -98,4 +100,7 @@ def main(out_jpg: str, before_dir: str, after_dir: str, pairs: list[str]):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4:])
+    args = sys.argv[1:]
+    if args[0].startswith("--tile-h="):
+        TILE_H = int(args.pop(0).split("=", 1)[1])
+    main(args[0], args[1], args[2], args[3:])
