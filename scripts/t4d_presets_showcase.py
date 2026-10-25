@@ -7,7 +7,8 @@ ID: frame ids of data/manifests/s3_dev_frames.json (e.g. nlp:_DSF9237, ext:A012)
 opens it (State.open, automatic base choice, on a roll folder of symlinks to the manifest's frames of that roll, the
 same folders as t4d_source_eval.py), each preset applied with State.set_preset (re-estimate on the kept positive), and
 the 1000 px preview rendered with the preset's automatic parameters; tiles are turned by the app's orientation for
-the file. Files are checked against the frozen sets before they are read. Writes OUT_JPG and OUT_JPG's .json
+the file; camera-frame references (ICC-tagged, in the scan's own orientation) are turned the same way, BlueNeg prints
+are shown as stored. Files are checked against the frozen sets before they are read. Writes OUT_JPG and OUT_JPG's .json
 (parameters per frame and preset, software commit); images are not committed (experiments/**/*.jpg is ignored).
 """
 import json
@@ -96,6 +97,8 @@ def main(out_jpg: str, ids: list[str], tile_h: int):
             rec["presets"][name] = dict(params=p, flags=mm["auto"]["flags"],
                                         backlit=(mm["auto"]["diagnostics"] or {}).get("backlit_check"))
         ref_im = reference_rgb(f)
+        if f["ref_kind"] == "icc" and k:
+            ref_im = ref_im.rotate(90 * k, expand=True)  # PIL rotate is counter-clockwise, as numpy.rot90
         cols.append(tile(ref_im, tile_h, f"REFERENCE ({f['domain']})", Path(f["ref"]).name.encode("ascii", "replace").decode()))
         w = sum(c.width for c in cols) + 6 * (len(cols) - 1)
         row = Image.new("RGB", (w, cols[0].height + 6), (15, 15, 18))
