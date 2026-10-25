@@ -275,7 +275,7 @@ def test_roll_nat_wb_pick_thumbnails_and_extended_export(server):
     # Open t.dng in roll_nat mode with softness=0.6
     m = call("/api/open", dict(path="t.dng", base_mode="roll_nat", softness=0.6))[0]
     assert m["base"]["method"] == "roll_nat" and m["base"]["softness"] == pytest.approx(0.6)
-    assert m["auto"]["config"] == "noref_v3" and 0.95 <= m["auto"]["params"]["contrast"] <= app.NOREF_V3["backlit_contrast"]
+    assert m["auto"]["config"] == "noref_v3" and 0.95 <= m["auto"]["params"]["contrast"] <= app.NOREF_V3["backlit_contrast_cap"]
 
     # White balance eyedropper
     wb, code, _ = call("/api/wb_pick", dict(token=m["token"], x=180, y=120))

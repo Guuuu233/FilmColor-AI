@@ -41,7 +41,7 @@ applied: on dsc6161 the roll median is pulled to blue sky (0.678 : 1 : 1.214) an
 
 Style presets (T4d): the automatic starting point is estimated for the selected ``noref.STYLE_PRESETS`` entry
 (default ``standard`` = NOREF_V3; POST /api/open with ``preset``, or POST /api/preset to re-estimate the open photo on
-its kept full-resolution positive without decoding or inverting again). The camera matrix share is the preset's
+its kept estimator input, without decoding, inverting or averaging the positive again). The camera matrix share is the preset's
 ``camera_matrix_mix``. The selection stays for the next photos; thumbnails always use ``standard``. The export
 records the preset in the sidecar's ``render.source``.
 
@@ -89,7 +89,7 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4d"  # thumbnails rendered with the T4d NOREF_V3 (standard preset), camera matrix and white point
+THUMB_REV = "t4e"  # thumbnails rendered with the T4e NOREF_V3 (standard preset), camera matrix and white point
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)

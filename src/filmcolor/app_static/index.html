@@ -225,8 +225,8 @@ const UI_SLIDERS = [
   {group:"toneSliders", key:"ev", label:"曝光 Exposure (EV)", cls:"", min:-3.0, max:3.0, step:0.05, def:0.0,
    toUI: v => Number(v.toFixed(2)), fromUI: u => u, fmt: u => (u >= 0 ? "+" : "") + Number(u).toFixed(2)},
   {group:"toneSliders", key:"midtone", label:"中灰亮度 Midtone", cls:"", min:-100, max:100, step:1, def:0,
-   toUI: v => Math.round((v >= 0.25 ? (v - 0.25) / 0.20 : (v - 0.25) / 0.15) * 100),
-   fromUI: u => u >= 0 ? 0.25 + (u / 100) * 0.20 : 0.25 + (u / 100) * 0.15,
+   toUI: v => Math.round((v >= 0.23 ? (v - 0.23) / 0.22 : (v - 0.23) / 0.13) * 100),
+   fromUI: u => u >= 0 ? 0.23 + (u / 100) * 0.22 : 0.23 + (u / 100) * 0.13,
    fmt: u => (u > 0 ? "+" + u : "" + u)},
   {group:"toneSliders", key:"contrast", label:"对比度 Contrast", cls:"", min:-100, max:100, step:1, def:0,
    toUI: v => Math.round((v >= 1.30 ? (v - 1.30) / 0.70 : (v - 1.30) / 0.80) * 100),
@@ -247,9 +247,9 @@ const UI_SLIDERS = [
    toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
   {group:"colorSliders", key:"sat", label:"饱和度 Saturation", cls:"", min:-100, max:100, step:1, def:0,
    toUI: v => Math.round((v - 1.0) * 100), fromUI: u => 1.0 + u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
-  {group:"colorSliders", key:"cam_mix", label:"相机色彩校准 Camera Matrix", cls:"", min:0, max:100, step:1, def:40,
+  {group:"colorSliders", key:"cam_mix", label:"相机色彩校准 Camera Matrix", cls:"", min:0, max:100, step:1, def:35,
    toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => "" + u},
-  {group:"colorSliders", key:"chroma_preserve", label:"中间调保色 Chroma Preserve", cls:"", min:0, max:100, step:1, def:40,
+  {group:"colorSliders", key:"chroma_preserve", label:"中间调保色 Chroma Preserve", cls:"", min:0, max:100, step:1, def:35,
    toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => "" + u},
   {group:"colorSliders", key:"slope_r", label:"红层反差斜率 Red Ratio", cls:"", min:-50, max:50, step:1, def:0,
    toUI: v => Math.round(v * 100), fromUI: u => u / 100, fmt: u => (u > 0 ? "+" + u : "" + u)},
@@ -280,9 +280,9 @@ function folderOf(rel) { const i = rel ? rel.lastIndexOf("/") : -1; return i >= 
 
 function defaultNaturalParams() {
   return {
-    ev:0.0, temp:0.0, tint:0.0, sat:1.0, contrast:1.30, midtone:0.25, shoulder:0.15,
+    ev:0.0, temp:0.0, tint:0.0, sat:1.0, contrast:1.30, midtone:0.23, shoulder:0.15,
     highlights:0.0, shadows:0.0, whites:0.0, blacks:0.0, vibrance:0.0, slope_r:0.0, slope_b:0.0,
-    chroma_preserve:0.40, cam_mix:0.40, tone_curve:{}
+    chroma_preserve:0.35, cam_mix:0.35, tone_curve:{}
   };
 }
 

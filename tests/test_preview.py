@@ -77,3 +77,24 @@ def test_camera_preview_default_auto_and_params(tmp_path):
         ref = block_mean(full, pv.factor)[:pv.positive.shape[0], :pv.positive.shape[1]]
         d = np.abs(pv.render(params) - ref)
         assert d.mean() < 0.01 and np.percentile(d, 99) < 0.05, (params, d.mean(), np.percentile(d, 99))
+
+
+def test_t4e_with_auto_reuses_the_kept_estimator_input(tmp_path):
+    """T4e: a preview loaded with an auto estimate keeps its estimator input (noref.estimation_input of the
+    full-resolution positive), so with_auto re-estimates another style preset without the full-resolution positive,
+    with exactly the parameters a fresh load with that preset gives."""
+    from filmcolor.noref import estimation_input, preset_config
+
+    rgb, irl = scan()
+    p = tmp_path / "s.dng"
+    write_dng(p, rgb, irl)
+    pv = load_preview(p, max_side=100, image_region=SCAN_REGION, auto=preset_config("standard"))
+    assert pv.full_positive is None and pv.est_input is not None
+    full = load_preview(p, max_side=100, image_region=SCAN_REGION, keep_full=True)
+    ref_input = estimation_input(full.full_positive, full.image_region)
+    assert all(np.array_equal(a, b) for a, b in zip(pv.est_input, ref_input))
+    vivid = pv.with_auto(preset_config("vivid"))
+    fresh = load_preview(p, max_side=100, image_region=SCAN_REGION, auto=preset_config("vivid"))
+    assert vivid.auto["params"] == fresh.auto["params"] and vivid.auto["preset"] == "vivid"
+    assert vivid.est_input is pv.est_input and vivid.load_kwargs["auto"]["preset"] == "vivid"
+    assert full.with_auto(preset_config("vivid")).auto["params"] == fresh.auto["params"]  # computed when not kept

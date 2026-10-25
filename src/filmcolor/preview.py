@@ -50,6 +50,9 @@ class Preview:
     load_kwargs: dict = field(default_factory=dict)  # what load_preview was called with (besides path)
     full_positive: np.ndarray | None = field(default=None, repr=False)  # kept with keep_full=True (1:1 view)
     _base_source: dict | None = field(default=None, repr=False)
+    # (P4, mask4) = noref.estimation_input of the full-resolution positive, kept when an auto estimate was made, so a
+    # style preset is re-estimated without averaging the full-resolution positive again (T4e)
+    est_input: tuple | None = field(default=None, repr=False)
 
     def render_crop(self, region, params=None) -> np.ndarray:
         """1:1 render of a sensor-pixel region (top, left, height, width) of the full-resolution positive,
@@ -104,10 +107,14 @@ class Preview:
 
     def with_auto(self, auto) -> "Preview":
         """The same preview with the automatic estimate redone for noref config ``auto`` (a style preset), on the
-        kept full-resolution positive exactly as ``load_preview`` does; no decode or inversion (needs keep_full)."""
-        if self.full_positive is None:
-            raise ValueError("load_preview(..., keep_full=True) is needed to re-estimate")
-        return replace(self, auto=auto_estimate(self.full_positive, self.image_region, auto, self.film),
+        kept estimator input (or the kept full-resolution positive) exactly as ``load_preview`` does; no decode or
+        inversion."""
+        ei = self.est_input
+        if ei is None:
+            if self.full_positive is None:
+                raise ValueError("load_preview(..., keep_full=True) or an auto estimate is needed to re-estimate")
+            ei = estimation_input(self.full_positive, self.image_region)
+        return replace(self, auto=auto_estimate(ei, auto, self.film), est_input=ei,
                        load_kwargs=dict(self.load_kwargs, auto=auto))
 
     def export(self, out_dir, params=None, encoding: str = "srgb", *, stem: str | None = None,
@@ -130,9 +137,10 @@ class SourceChangedError(RuntimeError):
     """The previewed source file changed on disk; its previewed base no longer applies."""
 
 
-def auto_estimate(pos, image_region, auto, film: str = "color") -> dict:
-    """noref estimate (``Preview.auto``) of full-resolution positive ``pos`` for config ``auto``, as ``convert``."""
-    est = estimate_params_v2(*estimation_input(pos, image_region), auto)
+def auto_estimate(est_input, auto, film: str = "color") -> dict:
+    """noref estimate (``Preview.auto``) for config ``auto`` on ``est_input`` = ``noref.estimation_input`` of the
+    full-resolution positive, as ``convert``."""
+    est = estimate_params_v2(*est_input, auto)
     if film == "bw":
         est = dict(est, params=dict(est["params"], **BW_NEUTRAL), bw_neutralised=sorted(BW_NEUTRAL))
     return dict(est, look_file=dict(name=f"{est['look']}.json", sha256=sha256(CONFIG_DIR / f"{est['look']}.json")))
@@ -154,7 +162,8 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
                  white_ratio=white_ratio)
     pos, mask = p["positive"], p["mask"]
     full_shape = pos.shape[:2]
-    auto_info = auto_estimate(pos, p["image_region"], auto, film) if auto is not None else None
+    ei = estimation_input(pos, p["image_region"]) if auto is not None else None
+    auto_info = auto_estimate(ei, auto, film) if auto is not None else None
     f = max(1, math.ceil(max(full_shape) / max_side))
     small = block_mean(pos, f).astype(np.float32) if f > 1 else pos
     msk = block_mean(mask.astype(np.float32), f) > 0.5 if f > 1 else mask
@@ -172,4 +181,4 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
                                     image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,
                                     exposure=exposure, film=film, keep_full=keep_full, base_source=base_source,
                                     white_block=white_block, white_ratio=white_ratio),
-                   full_positive=full, _base_source=base_source)
+                   full_positive=full, _base_source=base_source, est_input=ei)
