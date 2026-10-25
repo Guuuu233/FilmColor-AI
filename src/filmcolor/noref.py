@@ -385,8 +385,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4f-2026-10-25",          # T4f: trimean anchor, EV refinement on the textured cells (brighten-only, at most
-                                   # -0.20 EV down), wider backlit weight, clear-sky wb damping, new preset table;
+    rev="t4g-2026-10-25",          # T4g: adaptive WB and softer portrait / natural presets; T4f: trimean anchor,
+                                   # textured EV refinement (at most -0.20 EV down), wider backlit, sky WB damping;
                                    # T4e: standard back to the T4c band, backlit weight narrowed and relative to the
                                    # preset; T4d: neutral wb fallback, style presets, continuous backlit weight;
                                    # T4c: camera matrix, chroma_preserve, backlit midtone; T4b: encoded-output decisions
@@ -398,18 +398,19 @@ NOREF_V3 = dict(
     min_textured_share=0.08,       # fallback to top 25% most active cells when fewer than 8% exceed activity_thr_d
     anchor_target_density=0.75,    # NegPy print target density 0.75 D (reflectance 10^-0.75 ≈ 0.178 = 18% grey)
     anchor_band_d=0.08,            # comfort band around target density (preserves high-key / low-key mood)
-    base_contrast=1.34,            # print contrast (T4f; UI contrast 0 stays 1.30; T4d 1.35, T4e 1.30)
+    base_contrast=1.30,            # standard print contrast (UI contrast 0)
     contrast_bounds_v3=(1.05, 1.38),  # contrast is only lowered (to >= 1.05) for very wide, both-ends-clipped frames;
                                    # the upper bound never cuts a preset's base_contrast
     contrast_spread_max=0.78,      # encoded luminance p90 - p10 above this, with both ends clipped: lower contrast
     end_clip_share=0.005,          # "clipped end": share of encoded luminance <= 0.02 (black) or >= 0.98 (white)
-    base_sat=1.04,                 # restrained saturation (T4f; T4d 1.04, T4e 1.02)
-    base_vibrance=0.10,            # vibrance on frames that are not already colourful (chroma p90 <= sat_colourful)
-    base_midtone=0.25,             # mid-grey placement (UI midtone 0; T4c 0.22, T4d 0.25, T4e 0.23)
-    base_shoulder=0.25,            # baseline highlight roll-off (T4c 0.15, T4d 0.25, T4e 0.20)
+    base_sat=1.02,                 # restrained saturation
+    base_vibrance=0.08,            # vibrance on frames that are not already colourful (chroma p90 <= sat_colourful)
+    base_midtone=0.23,             # mid-grey placement (UI midtone 0)
+    base_shoulder=0.22,            # baseline highlight roll-off
+    base_shadows=0.0, base_highlights=0.0, base_slope_r=0.0, base_slope_b=0.0,
     base_blacks=0.0,               # blacks of the preset (a constant; never estimated from the frame)
     temp_offset=0.0, tint_offset=0.0,  # preset colour offsets added after the white balance estimate
-    target_encoded_band=(0.48, 0.55),  # target sRGB-encoded median luminance of the textured cells (T4f; T4d
+    target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance of the textured cells (T4g; T4d
                                    # 0.48..0.55 and T4c / T4e 0.45..0.52 on the full frame)
     ev_refine_down_max=0.20,       # T4f: the EV refinement lowers exposure by at most this, and not below -this
     ev_refine_p98_max=0.96,        # T4f: the EV refinement brightens only while full-frame encoded p98 stays <= this
@@ -422,7 +423,9 @@ NOREF_V3 = dict(
     ev_limits=(-2.0, 2.5),
     wb_prior_weight=0.0,           # T4d: the share (1 - wb confidence) falls back to neutral (0, 0), not to
                                    # global_look_v1 (fitted on nlp_official + shop_r01 references; T4b-T4c used 0.55)
-    wb_max_shift=0.35,
+    wb_max_shift=0.50,
+    wb_v3_adaptive_share=0.12, wb_v3_adaptive_pct=15.0,
+    wb_v3_gw_weight=0.45, wb_v3_gw_threshold=0.18, wb_v3_gw_huber=0.18,
     wb_v3_zones=(((70, 96), 0.35, 0.6), ((25, 75), 0.25, 0.4)),  # (luma pct range, chroma radius log2, weight):
                                    # bright near-neutral (cloud, road, white surfaces) and low-saturation mid-grey
     wb_v3_min_px=200,              # pixels a zone needs to count
@@ -435,8 +438,8 @@ NOREF_V3 = dict(
     wb_v3_sky_weight=0.35,         # T4f: then its weight is multiplied by this (the mid-grey zone leads)
     wp_invalid_stops=1.5,
     matrix=None,                   # colour matrix rendered with (app: camera_color_matrix of the RAW); None = identity
-    camera_matrix_mix=0.45,        # share of the camera matrix the app renders camera RAW with (T4d 0.40, T4e 0.35)
-    chroma_preserve=0.45,          # shoulder & midtone partly on luminance (RenderParams.chroma_preserve; T4e 0.35)
+    camera_matrix_mix=0.40,        # share of the camera matrix the app renders camera RAW with
+    chroma_preserve=0.40,          # shoulder & midtone partly on luminance (RenderParams.chroma_preserve; T4e 0.35)
     # Backlit weight (T4f: wider than T4e's 0.78 / 0.32 / 0.06; T4e: bright background and dark foreground only; T4d
     # also fired on a wide p25..p90 gap; T4c was 1 when p90 >= 0.80 and p25 <= 0.30), on the encoded luminance:
     # w = ramp(p90; backlit_p90, backlit_p90 + backlit_ramp) x ramp(backlit_p25 - p25; 0, backlit_ramp_p25)
@@ -453,23 +456,25 @@ NOREF_V3 = dict(
 
 
 # Style presets (T4d): overrides of NOREF_V3 for the automatic starting point; the estimate itself (exposure, white
-# balance, highlight / shadow hold, backlit weight) runs the same way on each. Values from the T4f task list; they are
+# balance, highlight / shadow hold, backlit weight) runs the same way on each. Values from the T4g task list; they are
 # named after looks the task list associates with them (NLP tone profiles, Frontier / Noritsu scans, optical prints),
 # not measured against those systems.
 STYLE_PRESETS = {
     "standard": dict(label="标准 Standard", cfg=dict()),
     "natural": dict(label="自然 Natural", cfg=dict(
-        target_encoded_band=(0.49, 0.56), base_midtone=0.26, base_contrast=1.20, base_shoulder=0.35, base_sat=0.98,
-        base_vibrance=0.06, chroma_preserve=0.40, camera_matrix_mix=0.40)),
+        target_encoded_band=(0.46, 0.53), base_midtone=0.24, base_contrast=1.18, base_shoulder=0.35, base_sat=0.96,
+        base_vibrance=0.04, chroma_preserve=0.35, camera_matrix_mix=0.35, base_shadows=0.06, base_highlights=-0.05)),
     "portrait": dict(label="人像 Portrait", cfg=dict(
-        target_encoded_band=(0.53, 0.60), base_midtone=0.29, base_contrast=1.26, base_shoulder=0.40, base_sat=1.03,
-        base_vibrance=0.14, chroma_preserve=0.50, camera_matrix_mix=0.45, temp_offset=0.02, tint_offset=-0.02)),
+        target_encoded_band=(0.49, 0.56), base_midtone=0.26, base_contrast=1.16, base_shoulder=0.42, base_sat=0.93,
+        base_vibrance=0.05, chroma_preserve=0.38, camera_matrix_mix=0.38, temp_offset=-0.02, tint_offset=0.05,
+        base_shadows=0.12, base_highlights=-0.10, base_slope_r=-0.04, base_slope_b=0.04)),
     "vivid": dict(label="鲜明 Vivid", cfg=dict(
-        target_encoded_band=(0.48, 0.55), base_midtone=0.24, base_contrast=1.46, base_shoulder=0.30, base_sat=1.12,
-        base_vibrance=0.18, chroma_preserve=0.55, camera_matrix_mix=0.55, base_blacks=-0.03)),
+        target_encoded_band=(0.45, 0.52), base_midtone=0.23, base_contrast=1.46, base_shoulder=0.28, base_sat=1.14,
+        base_vibrance=0.18, chroma_preserve=0.58, camera_matrix_mix=0.58, base_blacks=-0.04,
+        base_highlights=-0.05, base_slope_r=0.02, base_slope_b=-0.02, temp_offset=0.02)),
     "print_classic": dict(label="经典印相 Print", cfg=dict(
-        target_encoded_band=(0.44, 0.51), base_midtone=0.22, base_contrast=1.40, base_shoulder=0.20, base_sat=1.04,
-        base_vibrance=0.06, chroma_preserve=0.40, camera_matrix_mix=0.40, base_blacks=-0.05)),
+        target_encoded_band=(0.42, 0.49), base_midtone=0.21, base_contrast=1.40, base_shoulder=0.18, base_sat=1.02,
+        base_vibrance=0.04, chroma_preserve=0.35, camera_matrix_mix=0.35, base_blacks=-0.07, temp_offset=0.01)),
 }
 
 
@@ -544,7 +549,8 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     (luminance percentile range, chroma radius, weight) the near-neutral pixels give a robust (Huber) residual cast;
     zones with at least ``wb_v3_min_px`` pixels are combined by weight. Confidence comes from the candidate share and
     spread and is lowered, never zeroed, when image quadrants disagree (a frame with sky above and grass below is not
-    evidence against a cast). temp / tint remove ``wb_v3_strength`` x confidence of the cast."""
+    evidence against a cast). T4g expands sparse zones to their lowest-chroma 15% and blends a midtone Huber estimate;
+    clear-sky directions receive less weight. temp / tint remove ``wb_v3_strength`` x confidence of the cast."""
     cfg = cfg or NOREF_V3
     px = np.asarray(px, np.float32)
     y = px @ LUMA.astype(np.float32)
@@ -559,8 +565,14 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     sky_r, sky_b = cfg.get("wb_v3_sky", (-np.inf, np.inf))
     for i, ((q_lo, q_hi), radius, weight) in enumerate(cfg["wb_v3_zones"]):
         lo, hi = np.percentile(y, [q_lo, q_hi])
-        sel = (y >= lo) & (y <= hi) & (norm <= radius)
-        zd = dict(luma_pct=[q_lo, q_hi], radius=radius, n=int(sel.sum()), share=float(sel.sum() / max(len(y), 1)))
+        zone = (y >= lo) & (y <= hi)
+        narrow_share = float(np.mean(norm[zone] <= radius)) if zone.any() else 0.0
+        radius_eff = radius
+        if zone.any() and narrow_share < cfg["wb_v3_adaptive_share"]:
+            radius_eff = max(radius, float(np.percentile(norm[zone], cfg["wb_v3_adaptive_pct"])))
+        sel = zone & (norm <= radius_eff)
+        zd = dict(luma_pct=[q_lo, q_hi], radius=radius, radius_effective=radius_eff, narrow_share=narrow_share,
+                  n=int(sel.sum()), share=float(sel.sum() / max(len(y), 1)))
         if sel.sum() >= cfg["wb_v3_min_px"]:
             est = _huber_location(c[sel], cfg["wb_v3_huber"])
             zd.update(chroma=[float(v) for v in est])
@@ -576,6 +588,16 @@ def estimate_wb_v3(px, cfg=None) -> dict:
                     diagnostics=dict(diag, reason="no near-neutral zone with enough pixels"))
     w = np.asarray(weights) / np.sum(weights)
     est = (w[:, None] * np.asarray(ests)).sum(0)
+    lo, hi = np.percentile(y, [15, 88])
+    mid = (y >= lo) & (y <= hi)
+    if mid.sum() >= cfg["wb_v3_min_px"]:
+        est_gw = _huber_location(c[mid], cfg["wb_v3_gw_huber"])
+        sparse = any(z["narrow_share"] < cfg["wb_v3_adaptive_share"] for z in diag["zones"])
+        gw_weight = float(cfg["wb_v3_gw_weight"]) if sparse or np.linalg.norm(est_gw) > cfg["wb_v3_gw_threshold"] else 0.0
+        if est_gw[0] < sky_r and est_gw[1] > sky_b:
+            gw_weight *= float(cfg["wb_v3_sky_weight"])
+        est = (1 - gw_weight) * est + gw_weight * est_gw
+        diag["grey_world"] = dict(chroma=[float(v) for v in est_gw], weight=gw_weight)
     allc = np.concatenate(cands)
     mad = float(np.median(np.linalg.norm(allc - est, axis=1)))
     share = float(sum(z["share"] for z in diag["zones"] if "chroma" in z) / len(diag["zones"]))
@@ -619,7 +641,7 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
        0.75 D`` (18 % mid-grey) with a comfort band, then refines so the encoded median luminance of the textured cells
        (T4f; the full frame before) lands in the target band: brightening under a full-frame p98 ceiling, lowering
        by at most 0.20 EV.
-    3. **Contrast** (T4b): starts at the print centre ``base_contrast`` (1.34 since T4f); lowered (to >= 1.05)
+    3. **Contrast** (T4b): starts at the print centre ``base_contrast`` (standard 1.30); lowered (to >= 1.05)
        only when the encoded luminance p90 - p10 exceeds ``contrast_spread_max`` and both ends clip.
     4. **Highlight Hold (highlights & shoulder)**: when bright textured cells ``P2`` approach the white point or
        full-frame clipping exceeds ``clip_budget`` (0.2 %), writes an explicit negative ``highlights`` burn and/or a
@@ -661,7 +683,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
         contrast=float(cfg["base_contrast"]),
         midtone=float(cfg["base_midtone"]),
         shoulder=float(cfg["base_shoulder"]),
-        highlights=0.0, shadows=0.0, whites=0.0, blacks=float(cfg.get("base_blacks", 0.0)), vibrance=0.0,
+        highlights=float(cfg["base_highlights"]), shadows=float(cfg["base_shadows"]), whites=0.0,
+        blacks=float(cfg.get("base_blacks", 0.0)), vibrance=0.0,
+        slope_r=float(cfg["base_slope_r"]), slope_b=float(cfg["base_slope_b"]),
         matrix=cfg.get("matrix") or IDENTITY, chroma_preserve=float(cfg.get("chroma_preserve", 0.0)),
     )
     if reasons:
@@ -770,8 +794,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     if backlit:
         base_p["shoulder"] = min(float(cfg["backlit_shoulder_cap"]),
                                  base_p["shoulder"] + w_bl * float(cfg["backlit_shoulder_step"]))
-        base_p["contrast"] = min(float(cfg["backlit_contrast_cap"]),
-                                 base_p["contrast"] + w_bl * float(cfg["backlit_contrast_step"]))
+        if cfg["base_contrast"] >= 1.25:
+            base_p["contrast"] = min(float(cfg["backlit_contrast_cap"]),
+                                     base_p["contrast"] + w_bl * float(cfg["backlit_contrast_step"]))
         lo_m = m0 = base_p["midtone"]
         hi_m = max(m0, min(float(cfg["backlit_midtone_cap"]), m0 + float(cfg["backlit_midtone_step"])))
         if _encoded_quantiles(px, RenderParams(**dict(base_p, midtone=hi_m)), qs=(25,))[0] <= cfg["backlit_p25_target"]:
@@ -792,7 +817,7 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     p2_shifted_d = tc["p2_bright_d"] - 0.30103 * base_p["ev"]
     if p2_shifted_d < 0.12:
         # Automatic highlight burn written directly to the highlights slider
-        base_p["highlights"] = float(np.clip(-1.8 * (0.12 - p2_shifted_d), -0.65, 0.0))
+        base_p["highlights"] = min(base_p["highlights"], float(np.clip(-1.8 * (0.12 - p2_shifted_d), -0.65, 0.0)))
 
     s_grid = np.linspace(base_p["shoulder"], 0.85, 15)
     hl_grid = sorted({round(base_p["highlights"], 3), -0.20, -0.40, -0.65}, reverse=True)
@@ -845,7 +870,8 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     p2, p25, p50, p98 = _encoded_quantiles(px, RenderParams(**base_p), qs=(2, 25, 50, 98))
     out["diagnostics"]["encoded_p25_before_shadows"] = p25
     if p25 < cfg["shadow_p25_floor"]:
-        base_p["shadows"] = float(np.clip(cfg["shadow_gain"] * (cfg["shadow_p25_floor"] - p25), 0.0, cfg["shadow_max"]))
+        base_p["shadows"] = max(base_p["shadows"], float(np.clip(
+            cfg["shadow_gain"] * (cfg["shadow_p25_floor"] - p25), 0.0, cfg["shadow_max"])))
 
     # Round slider-visible values cleanly
     for k in ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder", "highlights", "shadows", "whites", "blacks",

@@ -89,7 +89,7 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4f"  # thumbnails rendered with the T4f NOREF_V3 (standard preset), camera matrix and white point
+THUMB_REV = "t4g"  # thumbnails rendered with T4g roll-base selection and NOREF_V3 (standard preset)
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)
@@ -550,12 +550,13 @@ class State:
         p = self.resolve(rel)
         folder = str(Path(rel).parent)
         # Smart default: when no explicit base_mode was given and the roll cache is ready, auto-select
-        # roll_nat if this frame's own B0 failed or deviates from the roll by >= 0.10 D.
+        # roll_nat if B0 failed / deviates by >= 0.10 D, or an orange-mask consensus supersedes interior B0 (T4g).
         if base_mode is None:
             rinfo = self.roll_cache.get(folder)
             fe = (rinfo or {}).get("frames", {}).get(rel)
             if rinfo and rinfo.get("roll") and fe and (
                 fe.get("own_error") or (fe.get("chroma_part") is not None and fe["chroma_part"] >= 0.1)
+                or (rinfo.get("roll", {}).get("diagnostics", {}).get("orange_consensus", False))
             ):
                 base_mode = "roll_nat"
             else:

@@ -1,0 +1,102 @@
+{
+ "standard": {
+  "target_encoded_band": [
+   0.45,
+   0.52
+  ],
+  "base_midtone": 0.23,
+  "base_contrast": 1.3,
+  "base_shoulder": 0.22,
+  "base_sat": 1.02,
+  "base_vibrance": 0.08,
+  "base_shadows": 0.0,
+  "base_highlights": 0.0,
+  "base_blacks": 0.0,
+  "base_slope_r": 0.0,
+  "base_slope_b": 0.0,
+  "temp_offset": 0.0,
+  "tint_offset": 0.0,
+  "camera_matrix_mix": 0.4,
+  "chroma_preserve": 0.4
+ },
+ "natural": {
+  "target_encoded_band": [
+   0.46,
+   0.53
+  ],
+  "base_midtone": 0.24,
+  "base_contrast": 1.18,
+  "base_shoulder": 0.35,
+  "base_sat": 0.96,
+  "base_vibrance": 0.04,
+  "base_shadows": 0.06,
+  "base_highlights": -0.05,
+  "base_blacks": 0.0,
+  "base_slope_r": 0.0,
+  "base_slope_b": 0.0,
+  "temp_offset": 0.0,
+  "tint_offset": 0.0,
+  "camera_matrix_mix": 0.35,
+  "chroma_preserve": 0.35
+ },
+ "portrait": {
+  "target_encoded_band": [
+   0.49,
+   0.56
+  ],
+  "base_midtone": 0.26,
+  "base_contrast": 1.16,
+  "base_shoulder": 0.42,
+  "base_sat": 0.93,
+  "base_vibrance": 0.05,
+  "base_shadows": 0.12,
+  "base_highlights": -0.1,
+  "base_blacks": 0.0,
+  "base_slope_r": -0.04,
+  "base_slope_b": 0.04,
+  "temp_offset": -0.02,
+  "tint_offset": 0.05,
+  "camera_matrix_mix": 0.38,
+  "chroma_preserve": 0.38
+ },
+ "vivid": {
+  "target_encoded_band": [
+   0.45,
+   0.52
+  ],
+  "base_midtone": 0.23,
+  "base_contrast": 1.46,
+  "base_shoulder": 0.28,
+  "base_sat": 1.14,
+  "base_vibrance": 0.18,
+  "base_shadows": 0.0,
+  "base_highlights": -0.05,
+  "base_blacks": -0.04,
+  "base_slope_r": 0.02,
+  "base_slope_b": -0.02,
+  "temp_offset": 0.02,
+  "tint_offset": 0.0,
+  "camera_matrix_mix": 0.58,
+  "chroma_preserve": 0.58
+ },
+ "print_classic": {
+  "target_encoded_band": [
+   0.42,
+   0.49
+  ],
+  "base_midtone": 0.21,
+  "base_contrast": 1.4,
+  "base_shoulder": 0.18,
+  "base_sat": 1.02,
+  "base_vibrance": 0.04,
+  "base_shadows": 0.0,
+  "base_highlights": 0.0,
+  "base_blacks": -0.07,
+  "base_slope_r": 0.0,
+  "base_slope_b": 0.0,
+  "temp_offset": 0.01,
+  "tint_offset": 0.0,
+  "camera_matrix_mix": 0.35,
+  "chroma_preserve": 0.35
+ }
+}

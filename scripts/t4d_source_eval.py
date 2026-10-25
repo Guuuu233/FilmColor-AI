@@ -27,6 +27,7 @@ and C*. Summaries leave out frames whose alignment NCC is below 0.7 (eval_bluene
 import hashlib
 import json
 import os
+import platform
 import subprocess
 import sys
 import time
@@ -119,9 +120,18 @@ def main(out_json: str, opts: list[str]):
     prof = MatrixTRCProfile(icc_profile("srgb"))
     sel = [f for f in FRAMES if (domains is None or f["domain"] in domains) and (ids is None or f["id"] in ids)]
     res = dict(src=str(SRC), git_commit=commit, src_dirty=dirty, src_content_sha256=src_content_sha256(SRC), manifest=str(MANIFEST.relative_to(REPO)),
+               environment=dict(python=sys.version.split()[0], numpy=np.__version__, platform=platform.platform()),
                variants=variants, ncc_min=NCC_MIN, max_side=max_side, frames={})
+    if Path(out_json).exists():
+        previous = json.loads(Path(out_json).read_text())
+        for key in ("src_content_sha256", "variants", "ncc_min", "max_side", "manifest"):
+            if previous.get(key) != res[key]:
+                raise ValueError(f"cannot resume {out_json}: {key} changed")
+        res["frames"] = previous["frames"]
     states = {}
     for f in sel:
+        if f["id"] in res["frames"]:
+            continue
         t0 = time.time()
         raw = REPO / f["raw"] if not os.path.isabs(f["raw"]) else Path(f["raw"])
         ref = REPO / f["ref"] if not os.path.isabs(f["ref"]) else Path(f["ref"])
@@ -136,8 +146,10 @@ def main(out_json: str, opts: list[str]):
         pv = st.preview
         P4, mask4 = noref.estimation_input(pv.full_positive, pv.image_region)
         cam = st._raw_meta(pv.path).get("rgb_xyz_matrix") if st.camera_matrix(pv.path) is not None else None
-        out = dict(domain=f["domain"], roll=f["roll"], base_method=m["base"]["method"], camera_matrix=cam is not None,
-                   variants={})
+        out = dict(domain=f["domain"], roll=f["roll"], base_method=m["base"]["method"], base=m["base"],
+                   camera_matrix=cam is not None,
+                   raw_sha256=hashlib.file_digest(raw.open("rb"), "sha256").hexdigest(),
+                   ref_sha256=hashlib.file_digest(ref.open("rb"), "sha256").hexdigest(), variants={})
         ref_small = al = None
         lab0 = lab_of(prof, pv.render(RenderParams()))  # alignment on the default render: the same in every run
         for name, cfg in cfgs.items():

@@ -252,7 +252,7 @@ def test_t4d_presets_order_brightness_contrast_and_colour():
     med = {n: x["diagnostics"]["encoded_median"] for n, x in e.items()}
     assert med["portrait"] > med["standard"] > med["print_classic"]
     c = {n: x["params"]["contrast"] for n, x in e.items()}
-    assert c["vivid"] > c["print_classic"] > c["standard"] > c["portrait"] > c["natural"]
+    assert c["vivid"] > c["print_classic"] > c["standard"] > c["natural"] > c["portrait"]
     for k in ("sat", "vibrance"):
         assert e["vivid"]["params"][k] > e["standard"]["params"][k] > e["natural"]["params"][k]
     b = {n: x["params"].get("blacks", 0.0) for n, x in e.items()}
@@ -265,13 +265,15 @@ def test_t4d_white_balance_falls_back_to_neutral_and_presets_add_their_offsets()
     from filmcolor.noref import NOREF_V3, estimate_params_v3, preset_config
 
     P = scene(median=0.18, stops=4.0, cast=(0.9, -0.9), chroma=0.05, seed=33)  # every pixel strongly coloured
-    e = estimate_params_v3(P, None, NOREF_V3)
+    # T4g adapts to strong casts. Disable the adaptive evidence here to keep testing the no-evidence fallback.
+    cfg = dict(NOREF_V3, wb_v3_adaptive_share=0.0, wb_v3_gw_weight=0.0)
+    e = estimate_params_v3(P, None, cfg)
     assert e["diagnostics"]["wb"]["confidence"] == 0
     assert e["params"]["temp"] == 0 and e["params"]["tint"] == 0
-    old = estimate_params_v3(P, None, dict(NOREF_V3, wb_prior_weight=0.55))
+    old = estimate_params_v3(P, None, dict(cfg, wb_prior_weight=0.55))
     assert old["params"]["temp"] == pytest.approx(0.55 * LOOK["params"]["temp"], abs=1e-3)
-    pt = estimate_params_v3(P, None, preset_config("portrait"))
-    cp = preset_config("portrait")
+    cp = preset_config("portrait", cfg)
+    pt = estimate_params_v3(P, None, cp)
     assert pt["params"]["temp"] == pytest.approx(cp["temp_offset"]) and pt["params"]["tint"] == pytest.approx(cp["tint_offset"])
 
 
@@ -281,7 +283,7 @@ def test_t4d_backlit_weight_is_continuous():
     from filmcolor.noref import NOREF_V3, estimate_params_v3
 
     ws = []
-    for fg in (0.15, 0.09, 0.08, 0.075, 0.07, 0.05):
+    for fg in (0.20, 0.15, 0.09, 0.08, 0.075, 0.07, 0.05):
         e = estimate_params_v3(backlit_scene(fg=fg), None, NOREF_V3)
         w = e["diagnostics"]["backlit_check"]["weight"]
         ws.append(w)
@@ -307,18 +309,18 @@ def test_t4e_backlit_adjustment_is_relative_to_each_preset():
         cfg, p = preset_config(n), x["params"]
         w = x["diagnostics"]["backlit_check"]["weight"]
         assert w > 0 and "backlit_midtone" in x["flags"]
-        exp_c = min(cfg["backlit_contrast_cap"], cfg["base_contrast"] + w * cfg["backlit_contrast_step"])
+        step = cfg["backlit_contrast_step"] if cfg["base_contrast"] >= 1.25 else 0.0
+        exp_c = min(cfg["backlit_contrast_cap"], cfg["base_contrast"] + w * step)
         assert p["contrast"] == pytest.approx(exp_c, abs=1e-3)
         assert p["shoulder"] >= min(cfg["backlit_shoulder_cap"], cfg["base_shoulder"] + w * cfg["backlit_shoulder_step"]) - 1e-3
         hi = min(cfg["backlit_midtone_cap"], cfg["base_midtone"] + cfg["backlit_midtone_step"])
-        assert cfg["base_midtone"] < p["midtone"] <= hi + 1e-4
+        assert cfg["base_midtone"] <= p["midtone"] <= hi + 1e-4
     v = sorted(x["params"]["contrast"] for x in e.values())
     assert all(b - a > 1e-3 for a, b in zip(v, v[1:])), v
 
 
-def test_t4f_presets_have_distinct_base_midtones():
-    """T4f preset table: base midtones print 0.22 < vivid 0.24 < standard 0.25 < natural 0.26 < portrait 0.29, so off
-    backlit frames every preset's midtone differs (T4e: standard and natural both 0.23)."""
+def test_t4g_presets_keep_their_base_midtones():
+    """T4g: standard and vivid share 0.23; the other base midtones are print 0.21, natural 0.24, portrait 0.26."""
     from filmcolor.noref import estimate_params_v3, preset_config
 
     P = scene(median=0.18, stops=3.5, chroma=0.12, seed=32)
@@ -326,7 +328,39 @@ def test_t4f_presets_have_distinct_base_midtones():
     e = {n: estimate_params_v3(P, None, preset_config(n)) for n in order}
     assert all(x["diagnostics"]["backlit_check"]["weight"] == 0 for x in e.values())
     mids = [e[n]["params"]["midtone"] for n in order]
-    assert mids == [preset_config(n)["base_midtone"] for n in order] == sorted(mids) and len(set(mids)) == 5
+    assert mids == [preset_config(n)["base_midtone"] for n in order] == sorted(mids)
+    assert mids == [0.21, 0.23, 0.23, 0.24, 0.26]
+
+
+def test_t4g_adaptive_wb_recovers_evidence_outside_the_fixed_radius():
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(47)
+    y = 0.18 * 2 ** rng.uniform(-2, 2, 20000)
+    c = rng.normal([-0.60, 0.12], 0.025, (len(y), 2))
+    px = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1)
+    fixed = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_adaptive_share=0.0, wb_v3_gw_weight=0.0))
+    adaptive = estimate_wb_v3(px)
+    assert fixed["confidence"] == 0
+    assert adaptive["confidence"] > 0.1 and adaptive["temp"] > 0.05
+    assert all(z["radius_effective"] > z["radius"] for z in adaptive["diagnostics"]["zones"])
+    assert adaptive["diagnostics"]["grey_world"]["weight"] > 0
+
+
+def test_t4g_soft_presets_keep_shadow_highlight_and_slope_defaults():
+    from filmcolor.noref import estimate_params_v3, preset_config
+
+    for name in ("natural", "portrait"):
+        cfg = preset_config(name)
+        for P in (scene(median=0.18, stops=3.5, seed=32), backlit_scene()):
+            e = estimate_params_v3(P, None, cfg)
+            p = e["params"]
+            assert p["contrast"] == cfg["base_contrast"]
+            assert p["shadows"] >= cfg["base_shadows"]
+            assert p["highlights"] <= cfg["base_highlights"]
+            for c in ("r", "b"):
+                assert p.get(f"slope_{c}", 0.0) == cfg[f"base_slope_{c}"]
+            RenderParams.from_dict(p)
 
 
 def sky_over_grass(seed=41):

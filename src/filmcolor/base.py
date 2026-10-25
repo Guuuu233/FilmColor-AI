@@ -186,7 +186,7 @@ def decoupled_quantile_base(roll_rgb, block_L_p01) -> tuple[tuple[float, float, 
 
 def natural_roll_base(
     roll_rgb, block_L_p01, *, own_rgb=None, paper_black_d: float = 0.02,
-    softness: float = 0.5, ramp_lo: float = 0.04, ramp_hi: float = 0.10,
+    softness: float = 0.5, ramp_lo: float = 0.04, ramp_hi: float = 0.10, max_black_pull_d: float = 0.04,
 ) -> tuple[tuple[float, float, float], dict]:
     """Natural roll-base fusion (T4, inspired by Darktable negadoctor paper-black + DQ anti-truncation):
 
@@ -194,7 +194,9 @@ def natural_roll_base(
     - Blends the black point smoothly between the roll's physical base density ``-l_roll`` (which preserves
       a restrained paper-black margin on normal / high-key frames) and the frame's anti-truncation quantile
       floor ``d_lo_min - paper_black_d`` according to the frame's base chroma error ``chroma_part`` and
-      ``softness`` in [0, 1] (0 = crisp DQ black point, 1 = full B1 roll black point unless ``d_lo_min < -l_roll``).
+      ``softness`` in [0, 1]. Above the roll floor, the black pull is capped at ``max_black_pull_d`` (T4g):
+      a frame without black objects must not lose a large common density from unequal dye-layer ranges.
+      Below the roll floor, the DQ anti-truncation floor is used without this upward cap.
     """
     l_roll, c_roll = split_log_base(roll_rgb)
     d_lo_b1 = float(-l_roll)
@@ -216,10 +218,10 @@ def natural_roll_base(
         w = float(np.clip(1.0 - alpha * (1.0 - 0.35 * float(softness)), 0.0, 1.0))
         if softness >= 0.999 and alpha == 0.0:
             w = 1.0
-        d_lo = w * d_lo_b1 + (1.0 - w) * d_lo_dq
+        d_lo = min(w * d_lo_b1 + (1.0 - w) * d_lo_dq, d_lo_b1 + max_black_pull_d)
     b_eff = tuple(float(x) for x in (10.0 ** (c_roll - d_lo)))
     return b_eff, dict(d_lo_used=float(d_lo), d_lo_b1=d_lo_b1, d_lo_min=d_lo_min,
-                       paper_black_d=float(paper_black_d), b1_weight=w)
+                       paper_black_d=float(paper_black_d), b1_weight=w, max_black_pull_d=max_black_pull_d)
 
 
 def estimate_base_blocks(
@@ -311,7 +313,7 @@ class RollBase:
 
 def estimate_base_roll(candidates: dict, exposures: dict, *, t_ref: float | None = None,
                        level_window: float = 0.1, chroma_tol: float = 0.05, n_use: int = 3,
-                       min_members: int = 3) -> RollBase:
+                       min_members: int = 3, orange_mask_prior: bool = True) -> RollBase:
     """Film base for a roll scanned without film border, from per-frame interior candidates.
 
     ``candidates``: frame -> linear RGB of the frame's most transparent uniform area (e.g.
@@ -321,9 +323,11 @@ def estimate_base_roll(candidates: dict, exposures: dict, *, t_ref: float | None
 
     A frame's interior minimum is base only where the scene left the film unexposed; elsewhere it is
     denser and usually coloured. Areas below the film's toe converge to the colour of base + fog, so:
-    1. frames within ``level_window`` (density, G channel) of the most transparent frame, and
-    2. within ``chroma_tol`` (log2 R/G, B/G) of their median chromaticity, form the floor cluster;
-    3. base = per-channel median of the ``n_use`` most transparent cluster members.
+    1. when at least 25% have orange-mask chromaticity, first keep their robust chromaticity consensus;
+       otherwise keep all candidates (unmasked / special film fallback);
+    2. frames within ``level_window`` (density, G channel) of the most transparent eligible frame and
+       within ``chroma_tol`` (log2 R/G, B/G) of their median chromaticity form the floor cluster;
+    3. base = per-channel median of up to ``n_use`` most transparent cluster members.
     The result is the least dense film observed on the roll: an upper bound on the base density, equal
     to it only if some frame reached the floor. Fewer than ``min_members`` cluster frames -> warning.
     """
@@ -340,9 +344,19 @@ def estimate_base_roll(candidates: dict, exposures: dict, *, t_ref: float | None
         raise ValueError("exposure times must be finite and positive")
     t_ref = float(np.median(t)) if t_ref is None else float(t_ref)
     norm = rgb * (t_ref / t)[:, None]
-    dG = np.log10(norm[:, 1].max() / norm[:, 1])          # density above the most transparent frame
     chroma = np.log2(norm[:, [0, 2]] / norm[:, [1]])
-    near = dG <= level_window
+    orange = (chroma[:, 0] >= 0.16) & (chroma[:, 1] <= -0.36)
+    pool = np.ones(len(names), bool)
+    orange_consensus = orange_mask_prior and float(orange.mean()) >= 0.25 and int(orange.sum()) >= min_members
+    if orange_consensus:
+        # T4g: a few transparent flare / bypass candidates must not displace the roll's orange-mask consensus.
+        centre = np.median(chroma[orange], 0)
+        pool = orange & (np.linalg.norm(chroma - centre, axis=1) <= max(chroma_tol * 2.5, 0.18))
+        if int(pool.sum()) < min_members:
+            pool[:] = True
+            orange_consensus = False
+    dG = np.log10(norm[pool, 1].max() / norm[:, 1])  # density above the most transparent eligible frame
+    near = pool & (dG <= level_window)
     centre = np.median(chroma[near], 0)
     member = near & np.all(np.abs(chroma - centre) <= chroma_tol, -1)
     if not member.any():
@@ -357,6 +371,7 @@ def estimate_base_roll(candidates: dict, exposures: dict, *, t_ref: float | None
                         "never reach the film base, so the estimate may be a scene shadow")
     diagnostics = dict(
         level_window=level_window, chroma_tol=chroma_tol, n_use=n_use,
+        orange_consensus=orange_consensus, orange_share=float(orange.mean()), n_consensus=int(pool.sum()),
         cluster_chroma_log2_RG_BG=[float(x) for x in centre],
         cluster_chroma_spread=[float(x) for x in chroma[member].max(0) - chroma[member].min(0)],
         cluster_density_spread_G=float(dG[member].max()),

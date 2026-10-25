@@ -12,6 +12,7 @@ are shown as stored. Files are checked against the frozen sets before they are r
 (parameters per frame and preset, software commit); images are not committed (experiments/**/*.jpg is ignored).
 --before (T4f): a first column rendered with the frame's parameters of VARIANT in t4d_source_eval.py outputs (an
 earlier version's automatic estimate, its camera matrix included) on the same preview.
+--before-images=DIR (T4g): use actual T4f renderings and checks.json from t4g_checks.py instead, when inversion changed.
 """
 import json
 import os
@@ -81,14 +82,16 @@ def before_params(spec: str | None) -> tuple[str, dict]:
     return label, out
 
 
-def main(out_jpg: str, ids: list[str], tile_h: int, before: str | None = None):
+def main(out_jpg: str, ids: list[str], tile_h: int, before: str | None = None, before_images: str | None = None):
     b_label, b_params = before_params(before)
+    saved = json.loads((path_of(before_images) / "checks.json").read_text()) if before_images else None
     frames = json.loads(MANIFEST.read_text())["frames"]
     by_id = {f["id"]: f for f in frames}
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     dirty = bool(subprocess.run(["git", "-C", str(REPO), "status", "--porcelain", "--", "src"], capture_output=True,
                                 text=True).stdout.strip())
-    rows, record = [], dict(git_commit=commit, src_dirty=dirty, presets=list(STYLE_PRESETS), before=before, frames={})
+    rows, record = [], dict(git_commit=commit, src_dirty=dirty, presets=list(STYLE_PRESETS), before=before,
+                           before_images=before_images, frames={})
     states = {}
     for fid in ids:
         f = by_id[fid]
@@ -102,7 +105,16 @@ def main(out_jpg: str, ids: list[str], tile_h: int, before: str | None = None):
         m = st.open(raw.name, "color", preset="standard")
         k = int(m["rot90"])
         cols, rec = [], dict(base_method=m["base"]["method"], rot90=k, presets={})
-        if fid in b_params:
+        if saved and fid.split(":")[-1] in saved["frames"]:
+            old = saved["frames"][fid.split(":")[-1]]
+            item = old["presets"]["standard"]
+            im = Image.open(path_of(before_images) / item["image"]).convert("RGB")
+            # Saved images are already oriented by the original State, independently of this symlink roll.
+            if old["rot90"] != k:
+                im = im.rotate(90 * (k - old["rot90"]), expand=True)
+            cols.append(tile(im, tile_h, f"T4F  {fid}", "Actual before inversion + automatic parameters"))
+            rec["before"] = dict(git_commit=saved["git_commit"], params=item["auto"]["params"], base=old["base"])
+        elif fid in b_params:
             p = b_params[fid]
             disp = st.preview.render(p)
             im = Image.fromarray(np.round(np.clip(np.rot90(disp, k), 0, 1) * 255).astype(np.uint8))
@@ -146,10 +158,12 @@ def main(out_jpg: str, ids: list[str], tile_h: int, before: str | None = None):
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    th, before = 300, None
+    th, before, before_images = 300, None, None
     if any(a.startswith("--tile-h=") for a in args):
         th = int(next(a for a in args if a.startswith("--tile-h=")).split("=", 1)[1])
     if any(a.startswith("--before=") for a in args):
         before = next(a for a in args if a.startswith("--before=")).split("=", 1)[1]
-    args = [a for a in args if not a.startswith(("--tile-h=", "--before="))]
-    main(args[0], args[1:], th, before)
+    if any(a.startswith("--before-images=") for a in args):
+        before_images = next(a for a in args if a.startswith("--before-images=")).split("=", 1)[1]
+    args = [a for a in args if not a.startswith(("--tile-h=", "--before=", "--before-images="))]
+    main(args[0], args[1:], th, before, before_images)
