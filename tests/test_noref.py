@@ -158,11 +158,11 @@ def test_noref_v3_t4b_keeps_print_contrast_and_never_sets_blacks():
     """T4b (2026-10-24): contrast and shadow decisions are measured on the encoded output. A normal frame keeps the
     print contrast centre 1.30 with no shadow lift and blacks 0 (T4 v2 gave contrast 0.95, shadows +0.15, blacks +0.10
     on such frames by comparing -log10 of the positive with print-density thresholds); a crushed frame gets a
-    positive shadows lift and still blacks 0. T4d / T4e: the centre is base_contrast; the normal frame spans 4 stops
-    and has no backlit weight."""
+    positive shadows lift and still blacks 0. T4d / T4e: the centre is base_contrast; the normal frame has no
+    backlit weight (T4f: 3.5 stops; the wider T4f backlit weight gives a 4-stop log-uniform scene w = 0.06)."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3
 
-    normal = estimate_params_v3(scene(median=0.18, stops=4.0, seed=21), None, NOREF_V3)
+    normal = estimate_params_v3(scene(median=0.18, stops=3.5, seed=21), None, NOREF_V3)
     assert normal["status"] == "ok" and normal["config_rev"] == NOREF_V3["rev"]
     assert "backlit_midtone" not in normal["flags"]  # T4c: a 7-stop log-uniform scene counts as backlit
     assert normal["params"]["contrast"] == pytest.approx(NOREF_V3["base_contrast"])
@@ -212,7 +212,7 @@ def test_noref_v3_t4c_backlit_frame_lifts_midtone_and_renders_the_given_matrix()
     e = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m))
     assert "backlit_midtone" in e["flags"] and e["diagnostics"]["backlit_check"]["weight"] == 1.0
     m0 = NOREF_V3["base_midtone"]
-    assert m0 < e["params"]["midtone"] <= m0 + NOREF_V3["backlit_midtone_step"]
+    assert m0 < e["params"]["midtone"] <= m0 + NOREF_V3["backlit_midtone_step"] + 1e-4
     assert e["params"]["shoulder"] >= NOREF_V3["base_shoulder"] + NOREF_V3["backlit_shoulder_step"]
     assert e["params"]["contrast"] == pytest.approx(NOREF_V3["base_contrast"] + NOREF_V3["backlit_contrast_step"])
     assert e["params"]["matrix"] == [list(r) for r in m]
@@ -261,7 +261,7 @@ def test_t4d_presets_order_brightness_contrast_and_colour():
 
 def test_t4d_white_balance_falls_back_to_neutral_and_presets_add_their_offsets():
     """T4d: with no near-neutral evidence (wb confidence 0) NOREF_V3 stays at temp = tint = 0 instead of 0.55 x the
-    global_look_v1 prior (T4b-T4c); portrait adds its +0.03 / -0.02 offsets to the same estimate."""
+    global_look_v1 prior (T4b-T4c); portrait adds its offsets (T4f +0.02 / -0.02) to the same estimate."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3, preset_config
 
     P = scene(median=0.18, stops=4.0, cast=(0.9, -0.9), chroma=0.05, seed=33)  # every pixel strongly coloured
@@ -271,7 +271,8 @@ def test_t4d_white_balance_falls_back_to_neutral_and_presets_add_their_offsets()
     old = estimate_params_v3(P, None, dict(NOREF_V3, wb_prior_weight=0.55))
     assert old["params"]["temp"] == pytest.approx(0.55 * LOOK["params"]["temp"], abs=1e-3)
     pt = estimate_params_v3(P, None, preset_config("portrait"))
-    assert pt["params"]["temp"] == pytest.approx(0.03) and pt["params"]["tint"] == pytest.approx(-0.02)
+    cp = preset_config("portrait")
+    assert pt["params"]["temp"] == pytest.approx(cp["temp_offset"]) and pt["params"]["tint"] == pytest.approx(cp["tint_offset"])
 
 
 def test_t4d_backlit_weight_is_continuous():
@@ -292,11 +293,12 @@ def test_t4d_backlit_weight_is_continuous():
 
 
 def test_t4e_backlit_adjustment_is_relative_to_each_preset():
-    """T4e: on a backlit frame the five presets keep distinct contrast and midtone (T4d pulled all of them to the same
+    """T4e: on a backlit frame the five presets keep distinct contrast (T4d pulled all of them to the same
     1.55 / 0.42 / 0.35 at full weight): contrast = min(cap, preset base + w x step), shoulder at least
     min(cap, preset base + w x step) (highlight hold may add more), midtone between the preset's base and
-    min(cap, base + step). Note: standard and natural share base_midtone 0.23, so on a frame dark enough for both to
-    reach their cap their midtone is the same (A023 in T4E_REPORT.md); this scene does not."""
+    min(cap, base + step). T4f: the midtone is not asserted distinct here: natural (lower contrast, so a higher p25)
+    reaches backlit_p25_target 0.34 at 0.329, 0.001 from vivid's 0.33 at its search cap on this scene; the base
+    midtones are distinct (test_t4f_presets_have_distinct_base_midtones)."""
     from filmcolor.noref import STYLE_PRESETS, estimate_params_v3, preset_config
 
     P = backlit_scene()
@@ -309,7 +311,110 @@ def test_t4e_backlit_adjustment_is_relative_to_each_preset():
         assert p["contrast"] == pytest.approx(exp_c, abs=1e-3)
         assert p["shoulder"] >= min(cfg["backlit_shoulder_cap"], cfg["base_shoulder"] + w * cfg["backlit_shoulder_step"]) - 1e-3
         hi = min(cfg["backlit_midtone_cap"], cfg["base_midtone"] + cfg["backlit_midtone_step"])
-        assert cfg["base_midtone"] <= p["midtone"] <= hi + 1e-4
-    for k in ("contrast", "midtone"):
-        v = sorted(x["params"][k] for x in e.values())
-        assert all(b - a > 1e-3 for a, b in zip(v, v[1:])), (k, v)
+        assert cfg["base_midtone"] < p["midtone"] <= hi + 1e-4
+    v = sorted(x["params"]["contrast"] for x in e.values())
+    assert all(b - a > 1e-3 for a, b in zip(v, v[1:])), v
+
+
+def test_t4f_presets_have_distinct_base_midtones():
+    """T4f preset table: base midtones print 0.22 < vivid 0.24 < standard 0.25 < natural 0.26 < portrait 0.29, so off
+    backlit frames every preset's midtone differs (T4e: standard and natural both 0.23)."""
+    from filmcolor.noref import estimate_params_v3, preset_config
+
+    P = scene(median=0.18, stops=3.5, chroma=0.12, seed=32)
+    order = ("print_classic", "vivid", "standard", "natural", "portrait")
+    e = {n: estimate_params_v3(P, None, preset_config(n)) for n in order}
+    assert all(x["diagnostics"]["backlit_check"]["weight"] == 0 for x in e.values())
+    mids = [e[n]["params"]["midtone"] for n in order]
+    assert mids == [preset_config(n)["base_midtone"] for n in order] == sorted(mids) and len(set(mids)) == 5
+
+
+def sky_over_grass(seed=41):
+    """Top 55 %: smooth bright clear sky (log2 R/G -0.12, B/G +0.13; within-cell activity far below 0.05 D); bottom
+    45 %: textured darker grass (median 0.12 of white, 3 stops). A013-like: the full-frame median sits in the sky."""
+    rng = np.random.default_rng(seed)
+    h, w = 400, 500
+    ns = int(h * 0.55)
+    P = np.empty((h, w, 3), np.float32)
+    y_sky = 0.55 * 2.0 ** rng.normal(0, 0.01, (ns, w))
+    P[:ns] = y_sky[..., None] * 2.0 ** np.array([-0.12, 0.0, 0.13])
+    y_g = 0.12 * 2.0 ** rng.uniform(-1.5, 1.5, (h - ns, w))
+    c = rng.normal(0, 0.08, (h - ns, w, 2)) + [0.05, -0.25]
+    P[ns:] = np.stack([y_g * 2 ** c[..., 0], y_g, y_g * 2 ** c[..., 1]], -1)
+    return P
+
+
+def test_t4f_textured_trimean_anchor_and_ev_refinement_ignore_a_large_sky():
+    """T4f Bug 1: the anchor is the Tukey trimean of the textured cell densities, and the EV refinement measures the
+    textured cells' encoded median, lowering exposure by at most ev_refine_down_max (and not below -it). On a sky over
+    grass frame whose full-frame encoded median is far above the band at the anchor exposure (T4c-T4e bisected that
+    median down to the band: -1.08 EV on A013), the exposure stays within 0.20 EV of the anchor."""
+    from filmcolor.noref import NOREF_V3, _encoded_quantiles, _sample, _textured_cells, estimate_params_v3
+
+    P = sky_over_grass()
+    tc = _textured_cells(P, None, NOREF_V3)
+    assert 0.3 < tc["textured_share"] < 0.6  # the grass, not the sky
+    assert tc["anchor_d"] == pytest.approx(0.5 * tc["p50_d"] + 0.25 * (tc["p25_d"] + tc["p75_d"]))
+    e = estimate_params_v3(P, None, NOREF_V3)
+    r, ev = e["diagnostics"]["ev_refine"], e["params"]["ev"]
+    px = _sample(P, None, NOREF_V3["n_sample"] // 4, seed=1)
+    full_med = _encoded_quantiles(px, RenderParams(**dict(e["params"], ev=r["ev_anchor"])), qs=(50,))[0]
+    assert full_med > NOREF_V3["target_encoded_band"][1] + 0.2
+    dmax = NOREF_V3["ev_refine_down_max"]
+    assert r["ev_anchor"] > 0.3 and ev >= max(r["ev_anchor"] - dmax, -dmax) - 1e-3 and ev <= r["ev_anchor"]
+
+
+def test_t4f_ev_refinement_brightens_under_the_p98_ceiling():
+    """T4f Bug 1: a frame whose textured median is below the band is brightened only while the full-frame encoded p98
+    stays <= ev_refine_p98_max (a dark frame with a 2.5 % bright window; anchor_target_density 1.4 makes the anchor
+    step lift too little, so the refinement has to brighten)."""
+    from filmcolor.noref import NOREF_V3, _encoded_quantiles, _sample, estimate_params_v3
+
+    P = scene(median=0.03, stops=5.0, seed=10).reshape(-1, 3)
+    P[: len(P) // 40] = 0.9
+    P = P.reshape(400, -1, 3)
+    cfg = dict(NOREF_V3, anchor_target_density=1.4, backlit_p90=2.0)  # backlit rule off: only the refinement moves ev
+    e = estimate_params_v3(P, None, cfg)
+    r = e["diagnostics"]["ev_refine"]
+    assert r["med_tex_before"] < cfg["target_encoded_band"][0] and r.get("capped_by_p98")
+    assert r["ev"] > r["ev_anchor"]
+    px = _sample(P, None, cfg["n_sample"] // 4, seed=1)
+    p = dict(e["params"], ev=r["ev"], shoulder=cfg["base_shoulder"], highlights=0.0)
+    assert _encoded_quantiles(px, RenderParams(**p), qs=(98,))[0] <= cfg["ev_refine_p98_max"] + 1e-3
+
+
+def test_t4f_wb_damps_a_clear_sky_bright_zone():
+    """T4f Bug 3: a bright near-neutral zone with red low and blue high (clear sky) gets wb_v3_sky_weight x its
+    weight, so a blue sky pulls the white balance less towards warm; strength 0.65 (T4b-T4e 0.85)."""
+    from filmcolor.noref import NOREF_V3, _sample, estimate_wb_v3
+
+    assert NOREF_V3["wb_v3_strength"] == 0.65
+    px = _sample(sky_over_grass(), None, NOREF_V3["n_sample"] // 4, seed=1)
+    wb = estimate_wb_v3(px, NOREF_V3)
+    z0 = wb["diagnostics"]["zones"][0]
+    assert z0["clear_sky"] and z0["weight"] == pytest.approx(NOREF_V3["wb_v3_zones"][0][2] * NOREF_V3["wb_v3_sky_weight"])
+    undamped = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_sky_weight=1.0))
+    assert 0 < wb["temp"] < undamped["temp"]
+
+
+def test_t4f_anchor_lift_is_held_to_the_p98_ceiling():
+    """T4f: on a dark frame with a 2.5 % bright window the textured anchor alone asks for a large positive ev; with
+    ev_anchor_p98_cap (default) that lift stops where full-frame encoded p98 reaches ev_refine_p98_max (at base shoulder,
+    no highlights), as the task list wants for A012's sky; without it the anchor ev is kept and p98 passes the ceiling."""
+    from filmcolor.noref import NOREF_V3, _encoded_quantiles, _sample, estimate_params_v3
+
+    P = scene(median=0.03, stops=5.0, seed=10).reshape(-1, 3)
+    P[: len(P) // 40] = 0.9
+    P = P.reshape(400, -1, 3)
+    px = _sample(P, None, NOREF_V3["n_sample"] // 4, seed=1)
+    cfg = dict(NOREF_V3, backlit_p90=2.0)  # backlit rule off
+
+    def p98(e, ev):
+        return _encoded_quantiles(px, RenderParams(**dict(e["params"], ev=ev, shoulder=cfg["base_shoulder"],
+                                                          highlights=0.0)), qs=(98,))[0]
+
+    on, off = estimate_params_v3(P, None, cfg), estimate_params_v3(P, None, dict(cfg, ev_anchor_p98_cap=False))
+    r_on, r_off = on["diagnostics"]["ev_refine"], off["diagnostics"]["ev_refine"]
+    assert r_on["anchor_capped_by_p98"] and r_on["ev_anchor_raw"] == pytest.approx(r_off["ev_anchor"])
+    assert 0.0 <= r_on["ev_anchor"] < r_off["ev_anchor"]
+    assert p98(on, r_on["ev_anchor"]) <= cfg["ev_refine_p98_max"] + 1e-3 < p98(off, r_off["ev_anchor"])

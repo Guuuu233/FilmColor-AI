@@ -1,7 +1,7 @@
 """T4d style-preset sheet: one row per frame, one column per noref.STYLE_PRESETS entry (the app's automatic starting
 point for that preset, nothing moved by hand), plus the frame's reference conversion as the last column.
 
-  t4d_presets_showcase.py OUT_JPG [--tile-h=PX] ID [ID ...]
+  t4d_presets_showcase.py OUT_JPG [--tile-h=PX] [--before=LABEL=EVAL_JSON[,EVAL_JSON]:VARIANT] ID [ID ...]
 
 ID: frame ids of data/manifests/s3_dev_frames.json (e.g. nlp:_DSF9237, ext:A012). Each frame is opened as the app
 opens it (State.open, automatic base choice, on a roll folder of symlinks to the manifest's frames of that roll, the
@@ -10,6 +10,8 @@ the 1000 px preview rendered with the preset's automatic parameters; tiles are t
 the file; camera-frame references (ICC-tagged, in the scan's own orientation) are turned the same way, BlueNeg prints
 are shown as stored. Files are checked against the frozen sets before they are read. Writes OUT_JPG and OUT_JPG's .json
 (parameters per frame and preset, software commit); images are not committed (experiments/**/*.jpg is ignored).
+--before (T4f): a first column rendered with the frame's parameters of VARIANT in t4d_source_eval.py outputs (an
+earlier version's automatic estimate, its camera matrix included) on the same preview.
 """
 import json
 import os
@@ -67,13 +69,26 @@ def tile(im: Image.Image, h: int, title: str, sub: str = "") -> Image.Image:
     return out
 
 
-def main(out_jpg: str, ids: list[str], tile_h: int):
+def before_params(spec: str | None) -> tuple[str, dict]:
+    if not spec:
+        return "", {}
+    label, rest = spec.split("=", 1)
+    files, variant = rest.rsplit(":", 1)
+    out = {}
+    for fn in files.split(","):
+        d = json.loads(path_of(fn).read_text())
+        out.update({k: v["variants"][variant]["params"] for k, v in d["frames"].items() if variant in v.get("variants", {})})
+    return label, out
+
+
+def main(out_jpg: str, ids: list[str], tile_h: int, before: str | None = None):
+    b_label, b_params = before_params(before)
     frames = json.loads(MANIFEST.read_text())["frames"]
     by_id = {f["id"]: f for f in frames}
     commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     dirty = bool(subprocess.run(["git", "-C", str(REPO), "status", "--porcelain", "--", "src"], capture_output=True,
                                 text=True).stdout.strip())
-    rows, record = [], dict(git_commit=commit, src_dirty=dirty, presets=list(STYLE_PRESETS), frames={})
+    rows, record = [], dict(git_commit=commit, src_dirty=dirty, presets=list(STYLE_PRESETS), before=before, frames={})
     states = {}
     for fid in ids:
         f = by_id[fid]
@@ -87,6 +102,13 @@ def main(out_jpg: str, ids: list[str], tile_h: int):
         m = st.open(raw.name, "color", preset="standard")
         k = int(m["rot90"])
         cols, rec = [], dict(base_method=m["base"]["method"], rot90=k, presets={})
+        if fid in b_params:
+            p = b_params[fid]
+            disp = st.preview.render(p)
+            im = Image.fromarray(np.round(np.clip(np.rot90(disp, k), 0, 1) * 255).astype(np.uint8))
+            sub = " ".join(f"{a}={p.get(a, 0.0):+.2f}" for a in ("ev", "contrast", "midtone", "shoulder", "sat"))
+            cols.append(tile(im, tile_h, f"{b_label}  {fid}", sub))
+            rec["before"] = dict(params=p)
         for name in STYLE_PRESETS:
             mm = st.set_preset(dict(token=st.token, preset=name))
             p = mm["auto"]["params"]
@@ -124,8 +146,10 @@ def main(out_jpg: str, ids: list[str], tile_h: int):
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    th = 300
+    th, before = 300, None
     if any(a.startswith("--tile-h=") for a in args):
         th = int(next(a for a in args if a.startswith("--tile-h=")).split("=", 1)[1])
-        args = [a for a in args if not a.startswith("--tile-h=")]
-    main(args[0], args[1:], th)
+    if any(a.startswith("--before=") for a in args):
+        before = next(a for a in args if a.startswith("--before=")).split("=", 1)[1]
+    args = [a for a in args if not a.startswith(("--tile-h=", "--before="))]
+    main(args[0], args[1:], th, before)

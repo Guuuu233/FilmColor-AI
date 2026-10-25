@@ -385,7 +385,9 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4e-2026-10-25",          # T4e: standard back to the T4c band, backlit weight narrowed and relative to the
+    rev="t4f-2026-10-25",          # T4f: trimean anchor, EV refinement on the textured cells (brighten-only, at most
+                                   # -0.20 EV down), wider backlit weight, clear-sky wb damping, new preset table;
+                                   # T4e: standard back to the T4c band, backlit weight narrowed and relative to the
                                    # preset; T4d: neutral wb fallback, style presets, continuous backlit weight;
                                    # T4c: camera matrix, chroma_preserve, backlit midtone; T4b: encoded-output decisions
     look="global_look_v1",         # recorded only: wb_prior_weight 0 (T4d) applies none of it
@@ -396,18 +398,23 @@ NOREF_V3 = dict(
     min_textured_share=0.08,       # fallback to top 25% most active cells when fewer than 8% exceed activity_thr_d
     anchor_target_density=0.75,    # NegPy print target density 0.75 D (reflectance 10^-0.75 ≈ 0.178 = 18% grey)
     anchor_band_d=0.08,            # comfort band around target density (preserves high-key / low-key mood)
-    base_contrast=1.30,            # print contrast centre (UI contrast 0; T4d 1.35); replaces fixed contrast=2.0
+    base_contrast=1.34,            # print contrast (T4f; UI contrast 0 stays 1.30; T4d 1.35, T4e 1.30)
     contrast_bounds_v3=(1.05, 1.38),  # contrast is only lowered (to >= 1.05) for very wide, both-ends-clipped frames;
                                    # the upper bound never cuts a preset's base_contrast
     contrast_spread_max=0.78,      # encoded luminance p90 - p10 above this, with both ends clipped: lower contrast
     end_clip_share=0.005,          # "clipped end": share of encoded luminance <= 0.02 (black) or >= 0.98 (white)
-    base_sat=1.02,                 # restrained saturation (T4d 1.04)
-    base_vibrance=0.08,            # vibrance on frames that are not already colourful (chroma p90 <= sat_colourful)
-    base_midtone=0.23,             # mid-grey placement (UI midtone 0; T4c 0.22, T4d 0.25)
-    base_shoulder=0.20,            # baseline highlight roll-off (T4c 0.15, T4d 0.25)
+    base_sat=1.04,                 # restrained saturation (T4f; T4d 1.04, T4e 1.02)
+    base_vibrance=0.10,            # vibrance on frames that are not already colourful (chroma p90 <= sat_colourful)
+    base_midtone=0.25,             # mid-grey placement (UI midtone 0; T4c 0.22, T4d 0.25, T4e 0.23)
+    base_shoulder=0.25,            # baseline highlight roll-off (T4c 0.15, T4d 0.25, T4e 0.20)
     base_blacks=0.0,               # blacks of the preset (a constant; never estimated from the frame)
     temp_offset=0.0, tint_offset=0.0,  # preset colour offsets added after the white balance estimate
-    target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance band (T4d 0.48..0.55)
+    target_encoded_band=(0.48, 0.55),  # target sRGB-encoded median luminance of the textured cells (T4f; T4d
+                                   # 0.48..0.55 and T4c / T4e 0.45..0.52 on the full frame)
+    ev_refine_down_max=0.20,       # T4f: the EV refinement lowers exposure by at most this, and not below -this
+    ev_refine_p98_max=0.96,        # T4f: the EV refinement brightens only while full-frame encoded p98 stays <= this
+    ev_anchor_p98_cap=True,        # T4f: a positive anchor ev is held to the same p98 ceiling (the task list puts the
+                                   # ceiling on the refinement only, which left A012 at the anchor's +2.50 EV)
     shadow_p25_floor=0.12,         # shadows lifted only when encoded luminance p25 is below this (crushed frame)
     shadow_gain=2.5, shadow_max=0.35,  # shadows = min(shadow_max, shadow_gain * (floor - p25)); blacks stay 0
     clip_budget=0.002,             # <= 0.2 % highlight clipping
@@ -423,45 +430,46 @@ NOREF_V3 = dict(
     wb_v3_share=(0.01, 0.08),      # candidate share mapping to confidence 0..1
     wb_v3_mad=(0.10, 0.35),        # candidate MAD mapping to confidence factor 1..0.5 (never 0)
     wb_v3_conflict_factor=0.75,    # quadrant disagreement lowers confidence by this factor (never to 0)
-    wb_v3_strength=0.85,           # share of the measured residual cast removed at full confidence
+    wb_v3_strength=0.65,           # share of the measured residual cast removed at full confidence (T4b-T4e 0.85)
+    wb_v3_sky=(-0.05, 0.05),       # T4f: bright zone reads as clear sky when its log2 R/G < [0] and log2 B/G > [1]
+    wb_v3_sky_weight=0.35,         # T4f: then its weight is multiplied by this (the mid-grey zone leads)
     wp_invalid_stops=1.5,
     matrix=None,                   # colour matrix rendered with (app: camera_color_matrix of the RAW); None = identity
-    camera_matrix_mix=0.35,        # share of the camera matrix the app renders camera RAW with (T4d 0.40)
-    chroma_preserve=0.35,          # shoulder & midtone partly on luminance (RenderParams.chroma_preserve; T4d 0.40)
-    # Backlit weight (T4e: bright background and dark foreground only; T4d also fired on a wide p25..p90 gap; T4c was
-    # 1 when p90 >= 0.80 and p25 <= 0.30), on the encoded luminance:
-    # w = ramp(p90; backlit_p90, backlit_p90 + backlit_ramp) x ramp(backlit_p25 - p25; 0, backlit_ramp)
-    backlit_p90=0.78,              # bright background: weight starts at this p90, full at p90 + backlit_ramp
-    backlit_p25=0.32,              # dark foreground: starts below this p25, full at p25 - backlit_ramp
-    backlit_ramp=0.06,
+    camera_matrix_mix=0.45,        # share of the camera matrix the app renders camera RAW with (T4d 0.40, T4e 0.35)
+    chroma_preserve=0.45,          # shoulder & midtone partly on luminance (RenderParams.chroma_preserve; T4e 0.35)
+    # Backlit weight (T4f: wider than T4e's 0.78 / 0.32 / 0.06; T4e: bright background and dark foreground only; T4d
+    # also fired on a wide p25..p90 gap; T4c was 1 when p90 >= 0.80 and p25 <= 0.30), on the encoded luminance:
+    # w = ramp(p90; backlit_p90, backlit_p90 + backlit_ramp) x ramp(backlit_p25 - p25; 0, backlit_ramp_p25)
+    backlit_p90=0.72,              # bright background: weight starts at this p90, full at p90 + backlit_ramp
+    backlit_p25=0.40,              # dark foreground: starts below this p25, full at p25 - backlit_ramp_p25
+    backlit_ramp=0.08, backlit_ramp_p25=0.10,  # T4f task list formula: 0.72..0.80 and 0.40 - p25 in 0..0.10
     # Relative to the preset (T4e; T4d moved to absolute 1.55 / 0.42 / 0.35, equal for every preset at full weight):
-    backlit_contrast_step=0.12, backlit_contrast_cap=1.65,  # contrast + w x step, at most cap
+    backlit_contrast_step=0.10, backlit_contrast_cap=1.65,  # contrast + w x step, at most cap (T4e step 0.12)
     backlit_shoulder_step=0.15, backlit_shoulder_cap=0.55,  # shoulder + w x step, at most cap
     backlit_midtone_step=0.09, backlit_midtone_cap=0.38,    # midtone towards the one lifting p25 to backlit_p25_target,
                                                             # searched up to min(cap, base midtone + step), x w
-    backlit_p25_target=0.28,
+    backlit_p25_target=0.34,       # T4f (T4e 0.28)
 )
 
 
 # Style presets (T4d): overrides of NOREF_V3 for the automatic starting point; the estimate itself (exposure, white
-# balance, highlight / shadow hold, backlit weight) runs the same way on each. Values from the T4e task list; they are
+# balance, highlight / shadow hold, backlit weight) runs the same way on each. Values from the T4f task list; they are
 # named after looks the task list associates with them (NLP tone profiles, Frontier / Noritsu scans, optical prints),
 # not measured against those systems.
 STYLE_PRESETS = {
     "standard": dict(label="标准 Standard", cfg=dict()),
     "natural": dict(label="自然 Natural", cfg=dict(
-        target_encoded_band=(0.45, 0.52), base_midtone=0.23, base_contrast=1.18, base_shoulder=0.32, base_sat=0.95,
-        base_vibrance=0.04, chroma_preserve=0.35, camera_matrix_mix=0.35)),
+        target_encoded_band=(0.49, 0.56), base_midtone=0.26, base_contrast=1.20, base_shoulder=0.35, base_sat=0.98,
+        base_vibrance=0.06, chroma_preserve=0.40, camera_matrix_mix=0.40)),
     "portrait": dict(label="人像 Portrait", cfg=dict(
-        target_encoded_band=(0.50, 0.57), base_midtone=0.27, base_contrast=1.25, base_shoulder=0.36, base_sat=1.02,
-        base_vibrance=0.12, chroma_preserve=0.45, camera_matrix_mix=0.40, temp_offset=0.03, tint_offset=-0.02,
-        backlit_p25_target=0.34)),  # backlit_p25_target: T4d value, not in the T4e table
+        target_encoded_band=(0.53, 0.60), base_midtone=0.29, base_contrast=1.26, base_shoulder=0.40, base_sat=1.03,
+        base_vibrance=0.14, chroma_preserve=0.50, camera_matrix_mix=0.45, temp_offset=0.02, tint_offset=-0.02)),
     "vivid": dict(label="鲜明 Vivid", cfg=dict(
-        target_encoded_band=(0.46, 0.53), base_midtone=0.24, base_contrast=1.45, base_shoulder=0.28, base_sat=1.10,
-        base_vibrance=0.15, chroma_preserve=0.50, camera_matrix_mix=0.50, base_blacks=-0.03)),
+        target_encoded_band=(0.48, 0.55), base_midtone=0.24, base_contrast=1.46, base_shoulder=0.30, base_sat=1.12,
+        base_vibrance=0.18, chroma_preserve=0.55, camera_matrix_mix=0.55, base_blacks=-0.03)),
     "print_classic": dict(label="经典印相 Print", cfg=dict(
-        target_encoded_band=(0.42, 0.49), base_midtone=0.21, base_contrast=1.40, base_shoulder=0.18, base_sat=1.02,
-        base_vibrance=0.05, chroma_preserve=0.35, camera_matrix_mix=0.35, base_blacks=-0.05)),
+        target_encoded_band=(0.44, 0.51), base_midtone=0.22, base_contrast=1.40, base_shoulder=0.20, base_sat=1.04,
+        base_vibrance=0.06, chroma_preserve=0.40, camera_matrix_mix=0.40, base_blacks=-0.05)),
 }
 
 
@@ -503,10 +511,8 @@ def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
         q75 = float(np.percentile(std_D[valid], 75))
         tex = valid & (std_D >= q75)
     dt = mean_D[tex]
-    p2, p5, p10, p50, p90, p95, p98 = (float(x) for x in np.percentile(dt, [2, 5, 10, 50, 90, 95, 98]))
-    in_5_95 = dt[(dt >= p5) & (dt <= p95)]
-    mean_5_95 = float(in_5_95.mean()) if len(in_5_95) else p50
-    anchor_d = 0.5 * (mean_5_95 + 0.5 * (p5 + p95))
+    p2, p10, p25, p50, p75, p90, p98 = (float(x) for x in np.percentile(dt, [2, 10, 25, 50, 75, 90, 98]))
+    anchor_d = 0.5 * p50 + 0.25 * (p25 + p75)  # Tukey trimean (T4f; T4 v2-T4e averaged the P5..P95 mean and midrange)
     return dict(
         textured_share=tex_share,
         n_textured=int(tex.sum()),
@@ -514,7 +520,9 @@ def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
         span_10_90_d=float(p90 - p10),
         p2_bright_d=p2,
         p10_d=p10,
+        p25_d=p25,
         p50_d=p50,
+        p75_d=p75,
         p90_d=p90,
         p98_dark_d=p98,
         textured_rgb=mean_rgb[tex],
@@ -548,13 +556,19 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     c = _chroma(px)
     norm = np.linalg.norm(c, axis=1)
     ests, weights, cands = [], [], []
-    for (q_lo, q_hi), radius, weight in cfg["wb_v3_zones"]:
+    sky_r, sky_b = cfg.get("wb_v3_sky", (-np.inf, np.inf))
+    for i, ((q_lo, q_hi), radius, weight) in enumerate(cfg["wb_v3_zones"]):
         lo, hi = np.percentile(y, [q_lo, q_hi])
         sel = (y >= lo) & (y <= hi) & (norm <= radius)
         zd = dict(luma_pct=[q_lo, q_hi], radius=radius, n=int(sel.sum()), share=float(sel.sum() / max(len(y), 1)))
         if sel.sum() >= cfg["wb_v3_min_px"]:
             est = _huber_location(c[sel], cfg["wb_v3_huber"])
             zd.update(chroma=[float(v) for v in est])
+            if i == 0 and est[0] < sky_r and est[1] > sky_b:
+                # T4f: a bright zone with red low and blue high reads as clear sky, not as a cool cast
+                weight = weight * float(cfg["wb_v3_sky_weight"])
+                zd.update(clear_sky=True)
+            zd.update(weight=float(weight))
             ests.append(est), weights.append(weight), cands.append(c[sel])
         diag["zones"].append(zd)
     if not ests:
@@ -601,9 +615,11 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
 
     1. **Textured Cells**: filters grid cells by local density activity ``std(-log10 Y) >= 0.05 D`` so large
        uniform skies, water or borders do not bias metering.
-    2. **Auto Density (ev)**: pulls the textured P5..P95 anchor density towards ``anchor_target_density = 0.75 D``
-       (18 % mid-grey) with a comfort band, then refines so sRGB-encoded median luminance lands in the target band.
-    3. **Contrast** (T4b): starts at the print centre ``base_contrast`` (1.30, UI contrast 0); lowered (to >= 1.05)
+    2. **Auto Density (ev)**: pulls the textured anchor density (T4f: trimean) towards ``anchor_target_density =
+       0.75 D`` (18 % mid-grey) with a comfort band, then refines so the encoded median luminance of the textured cells
+       (T4f; the full frame before) lands in the target band: brightening under a full-frame p98 ceiling, lowering
+       by at most 0.20 EV.
+    3. **Contrast** (T4b): starts at the print centre ``base_contrast`` (1.34 since T4f); lowered (to >= 1.05)
        only when the encoded luminance p90 - p10 exceeds ``contrast_spread_max`` and both ends clip.
     4. **Highlight Hold (highlights & shoulder)**: when bright textured cells ``P2`` approach the white point or
        full-frame clipping exceeds ``clip_budget`` (0.2 %), writes an explicit negative ``highlights`` burn and/or a
@@ -695,21 +711,51 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
         ev_anc = (anc_d - target_d) * 0.4 / 0.30103
     base_p["ev"] = float(np.clip(ev_anc, *cfg["ev_limits"]))
 
-    # Refine EV: lift dark frames into target_encoded_band (0.45..0.52); high-key frames allowed up to 0.76
+    # Refine EV (T4f) on the encoded median of the textured cells (cell-mean RGB), not of the full frame, whose median
+    # sits in the sky on frames with a large sky (T4c-T4e pulled A013 down to -1.08 EV that way):
+    # - textured median below the band: brighten to t_lo + 0.03, while full-frame encoded p98 stays <= ev_refine_p98_max;
+    # - above the band (high-key frames: above 0.76): lower towards t_hi - 0.02 by at most ev_refine_down_max, and
+    #   not below -ev_refine_down_max.
+    # With ev_anchor_p98_cap a positive anchor ev is first held to the same ceiling (not below 0): on backlit frames
+    # (A012, A023) the dark textured foreground alone gives the anchor +2.50 EV, which burns the sky.
     t_lo, t_hi = cfg["target_encoded_band"]
-    p2_0, med0, p98_0 = _encoded_quantiles(px, RenderParams(**base_p))
-    t_hi_eff = 0.76 if anc_d < 0.65 else t_hi
-    if med0 < t_lo or med0 > t_hi_eff:
-        target_m = t_lo + 0.03 if med0 < t_lo else t_hi_eff - 0.02
-        lo_ev, hi_ev = cfg["ev_limits"]
+    tex_px = tc["textured_rgb"]
+    p98_max = float(cfg["ev_refine_p98_max"])
+
+    def bisect_ev(lo_ev, hi_ev, below):  # largest ev in [lo_ev, hi_ev] with below(ev) true; below falls with ev
         for _ in range(18):
             mid_ev = 0.5 * (lo_ev + hi_ev)
-            _, m_cur, _ = _encoded_quantiles(px, RenderParams(**dict(base_p, ev=mid_ev)))
-            if m_cur < target_m:
-                lo_ev = mid_ev
-            else:
-                hi_ev = mid_ev
-        base_p["ev"] = float(np.clip(0.5 * (lo_ev + hi_ev), *cfg["ev_limits"]))
+            lo_ev, hi_ev = (mid_ev, hi_ev) if below(mid_ev) else (lo_ev, mid_ev)
+        return float(lo_ev)
+
+    def p98_ok(ev):
+        return _encoded_quantiles(px, RenderParams(**dict(base_p, ev=ev)), qs=(98,))[0] <= p98_max
+
+    refine = dict(ev_anchor_raw=base_p["ev"])
+    if cfg.get("ev_anchor_p98_cap") and base_p["ev"] > 0 and not p98_ok(base_p["ev"]):
+        base_p["ev"] = bisect_ev(0.0, base_p["ev"], p98_ok)
+        refine.update(anchor_capped_by_p98=True)
+    ev0 = base_p["ev"]
+    med_tex = _encoded_quantiles(tex_px, RenderParams(**base_p), qs=(50,))[0]
+    t_hi_eff = 0.76 if anc_d < 0.65 else t_hi
+    refine.update(ev_anchor=ev0, med_tex_before=med_tex)
+
+    if med_tex < t_lo:
+        tgt = t_lo + 0.03
+        ev_up = bisect_ev(ev0, cfg["ev_limits"][1],
+                          lambda ev: _encoded_quantiles(tex_px, RenderParams(**dict(base_p, ev=ev)), qs=(50,))[0] < tgt)
+        if not p98_ok(ev_up):
+            ev_up = bisect_ev(ev0, ev_up, p98_ok)
+            refine.update(capped_by_p98=True)
+        base_p["ev"] = float(max(ev0, ev_up))
+    elif med_tex > t_hi_eff:
+        tgt, dmax = t_hi_eff - 0.02, float(cfg["ev_refine_down_max"])
+        floor = min(ev0, max(ev0 - dmax, -dmax))
+        base_p["ev"] = bisect_ev(floor, ev0,
+                                 lambda ev: _encoded_quantiles(tex_px, RenderParams(**dict(base_p, ev=ev)), qs=(50,))[0] <= tgt)
+    base_p["ev"] = float(np.clip(base_p["ev"], *cfg["ev_limits"]))
+    refine.update(ev=base_p["ev"], med_tex_after=_encoded_quantiles(tex_px, RenderParams(**base_p), qs=(50,))[0])
+    out["diagnostics"]["ev_refine"] = refine
 
     # 4b. Backlit midtone (continuous weight w in [0, 1] since T4d; T4e: bright background and dark foreground only,
     #     and relative to the preset): contrast and shoulder get w x their step above the preset's own values (capped),
@@ -717,7 +763,8 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     #     to backlit_p25_target, instead of more ev pushing the sky into white
     q25, q90 = _encoded_quantiles(px, RenderParams(**base_p), qs=(25, 90))
     rmp = float(cfg["backlit_ramp"])
-    w_bl = _ramp(q90, cfg["backlit_p90"], cfg["backlit_p90"] + rmp) * _ramp(cfg["backlit_p25"] - q25, 0.0, rmp)
+    rmp25 = float(cfg.get("backlit_ramp_p25", rmp))
+    w_bl = _ramp(q90, cfg["backlit_p90"], cfg["backlit_p90"] + rmp) * _ramp(cfg["backlit_p25"] - q25, 0.0, rmp25)
     out["diagnostics"]["backlit_check"] = dict(p25=q25, p90=q90, weight=w_bl)
     backlit = w_bl > 0
     if backlit:
