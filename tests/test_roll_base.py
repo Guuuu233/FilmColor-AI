@@ -61,20 +61,25 @@ def test_default_t_ref_is_median_exposure():
 
 
 def test_orange_roll_consensus_rejects_brighter_colourless_flare():
+    """T4g prior, off by default since T4h: with it, colourless candidates brighter than the orange-mask consensus
+    are not taken as base; without it (default) the most transparent candidates still are."""
     base = np.array([0.34, 0.20, 0.076])
     cand = {f"orange{i}": tuple(base * 10 ** (-0.01 * i)) for i in range(6)}
     cand.update({f"flare{i}": (0.28, 0.28, 0.18) for i in range(3)})
-    r = estimate_base_roll(cand, dict.fromkeys(cand, 1.0))
+    r = estimate_base_roll(cand, dict.fromkeys(cand, 1.0), orange_mask_prior=True)
     assert r.diagnostics["orange_consensus"]
     assert all(n.startswith("orange") for n in r.members)
     np.testing.assert_allclose(r.rgb_norm, base * 10 ** -0.01)
+    default = estimate_base_roll(cand, dict.fromkeys(cand, 1.0))
+    assert not default.diagnostics["orange_consensus"]
+    assert all(n.startswith("flare") for n in default.members)
 
 
 @pytest.mark.parametrize("n_plain", [3, 5])
 def test_minority_orange_frames_do_not_override_an_unmasked_roll(n_plain):
     cand = {f"plain{i}": (0.20, 0.20, 0.15) for i in range(n_plain)}
     cand["orange"] = (0.25, 0.18, 0.06)
-    r = estimate_base_roll(cand, dict.fromkeys(cand, 1.0))
+    r = estimate_base_roll(cand, dict.fromkeys(cand, 1.0), orange_mask_prior=True)
     assert not r.diagnostics["orange_consensus"]
     assert r.members == [f"plain{i}" for i in range(n_plain)]
 

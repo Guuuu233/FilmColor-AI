@@ -1,0 +1,289 @@
+{
+ "git_commit": "4276a7fd4a952757687f054cb447719abe0e6e81",
+ "src_dirty": true,
+ "presets": [
+  "standard",
+  "natural",
+  "portrait",
+  "vivid",
+  "print_classic"
+ ],
+ "before": null,
+ "before_images": "experiments/t4_auto_ui/t4g/before",
+ "frames": {
+  "ext:A012": {
+   "base_method": "roll_nat",
+   "rot90": 1,
+   "presets": {
+    "standard": {
+     "params": {
+      "ev": 0.9343,
+      "temp": -0.1615,
+      "tint": -0.014,
+      "sat": 1.0078,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "highlights": -0.385,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "white_point_unrepresentative",
+      "backlit_midtone"
+     ],
+     "backlit": {
+      "p25": 0.2458266168832779,
+      "p90": 0.9373914361000061,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     }
+    },
+    "natural": {
+     "params": {
+      "ev": 1.397,
+      "temp": -0.1615,
+      "tint": -0.014,
+      "sat": 0.9845,
+      "contrast": 1.18,
+      "midtone": 0.2555,
+      "shoulder": 0.4723,
+      "matrix": [
+       [
+        1.0960107544434523,
+        -0.030208105763803145,
+        -0.06580264867964923
+       ],
+       [
+        -0.03792696247738835,
+        1.1475791649435185,
+        -0.1096522024661301
+       ],
+       [
+        0.0018592942373558896,
+        -0.1234560839928416,
+        1.1215967897554857
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.06,
+      "chroma_preserve": 0.35
+     },
+     "flags": [
+      "white_point_unrepresentative",
+      "backlit_midtone"
+     ],
+     "backlit": {
+      "p25": 0.31847305595874786,
+      "p90": 0.941139429807663,
+      "weight": 0.8152694404125216,
+      "midtone_target": 0.2589569091796874
+     }
+    },
+    "portrait": {
+     "params": {
+      "ev": 1.5544,
+      "temp": -0.1815,
+      "tint": 0.036,
+      "sat": 0.9728,
+      "contrast": 1.16,
+      "midtone": 0.26,
+      "shoulder": 0.4803,
+      "matrix": [
+       [
+        1.1042402476814623,
+        -0.03279737197212906,
+        -0.07144287570933339
+       ],
+       [
+        -0.04117784497545021,
+        1.160228807652963,
+        -0.11905096267751268
+       ],
+       [
+        0.002018662314843618,
+        -0.1340380340493708,
+        1.1320193717345273
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.12,
+      "slope_r": -0.04,
+      "slope_b": 0.04,
+      "chroma_preserve": 0.38
+     },
+     "flags": [
+      "white_point_unrepresentative",
+      "backlit_midtone"
+     ],
+     "backlit": {
+      "p25": 0.3597712889313698,
+      "p90": 0.9431599378585815,
+      "weight": 0.4022871106863024,
+      "midtone_target": 0.2600054931640625
+     }
+    },
+    "vivid": {
+     "params": {
+      "ev": 1.0251,
+      "temp": -0.1415,
+      "tint": -0.014,
+      "sat": 1.0544,
+      "contrast": 1.56,
+      "midtone": 0.32,
+      "shoulder": 0.43,
+      "matrix": [
+       [
+        1.1591035359348636,
+        -0.05005914669430224,
+        -0.10904438924056148
+       ],
+       [
+        -0.06285039496252927,
+        1.2445597590492592,
+        -0.18170936408672989
+       ],
+       [
+        0.003081116164761311,
+        -0.20458436775956595,
+        1.2015032515948048
+       ]
+      ],
+      "highlights": -0.434,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
+      "chroma_preserve": 0.58
+     },
+     "flags": [
+      "white_point_unrepresentative",
+      "backlit_midtone"
+     ],
+     "backlit": {
+      "p25": 0.2336856760084629,
+      "p90": 0.9407508075237274,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     }
+    },
+    "print_classic": {
+     "params": {
+      "ev": 0.7575,
+      "temp": -0.1515,
+      "tint": -0.014,
+      "sat": 1.0078,
+      "contrast": 1.5,
+      "midtone": 0.3,
+      "shoulder": 0.33,
+      "matrix": [
+       [
+        1.0960107544434523,
+        -0.030208105763803145,
+        -0.06580264867964923
+       ],
+       [
+        -0.03792696247738835,
+        1.1475791649435185,
+        -0.1096522024661301
+       ],
+       [
+        0.0018592942373558896,
+        -0.1234560839928416,
+        1.1215967897554857
+       ]
+      ],
+      "highlights": -0.289,
+      "blacks": -0.07,
+      "chroma_preserve": 0.35
+     },
+     "flags": [
+      "white_point_unrepresentative",
+      "backlit_midtone"
+     ],
+     "backlit": {
+      "p25": 0.19383283704519272,
+      "p90": 0.9360964357852936,
+      "weight": 1.0,
+      "midtone_target": 0.3
+     }
+    }
+   },
+   "before": {
+    "git_commit": "4276a7fd4a952757687f054cb447719abe0e6e81",
+    "params": {
+     "ev": 0.9514,
+     "temp": 0.0419,
+     "tint": 0.0091,
+     "sat": 1.0363,
+     "contrast": 1.44,
+     "midtone": 0.34,
+     "shoulder": 0.4,
+     "matrix": [
+      [
+       1.123442398570153,
+       -0.038838993124889684,
+       -0.08460340544526324
+      ],
+      [
+       -0.04876323747092789,
+       1.1897446406416667,
+       -0.1409814031707387
+      ],
+      [
+       0.0023905211623147364,
+       -0.1587292508479392,
+       1.1563387296856245
+      ]
+     ],
+     "highlights": -0.26,
+     "chroma_preserve": 0.45
+    },
+    "base": {
+     "method": "auto",
+     "rgb": [
+      0.09816128760576248,
+      0.09729152172803879,
+      0.05856412649154663
+     ],
+     "warnings": [
+      "51% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+      "G base blocks spread 11.9% (p05-p95)",
+      "B base blocks spread 12.9% (p05-p95)"
+     ],
+     "inside_image": 0.030837004405286344,
+     "regions_preview": [],
+     "chroma_part": 0.014316144934397914,
+     "level_diff": -0.021426265951970003,
+     "d_lo_shared": null,
+     "softness": 0.5,
+     "roll_rgb": [
+      0.09038990736007692,
+      0.09107021614909172,
+      0.05704928934574127
+     ],
+     "own_rgb": [
+      0.09748327732086182,
+      0.09632407873868942,
+      0.057990968227386475
+     ]
+    }
+   }
+  }
+ }
+}

@@ -1,16 +1,20 @@
-"""Run T4g's unchanged 191-frame manifest split in two processes, resuming matching checkpoints.
-Usage: python -I scripts/t4g_run_eval.py
+"""Run the unchanged 191-frame manifest split (T4d-T4f halves) in two processes, resuming matching checkpoints.
+Usage: python -I scripts/t4g_run_eval.py [TAG]   (TAG t4g, default, or t4h; outputs experiments/t4_auto_ui/TAG/)
 """
 import json
 import os
 import subprocess
+import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "experiments/t4_auto_ui/t4g"
+TAG = sys.argv[1] if len(sys.argv) > 1 else "t4g"
+OUT = REPO / "experiments/t4_auto_ui" / TAG
 VARIANTS = {n: dict(preset=n) for n in ("standard", "natural", "portrait", "vivid", "print_classic")}
 VARIANTS["wb_t4f"] = dict(preset="standard", cfg=dict(wb_v3_adaptive_share=0.0, wb_v3_gw_weight=0.0, wb_max_shift=0.35))
+if TAG != "t4g":  # T4h: the task list's other reading of the clear-sky damping (red axis not damped)
+    VARIANTS["wb_sky_red1"] = dict(preset="standard", cfg=dict(wb_v3_gw_sky_red=1.0))
 
 
 def main():
@@ -25,7 +29,7 @@ def main():
     def run(item):
         part, ids = item
         cmd = ["/usr/bin/time", "-l", str(REPO / ".venv/bin/python"), "-I", str(REPO / "scripts/t4d_source_eval.py"),
-               str(REPO / "src"), str(OUT / f"eval_t4g_{part}.json"), "--ids=" + ",".join(ids),
+               str(REPO / "src"), str(OUT / f"eval_{TAG}_{part}.json"), "--ids=" + ",".join(ids),
                "--variants=" + json.dumps(VARIANTS)]
         print(part, len(ids), flush=True)
         with (OUT / f"eval_{part}.log").open("a") as log:

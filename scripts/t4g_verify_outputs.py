@@ -1,12 +1,16 @@
-"""Validate the completed T4g delivery without decoding any source image.
-Usage: python -I scripts/t4g_verify_outputs.py
+"""Validate a completed T4g / T4h delivery without decoding any source image.
+Usage: python -I scripts/t4g_verify_outputs.py [TAG]   (default t4g)
 """
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 ROOT = REPO / "experiments/t4_auto_ui"
+TAG = sys.argv[1] if len(sys.argv) > 1 else "t4g"
+VARIANTS = {"standard", "natural", "portrait", "vivid", "print_classic", "wb_t4f"} | ({"wb_sky_red1"} if TAG != "t4g" else set())
+PORTRAIT_CONTRAST = 1.16
 
 
 def main():
@@ -16,7 +20,7 @@ def main():
         h.update(str(p.relative_to(REPO / "src")).encode() + b"\0" + p.read_bytes() + b"\0")
     sha = h.hexdigest()
     for part, expected in (("a", 96), ("b", 95)):
-        data = json.loads((ROOT / f"t4g/eval_t4g_{part}.json").read_text())
+        data = json.loads((ROOT / f"{TAG}/eval_{TAG}_{part}.json").read_text())
         assert data["src_content_sha256"] == sha
         assert len(data["frames"]) == expected
         assert not (records.keys() & data["frames"].keys())
@@ -30,19 +34,19 @@ def main():
     assert all(v["ncc"] >= 0.7 for v in valid.values())
     assert all(len(v["raw_sha256"]) == len(v["ref_sha256"]) == 64 for v in records.values())
     for v in valid.values():
-        assert set(v["variants"]) == {"standard", "natural", "portrait", "vivid", "print_classic", "wb_t4f"}
-    key = json.loads((ROOT / "t4g/key_eval.json").read_text())["frames"]
+        assert set(v["variants"]) == VARIANTS
+    key = json.loads((ROOT / TAG / "key_eval.json").read_text())["frames"]
     for fid, v in key.items():
         for name, item in v["variants"].items():
             assert item["params"] == records[fid]["variants"][name]["params"], (fid, name)
             assert abs(item["metrics"]["de2000_median"] - records[fid]["variants"][name]["metrics"]["de2000_median"]) < 1e-8
-    checks = json.loads((ROOT / "t4g/after/checks.json").read_text())
+    checks = json.loads((ROOT / TAG / "after/checks.json").read_text())
     assert checks["src_content_sha256"] == sha
-    assert checks["frames"]["A012"]["presets"]["portrait"]["auto"]["params"]["contrast"] == 1.16
+    assert checks["frames"]["A012"]["presets"]["portrait"]["auto"]["params"]["contrast"] == PORTRAIT_CONTRAST
     cache = Path("/Volumes/waizhiyingpan/filmcolor_data/app_cache")
     for roll in checks["rolls"].values():
         for frame in roll["info"]["frames"].values():
-            assert (cache / f"thumb_color_t4g_{frame['disk_key']}.png").is_file()
+            assert (cache / f"thumb_color_{TAG}_{frame['disk_key']}.png").is_file()
     print("Verified 191 records / 185 valid, unchanged exclusions, disjoint halves, input hashes, key replays, source hash and 75 thumbnails.")
     print("Software SHA256:", sha)
 

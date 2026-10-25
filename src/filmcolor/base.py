@@ -313,7 +313,7 @@ class RollBase:
 
 def estimate_base_roll(candidates: dict, exposures: dict, *, t_ref: float | None = None,
                        level_window: float = 0.1, chroma_tol: float = 0.05, n_use: int = 3,
-                       min_members: int = 3, orange_mask_prior: bool = True) -> RollBase:
+                       min_members: int = 3, orange_mask_prior: bool = False) -> RollBase:
     """Film base for a roll scanned without film border, from per-frame interior candidates.
 
     ``candidates``: frame -> linear RGB of the frame's most transparent uniform area (e.g.
@@ -323,8 +323,9 @@ def estimate_base_roll(candidates: dict, exposures: dict, *, t_ref: float | None
 
     A frame's interior minimum is base only where the scene left the film unexposed; elsewhere it is
     denser and usually coloured. Areas below the film's toe converge to the colour of base + fog, so:
-    1. when at least 25% have orange-mask chromaticity, first keep their robust chromaticity consensus;
-       otherwise keep all candidates (unmasked / special film fallback);
+    1. only with ``orange_mask_prior`` (T4g; off by default since T4h: on dsc6161 it picked scene shadows 0.48 D
+       denser than the floor): when at least 25% have orange-mask chromaticity, first keep their robust
+       chromaticity consensus; otherwise keep all candidates;
     2. frames within ``level_window`` (density, G channel) of the most transparent eligible frame and
        within ``chroma_tol`` (log2 R/G, B/G) of their median chromaticity form the floor cluster;
     3. base = per-channel median of up to ``n_use`` most transparent cluster members.

@@ -1,5 +1,5 @@
 {
- "git_commit": "4276a7fd4a952757687f054cb447719abe0e6e81",
+ "git_commit": "7e80eebac4f1e4c7bbc260fda9dfa2c048ac3618",
  "src_dirty": true,
  "presets": [
   "standard",
@@ -18,8 +18,8 @@
     "standard": {
      "params": {
       "ev": -0.25,
-      "temp": 0.0271,
-      "tint": 0.0029,
+      "temp": 0.0916,
+      "tint": 0.0555,
       "sat": 1.02,
       "contrast": 1.3,
       "midtone": 0.23,
@@ -48,16 +48,16 @@
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6785084307193756,
-      "p90": 0.7737470507621765,
+      "p25": 0.6730065643787384,
+      "p90": 0.7702404797077179,
       "weight": 0.0
      }
     },
     "natural": {
      "params": {
       "ev": -0.25,
-      "temp": 0.0271,
-      "tint": 0.0029,
+      "temp": 0.0916,
+      "tint": 0.0555,
       "sat": 0.96,
       "contrast": 1.18,
       "midtone": 0.24,
@@ -88,17 +88,17 @@
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6685330420732498,
-      "p90": 0.7524031043052674,
+      "p25": 0.6641805917024612,
+      "p90": 0.7494367778301239,
       "weight": 0.0
      }
     },
     "portrait": {
      "params": {
       "ev": -0.25,
-      "temp": 0.0071,
-      "tint": 0.0529,
-      "sat": 0.93,
+      "temp": 0.0816,
+      "tint": 0.0855,
+      "sat": 0.94,
       "contrast": 1.16,
       "midtone": 0.26,
       "shoulder": 0.42,
@@ -122,24 +122,24 @@
       "highlights": -0.1,
       "shadows": 0.12,
       "vibrance": 0.05,
-      "slope_r": -0.04,
-      "slope_b": 0.04,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.678771585226059,
-      "p90": 0.7569643974304199,
+      "p25": 0.6743944883346558,
+      "p90": 0.7541669368743896,
       "weight": 0.0
      }
     },
     "vivid": {
      "params": {
       "ev": -0.25,
-      "temp": 0.0471,
-      "tint": 0.0029,
+      "temp": 0.1116,
+      "tint": 0.0555,
       "sat": 1.14,
       "contrast": 1.46,
       "midtone": 0.23,
@@ -172,16 +172,16 @@
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6845397055149078,
-      "p90": 0.7812987864017487,
+      "p25": 0.6769911050796509,
+      "p90": 0.7776324272155761,
       "weight": 0.0
      }
     },
     "print_classic": {
      "params": {
       "ev": -0.25,
-      "temp": 0.0371,
-      "tint": 0.0029,
+      "temp": 0.1016,
+      "tint": 0.0555,
       "sat": 1.02,
       "contrast": 1.4,
       "midtone": 0.21,
@@ -211,8 +211,8 @@
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6744903028011322,
-      "p90": 0.7800660610198975,
+      "p25": 0.6688234061002731,
+      "p90": 0.7763519048690796,
       "weight": 0.0
      }
     }

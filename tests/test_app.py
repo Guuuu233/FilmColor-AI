@@ -86,15 +86,15 @@ def test_open_render_crop_export(server):
     assert code == 200 and decode_png(neg).shape[:2] == (240, 360)
 
 
-def test_t4g_orange_consensus_uses_roll_base_but_keeps_explicit_auto(server):
+def test_t4h_orange_consensus_does_not_change_the_automatic_base_choice(server):
+    """T4h: the T4g routing of orange-consensus rolls to roll_nat is removed; a frame consistent with the roll keeps
+    its own B0, and roll_nat is still available on request."""
     _, root, tmp = server
     st = app.State(root, tmp / "out", allow_frozen=False)
     info = st.roll_info()
     info["roll"]["diagnostics"]["orange_consensus"] = True
-    m = st.open("s.dng", "color")
-    assert m["base"]["method"] == "roll_nat"
-    explicit = st.open("s.dng", "color", base_mode="auto")
-    assert explicit["base"]["method"] == "auto"
+    assert st.open("s.dng", "color")["base"]["method"] == "auto"
+    assert st.open("s.dng", "color", base_mode="roll_nat")["base"]["method"] == "roll_nat"
 
 
 def test_manual_base_region(server):

@@ -385,7 +385,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4g-2026-10-25",          # T4g: adaptive WB and softer portrait / natural presets; T4f: trimean anchor,
+    rev="t4h-2026-10-25",          # T4h: sky damping on the grey-world blue axis only, milder portrait colour;
+                                   # T4g: adaptive WB and softer portrait / natural presets; T4f: trimean anchor,
                                    # textured EV refinement (at most -0.20 EV down), wider backlit, sky WB damping;
                                    # T4e: standard back to the T4c band, backlit weight narrowed and relative to the
                                    # preset; T4d: neutral wb fallback, style presets, continuous backlit weight;
@@ -426,6 +427,8 @@ NOREF_V3 = dict(
     wb_max_shift=0.50,
     wb_v3_adaptive_share=0.12, wb_v3_adaptive_pct=15.0,
     wb_v3_gw_weight=0.45, wb_v3_gw_threshold=0.18, wb_v3_gw_huber=0.18,
+    wb_v3_gw_sky_red=0.75,         # T4h: clear-sky grey-world estimate keeps this share of its red axis (blue axis
+                                   # x wb_v3_sky_weight)
     wb_v3_zones=(((70, 96), 0.35, 0.6), ((25, 75), 0.25, 0.4)),  # (luma pct range, chroma radius log2, weight):
                                    # bright near-neutral (cloud, road, white surfaces) and low-saturation mid-grey
     wb_v3_min_px=200,              # pixels a zone needs to count
@@ -465,9 +468,9 @@ STYLE_PRESETS = {
         target_encoded_band=(0.46, 0.53), base_midtone=0.24, base_contrast=1.18, base_shoulder=0.35, base_sat=0.96,
         base_vibrance=0.04, chroma_preserve=0.35, camera_matrix_mix=0.35, base_shadows=0.06, base_highlights=-0.05)),
     "portrait": dict(label="人像 Portrait", cfg=dict(
-        target_encoded_band=(0.49, 0.56), base_midtone=0.26, base_contrast=1.16, base_shoulder=0.42, base_sat=0.93,
-        base_vibrance=0.05, chroma_preserve=0.38, camera_matrix_mix=0.38, temp_offset=-0.02, tint_offset=0.05,
-        base_shadows=0.12, base_highlights=-0.10, base_slope_r=-0.04, base_slope_b=0.04)),
+        target_encoded_band=(0.49, 0.56), base_midtone=0.26, base_contrast=1.16, base_shoulder=0.42, base_sat=0.94,
+        base_vibrance=0.05, chroma_preserve=0.38, camera_matrix_mix=0.38, temp_offset=-0.01, tint_offset=0.03,
+        base_shadows=0.12, base_highlights=-0.10, base_slope_r=-0.02, base_slope_b=0.02)),
     "vivid": dict(label="鲜明 Vivid", cfg=dict(
         target_encoded_band=(0.45, 0.52), base_midtone=0.23, base_contrast=1.46, base_shoulder=0.28, base_sat=1.14,
         base_vibrance=0.18, chroma_preserve=0.58, camera_matrix_mix=0.58, base_blacks=-0.04,
@@ -550,7 +553,8 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     zones with at least ``wb_v3_min_px`` pixels are combined by weight. Confidence comes from the candidate share and
     spread and is lowered, never zeroed, when image quadrants disagree (a frame with sky above and grass below is not
     evidence against a cast). T4g expands sparse zones to their lowest-chroma 15% and blends a midtone Huber estimate;
-    clear-sky directions receive less weight. temp / tint remove ``wb_v3_strength`` x confidence of the cast."""
+    a clear-sky bright zone gets less weight, and a clear-sky grey-world estimate keeps its red axis (x
+    ``wb_v3_gw_sky_red``) with only its blue axis damped (T4h). temp / tint remove ``wb_v3_strength`` x confidence."""
     cfg = cfg or NOREF_V3
     px = np.asarray(px, np.float32)
     y = px @ LUMA.astype(np.float32)
@@ -594,10 +598,13 @@ def estimate_wb_v3(px, cfg=None) -> dict:
         est_gw = _huber_location(c[mid], cfg["wb_v3_gw_huber"])
         sparse = any(z["narrow_share"] < cfg["wb_v3_adaptive_share"] for z in diag["zones"])
         gw_weight = float(cfg["wb_v3_gw_weight"]) if sparse or np.linalg.norm(est_gw) > cfg["wb_v3_gw_threshold"] else 0.0
-        if est_gw[0] < sky_r and est_gw[1] > sky_b:
-            gw_weight *= float(cfg["wb_v3_sky_weight"])
-        est = (1 - gw_weight) * est + gw_weight * est_gw
         diag["grey_world"] = dict(chroma=[float(v) for v in est_gw], weight=gw_weight)
+        if est_gw[0] < sky_r and est_gw[1] > sky_b:
+            # T4h: in a clear-sky direction only the blue axis is damped (T4g damped the whole weight), so a cyan cast
+            # (red low) is still corrected without pulling the sky yellow
+            est_gw = np.array([est_gw[0] * float(cfg["wb_v3_gw_sky_red"]), est_gw[1] * float(cfg["wb_v3_sky_weight"])])
+            diag["grey_world"].update(clear_sky=True, chroma_used=[float(v) for v in est_gw])
+        est = (1 - gw_weight) * est + gw_weight * est_gw
     allc = np.concatenate(cands)
     mad = float(np.median(np.linalg.norm(allc - est, axis=1)))
     share = float(sum(z["share"] for z in diag["zones"] if "chroma" in z) / len(diag["zones"]))

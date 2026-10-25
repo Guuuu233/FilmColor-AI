@@ -347,6 +347,26 @@ def test_t4g_adaptive_wb_recovers_evidence_outside_the_fixed_radius():
     assert adaptive["diagnostics"]["grey_world"]["weight"] > 0
 
 
+def test_t4h_clear_sky_grey_world_damps_only_the_blue_axis():
+    """T4h: a cyan cast in the clear-sky direction (red low, blue high; A008-like [-0.30, +0.26]) keeps its full
+    grey-world weight; the estimate's red axis is kept at wb_v3_gw_sky_red and only its blue axis is damped by
+    wb_v3_sky_weight (T4g damped the whole weight), so the frame is warmed."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(53)
+    y = 0.18 * 2 ** rng.uniform(-2, 2, 20000)
+    c = rng.normal([-0.30, 0.26], 0.03, (len(y), 2))
+    px = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1)
+    wb = estimate_wb_v3(px, NOREF_V3)
+    gw = wb["diagnostics"]["grey_world"]
+    assert gw["clear_sky"] and gw["weight"] == NOREF_V3["wb_v3_gw_weight"]
+    raw, used = np.array(gw["chroma"]), np.array(gw["chroma_used"])
+    np.testing.assert_allclose(used, raw * [NOREF_V3["wb_v3_gw_sky_red"], NOREF_V3["wb_v3_sky_weight"]], rtol=1e-6)
+    assert wb["temp"] > 0
+    full_red = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_gw_sky_red=1.0))
+    assert full_red["diagnostics"]["grey_world"]["chroma_used"][0] == pytest.approx(raw[0])
+
+
 def test_t4g_soft_presets_keep_shadow_highlight_and_slope_defaults():
     from filmcolor.noref import estimate_params_v3, preset_config
 
