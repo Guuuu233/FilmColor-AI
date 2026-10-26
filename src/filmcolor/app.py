@@ -58,6 +58,7 @@ import hashlib
 import json
 import os
 import secrets
+import shutil
 import struct
 import subprocess
 import tempfile
@@ -77,7 +78,7 @@ from .frozen import FrozenDataError, check_source
 from .invert import central_region, invert_negative, neutral_transmission, region_mask
 from .noref import NOREF_V3, STYLE_PRESETS, estimate_params_v3, preset_config, wb_from_chroma
 from .pipeline import FILM_MODES, free_stem
-from .preview import Preview, SourceChangedError, load_preview
+from .preview import HOLDER_GREY, Preview, SourceChangedError, film_box, holder_mask, load_preview
 from .raw import linearize, saturation_mask, superpixel
 from .rawpy_io import load_raw
 from .render import (BOUNDS, CURVE_PRESETS, EXTENDED_BOUNDS, EXTENDED_SCALARS, RenderParams, camera_color_matrix,
@@ -89,7 +90,7 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4h"  # thumbnails rendered with the T4h NOREF_V3 (standard preset), black-pull cap and white point
+THUMB_REV = "t4i"  # thumbnails rendered with the T4i NOREF_V3 (standard preset) and the film holder shown dark
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)
@@ -138,44 +139,80 @@ def negative_view(path: Path, max_side: int = 1600) -> tuple[bytes, str]:
     return png_bytes(to8((small / max(np.percentile(small, 99.9), 1e-6)) ** (1 / 2.2))), "image/png"
 
 
-def _exposures(paths: list[Path]) -> dict[Path, float]:
-    """EXIF ExposureTime per file (defaults to 1.0 when absent, e.g. scanner DNGs)."""
-    out: dict[Path, float] = {}
+EXIFTOOL_CANDIDATES = ("/opt/homebrew/bin/exiftool", "/usr/local/bin/exiftool")  # T4i: app started without them on PATH
+
+
+def _exiftool() -> str | None:
+    found = shutil.which("exiftool")
+    return found or next((c for c in EXIFTOOL_CANDIDATES if os.access(c, os.X_OK)), None)
+
+
+def _exif_info(paths: list[Path]) -> dict[Path, dict]:
+    """EXIF ExposureTime (1.0 when absent, e.g. scanner DNGs), camera Model and capture date (DateTimeOriginal, else
+    CreateDate; None when absent) per file: exifread first, exiftool for what it could not read (Fujifilm RAF)."""
+    out: dict[Path, dict] = {}
     need_tool: list[Path] = []
     try:
         import exifread
     except ImportError:
         exifread = None
     for p in paths:
-        val = None
+        info = dict(exposure=None, model=None, date=None)
         if exifread is not None:
             try:
                 with open(p, "rb") as fh:
-                    tags = exifread.process_file(fh, details=False, stop_tag="ExposureTime")
+                    tags = exifread.process_file(fh, details=False, stop_tag="DateTimeOriginal")
                 r = tags.get("EXIF ExposureTime")
                 if r and r.values:
                     v = float(Fraction(r.values[0].num, r.values[0].den))
                     if np.isfinite(v) and v > 0:
-                        val = v
+                        info["exposure"] = v
+                model, date = tags.get("Image Model"), tags.get("EXIF DateTimeOriginal")
+                info["model"] = str(model).strip() or None if model else None
+                info["date"] = str(date)[:10] or None if date else None
             except Exception:  # noqa: BLE001
-                val = None
-        if val is not None:
-            out[p] = val
-        else:
+                pass
+        out[p] = info
+        if info["exposure"] is None:
             need_tool.append(p)
-    if need_tool:
+    tool = _exiftool() if need_tool else None
+    if tool:
         try:
             proc = subprocess.run(
-                ["exiftool", "-j", "-n", "-q", "-q", "-ExposureTime", *(str(p) for p in need_tool)],
-                capture_output=True, text=True, check=False,
+                [tool, "-j", "-n", "-q", "-q", "-ExposureTime", "-Model", "-DateTimeOriginal", "-CreateDate",
+                 *(str(p) for p in need_tool)], capture_output=True, text=True, check=False,
             )
-            by_src = {Path(d["SourceFile"]): d.get("ExposureTime") for d in json.loads(proc.stdout or "[]")}
+            by_src = {Path(d["SourceFile"]): d for d in json.loads(proc.stdout or "[]")}
         except Exception:  # noqa: BLE001
             by_src = {}
         for p in need_tool:
-            v = by_src.get(p)
-            out[p] = float(v) if isinstance(v, (int, float)) and np.isfinite(v) and v > 0 else 1.0
+            d = by_src.get(p, {})
+            v = d.get("ExposureTime")
+            if isinstance(v, (int, float)) and np.isfinite(v) and v > 0:
+                out[p]["exposure"] = float(v)
+            if d.get("Model") is not None:
+                out[p]["model"] = out[p]["model"] or str(d["Model"]).strip() or None
+            date = d.get("DateTimeOriginal") or d.get("CreateDate")
+            if date is not None:
+                out[p]["date"] = out[p]["date"] or str(date)[:10] or None
+    for info in out.values():
+        if info["exposure"] is None:
+            info["exposure"] = 1.0
     return out
+
+
+def mixed_rolls(exif: dict) -> dict | None:
+    """T4i: a folder whose files come from more than one camera body or capture date (e.g. nlp_official, frames of
+    four rolls) is a collection, not one roll: its roll base would be one film's base applied to the others. Returns
+    the groups (files without the tag are left out of the count), or None for a single roll."""
+    models = {v["model"] for v in exif.values() if v["model"]}
+    dates = {v["date"] for v in exif.values() if v["date"]}
+    if len(models) <= 1 and len(dates) <= 1:
+        return None
+    groups: dict[str, list] = {}
+    for p, v in exif.items():
+        groups.setdefault(f"{v['model']} {v['date']}", []).append(Path(p).name)
+    return dict(n_models=len(models), n_dates=len(dates), groups=groups)
 
 
 class StaleError(RuntimeError):
@@ -282,7 +319,9 @@ class State:
             if cached is not None and cached.get("file_list") == all_rels:
                 return cached
             paths = [self.resolve(r) for r in all_rels]
-            exps_by_path = _exposures(paths)
+            exif = _exif_info(paths)
+            exps_by_path = {p: v["exposure"] for p, v in exif.items()}
+            mixed = mixed_rolls(exif)
             with ThreadPoolExecutor(min(4, len(all_rels))) as ex:
                 scans = dict(zip(all_rels, ex.map(self._scan_one, all_rels)))
             cand = {r: scans[r]["own_rgb"] for r in all_rels if scans[r]["own_rgb"] is not None}
@@ -319,7 +358,7 @@ class State:
                         sc["error"]
                         or (dev is not None and dev["chroma_part"] >= 0.1)
                         or (sc["inside_image"] is not None and sc["inside_image"] > 0.5)
-                    )
+                    ) and mixed is None  # T4i: frames of a collection are not measured against another film's base
                     entry.update(
                         roll_rgb=b_roll,
                         dq_rgb=list(b_dq),
@@ -343,6 +382,7 @@ class State:
                 file_list=all_rels,
                 n_files=len(all_rels),
                 roll=rb.to_dict() if rb is not None else None,
+                mixed_rolls=mixed,
                 neutral_ratio=neutral,
                 error=roll_err,
                 frames=frames_out,
@@ -416,8 +456,11 @@ class State:
             tf = max(1, -(-max(sp.shape[:2]) // THUMB_SIDE))
             sp = block_mean(sp, tf).astype(np.float32) if tf > 1 else sp.astype(np.float32)
         folder = str(Path(rel).parent)
-        fe = self.roll_cache.get(folder, {}).get("frames", {}).get(rel) or {}
-        base = fe.get("nat_rgb") or fe.get("roll_rgb") or sc.get("own_rgb")
+        rinfo = self.roll_cache.get(folder, {})
+        fe = rinfo.get("frames", {}).get(rel) or {}
+        # T4i: in a folder of several rolls the roll base belongs to another film; each frame keeps its own
+        roll_base = None if rinfo.get("mixed_rolls") else (fe.get("nat_rgb") or fe.get("roll_rgb"))
+        base = roll_base or sc.get("own_rgb")
         if base is None:
             base = [float(x) for x in np.percentile(sp.reshape(-1, 3), 99.0, axis=0)]
         mask = region_mask(sp.shape[:2], central_region(sp.shape[:2]))
@@ -432,6 +475,7 @@ class State:
             est = estimate_params_v3(pos, mask, ck["auto"])
             rp = RenderParams.from_dict(est["params"])
             disp, _ = render_image(pos, rp)
+            disp[holder_mask(pos)] = HOLDER_GREY
         except Exception:  # noqa: BLE001
             disp = np.clip(sp / max(float(np.percentile(sp, 99.5)), 1e-6), 0, 1) ** (1 / 2.2)
         data = png_bytes(to8(disp))
@@ -519,6 +563,7 @@ class State:
             white_point=dict(pv.report.get("white_point") or dict(method="pixel", pct=pv.white_pct),
                              d_hi=list(pv.inversion["d_hi"])),
             preview_shape=list(pv.positive.shape[:2]), full_shape=list(pv.full_shape),
+            film_box=film_box(pv.holder) if pv.holder is not None else None,
             base=dict(
                 method=method,
                 rgb=pv.base_info.get("rgb_render"),
@@ -550,11 +595,12 @@ class State:
         p = self.resolve(rel)
         folder = str(Path(rel).parent)
         # Smart default: when no explicit base_mode was given and the roll cache is ready, auto-select
-        # roll_nat if this frame's own B0 failed or deviates from the roll by >= 0.10 D.
+        # roll_nat if this frame's own B0 failed or deviates from the roll by >= 0.10 D; never in a folder of several
+        # rolls (T4i: mixed_rolls)
         if base_mode is None:
             rinfo = self.roll_cache.get(folder)
             fe = (rinfo or {}).get("frames", {}).get(rel)
-            if rinfo and rinfo.get("roll") and fe and (
+            if rinfo and rinfo.get("roll") and not rinfo.get("mixed_rolls") and fe and (
                 fe.get("own_error") or (fe.get("chroma_part") is not None and fe["chroma_part"] >= 0.1)
             ):
                 base_mode = "roll_nat"

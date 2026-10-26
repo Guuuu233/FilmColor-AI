@@ -1,4 +1,4 @@
-"""Validate a completed T4g / T4h delivery without decoding any source image.
+"""Validate a completed T4g / T4h / T4i delivery without decoding any source image.
 Usage: python -I scripts/t4g_verify_outputs.py [TAG]   (default t4g)
 """
 import hashlib
@@ -9,8 +9,10 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 ROOT = REPO / "experiments/t4_auto_ui"
 TAG = sys.argv[1] if len(sys.argv) > 1 else "t4g"
-VARIANTS = {"standard", "natural", "portrait", "vivid", "print_classic", "wb_t4f"} | ({"wb_sky_red1"} if TAG != "t4g" else set())
-PORTRAIT_CONTRAST = 1.16
+PRESETS = {"standard", "natural", "portrait", "vivid", "print_classic"}
+VARIANTS = {"t4g": PRESETS | {"wb_t4f"}, "t4h": PRESETS | {"wb_t4f", "wb_sky_red1"},
+            "t4i": PRESETS | {"wb_t4h", "no_auto_levels", "no_auto_slope", "t4h_equiv", "levels_display"}}[TAG]
+PORTRAIT_CONTRAST = None if TAG == "t4i" else 1.16  # T4i: auto contrast may raise it on a narrow frame
 
 
 def main():
@@ -42,7 +44,8 @@ def main():
             assert abs(item["metrics"]["de2000_median"] - records[fid]["variants"][name]["metrics"]["de2000_median"]) < 1e-8
     checks = json.loads((ROOT / TAG / "after/checks.json").read_text())
     assert checks["src_content_sha256"] == sha
-    assert checks["frames"]["A012"]["presets"]["portrait"]["auto"]["params"]["contrast"] == PORTRAIT_CONTRAST
+    if PORTRAIT_CONTRAST is not None:
+        assert checks["frames"]["A012"]["presets"]["portrait"]["auto"]["params"]["contrast"] == PORTRAIT_CONTRAST
     cache = Path("/Volumes/waizhiyingpan/filmcolor_data/app_cache")
     for roll in checks["rolls"].values():
         for frame in roll["info"]["frames"].values():

@@ -6,7 +6,7 @@ import pytest
 from filmcolor.compare import block_mean
 from filmcolor.noref import NOREF_V2
 from filmcolor.pipeline import convert
-from filmcolor.preview import load_preview
+from filmcolor.preview import HOLDER_GREY, load_preview
 
 from test_bw import bw_scan, write_dng as write_bw_dng
 from test_pins_and_cli import PARAMS, RAF, SCAN_REGION, needs_raf
@@ -72,10 +72,15 @@ def test_camera_preview_default_auto_and_params(tmp_path):
     _, sc = convert(RAF, auto=NOREF_V2)
     assert pv.auto["params"] == sc["auto"]["params"]
     assert pv.export(tmp_path / "a", pv.auto["params"])["output"]["sha256"] == PIN_RAF_AUTO
+    # T4i: the film holder around this 6x6 frame is shown as HOLDER_GREY in the preview only; elsewhere the preview
+    # is the downscaled export
+    assert 0.2 < pv.holder.mean() < 0.5
     for params in (None, PARAMS):
         full, _ = convert(RAF, render_params=params)
         ref = block_mean(full, pv.factor)[:pv.positive.shape[0], :pv.positive.shape[1]]
-        d = np.abs(pv.render(params) - ref)
+        disp = pv.render(params)
+        assert np.all(disp[pv.holder] == np.float32(HOLDER_GREY))
+        d = np.abs(disp - ref)[~pv.holder]
         assert d.mean() < 0.01 and np.percentile(d, 99) < 0.05, (params, d.mean(), np.percentile(d, 99))
 
 
@@ -98,3 +103,22 @@ def test_t4e_with_auto_reuses_the_kept_estimator_input(tmp_path):
     assert vivid.auto["params"] == fresh.auto["params"] and vivid.auto["preset"] == "vivid"
     assert vivid.est_input is pv.est_input and vivid.load_kwargs["auto"]["preset"] == "vivid"
     assert full.with_auto(preset_config("vivid")).auto["params"] == fresh.auto["params"]  # computed when not kept
+
+
+def test_t4i_holder_mask_is_the_edge_connected_far_past_white_region():
+    """T4i Bug 3: an opaque holder at the frame edge (positive hundreds of times white in one channel, past 2 in two;
+    _DSF8948's is R ~300, G ~36, B ~3.6) is the holder; a highlight of the same values inside the frame, the dark
+    rebate and a frame without a holder are not. film_box is the rest of the frame."""
+    from filmcolor.preview import film_box, holder_mask
+
+    P = np.full((60, 90, 3), 0.3, np.float32)
+    P[:, :15] = (300.0, 36.0, 3.6)       # holder on the left
+    P[:, 80:] = (40.0, 2.5, 30.0)        # magenta holder on the right
+    P[:, 15:18] = 0.0                    # rebate between holder and image
+    P[20:25, 40:45] = (300.0, 36.0, 3.6) # a highlight inside the frame
+    P[:, 10:12, 2] = 0.9                 # holder pixels with one channel below white stay holder
+    m = holder_mask(P)
+    assert m[:, :15].all() and m[:, 80:].all()
+    assert not m[:, 15:80].any()
+    assert film_box(m) == [0, 15, 60, 65]
+    assert not holder_mask(np.full((20, 20, 3), 0.5, np.float32)).any() and film_box(np.zeros((4, 4), bool)) is None

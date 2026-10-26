@@ -97,6 +97,42 @@ def test_t4h_orange_consensus_does_not_change_the_automatic_base_choice(server):
     assert st.open("s.dng", "color", base_mode="roll_nat")["base"]["method"] == "roll_nat"
 
 
+def test_t4i_exiftool_is_found_outside_path(monkeypatch, tmp_path):
+    """T4i: an app started without Homebrew on PATH still finds exiftool at the usual locations."""
+    tool = tmp_path / "exiftool"
+    tool.write_text("#!/bin/sh\n")
+    tool.chmod(0o755)
+    monkeypatch.setattr(app.shutil, "which", lambda name: None)
+    monkeypatch.setattr(app, "EXIFTOOL_CANDIDATES", (str(tmp_path / "missing"), str(tool)))
+    assert app._exiftool() == str(tool)
+    monkeypatch.setattr(app, "EXIFTOOL_CANDIDATES", (str(tmp_path / "missing"),))
+    assert app._exiftool() is None
+
+
+def test_t4i_folder_of_several_rolls_is_not_routed_to_the_roll_base(server, monkeypatch):
+    """T4i Bug 4: files from different capture dates (nlp_official: four rolls) are a collection: roll_info reports
+    mixed_rolls, flags no frame, and opening a frame keeps its own base even when it deviates from the folder's roll
+    base by >= 0.10 D; a single-date folder keeps the T4f routing."""
+    _, root, tmp = server
+    rgb, irl = scan()
+    write_dng(root / "t.dng", (rgb * np.array([0.35, 0.65, 0.95])).astype(rgb.dtype), irl)  # dC 0.23 vs s.dng
+    dates = {"s.dng": "2018:06:13", "t.dng": "2018:07:29"}
+
+    def fake_exif(paths):
+        return {p: dict(exposure=1.0, model="X-T2", date=dates[p.name]) for p in paths}
+
+    monkeypatch.setattr(app, "_exif_info", fake_exif)
+    st = app.State(root, tmp / "out", allow_frozen=False)
+    info = st.roll_info()
+    assert info["mixed_rolls"]["n_dates"] == 2 and not any(f["flag"] for f in info["frames"].values())
+    assert st.open("t.dng", "color")["base"]["method"] == "auto"
+    dates["t.dng"] = "2018:06:13"
+    one = app.State(root, tmp / "out", allow_frozen=False)
+    info1 = one.roll_info()
+    assert info1["mixed_rolls"] is None
+    assert info1["frames"]["t.dng"]["flag"] and one.open("t.dng", "color")["base"]["method"] == "roll_nat"
+
+
 def test_manual_base_region(server):
     call, root, _ = server
     tok = call("/api/open", dict(path="s.dng"))[0]["token"]

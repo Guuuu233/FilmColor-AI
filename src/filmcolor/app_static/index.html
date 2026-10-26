@@ -384,7 +384,7 @@ function updateFileBadges() {
       tag.className = "tag warn";
     } else if (fr.chroma_part != null) {
       const dc = fr.chroma_part, dl = fr.level_diff;
-      const hi = dc >= 0.1 || (fr.inside_image != null && fr.inside_image > 0.5);
+      const hi = !!fr.flag;  // the server's flag (T4i: never set in a folder of several rolls)
       tag.textContent = `ΔC ${dc.toFixed(2)}${hi ? "!" : ""}`;
       tag.title = `相对整卷片基：色度差 ΔC = ${dc.toFixed(3)} D，水平差 Δℓ = ${dl >= 0 ? "+" : ""}${dl.toFixed(3)} D`;
       tag.className = hi ? "tag warn" : "tag";
@@ -399,7 +399,11 @@ async function scanRoll(folder) {
   try {
     const j = await api("/api/roll?folder=" + encodeURIComponent(folder));
     rollData[folder] = j;
-    if (j.roll) {
+    if (j.roll && j.mixed_rolls) {
+      const ng = Object.keys(j.mixed_rolls.groups).length;
+      $("rollSummary").innerHTML = `此文件夹含多卷（${ng} 组机身 / 拍摄日期，${j.n_files} 帧）：不自动套用整卷片基，` +
+        `每帧用自己的片基；整卷模式仍可手动选择`;
+    } else if (j.roll) {
       const nWarn = Object.values(j.frames).filter(x => x.flag).length;
       $("rollSummary").innerHTML = `整卷片基已就绪（${j.n_files} 帧，基准 ${j.roll.used.map(x => x.split("_")[0]).join(", ")}）` +
         (nWarn ? `<br><span class="warn">已标出 ${nWarn} 帧异常（点击时自动启用「③ 整卷自然」）</span>` : "");
@@ -582,8 +586,19 @@ function updateHistogramFromImage(imgEl, bb, ch) {
   octx.drawImage(imgEl, 0, 0, sw, sh);
   const data = octx.getImageData(0, 0, sw, sh).data;
   const rB = new Uint32Array(256), gB = new Uint32Array(256), bB = new Uint32Array(256), yB = new Uint32Array(256);
-  let ySum = 0, nPx = data.length >> 2;
+  // T4i: only the film area (meta.film_box, preview pixels, sensor orientation) when a film holder was found
+  let u0 = 0, v0 = 0, u1 = sw, v1 = sh;
+  if (meta && meta.film_box && mode === "pos") {
+    const [t, l, h, w] = meta.film_box, [dw, dh] = dispShape();
+    const [a0, b0] = prevToDisp(l, t), [a1, b1] = prevToDisp(l + w, t + h);
+    u0 = Math.floor(Math.min(a0, a1) * sw / dw); u1 = Math.ceil(Math.max(a0, a1) * sw / dw);
+    v0 = Math.floor(Math.min(b0, b1) * sh / dh); v1 = Math.ceil(Math.max(b0, b1) * sh / dh);
+  }
+  let ySum = 0, nPx = 0;
   for (let i = 0; i < data.length; i += 4) {
+    const px = (i >> 2) % sw, py = Math.floor((i >> 2) / sw);
+    if (px < u0 || px >= u1 || py < v0 || py >= v1) continue;
+    nPx++;
     const r = data[i], g = data[i + 1], b = data[i + 2];
     const y = (r * 54 + g * 183 + b * 19) >> 8;
     rB[r]++; gB[g]++; bB[b]++; yB[y]++;
@@ -652,7 +667,7 @@ function showInfo() {
   const dl = b.level_diff != null ? b.level_diff : (fr ? fr.level_diff : null);
   let rollLine = "";
   if (dc != null && dl != null) {
-    const warnC = dc >= 0.1;
+    const warnC = dc >= 0.1 && !(fd && fd.mixed_rolls);
     rollLine = `<br>相对整卷片基：ΔC = <span class="${warnC ? "warn" : ""}">${dc.toFixed(3)} D</span>，` +
       `Δℓ = ${dl >= 0 ? "+" : ""}${dl.toFixed(3)} D`;
   }

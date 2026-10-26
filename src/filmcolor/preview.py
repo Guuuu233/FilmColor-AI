@@ -29,6 +29,36 @@ from .noref import CONFIG_DIR, estimate_params_v2, estimation_input
 from .pipeline import BW_NEUTRAL, positive, sha256, write
 from .render import RenderParams, render, render_full
 
+# T4i: an opaque film holder / mask around the frame is far denser than the image, so its positive is many stops past
+# white with unequal channels (yellow or magenta after the white clip). Shown as one dark neutral instead (display
+# only: the export, the 1:1 crop and every estimate are unchanged).
+HOLDER_OVER = 2.0    # positive above this in two channels (one stop past the white point) ...
+HOLDER_PEAK = 16.0   # ... and above this in the brightest one (four stops; _DSF8948's holder: R ~300, G ~36, B ~3.6)
+HOLDER_GREY = 0.02   # sRGB-encoded value the holder is displayed with
+
+
+def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.ndarray:
+    """Pixels of positive ``P`` (h, w, 3) above ``over`` in two channels and ``peak`` in one that connect to the image
+    edge (a highlight inside the frame does not)."""
+    from scipy import ndimage
+
+    s = np.sort(np.asarray(P), axis=-1)
+    hot = (s[..., 1] > over) & (s[..., 2] > peak)
+    if not hot.any():
+        return hot
+    lab, _ = ndimage.label(hot)
+    edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
+    return np.isin(lab, edge[edge > 0])
+
+
+def film_box(holder: np.ndarray) -> list[int] | None:
+    """(top, left, height, width) of the pixels outside ``holder``, or None when the holder covers nothing."""
+    if not holder.any():
+        return None
+    keep = ~holder
+    rows, cols = np.where(keep.any(1))[0], np.where(keep.any(0))[0]
+    return [int(rows[0]), int(cols[0]), int(rows[-1] - rows[0] + 1), int(cols[-1] - cols[0] + 1)]
+
 
 @dataclass
 class Preview:
@@ -53,6 +83,12 @@ class Preview:
     # (P4, mask4) = noref.estimation_input of the full-resolution positive, kept when an auto estimate was made, so a
     # style preset is re-estimated without averaging the full-resolution positive again (T4e)
     est_input: tuple | None = field(default=None, repr=False)
+    holder: np.ndarray | None = field(default=None, repr=False)  # holder_mask of ``positive`` (T4i), display only
+
+    def _paint_holder(self, e: np.ndarray) -> np.ndarray:
+        if self.holder is not None and self.holder.any():
+            e[self.holder] = np.float32(HOLDER_GREY)
+        return e
 
     def render_crop(self, region, params=None) -> np.ndarray:
         """1:1 render of a sensor-pixel region (top, left, height, width) of the full-resolution positive,
@@ -71,9 +107,10 @@ class Preview:
         return load_preview(self.path, **(self.load_kwargs | changes))
 
     def render(self, params=None) -> np.ndarray:
-        """sRGB-encoded display image (h, w, 3) float32 for render parameters (RenderParams or dict)."""
+        """sRGB-encoded display image (h, w, 3) float32 for render parameters (RenderParams or dict); the film holder
+        (``holder``) is shown as ``HOLDER_GREY``."""
         rp = params if isinstance(params, RenderParams) else RenderParams.from_dict(params or {})
-        return render(self.positive, rp, self.mask)[0]
+        return self._paint_holder(render(self.positive, rp, self.mask)[0])
 
     def render_stats(self, params=None) -> tuple[np.ndarray, dict]:
         """``render`` plus per-pixel shares over ``mask`` (image region, unsaturated) of the preview: below_black
@@ -85,7 +122,8 @@ class Preview:
         m = self.mask
         n = int(m.sum())
         share = (lambda flags: float(flags[m].sum() / n)) if n else (lambda flags: float("nan"))
-        return e, dict(below_black=share((self.positive < 0).any(-1)), above_white=share((pre > 1).any(-1)))
+        return self._paint_holder(e), dict(below_black=share((self.positive < 0).any(-1)),
+                                           above_white=share((pre > 1).any(-1)))
 
     def to_sensor(self, region):
         """(top, left, height, width) in preview pixels -> sensor pixels."""
@@ -181,4 +219,4 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
                                     image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,
                                     exposure=exposure, film=film, keep_full=keep_full, base_source=base_source,
                                     white_block=white_block, white_ratio=white_ratio),
-                   full_positive=full, _base_source=base_source, est_input=ei)
+                   full_positive=full, _base_source=base_source, est_input=ei, holder=holder_mask(small))

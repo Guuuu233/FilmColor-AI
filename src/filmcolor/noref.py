@@ -25,7 +25,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .render import BOUNDS, IDENTITY, LUMA, RenderParams, render_full
+from .render import BOUNDS, EXTENDED_BOUNDS, IDENTITY, LUMA, RenderParams, render_full
 
 NOREF_V1 = dict(
     id="noref_v1",
@@ -385,7 +385,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4h-2026-10-25",          # T4h: sky damping on the grey-world blue axis only, milder portrait colour;
+    rev="t4i-2026-10-26",          # T4i: sky damping only on a top-cool / bottom-warm frame, auto slopes, contrast
+                                   # and blacks; T4h: sky damping on the grey-world blue axis only, milder portrait;
                                    # T4g: adaptive WB and softer portrait / natural presets; T4f: trimean anchor,
                                    # textured EV refinement (at most -0.20 EV down), wider backlit, sky WB damping;
                                    # T4e: standard back to the T4c band, backlit weight narrowed and relative to the
@@ -436,9 +437,29 @@ NOREF_V3 = dict(
     wb_v3_share=(0.01, 0.08),      # candidate share mapping to confidence 0..1
     wb_v3_mad=(0.10, 0.35),        # candidate MAD mapping to confidence factor 1..0.5 (never 0)
     wb_v3_conflict_factor=0.75,    # quadrant disagreement lowers confidence by this factor (never to 0)
-    wb_v3_strength=0.65,           # share of the measured residual cast removed at full confidence (T4b-T4e 0.85)
+    wb_v3_strength=0.80,           # share of the measured residual cast removed at full confidence (T4i; T4f-T4h
+                                   # 0.65, T4b-T4e 0.85)
     wb_v3_sky=(-0.05, 0.05),       # T4f: bright zone reads as clear sky when its log2 R/G < [0] and log2 B/G > [1]
     wb_v3_sky_weight=0.35,         # T4f: then its weight is multiplied by this (the mid-grey zone leads)
+    # T4i: the clear-sky damping applies only to a sky scene, top half of the frame cooler than the bottom half:
+    # top_bottom_spread >= wb_v3_sky_spread and (top - bottom log2 B/G >= wb_v3_sky_split or top - bottom log2 R/G <=
+    # -wb_v3_sky_split); a frame cool all over (_DSF8948, spread 0.043) is a cast. False = T4f-T4h behaviour.
+    wb_v3_sky_split_check=True, wb_v3_sky_spread=0.10, wb_v3_sky_split=0.05,
+    # T4i: outside a sky scene, a grey-world cast of norm >= wb_v3_cast_norm gets weight wb_v3_cast_gw_weight and the
+    # confidence at least wb_v3_cast_conf
+    wb_v3_cast_norm=0.20, wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80,
+    # T4i auto levels on the existing sliders (task list 2.1, scheme A):
+    # - slope_r / slope_b: per-channel log2 ratio to G at the auto_slope_pct percentiles (pixels with max > 0.003);
+    #   when highlight minus shadow ratio differs by >= auto_slope_min_delta, the channel's gamma is matched to G over
+    #   the G log range, at most +-auto_slope_max, added to the preset's slope
+    auto_slope=True, auto_slope_pct=(2.0, 98.0), auto_slope_min_delta=0.10, auto_slope_max=0.08,
+    # - contrast: encoded luminance p90 - p10 below auto_contrast_spread raises contrast by auto_contrast_gain x the
+    #   shortfall, at most auto_contrast_max (the task list gives the cap and threshold; the gain is ours)
+    auto_contrast=True, auto_contrast_spread=0.42, auto_contrast_gain=1.3, auto_contrast_max=0.22,
+    # - blacks: encoded luminance p2 above auto_blacks_p2 adds -clip((p2 - auto_blacks_offset) x auto_blacks_gain, 0,
+    #   auto_blacks_max) to the preset's blacks, within +-auto_blacks_bound
+    auto_blacks=True, auto_blacks_p2=0.06, auto_blacks_offset=0.05, auto_blacks_gain=1.1, auto_blacks_max=0.28,
+    auto_blacks_bound=0.35,
     wp_invalid_stops=1.5,
     matrix=None,                   # colour matrix rendered with (app: camera_color_matrix of the RAW); None = identity
     camera_matrix_mix=0.40,        # share of the camera matrix the app renders camera RAW with
@@ -554,7 +575,9 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     spread and is lowered, never zeroed, when image quadrants disagree (a frame with sky above and grass below is not
     evidence against a cast). T4g expands sparse zones to their lowest-chroma 15% and blends a midtone Huber estimate;
     a clear-sky bright zone gets less weight, and a clear-sky grey-world estimate keeps its red axis (x
-    ``wb_v3_gw_sky_red``) with only its blue axis damped (T4h). temp / tint remove ``wb_v3_strength`` x confidence."""
+    ``wb_v3_gw_sky_red``) with only its blue axis damped (T4h). T4i: both dampings only on a sky scene (top half
+    cooler than the bottom half, ``wb_v3_sky_split_check``); elsewhere a strong grey-world cast gets more weight and a
+    confidence floor. temp / tint remove ``wb_v3_strength`` x confidence."""
     cfg = cfg or NOREF_V3
     px = np.asarray(px, np.float32)
     y = px @ LUMA.astype(np.float32)
@@ -565,8 +588,29 @@ def estimate_wb_v3(px, cfg=None) -> dict:
         return dict(temp=0.0, tint=0.0, confidence=0.0, chroma=[0.0, 0.0], diagnostics=dict(diag, reason="too few pixels"))
     c = _chroma(px)
     norm = np.linalg.norm(c, axis=1)
+    quads = []
+    n = len(px)
+    # quadrants are approximated by sample order: _sample keeps row-major order, so halves of the sample are the
+    # top and bottom of the frame; left / right are not separable here, so only top vs bottom is checked
+    for half in (slice(0, n // 2), slice(n // 2, n)):
+        ch, yh, nh = c[half], y[half], norm[half]
+        lo, hi = np.percentile(yh, [25, 96])
+        selh = (yh >= lo) & (yh <= hi) & (nh <= max(r for _, r, _ in cfg["wb_v3_zones"]))
+        if selh.sum() >= cfg["wb_v3_min_px"]:
+            quads.append(_huber_location(ch[selh], cfg["wb_v3_huber"]))
+    if len(quads) == 2:
+        diag["top_bottom_spread"] = float(np.linalg.norm(quads[0] - quads[1]))
+    # T4i: clear-sky damping only on a sky scene (top half cooler than the bottom half); T4f-T4h damped every frame
+    # whose estimate pointed that way, including frames cool all over
+    if cfg.get("wb_v3_sky_split_check", False):
+        split = cfg["wb_v3_sky_split"]
+        sky_scene = bool(len(quads) == 2 and diag["top_bottom_spread"] >= cfg["wb_v3_sky_spread"] and (
+            quads[0][1] - quads[1][1] >= split or quads[0][0] - quads[1][0] <= -split))
+    else:
+        sky_scene = True
+    diag["sky_scene"] = sky_scene
     ests, weights, cands = [], [], []
-    sky_r, sky_b = cfg.get("wb_v3_sky", (-np.inf, np.inf))
+    sky_r, sky_b = cfg.get("wb_v3_sky", (-np.inf, np.inf)) if sky_scene else (-np.inf, np.inf)
     for i, ((q_lo, q_hi), radius, weight) in enumerate(cfg["wb_v3_zones"]):
         lo, hi = np.percentile(y, [q_lo, q_hi])
         zone = (y >= lo) & (y <= hi)
@@ -594,11 +638,16 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     est = (w[:, None] * np.asarray(ests)).sum(0)
     lo, hi = np.percentile(y, [15, 88])
     mid = (y >= lo) & (y <= hi)
+    cast = False
     if mid.sum() >= cfg["wb_v3_min_px"]:
         est_gw = _huber_location(c[mid], cfg["wb_v3_gw_huber"])
         sparse = any(z["narrow_share"] < cfg["wb_v3_adaptive_share"] for z in diag["zones"])
         gw_weight = float(cfg["wb_v3_gw_weight"]) if sparse or np.linalg.norm(est_gw) > cfg["wb_v3_gw_threshold"] else 0.0
-        diag["grey_world"] = dict(chroma=[float(v) for v in est_gw], weight=gw_weight)
+        if cfg.get("wb_v3_sky_split_check", False) and not sky_scene and (
+                np.linalg.norm(est_gw) >= cfg["wb_v3_cast_norm"]):
+            # T4i: a strong cast over a frame without a sky split: grey world leads, confidence raised below
+            gw_weight, cast = float(cfg["wb_v3_cast_gw_weight"]), True
+        diag["grey_world"] = dict(chroma=[float(v) for v in est_gw], weight=gw_weight, cast=cast)
         if est_gw[0] < sky_r and est_gw[1] > sky_b:
             # T4h: in a clear-sky direction only the blue axis is damped (T4g damped the whole weight), so a cyan cast
             # (red low) is still corrected without pulling the sky yellow
@@ -611,21 +660,11 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     conf = _ramp(share, *cfg["wb_v3_share"]) * (1 - 0.5 * _ramp(mad, *cfg["wb_v3_mad"]))
     if len(ests) == 2:
         diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
-    quads = []
-    n = len(px)
-    # quadrants are approximated by sample order: _sample keeps row-major order, so halves of the sample are the
-    # top and bottom of the frame; left / right are not separable here, so only top vs bottom is checked
-    for half in (slice(0, n // 2), slice(n // 2, n)):
-        ch, yh, nh = c[half], y[half], norm[half]
-        lo, hi = np.percentile(yh, [25, 96])
-        selh = (yh >= lo) & (yh <= hi) & (nh <= max(r for _, r, _ in cfg["wb_v3_zones"]))
-        if selh.sum() >= cfg["wb_v3_min_px"]:
-            quads.append(_huber_location(ch[selh], cfg["wb_v3_huber"]))
-    if len(quads) == 2:
-        diag["top_bottom_spread"] = float(np.linalg.norm(quads[0] - quads[1]))
-        if diag["top_bottom_spread"] > cfg["wb_conflict"]:
-            conf *= cfg["wb_v3_conflict_factor"]
-            diag["conflict"] = True
+    if len(quads) == 2 and diag["top_bottom_spread"] > cfg["wb_conflict"]:
+        conf *= cfg["wb_v3_conflict_factor"]
+        diag["conflict"] = True
+    if cast:
+        conf = max(conf, float(cfg["wb_v3_cast_conf"]))
     temp, tint = wb_from_chroma(cfg["wb_v3_strength"] * conf * est)
     m = cfg["wb_max_shift"]
     diag.update(share=share, mad=mad)
@@ -654,7 +693,10 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
        full-frame clipping exceeds ``clip_budget`` (0.2 %), writes an explicit negative ``highlights`` burn and/or a
        raised ``shoulder``.
     5. **Shadow Hold** (T4b): positive ``shadows`` only when the encoded luminance p25 is below ``shadow_p25_floor``;
-       ``blacks`` is never estimated: it is the preset's constant ``base_blacks`` (0 for standard).
+       ``blacks`` starts at the preset's constant ``base_blacks`` (0 for standard).
+    5b. **Auto levels** (T4i, on the existing sliders): ``slope_r`` / ``slope_b`` follow G between the shadow and
+       highlight percentiles of each channel; a narrow frame (encoded p90 - p10 < ``auto_contrast_spread``) gets more
+       contrast; lifted shadows (encoded p2 > ``auto_blacks_p2``) a negative ``blacks`` on top of the preset's.
     6. **White balance** (T4b, ``estimate_wb_v3``): robust residual cast of bright near-neutral and low-saturation
        mid-grey pixels; the share the evidence does not cover gets ``wb_prior_weight`` x the look (0 since T4d:
        neutral), then the preset's ``temp_offset`` / ``tint_offset``.
@@ -714,6 +756,26 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     base_p["temp"] = float(np.clip(base_p["temp"] + cfg.get("temp_offset", 0.0), *BOUNDS["temp"]))
     base_p["tint"] = float(np.clip(base_p["tint"] + cfg.get("tint_offset", 0.0), *BOUNDS["tint"]))
     out["diagnostics"]["wb"] = wb
+    auto_lv = out["diagnostics"]["auto_levels"] = {}
+
+    # 1b. Auto slopes (T4i): log2 R/G and B/G at the shadow and highlight percentiles of each channel; a channel whose
+    #     ratio changes by >= auto_slope_min_delta between them gets the gamma that follows G over G's log range
+    #     (white balance gains shift both ends equally, so they do not enter)
+    if cfg.get("auto_slope"):
+        px_v = px[px.max(-1) > 0.003]
+        if len(px_v) >= cfg["wb_v3_min_px"]:
+            q_lo, q_hi = (np.maximum(np.percentile(px_v, q, axis=0), 1e-4) for q in cfg["auto_slope_pct"])
+            r_lo, r_hi = np.log2(q_lo[[0, 2]] / q_lo[1]), np.log2(q_hi[[0, 2]] / q_hi[1])
+            g_range = float(np.log2(q_hi[1] / q_lo[1]))
+            auto_lv["slope"] = dict(shadow_log2_rg_bg=r_lo.tolist(), highlight_log2_rg_bg=r_hi.tolist(),
+                                    g_log2_range=g_range)
+            for k, name in enumerate(("slope_r", "slope_b")):
+                delta = float(r_hi[k] - r_lo[k])
+                if abs(delta) >= cfg["auto_slope_min_delta"] and g_range > 0.5:
+                    s = float(np.clip(np.log2(max(1.0 + delta / g_range, 0.25)) / 0.65,
+                                      -cfg["auto_slope_max"], cfg["auto_slope_max"]))
+                    base_p[name] = float(np.clip(base_p[name] + s, *EXTENDED_BOUNDS[name]))
+                    auto_lv["slope"][name] = s
 
     # 2. Saturation / vibrance: reduce saturation slightly on already high-chroma frames
     c_all = _chroma(px[(px @ LUMA.astype(np.float32)) > cfg["min_luma"]])
@@ -871,18 +933,34 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
                 lo_c, hi_c = (mid_c, hi_c) if ends(dict(base_p, contrast=mid_c))[0] <= cfg["contrast_spread_max"] else (lo_c, mid_c)
             base_p["contrast"] = float(lo_c)
         flags.append("contrast_lowered_wide_frame")
+    # 6b. Auto contrast (T4i): a narrow frame (encoded luminance p90 - p10 below auto_contrast_spread) gets more
+    #     contrast in proportion to the shortfall, at most auto_contrast_max
+    if cfg.get("auto_contrast") and spread < cfg["auto_contrast_spread"]:
+        inc = float(min(cfg["auto_contrast_max"], cfg["auto_contrast_gain"] * (cfg["auto_contrast_spread"] - spread)))
+        base_p["contrast"] = float(min(BOUNDS["contrast"][1], base_p["contrast"] + inc))
+        auto_lv["contrast"] = inc
 
     # 7. Shadow Hold (T4b, encoded output): shadows lifted only on crushed frames (encoded luminance p25 below
-    #    shadow_p25_floor); blacks are never set automatically (paper-black / matte stays a user choice)
+    #    shadow_p25_floor); a positive blacks (paper-black / matte) stays a user choice
     p2, p25, p50, p98 = _encoded_quantiles(px, RenderParams(**base_p), qs=(2, 25, 50, 98))
     out["diagnostics"]["encoded_p25_before_shadows"] = p25
     if p25 < cfg["shadow_p25_floor"]:
         base_p["shadows"] = max(base_p["shadows"], float(np.clip(
             cfg["shadow_gain"] * (cfg["shadow_p25_floor"] - p25), 0.0, cfg["shadow_max"])))
+    # 7b. Auto blacks (T4i): darkest 2 % lifted off black (encoded luminance p2 above auto_blacks_p2) get a negative
+    #     blacks on top of the preset's
+    if cfg.get("auto_blacks"):
+        p2_b = _encoded_quantiles(px, RenderParams(**base_p), qs=(2,))[0]
+        if p2_b > cfg["auto_blacks_p2"]:
+            ab = -float(np.clip((p2_b - cfg["auto_blacks_offset"]) * cfg["auto_blacks_gain"], 0.0,
+                                cfg["auto_blacks_max"]))
+            bound = float(cfg["auto_blacks_bound"])
+            base_p["blacks"] = float(np.clip(base_p["blacks"] + ab, -bound, bound))
+            auto_lv["blacks"] = dict(p2=p2_b, blacks=ab)
 
     # Round slider-visible values cleanly
     for k in ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder", "highlights", "shadows", "whites", "blacks",
-              "vibrance"):
+              "vibrance", "slope_r", "slope_b"):
         base_p[k] = round(float(base_p[k]), 4)
 
     params = RenderParams(**base_p)

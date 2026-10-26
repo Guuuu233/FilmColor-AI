@@ -8,8 +8,11 @@ SRC_DIR: the ``src`` folder whose ``filmcolor`` package is used (a ``git worktre
 repo's src), so before / after are measured with the same script.
 
 ``--variants``: JSON object ``name -> spec`` (default ``{"default": {}}``). A spec may hold ``preset`` (a name of
-``noref.STYLE_PRESETS``: start from ``noref.preset_config``), ``cfg`` (NOREF_V3 entries overridden) and ``cam_mix``
-(camera matrix share; default the config's ``camera_matrix_mix``, else ``app.CAMERA_MATRIX_MIX``).
+``noref.STYLE_PRESETS``: start from ``noref.preset_config``), ``cfg`` (NOREF_V3 entries overridden), ``cam_mix``
+(camera matrix share; default the config's ``camera_matrix_mix``, else ``app.CAMERA_MATRIX_MIX``) and
+``display_levels`` (T4i, measurement only, not in the app: ``{"lo": 1.0, "hi": 99.2, "mix": 0.8}`` stretches each
+channel of the rendered display image from its ``lo`` .. ``hi`` percentile over the preview mask to 0 .. 1, the
+per-channel points mixed ``mix`` : ``1 - mix`` with the same percentiles of the channel mean).
 
 Per frame: the frame is opened as the app opens it - ``State.open`` with the automatic base choice (per-frame B0, or
 ``roll_nat`` when B0 failed or deviates from the roll) on a roll folder of symlinks to the manifest's frames of that
@@ -89,6 +92,15 @@ def roll_state(f: dict, states: dict, max_side: int):
     return states[key]
 
 
+def display_levels(disp, mask, lo=1.0, hi=99.2, mix=0.8):
+    x = disp[mask].reshape(-1, 3)
+    q_lo, q_hi = np.percentile(x, lo, axis=0), np.percentile(x, hi, axis=0)
+    y = x.mean(1)
+    y_lo, y_hi = np.percentile(y, lo), np.percentile(y, hi)
+    a, b = mix * q_lo + (1 - mix) * y_lo, mix * q_hi + (1 - mix) * y_hi
+    return np.clip((disp - a) / np.maximum(b - a, 1e-3), 0.0, 1.0).astype(np.float32)
+
+
 def lab_of(prof, disp):
     return xyz_to_lab(prof.to_xyz(disp.astype(np.float64)))
 
@@ -148,6 +160,7 @@ def main(out_json: str, opts: list[str]):
         cam = st._raw_meta(pv.path).get("rgb_xyz_matrix") if st.camera_matrix(pv.path) is not None else None
         out = dict(domain=f["domain"], roll=f["roll"], base_method=m["base"]["method"], base=m["base"],
                    camera_matrix=cam is not None,
+                   holder_share=float(pv.holder.mean()) if getattr(pv, "holder", None) is not None else None,
                    raw_sha256=hashlib.file_digest(raw.open("rb"), "sha256").hexdigest(),
                    ref_sha256=hashlib.file_digest(ref.open("rb"), "sha256").hexdigest(), variants={})
         ref_small = al = None
@@ -158,7 +171,10 @@ def main(out_json: str, opts: list[str]):
             t1 = time.time()
             est = noref.estimate_params_v2(P4, mask4, cfg_v)
             est_s = time.time() - t1
-            lab = lab_of(prof, pv.render(est["params"]))
+            disp = pv.render(est["params"])
+            if variants[name].get("display_levels"):
+                disp = display_levels(disp, pv.mask, **variants[name]["display_levels"])
+            lab = lab_of(prof, disp)
             if al is None:  # align once, on lab0
                 if f["ref_kind"] == "srgb_no_icc":
                     ref_full, lf = print_lab(ref), 1
