@@ -1,5 +1,5 @@
 {
- "git_commit": "e075ab5f58e201580e68072a4d6e298ecde8536a",
+ "git_commit": "65f038a3a861fb4c6dd909455e182a345a081728",
  "src_dirty": true,
  "presets": [
   "standard",
@@ -18,10 +18,10 @@
     "standard": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2848,
-      "tint": 0.0458,
+      "temp": 0.0916,
+      "tint": 0.0555,
       "sat": 1.02,
-      "contrast": 1.52,
+      "contrast": 1.3,
       "midtone": 0.23,
       "shoulder": 0.22,
       "matrix": [
@@ -41,28 +41,25 @@
         1.138967759720555
        ]
       ],
-      "blacks": -0.28,
       "vibrance": 0.08,
-      "slope_r": 0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.4
      },
      "flags": [
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6733763068914413,
-      "p90": 0.769530463218689,
+      "p25": 0.6730065643787384,
+      "p90": 0.7702404797077179,
       "weight": 0.0
      }
     },
     "natural": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2848,
-      "tint": 0.0458,
+      "temp": 0.0916,
+      "tint": 0.0555,
       "sat": 0.96,
-      "contrast": 1.4,
+      "contrast": 1.18,
       "midtone": 0.24,
       "shoulder": 0.35,
       "matrix": [
@@ -84,28 +81,25 @@
       ],
       "highlights": -0.05,
       "shadows": 0.06,
-      "blacks": -0.28,
       "vibrance": 0.04,
-      "slope_r": 0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.35
      },
      "flags": [
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6641863733530045,
-      "p90": 0.7484449982643128,
+      "p25": 0.6641805917024612,
+      "p90": 0.7494367778301239,
       "weight": 0.0
      }
     },
     "portrait": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2748,
-      "tint": 0.0758,
+      "temp": 0.0816,
+      "tint": 0.0855,
       "sat": 0.94,
-      "contrast": 1.38,
+      "contrast": 1.16,
       "midtone": 0.26,
       "shoulder": 0.42,
       "matrix": [
@@ -127,28 +121,27 @@
       ],
       "highlights": -0.1,
       "shadows": 0.12,
-      "blacks": -0.28,
       "vibrance": 0.05,
-      "slope_r": 0.06,
-      "slope_b": 0.1,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6744899451732635,
-      "p90": 0.753376966714859,
+      "p25": 0.6743944883346558,
+      "p90": 0.7541669368743896,
       "weight": 0.0
      }
     },
     "vivid": {
      "params": {
       "ev": -0.25,
-      "temp": 0.3048,
-      "tint": 0.0458,
+      "temp": 0.1116,
+      "tint": 0.0555,
       "sat": 1.14,
-      "contrast": 1.68,
+      "contrast": 1.46,
       "midtone": 0.23,
       "shoulder": 0.28,
       "matrix": [
@@ -169,28 +162,28 @@
        ]
       ],
       "highlights": -0.05,
-      "blacks": -0.32,
+      "blacks": -0.04,
       "vibrance": 0.18,
-      "slope_r": 0.1,
-      "slope_b": 0.06,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6789253652095795,
-      "p90": 0.7777585983276367,
+      "p25": 0.6769911050796509,
+      "p90": 0.7776324272155761,
       "weight": 0.0
      }
     },
     "print_classic": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2948,
-      "tint": 0.0458,
+      "temp": 0.1016,
+      "tint": 0.0555,
       "sat": 1.02,
-      "contrast": 1.62,
+      "contrast": 1.4,
       "midtone": 0.21,
       "shoulder": 0.18,
       "matrix": [
@@ -210,18 +203,16 @@
         1.1215967897554857
        ]
       ],
-      "blacks": -0.35,
+      "blacks": -0.07,
       "vibrance": 0.04,
-      "slope_r": 0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.35
      },
      "flags": [
       "white_point_unrepresentative"
      ],
      "backlit": {
-      "p25": 0.6689349561929703,
-      "p90": 0.7752496004104614,
+      "p25": 0.6688234061002731,
+      "p90": 0.7763519048690796,
       "weight": 0.0
      }
     }
@@ -233,9 +224,9 @@
    "presets": {
     "standard": {
      "params": {
-      "ev": 0.9327,
-      "temp": 0.1439,
-      "tint": 0.0083,
+      "ev": 0.928,
+      "temp": 0.0577,
+      "tint": 0.0119,
       "sat": 1.0182,
       "contrast": 1.4,
       "midtone": 0.32,
@@ -257,9 +248,7 @@
         1.138967759720555
        ]
       ],
-      "highlights": -0.4,
-      "slope_r": 0.049,
-      "slope_b": -0.08,
+      "highlights": -0.247,
       "chroma_preserve": 0.4
      },
      "flags": [
@@ -267,17 +256,17 @@
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.15810251235961914,
-      "p90": 0.9359547138214112,
+      "p25": 0.1570340245962143,
+      "p90": 0.9357885420322418,
       "weight": 1.0,
       "midtone_target": 0.32
      }
     },
     "natural": {
      "params": {
-      "ev": 1.3985,
-      "temp": 0.1439,
-      "tint": 0.0083,
+      "ev": 1.3905,
+      "temp": 0.0577,
+      "tint": 0.0119,
       "sat": 0.9637,
       "contrast": 1.18,
       "midtone": 0.33,
@@ -299,10 +288,8 @@
         1.1215967897554857
        ]
       ],
-      "highlights": -0.502,
+      "highlights": -0.65,
       "shadows": 0.06,
-      "slope_r": 0.049,
-      "slope_b": -0.08,
       "chroma_preserve": 0.35
      },
      "flags": [
@@ -310,20 +297,20 @@
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.22224465385079384,
-      "p90": 0.9399361908435822,
+      "p25": 0.2209973782300949,
+      "p90": 0.9398115396499633,
       "weight": 1.0,
       "midtone_target": 0.32999999999999996
      }
     },
     "portrait": {
      "params": {
-      "ev": 1.5587,
-      "temp": 0.1339,
-      "tint": 0.0383,
+      "ev": 1.5517,
+      "temp": 0.0477,
+      "tint": 0.0419,
       "sat": 0.9455,
       "contrast": 1.16,
-      "midtone": 0.3349,
+      "midtone": 0.3363,
       "shoulder": 0.55,
       "matrix": [
        [
@@ -342,10 +329,10 @@
         1.1320193717345273
        ]
       ],
-      "highlights": -0.589,
+      "highlights": -0.585,
       "shadows": 0.12,
-      "slope_r": 0.029,
-      "slope_b": -0.06,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [
@@ -353,17 +340,17 @@
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.2605348154902458,
-      "p90": 0.9421440303325653,
+      "p25": 0.25921235978603363,
+      "p90": 0.9422651529312134,
       "weight": 1.0,
-      "midtone_target": 0.33487731933593745
+      "midtone_target": 0.33625610351562496
      }
     },
     "vivid": {
      "params": {
-      "ev": 1.015,
-      "temp": 0.1639,
-      "tint": 0.0083,
+      "ev": 1.0112,
+      "temp": 0.0777,
+      "tint": 0.0119,
       "sat": 1.1272,
       "contrast": 1.56,
       "midtone": 0.32,
@@ -385,10 +372,10 @@
         1.2015032515948048
        ]
       ],
-      "highlights": -0.294,
+      "highlights": -0.292,
       "blacks": -0.04,
-      "slope_r": 0.069,
-      "slope_b": -0.1,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [
@@ -396,17 +383,17 @@
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.14087902754545212,
-      "p90": 0.9393509805202485,
+      "p25": 0.13971396908164024,
+      "p90": 0.9392438471317291,
       "weight": 1.0,
       "midtone_target": 0.32
      }
     },
     "print_classic": {
      "params": {
-      "ev": 0.756,
-      "temp": 0.1539,
-      "tint": 0.0083,
+      "ev": 0.7523,
+      "temp": 0.0677,
+      "tint": 0.0119,
       "sat": 1.0182,
       "contrast": 1.5,
       "midtone": 0.3,
@@ -428,10 +415,8 @@
         1.1215967897554857
        ]
       ],
-      "highlights": -0.154,
+      "highlights": -0.152,
       "blacks": -0.07,
-      "slope_r": 0.049,
-      "slope_b": -0.08,
       "chroma_preserve": 0.35
      },
      "flags": [
@@ -439,8 +424,8 @@
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.11429108306765556,
-      "p90": 0.9343204379081727,
+      "p25": 0.11349614150822163,
+      "p90": 0.934172123670578,
       "weight": 1.0,
       "midtone_target": 0.3
      }
@@ -454,10 +439,10 @@
     "standard": {
      "params": {
       "ev": 0.5249,
-      "temp": 0.1821,
-      "tint": -0.0051,
+      "temp": 0.1195,
+      "tint": 0.0029,
       "sat": 1.02,
-      "contrast": 1.3411,
+      "contrast": 1.3,
       "midtone": 0.23,
       "shoulder": 0.22,
       "matrix": [
@@ -478,26 +463,23 @@
        ]
       ],
       "highlights": -0.2,
-      "blacks": -0.28,
       "vibrance": 0.08,
-      "slope_r": -0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.4
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5095307976007462,
-      "p90": 0.8683168113231658,
+      "p25": 0.5087350606918335,
+      "p90": 0.8663330912590027,
       "weight": 0.0
      }
     },
     "natural": {
      "params": {
       "ev": 0.5249,
-      "temp": 0.1821,
-      "tint": -0.0051,
+      "temp": 0.1195,
+      "tint": 0.0029,
       "sat": 0.96,
-      "contrast": 1.2726,
+      "contrast": 1.18,
       "midtone": 0.24,
       "shoulder": 0.35,
       "matrix": [
@@ -519,26 +501,23 @@
       ],
       "highlights": -0.2,
       "shadows": 0.06,
-      "blacks": -0.28,
       "vibrance": 0.04,
-      "slope_r": -0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5203119963407516,
-      "p90": 0.8358550548553467,
+      "p25": 0.5196824967861176,
+      "p90": 0.834140294790268,
       "weight": 0.0
      }
     },
     "portrait": {
      "params": {
       "ev": 0.5249,
-      "temp": 0.1721,
-      "tint": 0.0249,
+      "temp": 0.1095,
+      "tint": 0.0329,
       "sat": 0.94,
-      "contrast": 1.2789,
+      "contrast": 1.16,
       "midtone": 0.26,
       "shoulder": 0.42,
       "matrix": [
@@ -560,26 +539,25 @@
       ],
       "highlights": -0.2,
       "shadows": 0.12,
-      "blacks": -0.28,
       "vibrance": 0.05,
-      "slope_r": -0.1,
-      "slope_b": 0.1,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5402141064405441,
-      "p90": 0.834616631269455,
+      "p25": 0.5395860373973846,
+      "p90": 0.8329913735389709,
       "weight": 0.0
      }
     },
     "vivid": {
      "params": {
       "ev": 0.5249,
-      "temp": 0.2021,
-      "tint": -0.0051,
+      "temp": 0.1395,
+      "tint": 0.0029,
       "sat": 1.14,
-      "contrast": 1.4766,
+      "contrast": 1.46,
       "midtone": 0.23,
       "shoulder": 0.28,
       "matrix": [
@@ -600,24 +578,24 @@
        ]
       ],
       "highlights": -0.2,
-      "blacks": -0.32,
+      "blacks": -0.04,
       "vibrance": 0.18,
-      "slope_r": -0.06,
-      "slope_b": 0.06,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5073287039995193,
-      "p90": 0.8735478341579437,
+      "p25": 0.5063420534133911,
+      "p90": 0.8714894771575927,
       "weight": 0.0
      }
     },
     "print_classic": {
      "params": {
       "ev": 0.5249,
-      "temp": 0.1921,
-      "tint": -0.0051,
+      "temp": 0.1295,
+      "tint": 0.0029,
       "sat": 1.02,
       "contrast": 1.4,
       "midtone": 0.21,
@@ -640,16 +618,14 @@
        ]
       ],
       "highlights": -0.2,
-      "blacks": -0.35,
+      "blacks": -0.07,
       "vibrance": 0.04,
-      "slope_r": -0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.48491227626800537,
-      "p90": 0.8827387452125549,
+      "p25": 0.4840572327375412,
+      "p90": 0.8806819558143616,
       "weight": 0.0
      }
     }
@@ -661,13 +637,13 @@
    "presets": {
     "standard": {
      "params": {
-      "ev": 0.9079,
-      "temp": -0.1169,
-      "tint": 0.036,
+      "ev": 0.9066,
+      "temp": -0.0702,
+      "tint": 0.0261,
       "sat": 1.0109,
-      "contrast": 1.3282,
+      "contrast": 1.3277,
       "midtone": 0.23,
-      "shoulder": 0.2623,
+      "shoulder": 0.2615,
       "matrix": [
        [
         1.1128614482232428,
@@ -685,25 +661,23 @@
         1.1712407315632702
        ]
       ],
-      "blacks": -0.0515,
-      "slope_b": -0.08,
       "chroma_preserve": 0.4
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.3717762902379036,
-      "p90": 0.937796413898468,
-      "weight": 0.2822370976209643,
+      "p25": 0.3723437115550041,
+      "p90": 0.9375655770301818,
+      "weight": 0.276562884449959,
       "midtone_target": 0.2300054931640625
      }
     },
     "natural": {
      "params": {
       "ev": 1.0869,
-      "temp": -0.1169,
-      "tint": 0.036,
+      "temp": -0.0702,
+      "tint": 0.0261,
       "sat": 0.9781,
       "contrast": 1.18,
       "midtone": 0.24,
@@ -727,22 +701,20 @@
       ],
       "highlights": -0.068,
       "shadows": 0.06,
-      "blacks": -0.0968,
-      "slope_b": -0.08,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.41767019778490067,
-      "p90": 0.9161287009716034,
+      "p25": 0.41826003789901733,
+      "p90": 0.91583531498909,
       "weight": 0.0
      }
     },
     "portrait": {
      "params": {
       "ev": 1.0869,
-      "temp": -0.1269,
-      "tint": 0.066,
+      "temp": -0.0802,
+      "tint": 0.0561,
       "sat": 0.9672,
       "contrast": 1.16,
       "midtone": 0.26,
@@ -766,27 +738,26 @@
       ],
       "highlights": -0.1,
       "shadows": 0.12,
-      "blacks": -0.1234,
       "slope_r": -0.02,
-      "slope_b": -0.06,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [],
      "backlit": {
-      "p25": 0.44189900904893875,
-      "p90": 0.9082123816013337,
+      "p25": 0.44249116629362106,
+      "p90": 0.9079698204994202,
       "weight": 0.0
      }
     },
     "vivid": {
      "params": {
-      "ev": 0.9955,
-      "temp": -0.0969,
-      "tint": 0.036,
+      "ev": 0.9881,
+      "temp": -0.0502,
+      "tint": 0.0261,
       "sat": 1.0766,
       "contrast": 1.4926,
       "midtone": 0.23,
-      "shoulder": 0.3289,
+      "shoulder": 0.329,
       "matrix": [
        [
         1.1636490999237021,
@@ -805,30 +776,30 @@
        ]
       ],
       "highlights": -0.05,
-      "blacks": -0.0737,
+      "blacks": -0.04,
       "slope_r": 0.02,
-      "slope_b": -0.1,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.36737921088933945,
-      "p90": 0.9420149505138398,
-      "weight": 0.32620789110660575,
+      "p25": 0.36735714972019196,
+      "p90": 0.941773796081543,
+      "weight": 0.32642850279808067,
       "midtone_target": 0.2300054931640625
      }
     },
     "print_classic": {
      "params": {
-      "ev": 0.73,
-      "temp": -0.1069,
-      "tint": 0.036,
+      "ev": 0.7313,
+      "temp": -0.0602,
+      "tint": 0.0261,
       "sat": 1.0109,
-      "contrast": 1.4855,
-      "midtone": 0.233,
-      "shoulder": 0.3083,
+      "contrast": 1.4846,
+      "midtone": 0.232,
+      "shoulder": 0.307,
       "matrix": [
        [
         1.0987537671953373,
@@ -846,18 +817,17 @@
         1.1498356401178613
        ]
       ],
-      "blacks": -0.0977,
-      "slope_b": -0.08,
+      "blacks": -0.07,
       "chroma_preserve": 0.35
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.314484603703022,
-      "p90": 0.936007809638977,
-      "weight": 0.8551539629697802,
-      "midtone_target": 0.23687805175781246
+      "p25": 0.31535695493221283,
+      "p90": 0.9359107673168182,
+      "weight": 0.8464304506778719,
+      "midtone_target": 0.23602111816406246
      }
     }
    }
@@ -872,7 +842,7 @@
       "temp": 0.5,
       "tint": -0.0383,
       "sat": 1.0192,
-      "contrast": 1.5198,
+      "contrast": 1.3,
       "midtone": 0.23,
       "shoulder": 0.22,
       "matrix": [
@@ -892,15 +862,12 @@
         1.1712407315632702
        ]
       ],
-      "blacks": -0.28,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
       "chroma_preserve": 0.4
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5427945703268051,
-      "p90": 0.7216597497463226,
+      "p25": 0.5425454676151276,
+      "p90": 0.7225604176521301,
       "weight": 0.0
      }
     },
@@ -910,7 +877,7 @@
       "temp": 0.5,
       "tint": -0.0383,
       "sat": 0.9615,
-      "contrast": 1.4,
+      "contrast": 1.18,
       "midtone": 0.24,
       "shoulder": 0.35,
       "matrix": [
@@ -932,15 +899,12 @@
       ],
       "highlights": -0.05,
       "shadows": 0.06,
-      "blacks": -0.28,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5503268837928772,
-      "p90": 0.7063147246837616,
+      "p25": 0.5501341372728348,
+      "p90": 0.7070522844791413,
       "weight": 0.0
      }
     },
@@ -950,7 +914,7 @@
       "temp": 0.49,
       "tint": -0.0083,
       "sat": 0.9423,
-      "contrast": 1.38,
+      "contrast": 1.16,
       "midtone": 0.26,
       "shoulder": 0.42,
       "matrix": [
@@ -972,15 +936,14 @@
       ],
       "highlights": -0.1,
       "shadows": 0.12,
-      "blacks": -0.28,
-      "slope_r": 0.06,
-      "slope_b": -0.06,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5673813968896866,
-      "p90": 0.7138210952281951,
+      "p25": 0.5671816468238831,
+      "p90": 0.7145530879497528,
       "weight": 0.0
      }
     },
@@ -990,7 +953,7 @@
       "temp": 0.52,
       "tint": -0.0383,
       "sat": 1.1347,
-      "contrast": 1.6556,
+      "contrast": 1.46,
       "midtone": 0.23,
       "shoulder": 0.28,
       "matrix": [
@@ -1011,15 +974,15 @@
        ]
       ],
       "highlights": -0.05,
-      "blacks": -0.32,
-      "slope_r": 0.1,
-      "slope_b": -0.1,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5392551720142365,
-      "p90": 0.7297179877758027,
+      "p25": 0.5388668775558472,
+      "p90": 0.7306121230125427,
       "weight": 0.0
      }
     },
@@ -1029,7 +992,7 @@
       "temp": 0.51,
       "tint": -0.0383,
       "sat": 1.0192,
-      "contrast": 1.5832,
+      "contrast": 1.4,
       "midtone": 0.21,
       "shoulder": 0.18,
       "matrix": [
@@ -1049,15 +1012,13 @@
         1.1498356401178613
        ]
       ],
-      "blacks": -0.3473,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
+      "blacks": -0.07,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5233696401119232,
-      "p90": 0.7225263237953186,
+      "p25": 0.5230982899665833,
+      "p90": 0.7234355628490448,
       "weight": 0.0
      }
     }
@@ -1069,11 +1030,11 @@
    "presets": {
     "standard": {
      "params": {
-      "ev": -0.1003,
-      "temp": -0.0173,
-      "tint": 0.0765,
+      "ev": -0.1018,
+      "temp": -0.014,
+      "tint": 0.0622,
       "sat": 1.02,
-      "contrast": 1.5005,
+      "contrast": 1.3,
       "midtone": 0.23,
       "shoulder": 0.22,
       "matrix": [
@@ -1093,26 +1054,23 @@
         1.138967759720555
        ]
       ],
-      "blacks": -0.0285,
       "vibrance": 0.08,
-      "slope_r": -0.08,
-      "slope_b": 0.0596,
       "chroma_preserve": 0.4
      },
      "flags": [],
      "backlit": {
-      "p25": 0.41658783704042435,
-      "p90": 0.6188832879066467,
+      "p25": 0.41739271581172943,
+      "p90": 0.6182843327522277,
       "weight": 0.0
      }
     },
     "natural": {
      "params": {
-      "ev": -0.1182,
-      "temp": -0.0173,
-      "tint": 0.0765,
+      "ev": -0.12,
+      "temp": -0.014,
+      "tint": 0.0622,
       "sat": 0.96,
-      "contrast": 1.4,
+      "contrast": 1.18,
       "midtone": 0.24,
       "shoulder": 0.35,
       "matrix": [
@@ -1134,26 +1092,23 @@
       ],
       "highlights": -0.05,
       "shadows": 0.06,
-      "blacks": -0.0525,
       "vibrance": 0.04,
-      "slope_r": -0.08,
-      "slope_b": 0.0596,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.4371746927499771,
-      "p90": 0.6134273588657378,
+      "p25": 0.4377947077155113,
+      "p90": 0.6128315925598145,
       "weight": 0.0
      }
     },
     "portrait": {
      "params": {
       "ev": 0.0411,
-      "temp": -0.0273,
-      "tint": 0.1065,
+      "temp": -0.024,
+      "tint": 0.0922,
       "sat": 0.94,
-      "contrast": 1.38,
+      "contrast": 1.16,
       "midtone": 0.26,
       "shoulder": 0.42,
       "matrix": [
@@ -1175,26 +1130,25 @@
       ],
       "highlights": -0.1,
       "shadows": 0.12,
-      "blacks": -0.0828,
       "vibrance": 0.05,
-      "slope_r": -0.1,
-      "slope_b": 0.0796,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [],
      "backlit": {
-      "p25": 0.4780115857720375,
-      "p90": 0.6471028923988342,
+      "p25": 0.4788494035601616,
+      "p90": 0.6467241704463959,
       "weight": 0.0
      }
     },
     "vivid": {
      "params": {
       "ev": 0.0411,
-      "temp": 0.0027,
-      "tint": 0.0765,
+      "temp": 0.006,
+      "tint": 0.0622,
       "sat": 1.14,
-      "contrast": 1.6226,
+      "contrast": 1.46,
       "midtone": 0.23,
       "shoulder": 0.28,
       "matrix": [
@@ -1215,26 +1169,26 @@
        ]
       ],
       "highlights": -0.05,
-      "blacks": -0.0608,
+      "blacks": -0.04,
       "vibrance": 0.18,
-      "slope_r": -0.06,
-      "slope_b": 0.0396,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [],
      "backlit": {
-      "p25": 0.42209696024656296,
-      "p90": 0.6470380008220672,
+      "p25": 0.4233030453324318,
+      "p90": 0.6467026472091675,
       "weight": 0.0
      }
     },
     "print_classic": {
      "params": {
-      "ev": -0.1286,
-      "temp": -0.0073,
-      "tint": 0.0765,
+      "ev": -0.1304,
+      "temp": -0.004,
+      "tint": 0.0622,
       "sat": 1.02,
-      "contrast": 1.57,
+      "contrast": 1.4,
       "midtone": 0.21,
       "shoulder": 0.18,
       "matrix": [
@@ -1256,14 +1210,12 @@
       ],
       "blacks": -0.07,
       "vibrance": 0.04,
-      "slope_r": -0.08,
-      "slope_b": 0.0596,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.38050825148820877,
-      "p90": 0.6027370870113373,
+      "p25": 0.38125624507665634,
+      "p90": 0.6019389748573303,
       "weight": 0.0
      }
     }
@@ -1276,10 +1228,10 @@
     "standard": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2677,
-      "tint": -0.0327,
+      "temp": 0.1466,
+      "tint": -0.0029,
       "sat": 1.02,
-      "contrast": 1.52,
+      "contrast": 1.3,
       "midtone": 0.23,
       "shoulder": 0.22,
       "matrix": [
@@ -1300,26 +1252,23 @@
        ]
       ],
       "highlights": -0.003,
-      "blacks": -0.28,
       "vibrance": 0.08,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
       "chroma_preserve": 0.4
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5973368287086487,
-      "p90": 0.7880579352378845,
+      "p25": 0.5958206206560135,
+      "p90": 0.7883905529975891,
       "weight": 0.0
      }
     },
     "natural": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2677,
-      "tint": -0.0327,
+      "temp": 0.1466,
+      "tint": -0.0029,
       "sat": 0.96,
-      "contrast": 1.4,
+      "contrast": 1.18,
       "midtone": 0.24,
       "shoulder": 0.35,
       "matrix": [
@@ -1341,26 +1290,23 @@
       ],
       "highlights": -0.05,
       "shadows": 0.06,
-      "blacks": -0.28,
       "vibrance": 0.04,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5976180285215378,
-      "p90": 0.7643523037433624,
+      "p25": 0.5966085344552994,
+      "p90": 0.7647708892822266,
       "weight": 0.0
      }
     },
     "portrait": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2577,
-      "tint": -0.0027,
+      "temp": 0.1366,
+      "tint": 0.0271,
       "sat": 0.94,
-      "contrast": 1.38,
+      "contrast": 1.16,
       "midtone": 0.26,
       "shoulder": 0.42,
       "matrix": [
@@ -1382,26 +1328,25 @@
       ],
       "highlights": -0.1,
       "shadows": 0.12,
-      "blacks": -0.28,
       "vibrance": 0.05,
-      "slope_r": 0.06,
-      "slope_b": -0.06,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [],
      "backlit": {
-      "p25": 0.6120512634515762,
-      "p90": 0.7684205591678619,
+      "p25": 0.6109189838171005,
+      "p90": 0.7686890959739685,
       "weight": 0.0
      }
     },
     "vivid": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2877,
-      "tint": -0.0327,
+      "temp": 0.1666,
+      "tint": -0.0029,
       "sat": 1.14,
-      "contrast": 1.68,
+      "contrast": 1.46,
       "midtone": 0.23,
       "shoulder": 0.28,
       "matrix": [
@@ -1422,26 +1367,26 @@
        ]
       ],
       "highlights": -0.05,
-      "blacks": -0.32,
+      "blacks": -0.04,
       "vibrance": 0.18,
-      "slope_r": 0.1,
-      "slope_b": -0.1,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5991984903812408,
-      "p90": 0.7977706611156463,
+      "p25": 0.5965197086334229,
+      "p90": 0.7977934896945953,
       "weight": 0.0
      }
     },
     "print_classic": {
      "params": {
       "ev": -0.25,
-      "temp": 0.2777,
-      "tint": -0.0327,
+      "temp": 0.1566,
+      "tint": -0.0029,
       "sat": 1.02,
-      "contrast": 1.62,
+      "contrast": 1.4,
       "midtone": 0.21,
       "shoulder": 0.18,
       "matrix": [
@@ -1462,16 +1407,14 @@
        ]
       ],
       "highlights": -0.003,
-      "blacks": -0.35,
+      "blacks": -0.07,
       "vibrance": 0.04,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5842217206954956,
-      "p90": 0.795300179719925,
+      "p25": 0.5828334093093872,
+      "p90": 0.7958630204200744,
       "weight": 0.0
      }
     }
@@ -1483,13 +1426,13 @@
    "presets": {
     "standard": {
      "params": {
-      "ev": 1.6358,
-      "temp": -0.0935,
-      "tint": 0.3338,
+      "ev": 1.6896,
+      "temp": -0.0179,
+      "tint": 0.0953,
       "sat": 1.0044,
-      "contrast": 1.3854,
-      "midtone": 0.2591,
-      "shoulder": 0.3481,
+      "contrast": 1.3832,
+      "midtone": 0.2528,
+      "shoulder": 0.3448,
       "matrix": [
        [
         1.1097265765068025,
@@ -1508,29 +1451,27 @@
        ]
       ],
       "highlights": -0.65,
-      "slope_r": 0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.4
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.3099130466580391,
-      "p90": 0.7958379030227661,
-      "weight": 0.8540007038955121,
-      "midtone_target": 0.2641235351562501
+      "p25": 0.31678052246570587,
+      "p90": 0.8097020208835601,
+      "weight": 0.8321947753429415,
+      "midtone_target": 0.257410888671875
      }
     },
     "natural": {
      "params": {
       "ev": 1.8057,
-      "temp": -0.0935,
-      "tint": 0.3338,
+      "temp": -0.0179,
+      "tint": 0.0953,
       "sat": 0.9912,
       "contrast": 1.18,
       "midtone": 0.24,
-      "shoulder": 0.4097,
+      "shoulder": 0.4132,
       "matrix": [
        [
         1.0960107544434523,
@@ -1550,29 +1491,27 @@
       ],
       "highlights": -0.65,
       "shadows": 0.06,
-      "slope_r": 0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.35
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.35553985089063644,
-      "p90": 0.7916588723659514,
-      "weight": 0.3982455187998822,
+      "p25": 0.3562634810805321,
+      "p90": 0.7970686495304108,
+      "weight": 0.4213393060355824,
       "midtone_target": 0.2400054931640625
      }
     },
     "portrait": {
      "params": {
       "ev": 1.8057,
-      "temp": -0.1035,
-      "tint": 0.3638,
+      "temp": -0.0279,
+      "tint": 0.1253,
       "sat": 0.9868,
       "contrast": 1.16,
       "midtone": 0.26,
-      "shoulder": 0.4455,
+      "shoulder": 0.4462,
       "matrix": [
        [
         1.1042402476814623,
@@ -1592,29 +1531,29 @@
       ],
       "highlights": -0.65,
       "shadows": 0.12,
-      "slope_r": 0.06,
-      "slope_b": 0.1,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.38151947408914566,
-      "p90": 0.7935277104377746,
-      "weight": 0.1698538447388864,
+      "p25": 0.38232889771461487,
+      "p90": 0.7990955770015716,
+      "weight": 0.17471325393954137,
       "midtone_target": 0.2600054931640625
      }
     },
     "vivid": {
      "params": {
-      "ev": 1.7112,
-      "temp": -0.0735,
-      "tint": 0.3338,
+      "ev": 1.6204,
+      "temp": 0.0021,
+      "tint": 0.0953,
       "sat": 1.0308,
-      "contrast": 1.5569,
-      "midtone": 0.2706,
-      "shoulder": 0.4254,
+      "contrast": 1.56,
+      "midtone": 0.2795,
+      "shoulder": 0.43,
       "matrix": [
        [
         1.1591035359348636,
@@ -1632,31 +1571,31 @@
         1.2015032515948048
        ]
       ],
-      "highlights": -0.449,
+      "highlights": -0.4,
       "blacks": -0.04,
-      "slope_r": 0.1,
-      "slope_b": 0.06,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.3030540347099304,
-      "p90": 0.814317137002945,
-      "weight": 0.969459652900696,
-      "midtone_target": 0.2718359375
+      "p25": 0.2954074665904045,
+      "p90": 0.8099014699459075,
+      "weight": 1.0,
+      "midtone_target": 0.27953735351562503
      }
     },
     "print_classic": {
      "params": {
-      "ev": 1.5925,
-      "temp": -0.0835,
-      "tint": 0.3338,
+      "ev": 1.5093,
+      "temp": -0.0079,
+      "tint": 0.0953,
       "sat": 1.0044,
-      "contrast": 1.4972,
-      "midtone": 0.2811,
-      "shoulder": 0.3258,
+      "contrast": 1.4898,
+      "midtone": 0.2816,
+      "shoulder": 0.3146,
       "matrix": [
        [
         1.0960107544434523,
@@ -1674,20 +1613,18 @@
         1.1215967897554857
        ]
       ],
-      "highlights": -0.385,
+      "highlights": -0.4,
       "blacks": -0.07,
-      "slope_r": 0.08,
-      "slope_b": 0.08,
       "chroma_preserve": 0.35
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.26743125915527344,
-      "p90": 0.7977696537971496,
-      "weight": 0.9721206724643707,
-      "midtone_target": 0.28311401367187494
+      "p25": 0.260465070605278,
+      "p90": 0.7918053746223449,
+      "weight": 0.8975671827793121,
+      "midtone_target": 0.289749755859375
      }
     }
    }
@@ -1698,13 +1635,13 @@
    "presets": {
     "standard": {
      "params": {
-      "ev": 1.2837,
-      "temp": 0.1171,
-      "tint": 0.1366,
+      "ev": 1.2636,
+      "temp": 0.0879,
+      "tint": 0.1018,
       "sat": 1.019,
-      "contrast": 1.3825,
-      "midtone": 0.3043,
-      "shoulder": 0.3438,
+      "contrast": 1.3815,
+      "midtone": 0.3033,
+      "shoulder": 0.3422,
       "matrix": [
        [
         1.1097265765068025,
@@ -1722,31 +1659,28 @@
         1.138967759720555
        ]
       ],
-      "highlights": -0.443,
-      "blacks": -0.0586,
-      "slope_r": 0.08,
-      "slope_b": -0.0629,
+      "highlights": -0.432,
       "chroma_preserve": 0.4
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.24093016237020493,
-      "p90": 0.7860392749309539,
-      "weight": 0.825490936636925,
+      "p25": 0.2384231500327587,
+      "p90": 0.7851769328117371,
+      "weight": 0.814711660146714,
       "midtone_target": 0.32
      }
     },
     "natural": {
      "params": {
-      "ev": 1.7483,
-      "temp": 0.1171,
-      "tint": 0.1366,
+      "ev": 1.7257,
+      "temp": 0.0879,
+      "tint": 0.1018,
       "sat": 0.962,
       "contrast": 1.18,
-      "midtone": 0.259,
-      "shoulder": 0.4783,
+      "midtone": 0.2619,
+      "shoulder": 0.4824,
       "matrix": [
        [
         1.0960107544434523,
@@ -1766,30 +1700,27 @@
       ],
       "highlights": -0.65,
       "shadows": 0.06,
-      "blacks": -0.0711,
-      "slope_r": 0.08,
-      "slope_b": -0.0629,
       "chroma_preserve": 0.35
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.31448177248239517,
-      "p90": 0.8171345114707946,
-      "weight": 0.8551822751760485,
-      "midtone_target": 0.2622528076171875
+      "p25": 0.31172892451286316,
+      "p90": 0.8163252890110015,
+      "weight": 0.8827107548713686,
+      "midtone_target": 0.26478515624999993
      }
     },
     "portrait": {
      "params": {
-      "ev": 1.9123,
-      "temp": 0.1071,
-      "tint": 0.1666,
+      "ev": 1.8925,
+      "temp": 0.0779,
+      "tint": 0.1318,
       "sat": 0.943,
       "contrast": 1.16,
       "midtone": 0.26,
-      "shoulder": 0.4856,
+      "shoulder": 0.4895,
       "matrix": [
        [
         1.1042402476814623,
@@ -1809,26 +1740,25 @@
       ],
       "highlights": -0.65,
       "shadows": 0.12,
-      "blacks": -0.0832,
-      "slope_r": 0.06,
-      "slope_b": -0.0429,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.3562351167201996,
-      "p90": 0.8342062771320343,
-      "weight": 0.4376488327980044,
+      "p25": 0.3536877855658531,
+      "p90": 0.8339299976825714,
+      "weight": 0.46312214434146903,
       "midtone_target": 0.2600054931640625
      }
     },
     "vivid": {
      "params": {
-      "ev": 1.3737,
-      "temp": 0.1371,
-      "tint": 0.1366,
+      "ev": 1.3489,
+      "temp": 0.1079,
+      "tint": 0.1018,
       "sat": 1.1329,
       "contrast": 1.56,
       "midtone": 0.32,
@@ -1850,31 +1780,31 @@
         1.2015032515948048
        ]
       ],
-      "highlights": -0.65,
-      "blacks": -0.089,
-      "slope_r": 0.1,
-      "slope_b": -0.0829,
+      "highlights": -0.478,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.22685705497860909,
-      "p90": 0.8078059673309326,
+      "p25": 0.22400593757629395,
+      "p90": 0.8065537512302399,
       "weight": 1.0,
       "midtone_target": 0.32
      }
     },
     "print_classic": {
      "params": {
-      "ev": 1.1062,
-      "temp": 0.1271,
-      "tint": 0.1366,
+      "ev": 1.0867,
+      "temp": 0.0979,
+      "tint": 0.1018,
       "sat": 1.019,
-      "contrast": 1.4577,
-      "midtone": 0.262,
-      "shoulder": 0.2666,
+      "contrast": 1.4563,
+      "midtone": 0.2606,
+      "shoulder": 0.2644,
       "matrix": [
        [
         1.0960107544434523,
@@ -1892,19 +1822,17 @@
         1.1215967897554857
        ]
       ],
-      "highlights": -0.4,
-      "blacks": -0.0837,
-      "slope_r": 0.08,
-      "slope_b": -0.0629,
+      "highlights": -0.336,
+      "blacks": -0.07,
       "chroma_preserve": 0.35
      },
      "flags": [
       "backlit_midtone"
      ],
      "backlit": {
-      "p25": 0.18823007494211197,
-      "p90": 0.7661961913108826,
-      "weight": 0.5774523913860328,
+      "p25": 0.18588601425290108,
+      "p90": 0.7650149524211883,
+      "weight": 0.5626869052648548,
       "midtone_target": 0.3
      }
     }

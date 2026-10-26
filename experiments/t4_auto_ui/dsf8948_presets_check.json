@@ -1,5 +1,5 @@
 {
- "git_commit": "e075ab5f58e201580e68072a4d6e298ecde8536a",
+ "git_commit": "65f038a3a861fb4c6dd909455e182a345a081728",
  "src_dirty": true,
  "presets": [
   "standard",
@@ -21,7 +21,7 @@
       "temp": 0.5,
       "tint": -0.0383,
       "sat": 1.0192,
-      "contrast": 1.5198,
+      "contrast": 1.3,
       "midtone": 0.23,
       "shoulder": 0.22,
       "matrix": [
@@ -41,15 +41,12 @@
         1.1712407315632702
        ]
       ],
-      "blacks": -0.28,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
       "chroma_preserve": 0.4
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5427945703268051,
-      "p90": 0.7216597497463226,
+      "p25": 0.5425454676151276,
+      "p90": 0.7225604176521301,
       "weight": 0.0
      }
     },
@@ -59,7 +56,7 @@
       "temp": 0.5,
       "tint": -0.0383,
       "sat": 0.9615,
-      "contrast": 1.4,
+      "contrast": 1.18,
       "midtone": 0.24,
       "shoulder": 0.35,
       "matrix": [
@@ -81,15 +78,12 @@
       ],
       "highlights": -0.05,
       "shadows": 0.06,
-      "blacks": -0.28,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5503268837928772,
-      "p90": 0.7063147246837616,
+      "p25": 0.5501341372728348,
+      "p90": 0.7070522844791413,
       "weight": 0.0
      }
     },
@@ -99,7 +93,7 @@
       "temp": 0.49,
       "tint": -0.0083,
       "sat": 0.9423,
-      "contrast": 1.38,
+      "contrast": 1.16,
       "midtone": 0.26,
       "shoulder": 0.42,
       "matrix": [
@@ -121,15 +115,14 @@
       ],
       "highlights": -0.1,
       "shadows": 0.12,
-      "blacks": -0.28,
-      "slope_r": 0.06,
-      "slope_b": -0.06,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5673813968896866,
-      "p90": 0.7138210952281951,
+      "p25": 0.5671816468238831,
+      "p90": 0.7145530879497528,
       "weight": 0.0
      }
     },
@@ -139,7 +132,7 @@
       "temp": 0.52,
       "tint": -0.0383,
       "sat": 1.1347,
-      "contrast": 1.6556,
+      "contrast": 1.46,
       "midtone": 0.23,
       "shoulder": 0.28,
       "matrix": [
@@ -160,15 +153,15 @@
        ]
       ],
       "highlights": -0.05,
-      "blacks": -0.32,
-      "slope_r": 0.1,
-      "slope_b": -0.1,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5392551720142365,
-      "p90": 0.7297179877758027,
+      "p25": 0.5388668775558472,
+      "p90": 0.7306121230125427,
       "weight": 0.0
      }
     },
@@ -178,7 +171,7 @@
       "temp": 0.51,
       "tint": -0.0383,
       "sat": 1.0192,
-      "contrast": 1.5832,
+      "contrast": 1.4,
       "midtone": 0.21,
       "shoulder": 0.18,
       "matrix": [
@@ -198,15 +191,13 @@
         1.1498356401178613
        ]
       ],
-      "blacks": -0.3473,
-      "slope_r": 0.08,
-      "slope_b": -0.08,
+      "blacks": -0.07,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5233696401119232,
-      "p90": 0.7225263237953186,
+      "p25": 0.5230982899665833,
+      "p90": 0.7234355628490448,
       "weight": 0.0
      }
     }
@@ -248,10 +239,10 @@
     "standard": {
      "params": {
       "ev": -0.25,
-      "temp": 0.026,
-      "tint": 0.0242,
+      "temp": 0.0212,
+      "tint": 0.0197,
       "sat": 1.02,
-      "contrast": 1.4302,
+      "contrast": 1.3,
       "midtone": 0.23,
       "shoulder": 0.22,
       "matrix": [
@@ -271,25 +262,23 @@
         1.1712407315632702
        ]
       ],
-      "blacks": -0.28,
       "vibrance": 0.08,
-      "slope_r": 0.0792,
       "chroma_preserve": 0.4
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5926167666912079,
-      "p90": 0.8116501688957214,
+      "p25": 0.5932921022176743,
+      "p90": 0.8137522220611573,
       "weight": 0.0
      }
     },
     "natural": {
      "params": {
       "ev": -0.25,
-      "temp": 0.026,
-      "tint": 0.0242,
+      "temp": 0.0212,
+      "tint": 0.0197,
       "sat": 0.96,
-      "contrast": 1.362,
+      "contrast": 1.18,
       "midtone": 0.24,
       "shoulder": 0.35,
       "matrix": [
@@ -311,25 +300,23 @@
       ],
       "highlights": -0.05,
       "shadows": 0.06,
-      "blacks": -0.28,
       "vibrance": 0.04,
-      "slope_r": 0.0792,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.592813566327095,
-      "p90": 0.7853432893753052,
+      "p25": 0.5933827310800552,
+      "p90": 0.7871880173683167,
       "weight": 0.0
      }
     },
     "portrait": {
      "params": {
       "ev": -0.25,
-      "temp": 0.016,
-      "tint": 0.0542,
+      "temp": 0.0112,
+      "tint": 0.0497,
       "sat": 0.94,
-      "contrast": 1.3651,
+      "contrast": 1.16,
       "midtone": 0.26,
       "shoulder": 0.42,
       "matrix": [
@@ -351,26 +338,25 @@
       ],
       "highlights": -0.1,
       "shadows": 0.12,
-      "blacks": -0.28,
       "vibrance": 0.05,
-      "slope_r": 0.0592,
+      "slope_r": -0.02,
       "slope_b": 0.02,
       "chroma_preserve": 0.38
      },
      "flags": [],
      "backlit": {
-      "p25": 0.6079577058553696,
-      "p90": 0.7877171456813812,
+      "p25": 0.6085222214460373,
+      "p90": 0.7894523799419403,
       "weight": 0.0
      }
     },
     "vivid": {
      "params": {
       "ev": -0.25,
-      "temp": 0.046,
-      "tint": 0.0242,
+      "temp": 0.0412,
+      "tint": 0.0197,
       "sat": 1.14,
-      "contrast": 1.5716,
+      "contrast": 1.46,
       "midtone": 0.23,
       "shoulder": 0.28,
       "matrix": [
@@ -391,26 +377,26 @@
        ]
       ],
       "highlights": -0.05,
-      "blacks": -0.32,
+      "blacks": -0.04,
       "vibrance": 0.18,
-      "slope_r": 0.0992,
+      "slope_r": 0.02,
       "slope_b": -0.02,
       "chroma_preserve": 0.58
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5965463668107986,
-      "p90": 0.8203728497028351,
+      "p25": 0.597319021821022,
+      "p90": 0.8224393606185914,
       "weight": 0.0
      }
     },
     "print_classic": {
      "params": {
       "ev": -0.25,
-      "temp": 0.036,
-      "tint": 0.0242,
+      "temp": 0.0312,
+      "tint": 0.0197,
       "sat": 1.02,
-      "contrast": 1.4837,
+      "contrast": 1.4,
       "midtone": 0.21,
       "shoulder": 0.18,
       "matrix": [
@@ -430,15 +416,14 @@
         1.1498356401178613
        ]
       ],
-      "blacks": -0.35,
+      "blacks": -0.07,
       "vibrance": 0.04,
-      "slope_r": 0.0792,
       "chroma_preserve": 0.35
      },
      "flags": [],
      "backlit": {
-      "p25": 0.5781067609786987,
-      "p90": 0.8213287174701691,
+      "p25": 0.5788522362709045,
+      "p90": 0.8236137509346009,
       "weight": 0.0
      }
     }

@@ -33,10 +33,6 @@ def backlit_scene(fg=0.05, sky=0.5, seed=31):
     return np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).reshape(400, -1, 3).astype(np.float32)
 
 
-# T4i auto levels (slopes, contrast, blacks) off: the tests written for the earlier rules check those rules alone
-NO_AUTO_LEVELS = dict(auto_slope=False, auto_contrast=False, auto_blacks=False)
-
-
 def look_params(**kw):
     return RenderParams(**dict(LOOK["params"], **kw)).to_dict()
 
@@ -163,11 +159,9 @@ def test_noref_v3_t4b_keeps_print_contrast_and_never_sets_blacks():
     print contrast centre 1.30 with no shadow lift and blacks 0 (T4 v2 gave contrast 0.95, shadows +0.15, blacks +0.10
     on such frames by comparing -log10 of the positive with print-density thresholds); a crushed frame gets a
     positive shadows lift and still blacks 0. T4d / T4e: the centre is base_contrast; the normal frame has no
-    backlit weight (T4f: 3.5 stops; the wider T4f backlit weight gives a 4-stop log-uniform scene w = 0.06). T4i: with
-    the auto levels off (they raise contrast and lower blacks on narrow / lifted frames, tested below)."""
-    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+    backlit weight (T4f: 3.5 stops; the wider T4f backlit weight gives a 4-stop log-uniform scene w = 0.06)."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
 
-    NOREF_V3 = dict(V3, **NO_AUTO_LEVELS)
     normal = estimate_params_v3(scene(median=0.18, stops=3.5, seed=21), None, NOREF_V3)
     assert normal["status"] == "ok" and normal["config_rev"] == NOREF_V3["rev"]
     assert "backlit_midtone" not in normal["flags"]  # T4c: a 7-stop log-uniform scene counts as backlit
@@ -228,8 +222,7 @@ def test_noref_v3_t4c_backlit_frame_lifts_midtone_and_renders_the_given_matrix()
 
 def test_t4d_style_presets_are_overrides_of_noref_v3_and_standard_is_noref_v3():
     """T4d: every style preset only overrides existing NOREF_V3 entries, standard is NOREF_V3 itself, unknown names
-    are refused, and every preset gives a valid estimate whose blacks is the preset's constant (T4i: plus at most
-    auto_blacks_max of auto blacks, never above it)."""
+    are refused, and every preset gives a valid estimate whose blacks is the preset's constant."""
     from filmcolor.noref import NOREF_V3, STYLE_PRESETS, estimate_params_v3, preset_config
 
     assert list(STYLE_PRESETS) == ["standard", "natural", "portrait", "vivid", "print_classic"]
@@ -242,26 +235,19 @@ def test_t4d_style_presets_are_overrides_of_noref_v3_and_standard_is_noref_v3():
         cfg = preset_config(name)
         e = estimate_params_v3(P, None, cfg)
         assert e["status"] == "ok" and e["preset"] == name
-        b = e["params"].get("blacks", 0.0)
-        assert cfg["base_blacks"] - cfg["auto_blacks_max"] - 1e-9 <= b <= cfg["base_blacks"]
-        assert e["params"]["chroma_preserve"] == cfg["chroma_preserve"]
-        assert preset_config(name, dict(NOREF_V3, **NO_AUTO_LEVELS))["auto_blacks"] is False
-        e0 = estimate_params_v3(P, None, preset_config(name, dict(NOREF_V3, **NO_AUTO_LEVELS)))
-        assert e0["params"].get("blacks", 0.0) == cfg["base_blacks"]
+        assert e["params"].get("blacks", 0.0) == cfg["base_blacks"] and e["params"]["chroma_preserve"] == cfg["chroma_preserve"]
         RenderParams.from_dict(e["params"])  # inside the slider bounds
 
 
 def test_t4d_presets_order_brightness_contrast_and_colour():
     """T4d preset expectations on a plain 4-stop scene (no backlit weight): portrait brighter and print darker than
     standard; vivid more contrast and colour than standard, natural less; print and vivid crush blacks a little.
-    (On a 4-stop scene the darker print preset already gets some backlit weight: encoded p25 < 0.36.) T4i: the preset
-    table itself, auto levels off."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3, preset_config
+    (On a 4-stop scene the darker print preset already gets some backlit weight: encoded p25 < 0.36.)"""
+    from filmcolor.noref import estimate_params_v3, preset_config
 
     P = scene(median=0.18, stops=3.5, chroma=0.12, seed=32)
-    base = dict(NOREF_V3, **NO_AUTO_LEVELS)
-    e = {n: estimate_params_v3(P, None, preset_config(n, base)) for n in ("standard", "natural", "portrait", "vivid",
-                                                                           "print_classic")}
+    e = {n: estimate_params_v3(P, None, preset_config(n)) for n in ("standard", "natural", "portrait", "vivid",
+                                                                     "print_classic")}
     assert all(x["diagnostics"]["backlit_check"]["weight"] == 0 for x in e.values())
     med = {n: x["diagnostics"]["encoded_median"] for n, x in e.items()}
     assert med["portrait"] > med["standard"] > med["print_classic"]
@@ -364,11 +350,12 @@ def test_t4g_adaptive_wb_recovers_evidence_outside_the_fixed_radius():
 def test_t4h_clear_sky_grey_world_damps_only_the_blue_axis():
     """T4h: a cyan cast in the clear-sky direction (red low, blue high; A008-like [-0.30, +0.26]) keeps its full
     grey-world weight; the estimate's red axis is kept at wb_v3_gw_sky_red and only its blue axis is damped by
-    wb_v3_sky_weight (T4g damped the whole weight), so the frame is warmed. T4i: on a frame cool all over this damping
-    is off by default (test_t4i_uniform_cool_cast_is_corrected_not_damped); checked here with the T4h rule."""
+    wb_v3_sky_weight (T4g damped the whole weight), so the frame is warmed. T4j: this scene is the same cast in every
+    zone, a cool cast by wb_v3_cool_* (test_t4j_uniform_cool_cast_is_corrected_not_damped); checked here with the
+    check off."""
     from filmcolor.noref import NOREF_V3 as V3, estimate_wb_v3
 
-    NOREF_V3 = dict(V3, wb_v3_sky_split_check=False)
+    NOREF_V3 = dict(V3, wb_v3_cool_cast_check=False)
     rng = np.random.default_rng(53)
     y = 0.18 * 2 ** rng.uniform(-2, 2, 20000)
     c = rng.normal([-0.30, 0.26], 0.03, (len(y), 2))
@@ -384,12 +371,10 @@ def test_t4h_clear_sky_grey_world_damps_only_the_blue_axis():
 
 
 def test_t4g_soft_presets_keep_shadow_highlight_and_slope_defaults():
-    """T4g: natural / portrait get no backlit contrast step and keep their shadow / highlight / slope bases (T4i: auto
-    levels off; they move contrast, slopes and blacks on their own measurements)."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3, preset_config
+    from filmcolor.noref import estimate_params_v3, preset_config
 
     for name in ("natural", "portrait"):
-        cfg = preset_config(name, dict(NOREF_V3, **NO_AUTO_LEVELS))
+        cfg = preset_config(name)
         for P in (scene(median=0.18, stops=3.5, seed=32), backlit_scene()):
             e = estimate_params_v3(P, None, cfg)
             p = e["params"]
@@ -457,14 +442,12 @@ def test_t4f_ev_refinement_brightens_under_the_p98_ceiling():
 
 def test_t4f_wb_damps_a_clear_sky_bright_zone():
     """T4f Bug 3: a bright near-neutral zone with red low and blue high (clear sky) gets wb_v3_sky_weight x its
-    weight, so a blue sky pulls the white balance less towards warm; strength 0.65 (T4b-T4e 0.85; T4i 0.80). T4i: the
-    sky over grass is a sky scene (top half bluer than the bottom half), so the damping still applies."""
+    weight, so a blue sky pulls the white balance less towards warm; strength 0.65 (T4b-T4e 0.85)."""
     from filmcolor.noref import NOREF_V3, _sample, estimate_wb_v3
 
-    assert NOREF_V3["wb_v3_strength"] == 0.80
+    assert NOREF_V3["wb_v3_strength"] == 0.65
     px = _sample(sky_over_grass(), None, NOREF_V3["n_sample"] // 4, seed=1)
     wb = estimate_wb_v3(px, NOREF_V3)
-    assert wb["diagnostics"]["sky_scene"] and wb["diagnostics"]["top_bottom_spread"] >= NOREF_V3["wb_v3_sky_spread"]
     z0 = wb["diagnostics"]["zones"][0]
     assert z0["clear_sky"] and z0["weight"] == pytest.approx(NOREF_V3["wb_v3_zones"][0][2] * NOREF_V3["wb_v3_sky_weight"])
     undamped = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_sky_weight=1.0))
@@ -494,34 +477,66 @@ def test_t4f_anchor_lift_is_held_to_the_p98_ceiling():
     assert p98(on, r_on["ev_anchor"]) <= cfg["ev_refine_p98_max"] + 1e-3 < p98(off, r_off["ev_anchor"])
 
 
-def test_t4i_uniform_cool_cast_is_corrected_not_damped():
-    """T4i Bug 2 (_DSF8948): a frame cool all over (grey world [-0.46, +0.61], top and bottom halves alike) is not a
-    sky scene, so neither the bright zone nor the grey-world estimate is damped; the strong grey-world cast gets weight
-    wb_v3_cast_gw_weight and confidence at least wb_v3_cast_conf, and the frame is warmed much more than by the T4h
-    rule (clear-sky damping on every frame pointing that way, strength 0.65)."""
-    from filmcolor.noref import NOREF_V3, estimate_wb_v3
-
-    rng = np.random.default_rng(61)
+def cool_cast_scene(mid_grey=(-0.15, 0.22), seed=61):
+    """40 % near-neutral greys (cool, ``mid_grey`` below the 70th luminance percentile) and the rest strongly cast
+    [-0.6, +0.8]; both halves of the frame alike."""
+    rng = np.random.default_rng(seed)
     n = 40000
     y = 0.18 * 2 ** rng.uniform(-2, 2, n)
-    grey = rng.random(n) < 0.4  # 40 % near-neutral greys, the rest strongly cast; both halves alike
-    c = np.where(grey[:, None], rng.normal([-0.15, 0.22], 0.04, (n, 2)), rng.normal([-0.6, 0.8], 0.1, (n, 2)))
-    px = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1)
+    grey = rng.random(n) < 0.4
+    low = y < np.percentile(y, 70)
+    g = np.where(low[:, None], rng.normal(mid_grey, 0.04, (n, 2)), rng.normal([-0.15, 0.22], 0.04, (n, 2)))
+    c = np.where(grey[:, None], g, rng.normal([-0.6, 0.8], 0.1, (n, 2)))
+    return np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1)
+
+
+def test_t4j_uniform_cool_cast_is_corrected_not_damped():
+    """T4j (_DSF8948): bright zone, mid-grey zone and grey world all cool (red low, blue high past wb_v3_cool_*) is a
+    cool cast, not a sky: neither the bright zone nor the grey world is damped, the grey world gets
+    wb_v3_cast_gw_weight, confidence at least wb_v3_cast_conf and strength wb_v3_cast_strength, so the frame is warmed
+    much more than by the T4h rule (cool_cast_check off); the global strength stays 0.65."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    assert NOREF_V3["wb_v3_strength"] == 0.65 and NOREF_V3["wb_v3_cast_strength"] == 0.80
+    px = cool_cast_scene()
     wb = estimate_wb_v3(px, NOREF_V3)
     d = wb["diagnostics"]
-    assert d["top_bottom_spread"] < NOREF_V3["wb_v3_sky_spread"] and not d["sky_scene"]
+    z0, z1, gw = d["zones"][0]["chroma"], d["zones"][1]["chroma"], d["grey_world"]["chroma"]
+    assert z0[0] < -0.05 < 0.05 < z0[1] and z1[0] < -0.10 < 0.10 < z1[1] and gw[0] < -0.20 < 0.25 < gw[1]
+    assert d["cool_cast"]
     assert not any(z.get("clear_sky") for z in d["zones"]) and "clear_sky" not in d["grey_world"]
-    assert d["grey_world"]["cast"] and d["grey_world"]["weight"] == NOREF_V3["wb_v3_cast_gw_weight"]
-    assert wb["confidence"] >= NOREF_V3["wb_v3_cast_conf"]
-    t4h = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_sky_split_check=False, wb_v3_strength=0.65))
-    assert t4h["diagnostics"]["grey_world"]["clear_sky"] and wb["temp"] > t4h["temp"] + 0.15 > 0.15
+    assert d["zones"][0]["weight"] == NOREF_V3["wb_v3_zones"][0][2]
+    assert d["grey_world"]["weight"] == NOREF_V3["wb_v3_cast_gw_weight"] and wb["confidence"] >= NOREF_V3["wb_v3_cast_conf"]
+    t4h = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_cool_cast_check=False))
+    assert not t4h["diagnostics"]["cool_cast"] and t4h["diagnostics"]["grey_world"]["clear_sky"]
+    assert t4h["diagnostics"]["zones"][0]["clear_sky"] and wb["temp"] > t4h["temp"] + 0.15 > 0.15
+
+
+def test_t4j_sky_over_a_warm_mid_grey_zone_is_still_damped():
+    """T4j: the same cool bright zone and grey world over a mid-grey zone whose blue is not high (A008's mid-grey zone
+    is [-0.12, -0.08]) is not a cool cast; the T4h clear-sky damping applies as before (same result as with the check
+    off)."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    px = cool_cast_scene(mid_grey=(-0.12, -0.08))
+    wb = estimate_wb_v3(px, NOREF_V3)
+    d = wb["diagnostics"]
+    z1 = d["zones"][1]["chroma"]
+    assert z1[1] < NOREF_V3["wb_v3_cool_z1"][1] and not d["cool_cast"]
+    assert d["zones"][0]["clear_sky"] and d["grey_world"]["clear_sky"]
+    assert d["zones"][0]["weight"] == pytest.approx(NOREF_V3["wb_v3_zones"][0][2] * NOREF_V3["wb_v3_sky_weight"])
+    off = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_cool_cast_check=False))
+    assert (wb["temp"], wb["tint"], wb["confidence"]) == (off["temp"], off["tint"], off["confidence"])
 
 
 def test_t4i_auto_contrast_and_blacks_on_a_narrow_lifted_frame():
     """T4i: a narrow frame (2 stops, encoded p90 - p10 below auto_contrast_spread) gets contrast + min(max, gain x
     shortfall); its darkest 2 % sit above auto_blacks_p2, so blacks gets -clip((p2 - offset) x gain, 0, max), measured
-    after the contrast step; both off with their switches."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    after the contrast step; both off with their switches. T4j: off by default, switched on here."""
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+
+    NOREF_V3 = dict(V3, auto_contrast=True, auto_blacks=True)
+    assert V3["auto_contrast"] is False and V3["auto_blacks"] is False and V3["auto_slope"] is False
 
     P = scene(median=0.18, stops=2.0, chroma=0.05, seed=63)
     e = estimate_params_v3(P, None, NOREF_V3)
@@ -542,14 +557,15 @@ def test_t4i_auto_contrast_and_blacks_on_a_narrow_lifted_frame():
 def test_t4i_auto_slope_follows_green_between_shadows_and_highlights():
     """T4i: a positive whose blue channel has a lower gamma than green (log2 B = 0.85 log2 G: blue in the shadows,
     short of blue in the highlights) gets a negative slope_b, at most auto_slope_max, that brings B / G at the shadow
-    and highlight percentiles closer together in the render; a channel that follows G gets none."""
+    and highlight percentiles closer together in the render; a channel that follows G gets none. T4j: off by default,
+    switched on here."""
     from filmcolor.noref import NOREF_V3, _sample, estimate_params_v3
     from filmcolor.render import render_full
 
     rng = np.random.default_rng(65)
     g = 0.18 * 2.0 ** rng.uniform(-3, 3, 200_000)
     P = np.stack([g, g, 0.18 * (g / 0.18) ** 0.85], -1).reshape(400, -1, 3).astype(np.float32)
-    cfg = dict(NOREF_V3, wb_v3_strength=0.0)  # white balance off: only the slope is under test
+    cfg = dict(NOREF_V3, auto_slope=True, wb_v3_strength=0.0)  # white balance off: only the slope is under test
     e = estimate_params_v3(P, None, cfg)
     s = e["diagnostics"]["auto_levels"]["slope"]
     assert "slope_r" not in s and -NOREF_V3["auto_slope_max"] <= s["slope_b"] < 0

@@ -385,8 +385,9 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4i-2026-10-26",          # T4i: sky damping only on a top-cool / bottom-warm frame, auto slopes, contrast
-                                   # and blacks; T4h: sky damping on the grey-world blue axis only, milder portrait;
+    rev="t4j-2026-10-26",          # T4j: no sky damping on a uniform cool cast (bright, mid-grey and grey world all
+                                   # cool), auto levels off by default; T4i (not adopted): sky split, auto levels;
+                                   # T4h: sky damping on the grey-world blue axis only, milder portrait;
                                    # T4g: adaptive WB and softer portrait / natural presets; T4f: trimean anchor,
                                    # textured EV refinement (at most -0.20 EV down), wider backlit, sky WB damping;
                                    # T4e: standard back to the T4c band, backlit weight narrowed and relative to the
@@ -437,28 +438,26 @@ NOREF_V3 = dict(
     wb_v3_share=(0.01, 0.08),      # candidate share mapping to confidence 0..1
     wb_v3_mad=(0.10, 0.35),        # candidate MAD mapping to confidence factor 1..0.5 (never 0)
     wb_v3_conflict_factor=0.75,    # quadrant disagreement lowers confidence by this factor (never to 0)
-    wb_v3_strength=0.80,           # share of the measured residual cast removed at full confidence (T4i; T4f-T4h
-                                   # 0.65, T4b-T4e 0.85)
+    wb_v3_strength=0.65,           # share of the measured residual cast removed at full confidence (T4b-T4e 0.85)
     wb_v3_sky=(-0.05, 0.05),       # T4f: bright zone reads as clear sky when its log2 R/G < [0] and log2 B/G > [1]
     wb_v3_sky_weight=0.35,         # T4f: then its weight is multiplied by this (the mid-grey zone leads)
-    # T4i: the clear-sky damping applies only to a sky scene, top half of the frame cooler than the bottom half:
-    # top_bottom_spread >= wb_v3_sky_spread and (top - bottom log2 B/G >= wb_v3_sky_split or top - bottom log2 R/G <=
-    # -wb_v3_sky_split); a frame cool all over (_DSF8948, spread 0.043) is a cast. False = T4f-T4h behaviour.
-    wb_v3_sky_split_check=True, wb_v3_sky_spread=0.10, wb_v3_sky_split=0.05,
-    # T4i: outside a sky scene, a grey-world cast of norm >= wb_v3_cast_norm gets weight wb_v3_cast_gw_weight and the
-    # confidence at least wb_v3_cast_conf
-    wb_v3_cast_norm=0.20, wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80,
-    # T4i auto levels on the existing sliders (task list 2.1, scheme A):
+    # T4j: a uniform cool cast, the bright zone, the mid-grey zone and the midtone grey world each with log2 R/G below
+    # [0] and log2 B/G above [1] of its pair, is not damped as a sky; it gets grey-world weight wb_v3_cast_gw_weight,
+    # confidence at least wb_v3_cast_conf and strength wb_v3_cast_strength. False = the T4h rule.
+    wb_v3_cool_cast_check=True,
+    wb_v3_cool_z0=(-0.05, 0.05), wb_v3_cool_z1=(-0.10, 0.10), wb_v3_cool_gw=(-0.20, 0.25),
+    wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80, wb_v3_cast_strength=0.80,
+    # T4i auto levels on the existing sliders (task list 2.1, scheme A; off by default since T4j, measured in T4i):
     # - slope_r / slope_b: per-channel log2 ratio to G at the auto_slope_pct percentiles (pixels with max > 0.003);
     #   when highlight minus shadow ratio differs by >= auto_slope_min_delta, the channel's gamma is matched to G over
     #   the G log range, at most +-auto_slope_max, added to the preset's slope
-    auto_slope=True, auto_slope_pct=(2.0, 98.0), auto_slope_min_delta=0.10, auto_slope_max=0.08,
+    auto_slope=False, auto_slope_pct=(2.0, 98.0), auto_slope_min_delta=0.10, auto_slope_max=0.08,
     # - contrast: encoded luminance p90 - p10 below auto_contrast_spread raises contrast by auto_contrast_gain x the
     #   shortfall, at most auto_contrast_max (the task list gives the cap and threshold; the gain is ours)
-    auto_contrast=True, auto_contrast_spread=0.42, auto_contrast_gain=1.3, auto_contrast_max=0.22,
+    auto_contrast=False, auto_contrast_spread=0.42, auto_contrast_gain=1.3, auto_contrast_max=0.22,
     # - blacks: encoded luminance p2 above auto_blacks_p2 adds -clip((p2 - auto_blacks_offset) x auto_blacks_gain, 0,
     #   auto_blacks_max) to the preset's blacks, within +-auto_blacks_bound
-    auto_blacks=True, auto_blacks_p2=0.06, auto_blacks_offset=0.05, auto_blacks_gain=1.1, auto_blacks_max=0.28,
+    auto_blacks=False, auto_blacks_p2=0.06, auto_blacks_offset=0.05, auto_blacks_gain=1.1, auto_blacks_max=0.28,
     auto_blacks_bound=0.35,
     wp_invalid_stops=1.5,
     matrix=None,                   # colour matrix rendered with (app: camera_color_matrix of the RAW); None = identity
@@ -575,9 +574,10 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     spread and is lowered, never zeroed, when image quadrants disagree (a frame with sky above and grass below is not
     evidence against a cast). T4g expands sparse zones to their lowest-chroma 15% and blends a midtone Huber estimate;
     a clear-sky bright zone gets less weight, and a clear-sky grey-world estimate keeps its red axis (x
-    ``wb_v3_gw_sky_red``) with only its blue axis damped (T4h). T4i: both dampings only on a sky scene (top half
-    cooler than the bottom half, ``wb_v3_sky_split_check``); elsewhere a strong grey-world cast gets more weight and a
-    confidence floor. temp / tint remove ``wb_v3_strength`` x confidence."""
+    ``wb_v3_gw_sky_red``) with only its blue axis damped (T4h). T4j: when the bright zone, the mid-grey zone and the
+    grey world all point to a strong cool cast (``wb_v3_cool_*``: red low, blue high), the frame is cool all over, not
+    a sky: no damping, grey-world weight ``wb_v3_cast_gw_weight``, confidence at least ``wb_v3_cast_conf`` and strength
+    ``wb_v3_cast_strength``. temp / tint remove ``wb_v3_strength`` x confidence of the cast."""
     cfg = cfg or NOREF_V3
     px = np.asarray(px, np.float32)
     y = px @ LUMA.astype(np.float32)
@@ -588,29 +588,8 @@ def estimate_wb_v3(px, cfg=None) -> dict:
         return dict(temp=0.0, tint=0.0, confidence=0.0, chroma=[0.0, 0.0], diagnostics=dict(diag, reason="too few pixels"))
     c = _chroma(px)
     norm = np.linalg.norm(c, axis=1)
-    quads = []
-    n = len(px)
-    # quadrants are approximated by sample order: _sample keeps row-major order, so halves of the sample are the
-    # top and bottom of the frame; left / right are not separable here, so only top vs bottom is checked
-    for half in (slice(0, n // 2), slice(n // 2, n)):
-        ch, yh, nh = c[half], y[half], norm[half]
-        lo, hi = np.percentile(yh, [25, 96])
-        selh = (yh >= lo) & (yh <= hi) & (nh <= max(r for _, r, _ in cfg["wb_v3_zones"]))
-        if selh.sum() >= cfg["wb_v3_min_px"]:
-            quads.append(_huber_location(ch[selh], cfg["wb_v3_huber"]))
-    if len(quads) == 2:
-        diag["top_bottom_spread"] = float(np.linalg.norm(quads[0] - quads[1]))
-    # T4i: clear-sky damping only on a sky scene (top half cooler than the bottom half); T4f-T4h damped every frame
-    # whose estimate pointed that way, including frames cool all over
-    if cfg.get("wb_v3_sky_split_check", False):
-        split = cfg["wb_v3_sky_split"]
-        sky_scene = bool(len(quads) == 2 and diag["top_bottom_spread"] >= cfg["wb_v3_sky_spread"] and (
-            quads[0][1] - quads[1][1] >= split or quads[0][0] - quads[1][0] <= -split))
-    else:
-        sky_scene = True
-    diag["sky_scene"] = sky_scene
-    ests, weights, cands = [], [], []
-    sky_r, sky_b = cfg.get("wb_v3_sky", (-np.inf, np.inf)) if sky_scene else (-np.inf, np.inf)
+    ests, weights, cands, found = [], [], [], []
+    sky_r, sky_b = cfg.get("wb_v3_sky", (-np.inf, np.inf))
     for i, ((q_lo, q_hi), radius, weight) in enumerate(cfg["wb_v3_zones"]):
         lo, hi = np.percentile(y, [q_lo, q_hi])
         zone = (y >= lo) & (y <= hi)
@@ -624,31 +603,39 @@ def estimate_wb_v3(px, cfg=None) -> dict:
         if sel.sum() >= cfg["wb_v3_min_px"]:
             est = _huber_location(c[sel], cfg["wb_v3_huber"])
             zd.update(chroma=[float(v) for v in est])
-            if i == 0 and est[0] < sky_r and est[1] > sky_b:
-                # T4f: a bright zone with red low and blue high reads as clear sky, not as a cool cast
-                weight = weight * float(cfg["wb_v3_sky_weight"])
-                zd.update(clear_sky=True)
-            zd.update(weight=float(weight))
-            ests.append(est), weights.append(weight), cands.append(c[sel])
+            ests.append(est), weights.append(weight), cands.append(c[sel]), found.append(i)
         diag["zones"].append(zd)
     if not ests:
         return dict(temp=0.0, tint=0.0, confidence=0.0, chroma=[0.0, 0.0],
                     diagnostics=dict(diag, reason="no near-neutral zone with enough pixels"))
-    w = np.asarray(weights) / np.sum(weights)
-    est = (w[:, None] * np.asarray(ests)).sum(0)
     lo, hi = np.percentile(y, [15, 88])
     mid = (y >= lo) & (y <= hi)
-    cast = False
-    if mid.sum() >= cfg["wb_v3_min_px"]:
-        est_gw = _huber_location(c[mid], cfg["wb_v3_gw_huber"])
+    est_gw = _huber_location(c[mid], cfg["wb_v3_gw_huber"]) if mid.sum() >= cfg["wb_v3_min_px"] else None
+
+    def cool(v, key):  # log2 R/G below and log2 B/G above the thresholds of cfg[key]
+        return bool(v[0] < cfg[key][0] and v[1] > cfg[key][1])
+
+    # T4j: a uniform cool cast (_DSF8948: bright [-0.10, +0.17], mid-grey [-0.22, +0.31], grey world [-0.46, +0.61]);
+    # a sky over a warm or green ground has a mid-grey zone that is not cool (A008 [-0.12, -0.08]) and keeps the damping
+    cool_cast = bool(cfg.get("wb_v3_cool_cast_check", False) and found == [0, 1] and est_gw is not None
+                     and cool(ests[0], "wb_v3_cool_z0") and cool(ests[1], "wb_v3_cool_z1")
+                     and cool(est_gw, "wb_v3_cool_gw"))
+    diag["cool_cast"] = cool_cast
+    for k, i in enumerate(found):
+        if i == 0 and not cool_cast and ests[k][0] < sky_r and ests[k][1] > sky_b:
+            # T4f: a bright zone with red low and blue high reads as clear sky, not as a cool cast
+            weights[k] = weights[k] * float(cfg["wb_v3_sky_weight"])
+            diag["zones"][i].update(clear_sky=True)
+        diag["zones"][i].update(weight=float(weights[k]))
+    w = np.asarray(weights) / np.sum(weights)
+    est = (w[:, None] * np.asarray(ests)).sum(0)
+    if est_gw is not None:
         sparse = any(z["narrow_share"] < cfg["wb_v3_adaptive_share"] for z in diag["zones"])
         gw_weight = float(cfg["wb_v3_gw_weight"]) if sparse or np.linalg.norm(est_gw) > cfg["wb_v3_gw_threshold"] else 0.0
-        if cfg.get("wb_v3_sky_split_check", False) and not sky_scene and (
-                np.linalg.norm(est_gw) >= cfg["wb_v3_cast_norm"]):
-            # T4i: a strong cast over a frame without a sky split: grey world leads, confidence raised below
-            gw_weight, cast = float(cfg["wb_v3_cast_gw_weight"]), True
-        diag["grey_world"] = dict(chroma=[float(v) for v in est_gw], weight=gw_weight, cast=cast)
-        if est_gw[0] < sky_r and est_gw[1] > sky_b:
+        if cool_cast:
+            gw_weight = float(cfg["wb_v3_cast_gw_weight"])
+        diag["grey_world"] = dict(chroma=[float(v) for v in est_gw], weight=gw_weight)
+        if not cool_cast and est_gw[0] < sky_r and est_gw[1] > sky_b:
             # T4h: in a clear-sky direction only the blue axis is damped (T4g damped the whole weight), so a cyan cast
             # (red low) is still corrected without pulling the sky yellow
             est_gw = np.array([est_gw[0] * float(cfg["wb_v3_gw_sky_red"]), est_gw[1] * float(cfg["wb_v3_sky_weight"])])
@@ -660,12 +647,26 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     conf = _ramp(share, *cfg["wb_v3_share"]) * (1 - 0.5 * _ramp(mad, *cfg["wb_v3_mad"]))
     if len(ests) == 2:
         diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
-    if len(quads) == 2 and diag["top_bottom_spread"] > cfg["wb_conflict"]:
-        conf *= cfg["wb_v3_conflict_factor"]
-        diag["conflict"] = True
-    if cast:
+    quads = []
+    n = len(px)
+    # quadrants are approximated by sample order: _sample keeps row-major order, so halves of the sample are the
+    # top and bottom of the frame; left / right are not separable here, so only top vs bottom is checked
+    for half in (slice(0, n // 2), slice(n // 2, n)):
+        ch, yh, nh = c[half], y[half], norm[half]
+        lo, hi = np.percentile(yh, [25, 96])
+        selh = (yh >= lo) & (yh <= hi) & (nh <= max(r for _, r, _ in cfg["wb_v3_zones"]))
+        if selh.sum() >= cfg["wb_v3_min_px"]:
+            quads.append(_huber_location(ch[selh], cfg["wb_v3_huber"]))
+    if len(quads) == 2:
+        diag["top_bottom_spread"] = float(np.linalg.norm(quads[0] - quads[1]))
+        if diag["top_bottom_spread"] > cfg["wb_conflict"]:
+            conf *= cfg["wb_v3_conflict_factor"]
+            diag["conflict"] = True
+    strength = cfg["wb_v3_strength"]
+    if cool_cast:
         conf = max(conf, float(cfg["wb_v3_cast_conf"]))
-    temp, tint = wb_from_chroma(cfg["wb_v3_strength"] * conf * est)
+        strength = cfg["wb_v3_cast_strength"]
+    temp, tint = wb_from_chroma(strength * conf * est)
     m = cfg["wb_max_shift"]
     diag.update(share=share, mad=mad)
     return dict(temp=float(np.clip(temp, -m, m)), tint=float(np.clip(tint, -m, m)), confidence=float(conf),
@@ -694,7 +695,7 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
        raised ``shoulder``.
     5. **Shadow Hold** (T4b): positive ``shadows`` only when the encoded luminance p25 is below ``shadow_p25_floor``;
        ``blacks`` starts at the preset's constant ``base_blacks`` (0 for standard).
-    5b. **Auto levels** (T4i, on the existing sliders): ``slope_r`` / ``slope_b`` follow G between the shadow and
+    5b. **Auto levels** (T4i, on the existing sliders; off by default since T4j): ``slope_r`` / ``slope_b`` follow G between the shadow and
        highlight percentiles of each channel; a narrow frame (encoded p90 - p10 < ``auto_contrast_spread``) gets more
        contrast; lifted shadows (encoded p2 > ``auto_blacks_p2``) a negative ``blacks`` on top of the preset's.
     6. **White balance** (T4b, ``estimate_wb_v3``): robust residual cast of bright near-neutral and low-saturation

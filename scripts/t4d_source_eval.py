@@ -216,7 +216,8 @@ def main(out_json: str, opts: list[str]):
             (oL, oC), (rL, rC) = med_lc(a), med_lc(r)
             out["variants"][name] = dict(params=est["params"], flags=est.get("flags"), status=est.get("status"),
                                          backlit=est.get("diagnostics", {}).get("backlit_check"),
-                                         estimate_seconds=round(est_s, 3), cam_mix=mix if cam is not None else None,
+                                         wb_cool_cast=est.get("diagnostics", {}).get("wb", {}).get("diagnostics", {})
+                                         .get("cool_cast"), estimate_seconds=round(est_s, 3), cam_mix=mix if cam is not None else None,
                                          metrics=mt, ours_L_median=oL, ours_C_median=oC, ref_L_median=rL,
                                          ref_C_median=rC)
         if "error" in out:
