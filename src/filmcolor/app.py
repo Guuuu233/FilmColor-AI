@@ -93,7 +93,8 @@ THUMB_SIDE = 240
 THUMB_REV = "t4l"  # thumbnails rendered with the T4l NOREF_V3 (standard preset) and inversion, holder shown dark
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
-WHITE_SELF_RATIO = (0.78, 0.85)  # T4l: colour film's invert.self_ratio_white_point (collapse, target); None = off
+WHITE_SELF_RATIO = None  # T4l: colour film's invert.self_ratio_white_point (collapse, target), e.g. (0.78, 0.85);
+                         # off: under per-frame B0 bases it missed DSC_3827 / A006 / A196 and hurt 19960809B-14 (+8.67)
 WHITE_B_GUARD = None  # T4k: colour film's blue white point guard (invert.blue_white_guard), e.g. (1.12, 1.18, 0.65);
                       # off: on scanner DNGs (BlueNeg, d_hi B/G 0.24-0.69) it turned 26 of 27 frames yellow
 SUBROLL_CHROMA_TOL = 0.15  # T4k: own-base log2 R/G, B/G tolerance of one sub-roll inside a (body, date) group of a

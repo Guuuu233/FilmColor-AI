@@ -764,19 +764,21 @@ def test_t4l_metering_mask_uses_the_inset_film_box_and_cuts_full_black_strips_on
 
 
 def test_t4l_ev_lowering_widens_on_frames_bright_all_over():
-    """T4l: when the textured cells' encoded p25 is high (a frame bright all over, 13 BlueNeg rolls / A222) the ev
-    refinement may lower by ev_refine_down_max + ev_down_extra x ramp(p25; ev_down_q25), instead of 0.20; with p25
-    below the ramp (a sky over dark ground, A013) the limit stays 0.20 and the result is the T4k one."""
+    """T4l: when the textured cells' encoded p25 is high (a frame bright all over, 13 BlueNeg rolls / A222) and
+    ev_down_adaptive is enabled, the ev refinement may lower by ev_refine_down_max + ev_down_extra x ramp(p25;
+    ev_down_q25), instead of 0.20; off by default (False: 4 better / 10 worse on the 185 dev frames); with p25 below the
+    ramp (a sky over dark ground, A013) the limit stays 0.20 and the result is the T4k one."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3
 
+    assert not NOREF_V3["ev_down_adaptive"]
     P = scene(median=0.75, stops=2.0, seed=93)
-    on = estimate_params_v3(P, None, NOREF_V3)
-    off = estimate_params_v3(P, None, dict(NOREF_V3, ev_down_adaptive=False))
+    off = estimate_params_v3(P, None, NOREF_V3)
+    on = estimate_params_v3(P, None, dict(NOREF_V3, ev_down_adaptive=True))
     r, r_off = on["diagnostics"]["ev_refine"], off["diagnostics"]["ev_refine"]
     assert r["q25_tex"] >= NOREF_V3["ev_down_q25"][0] and r["down_max"] > NOREF_V3["ev_refine_down_max"] + 0.1
     floor = min(r_off["ev_anchor"], max(r_off["ev_anchor"] - NOREF_V3["ev_refine_down_max"], -NOREF_V3["ev_refine_down_max"]))
     assert off["params"]["ev"] >= floor - 1e-6 and on["params"]["ev"] < floor - 0.1
-    high = estimate_params_v3(P, None, dict(NOREF_V3, ev_down_q25=(0.95, 0.99)))  # p25 below the ramp: 0.20 as before
+    high = estimate_params_v3(P, None, dict(NOREF_V3, ev_down_adaptive=True, ev_down_q25=(0.95, 0.99)))  # p25 below ramp
     assert high["diagnostics"]["ev_refine"]["down_max"] == pytest.approx(NOREF_V3["ev_refine_down_max"])
     assert high["params"]["ev"] == off["params"]["ev"]
 

@@ -445,10 +445,11 @@ NOREF_V3 = dict(
     meter_holder_box=True, meter_holder_min_share=0.01, meter_box_inset=0.08,
     meter_trim_strips=True, meter_strip_luma=0.012, meter_strip_share=0.80, meter_strip_margin=2,
     meter_min_share=0.25,          # the metering mask keeps at least this share of the original mask, else unchanged
-    # T4l: lowering the ev on frames bright all over (textured-cell encoded p25 >= ev_down_q25[0]) by up to
+    # T4l (off by default: 4 better / 10 worse on the 185 dev frames due to low-contrast ext_own frames): lowering the
+    # ev on frames bright all over (textured-cell encoded p25 >= ev_down_q25[0]) by up to
     # ev_refine_down_max + ev_down_extra x ramp(p25; ev_down_q25), instead of ev_refine_down_max alone (A013, a sky over
     # dark ground, keeps 0.20)
-    ev_down_adaptive=True, ev_down_q25=(0.42, 0.55), ev_down_extra=0.45,
+    ev_down_adaptive=False, ev_down_q25=(0.42, 0.55), ev_down_extra=0.45,
     min_span_d_g=0.22,             # T4l: inversion G density range below this: low information, manual review; None = off
     target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance of the textured cells (T4g; T4d
                                    # 0.48..0.55 and T4c / T4e 0.45..0.52 on the full frame)

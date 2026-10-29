@@ -1,0 +1,5793 @@
+{
+ "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+ "git_commit": "caa0ba909afc2aac3ea654fa018bc2331a2142f2",
+ "src_dirty": true,
+ "src_content_sha256": "10d5e6a00221b5ef2d464005912875752f9239002ed11c13500d2c1606823604",
+ "manifest": "data/manifests/s3_dev_frames.json",
+ "environment": {
+  "python": "3.13.15",
+  "numpy": "2.5.4",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O"
+ },
+ "variants": {
+  "standard": {
+   "preset": "standard"
+  },
+  "natural": {
+   "preset": "natural"
+  },
+  "portrait": {
+   "preset": "portrait"
+  },
+  "vivid": {
+   "preset": "vivid"
+  },
+  "print_classic": {
+   "preset": "print_classic"
+  },
+  "no_meter": {
+   "preset": "standard",
+   "cfg": {
+    "meter_holder_box": false,
+    "meter_trim_strips": false
+   }
+  },
+  "no_holder_box": {
+   "preset": "standard",
+   "cfg": {
+    "meter_holder_box": false
+   }
+  },
+  "no_strips": {
+   "preset": "standard",
+   "cfg": {
+    "meter_trim_strips": false
+   }
+  },
+  "no_ev_down": {
+   "preset": "standard",
+   "cfg": {
+    "ev_down_adaptive": false
+   }
+  },
+  "t4k_est": {
+   "preset": "standard",
+   "cfg": {
+    "meter_holder_box": false,
+    "meter_trim_strips": false,
+    "ev_down_adaptive": false,
+    "min_span_d_g": null
+   }
+  }
+ },
+ "ncc_min": 0.7,
+ "max_side": 1000,
+ "app_config": {},
+ "roll_folder": null,
+ "base_mode": null,
+ "frames": {
+  "blueneg:19941221D-25-kyoto": {
+   "domain": "blueneg",
+   "roll": "19941221D",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.5613641738891602,
+     0.2657968997955322,
+     0.21811245381832123
+    ],
+    "warnings": [],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.0,
+    "level_diff": 0.0,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5596733689308167,
+     0.2649952471256256,
+     0.2176211029291153
+    ],
+    "own_rgb": [
+     0.5596733689308167,
+     0.2649952471256256,
+     0.2176211029291153
+    ]
+   },
+   "camera_matrix": false,
+   "holder_share": 0.006731251715594999,
+   "d_hi": [
+    1.069661021232605,
+    1.0900030136108398,
+    0.36845824122428894
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 67098
+   },
+   "spike_clamp": {
+    "clamp": [
+     1.15,
+     0.12
+    ],
+    "pixels": 175538,
+    "share": 0.0025338056306150256
+   },
+   "raw_sha256": "158b317edef93cd90e27a13d30fae7c00dc033d5c80498be974588eca1593a04",
+   "ref_sha256": "9144cb9771f247e31aaa02eff48d36e9f3d9b1cca696d77d9202ce19f3593b75",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.9543,
+      "temp": 0.1481,
+      "tint": 0.0328,
+      "sat": 1.0147,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.17730757966637611,
+      "p90": 0.9232055485248566,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.006569435783736345,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 0.9542655944824219,
+       "med_tex_before": 0.20416080951690674,
+       "capped_by_p98": true,
+       "ev": 0.9542714909687386,
+       "med_tex_after": 0.20416122674942017
+      }
+     },
+     "estimate_seconds": 0.523,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 10.998814841008919,
+      "de2000_p90": 14.747762472081043,
+      "mean_dL": 8.36221572531254,
+      "mean_da": -2.8906633312108085,
+      "mean_db": -4.7246433968090065,
+      "chroma_ratio": 0.893729354906257
+     },
+     "ours_L_median": 39.42565359989612,
+     "ours_C_median": 12.056298798526647,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "natural": {
+     "params": {
+      "ev": 1.4185,
+      "temp": 0.1481,
+      "tint": 0.0328,
+      "sat": 0.9707,
+      "contrast": 1.18,
+      "midtone": 0.3295,
+      "shoulder": 0.5,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.05,
+      "shadows": 0.06,
+      "chroma_preserve": 0.35
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.24378923326730728,
+      "p90": 0.9293067932128906,
+      "weight": 1.0,
+      "midtone_target": 0.329461669921875
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.006569435783736345,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 1.4185047149658203,
+       "med_tex_before": 0.27411386370658875,
+       "capped_by_p98": true,
+       "ev": 1.4185047149658203,
+       "med_tex_after": 0.27411386370658875
+      }
+     },
+     "estimate_seconds": 0.698,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 13.960016309423054,
+      "de2000_p90": 19.540338735531687,
+      "mean_dL": 13.833458201933992,
+      "mean_da": -3.100849963667933,
+      "mean_db": -3.9877895640089513,
+      "chroma_ratio": 0.8353750539478506
+     },
+     "ours_L_median": 48.15562194559283,
+     "ours_C_median": 11.386214443248543,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "portrait": {
+     "params": {
+      "ev": 1.5748,
+      "temp": 0.1381,
+      "tint": 0.0628,
+      "sat": 0.956,
+      "contrast": 1.16,
+      "midtone": 0.3128,
+      "shoulder": 0.55,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.1,
+      "shadows": 0.12,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
+      "chroma_preserve": 0.38
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.2833818718791008,
+      "p90": 0.9332209527492523,
+      "weight": 1.0,
+      "midtone_target": 0.31283874511718757
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.006569435783736345,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 1.5748310089111328,
+       "med_tex_before": 0.3147602081298828,
+       "capped_by_p98": true,
+       "ev": 1.5748345381372904,
+       "med_tex_after": 0.3147605061531067
+      }
+     },
+     "estimate_seconds": 0.692,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 13.629374456696684,
+      "de2000_p90": 19.62026722590094,
+      "mean_dL": 13.884638629280007,
+      "mean_da": -2.676536719100679,
+      "mean_db": -4.357903339790909,
+      "chroma_ratio": 0.884375681011738
+     },
+     "ours_L_median": 48.30084807891582,
+     "ours_C_median": 12.110063059552225,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "vivid": {
+     "params": {
+      "ev": 1.0312,
+      "temp": 0.1681,
+      "tint": 0.0328,
+      "sat": 1.1027,
+      "contrast": 1.56,
+      "midtone": 0.32,
+      "shoulder": 0.43,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.05,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
+      "chroma_preserve": 0.58
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.16103770956397057,
+      "p90": 0.9298618912696838,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.006569435783736345,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 1.031198501586914,
+       "med_tex_before": 0.18831640481948853,
+       "capped_by_p98": true,
+       "ev": 1.031198501586914,
+       "med_tex_after": 0.18831640481948853
+      }
+     },
+     "estimate_seconds": 0.578,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 10.777429096535503,
+      "de2000_p90": 16.111735111109297,
+      "mean_dL": 7.806166909466701,
+      "mean_da": -2.187254722439667,
+      "mean_db": -6.665671191849846,
+      "chroma_ratio": 1.0707940730271017
+     },
+     "ours_L_median": 38.015472847003814,
+     "ours_C_median": 14.15597195105805,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "print_classic": {
+     "params": {
+      "ev": 0.781,
+      "temp": 0.1581,
+      "tint": 0.0328,
+      "sat": 1.0147,
+      "contrast": 1.5,
+      "midtone": 0.3,
+      "shoulder": 0.33,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "blacks": -0.07,
+      "chroma_preserve": 0.35
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.13089203462004662,
+      "p90": 0.9202309608459472,
+      "weight": 1.0,
+      "midtone_target": 0.3
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.006569435783736345,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 0.7810211181640625,
+       "med_tex_before": 0.1548229455947876,
+       "capped_by_p98": true,
+       "ev": 0.7810276755230883,
+       "med_tex_after": 0.15482334792613983
+      }
+     },
+     "estimate_seconds": 0.521,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 8.379523748073659,
+      "de2000_p90": 14.375749902799734,
+      "mean_dL": 4.788234780118353,
+      "mean_da": -3.02123539096024,
+      "mean_db": -4.039657316828323,
+      "chroma_ratio": 0.8161850298150268
+     },
+     "ours_L_median": 33.679807408907536,
+     "ours_C_median": 10.877663087298428,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "no_meter": {
+     "params": {
+      "ev": 0.9543,
+      "temp": 0.1481,
+      "tint": 0.0328,
+      "sat": 1.0147,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.17730757966637611,
+      "p90": 0.9232055485248566,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 0.9542655944824219,
+       "med_tex_before": 0.20416080951690674,
+       "capped_by_p98": true,
+       "ev": 0.9542714909687386,
+       "med_tex_after": 0.20416122674942017
+      }
+     },
+     "estimate_seconds": 0.419,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 10.998814841008919,
+      "de2000_p90": 14.747762472081043,
+      "mean_dL": 8.36221572531254,
+      "mean_da": -2.8906633312108085,
+      "mean_db": -4.7246433968090065,
+      "chroma_ratio": 0.893729354906257
+     },
+     "ours_L_median": 39.42565359989612,
+     "ours_C_median": 12.056298798526647,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "no_holder_box": {
+     "params": {
+      "ev": 0.9543,
+      "temp": 0.1481,
+      "tint": 0.0328,
+      "sat": 1.0147,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.17730757966637611,
+      "p90": 0.9232055485248566,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 0.9542655944824219,
+       "med_tex_before": 0.20416080951690674,
+       "capped_by_p98": true,
+       "ev": 0.9542714909687386,
+       "med_tex_after": 0.20416122674942017
+      }
+     },
+     "estimate_seconds": 0.449,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 10.998814841008919,
+      "de2000_p90": 14.747762472081043,
+      "mean_dL": 8.36221572531254,
+      "mean_da": -2.8906633312108085,
+      "mean_db": -4.7246433968090065,
+      "chroma_ratio": 0.893729354906257
+     },
+     "ours_L_median": 39.42565359989612,
+     "ours_C_median": 12.056298798526647,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "no_strips": {
+     "params": {
+      "ev": 0.9543,
+      "temp": 0.1481,
+      "tint": 0.0328,
+      "sat": 1.0147,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.17730757966637611,
+      "p90": 0.9232055485248566,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.006569435783736345,
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 0.9542655944824219,
+       "med_tex_before": 0.20416080951690674,
+       "capped_by_p98": true,
+       "ev": 0.9542714909687386,
+       "med_tex_after": 0.20416122674942017
+      }
+     },
+     "estimate_seconds": 0.505,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 10.998814841008919,
+      "de2000_p90": 14.747762472081043,
+      "mean_dL": 8.36221572531254,
+      "mean_da": -2.8906633312108085,
+      "mean_db": -4.7246433968090065,
+      "chroma_ratio": 0.893729354906257
+     },
+     "ours_L_median": 39.42565359989612,
+     "ours_C_median": 12.056298798526647,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "no_ev_down": {
+     "params": {
+      "ev": 0.9543,
+      "temp": 0.1481,
+      "tint": 0.0328,
+      "sat": 1.0147,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.17730757966637611,
+      "p90": 0.9232055485248566,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.006569435783736345,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 0.9542655944824219,
+       "med_tex_before": 0.20416080951690674,
+       "capped_by_p98": true,
+       "ev": 0.9542714909687386,
+       "med_tex_after": 0.20416122674942017
+      }
+     },
+     "estimate_seconds": 0.529,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 10.998814841008919,
+      "de2000_p90": 14.747762472081043,
+      "mean_dL": 8.36221572531254,
+      "mean_da": -2.8906633312108085,
+      "mean_db": -4.7246433968090065,
+      "chroma_ratio": 0.893729354906257
+     },
+     "ours_L_median": 39.42565359989612,
+     "ours_C_median": 12.056298798526647,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    },
+    "t4k_est": {
+     "params": {
+      "ev": 0.9543,
+      "temp": 0.1481,
+      "tint": 0.0328,
+      "sat": 1.0147,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.17730757966637611,
+      "p90": 0.9232055485248566,
+      "weight": 1.0,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0900030136108398,
+       "bright_share": 0.228,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.228
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 0.9542655944824219,
+       "med_tex_before": 0.20416080951690674,
+       "capped_by_p98": true,
+       "ev": 0.9542714909687386,
+       "med_tex_after": 0.20416122674942017
+      }
+     },
+     "estimate_seconds": 0.402,
+     "cam_mix": null,
+     "metrics": {
+      "n": 107562,
+      "de2000_median": 10.998814841008919,
+      "de2000_p90": 14.747762472081043,
+      "mean_dL": 8.36221572531254,
+      "mean_da": -2.8906633312108085,
+      "mean_db": -4.7246433968090065,
+      "chroma_ratio": 0.893729354906257
+     },
+     "ours_L_median": 39.42565359989612,
+     "ours_C_median": 12.056298798526647,
+     "ref_L_median": 27.602176365202077,
+     "ref_C_median": 11.435463932731544
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "mirror": false,
+    "scale": 0.8420000000000005,
+    "offset": [
+     4,
+     22
+    ],
+    "ncc": 0.9707996527140621,
+    "factor": 2,
+    "method": "eval_blueneg.register",
+    "ref_block_factor": 3
+   },
+   "ncc": 0.9707996527140621,
+   "seconds": 26.1
+  },
+  "blueneg:19960809B-14-new-orleans-siggraph96": {
+   "domain": "blueneg",
+   "roll": "19960809B",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.42214083671569824,
+     0.23031967878341675,
+     0.17122147977352142
+    ],
+    "warnings": [
+     "87% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.0,
+    "level_diff": 0.0,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.4231370985507965,
+     0.22967876493930817,
+     0.17083412408828735
+    ],
+    "own_rgb": [
+     0.4231370985507965,
+     0.22967876493930817,
+     0.17083412408828735
+    ]
+   },
+   "camera_matrix": false,
+   "holder_share": 0.0,
+   "d_hi": [
+    0.7734261751174927,
+    0.8336639404296875,
+    0.326392263174057
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 65832
+   },
+   "spike_clamp": {
+    "clamp": [
+     1.15,
+     0.12
+    ],
+    "pixels": 25728,
+    "share": 0.0003776334605791354
+   },
+   "raw_sha256": "65f10dc706a85a935401f0164b7f917d95defdd009db57807ebd54bbf882b251",
+   "ref_sha256": "6e09baf919bbef7657897a7c1cccac9890f654c696fbacd97f7448e9f44d72f0",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0873,
+      "tint": -0.1511,
+      "sat": 1.0093,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4064780995249748,
+      "p90": 0.8231657028198243,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975311296183383,
+       "holder_share": 0.0,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975311296183383
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.4843330383300781,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.4843330383300781
+      }
+     },
+     "estimate_seconds": 0.318,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 19.70626126394847,
+      "de2000_p90": 24.57414346969495,
+      "mean_dL": 17.143637274665583,
+      "mean_da": -3.8739586773656143,
+      "mean_db": -15.699891979095325,
+      "chroma_ratio": 0.40190617811762364
+     },
+     "ours_L_median": 66.24943288138553,
+     "ours_C_median": 7.8275578915458865,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "natural": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0873,
+      "tint": -0.1511,
+      "sat": 0.9815,
+      "contrast": 1.18,
+      "midtone": 0.24,
+      "shoulder": 0.35,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "shadows": 0.06,
+      "chroma_preserve": 0.35
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.42927610129117966,
+      "p90": 0.7956176221370697,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975311296183383,
+       "holder_share": 0.0,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975311296183383
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.49923764169216156,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.49923764169216156
+      }
+     },
+     "estimate_seconds": 0.315,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 20.516882366033663,
+      "de2000_p90": 24.94330088298829,
+      "mean_dL": 17.398013113998935,
+      "mean_da": -5.178589325448589,
+      "mean_db": -15.811375495397133,
+      "chroma_ratio": 0.35249884506550405
+     },
+     "ours_L_median": 66.0595801242965,
+     "ours_C_median": 6.903067499306813,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "portrait": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0973,
+      "tint": -0.1211,
+      "sat": 0.9722,
+      "contrast": 1.16,
+      "midtone": 0.26,
+      "shoulder": 0.42,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "shadows": 0.12,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
+      "chroma_preserve": 0.38
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.45356982946395874,
+      "p90": 0.7978528082370758,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975311296183383,
+       "holder_share": 0.0,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975311296183383
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.5202201902866364,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.5202201902866364
+      }
+     },
+     "estimate_seconds": 0.309,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 21.970631214842143,
+      "de2000_p90": 26.693276497022996,
+      "mean_dL": 19.046375202634735,
+      "mean_da": -4.655502542663278,
+      "mean_db": -16.147632276471537,
+      "chroma_ratio": 0.3681121925076917
+     },
+     "ours_L_median": 67.55002927085016,
+     "ours_C_median": 7.247821173461639,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "vivid": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0673,
+      "tint": -0.1511,
+      "sat": 1.0649,
+      "contrast": 1.4674,
+      "midtone": 0.23,
+      "shoulder": 0.2911,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
+      "chroma_preserve": 0.58
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.39262624830007553,
+      "p90": 0.8312820851802826,
+      "weight": 0.07373751699924491,
+      "midtone_target": 0.2300054931640625
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975311296183383,
+       "holder_share": 0.0,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975311296183383
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.476315513253212,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.476315513253212
+      }
+     },
+     "estimate_seconds": 0.394,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 20.122029855303545,
+      "de2000_p90": 25.32095387620867,
+      "mean_dL": 17.815671501598263,
+      "mean_da": -1.386057020167778,
+      "mean_db": -15.299063762322227,
+      "chroma_ratio": 0.4974410778573053
+     },
+     "ours_L_median": 67.44643701479546,
+     "ours_C_median": 9.610182899734186,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "print_classic": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0773,
+      "tint": -0.1511,
+      "sat": 1.0093,
+      "contrast": 1.4258,
+      "midtone": 0.21,
+      "shoulder": 0.2187,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "blacks": -0.07,
+      "chroma_preserve": 0.35
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.3741694986820221,
+      "p90": 0.8337608277797699,
+      "weight": 0.2583050131797793,
+      "midtone_target": 0.21000549316406247
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975311296183383,
+       "holder_share": 0.0,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975311296183383
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.4581906646490097,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.4581906646490097
+      }
+     },
+     "estimate_seconds": 0.365,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 18.600612404137696,
+      "de2000_p90": 23.786271941031345,
+      "mean_dL": 15.91947638084617,
+      "mean_da": -3.2541140695579758,
+      "mean_db": -15.37362614777163,
+      "chroma_ratio": 0.41492548029230875
+     },
+     "ours_L_median": 65.56300263790033,
+     "ours_C_median": 7.9858955270009595,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "no_meter": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0873,
+      "tint": -0.1511,
+      "sat": 1.0093,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4064780995249748,
+      "p90": 0.8231657028198243,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.4843330383300781,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.4843330383300781
+      }
+     },
+     "estimate_seconds": 0.225,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 19.70626126394847,
+      "de2000_p90": 24.57414346969495,
+      "mean_dL": 17.143637274665583,
+      "mean_da": -3.8739586773656143,
+      "mean_db": -15.699891979095325,
+      "chroma_ratio": 0.40190617811762364
+     },
+     "ours_L_median": 66.24943288138553,
+     "ours_C_median": 7.8275578915458865,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "no_holder_box": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0873,
+      "tint": -0.1511,
+      "sat": 1.0093,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4064780995249748,
+      "p90": 0.8231657028198243,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975311296183383,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975311296183383
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.4843330383300781,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.4843330383300781
+      }
+     },
+     "estimate_seconds": 0.254,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 19.70626126394847,
+      "de2000_p90": 24.57414346969495,
+      "mean_dL": 17.143637274665583,
+      "mean_da": -3.8739586773656143,
+      "mean_db": -15.699891979095325,
+      "chroma_ratio": 0.40190617811762364
+     },
+     "ours_L_median": 66.24943288138553,
+     "ours_C_median": 7.8275578915458865,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "no_strips": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0873,
+      "tint": -0.1511,
+      "sat": 1.0093,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4064780995249748,
+      "p90": 0.8231657028198243,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975311296183383,
+       "holder_share": 0.0,
+       "used": true,
+       "mask_share_after": 0.24975311296183383
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.4843330383300781,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.4843330383300781
+      }
+     },
+     "estimate_seconds": 0.255,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 19.70626126394847,
+      "de2000_p90": 24.57414346969495,
+      "mean_dL": 17.143637274665583,
+      "mean_da": -3.8739586773656143,
+      "mean_db": -15.699891979095325,
+      "chroma_ratio": 0.40190617811762364
+     },
+     "ours_L_median": 66.24943288138553,
+     "ours_C_median": 7.8275578915458865,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "no_ev_down": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0873,
+      "tint": -0.1511,
+      "sat": 1.0093,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4064780995249748,
+      "p90": 0.8231657028198243,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975311296183383,
+       "holder_share": 0.0,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975311296183383
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.4843330383300781,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.4843330383300781
+      }
+     },
+     "estimate_seconds": 0.305,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 19.70626126394847,
+      "de2000_p90": 24.57414346969495,
+      "mean_dL": 17.143637274665583,
+      "mean_da": -3.8739586773656143,
+      "mean_db": -15.699891979095325,
+      "chroma_ratio": 0.40190617811762364
+     },
+     "ours_L_median": 66.24943288138553,
+     "ours_C_median": 7.8275578915458865,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    },
+    "t4k_est": {
+     "params": {
+      "ev": 0.8607,
+      "temp": -0.0873,
+      "tint": -0.1511,
+      "sat": 1.0093,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4064780995249748,
+      "p90": 0.8231657028198243,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8336639404296875,
+       "bright_share": 0.07852,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.07852
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 0.8607374180536611,
+       "ev_anchor": 0.8607374180536611,
+       "med_tex_before": 0.4843330383300781,
+       "ev": 0.8607374180536611,
+       "med_tex_after": 0.4843330383300781
+      }
+     },
+     "estimate_seconds": 0.202,
+     "cam_mix": null,
+     "metrics": {
+      "n": 98020,
+      "de2000_median": 19.70626126394847,
+      "de2000_p90": 24.57414346969495,
+      "mean_dL": 17.143637274665583,
+      "mean_da": -3.8739586773656143,
+      "mean_db": -15.699891979095325,
+      "chroma_ratio": 0.40190617811762364
+     },
+     "ours_L_median": 66.24943288138553,
+     "ours_C_median": 7.8275578915458865,
+     "ref_L_median": 48.34828132321465,
+     "ref_C_median": 20.626113308621797
+    }
+   },
+   "alignment": {
+    "rot90": 3,
+    "mirror": false,
+    "scale": 0.8060000000000005,
+    "offset": [
+     21,
+     38
+    ],
+    "ncc": 0.9811960683366149,
+    "factor": 2,
+    "method": "eval_blueneg.register",
+    "ref_block_factor": 3
+   },
+   "ncc": 0.9811960683366149,
+   "seconds": 21.7
+  },
+  "blueneg:19960812D-09-las-vegas": {
+   "domain": "blueneg",
+   "roll": "19960812D",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.5628900527954102,
+     0.28120851516723633,
+     0.1889829933643341
+    ],
+    "warnings": [],
+    "inside_image": 0.30036630036630035,
+    "regions_preview": [],
+    "chroma_part": 0.000892219883613261,
+    "level_diff": 0.0008456103028242077,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5608115494251251,
+     0.28013357520103455,
+     0.1892334297299385
+    ],
+    "own_rgb": [
+     0.5604100227355957,
+     0.2798190116882324,
+     0.18847772479057312
+    ]
+   },
+   "camera_matrix": false,
+   "holder_share": 3.5330196011927476e-06,
+   "d_hi": [
+    0.7124926447868347,
+    0.5293645858764648,
+    0.24500150978565216
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 66254
+   },
+   "spike_clamp": {
+    "clamp": [
+     1.15,
+     0.12
+    ],
+    "pixels": 139479,
+    "share": 0.0020358853195735225
+   },
+   "raw_sha256": "f64940688111501c91a5401d4eaa61b1aa87d7aeaba6eb5177c0ee57a5811c27",
+   "ref_sha256": "ed20ab0d2ab3c5f9c33297ae34f4007029d08b402feda5894858c3c1c9c52df7",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.027,
+      "tint": -0.0835,
+      "sat": 1.0084,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.1487673483788967,
+      "p90": 0.5512663960456848,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.0745770288904732
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975366730213533,
+       "holder_share": 8.50510808847462e-05,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975366730213533
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 2.074575424194336,
+       "med_tex_before": 0.4237462282180786,
+       "capped_by_p98": true,
+       "ev": 2.0745770288904732,
+       "med_tex_after": 0.4237464666366577
+      }
+     },
+     "estimate_seconds": 0.522,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 12.910782392322375,
+      "de2000_p90": 28.206339339418545,
+      "mean_dL": 14.365807606141278,
+      "mean_da": 0.39166752804816907,
+      "mean_db": -3.165642812579525,
+      "chroma_ratio": 0.6562464391344596
+     },
+     "ours_L_median": 23.996625447741906,
+     "ours_C_median": 10.211938907199556,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "natural": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.027,
+      "tint": -0.0835,
+      "sat": 0.9832,
+      "contrast": 1.18,
+      "midtone": 0.24,
+      "shoulder": 0.35,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.05,
+      "shadows": 0.06,
+      "chroma_preserve": 0.35
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.18178055062890053,
+      "p90": 0.5573311448097229,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.5
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975366730213533,
+       "holder_share": 8.50510808847462e-05,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975366730213533
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.4956495761871338,
+       "ev": 2.5,
+       "med_tex_after": 0.4956495761871338
+      }
+     },
+     "estimate_seconds": 0.33,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 14.759825472915534,
+      "de2000_p90": 28.730254462827073,
+      "mean_dL": 17.149789955630336,
+      "mean_da": -0.4119369670555705,
+      "mean_db": -3.1238061676132407,
+      "chroma_ratio": 0.5708246989362598
+     },
+     "ours_L_median": 27.778476310590644,
+     "ours_C_median": 9.675645739403599,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "portrait": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.037,
+      "tint": -0.0535,
+      "sat": 0.9748,
+      "contrast": 1.16,
+      "midtone": 0.26,
+      "shoulder": 0.42,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.1,
+      "shadows": 0.12,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
+      "chroma_preserve": 0.38
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.20844926312565804,
+      "p90": 0.5751421391963959,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.5
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975366730213533,
+       "holder_share": 8.50510808847462e-05,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975366730213533
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.5168361663818359,
+       "ev": 2.5,
+       "med_tex_after": 0.5168361663818359
+      }
+     },
+     "estimate_seconds": 0.324,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 16.80735682124476,
+      "de2000_p90": 30.247197761555213,
+      "mean_dL": 19.78029644731397,
+      "mean_da": -0.09853845253614532,
+      "mean_db": -3.842325681163991,
+      "chroma_ratio": 0.5870620732274952
+     },
+     "ours_L_median": 30.86261068086126,
+     "ours_C_median": 10.437082867926973,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "vivid": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.007,
+      "tint": -0.0835,
+      "sat": 1.0587,
+      "contrast": 1.46,
+      "midtone": 0.23,
+      "shoulder": 0.28,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.05,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
+      "chroma_preserve": 0.58
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.12863966077566147,
+      "p90": 0.5493727445602415,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.1729423837487665
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975366730213533,
+       "holder_share": 8.50510808847462e-05,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975366730213533
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 2.1729373931884766,
+       "med_tex_before": 0.42544659972190857,
+       "capped_by_p98": true,
+       "ev": 2.1729423837487665,
+       "med_tex_after": 0.4254472851753235
+      }
+     },
+     "estimate_seconds": 0.557,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 12.532575699575132,
+      "de2000_p90": 28.174865127483546,
+      "mean_dL": 12.761418134405407,
+      "mean_da": 1.9643875846110181,
+      "mean_db": -2.791244677098034,
+      "chroma_ratio": 0.796816911865718
+     },
+     "ours_L_median": 21.711984528718965,
+     "ours_C_median": 11.25756406210451,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "print_classic": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.017,
+      "tint": -0.0835,
+      "sat": 1.0084,
+      "contrast": 1.4,
+      "midtone": 0.21,
+      "shoulder": 0.18,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "shadows": 0.0125,
+      "blacks": -0.07,
+      "chroma_preserve": 0.35
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.11498120054602623,
+      "p90": 0.5321352064609527,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 1.8944711253654716
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975366730213533,
+       "holder_share": 8.50510808847462e-05,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975366730213533
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 1.8944644927978516,
+       "med_tex_before": 0.3674599826335907,
+       "capped_by_p98": true,
+       "ev": 1.8944711253654716,
+       "med_tex_after": 0.36746084690093994
+      }
+     },
+     "estimate_seconds": 0.519,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 10.697593108158392,
+      "de2000_p90": 26.91612495445202,
+      "mean_dL": 11.016632495197726,
+      "mean_da": 0.4955454239788737,
+      "mean_db": -2.860687145219483,
+      "chroma_ratio": 0.6854709039348407
+     },
+     "ours_L_median": 19.689885201794432,
+     "ours_C_median": 9.809856202593904,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "no_meter": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.027,
+      "tint": -0.0835,
+      "sat": 1.0084,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.1487673483788967,
+      "p90": 0.5512663960456848,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.0745770288904732
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 2.074575424194336,
+       "med_tex_before": 0.4237462282180786,
+       "capped_by_p98": true,
+       "ev": 2.0745770288904732,
+       "med_tex_after": 0.4237464666366577
+      }
+     },
+     "estimate_seconds": 0.413,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 12.910782392322375,
+      "de2000_p90": 28.206339339418545,
+      "mean_dL": 14.365807606141278,
+      "mean_da": 0.39166752804816907,
+      "mean_db": -3.165642812579525,
+      "chroma_ratio": 0.6562464391344596
+     },
+     "ours_L_median": 23.996625447741906,
+     "ours_C_median": 10.211938907199556,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "no_holder_box": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.027,
+      "tint": -0.0835,
+      "sat": 1.0084,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.1487673483788967,
+      "p90": 0.5512663960456848,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.0745770288904732
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975366730213533,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975366730213533
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 2.074575424194336,
+       "med_tex_before": 0.4237462282180786,
+       "capped_by_p98": true,
+       "ev": 2.0745770288904732,
+       "med_tex_after": 0.4237464666366577
+      }
+     },
+     "estimate_seconds": 0.443,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 12.910782392322375,
+      "de2000_p90": 28.206339339418545,
+      "mean_dL": 14.365807606141278,
+      "mean_da": 0.39166752804816907,
+      "mean_db": -3.165642812579525,
+      "chroma_ratio": 0.6562464391344596
+     },
+     "ours_L_median": 23.996625447741906,
+     "ours_C_median": 10.211938907199556,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "no_strips": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.027,
+      "tint": -0.0835,
+      "sat": 1.0084,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.1487673483788967,
+      "p90": 0.5512663960456848,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.0745770288904732
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975366730213533,
+       "holder_share": 8.50510808847462e-05,
+       "used": true,
+       "mask_share_after": 0.24975366730213533
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 2.074575424194336,
+       "med_tex_before": 0.4237462282180786,
+       "capped_by_p98": true,
+       "ev": 2.0745770288904732,
+       "med_tex_after": 0.4237464666366577
+      }
+     },
+     "estimate_seconds": 0.476,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 12.910782392322375,
+      "de2000_p90": 28.206339339418545,
+      "mean_dL": 14.365807606141278,
+      "mean_da": 0.39166752804816907,
+      "mean_db": -3.165642812579525,
+      "chroma_ratio": 0.6562464391344596
+     },
+     "ours_L_median": 23.996625447741906,
+     "ours_C_median": 10.211938907199556,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "no_ev_down": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.027,
+      "tint": -0.0835,
+      "sat": 1.0084,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.1487673483788967,
+      "p90": 0.5512663960456848,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.0745770288904732
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.24975366730213533,
+       "holder_share": 8.50510808847462e-05,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.24975366730213533
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 2.074575424194336,
+       "med_tex_before": 0.4237462282180786,
+       "capped_by_p98": true,
+       "ev": 2.0745770288904732,
+       "med_tex_after": 0.4237464666366577
+      }
+     },
+     "estimate_seconds": 0.517,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 12.910782392322375,
+      "de2000_p90": 28.206339339418545,
+      "mean_dL": 14.365807606141278,
+      "mean_da": 0.39166752804816907,
+      "mean_db": -3.165642812579525,
+      "chroma_ratio": 0.6562464391344596
+     },
+     "ours_L_median": 23.996625447741906,
+     "ours_C_median": 10.211938907199556,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    },
+    "t4k_est": {
+     "params": {
+      "ev": 0.3281,
+      "temp": -0.027,
+      "tint": -0.0835,
+      "sat": 1.0084,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.1487673483788967,
+      "p90": 0.5512663960456848,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5293645858764648,
+       "bright_share": 0.01912,
+       "applied": true,
+       "ev_cap": 0.3280937576293945,
+       "ev_before": 2.0745770288904732
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01912
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 2.074575424194336,
+       "med_tex_before": 0.4237462282180786,
+       "capped_by_p98": true,
+       "ev": 2.0745770288904732,
+       "med_tex_after": 0.4237464666366577
+      }
+     },
+     "estimate_seconds": 0.41,
+     "cam_mix": null,
+     "metrics": {
+      "n": 94095,
+      "de2000_median": 12.910782392322375,
+      "de2000_p90": 28.206339339418545,
+      "mean_dL": 14.365807606141278,
+      "mean_da": 0.39166752804816907,
+      "mean_db": -3.165642812579525,
+      "chroma_ratio": 0.6562464391344596
+     },
+     "ours_L_median": 23.996625447741906,
+     "ours_C_median": 10.211938907199556,
+     "ref_L_median": 10.510302650162458,
+     "ref_C_median": 5.084355257850513
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "mirror": false,
+    "scale": 0.7980000000000005,
+    "offset": [
+     20,
+     27
+    ],
+    "ncc": 0.852392912197921,
+    "factor": 2,
+    "method": "eval_blueneg.register",
+    "ref_block_factor": 3
+   },
+   "ncc": 0.852392912197921,
+   "seconds": 23.2
+  },
+  "blueneg:199807A-09-orlando-siggraph": {
+   "domain": "blueneg",
+   "roll": "199807A",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.4563973546028137,
+     0.20077821612358093,
+     0.16433966159820557
+    ],
+    "warnings": [],
+    "inside_image": 0.512372634643377,
+    "regions_preview": [],
+    "chroma_part": 0.0,
+    "level_diff": 0.0,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.455117404460907,
+     0.20008525252342224,
+     0.16415825486183167
+    ],
+    "own_rgb": [
+     0.455117404460907,
+     0.20008525252342224,
+     0.16415825486183167
+    ]
+   },
+   "camera_matrix": false,
+   "holder_share": 0.0074867193789837465,
+   "d_hi": [
+    0.8075661659240723,
+    0.8503873348236084,
+    0.37675631046295166
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 66676
+   },
+   "spike_clamp": {
+    "clamp": [
+     1.15,
+     0.12
+    ],
+    "pixels": 126440,
+    "share": 0.0018337292007191515
+   },
+   "raw_sha256": "bfb78f633043ba12b56fd896287a167fe74fb82decd5c6083f462d0fdd5346dc",
+   "ref_sha256": "649e697a26010555b5a7a9abc2ecc6d60a13448bbf11b974c2ccca0f24ce9336",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 1.1,
+      "temp": 0.03,
+      "tint": -0.0867,
+      "sat": 1.006,
+      "contrast": 1.3623,
+      "midtone": 0.2855,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone",
+      "ev_lowered_for_highlights:1.4"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.25123225152492523,
+      "p90": 0.7698560416698456,
+      "weight": 0.6232005208730701,
+      "midtone_target": 0.31908813476562503
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.01168,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01168
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.007377844977774808,
+       "strips": {
+        "top": 452,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.1163133097762073
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.38612109422683716,
+       "ev": 2.5,
+       "med_tex_after": 0.38612109422683716
+      }
+     },
+     "estimate_seconds": 0.659,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 10.271164058170903,
+      "de2000_p90": 15.166714591176483,
+      "mean_dL": -9.323310432100346,
+      "mean_da": -0.5551978159197674,
+      "mean_db": -4.181320854431199,
+      "chroma_ratio": 1.0582244707769664
+     },
+     "ours_L_median": 19.76548635808466,
+     "ours_C_median": 6.38805535783225,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "natural": {
+     "params": {
+      "ev": 1.1,
+      "temp": 0.03,
+      "tint": -0.0867,
+      "sat": 0.9881,
+      "contrast": 1.18,
+      "midtone": 0.2585,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.06,
+      "chroma_preserve": 0.35
+     },
+     "flags": [
+      "backlit_midtone",
+      "ev_lowered_for_highlights:1.4"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.2845010831952095,
+      "p90": 0.7491019666194916,
+      "weight": 0.3637745827436452,
+      "midtone_target": 0.2908172607421875
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.01168,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01168
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.007377844977774808,
+       "strips": {
+        "top": 452,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.1163133097762073
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.4112356901168823,
+       "ev": 2.5,
+       "med_tex_after": 0.4112356901168823
+      }
+     },
+     "estimate_seconds": 0.683,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 10.01254221407881,
+      "de2000_p90": 15.610777881981646,
+      "mean_dL": -9.646762090011126,
+      "mean_da": -1.198982174547292,
+      "mean_db": -3.8059571303189283,
+      "chroma_ratio": 0.8958273616867198
+     },
+     "ours_L_median": 20.35002832025928,
+     "ours_C_median": 5.962674830137411,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "portrait": {
+     "params": {
+      "ev": 1.1,
+      "temp": 0.02,
+      "tint": -0.0567,
+      "sat": 0.9821,
+      "contrast": 1.16,
+      "midtone": 0.2697,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.12,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
+      "chroma_preserve": 0.38
+     },
+     "flags": [
+      "backlit_midtone",
+      "ev_lowered_for_highlights:1.4"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.3122043013572693,
+      "p90": 0.7544605612754822,
+      "weight": 0.3781861316001997,
+      "midtone_target": 0.28565307617187496
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.01168,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01168
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.007377844977774808,
+       "strips": {
+        "top": 452,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.1163133097762073
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.4360933154821396,
+       "ev": 2.5,
+       "med_tex_after": 0.4360933154821396
+      }
+     },
+     "estimate_seconds": 0.689,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 9.34883970221683,
+      "de2000_p90": 14.986017695855821,
+      "mean_dL": -8.058494816585629,
+      "mean_da": -0.9254482992065648,
+      "mean_db": -4.373954307835738,
+      "chroma_ratio": 0.9294788136758679
+     },
+     "ours_L_median": 22.28347106034427,
+     "ours_C_median": 6.3993542393181535,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "vivid": {
+     "params": {
+      "ev": 1.1,
+      "temp": 0.05,
+      "tint": -0.0867,
+      "sat": 1.0417,
+      "contrast": 1.5298,
+      "midtone": 0.2929,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
+      "chroma_preserve": 0.58
+     },
+     "flags": [
+      "backlit_midtone",
+      "ev_lowered_for_highlights:1.4"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.2304721437394619,
+      "p90": 0.7758717358112335,
+      "weight": 0.6983966976404191,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.01168,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01168
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.007377844977774808,
+       "strips": {
+        "top": 452,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.1163133097762073
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.37140345573425293,
+       "ev": 2.5,
+       "med_tex_after": 0.37140345573425293
+      }
+     },
+     "estimate_seconds": 0.58,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 11.233529793763623,
+      "de2000_p90": 15.948993318379356,
+      "mean_dL": -10.28554655590514,
+      "mean_da": 0.5680626395239624,
+      "mean_db": -4.3414467573433315,
+      "chroma_ratio": 1.3082551087764358
+     },
+     "ours_L_median": 17.83410974159424,
+     "ours_C_median": 6.736600860895758,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "print_classic": {
+     "params": {
+      "ev": 1.0967,
+      "temp": 0.04,
+      "tint": -0.0867,
+      "sat": 1.006,
+      "contrast": 1.4493,
+      "midtone": 0.2544,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "blacks": -0.07,
+      "chroma_preserve": 0.35
+     },
+     "flags": [
+      "backlit_midtone",
+      "ev_lowered_for_highlights:1.3"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.2041744813323021,
+      "p90": 0.7594389498233793,
+      "weight": 0.4929868727922423,
+      "midtone_target": 0.3
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.01168,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01168
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.007377844977774808,
+       "strips": {
+        "top": 452,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.1163133097762073
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "anchor_capped_by_p98": true,
+       "ev_anchor": 2.396678924560547,
+       "med_tex_before": 0.3393535614013672,
+       "capped_by_p98": true,
+       "ev": 2.396687201440076,
+       "med_tex_after": 0.33935457468032837
+      }
+     },
+     "estimate_seconds": 0.821,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 12.064849681771156,
+      "de2000_p90": 16.459205336924754,
+      "mean_dL": -13.197021435712982,
+      "mean_da": -0.6262023336134951,
+      "mean_db": -4.083813051547254,
+      "chroma_ratio": 1.0613219702087302
+     },
+     "ours_L_median": 14.830725050266942,
+     "ours_C_median": 5.2945193908782855,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "no_meter": {
+     "params": {
+      "ev": 2.4,
+      "temp": 0.0213,
+      "tint": -0.0256,
+      "sat": 1.0058,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "ev_lowered_for_highlights:0.1"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.13974833115935326,
+      "p90": 0.5891759634017943,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.00576,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.00576
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.215873122215271,
+       "ev": 2.5,
+       "med_tex_after": 0.215873122215271
+      }
+     },
+     "estimate_seconds": 0.623,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 9.575617845571099,
+      "de2000_p90": 14.113077188154158,
+      "mean_dL": -3.2874772517015827,
+      "mean_da": 0.7299778932692313,
+      "mean_db": -5.0539231300387675,
+      "chroma_ratio": 1.2032448797484956
+     },
+     "ours_L_median": 24.489138523433095,
+     "ours_C_median": 7.812499134292488,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "no_holder_box": {
+     "params": {
+      "ev": 1.1,
+      "temp": 0.03,
+      "tint": -0.0867,
+      "sat": 1.006,
+      "contrast": 1.3623,
+      "midtone": 0.2855,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone",
+      "ev_lowered_for_highlights:1.4"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.25123225152492523,
+      "p90": 0.7698560416698456,
+      "weight": 0.6232005208730701,
+      "midtone_target": 0.31908813476562503
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.01168,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01168
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "strips": {
+        "top": 452,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.1163133097762073
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.38612109422683716,
+       "ev": 2.5,
+       "med_tex_after": 0.38612109422683716
+      }
+     },
+     "estimate_seconds": 0.572,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 10.271164058170903,
+      "de2000_p90": 15.166714591176483,
+      "mean_dL": -9.323310432100346,
+      "mean_da": -0.5551978159197674,
+      "mean_db": -4.181320854431199,
+      "chroma_ratio": 1.0582244707769664
+     },
+     "ours_L_median": 19.76548635808466,
+     "ours_C_median": 6.38805535783225,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "no_strips": {
+     "params": {
+      "ev": 2.4,
+      "temp": 0.0213,
+      "tint": -0.0256,
+      "sat": 1.0058,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "ev_lowered_for_highlights:0.1"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.13974833115935326,
+      "p90": 0.5891759634017943,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.00576,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.00576
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.007377844977774808,
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.215873122215271,
+       "ev": 2.5,
+       "med_tex_after": 0.215873122215271
+      }
+     },
+     "estimate_seconds": 0.656,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 9.575617845571099,
+      "de2000_p90": 14.113077188154158,
+      "mean_dL": -3.2874772517015827,
+      "mean_da": 0.7299778932692313,
+      "mean_db": -5.0539231300387675,
+      "chroma_ratio": 1.2032448797484956
+     },
+     "ours_L_median": 24.489138523433095,
+     "ours_C_median": 7.812499134292488,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "no_ev_down": {
+     "params": {
+      "ev": 1.1,
+      "temp": 0.03,
+      "tint": -0.0867,
+      "sat": 1.006,
+      "contrast": 1.3623,
+      "midtone": 0.2855,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone",
+      "ev_lowered_for_highlights:1.4"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.25123225152492523,
+      "p90": 0.7698560416698456,
+      "weight": 0.6232005208730701,
+      "midtone_target": 0.31908813476562503
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.01168,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.01168
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.007377844977774808,
+       "strips": {
+        "top": 452,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.1163133097762073
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.38612109422683716,
+       "ev": 2.5,
+       "med_tex_after": 0.38612109422683716
+      }
+     },
+     "estimate_seconds": 0.623,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 10.271164058170903,
+      "de2000_p90": 15.166714591176483,
+      "mean_dL": -9.323310432100346,
+      "mean_da": -0.5551978159197674,
+      "mean_db": -4.181320854431199,
+      "chroma_ratio": 1.0582244707769664
+     },
+     "ours_L_median": 19.76548635808466,
+     "ours_C_median": 6.38805535783225,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    },
+    "t4k_est": {
+     "params": {
+      "ev": 2.4,
+      "temp": 0.0213,
+      "tint": -0.0256,
+      "sat": 1.0058,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "ev_lowered_for_highlights:0.1"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.13974833115935326,
+      "p90": 0.5891759634017943,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8503873348236084,
+       "bright_share": 0.00576,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.00576
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 2.5,
+       "ev_anchor": 2.5,
+       "med_tex_before": 0.215873122215271,
+       "ev": 2.5,
+       "med_tex_after": 0.215873122215271
+      }
+     },
+     "estimate_seconds": 0.614,
+     "cam_mix": null,
+     "metrics": {
+      "n": 101230,
+      "de2000_median": 9.575617845571099,
+      "de2000_p90": 14.113077188154158,
+      "mean_dL": -3.2874772517015827,
+      "mean_da": 0.7299778932692313,
+      "mean_db": -5.0539231300387675,
+      "chroma_ratio": 1.2032448797484956
+     },
+     "ours_L_median": 24.489138523433095,
+     "ours_C_median": 7.812499134292488,
+     "ref_L_median": 27.913123433708556,
+     "ref_C_median": 2.8754581070908682
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "mirror": false,
+    "scale": 0.8260000000000005,
+    "offset": [
+     19,
+     26
+    ],
+    "ncc": 0.9638228330503849,
+    "factor": 2,
+    "method": "eval_blueneg.register",
+    "ref_block_factor": 3
+   },
+   "ncc": 0.9638228330503849,
+   "seconds": 26.9
+  },
+  "ext:A015": {
+   "domain": "ext_own",
+   "roll": "own-e5207-20240401-dsc6161",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.10620279610157013,
+     0.08343633264303207,
+     0.05226214975118637
+    ],
+    "warnings": [
+     "G base blocks spread 10.7% (p05-p95)",
+     "B base blocks spread 12.6% (p05-p95)"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.07227517436456243,
+    "level_diff": 0.42861409330702344,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.2410397529602051,
+     0.24285390973091125,
+     0.15213143825531006
+    ],
+    "own_rgb": [
+     0.1061083972454071,
+     0.08326829224824905,
+     0.05218924954533577
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.00034044967728207677,
+   "d_hi": [
+    0.32705846428871155,
+    0.5116267800331116,
+    0.6938487887382507
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 44118
+   },
+   "spike_clamp": {
+    "clamp": [
+     1.15,
+     0.12
+    ],
+    "pixels": 14171,
+    "share": 0.00030975025879917184
+   },
+   "raw_sha256": "a94cf84de7319864806232389d5b095d216841206249fd0bcd41a1f0e7c378da",
+   "ref_sha256": "b4d10b0fcd839df6d3a197c934c967f13e6edb540a9d31e253611968403dd517",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.5,
+      "tint": -0.0156,
+      "sat": 1.0062,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "highlights": -0.053,
+      "blacks": -0.0067,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5233159959316254,
+      "p90": 0.807157289981842,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0005375328744893962,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.45912034809589386,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.45912034809589386
+      }
+     },
+     "estimate_seconds": 0.236,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 5.763705235754117,
+      "de2000_p90": 9.701187725675547,
+      "mean_dL": -0.7612491119212539,
+      "mean_da": 5.147597197378077,
+      "mean_db": 1.6040011765868887,
+      "chroma_ratio": 0.963374896409214
+     },
+     "ours_L_median": 49.041896487796166,
+     "ours_C_median": 22.639804909816846,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "natural": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.5,
+      "tint": -0.0156,
+      "sat": 0.9876,
+      "contrast": 1.18,
+      "midtone": 0.24,
+      "shoulder": 0.35,
+      "matrix": [
+       [
+        1.0960107544434523,
+        -0.030208105763803145,
+        -0.06580264867964923
+       ],
+       [
+        -0.03792696247738835,
+        1.1475791649435185,
+        -0.1096522024661301
+       ],
+       [
+        0.0018592942373558896,
+        -0.1234560839928416,
+        1.1215967897554857
+       ]
+      ],
+      "highlights": -0.053,
+      "shadows": 0.06,
+      "blacks": -0.0067,
+      "chroma_preserve": 0.35
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5348285585641861,
+      "p90": 0.7813124537467957,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0005375328744893962,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.4785998463630676,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.4785998463630676
+      }
+     },
+     "estimate_seconds": 0.269,
+     "cam_mix": 0.35,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 6.12641723908179,
+      "de2000_p90": 9.496465162951463,
+      "mean_dL": 0.2573431359053222,
+      "mean_da": 3.3344097059142754,
+      "mean_db": 4.246998791387136,
+      "chroma_ratio": 0.8501918683007553
+     },
+     "ours_L_median": 50.831870116035915,
+     "ours_C_median": 20.170375881885878,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "portrait": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.49,
+      "tint": 0.0144,
+      "sat": 0.9814,
+      "contrast": 1.16,
+      "midtone": 0.26,
+      "shoulder": 0.42,
+      "matrix": [
+       [
+        1.1042402476814623,
+        -0.03279737197212906,
+        -0.07144287570933339
+       ],
+       [
+        -0.04117784497545021,
+        1.160228807652963,
+        -0.11905096267751268
+       ],
+       [
+        0.002018662314843618,
+        -0.1340380340493708,
+        1.1320193717345273
+       ]
+      ],
+      "highlights": -0.1,
+      "shadows": 0.12,
+      "blacks": -0.0067,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
+      "chroma_preserve": 0.38
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5512199848890305,
+      "p90": 0.7840912938117981,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0005375328744893962,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.49728529155254364,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.49728529155254364
+      }
+     },
+     "estimate_seconds": 0.237,
+     "cam_mix": 0.38,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 7.003522504903117,
+      "de2000_p90": 10.410549569123402,
+      "mean_dL": 1.8034347207697692,
+      "mean_da": 3.7907994173318404,
+      "mean_db": 3.4029650533018665,
+      "chroma_ratio": 0.8713816612328692
+     },
+     "ours_L_median": 52.693084656585285,
+     "ours_C_median": 20.566397032373086,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "vivid": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.52,
+      "tint": -0.0156,
+      "sat": 1.0434,
+      "contrast": 1.46,
+      "midtone": 0.23,
+      "shoulder": 0.28,
+      "matrix": [
+       [
+        1.1591035359348636,
+        -0.05005914669430224,
+        -0.10904438924056148
+       ],
+       [
+        -0.06285039496252927,
+        1.2445597590492592,
+        -0.18170936408672989
+       ],
+       [
+        0.003081116164761311,
+        -0.20458436775956595,
+        1.2015032515948048
+       ]
+      ],
+      "highlights": -0.053,
+      "blacks": -0.0467,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
+      "chroma_preserve": 0.58
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5095196962356567,
+      "p90": 0.8162025690078735,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.6658284129360681,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0005375328744893962,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.43595626950263977,
+       "ev": 0.6658284129360681,
+       "med_tex_after": 0.47999945282936096
+      }
+     },
+     "estimate_seconds": 0.24,
+     "cam_mix": 0.58,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 6.3940924141465345,
+      "de2000_p90": 11.885812903028759,
+      "mean_dL": -1.1537783143733082,
+      "mean_da": 9.02164968170402,
+      "mean_db": -3.838455145170185,
+      "chroma_ratio": 1.1946359610153015
+     },
+     "ours_L_median": 48.20873422191798,
+     "ours_C_median": 28.196910436940314,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "print_classic": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.51,
+      "tint": -0.0156,
+      "sat": 1.0062,
+      "contrast": 1.4,
+      "midtone": 0.21,
+      "shoulder": 0.18,
+      "matrix": [
+       [
+        1.0960107544434523,
+        -0.030208105763803145,
+        -0.06580264867964923
+       ],
+       [
+        -0.03792696247738835,
+        1.1475791649435185,
+        -0.1096522024661301
+       ],
+       [
+        0.0018592942373558896,
+        -0.1234560839928416,
+        1.1215967897554857
+       ]
+      ],
+      "highlights": -0.053,
+      "blacks": -0.0767,
+      "chroma_preserve": 0.35
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.504416361451149,
+      "p90": 0.8163183271884918,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0005375328744893962,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.4353500008583069,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.4353500008583069
+      }
+     },
+     "estimate_seconds": 0.236,
+     "cam_mix": 0.35,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 6.0427308775659085,
+      "de2000_p90": 10.2467819599847,
+      "mean_dL": -2.4831840160075425,
+      "mean_da": 5.687069230665296,
+      "mean_db": 1.5813897893257853,
+      "chroma_ratio": 0.9670661808831545
+     },
+     "ours_L_median": 46.6900894170423,
+     "ours_C_median": 22.412573740314755,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "no_meter": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.5,
+      "tint": -0.0156,
+      "sat": 1.0062,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "highlights": -0.053,
+      "blacks": -0.0067,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5233159959316254,
+      "p90": 0.807157289981842,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.45912034809589386,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.45912034809589386
+      }
+     },
+     "estimate_seconds": 0.159,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 5.763705235754117,
+      "de2000_p90": 9.701187725675547,
+      "mean_dL": -0.7612491119212539,
+      "mean_da": 5.147597197378077,
+      "mean_db": 1.6040011765868887,
+      "chroma_ratio": 0.963374896409214
+     },
+     "ours_L_median": 49.041896487796166,
+     "ours_C_median": 22.639804909816846,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "no_holder_box": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.5,
+      "tint": -0.0156,
+      "sat": 1.0062,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "highlights": -0.053,
+      "blacks": -0.0067,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5233159959316254,
+      "p90": 0.807157289981842,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.45912034809589386,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.45912034809589386
+      }
+     },
+     "estimate_seconds": 0.202,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 5.763705235754117,
+      "de2000_p90": 9.701187725675547,
+      "mean_dL": -0.7612491119212539,
+      "mean_da": 5.147597197378077,
+      "mean_db": 1.6040011765868887,
+      "chroma_ratio": 0.963374896409214
+     },
+     "ours_L_median": 49.041896487796166,
+     "ours_C_median": 22.639804909816846,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "no_strips": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.5,
+      "tint": -0.0156,
+      "sat": 1.0062,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "highlights": -0.053,
+      "blacks": -0.0067,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5233159959316254,
+      "p90": 0.807157289981842,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0005375328744893962,
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.45912034809589386,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.45912034809589386
+      }
+     },
+     "estimate_seconds": 0.199,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 5.763705235754117,
+      "de2000_p90": 9.701187725675547,
+      "mean_dL": -0.7612491119212539,
+      "mean_da": 5.147597197378077,
+      "mean_db": 1.6040011765868887,
+      "chroma_ratio": 0.963374896409214
+     },
+     "ours_L_median": 49.041896487796166,
+     "ours_C_median": 22.639804909816846,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "no_ev_down": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.5,
+      "tint": -0.0156,
+      "sat": 1.0062,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "highlights": -0.053,
+      "blacks": -0.0067,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5233159959316254,
+      "p90": 0.807157289981842,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0005375328744893962,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.45912034809589386,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.45912034809589386
+      }
+     },
+     "estimate_seconds": 0.226,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 5.763705235754117,
+      "de2000_p90": 9.701187725675547,
+      "mean_dL": -0.7612491119212539,
+      "mean_da": 5.147597197378077,
+      "mean_db": 1.6040011765868887,
+      "chroma_ratio": 0.963374896409214
+     },
+     "ours_L_median": 49.041896487796166,
+     "ours_C_median": 22.639804909816846,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    },
+    "t4k_est": {
+     "params": {
+      "ev": 0.2749,
+      "temp": 0.5,
+      "tint": -0.0156,
+      "sat": 1.0062,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "highlights": -0.053,
+      "blacks": -0.0067,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5233159959316254,
+      "p90": 0.807157289981842,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.5116267800331116,
+       "bright_share": 0.23624,
+       "applied": true,
+       "ev_cap": 0.27488034009933476,
+       "ev_before": 0.35477849625988306,
+       "blacks_lowered": 0.006698575973510756
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.23624
+      },
+      "border_cells": null,
+      "gw_cool_undamped": true
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 0.35477849625988306,
+       "ev_anchor": 0.35477849625988306,
+       "med_tex_before": 0.45912034809589386,
+       "ev": 0.35477849625988306,
+       "med_tex_after": 0.45912034809589386
+      }
+     },
+     "estimate_seconds": 0.154,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 5.763705235754117,
+      "de2000_p90": 9.701187725675547,
+      "mean_dL": -0.7612491119212539,
+      "mean_da": 5.147597197378077,
+      "mean_db": 1.6040011765868887,
+      "chroma_ratio": 0.963374896409214
+     },
+     "ours_L_median": 49.041896487796166,
+     "ours_C_median": 22.639804909816846,
+     "ref_L_median": 47.89097418838931,
+     "ref_C_median": 26.27209553092043
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.8900000000000001,
+    "offset": [
+     12,
+     18
+    ],
+    "ncc": 0.9904561003683496,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 4
+   },
+   "ncc": 0.9904561003683496,
+   "seconds": 28.3
+  },
+  "ext:A209": {
+   "domain": "ext_own",
+   "roll": "own-g200-20240320-dsc4889",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.09295795857906342,
+     0.0946974903345108,
+     0.038712140172719955
+    ],
+    "warnings": [],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.006074935604622342,
+    "level_diff": 0.08124913385771076,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.11146070063114165,
+     0.11520578861236572,
+     0.046046972274780266
+    ],
+    "own_rgb": [
+     0.09259621053934097,
+     0.09422154724597931,
+     0.03866395726799965
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.00017909071565359245,
+   "d_hi": [
+    0.293346643447876,
+    0.3797985017299652,
+    0.47062185406684875
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 44118
+   },
+   "spike_clamp": {
+    "clamp": [
+     1.15,
+     0.12
+    ],
+    "pixels": 1211377,
+    "share": 0.02647832469503665
+   },
+   "raw_sha256": "4d647cc2d3a9d10931777a032329b0216cbe6f713ced08abede54cde53e162d1",
+   "ref_sha256": "dc50d8c724dc6af536205d9083649ec09609a490a90ed378dc45bbe7640e6e44",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1576,
+      "tint": 0.0132,
+      "sat": 1.0085,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4666038453578949,
+      "p90": 0.8636886358261109,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0002584494432320519,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.5074782967567444,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.5074782967567444
+      }
+     },
+     "estimate_seconds": 0.251,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 14.96176116420791,
+      "de2000_p90": 24.363163916445785,
+      "mean_dL": 15.505183948287915,
+      "mean_da": -1.0257726402278404,
+      "mean_db": 7.99162003070869,
+      "chroma_ratio": 0.8794028191090238
+     },
+     "ours_L_median": 64.82856972927664,
+     "ours_C_median": 14.51263705958756,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "natural": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1576,
+      "tint": 0.0132,
+      "sat": 0.9829,
+      "contrast": 1.18,
+      "midtone": 0.24,
+      "shoulder": 0.35,
+      "matrix": [
+       [
+        1.0960107544434523,
+        -0.030208105763803145,
+        -0.06580264867964923
+       ],
+       [
+        -0.03792696247738835,
+        1.1475791649435185,
+        -0.1096522024661301
+       ],
+       [
+        0.0018592942373558896,
+        -0.1234560839928416,
+        1.1215967897554857
+       ]
+      ],
+      "highlights": -0.05,
+      "shadows": 0.06,
+      "chroma_preserve": 0.35
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.48475824296474457,
+      "p90": 0.8316755890846252,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0002584494432320519,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.5204857587814331,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.5204857587814331
+      }
+     },
+     "estimate_seconds": 0.392,
+     "cam_mix": 0.35,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 16.05808118422439,
+      "de2000_p90": 25.242702966761048,
+      "mean_dL": 15.129793018654325,
+      "mean_da": -1.32118804866542,
+      "mean_db": 8.597391365876577,
+      "chroma_ratio": 0.7475489673625407
+     },
+     "ours_L_median": 64.62348564831612,
+     "ours_C_median": 12.686942245246984,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "portrait": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1476,
+      "tint": 0.0432,
+      "sat": 0.9744,
+      "contrast": 1.16,
+      "midtone": 0.26,
+      "shoulder": 0.42,
+      "matrix": [
+       [
+        1.1042402476814623,
+        -0.03279737197212906,
+        -0.07144287570933339
+       ],
+       [
+        -0.04117784497545021,
+        1.160228807652963,
+        -0.11905096267751268
+       ],
+       [
+        0.002018662314843618,
+        -0.1340380340493708,
+        1.1320193717345273
+       ]
+      ],
+      "highlights": -0.1,
+      "shadows": 0.12,
+      "slope_r": -0.02,
+      "slope_b": 0.02,
+      "chroma_preserve": 0.38
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5043580085039139,
+      "p90": 0.8307633519172668,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0002584494432320519,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.5385470986366272,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.5385470986366272
+      }
+     },
+     "estimate_seconds": 0.303,
+     "cam_mix": 0.38,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 17.53877389266239,
+      "de2000_p90": 27.04496160827368,
+      "mean_dL": 16.239632793102356,
+      "mean_da": -0.6752215587489605,
+      "mean_db": 8.244447153168771,
+      "chroma_ratio": 0.7698946416273506
+     },
+     "ours_L_median": 65.87732536533537,
+     "ours_C_median": 13.079896785267168,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "vivid": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1776,
+      "tint": 0.0132,
+      "sat": 1.0598,
+      "contrast": 1.46,
+      "midtone": 0.23,
+      "shoulder": 0.28,
+      "matrix": [
+       [
+        1.1591035359348636,
+        -0.05005914669430224,
+        -0.10904438924056148
+       ],
+       [
+        -0.06285039496252927,
+        1.2445597590492592,
+        -0.18170936408672989
+       ],
+       [
+        0.003081116164761311,
+        -0.20458436775956595,
+        1.2015032515948048
+       ]
+      ],
+      "highlights": -0.05,
+      "blacks": -0.04,
+      "slope_r": 0.02,
+      "slope_b": -0.02,
+      "chroma_preserve": 0.58
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.45156868547201157,
+      "p90": 0.8693982243537903,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0002584494432320519,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.49645715951919556,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.49645715951919556
+      }
+     },
+     "estimate_seconds": 0.236,
+     "cam_mix": 0.58,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 14.516526985762534,
+      "de2000_p90": 24.75586655487011,
+      "mean_dL": 15.310537429252298,
+      "mean_da": -0.257325943699721,
+      "mean_db": 6.643735065968924,
+      "chroma_ratio": 1.1369944477676723
+     },
+     "ours_L_median": 65.090392695267,
+     "ours_C_median": 18.206313665590294,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "print_classic": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1676,
+      "tint": 0.0132,
+      "sat": 1.0085,
+      "contrast": 1.4,
+      "midtone": 0.21,
+      "shoulder": 0.18,
+      "matrix": [
+       [
+        1.0960107544434523,
+        -0.030208105763803145,
+        -0.06580264867964923
+       ],
+       [
+        -0.03792696247738835,
+        1.1475791649435185,
+        -0.1096522024661301
+       ],
+       [
+        0.0018592942373558896,
+        -0.1234560839928416,
+        1.1215967897554857
+       ]
+      ],
+      "blacks": -0.07,
+      "chroma_preserve": 0.35
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4409182146191597,
+      "p90": 0.8777139663696288,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0002584494432320519,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.4853360056877136,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.4853360056877136
+      }
+     },
+     "estimate_seconds": 0.226,
+     "cam_mix": 0.35,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 13.635267612363267,
+      "de2000_p90": 22.192181552325035,
+      "mean_dL": 14.560289987909112,
+      "mean_da": -0.8380906095569858,
+      "mean_db": 7.689500729874001,
+      "chroma_ratio": 0.8927966035534755
+     },
+     "ours_L_median": 63.83139457485264,
+     "ours_C_median": 14.194317773098781,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "no_meter": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1576,
+      "tint": 0.0132,
+      "sat": 1.0085,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4666038453578949,
+      "p90": 0.8636886358261109,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.5074782967567444,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.5074782967567444
+      }
+     },
+     "estimate_seconds": 0.172,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 14.96176116420791,
+      "de2000_p90": 24.363163916445785,
+      "mean_dL": 15.505183948287915,
+      "mean_da": -1.0257726402278404,
+      "mean_db": 7.99162003070869,
+      "chroma_ratio": 0.8794028191090238
+     },
+     "ours_L_median": 64.82856972927664,
+     "ours_C_median": 14.51263705958756,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "no_holder_box": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1576,
+      "tint": 0.0132,
+      "sat": 1.0085,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4666038453578949,
+      "p90": 0.8636886358261109,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.5074782967567444,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.5074782967567444
+      }
+     },
+     "estimate_seconds": 0.189,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 14.96176116420791,
+      "de2000_p90": 24.363163916445785,
+      "mean_dL": 15.505183948287915,
+      "mean_da": -1.0257726402278404,
+      "mean_db": 7.99162003070869,
+      "chroma_ratio": 0.8794028191090238
+     },
+     "ours_L_median": 64.82856972927664,
+     "ours_C_median": 14.51263705958756,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "no_strips": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1576,
+      "tint": 0.0132,
+      "sat": 1.0085,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4666038453578949,
+      "p90": 0.8636886358261109,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0002584494432320519,
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.5074782967567444,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.5074782967567444
+      }
+     },
+     "estimate_seconds": 0.227,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 14.96176116420791,
+      "de2000_p90": 24.363163916445785,
+      "mean_dL": 15.505183948287915,
+      "mean_da": -1.0257726402278404,
+      "mean_db": 7.99162003070869,
+      "chroma_ratio": 0.8794028191090238
+     },
+     "ours_L_median": 64.82856972927664,
+     "ours_C_median": 14.51263705958756,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "no_ev_down": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1576,
+      "tint": 0.0132,
+      "sat": 1.0085,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4666038453578949,
+      "p90": 0.8636886358261109,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0002584494432320519,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.5074782967567444,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.5074782967567444
+      }
+     },
+     "estimate_seconds": 0.246,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 14.96176116420791,
+      "de2000_p90": 24.363163916445785,
+      "mean_dL": 15.505183948287915,
+      "mean_da": -1.0257726402278404,
+      "mean_db": 7.99162003070869,
+      "chroma_ratio": 0.8794028191090238
+     },
+     "ours_L_median": 64.82856972927664,
+     "ours_C_median": 14.51263705958756,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    },
+    "t4k_est": {
+     "params": {
+      "ev": 0.2697,
+      "temp": 0.1576,
+      "tint": 0.0132,
+      "sat": 1.0085,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1097265765068025,
+        -0.034523549444346345,
+        -0.07520302706245617
+       ],
+       [
+        -0.0433450999741582,
+        1.1686619027925926,
+        -0.1253168028184345
+       ],
+       [
+        0.0021249076998353872,
+        -0.14109266742039034,
+        1.138967759720555
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4666038453578949,
+      "p90": 0.8636886358261109,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.3797985017299652,
+       "bright_share": 0.38044,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.38044
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": null,
+      "ev_refine": {
+       "ev_anchor_raw": 0.2696979668783284,
+       "ev_anchor": 0.2696979668783284,
+       "med_tex_before": 0.5074782967567444,
+       "ev": 0.2696979668783284,
+       "med_tex_after": 0.5074782967567444
+      }
+     },
+     "estimate_seconds": 0.164,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 462315,
+      "de2000_median": 14.96176116420791,
+      "de2000_p90": 24.363163916445785,
+      "mean_dL": 15.505183948287915,
+      "mean_da": -1.0257726402278404,
+      "mean_db": 7.99162003070869,
+      "chroma_ratio": 0.8794028191090238
+     },
+     "ours_L_median": 64.82856972927664,
+     "ours_C_median": 14.51263705958756,
+     "ref_L_median": 42.86879006071718,
+     "ref_C_median": 13.42704196234936
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.8900000000000001,
+    "offset": [
+     12,
+     18
+    ],
+    "ncc": 0.988154418303067,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 4
+   },
+   "ncc": 0.988154418303067,
+   "seconds": 32.3
+  }
+ }
+}

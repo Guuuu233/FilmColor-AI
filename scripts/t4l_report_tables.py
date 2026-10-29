@@ -57,8 +57,13 @@ def valid(d):
 
 def tables():
     j, k, l = load("t4j"), load("t4k"), load("t4l")
+    s6 = load_one("self_ratio_off_6.json")
     variants = json.loads((ROOT / "t4l/eval_t4l_a.json").read_text())["variants"]
     common = sorted(valid(j) & valid(k) & valid(l))
+
+    def de_final(x):
+        return de(s6, x, "standard") if x in s6 and "error" not in s6[x] else de(l, x, "no_ev_down")
+
     lines = [f"Common valid frames: {len(common)}; evaluated T4l records: {len(l)}.", "",
              "ΔE: per-frame median ΔE2000, then median | mean | p90 over frames; better / worse: change > 0.25.", ""]
     for domain in DOMAINS:
@@ -66,10 +71,15 @@ def tables():
         bk = np.array([de(k, x) for x in ids])
         lines += [f"### {domain} ({len(ids)})", "", "| Version / variant | ΔE median | mean | p90 | vs T4k standard |",
                   "|---|---:|---:|---:|---:|"]
-        for label, d, v in [("T4j standard", j, "standard"), ("T4k standard", k, "standard")] + \
-                [("T4l " + v, l, v) for v in variants]:
+        for label, d, v in [("T4j standard", j, "standard"), ("T4k standard", k, "standard")]:
             x = np.array([de(d, y, v) for y in ids])
             lines.append(f"| {label} | {stats(x)} | {'—' if d is k else bw(x - bk)} |")
+        if s6:
+            xf = np.array([de_final(y) for y in ids])
+            lines.append(f"| **T4l finalized (4 mechanisms)** | {stats(xf)} | {bw(xf - bk)} |")
+        for v in variants:
+            x = np.array([de(l, y, v) for y in ids])
+            lines.append(f"| T4l (caa0ba9) {v} | {stats(x)} | {bw(x - bk)} |")
         lines.append("")
 
     lines += ["### Each change alone (change on minus change off; negative = the change helps)", ""]
@@ -125,12 +135,12 @@ def tables():
     lines.append("")
 
     lines += ["### Protected and named frames (standard)", "",
-              "| Frame | T4j | T4k | T4l | no_meter | no_strips | no_ev_down | t4k_est |",
-              "|---|---:|---:|---:|---:|---:|---:|---:|"]
+              "| Frame | T4j | T4k | **T4l finalized** | T4l (caa0ba9) | no_meter | no_strips | no_ev_down | t4k_est |",
+              "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for x in PROTECTED + NAMED:
         if x not in common:
             continue
-        lines.append(f"| {x} | {de(j, x):.2f} | {de(k, x):.2f} | {de(l, x):.2f} | " +
+        lines.append(f"| {x} | {de(j, x):.2f} | {de(k, x):.2f} | **{de_final(x):.2f}** | {de(l, x):.2f} | " +
                      " | ".join(f"{de(l, x, v):.2f}" for v in ("no_meter", "no_strips", "no_ev_down", "t4k_est")) + " |")
     lines.append("")
 

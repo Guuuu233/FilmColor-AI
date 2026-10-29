@@ -1,6 +1,6 @@
 {
  "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
- "git_commit": "e0d17d3014cf7af2b8779d08d8f915895eaed3f1",
+ "git_commit": "caa0ba909afc2aac3ea654fa018bc2331a2142f2",
  "samples": {
   "A1106.CR2": {
    "path_name": "A1106.CR2",
@@ -32,27 +32,7 @@
     "method": "block_mean",
     "block": 16,
     "pct": 99.8,
-    "n_blocks": 21600,
-    "self_ratio": {
-     "guard": [
-      0.78,
-      0.85
-     ],
-     "band": [
-      0.2,
-      0.75
-     ],
-     "n_mid": 378457,
-     "applied": false,
-     "ratio_mid": [
-      0.7866049101774,
-      1.2843192796253717
-     ],
-     "ratio_hi": [
-      0.8055269150135771,
-      1.3109682930323243
-     ]
-    }
+    "n_blocks": 21600
    },
    "stats": {
     "median": 0.7263267040252686,
@@ -113,7 +93,7 @@
    "camera": {
     "model": "Canon EOS 5D Mark III"
    },
-   "seconds": 4.8
+   "seconds": 5.5
   },
   "A1141.NEF": {
    "path_name": "A1141.NEF",
@@ -145,27 +125,7 @@
     "method": "block_mean",
     "block": 16,
     "pct": 99.8,
-    "n_blocks": 44118,
-    "self_ratio": {
-     "guard": [
-      0.78,
-      0.85
-     ],
-     "band": [
-      0.2,
-      0.75
-     ],
-     "n_mid": 3379508,
-     "applied": false,
-     "ratio_mid": [
-      1.0277891125661873,
-      0.6377996813485249
-     ],
-     "ratio_hi": [
-      0.8929376200956323,
-      0.8694955067675271
-     ]
-    }
+    "n_blocks": 44118
    },
    "stats": {
     "median": 0.7929334044456482,
@@ -226,7 +186,7 @@
    "camera": {
     "model": "NIKON Z 7_2"
    },
-   "seconds": 8.8
+   "seconds": 10.4
   },
   "A1283.DNG": {
    "path_name": "A1283.DNG",
@@ -256,27 +216,7 @@
     "method": "block_mean",
     "block": 16,
     "pct": 99.8,
-    "n_blocks": 69768,
-    "self_ratio": {
-     "guard": [
-      0.78,
-      0.85
-     ],
-     "band": [
-      0.2,
-      0.75
-     ],
-     "n_mid": 9864158,
-     "applied": false,
-     "ratio_mid": [
-      1.1095087342931955,
-      1.0055225951343822
-     ],
-     "ratio_hi": [
-      0.939938142141816,
-      1.2226151132449543
-     ]
-    }
+    "n_blocks": 69768
    },
    "stats": {
     "median": 0.3595435172319412,
@@ -337,7 +277,7 @@
    "camera": {
     "model": "OpticFilm 8200i"
    },
-   "seconds": 11.3
+   "seconds": 13.2
   },
   "A1100.ARW": {
    "path_name": "A1100.ARW",
@@ -367,27 +307,7 @@
     "method": "block_mean",
     "block": 16,
     "pct": 99.8,
-    "n_blocks": 59004,
-    "self_ratio": {
-     "guard": [
-      0.78,
-      0.85
-     ],
-     "band": [
-      0.2,
-      0.75
-     ],
-     "n_mid": 13466908,
-     "applied": false,
-     "ratio_mid": [
-      0.6640647285432171,
-      1.2884920455798943
-     ],
-     "ratio_hi": [
-      0.7773414634286588,
-      1.2250370020251924
-     ]
-    }
+    "n_blocks": 59004
    },
    "stats": {
     "median": 0.2627875804901123,
@@ -448,7 +368,7 @@
    "camera": {
     "model": "ILCE-7RM4A"
    },
-   "seconds": 10.9
+   "seconds": 11.2
   },
   "A1105.ARW": {
    "path_name": "A1105.ARW",
@@ -478,27 +398,7 @@
     "method": "block_mean",
     "block": 16,
     "pct": 99.8,
-    "n_blocks": 59004,
-    "self_ratio": {
-     "guard": [
-      0.78,
-      0.85
-     ],
-     "band": [
-      0.2,
-      0.75
-     ],
-     "n_mid": 8368609,
-     "applied": false,
-     "ratio_mid": [
-      0.6518381510569824,
-      1.3392354493253795
-     ],
-     "ratio_hi": [
-      0.8901464431086594,
-      1.079207202842713
-     ]
-    }
+    "n_blocks": 59004
    },
    "stats": {
     "median": 0.20395031571388245,
@@ -559,7 +459,7 @@
    "camera": {
     "model": "ILCE-7RM4A"
    },
-   "seconds": 10.6
+   "seconds": 11.7
   },
   "A222.NEF": {
    "path_name": "A222.NEF",
@@ -569,7 +469,7 @@
     "white_point_unrepresentative"
    ],
    "params": {
-    "ev": -0.287,
+    "ev": -0.2,
     "temp": 0.0643,
     "tint": 0.0134,
     "contrast": 1.3,
@@ -591,27 +491,7 @@
     "method": "block_mean",
     "block": 16,
     "pct": 99.8,
-    "n_blocks": 44118,
-    "self_ratio": {
-     "guard": [
-      0.78,
-      0.85
-     ],
-     "band": [
-      0.2,
-      0.75
-     ],
-     "n_mid": 5742418,
-     "applied": false,
-     "ratio_mid": [
-      0.704719656711573,
-      1.4646128891568289
-     ],
-     "ratio_hi": [
-      0.7622112079575448,
-      1.2634583245544235
-     ]
-    }
+    "n_blocks": 44118
    },
    "stats": {
     "median": 0.2991509735584259,
@@ -672,7 +552,7 @@
    "camera": {
     "model": "NIKON Z 7_2"
    },
-   "seconds": 9.0
+   "seconds": 9.8
   }
  }
 }
