@@ -1,0 +1,1369 @@
+{
+ "src": "/private/tmp/fc_t4k/t4j_tree/src",
+ "git_commit": "",
+ "src_dirty": false,
+ "src_content_sha256": "c46b383af3cd05a71477749c98b27e334f067ead9b324bd4409f94d9183c30c7",
+ "manifest": "data/manifests/s3_dev_frames.json",
+ "environment": {
+  "python": "3.13.15",
+  "numpy": "2.5.4",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O"
+ },
+ "variants": {
+  "standard": {
+   "preset": "standard"
+  }
+ },
+ "ncc_min": 0.7,
+ "max_side": 1000,
+ "app_config": {},
+ "roll_folder": "data/raw/public/nlp_official",
+ "base_mode": "roll_nat",
+ "frames": {
+  "nlp:_DSF8434": {
+   "domain": "nlp",
+   "roll": "nlp-20180518",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     0.5162021845754017,
+     0.9730775422374013,
+     0.552077018839478
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.27805649820302747,
+    "level_diff": 0.44948822822300766,
+    "d_lo_shared": 0.18567768101569831,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5660044401884079,
+     1.0669583082199097,
+     0.605340413749218
+    ],
+    "own_rgb": [
+     0.3814065158367157,
+     0.35765379667282104,
+     0.12012995779514313
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.36935612659698025,
+   "d_hi": [
+    0.818473219871521,
+    1.2836400270462036,
+    1.7665303945541382
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "50c5bf7bf26d0cc536af69ddf8a0120a2a4ad9d3b852d1d181ff55b7c08bb444",
+   "ref_sha256": "6ad6803808d4f3af1223bc44e0c60d5667f5c28a86d40bfd2fff20ffa7ae5a48",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.25,
+      "temp": 0.1377,
+      "tint": 0.068,
+      "sat": 1.02,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.594531461596489,
+      "p90": 0.8127581655979157,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.128,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 220430,
+      "de2000_median": 9.337098507885582,
+      "de2000_p90": 30.109482573169796,
+      "mean_dL": 2.0300429068903845,
+      "mean_da": -3.7358300458419684,
+      "mean_db": -3.8752570674271385,
+      "chroma_ratio": 0.5663340194577297
+     },
+     "ours_L_median": 73.17570431014758,
+     "ours_C_median": 5.085161880528862,
+     "ref_L_median": 77.24339397693518,
+     "ref_C_median": 2.5658910246396482
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9800000000000002,
+    "offset": [
+     50,
+     162
+    ],
+    "ncc": 0.9280005773545295,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9280005773545295,
+   "seconds": 22.5
+  },
+  "nlp:_DSF8948": {
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     1.376539158730084,
+     2.5948734457069156,
+     1.4722053834247204
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.29656420222289526,
+    "level_diff": 0.532210237601526,
+    "d_lo_shared": -0.24029105121315333,
+    "softness": 0.5,
+    "roll_rgb": [
+     1.5093451736848198,
+     2.84522215496857,
+     1.6142411031698236
+    ],
+    "own_rgb": [
+     0.8772886991500854,
+     0.7841992378234863,
+     0.2550782859325409
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.3742640179377984,
+   "d_hi": [
+    1.1742773056030273,
+    1.612235188484192,
+    2.1201045513153076
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "644375ef0652998341a34ba0ddc904901a4b13ea5232aeca119c822201754326",
+   "ref_sha256": "48b00b10e45006f1a3402ab60ac2e183fb762fd96eec1c20698d4242d905d626",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.0517,
+      "temp": 0.5,
+      "tint": 0.0788,
+      "sat": 1.0129,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5304943174123764,
+      "p90": 0.7126989841461181,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.11,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 223720,
+      "de2000_median": 10.324376929634457,
+      "de2000_p90": 26.29312682669686,
+      "mean_dL": 5.207814807775453,
+      "mean_da": -4.9681133002022,
+      "mean_db": -13.635245449382488,
+      "chroma_ratio": 1.0920053438955974
+     },
+     "ours_L_median": 62.160273013459864,
+     "ours_C_median": 16.880270695872575,
+     "ref_L_median": 58.10296337709544,
+     "ref_C_median": 14.192067899106931
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     38,
+     212
+    ],
+    "ncc": 0.9743958623760978,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9743958623760978,
+   "seconds": 20.3
+  },
+  "nlp:_DSF8951": {
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     0.8259234953206427,
+     1.5569240675798421,
+     0.8833232301431647
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.2971603490169921,
+    "level_diff": 0.5046858620266139,
+    "d_lo_shared": -0.018442301640226477,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.9056071043014526,
+     1.7071332931518557,
+     0.9685446619987488
+    ],
+    "own_rgb": [
+     0.5615834593772888,
+     0.5004489421844482,
+     0.1631155014038086
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.36476480836236935,
+   "d_hi": [
+    1.0769526958465576,
+    1.514215111732483,
+    2.0058517456054688
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "d52ce3a32f13ae3b0e6f9917b438f6c00ffc580a5398f1522bbf76b4001e0f99",
+   "ref_sha256": "d33f2a2f05fe2567703c2d8a282e946ae7577bc730ad0dd67c07c8e1abc6dc54",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.0719,
+      "temp": 0.2286,
+      "tint": 0.0617,
+      "sat": 1.0129,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4480171874165535,
+      "p90": 0.7649017691612243,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.112,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 224667,
+      "de2000_median": 14.785406733556234,
+      "de2000_p90": 26.014304016562253,
+      "mean_dL": 1.0764357383907561,
+      "mean_da": -7.987166641985736,
+      "mean_db": -11.632736019714773,
+      "chroma_ratio": 1.2945433520778928
+     },
+     "ours_L_median": 53.143103960956864,
+     "ours_C_median": 19.25634497671237,
+     "ref_L_median": 53.630917149889555,
+     "ref_C_median": 11.560783677318526
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     34,
+     208
+    ],
+    "ncc": 0.8961910586353957,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.8961910586353957,
+   "seconds": 20.9
+  },
+  "nlp:_DSF8983": {
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     0.8259234953206427,
+     1.5569240675798421,
+     0.8833232301431647
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.013513513513513514,
+    "regions_preview": [],
+    "chroma_part": 0.2991296791059489,
+    "level_diff": 0.5181499060202811,
+    "d_lo_shared": -0.018442301640226477,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.9056071043014526,
+     1.7071332931518557,
+     0.9685446619987488
+    ],
+    "own_rgb": [
+     0.5469146966934204,
+     0.48655036091804504,
+     0.15697474777698517
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.3365656052393857,
+   "d_hi": [
+    1.3111882209777832,
+    1.7424299716949463,
+    2.2249951362609863
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "9d96173891843d780cbd0abcad40be5c613dfdcd9de3334faccfceb94aee2d53",
+   "ref_sha256": "fa5b5609f6321dd4892457712836360cb630677dd845ac259bf0737747e940b6",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 1.3912,
+      "temp": 0.2867,
+      "tint": 0.1349,
+      "sat": 1.0091,
+      "contrast": 1.3402,
+      "midtone": 0.254,
+      "shoulder": 0.2803,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "highlights": -0.455,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.2788388952612877,
+      "p90": 0.752157425880432,
+      "weight": 0.4019678235054005,
+      "midtone_target": 0.28965576171875
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.221,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 223725,
+      "de2000_median": 18.028432124375236,
+      "de2000_p90": 28.206242709893207,
+      "mean_dL": -2.654304281037327,
+      "mean_da": -12.135081392736643,
+      "mean_db": -10.459679771218424,
+      "chroma_ratio": 0.803233882292872
+     },
+     "ours_L_median": 39.54004010711131,
+     "ours_C_median": 14.555207061059448,
+     "ref_L_median": 46.18530617645957,
+     "ref_C_median": 10.696006036940663
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     29,
+     204
+    ],
+    "ncc": 0.8639642608871473,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.8639642608871473,
+   "seconds": 21.5
+  },
+  "nlp:_DSF9229": {
+   "domain": "nlp",
+   "roll": "nlp-20180728",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     1.0324043691508034,
+     1.9461550844748026,
+     1.104154037678956
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.35602419126058427,
+    "level_diff": 0.561803275596342,
+    "d_lo_shared": -0.11535231464828288,
+    "softness": 0.5,
+    "roll_rgb": [
+     1.1320088803768158,
+     2.1339166164398193,
+     1.210680827498436
+    ],
+    "own_rgb": [
+     0.7048078775405884,
+     0.5203231573104858,
+     0.1645520180463791
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.24412222544844497,
+   "d_hi": [
+    0.9968885779380798,
+    1.5374491214752197,
+    1.9723587036132812
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "43bfc84fa67b2c9457aba48515245f2aaae5a6fd50c8dd4923a8c2840f1ee783",
+   "ref_sha256": "2b09e08aae4b5130bdae489cc2b49ac00a70960aa41eca3fbd32808896f1b896",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.1532,
+      "temp": 0.1842,
+      "tint": 0.0503,
+      "sat": 1.0099,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.388785183429718,
+      "p90": 0.7035282135009765,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.134,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 238128,
+      "de2000_median": 13.614296580628027,
+      "de2000_p90": 25.617036202662728,
+      "mean_dL": 0.39741890747051783,
+      "mean_da": -10.478395847496685,
+      "mean_db": -7.654348804724614,
+      "chroma_ratio": 0.18280113175618634
+     },
+     "ours_L_median": 54.371540446124065,
+     "ours_C_median": 11.50217198621078,
+     "ref_L_median": 56.13093078278507,
+     "ref_C_median": 5.003556106864554
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     21,
+     150
+    ],
+    "ncc": 0.8775274280081461,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.8775274280081461,
+   "seconds": 21.0
+  },
+  "nlp:_DSF9231": {
+   "domain": "nlp",
+   "roll": "nlp-20180728",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     1.0324043691508034,
+     1.9461550844748026,
+     1.104154037678956
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.3571037121710759,
+    "level_diff": 0.5888708294665524,
+    "d_lo_shared": -0.11535231464828288,
+    "softness": 0.5,
+    "roll_rgb": [
+     1.1320088803768158,
+     2.1339166164398193,
+     1.210680827498436
+    ],
+    "own_rgb": [
+     0.6638695001602173,
+     0.4893321394920349,
+     0.15408416092395782
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.052147857788101694,
+   "d_hi": [
+    0.9276262521743774,
+    1.4425560235977173,
+    1.839226484298706
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "cd2575f8f65ebf4f8c2e2850bebb6c73ff8b47dc86eb97313e5625c5ae7858c5",
+   "ref_sha256": "0b1cce825e6b5c26981fc238e62056da47221ab4456c92c63b9510b4bde557b3",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.0676,
+      "temp": 0.1384,
+      "tint": 0.0796,
+      "sat": 1.0143,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5018916577100754,
+      "p90": 0.7888518512248993,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.119,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 242554,
+      "de2000_median": 9.627021967585971,
+      "de2000_p90": 21.57734697623305,
+      "mean_dL": -2.2205991922462784,
+      "mean_da": -7.110577792433571,
+      "mean_db": -6.218778947852108,
+      "chroma_ratio": 0.9201105447015279
+     },
+     "ours_L_median": 68.3881859439779,
+     "ours_C_median": 9.29168858277412,
+     "ref_L_median": 74.63568240280246,
+     "ref_C_median": 5.257292139728603
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     20,
+     149
+    ],
+    "ncc": 0.9424788309979392,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9424788309979392,
+   "seconds": 21.0
+  },
+  "nlp:_DSF9235": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     0.8259234953206427,
+     1.5569240675798421,
+     0.8833232301431647
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.05142857142857143,
+    "regions_preview": [],
+    "chroma_part": 0.3587543727802458,
+    "level_diff": 0.5739743686975669,
+    "d_lo_shared": -0.018442301640226477,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.9056071043014526,
+     1.7071332931518557,
+     0.9685446619987488
+    ],
+    "own_rgb": [
+     0.5517213940620422,
+     0.4088009297847748,
+     0.1259424388408661
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.23331639566395665,
+   "d_hi": [
+    0.7282445430755615,
+    1.2305471897125244,
+    1.6028770208358765
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "ae289e8118ffc91321b19c145c5e815b3562fe4b47fda5c2eae5517439ab0094",
+   "ref_sha256": "4cc17fed8640012855a67fd73996cc17886072ae4d244a5cba6b4c919948eeb8",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.0182,
+      "temp": 0.2066,
+      "tint": 0.0799,
+      "sat": 1.0091,
+      "contrast": 1.3628,
+      "midtone": 0.2341,
+      "shoulder": 0.3142,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.3371687978506088,
+      "p90": 0.8494786322116852,
+      "weight": 0.628312021493912,
+      "midtone_target": 0.23655334472656253
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.201,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 241080,
+      "de2000_median": 15.190656088665328,
+      "de2000_p90": 28.59680047676699,
+      "mean_dL": 10.583788079506247,
+      "mean_da": -10.679667608904545,
+      "mean_db": -4.9041431807845575,
+      "chroma_ratio": 1.1129711469408323
+     },
+     "ours_L_median": 65.4746625946728,
+     "ours_C_median": 11.757388541963708,
+     "ref_L_median": 61.40855977735594,
+     "ref_C_median": 4.744868699684558
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     26,
+     152
+    ],
+    "ncc": 0.9731166870269028,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9731166870269028,
+   "seconds": 21.3
+  },
+  "nlp:_DSF9237": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     0.8259234953206427,
+     1.5569240675798421,
+     0.8833232301431647
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.3577740307152898,
+    "level_diff": 0.5705221330545843,
+    "d_lo_shared": -0.018442301640226477,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.9056071043014526,
+     1.7071332931518557,
+     0.9685446619987488
+    ],
+    "own_rgb": [
+     0.55487060546875,
+     0.41097408533096313,
+     0.127571702003479
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.05752556781520196,
+   "d_hi": [
+    1.0564165115356445,
+    1.5982145071029663,
+    2.0482289791107178
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "37df5503bc615791d60e946553847de1e56c5fa188c24022a525d44893527fce",
+   "ref_sha256": "b194ad568e8e7a7b6b5b26b28e7f3947188464e09cd67683833fc8026cf7daf4",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.6259,
+      "temp": 0.1307,
+      "tint": 0.0921,
+      "sat": 1.0098,
+      "contrast": 1.3352,
+      "midtone": 0.23,
+      "shoulder": 0.2728,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.3648129105567932,
+      "p90": 0.9052032947540283,
+      "weight": 0.3518708944320681,
+      "midtone_target": 0.2300054931640625
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.203,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 245508,
+      "de2000_median": 15.097543322275742,
+      "de2000_p90": 24.29300279271653,
+      "mean_dL": 1.8927035812961086,
+      "mean_da": -11.026263014745192,
+      "mean_db": -13.864483405281685,
+      "chroma_ratio": 0.4979848615946791
+     },
+     "ours_L_median": 55.275719280731494,
+     "ours_C_median": 16.70697767858093,
+     "ref_L_median": 57.00173271306221,
+     "ref_C_median": 2.2574876920793407
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     18,
+     148
+    ],
+    "ncc": 0.9341581134333495,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9341581134333495,
+   "seconds": 21.5
+  },
+  "nlp:_DSF9238": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     0.8259234953206427,
+     1.5569240675798421,
+     0.8833232301431647
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.35826261798716386,
+    "level_diff": 0.5645265580735792,
+    "d_lo_shared": -0.018442301640226477,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.9056071043014526,
+     1.7071332931518557,
+     0.9685446619987488
+    ],
+    "own_rgb": [
+     0.5632171630859375,
+     0.4155532717704773,
+     0.12955215573310852
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.0733743870176797,
+   "d_hi": [
+    0.9053582549095154,
+    1.41584050655365,
+    1.8885574340820312
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "be99fa6a39acb700a08686b07a5231658f5b4f037e4b8bf41e6b6a3281e182e2",
+   "ref_sha256": "4b46bdfad240af517d51394d16c53327a67a006022b0d3a7d229ba633e1bd370",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.0562,
+      "temp": 0.1265,
+      "tint": 0.1478,
+      "sat": 1.0154,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5327568054199219,
+      "p90": 0.7947423398494721,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.112,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 246012,
+      "de2000_median": 14.137708817762901,
+      "de2000_p90": 29.171240909373946,
+      "mean_dL": -3.5138647628694604,
+      "mean_da": -11.860759880854927,
+      "mean_db": -3.737168291035618,
+      "chroma_ratio": 0.7508131290199601
+     },
+     "ours_L_median": 65.20827368554893,
+     "ours_C_median": 8.307470158326424,
+     "ref_L_median": 71.4998938909741,
+     "ref_C_median": 7.484319988827572
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     28,
+     151
+    ],
+    "ncc": 0.9691775172916091,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9691775172916091,
+   "seconds": 20.7
+  },
+  "nlp:_DSF9239": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     0.8259234953206427,
+     1.5569240675798421,
+     0.8833232301431647
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 1.0,
+    "regions_preview": [],
+    "chroma_part": 0.3592948587288912,
+    "level_diff": 0.5700212862953914,
+    "d_lo_shared": -0.018442301640226477,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.9056071043014526,
+     1.7071332931518557,
+     0.9685446619987488
+    ],
+    "own_rgb": [
+     0.5574595928192139,
+     0.41108131408691406,
+     0.12738606333732605
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.023039263130726545,
+   "d_hi": [
+    0.7303183078765869,
+    1.1849839687347412,
+    1.5419108867645264
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "62426373bbbf4240113c6dc5a750758d2745aa1f8f9d2de80fbe542e9433e3f7",
+   "ref_sha256": "8a07fafdb7181273a5928682f45232d68788cc046ac80d6945a2c7b37776a437",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.006,
+      "temp": 0.5,
+      "tint": 0.3148,
+      "sat": 1.0085,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.34728435426950455,
+      "p90": 0.6176813125610351,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.116,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 246512,
+      "de2000_median": 22.93346936160478,
+      "de2000_p90": 30.8874942244582,
+      "mean_dL": 15.67330452832214,
+      "mean_da": -9.943131428461347,
+      "mean_db": -13.704992688974743,
+      "chroma_ratio": 0.8592238354886093
+     },
+     "ours_L_median": 52.62666134513119,
+     "ours_C_median": 14.85336417701543,
+     "ref_L_median": 41.00252715666409,
+     "ref_C_median": 4.41400912526446
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     23,
+     153
+    ],
+    "ncc": 0.9650515751639813,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9650515751639813,
+   "seconds": 21.9
+  },
+  "nlp:_DSF9243": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "roll_nat",
+   "base": {
+    "method": "roll_nat",
+    "rgb": [
+     0.8259234953206427,
+     1.5569240675798421,
+     0.8833232301431647
+    ],
+    "warnings": [
+     "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.30460821219382794,
+    "level_diff": 0.4300965113561877,
+    "d_lo_shared": -0.018442301640226477,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.9056071043014526,
+     1.7071332931518557,
+     0.9685446619987488
+    ],
+    "own_rgb": [
+     0.6783463954925537,
+     0.5864071249961853,
+     0.1929241567850113
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.02684015679442509,
+   "d_hi": [
+    0.7774618268013,
+    1.215741515159607,
+    1.6865073442459106
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562
+   },
+   "raw_sha256": "1aa2cad3bbbb315de5ff03c9ff8e284af4657d4ccd89b21a14b47314d132fdc0",
+   "ref_sha256": "a6e845b508edb63986278c161ab5b9e701973d6edea0011a01f0ccb2a373cd67",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.2,
+      "temp": 0.1208,
+      "tint": 0.0949,
+      "sat": 1.0087,
+      "contrast": 1.3331,
+      "midtone": 0.231,
+      "shoulder": 0.2696,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.3387313634157181,
+      "p90": 0.7631824135780334,
+      "weight": 0.33071595054308667,
+      "midtone_target": 0.23316955566406256
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": null,
+      "tone_pixels": null,
+      "border_cells": null,
+      "gw_cool_undamped": null
+     },
+     "estimate_seconds": 0.208,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 240590,
+      "de2000_median": 12.556481655141248,
+      "de2000_p90": 22.94353164216482,
+      "mean_dL": 1.6434932129370254,
+      "mean_da": -8.404319094535833,
+      "mean_db": -5.455123902552211,
+      "chroma_ratio": 0.9024923273452099
+     },
+     "ours_L_median": 55.02198300786534,
+     "ours_C_median": 14.553829348149426,
+     "ref_L_median": 56.911211743097304,
+     "ref_C_median": 9.853389826191513
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     25,
+     151
+    ],
+    "ncc": 0.9642471933568901,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9642471933568901,
+   "seconds": 21.7
+  }
+ }
+}

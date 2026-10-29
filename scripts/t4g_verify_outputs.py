@@ -1,4 +1,4 @@
-"""Validate a completed T4g / T4h / T4i / T4j delivery without decoding any source image.
+"""Validate a completed T4g / T4h / T4i / T4j / T4k delivery without decoding any source image.
 Usage: python -I scripts/t4g_verify_outputs.py [TAG]   (default t4g)
 """
 import hashlib
@@ -12,7 +12,8 @@ TAG = sys.argv[1] if len(sys.argv) > 1 else "t4g"
 PRESETS = {"standard", "natural", "portrait", "vivid", "print_classic"}
 VARIANTS = {"t4g": PRESETS | {"wb_t4f"}, "t4h": PRESETS | {"wb_t4f", "wb_sky_red1"},
             "t4i": PRESETS | {"wb_t4h", "no_auto_levels", "no_auto_slope", "t4h_equiv", "levels_display"},
-            "t4j": PRESETS | {"wb_t4h"}}[TAG]
+            "t4j": PRESETS | {"wb_t4h"},
+            "t4k": PRESETS | {"no_border", "no_sky_check", "no_thin", "wb_t4j", "t4j_noref"}}[TAG]
 PORTRAIT_CONTRAST = None if TAG == "t4i" else 1.16  # T4i: auto contrast may raise it on a narrow frame
 
 

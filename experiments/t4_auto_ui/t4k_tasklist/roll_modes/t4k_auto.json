@@ -1,0 +1,1585 @@
+{
+ "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+ "git_commit": "6599652312ae0cc651d00c8d28a6b3e91b694a1f",
+ "src_dirty": true,
+ "src_content_sha256": "134d795483575bb56d9a7adf26949f6e8e14206fe3fc568ca03b156b272acc98",
+ "manifest": "data/manifests/s3_dev_frames.json",
+ "environment": {
+  "python": "3.13.15",
+  "numpy": "2.5.4",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O"
+ },
+ "variants": {
+  "standard": {
+   "preset": "standard"
+  }
+ },
+ "ncc_min": 0.7,
+ "max_side": 1000,
+ "app_config": {},
+ "roll_folder": "data/raw/public/nlp_official",
+ "base_mode": "auto",
+ "frames": {
+  "nlp:_DSF8434": {
+   "domain": "nlp",
+   "roll": "nlp-20180518",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.3818264901638031,
+     0.35725948214530945,
+     0.12048523873090744
+    ],
+    "warnings": [
+     "57 blocks contain saturated samples (excluded)"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.0,
+    "level_diff": 0.0,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.3814065158367157,
+     0.35765379667282104,
+     0.12012995779514313
+    ],
+    "own_rgb": [
+     0.3814065158367157,
+     0.35765379667282104,
+     0.12012995779514313
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.3687512098335269,
+   "d_hi": [
+    0.6875194311141968,
+    0.8484764099121094,
+    1.1054646968841553
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.3028820648044492,
+     "applied": false
+    }
+   },
+   "raw_sha256": "50c5bf7bf26d0cc536af69ddf8a0120a2a4ad9d3b852d1d181ff55b7c08bb444",
+   "ref_sha256": "6ad6803808d4f3af1223bc44e0c60d5667f5c28a86d40bfd2fff20ffa7ae5a48",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0212,
+      "tint": 0.0386,
+      "sat": 1.02,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5929166525602341,
+      "p90": 0.8133867442607879,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8484764099121094,
+       "bright_share": 0.55632,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.55632
+      },
+      "border_cells": {
+       "dropped": 0,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.157,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 220430,
+      "de2000_median": 8.744925721857488,
+      "de2000_p90": 23.820039064018886,
+      "mean_dL": 1.7519820753157853,
+      "mean_da": 0.17971124506316147,
+      "mean_db": -1.758863793102383,
+      "chroma_ratio": 0.40745578955650696
+     },
+     "ours_L_median": 73.30455555671938,
+     "ours_C_median": 2.2707419324011955,
+     "ref_L_median": 77.24339397693518,
+     "ref_C_median": 2.5658910246396482
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9800000000000002,
+    "offset": [
+     50,
+     162
+    ],
+    "ncc": 0.9298523876696414,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9298523876696414,
+   "seconds": 23.3
+  },
+  "nlp:_DSF8948": {
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.8788281083106995,
+     0.7844815850257874,
+     0.2567482888698578
+    ],
+    "warnings": [],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.0030552780565646694,
+    "level_diff": 0.01406033158124477,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.9115244943978814,
+     0.8109172681156499,
+     0.26162457960214613
+    ],
+    "own_rgb": [
+     0.8772886991500854,
+     0.7841992378234863,
+     0.2550782859325409
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.37273156213704994,
+   "d_hi": [
+    0.9793927073478699,
+    1.09270179271698,
+    1.361643671989441
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.2461255953499835,
+     "applied": false
+    }
+   },
+   "raw_sha256": "644375ef0652998341a34ba0ddc904901a4b13ea5232aeca119c822201754326",
+   "ref_sha256": "48b00b10e45006f1a3402ab60ac2e183fb762fd96eec1c20698d4242d905d626",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.0442,
+      "temp": 0.38,
+      "tint": -0.0233,
+      "sat": 1.0192,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5413129180669785,
+      "p90": 0.7214769899845124,
+      "weight": 0.0
+     },
+     "wb_cool_cast": true,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.09270179271698,
+       "bright_share": 0.14992,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.14992
+      },
+      "border_cells": {
+       "dropped": 0,
+       "used": true
+      },
+      "gw_cool_undamped": true
+     },
+     "estimate_seconds": 0.128,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 223720,
+      "de2000_median": 9.214131884531849,
+      "de2000_p90": 21.192324495506586,
+      "mean_dL": 5.853985401469655,
+      "mean_da": -0.9701686544485113,
+      "mean_db": -9.567862165419433,
+      "chroma_ratio": 0.8489674126059501
+     },
+     "ours_L_median": 63.10596398245753,
+     "ours_C_median": 12.580412295223187,
+     "ref_L_median": 58.10296337709544,
+     "ref_C_median": 14.192067899106931
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     38,
+     212
+    ],
+    "ncc": 0.9783350472937588,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9783350472937588,
+   "seconds": 21.3
+  },
+  "nlp:_DSF8951": {
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.5622339248657227,
+     0.5002212524414062,
+     0.16398870944976807
+    ],
+    "warnings": [
+     "126 blocks contain saturated samples (excluded)"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.003201397526460049,
+    "level_diff": -0.01346404399366719,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5469146966934204,
+     0.48655036091804504,
+     0.15697474777698514
+    ],
+    "own_rgb": [
+     0.5615834593772888,
+     0.5004489421844482,
+     0.1631155014038086
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.3637848432055749,
+   "d_hi": [
+    0.9099298119544983,
+    1.0211098194122314,
+    1.2745460271835327
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.2481968177694966,
+     "applied": false
+    }
+   },
+   "raw_sha256": "d52ce3a32f13ae3b0e6f9917b438f6c00ffc580a5398f1522bbf76b4001e0f99",
+   "ref_sha256": "d33f2a2f05fe2567703c2d8a282e946ae7577bc730ad0dd67c07c8e1abc6dc54",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.0339,
+      "temp": 0.1729,
+      "tint": 0.0119,
+      "sat": 1.02,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4548758715391159,
+      "p90": 0.7729501843452454,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.0211098194122314,
+       "bright_share": 0.17666840145722407,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 49958,
+       "n_all": 50000,
+       "bright_share": 0.17666840145722407
+      },
+      "border_cells": {
+       "dropped": 4,
+       "used": true
+      },
+      "gw_cool_undamped": true
+     },
+     "estimate_seconds": 0.146,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 224667,
+      "de2000_median": 8.471177415379984,
+      "de2000_p90": 18.90502166033069,
+      "mean_dL": 1.0480933230822622,
+      "mean_da": -1.612817432241665,
+      "mean_db": -6.735477122776151,
+      "chroma_ratio": 0.9027017642591435
+     },
+     "ours_L_median": 53.751720184679925,
+     "ours_C_median": 12.380799796844096,
+     "ref_L_median": 53.630917149889555,
+     "ref_C_median": 11.560783677318526
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     34,
+     208
+    ],
+    "ncc": 0.9066841152682789,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9066841152682789,
+   "seconds": 21.4
+  },
+  "nlp:_DSF8983": {
+   "domain": "nlp",
+   "roll": "nlp-20180613",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.547814130783081,
+     0.48674753308296204,
+     0.1577477753162384
+    ],
+    "warnings": [],
+    "inside_image": 0.013513513513513514,
+    "regions_preview": [],
+    "chroma_part": 6.428849777021916e-17,
+    "level_diff": -3.214424888510957e-17,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5469146966934204,
+     0.48655036091804504,
+     0.15697474777698514
+    ],
+    "own_rgb": [
+     0.5469146966934204,
+     0.48655036091804504,
+     0.15697474777698517
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.3338858239772874,
+   "d_hi": [
+    1.1328816413879395,
+    1.2374663352966309,
+    1.4768385887145996
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.1934373862062189,
+     "applied": false
+    }
+   },
+   "raw_sha256": "9d96173891843d780cbd0abcad40be5c613dfdcd9de3334faccfceb94aee2d53",
+   "ref_sha256": "fa5b5609f6321dd4892457712836360cb630677dd845ac259bf0737747e940b6",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.8891,
+      "temp": 0.0708,
+      "tint": 0.0625,
+      "sat": 1.0141,
+      "contrast": 1.3068,
+      "midtone": 0.2313,
+      "shoulder": 0.2303,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "highlights": -0.4,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.31867970526218414,
+      "p90": 0.7511919379234314,
+      "weight": 0.06839416883228476,
+      "bright_share": 0.05725669996179248,
+      "midtone_target": 0.249412841796875
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.2374663352966309,
+       "bright_share": 0.05725669996179248,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 36642,
+       "n_all": 50000,
+       "bright_share": 0.05725669996179248
+      },
+      "border_cells": {
+       "dropped": 1601,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.204,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 223725,
+      "de2000_median": 14.229180136933854,
+      "de2000_p90": 21.671247629239854,
+      "mean_dL": -12.721030083785744,
+      "mean_da": -3.3647100051589396,
+      "mean_db": -0.9218730891682735,
+      "chroma_ratio": 0.5608450352689724
+     },
+     "ours_L_median": 30.55679817737836,
+     "ours_C_median": 8.296802827933043,
+     "ref_L_median": 46.18530617645957,
+     "ref_C_median": 10.696006036940663
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     29,
+     204
+    ],
+    "ncc": 0.8880393136044133,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.8880393136044133,
+   "seconds": 22.4
+  },
+  "nlp:_DSF9229": {
+   "domain": "nlp",
+   "roll": "nlp-20180728",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.7052567601203918,
+     0.5202715992927551,
+     0.16537727415561676
+    ],
+    "warnings": [],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.000715522459399898,
+    "level_diff": -0.013322600554935374,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.6843386888504028,
+     0.5048276484012604,
+     0.15931808948516846
+    ],
+    "own_rgb": [
+     0.7048078775405884,
+     0.5203231573104858,
+     0.1645520180463791
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.24361207897793263,
+   "d_hi": [
+    0.8313859701156616,
+    0.9645017981529236,
+    1.147804856300354
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.1900494726899071,
+     "applied": false
+    }
+   },
+   "raw_sha256": "43bfc84fa67b2c9457aba48515245f2aaae5a6fd50c8dd4923a8c2840f1ee783",
+   "ref_sha256": "2b09e08aae4b5130bdae489cc2b49ac00a70960aa41eca3fbd32808896f1b896",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.0934,
+      "temp": 0.0441,
+      "tint": 0.0185,
+      "sat": 1.02,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4127788841724396,
+      "p90": 0.7106281280517579,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.9645017981529236,
+       "bright_share": 0.08256302993500214,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 44463,
+       "n_all": 50000,
+       "bright_share": 0.08256302993500214
+      },
+      "border_cells": {
+       "dropped": 849,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.156,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 238128,
+      "de2000_median": 7.949352861355444,
+      "de2000_p90": 16.18584004810946,
+      "mean_dL": -1.558240473520977,
+      "mean_da": 0.1921733128656919,
+      "mean_db": -0.558077299396824,
+      "chroma_ratio": 0.5550939241025067
+     },
+     "ours_L_median": 53.43835020742076,
+     "ours_C_median": 3.814097897410247,
+     "ref_L_median": 56.13093078278507,
+     "ref_C_median": 5.003556106864554
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     22,
+     149
+    ],
+    "ncc": 0.8930922397360318,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.8930922397360318,
+   "seconds": 21.8
+  },
+  "nlp:_DSF9231": {
+   "domain": "nlp",
+   "roll": "nlp-20180728",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.6648813486099243,
+     0.4892271161079407,
+     0.15474173426628113
+    ],
+    "warnings": [],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.0007621387428877763,
+    "level_diff": 0.013744953315275019,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.6843386888504028,
+     0.5048276484012604,
+     0.15931808948516846
+    ],
+    "own_rgb": [
+     0.6638695001602173,
+     0.4893321394920349,
+     0.15408416092395782
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.05123241708607562,
+   "d_hi": [
+    0.7365205883979797,
+    0.842889130115509,
+    0.9858042597770691
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.1695538885902765,
+     "applied": false
+    }
+   },
+   "raw_sha256": "cd2575f8f65ebf4f8c2e2850bebb6c73ff8b47dc86eb97313e5625c5ae7858c5",
+   "ref_sha256": "0b1cce825e6b5c26981fc238e62056da47221ab4456c92c63b9510b4bde557b3",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.0454,
+      "temp": -0.0123,
+      "tint": 0.0301,
+      "sat": 1.02,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5009181499481201,
+      "p90": 0.7948109626770019,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.842889130115509,
+       "bright_share": 0.3638970812569918,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 49165,
+       "n_all": 50000,
+       "bright_share": 0.3638970812569918
+      },
+      "border_cells": {
+       "dropped": 81,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.18,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 242554,
+      "de2000_median": 7.050097310388811,
+      "de2000_p90": 11.912015232814362,
+      "mean_dL": -2.846961707199051,
+      "mean_da": -0.42636679314043413,
+      "mean_db": -0.6350346324774392,
+      "chroma_ratio": 0.5843120045403185
+     },
+     "ours_L_median": 68.90373612226315,
+     "ours_C_median": 5.171927459203932,
+     "ref_L_median": 74.63568240280246,
+     "ref_C_median": 5.257292139728603
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     20,
+     149
+    ],
+    "ncc": 0.9536370796239695,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9536370796239695,
+   "seconds": 22.8
+  },
+  "nlp:_DSF9235": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.5523307919502258,
+     0.40849927067756653,
+     0.1265430748462677
+    ],
+    "warnings": [],
+    "inside_image": 0.05142857142857143,
+    "regions_preview": [],
+    "chroma_part": 0.0017480321754967869,
+    "level_diff": 0.004163893429321142,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5574595928192139,
+     0.41108131408691406,
+     0.127571702003479
+    ],
+    "own_rgb": [
+     0.5517213940620422,
+     0.4088009297847748,
+     0.1259424388408661
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.23243926635694928,
+   "d_hi": [
+    0.5535039305686951,
+    0.6494709849357605,
+    0.7589958310127258
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.1686370116869786,
+     "applied": false
+    }
+   },
+   "raw_sha256": "ae289e8118ffc91321b19c145c5e815b3562fe4b47fda5c2eae5517439ab0094",
+   "ref_sha256": "4cc17fed8640012855a67fd73996cc17886072ae4d244a5cba6b4c919948eeb8",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.8506,
+      "temp": 0.0465,
+      "tint": 0.0177,
+      "sat": 1.0121,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "highlights": -0.361,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.24017779529094696,
+      "p90": 0.9505399465560913,
+      "weight": 1.0,
+      "bright_share": 0.2994159438608726,
+      "midtone_target": 0.32
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.6494709849357605,
+       "bright_share": 0.2994159438608726,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 45886,
+       "n_all": 50000,
+       "bright_share": 0.2994159438608726
+      },
+      "border_cells": {
+       "dropped": 570,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.355,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 241080,
+      "de2000_median": 14.284855623663706,
+      "de2000_p90": 21.56441121515301,
+      "mean_dL": 15.823489785392955,
+      "mean_da": 0.43308324372778634,
+      "mean_db": -3.141030397893618,
+      "chroma_ratio": 1.2471242949535761
+     },
+     "ours_L_median": 78.77900209818685,
+     "ours_C_median": 6.149288315985865,
+     "ref_L_median": 61.40855977735594,
+     "ref_C_median": 4.744868699684558
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     26,
+     152
+    ],
+    "ncc": 0.9924202091106831,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9924202091106831,
+   "seconds": 22.9
+  },
+  "nlp:_DSF9237": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.5555504560470581,
+     0.4107118248939514,
+     0.1281910389661789
+    ],
+    "warnings": [],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.0013100169864557107,
+    "level_diff": 0.0007116577863386658,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5574595928192139,
+     0.41108131408691406,
+     0.127571702003479
+    ],
+    "own_rgb": [
+     0.55487060546875,
+     0.41097408533096313,
+     0.127571702003479
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.05647906181442767,
+   "d_hi": [
+    0.8842000961303711,
+    1.019484281539917,
+    1.2099668979644775
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.1868421317264835,
+     "applied": false
+    }
+   },
+   "raw_sha256": "37df5503bc615791d60e946553847de1e56c5fa188c24022a525d44893527fce",
+   "ref_sha256": "b194ad568e8e7a7b6b5b26b28e7f3947188464e09cd67683833fc8026cf7daf4",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.6209,
+      "temp": -0.0386,
+      "tint": 0.0464,
+      "sat": 1.0109,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.4299294203519821,
+      "p90": 0.9108177423477173,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 1.019484281539917,
+       "bright_share": 0.15010118396873764,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 42991,
+       "n_all": 50000,
+       "bright_share": 0.15010118396873764
+      },
+      "border_cells": {
+       "dropped": 1004,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.16,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 245508,
+      "de2000_median": 5.887486588374336,
+      "de2000_p90": 10.100264279004332,
+      "mean_dL": -0.06716429456997162,
+      "mean_da": -1.2764840828985624,
+      "mean_db": -5.104668199017643,
+      "chroma_ratio": 0.6934308765622385
+     },
+     "ours_L_median": 54.893278947637334,
+     "ours_C_median": 3.9262429140760258,
+     "ref_L_median": 57.00173271306221,
+     "ref_C_median": 2.2574876920793407
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     18,
+     148
+    ],
+    "ncc": 0.9532035740703746,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9532035740703746,
+   "seconds": 23.2
+  },
+  "nlp:_DSF9238": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.5640802383422852,
+     0.4156405031681061,
+     0.13034255802631378
+    ],
+    "warnings": [],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.0014063770733961124,
+    "level_diff": -0.005283917194666462,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5574595928192139,
+     0.41108131408691406,
+     0.127571702003479
+    ],
+    "own_rgb": [
+     0.5632171630859375,
+     0.4155532717704773,
+     0.12955215573310852
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.0725254871596335,
+   "d_hi": [
+    0.7397593259811401,
+    0.8422909379005432,
+    1.0575239658355713
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.2555328785461093,
+     "applied": false
+    }
+   },
+   "raw_sha256": "be99fa6a39acb700a08686b07a5231658f5b4f037e4b8bf41e6b6a3281e182e2",
+   "ref_sha256": "4b46bdfad240af517d51394d16c53327a67a006022b0d3a7d229ba633e1bd370",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": -0.2,
+      "temp": -0.0676,
+      "tint": 0.0929,
+      "sat": 1.02,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.5078527331352234,
+      "p90": 0.7772881269454956,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.8422909379005432,
+       "bright_share": 0.4038261426398783,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 49972,
+       "n_all": 50000,
+       "bright_share": 0.4038261426398783
+      },
+      "border_cells": {
+       "dropped": 2,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.15,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 246012,
+      "de2000_median": 9.007976528472334,
+      "de2000_p90": 10.587361544652035,
+      "mean_dL": -6.170236532420001,
+      "mean_da": -3.751909224728181,
+      "mean_db": 1.6369686757325548,
+      "chroma_ratio": 0.6557227778775275
+     },
+     "ours_L_median": 63.207486529173416,
+     "ours_C_median": 7.299847118832424,
+     "ref_L_median": 71.4998938909741,
+     "ref_C_median": 7.484319988827572
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     27,
+     151
+    ],
+    "ncc": 0.9807891390433705,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9807891390433705,
+   "seconds": 22.7
+  },
+  "nlp:_DSF9239": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.5581597685813904,
+     0.4109101891517639,
+     0.1280231922864914
+    ],
+    "warnings": [],
+    "inside_image": 1.0,
+    "regions_preview": [],
+    "chroma_part": 0.0004216220542913343,
+    "level_diff": 0.00021081102714566718,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.5574595928192139,
+     0.41108131408691406,
+     0.127571702003479
+    ],
+    "own_rgb": [
+     0.5574595928192139,
+     0.41108131408691406,
+     0.12738606333732605
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.022402084139889016,
+   "d_hi": [
+    0.5601370334625244,
+    0.6064634323120117,
+    0.7030799388885498
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.1593113474430081,
+     "applied": false
+    }
+   },
+   "raw_sha256": "62426373bbbf4240113c6dc5a750758d2745aa1f8f9d2de80fbe542e9433e3f7",
+   "ref_sha256": "8a07fafdb7181273a5928682f45232d68788cc046ac80d6945a2c7b37776a437",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.5594,
+      "temp": -0.004,
+      "tint": 0.0578,
+      "sat": 1.0161,
+      "contrast": 1.3021,
+      "midtone": 0.2301,
+      "shoulder": 0.2232,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "highlights": -0.209,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.3332478478550911,
+      "p90": 0.7286610007286072,
+      "weight": 0.021281531955127064,
+      "bright_share": 0.06355860193734776,
+      "midtone_target": 0.23609191894531256
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.6064634323120117,
+       "bright_share": 0.06355860193734776,
+       "applied": true,
+       "ev_cap": 0.5593902969360351,
+       "ev_before": 1.1967257717117232
+      },
+      "tone_pixels": {
+       "n": 35306,
+       "n_all": 50000,
+       "bright_share": 0.06355860193734776
+      },
+      "border_cells": {
+       "dropped": 1730,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.211,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 246512,
+      "de2000_median": 10.103822344174432,
+      "de2000_p90": 13.751091242282563,
+      "mean_dL": 10.140463216316057,
+      "mean_da": -1.056752912774858,
+      "mean_db": -1.9029383824869215,
+      "chroma_ratio": 0.7880478358619596
+     },
+     "ours_L_median": 53.075707305004634,
+     "ours_C_median": 5.659853504722012,
+     "ref_L_median": 41.00252715666409,
+     "ref_C_median": 4.41400912526446
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     23,
+     153
+    ],
+    "ncc": 0.9914236291324137,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9914236291324137,
+   "seconds": 22.0
+  },
+  "nlp:_DSF9243": {
+   "domain": "nlp",
+   "roll": "nlp-20180729",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.6792401075363159,
+     0.5862821340560913,
+     0.19353017210960388
+    ],
+    "warnings": [],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.0,
+    "level_diff": 0.0,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.6783463954925537,
+     0.5864071249961853,
+     0.1929241567850113
+    ],
+    "own_rgb": [
+     0.6783463954925537,
+     0.5864071249961853,
+     0.1929241567850113
+    ]
+   },
+   "camera_matrix": true,
+   "holder_share": 0.02617071557620338,
+   "d_hi": [
+    0.6925452947616577,
+    0.7915807366371155,
+    1.0271363258361816
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+     "guard": [
+      1.12,
+      1.18,
+      0.65
+     ],
+     "ratio_bg": 1.297576202017978,
+     "applied": false
+    }
+   },
+   "raw_sha256": "1aa2cad3bbbb315de5ff03c9ff8e284af4657d4ccd89b21a14b47314d132fdc0",
+   "ref_sha256": "a6e845b508edb63986278c161ab5b9e701973d6edea0011a01f0ccb2a373cd67",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.223,
+      "temp": 0.0348,
+      "tint": 0.0402,
+      "sat": 1.02,
+      "contrast": 1.3574,
+      "midtone": 0.2309,
+      "shoulder": 0.3061,
+      "matrix": [
+       [
+        1.1128614482232428,
+        -0.04147453839580518,
+        -0.07138690982743759
+       ],
+       [
+        -0.0738360993246589,
+        1.2162728422632245,
+        -0.14243674293856573
+       ],
+       [
+        0.006902150579605176,
+        -0.17814288214287544,
+        1.1712407315632702
+       ]
+      ],
+      "highlights": -0.2,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "flags": [
+      "backlit_midtone"
+     ],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.3426092863082886,
+      "p90": 0.8228863477706909,
+      "weight": 0.5739071369171145,
+      "bright_share": 0.2502150817310578,
+      "midtone_target": 0.23158203125000004
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.7915807366371155,
+       "bright_share": 0.2502150817310578,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 49981,
+       "n_all": 50000,
+       "bright_share": 0.2502150817310578
+      },
+      "border_cells": {
+       "dropped": 1,
+       "used": true
+      },
+      "gw_cool_undamped": false
+     },
+     "estimate_seconds": 0.271,
+     "cam_mix": 0.4,
+     "metrics": {
+      "n": 240590,
+      "de2000_median": 7.395469236228058,
+      "de2000_p90": 13.539936061743116,
+      "mean_dL": 3.795527346642198,
+      "mean_da": 0.7435561596765446,
+      "mean_db": 1.6564975224831202,
+      "chroma_ratio": 0.669825543196202
+     },
+     "ours_L_median": 59.362608811447274,
+     "ours_C_median": 8.043513440956186,
+     "ref_L_median": 56.911211743097304,
+     "ref_C_median": 9.853389826191513
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "scale": 0.9900000000000002,
+    "offset": [
+     25,
+     151
+    ],
+    "ncc": 0.9802195350425612,
+    "factor": 1,
+    "method": "compare.align",
+    "ref_block_factor": 7
+   },
+   "ncc": 0.9802195350425612,
+   "seconds": 22.7
+  }
+ }
+}

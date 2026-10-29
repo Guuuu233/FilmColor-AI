@@ -282,12 +282,12 @@ def load_look(name: str = "global_look_v1") -> dict:
     return look
 
 
-def estimate_params_v2(P, mask=None, cfg=NOREF_V2, roll=None, look=None) -> dict:
+def estimate_params_v2(P, mask=None, cfg=NOREF_V2, roll=None, look=None, *, span_d_g: float | None = None) -> dict:
     """noref_v2 / noref_v3 dispatcher: when ``cfg["id"] == "noref_v3"``, runs the adaptive print estimator
-    ``estimate_params_v3``; otherwise runs ``noref_v2`` (start from the fixed look and adjust only the groups in
-    ``cfg["groups"]``)."""
+    ``estimate_params_v3`` (``span_d_g``: the inversion's G density range); otherwise runs ``noref_v2`` (start from the
+    fixed look and adjust only the groups in ``cfg["groups"]``)."""
     if cfg.get("id") == "noref_v3":
-        return estimate_params_v3(P, mask, cfg, roll, look)
+        return estimate_params_v3(P, mask, cfg, roll, look, span_d_g=span_d_g)
     P = np.asarray(P, np.float32)
     if mask is not None and mask.shape != P.shape[:2]:
         raise ValueError(f"mask shape {mask.shape} != image shape {P.shape[:2]}")
@@ -385,8 +385,10 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4j-2026-10-26",          # T4j: no sky damping on a uniform cool cast (bright, mid-grey and grey world all
-                                   # cool), auto levels off by default; T4i (not adopted): sky split, auto levels;
+    rev="t4k-2026-10-27",          # T4k: black rebate / frame gaps out of the metering, backlit needs a bright share,
+                                   # thin-negative ev cap, warm-scene cooling damped, green tint countered, cool-cast
+                                   # temp capped; T4j: no sky damping on a uniform cool cast (bright, mid-grey and grey
+                                   # world all cool), auto levels off by default; T4i (not adopted): sky split, auto levels;
                                    # T4h: sky damping on the grey-world blue axis only, milder portrait;
                                    # T4g: adaptive WB and softer portrait / natural presets; T4f: trimean anchor,
                                    # textured EV refinement (at most -0.20 EV down), wider backlit, sky WB damping;
@@ -413,6 +415,22 @@ NOREF_V3 = dict(
     base_shadows=0.0, base_highlights=0.0, base_slope_r=0.0, base_slope_b=0.0,
     base_blacks=0.0,               # blacks of the preset (a constant; never estimated from the frame)
     temp_offset=0.0, tint_offset=0.0,  # preset colour offsets added after the white balance estimate
+    base_tint=0.015,               # T4k: added to every preset's tint offset (counter the set's green lean)
+    # T4k: deep-black rebate / gaps between frames inside the central region are not metered: a cell counts only when
+    # its mean max channel exceeds cell_min_luma and cell_bright_px_share of its pixels have max channel above
+    # cell_min_luma_px (fewer than cell_min_textured textured cells left: the cells without this filter)
+    cell_border_filter=True, cell_min_luma=0.022, cell_bright_px_share=0.80, cell_min_luma_px=0.015, cell_min_textured=50,
+    # T4k: the EV refinement's p98 ceiling and the backlit check use the pixels with max channel above tone_min_luma
+    # (fewer than wb_v3_min_px: all); bright share = share of those with linear luminance above bright_luma
+    tone_border_filter=True, tone_min_luma=0.020, bright_luma=0.45,
+    # T4k: the backlit weight is multiplied by ramp(bright share; backlit_sky_share_lo, backlit_min_sky_share)
+    backlit_sky_check=True, backlit_sky_share_lo=0.04, backlit_min_sky_share=0.12,
+    # T4k: a thin negative (G density range of the inversion below thin_span_max and bright share below
+    # thin_bright_share_max: its highlights were already stretched to the white point) gets a positive ev of at most
+    # max(0, (span - thin_span_zero) / thin_span_ramp) x thin_ev_max; below thin_blacks_span, blacks is lowered by
+    # clip((thin_blacks_span - span) x thin_blacks_gain, 0, thin_blacks_max)
+    thin_neg_check=True, thin_span_max=0.62, thin_bright_share_max=0.35, thin_span_zero=0.42, thin_span_ramp=0.20,
+    thin_ev_max=0.60, thin_blacks_span=0.52, thin_blacks_gain=0.8, thin_blacks_max=0.12,
     target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance of the textured cells (T4g; T4d
                                    # 0.48..0.55 and T4c / T4e 0.45..0.52 on the full frame)
     ev_refine_down_max=0.20,       # T4f: the EV refinement lowers exposure by at most this, and not below -this
@@ -447,6 +465,12 @@ NOREF_V3 = dict(
     wb_v3_cool_cast_check=True,
     wb_v3_cool_z0=(-0.05, 0.05), wb_v3_cool_z1=(-0.10, 0.10), wb_v3_cool_gw=(-0.20, 0.25),
     wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80, wb_v3_cast_strength=0.80,
+    wb_v3_cast_max_temp=0.38,      # T4k: a cool-cast frame's temp is at most this (T4j: up to wb_max_shift); None = off
+    # T4k: mid-grey zone and grey world both strongly cool (log2 R/G below [0], B/G above [1] of wb_v3_undamp_z1 /
+    # wb_v3_undamp_gw) with a top-bottom spread below wb_v3_undamp_tb_max (no sky over ground): no grey-world sky damping
+    wb_v3_gw_cool_undamp=True, wb_v3_undamp_z1=(-0.15, 0.15), wb_v3_undamp_gw=(-0.20, 0.25), wb_v3_undamp_tb_max=0.08,
+    wb_v3_cool_damp=0.55,          # T4k: a negative temp (towards blue: warm walls, lamp light) is multiplied by this
+    wb_v3_tint_boost=1.20,         # T4k: a positive tint (towards magenta, against green) is multiplied by this
     # T4i auto levels on the existing sliders (task list 2.1, scheme A; off by default since T4j, measured in T4i):
     # - slope_r / slope_b: per-channel log2 ratio to G at the auto_slope_pct percentiles (pixels with max > 0.003);
     #   when highlight minus shadow ratio differs by >= auto_slope_min_delta, the channel's gamma is matched to G over
@@ -533,17 +557,34 @@ def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
     if not valid.any():
         valid = np.ones((hc, wc), bool)
     thr = float(cfg.get("activity_thr_d", 0.05))
-    tex = valid & (std_D >= thr)
-    tex_share = float(tex.sum() / max(valid.sum(), 1))
-    if tex_share < float(cfg.get("min_textured_share", 0.08)):
-        q75 = float(np.percentile(std_D[valid], 75))
-        tex = valid & (std_D >= q75)
+
+    def textured(v):
+        t = v & (std_D >= thr)
+        share = float(t.sum() / max(v.sum(), 1))
+        if share < float(cfg.get("min_textured_share", 0.08)):
+            t = v & (std_D >= float(np.percentile(std_D[v], 75)))
+        return t, share
+
+    tex, tex_share = textured(valid)
+    border = None
+    if cfg.get("cell_border_filter"):
+        # T4k: a cell on the black rebate or a gap between frames is mostly pixels far below white; its edge with the
+        # image is textured and would be metered as the frame's shadows (_DSF9239: anchor 1.62 D instead of 1.04 D)
+        lit = (Pc.max(axis=-1) > cfg["cell_min_luma_px"]).mean(axis=(1, 3))
+        keep = valid & (mean_rgb.max(axis=-1) > cfg["cell_min_luma"]) & (lit >= cfg["cell_bright_px_share"])
+        border = dict(dropped=int((valid & ~keep).sum()), used=False)
+        if keep.any():
+            tex_k, share_k = textured(keep)
+            if tex_k.sum() >= cfg["cell_min_textured"]:
+                tex, tex_share = tex_k, share_k
+                border["used"] = True
     dt = mean_D[tex]
     p2, p10, p25, p50, p75, p90, p98 = (float(x) for x in np.percentile(dt, [2, 10, 25, 50, 75, 90, 98]))
     anchor_d = 0.5 * p50 + 0.25 * (p25 + p75)  # Tukey trimean (T4f; T4 v2-T4e averaged the P5..P95 mean and midrange)
     return dict(
         textured_share=tex_share,
         n_textured=int(tex.sum()),
+        border_cells=border,
         anchor_d=anchor_d,
         span_10_90_d=float(p90 - p10),
         p2_bright_d=p2,
@@ -577,7 +618,9 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     ``wb_v3_gw_sky_red``) with only its blue axis damped (T4h). T4j: when the bright zone, the mid-grey zone and the
     grey world all point to a strong cool cast (``wb_v3_cool_*``: red low, blue high), the frame is cool all over, not
     a sky: no damping, grey-world weight ``wb_v3_cast_gw_weight``, confidence at least ``wb_v3_cast_conf`` and strength
-    ``wb_v3_cast_strength``. temp / tint remove ``wb_v3_strength`` x confidence of the cast."""
+    ``wb_v3_cast_strength`` (T4k: temp at most ``wb_v3_cast_max_temp``). T4k: a strongly cool mid-grey zone and grey
+    world without a top-bottom split keep the grey world undamped; a negative temp is multiplied by ``wb_v3_cool_damp``
+    and a positive tint by ``wb_v3_tint_boost``. temp / tint remove ``wb_v3_strength`` x confidence of the cast."""
     cfg = cfg or NOREF_V3
     px = np.asarray(px, np.float32)
     y = px @ LUMA.astype(np.float32)
@@ -629,24 +672,6 @@ def estimate_wb_v3(px, cfg=None) -> dict:
         diag["zones"][i].update(weight=float(weights[k]))
     w = np.asarray(weights) / np.sum(weights)
     est = (w[:, None] * np.asarray(ests)).sum(0)
-    if est_gw is not None:
-        sparse = any(z["narrow_share"] < cfg["wb_v3_adaptive_share"] for z in diag["zones"])
-        gw_weight = float(cfg["wb_v3_gw_weight"]) if sparse or np.linalg.norm(est_gw) > cfg["wb_v3_gw_threshold"] else 0.0
-        if cool_cast:
-            gw_weight = float(cfg["wb_v3_cast_gw_weight"])
-        diag["grey_world"] = dict(chroma=[float(v) for v in est_gw], weight=gw_weight)
-        if not cool_cast and est_gw[0] < sky_r and est_gw[1] > sky_b:
-            # T4h: in a clear-sky direction only the blue axis is damped (T4g damped the whole weight), so a cyan cast
-            # (red low) is still corrected without pulling the sky yellow
-            est_gw = np.array([est_gw[0] * float(cfg["wb_v3_gw_sky_red"]), est_gw[1] * float(cfg["wb_v3_sky_weight"])])
-            diag["grey_world"].update(clear_sky=True, chroma_used=[float(v) for v in est_gw])
-        est = (1 - gw_weight) * est + gw_weight * est_gw
-    allc = np.concatenate(cands)
-    mad = float(np.median(np.linalg.norm(allc - est, axis=1)))
-    share = float(sum(z["share"] for z in diag["zones"] if "chroma" in z) / len(diag["zones"]))
-    conf = _ramp(share, *cfg["wb_v3_share"]) * (1 - 0.5 * _ramp(mad, *cfg["wb_v3_mad"]))
-    if len(ests) == 2:
-        diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
     quads = []
     n = len(px)
     # quadrants are approximated by sample order: _sample keeps row-major order, so halves of the sample are the
@@ -659,14 +684,46 @@ def estimate_wb_v3(px, cfg=None) -> dict:
             quads.append(_huber_location(ch[selh], cfg["wb_v3_huber"]))
     if len(quads) == 2:
         diag["top_bottom_spread"] = float(np.linalg.norm(quads[0] - quads[1]))
-        if diag["top_bottom_spread"] > cfg["wb_conflict"]:
-            conf *= cfg["wb_v3_conflict_factor"]
-            diag["conflict"] = True
+    # T4k: mid-grey zone and grey world both strongly cool on a frame without a sky over ground (_DSF8951): the grey
+    # world is a cast, not a sky
+    gw_undamp = bool(cfg.get("wb_v3_gw_cool_undamp") and est_gw is not None and 1 in found
+                     and cool(ests[found.index(1)], "wb_v3_undamp_z1") and cool(est_gw, "wb_v3_undamp_gw")
+                     and diag.get("top_bottom_spread", np.inf) < cfg["wb_v3_undamp_tb_max"])
+    diag["gw_cool_undamped"] = gw_undamp
+    if est_gw is not None:
+        sparse = any(z["narrow_share"] < cfg["wb_v3_adaptive_share"] for z in diag["zones"])
+        gw_weight = float(cfg["wb_v3_gw_weight"]) if sparse or np.linalg.norm(est_gw) > cfg["wb_v3_gw_threshold"] else 0.0
+        if cool_cast:
+            gw_weight = float(cfg["wb_v3_cast_gw_weight"])
+        diag["grey_world"] = dict(chroma=[float(v) for v in est_gw], weight=gw_weight)
+        if not (cool_cast or gw_undamp) and est_gw[0] < sky_r and est_gw[1] > sky_b:
+            # T4h: in a clear-sky direction only the blue axis is damped (T4g damped the whole weight), so a cyan cast
+            # (red low) is still corrected without pulling the sky yellow
+            est_gw = np.array([est_gw[0] * float(cfg["wb_v3_gw_sky_red"]), est_gw[1] * float(cfg["wb_v3_sky_weight"])])
+            diag["grey_world"].update(clear_sky=True, chroma_used=[float(v) for v in est_gw])
+        est = (1 - gw_weight) * est + gw_weight * est_gw
+    allc = np.concatenate(cands)
+    mad = float(np.median(np.linalg.norm(allc - est, axis=1)))
+    share = float(sum(z["share"] for z in diag["zones"] if "chroma" in z) / len(diag["zones"]))
+    conf = _ramp(share, *cfg["wb_v3_share"]) * (1 - 0.5 * _ramp(mad, *cfg["wb_v3_mad"]))
+    if len(ests) == 2:
+        diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
+    if diag.get("top_bottom_spread", 0.0) > cfg["wb_conflict"]:
+        conf *= cfg["wb_v3_conflict_factor"]
+        diag["conflict"] = True
     strength = cfg["wb_v3_strength"]
     if cool_cast:
         conf = max(conf, float(cfg["wb_v3_cast_conf"]))
         strength = cfg["wb_v3_cast_strength"]
     temp, tint = wb_from_chroma(strength * conf * est)
+    diag["temp_tint_raw"] = [float(temp), float(tint)]
+    # T4k: cooling a warm scene (warm wall, lamp light) is damped; a correction against green is strengthened
+    if temp < 0:
+        temp *= float(cfg.get("wb_v3_cool_damp", 1.0))
+    if tint > 0:
+        tint *= float(cfg.get("wb_v3_tint_boost", 1.0))
+    if cool_cast and cfg.get("wb_v3_cast_max_temp") is not None:
+        temp = min(temp, float(cfg["wb_v3_cast_max_temp"]))  # T4k: T4j pushed cool-cast frames to +0.50
     m = cfg["wb_max_shift"]
     diag.update(share=share, mad=mad)
     return dict(temp=float(np.clip(temp, -m, m)), tint=float(np.clip(tint, -m, m)), confidence=float(conf),
@@ -679,7 +736,7 @@ def _encoded_quantiles(px, p: RenderParams, qs=(2, 50, 98)):
     return [float(x) for x in np.percentile(y, qs)]
 
 
-def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict:
+def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span_d_g: float | None = None) -> dict:
     """Textured-cell adaptive print estimator (NOREF_V3, T4 v2, inspired by marcinz606/NegPy & negadoctor):
 
     1. **Textured Cells**: filters grid cells by local density activity ``std(-log10 Y) >= 0.05 D`` so large
@@ -707,6 +764,10 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
        each a step above the preset's own value (T4e), instead of more exposure.
     8. **Style presets** (T4d): ``preset_config(name)`` overrides the base values (band, midtone, contrast, shoulder,
        saturation, vibrance, blacks, colour offsets, camera matrix share, chroma_preserve); steps 1-7 are the same.
+    9. **Borders and thin negatives** (T4k): cells and pixels on black rebate / gaps between frames are not metered;
+       the backlit weight needs a bright share; with ``span_d_g`` (the inversion's G density range, white point minus
+       black point) below ``thin_span_max`` the positive ev is capped and blacks lowered (thin / night negatives,
+       whose highlights the inversion already stretched to white).
 
     T4b (2026-10-24) replaced the T4 v2 contrast / shadow / paper-black rules, which compared ``-log10`` of the
     scene-linear positive (``_textured_cells``) with print-density thresholds and so lowered contrast to its floor
@@ -745,6 +806,14 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     flags = ["white_point_unrepresentative"] if st["above_white"] > 0.05 else []
     px = _sample(P, mask, cfg["n_sample"] // 4, seed=1)
     tc = _textured_cells(P, mask, cfg)
+    # T4k: tone quantiles without deep-black rebate / frame gaps; bright share for the backlit and thin checks
+    px_tone = px
+    if cfg.get("tone_border_filter"):
+        lit_px = px[px.max(axis=-1) > cfg["tone_min_luma"]]
+        if len(lit_px) >= cfg["wb_v3_min_px"]:
+            px_tone = lit_px
+    bright_share = float(np.mean((px_tone @ LUMA.astype(np.float32)) > cfg.get("bright_luma", 0.45)))
+    out["diagnostics"]["tone_pixels"] = dict(n=int(len(px_tone)), n_all=int(len(px)), bright_share=bright_share)
     out["diagnostics"]["textured_cells"] = {k: v for k, v in tc.items() if k != "textured_rgb"}
 
     # 1. White balance (T4b): robust bright-neutral + mid-grey residual cast (estimate_wb_v3); the look's prior only
@@ -755,7 +824,8 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     base_p["tint"] = float(np.clip((1 - wb["confidence"]) * base_p["tint"] + wb["tint"], -m_wb, m_wb))
     # the preset's colour offsets (T4d) come on top of the estimate, inside the slider bounds
     base_p["temp"] = float(np.clip(base_p["temp"] + cfg.get("temp_offset", 0.0), *BOUNDS["temp"]))
-    base_p["tint"] = float(np.clip(base_p["tint"] + cfg.get("tint_offset", 0.0), *BOUNDS["tint"]))
+    base_p["tint"] = float(np.clip(base_p["tint"] + cfg.get("tint_offset", 0.0) + cfg.get("base_tint", 0.0),
+                                   *BOUNDS["tint"]))
     out["diagnostics"]["wb"] = wb
     auto_lv = out["diagnostics"]["auto_levels"] = {}
 
@@ -823,7 +893,7 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
         return float(lo_ev)
 
     def p98_ok(ev):
-        return _encoded_quantiles(px, RenderParams(**dict(base_p, ev=ev)), qs=(98,))[0] <= p98_max
+        return _encoded_quantiles(px_tone, RenderParams(**dict(base_p, ev=ev)), qs=(98,))[0] <= p98_max
 
     refine = dict(ev_anchor_raw=base_p["ev"])
     if cfg.get("ev_anchor_p98_cap") and base_p["ev"] > 0 and not p98_ok(base_p["ev"]):
@@ -851,15 +921,34 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
     refine.update(ev=base_p["ev"], med_tex_after=_encoded_quantiles(tex_px, RenderParams(**base_p), qs=(50,))[0])
     out["diagnostics"]["ev_refine"] = refine
 
+    # 4a. Thin negative (T4k): the inversion stretched a short G density range (night, underexposed) to the white point
+    #     already; more positive ev on top lifts the whole frame to grey
+    if cfg.get("thin_neg_check") and span_d_g is not None:
+        thin = dict(span_d_g=float(span_d_g), bright_share=bright_share, applied=False)
+        if span_d_g < cfg["thin_span_max"] and bright_share < cfg["thin_bright_share_max"]:
+            cap = max(0.0, (span_d_g - cfg["thin_span_zero"]) / cfg["thin_span_ramp"]) * cfg["thin_ev_max"]
+            thin.update(applied=True, ev_cap=float(cap), ev_before=base_p["ev"])
+            base_p["ev"] = float(min(base_p["ev"], cap))
+            if span_d_g < cfg["thin_blacks_span"]:
+                lower = float(np.clip((cfg["thin_blacks_span"] - span_d_g) * cfg["thin_blacks_gain"], 0.0,
+                                      cfg["thin_blacks_max"]))
+                base_p["blacks"] = float(np.clip(base_p["blacks"] - lower, *EXTENDED_BOUNDS["blacks"]))
+                thin.update(blacks_lowered=lower)
+        out["diagnostics"]["thin_negative"] = thin
+
     # 4b. Backlit midtone (continuous weight w in [0, 1] since T4d; T4e: bright background and dark foreground only,
     #     and relative to the preset): contrast and shoulder get w x their step above the preset's own values (capped),
     #     the midtone moves w of the way to the midtone (bisection up to min(cap, preset midtone + step)) that lifts p25
     #     to backlit_p25_target, instead of more ev pushing the sky into white
-    q25, q90 = _encoded_quantiles(px, RenderParams(**base_p), qs=(25, 90))
+    q25, q90 = _encoded_quantiles(px_tone, RenderParams(**base_p), qs=(25, 90))
     rmp = float(cfg["backlit_ramp"])
     rmp25 = float(cfg.get("backlit_ramp_p25", rmp))
     w_bl = _ramp(q90, cfg["backlit_p90"], cfg["backlit_p90"] + rmp) * _ramp(cfg["backlit_p25"] - q25, 0.0, rmp25)
     out["diagnostics"]["backlit_check"] = dict(p25=q25, p90=q90, weight=w_bl)
+    if cfg.get("backlit_sky_check") and w_bl > 0:
+        # T4k: a dark foreground needs a bright background to be backlit (_DSF9239: black frame gaps alone gave p25)
+        w_bl *= _ramp(bright_share, cfg["backlit_sky_share_lo"], cfg["backlit_min_sky_share"])
+        out["diagnostics"]["backlit_check"].update(weight=w_bl, bright_share=bright_share)
     backlit = w_bl > 0
     if backlit:
         base_p["shoulder"] = min(float(cfg["backlit_shoulder_cap"]),
@@ -869,12 +958,12 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None) -> dict
                                      base_p["contrast"] + w_bl * float(cfg["backlit_contrast_step"]))
         lo_m = m0 = base_p["midtone"]
         hi_m = max(m0, min(float(cfg["backlit_midtone_cap"]), m0 + float(cfg["backlit_midtone_step"])))
-        if _encoded_quantiles(px, RenderParams(**dict(base_p, midtone=hi_m)), qs=(25,))[0] <= cfg["backlit_p25_target"]:
+        if _encoded_quantiles(px_tone, RenderParams(**dict(base_p, midtone=hi_m)), qs=(25,))[0] <= cfg["backlit_p25_target"]:
             m_t = hi_m
         else:
             for _ in range(14):  # p25 increases with midtone
                 mid_m = 0.5 * (lo_m + hi_m)
-                if _encoded_quantiles(px, RenderParams(**dict(base_p, midtone=mid_m)), qs=(25,))[0] < cfg["backlit_p25_target"]:
+                if _encoded_quantiles(px_tone, RenderParams(**dict(base_p, midtone=mid_m)), qs=(25,))[0] < cfg["backlit_p25_target"]:
                     lo_m = mid_m
                 else:
                     hi_m = mid_m

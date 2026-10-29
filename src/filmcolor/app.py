@@ -90,8 +90,15 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4j"  # thumbnails rendered with the T4j NOREF_V3 (standard preset) and the film holder shown dark
+THUMB_REV = "t4k"  # thumbnails rendered with the T4k NOREF_V3 (standard preset), white guard, holder shown dark
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
+WHITE_B_GUARD = (1.12, 1.18, 0.65)  # T4k: colour film's blue white point guard (invert.blue_white_guard); None = off
+SUBROLL_CHROMA_TOL = 0.15  # T4k: own-base log2 R/G, B/G tolerance of one sub-roll inside a (body, date) group of a
+                           # collection; a single-roll folder is never split by chromaticity (its frames' own bases
+                           # range over 0.3-0.6 between the real base and scene shadows)
+ROLL_NAT_MIN_FRAMES = 3    # T4k: automatic roll_nat only in a sub-roll of at least this many frames without warnings
+ROLL_NAT_LEVEL_DIFF = 0.22  # T4k: ... and also when the own base is this much denser than the sub-roll's (D, channel
+                            # mean; scene shadow, not base); None = chroma_part / B0 failure only (T4j)
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)
 RATIO_D_G = (0.25, 0.75)  # density band (G, above the roll base) of the per-frame neutral-ratio statistic
@@ -215,6 +222,42 @@ def mixed_rolls(exif: dict) -> dict | None:
     return dict(n_models=len(models), n_dates=len(dates), groups=groups)
 
 
+def sub_rolls(rels: list[str], exif: dict, own: dict, mixed: dict | None) -> dict[str, list[str]]:
+    """T4k: frames of ``rels`` (in order) per sub-roll. A single roll (``mixed`` None) is one sub-roll ``""``. In a
+    collection, frames are grouped by camera body and capture date, and inside each group by own-base chromaticity
+    (log2 R/G, B/G within ``SUBROLL_CHROMA_TOL`` of the cluster's median): a B&W negative (no orange mask) or a second
+    film of the same day is its own sub-roll. Frames without an own base join their group's largest cluster."""
+    if mixed is None:
+        return {"": list(rels)}
+    groups: dict[tuple, list[str]] = {}
+    for r in rels:
+        groups.setdefault((exif[r]["model"], exif[r]["date"]), []).append(r)
+    out: dict[str, list[str]] = {}
+    for (model, date), rs in groups.items():
+        c = {r: np.log2(np.asarray(own[r], np.float64)[[0, 2]] / own[r][1]) for r in rs if own.get(r) is not None}
+        left, clusters = [r for r in rs if r in c], []
+
+        def near(centre, pool):
+            return [r for r in pool if np.max(np.abs(c[r] - centre)) <= SUBROLL_CHROMA_TOL]
+
+        while left:
+            seed = np.median([c[r] for r in left], 0)
+            mem = near(seed, left) or [min(left, key=lambda r: float(np.max(np.abs(c[r] - seed))))]
+            mem = near(np.median([c[r] for r in mem], 0), left) or mem
+            clusters.append(mem)
+            left = [r for r in left if r not in mem]
+        rest = [r for r in rs if r not in c]
+        if rest:
+            if clusters:
+                max(clusters, key=len).extend(rest)
+            else:
+                clusters.append(rest)
+        name = f"{model or '?'} {date or '?'}"
+        for i, mem in enumerate(clusters):
+            out[name if len(clusters) == 1 else f"{name} #{i + 1}"] = [r for r in rs if r in mem]
+    return out
+
+
 class StaleError(RuntimeError):
     """The request names a photo / base that is no longer the open one (another window changed it)."""
 
@@ -326,19 +369,33 @@ class State:
                 scans = dict(zip(all_rels, ex.map(self._scan_one, all_rels)))
             cand = {r: scans[r]["own_rgb"] for r in all_rels if scans[r]["own_rgb"] is not None}
             exp_map = {r: exps_by_path[p] for r, p in zip(all_rels, paths) if r in cand}
-            roll_err = None
-            rb = None
-            if cand:
-                try:
-                    rb = estimate_base_roll(cand, exp_map)
-                except ValueError as e:
-                    roll_err = str(e)
+            # T4k: one roll base per sub-roll (a collection's films and B&W frames do not share a base)
+            groups = sub_rolls(all_rels, {r: exif[p] for r, p in zip(all_rels, paths)}, cand, mixed)
+            subs, sub_of = {}, {}
+            for name, rs in groups.items():
+                c_sub = {r: cand[r] for r in rs if r in cand}
+                rb_sub, err_sub = None, None
+                if c_sub:
+                    try:
+                        rb_sub = estimate_base_roll(c_sub, {r: exp_map[r] for r in c_sub})
+                    except ValueError as e:
+                        err_sub = str(e)
+                else:
+                    err_sub = "no frame in the sub-roll produced a valid automatic base"
+                subs[name] = dict(frames=rs, n_base=len(c_sub), rb=rb_sub, error=err_sub)
+                sub_of.update({r: name for r in rs})
+            if mixed is None:
+                rb, roll_err = subs[""]["rb"], subs[""]["error"]
+                if not cand:
+                    roll_err = "no frame in the folder produced a valid automatic base"
             else:
-                roll_err = "no frame in the folder produced a valid automatic base"
+                rb, roll_err = None, None  # each frame's roll base is its sub-roll's
             frames_out = {}
             for r, p in zip(all_rels, paths):
                 sc = scans[r]
                 t = exps_by_path[p]
+                sub = subs[sub_of[r]]
+                rb_f = sub["rb"]
                 entry = dict(
                     exposure=t,
                     disk_key=sc.get("disk_key"),
@@ -347,9 +404,17 @@ class State:
                     own_warnings=sc["warnings"],
                     own_error=sc["error"],
                     block48_L_p01=sc["block48_L_p01"],
+                    sub_roll=sub_of[r],
+                    sub_roll_single=bool(mixed is not None and sub["n_base"] == 1 and sc["own_rgb"] is not None),
                 )
-                if rb is not None:
-                    b_roll = list(rb.for_exposure(t))
+                if rb_f is not None and entry["sub_roll_single"]:
+                    # T4k: a frame alone in its sub-roll keeps its own base in every roll mode
+                    own = list(sc["own_rgb"])
+                    entry.update(roll_rgb=own, dq_rgb=own, d_lo_shared=None, nat_rgb=own, nat_info=None,
+                                 deviation=base_deviation(own, own), chroma_part=0.0, level_diff=0.0, flag=False,
+                                 density_ratio=self._density_ratio(sc, own))
+                elif rb_f is not None:
+                    b_roll = list(rb_f.for_exposure(t))
                     entry["density_ratio"] = self._density_ratio(sc, b_roll)
                     b_dq, d_lo_dq = decoupled_quantile_base(b_roll, sc["block48_L_p01"])
                     b_nat, nat_diag = natural_roll_base(b_roll, sc["block48_L_p01"], own_rgb=sc["own_rgb"], softness=0.5)
@@ -383,6 +448,8 @@ class State:
                 n_files=len(all_rels),
                 roll=rb.to_dict() if rb is not None else None,
                 mixed_rolls=mixed,
+                sub_rolls={k: dict(frames=v["frames"], n_base=v["n_base"], roll=v["rb"].to_dict() if v["rb"] else None,
+                                   error=v["error"]) for k, v in subs.items()},
                 neutral_ratio=neutral,
                 error=roll_err,
                 frames=frames_out,
@@ -470,9 +537,10 @@ class State:
             sp_in, inv_base = sp, tuple(base)
         ck = self._colour_kwargs(p, film)
         try:  # sp is already 24 px block means
-            inv = invert_negative(sp_in, inv_base, mask=mask, white_pct=WHITE_PCT)
+            inv = invert_negative(sp_in, inv_base, mask=mask, white_pct=WHITE_PCT,
+                                  white_b_guard=WHITE_B_GUARD if film != "bw" else None)
             pos = inv.positive
-            est = estimate_params_v3(pos, mask, ck["auto"])
+            est = estimate_params_v3(pos, mask, ck["auto"], span_d_g=inv.params.d_hi[1] - inv.params.d_lo[1])
             rp = RenderParams.from_dict(est["params"])
             disp, _ = render_image(pos, rp)
             disp[holder_mask(pos)] = HOLDER_GREY
@@ -488,10 +556,11 @@ class State:
     def _roll_base_kwargs(self, rel: str, mode: str, softness: float = 0.5) -> dict:
         folder = str(Path(rel).parent)
         rinfo = self.roll_info(folder)
-        if rinfo.get("roll") is None:
-            raise ValueError(f"roll base unavailable for {folder}: {rinfo.get('error')}")
         fe = rinfo["frames"][rel]
-        rb = rinfo["roll"]
+        sub = rinfo["sub_rolls"][fe["sub_roll"]]
+        rb = sub["roll"]  # T4k: the frame's sub-roll (the whole folder for a single roll)
+        if rb is None or fe["roll_rgb"] is None:
+            raise ValueError(f"roll base unavailable for {rel}: {sub.get('error') or rinfo.get('error')}")
         dev = fe["deviation"] or {}
         common = dict(
             method=mode,
@@ -504,7 +573,11 @@ class State:
             roll_members=rb["members"],
             roll_warnings=rb["warnings"],
             base_inside_image=fe["inside_image"],
+            sub_roll=fe["sub_roll"],
         )
+        if fe.get("sub_roll_single"):
+            return dict(base_regions=None, base_rgb=list(fe["own_rgb"]),
+                        base_source=dict(common, effective_rgb=list(fe["own_rgb"]), single_frame_sub_roll=True))
         if mode == "roll_nat":
             b_nat, nat_diag = natural_roll_base(
                 fe["roll_rgb"], fe["block48_L_p01"], own_rgb=fe["own_rgb"], softness=float(softness))
@@ -594,38 +667,44 @@ class State:
             self.preset = preset
         p = self.resolve(rel)
         folder = str(Path(rel).parent)
-        # Smart default: when no explicit base_mode was given and the roll cache is ready, auto-select
-        # roll_nat if this frame's own B0 failed or deviates from the roll by >= 0.10 D; never in a folder of several
-        # rolls (T4i: mixed_rolls)
+        # Smart default: when no explicit base_mode was given and the roll cache is ready, auto-select roll_nat if
+        # this frame's own B0 failed, deviates from its sub-roll's base by >= 0.10 D in chroma, or (T4k) is
+        # ROLL_NAT_LEVEL_DIFF denser than it; only in a sub-roll of ROLL_NAT_MIN_FRAMES frames without warnings
+        # (T4k; T4i-T4j: never in a folder of several rolls)
         if base_mode is None:
-            rinfo = self.roll_cache.get(folder)
-            fe = (rinfo or {}).get("frames", {}).get(rel)
-            if rinfo and rinfo.get("roll") and not rinfo.get("mixed_rolls") and fe and (
-                fe.get("own_error") or (fe.get("chroma_part") is not None and fe["chroma_part"] >= 0.1)
-            ):
-                base_mode = "roll_nat"
-            else:
-                base_mode = "auto"
+            base_mode = "roll_nat" if self._route_roll_nat(folder, rel) else "auto"
         if base_mode not in BASE_MODES:
             raise ValueError(f"base_mode must be one of {BASE_MODES}")
         self.preview = None  # free the previous full-resolution positive first
         self.token = None
         extra = self._roll_base_kwargs(rel, base_mode, softness) if base_mode != "auto" else {}
         ck = self._colour_kwargs(p, film, self.preset)
+        wk = dict(white_block=WHITE_BLOCK, white_pct=WHITE_PCT, white_b_guard=WHITE_B_GUARD)  # guard: colour only
         try:
-            self.preview = load_preview(p, max_side=self.max_side, film=film, keep_full=True,
-                                        white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **ck, **extra)
+            self.preview = load_preview(p, max_side=self.max_side, film=film, keep_full=True, **wk, **ck, **extra)
         except ValueError:
             # If auto B0 failed and roll base can be computed for this folder, fall back to roll_nat automatically
             if base_mode == "auto":
                 extra = self._roll_base_kwargs(rel, "roll_nat", softness)
-                self.preview = load_preview(p, max_side=self.max_side, film=film, keep_full=True,
-                                            white_block=WHITE_BLOCK, white_pct=WHITE_PCT, **ck, **extra)
+                self.preview = load_preview(p, max_side=self.max_side, film=film, keep_full=True, **wk, **ck,
+                                            **extra)
             else:
                 raise
         self.token = secrets.token_hex(8)
         self.negative = None
         return self.meta()
+
+    def _route_roll_nat(self, folder: str, rel: str) -> bool:
+        rinfo = self.roll_cache.get(folder) or {}
+        fe = rinfo.get("frames", {}).get(rel)
+        sub = rinfo.get("sub_rolls", {}).get((fe or {}).get("sub_roll"))
+        if not fe or not sub or sub["roll"] is None or fe.get("roll_rgb") is None:
+            return False
+        if sub["n_base"] < ROLL_NAT_MIN_FRAMES or sub["roll"]["warnings"]:
+            return False
+        dc, lv = fe.get("chroma_part"), fe.get("level_diff")
+        return bool(fe.get("own_error") or (dc is not None and dc >= 0.1)
+                    or (ROLL_NAT_LEVEL_DIFF is not None and lv is not None and lv >= ROLL_NAT_LEVEL_DIFF))
 
     def need(self, token) -> Preview:
         if self.preview is None:

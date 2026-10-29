@@ -33,6 +33,12 @@ def backlit_scene(fg=0.05, sky=0.5, seed=31):
     return np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).reshape(400, -1, 3).astype(np.float32)
 
 
+# T4k white-balance changes off (cooling damp, tint boost, base tint, grey-world undamping, cool-cast temp cap): tests
+# written for the earlier rules check those rules alone
+T4K_WB_OFF = dict(wb_v3_cool_damp=1.0, wb_v3_tint_boost=1.0, base_tint=0.0, wb_v3_gw_cool_undamp=False,
+                  wb_v3_cast_max_temp=None)
+
+
 def look_params(**kw):
     return RenderParams(**dict(LOOK["params"], **kw)).to_dict()
 
@@ -120,8 +126,11 @@ def test_estimation_input_matches_the_development_runs():
 
 
 def test_information_isolation():
-    """The estimator takes no reference argument and imports nothing that reads or compares references."""
-    assert list(inspect.signature(estimate_params_v2).parameters) == ["P", "mask", "cfg", "roll", "look"]
+    """The estimator takes no reference argument and imports nothing that reads or compares references (T4k: plus the
+    frame's own inversion G density range, keyword only)."""
+    sig = inspect.signature(estimate_params_v2).parameters
+    assert list(sig) == ["P", "mask", "cfg", "roll", "look", "span_d_g"]
+    assert sig["span_d_g"].kind is inspect.Parameter.KEYWORD_ONLY
     tree = ast.parse(Path(noref.__file__).read_text())
     mods = {n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)} | {
         a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
@@ -181,7 +190,8 @@ def test_noref_v3_t4b_keeps_print_contrast_and_never_sets_blacks():
 def test_wb_v3_corrects_a_cast_when_top_and_bottom_differ():
     """T4b: a frame whose top and bottom halves have different scene colours (sky above, grass below) but share a
     green cast on their neutral greys: estimate_wb_v3 still measures the cast with non-zero confidence and moves
-    tint towards magenta (the T4 v2 estimate_wb set confidence 0 on such frames)."""
+    tint towards magenta (the T4 v2 estimate_wb set confidence 0 on such frames). T4k: a tint towards magenta is
+    multiplied by wb_v3_tint_boost."""
     from filmcolor.noref import NOREF_V3, estimate_wb_v3, wb_from_chroma
 
     rng = np.random.default_rng(5)
@@ -196,16 +206,21 @@ def test_wb_v3_corrects_a_cast_when_top_and_bottom_differ():
     assert wb["confidence"] > 0.3
     assert np.allclose(wb["chroma"], cast, atol=0.04)
     temp, tint = wb_from_chroma(cast)
-    assert wb["tint"] == pytest.approx(NOREF_V3["wb_v3_strength"] * wb["confidence"] * tint, abs=0.02)
+    assert wb["tint"] == pytest.approx(NOREF_V3["wb_v3_tint_boost"] * NOREF_V3["wb_v3_strength"] * wb["confidence"]
+                                       * tint, abs=0.02)
     assert wb["tint"] > 0.0
 
 
 def test_noref_v3_t4c_backlit_frame_lifts_midtone_and_renders_the_given_matrix():
     """T4c: a frame with a bright background and a dark foreground gets a higher midtone, shoulder and contrast (T4e:
     each a step above the preset's own value at full weight); the estimate renders with cfg["matrix"] and
-    chroma_preserve and returns them in its parameters."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    chroma_preserve and returns them in its parameters. T4k: with the bright-share condition off (this scene's sky
+    sits around 0.9 x 2^(-0.5..0.3)) and the tone pixel filter off (it leaves out the darkest foreground pixels, so
+    p25 rises a little); both tested in test_t4k_*."""
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
     from filmcolor.render import IDENTITY
+
+    NOREF_V3 = dict(V3, backlit_sky_check=False, tone_border_filter=False)
 
     P = backlit_scene()
     m = ((1.2, -0.1, -0.1), (-0.05, 1.2, -0.15), (0.0, -0.2, 1.2))
@@ -261,7 +276,8 @@ def test_t4d_presets_order_brightness_contrast_and_colour():
 
 def test_t4d_white_balance_falls_back_to_neutral_and_presets_add_their_offsets():
     """T4d: with no near-neutral evidence (wb confidence 0) NOREF_V3 stays at temp = tint = 0 instead of 0.55 x the
-    global_look_v1 prior (T4b-T4c); portrait adds its offsets (T4f +0.02 / -0.02) to the same estimate."""
+    global_look_v1 prior (T4b-T4c); portrait adds its offsets (T4f +0.02 / -0.02) to the same estimate. T4k: every
+    preset's tint also gets base_tint."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3, preset_config
 
     P = scene(median=0.18, stops=4.0, cast=(0.9, -0.9), chroma=0.05, seed=33)  # every pixel strongly coloured
@@ -269,19 +285,23 @@ def test_t4d_white_balance_falls_back_to_neutral_and_presets_add_their_offsets()
     cfg = dict(NOREF_V3, wb_v3_adaptive_share=0.0, wb_v3_gw_weight=0.0)
     e = estimate_params_v3(P, None, cfg)
     assert e["diagnostics"]["wb"]["confidence"] == 0
-    assert e["params"]["temp"] == 0 and e["params"]["tint"] == 0
+    assert NOREF_V3["base_tint"] > 0
+    assert e["params"]["temp"] == 0 and e["params"]["tint"] == pytest.approx(NOREF_V3["base_tint"])
     old = estimate_params_v3(P, None, dict(cfg, wb_prior_weight=0.55))
     assert old["params"]["temp"] == pytest.approx(0.55 * LOOK["params"]["temp"], abs=1e-3)
     cp = preset_config("portrait", cfg)
     pt = estimate_params_v3(P, None, cp)
-    assert pt["params"]["temp"] == pytest.approx(cp["temp_offset"]) and pt["params"]["tint"] == pytest.approx(cp["tint_offset"])
+    assert pt["params"]["temp"] == pytest.approx(cp["temp_offset"])
+    assert pt["params"]["tint"] == pytest.approx(cp["tint_offset"] + cp["base_tint"])
 
 
 def test_t4d_backlit_weight_is_continuous():
     """T4d: the backlit weight grows continuously as the foreground gets darker under a bright sky (no switch);
-    T4e: contrast is the preset's base_contrast + weight x backlit_contrast_step."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    T4e: contrast is the preset's base_contrast + weight x backlit_contrast_step. T4k: bright-share condition and tone
+    pixel filter off (they move the weight of this scene a little)."""
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
 
+    NOREF_V3 = dict(V3, backlit_sky_check=False, tone_border_filter=False)
     ws = []
     for fg in (0.20, 0.15, 0.09, 0.08, 0.075, 0.07, 0.05):
         e = estimate_params_v3(backlit_scene(fg=fg), None, NOREF_V3)
@@ -352,10 +372,10 @@ def test_t4h_clear_sky_grey_world_damps_only_the_blue_axis():
     grey-world weight; the estimate's red axis is kept at wb_v3_gw_sky_red and only its blue axis is damped by
     wb_v3_sky_weight (T4g damped the whole weight), so the frame is warmed. T4j: this scene is the same cast in every
     zone, a cool cast by wb_v3_cool_* (test_t4j_uniform_cool_cast_is_corrected_not_damped); checked here with the
-    check off."""
+    check off. T4k: also a strongly cool mid-grey zone and grey world without a top-bottom split; undamping off."""
     from filmcolor.noref import NOREF_V3 as V3, estimate_wb_v3
 
-    NOREF_V3 = dict(V3, wb_v3_cool_cast_check=False)
+    NOREF_V3 = dict(V3, wb_v3_cool_cast_check=False, wb_v3_gw_cool_undamp=False)
     rng = np.random.default_rng(53)
     y = 0.18 * 2 ** rng.uniform(-2, 2, 20000)
     c = rng.normal([-0.30, 0.26], 0.03, (len(y), 2))
@@ -494,8 +514,11 @@ def test_t4j_uniform_cool_cast_is_corrected_not_damped():
     """T4j (_DSF8948): bright zone, mid-grey zone and grey world all cool (red low, blue high past wb_v3_cool_*) is a
     cool cast, not a sky: neither the bright zone nor the grey world is damped, the grey world gets
     wb_v3_cast_gw_weight, confidence at least wb_v3_cast_conf and strength wb_v3_cast_strength, so the frame is warmed
-    much more than by the T4h rule (cool_cast_check off); the global strength stays 0.65."""
-    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+    much more than by the T4h rule (cool_cast_check off); the global strength stays 0.65. T4k changes off here
+    (test_t4k_cool_cast_temp_is_capped)."""
+    from filmcolor.noref import NOREF_V3 as V3, estimate_wb_v3
+
+    NOREF_V3 = dict(V3, **T4K_WB_OFF)
 
     assert NOREF_V3["wb_v3_strength"] == 0.65 and NOREF_V3["wb_v3_cast_strength"] == 0.80
     px = cool_cast_scene()
@@ -583,3 +606,116 @@ def test_t4i_auto_slope_follows_green_between_shadows_and_highlights():
     flat = estimate_params_v3(scene(median=0.18, stops=6.0, chroma=0.03, seed=66), None, cfg)
     assert "slope_r" not in flat["diagnostics"]["auto_levels"]["slope"]
     assert "slope_b" not in flat["diagnostics"]["auto_levels"]["slope"]
+
+
+def test_t4k_cool_cast_temp_is_capped():
+    """T4k: a cool-cast frame's temp is at most wb_v3_cast_max_temp (T4j pushed _DSF8948 and four other frames to the
+    +0.50 limit); without the cap it is higher."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    px = cool_cast_scene()
+    wb = estimate_wb_v3(px, NOREF_V3)
+    assert wb["diagnostics"]["cool_cast"] and wb["temp"] == pytest.approx(NOREF_V3["wb_v3_cast_max_temp"])
+    free = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_cast_max_temp=None))
+    assert free["temp"] > NOREF_V3["wb_v3_cast_max_temp"] + 0.05
+
+
+def test_t4k_cooling_is_damped_and_a_green_cast_is_countered_more():
+    """T4k: a warm cast (red high, blue low: warm wall, lamp light) is cooled by wb_v3_cool_damp x the measured
+    correction; a green cast gets wb_v3_tint_boost x its magenta correction; with both factors at 1 the T4j values."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(7)
+    y = 0.18 * 2 ** rng.uniform(-2, 2, 40000)
+    for cast, k in (((0.25, -0.25), "temp"), ((-0.12, -0.12), "tint")):
+        c = rng.normal(cast, 0.03, (len(y), 2))
+        px = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1)
+        wb = estimate_wb_v3(px, NOREF_V3)
+        raw = dict(zip(("temp", "tint"), wb["diagnostics"]["temp_tint_raw"]))
+        off = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_cool_damp=1.0, wb_v3_tint_boost=1.0))
+        assert off[k] == pytest.approx(raw[k])
+        if k == "temp":
+            assert raw["temp"] < -0.1 and wb["temp"] == pytest.approx(NOREF_V3["wb_v3_cool_damp"] * raw["temp"])
+        else:
+            assert raw["tint"] > 0.05 and wb["tint"] == pytest.approx(NOREF_V3["wb_v3_tint_boost"] * raw["tint"])
+
+
+def test_t4k_grey_world_is_not_sky_damped_when_mid_greys_are_cool_everywhere():
+    """T4k (_DSF8951): a neutral bright zone (so no cool cast) over strongly cool mid greys and grey world, the same in
+    the top and bottom halves, keeps its grey-world estimate undamped and is warmed more than with the clear-sky
+    damping of the grey world (wb_v3_gw_cool_undamp off)."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(71)
+    n = 40000
+    y = 0.18 * 2 ** rng.uniform(-2, 2, n)
+    grey = rng.random(n) < 0.4
+    low = y < np.percentile(y, 70)
+    g = np.where(low[:, None], rng.normal([-0.25, 0.25], 0.04, (n, 2)), rng.normal([0.0, 0.0], 0.04, (n, 2)))
+    c = np.where(grey[:, None], g, rng.normal([-0.6, 0.8], 0.1, (n, 2)))
+    px = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1)
+    wb = estimate_wb_v3(px, NOREF_V3)
+    d = wb["diagnostics"]
+    assert not d["cool_cast"] and d["gw_cool_undamped"] and "clear_sky" not in d["grey_world"]
+    assert d["top_bottom_spread"] < NOREF_V3["wb_v3_undamp_tb_max"]
+    off = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_gw_cool_undamp=False))
+    assert off["diagnostics"]["grey_world"]["clear_sky"] and wb["temp"] > off["temp"] + 0.02
+
+
+def test_t4k_black_rebate_is_not_metered():
+    """T4k (_DSF9239): grainy black rebate across 30 % of the frame makes textured cells at its noise and its edge
+    with the image, which the T4j metering took as the frame's shadows (anchor 1.16 D instead of 0.74 D, +1.05 EV);
+    with the border filter the anchor is the image's own and no extra exposure is given."""
+    from filmcolor.noref import NOREF_V3, _textured_cells, estimate_params_v3
+
+    rng = np.random.default_rng(3)
+    P = scene(median=0.18, stops=4.0, seed=81).copy()
+    P[:120] = 0.004 * np.exp(0.35 * rng.standard_normal(P[:120].shape))
+    P = P.astype(np.float32)
+    image_only = _textured_cells(P[120:], None, NOREF_V3)["anchor_d"]
+    tc = _textured_cells(P, None, NOREF_V3)
+    assert tc["border_cells"]["used"] and tc["border_cells"]["dropped"] > 0
+    assert tc["anchor_d"] == pytest.approx(image_only, abs=0.02)
+    t4j = _textured_cells(P, None, dict(NOREF_V3, cell_border_filter=False))["anchor_d"]
+    assert t4j > image_only + 0.3
+    on = estimate_params_v3(P, None, NOREF_V3)
+    off = estimate_params_v3(P, None, dict(NOREF_V3, cell_border_filter=False, tone_border_filter=False))
+    assert on["params"]["ev"] < off["params"]["ev"] - 0.8
+    assert on["diagnostics"]["tone_pixels"]["n"] < on["diagnostics"]["tone_pixels"]["n_all"]
+
+
+def test_t4k_backlit_lift_needs_a_bright_background():
+    """T4k: a dark foreground before a background that is only mid-bright (linear 0.35, below bright_luma) gets no
+    backlit lift (weight x ramp(bright share; 0.04, 0.12) = 0); the T4j weight would be about 0.5."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(37)
+    n = 200_000
+    y = np.where(rng.random(n) < 0.45, 0.35 * 2.0 ** rng.uniform(-0.3, 0.2, n), 0.02 * 2.0 ** rng.uniform(-2.0, 1.5, n))
+    c = rng.normal(0, 0.1, (n, 2))
+    P = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).reshape(400, -1, 3).astype(np.float32)
+    on = estimate_params_v3(P, None, NOREF_V3)
+    off = estimate_params_v3(P, None, dict(NOREF_V3, backlit_sky_check=False))
+    assert on["diagnostics"]["tone_pixels"]["bright_share"] < NOREF_V3["backlit_sky_share_lo"]
+    assert on["diagnostics"]["backlit_check"]["weight"] == 0 and "backlit_midtone" not in on["flags"]
+    assert off["diagnostics"]["backlit_check"]["weight"] > 0.3 and "backlit_midtone" in off["flags"]
+
+
+def test_t4k_thin_negative_caps_positive_ev_and_lowers_blacks():
+    """T4k (A224, night frames): with the inversion's G density range span_d_g below thin_span_max and few bright
+    pixels, positive ev is at most max(0, (span - 0.42) / 0.20) x 0.60 and, below 0.52, blacks is lowered by
+    clip((0.52 - span) x 0.8, 0, 0.12); a normal range or no span given leaves the estimate unchanged."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    P = scene(median=0.05, stops=4.0, seed=82)
+    free = estimate_params_v3(P, None, NOREF_V3)
+    thin = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.45)
+    wide = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.70)
+    cap = (0.45 - NOREF_V3["thin_span_zero"]) / NOREF_V3["thin_span_ramp"] * NOREF_V3["thin_ev_max"]
+    assert free["params"]["ev"] > 1.0 and "thin_negative" not in free["diagnostics"]
+    assert thin["diagnostics"]["thin_negative"]["applied"] and thin["params"]["ev"] == pytest.approx(cap, abs=1e-4)
+    assert thin["params"]["blacks"] == pytest.approx(-(0.52 - 0.45) * NOREF_V3["thin_blacks_gain"], abs=1e-4)
+    assert not wide["diagnostics"]["thin_negative"]["applied"] and wide["params"] == free["params"]
+    bright = estimate_params_v3(scene(median=0.5, stops=3.0, seed=83), None, NOREF_V3, span_d_g=0.45)
+    assert bright["diagnostics"]["tone_pixels"]["bright_share"] >= NOREF_V3["thin_bright_share_max"]
+    assert not bright["diagnostics"]["thin_negative"]["applied"]

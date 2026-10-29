@@ -152,8 +152,8 @@ class Preview:
             if self.full_positive is None:
                 raise ValueError("load_preview(..., keep_full=True) or an auto estimate is needed to re-estimate")
             ei = estimation_input(self.full_positive, self.image_region)
-        return replace(self, auto=auto_estimate(ei, auto, self.film), est_input=ei,
-                       load_kwargs=dict(self.load_kwargs, auto=auto))
+        return replace(self, auto=auto_estimate(ei, auto, self.film, span_d_g=green_span(self.inversion)),
+                       est_input=ei, load_kwargs=dict(self.load_kwargs, auto=auto))
 
     def export(self, out_dir, params=None, encoding: str = "srgb", *, stem: str | None = None,
                overwrite: bool = True, rot90: int = 0, render_source: dict | None = None) -> dict:
@@ -175,10 +175,15 @@ class SourceChangedError(RuntimeError):
     """The previewed source file changed on disk; its previewed base no longer applies."""
 
 
-def auto_estimate(est_input, auto, film: str = "color") -> dict:
+def green_span(inversion: dict) -> float:
+    """G density range of the inversion (white point minus black point, ``InversionParams.to_dict()``), T4k."""
+    return float(inversion["d_hi"][1] - inversion["d_lo"][1])
+
+
+def auto_estimate(est_input, auto, film: str = "color", span_d_g: float | None = None) -> dict:
     """noref estimate (``Preview.auto``) for config ``auto`` on ``est_input`` = ``noref.estimation_input`` of the
-    full-resolution positive, as ``convert``."""
-    est = estimate_params_v2(*est_input, auto)
+    full-resolution positive, as ``convert``; ``span_d_g``: the inversion's G density range (``green_span``)."""
+    est = estimate_params_v2(*est_input, auto, span_d_g=span_d_g)
     if film == "bw":
         est = dict(est, params=dict(est["params"], **BW_NEUTRAL), bw_neutralised=sorted(BW_NEUTRAL))
     return dict(est, look_file=dict(name=f"{est['look']}.json", sha256=sha256(CONFIG_DIR / f"{est['look']}.json")))
@@ -187,21 +192,23 @@ def auto_estimate(est_input, auto, film: str = "color") -> dict:
 def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, base_rgb=None, image_region=None,
                  d_hi=None, white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0,
                  film: str = "color", keep_full: bool = False, base_source: dict | None = None,
-                 white_block: int | None = None, white_ratio=None) -> Preview:
+                 white_block: int | None = None, white_ratio=None, white_b_guard=None) -> Preview:
     """Full-resolution decode / base / inversion once; keep a block-mean copy of at most ``max_side`` pixels.
     ``auto``: a noref config (noref.NOREF_V2) estimated here on the full-resolution positive, exactly as
     ``convert(auto=...)`` does; the result is in ``Preview.auto`` (render with ``Preview.auto['params']``).
     ``white_block``: automatic white point on block means of that size (``invert.block_white_point``; the app uses
     it); None = single pixels as ``convert``. ``white_ratio``: roll neutral density ratios checked against the automatic
-    white point (``invert.neutral_ratio_white_point``). The export replays the white point either way."""
+    white point (``invert.neutral_ratio_white_point``); ``white_b_guard``: colour film's ``invert.blue_white_guard``.
+    The export replays the white point either way."""
     path = Path(path)
     p = positive(path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region, d_hi=d_hi,
                  white_pct=white_pct, gamma=gamma, exposure=exposure, film=film, white_block=white_block,
-                 white_ratio=white_ratio)
+                 white_ratio=white_ratio, white_b_guard=white_b_guard)
     pos, mask = p["positive"], p["mask"]
     full_shape = pos.shape[:2]
     ei = estimation_input(pos, p["image_region"]) if auto is not None else None
-    auto_info = auto_estimate(ei, auto, film) if auto is not None else None
+    auto_info = auto_estimate(ei, auto, film, span_d_g=green_span(p["inversion"].params.to_dict())) if auto is not None \
+        else None
     f = max(1, math.ceil(max(full_shape) / max_side))
     small = block_mean(pos, f).astype(np.float32) if f > 1 else pos
     msk = block_mean(mask.astype(np.float32), f) > 0.5 if f > 1 else mask
@@ -218,5 +225,5 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
                    load_kwargs=dict(max_side=max_side, auto=auto, base_regions=base_regions, base_rgb=base_rgb,
                                     image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,
                                     exposure=exposure, film=film, keep_full=keep_full, base_source=base_source,
-                                    white_block=white_block, white_ratio=white_ratio),
+                                    white_block=white_block, white_ratio=white_ratio, white_b_guard=white_b_guard),
                    full_positive=full, _base_source=base_source, est_input=ei, holder=holder_mask(small))

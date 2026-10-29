@@ -91,3 +91,16 @@ def test_film_mode_validated(tmp_path):
     write_dng(p, bw_scan())
     with pytest.raises(ValueError, match="film"):
         convert(p, film="slide")
+
+
+def test_t4k_blue_white_guard_is_not_applied_to_bw(tmp_path):
+    """T4k: the blue white point guard is for colour film; a B&W positive (equal channels, B/G = 1) is left alone even
+    when the guard is passed (pipeline.positive drops it for film="bw")."""
+    p = tmp_path / "bw.dng"
+    write_dng(p, bw_scan())
+    guard = (1.12, 1.18, 0.65)
+    out, sc = convert(p, image_region=(20, 120, 200, 220), film="bw", white_b_guard=guard)
+    ref, _ = convert(p, image_region=(20, 120, 200, 220), film="bw")
+    assert np.array_equal(out, ref) and "white_point" not in sc["report"]
+    _, sc_c = convert(p, image_region=(20, 120, 200, 220), white_b_guard=guard)
+    assert sc_c["report"]["white_point"]["blue_guard"]["applied"]

@@ -177,3 +177,23 @@ def test_t4c_neutral_ratio_white_point_moves_only_a_blue_sky_white_point():
     rgb = BASE * 10.0 ** -np.array([[[0.1, 0.2, 0.3], [0.65, 1.0, 1.25]]], np.float32)
     res = invert_negative(rgb, BASE, white_pct=100, white_ratio=(0.72, 1.10))
     assert res.report["white_point"]["neutral_ratio"]["applied"]
+
+
+def test_t4k_blue_white_guard_lifts_a_collapsed_blue_white_point():
+    """T4k (DSC_3827: warm ridge as the densest area, d_hi_B / d_hi_G 1.02 against about 1.35 on its roll): below
+    min_ratio the blue white point moves ``weight`` of the way to target_ratio x d_hi_G; other channels and a white
+    point at or above min_ratio stay; invert_negative applies it only when given and records it."""
+    from filmcolor.invert import blue_white_guard
+
+    d, info = blue_white_guard((0.8, 1.0, 1.02), (1.12, 1.18, 0.65))
+    assert info["applied"] and d[:2] == (0.8, 1.0)
+    assert d[2] == pytest.approx(1.02 + 0.65 * (1.18 - 1.02)) and info["ratio_bg_used"] == pytest.approx(d[2])
+    d_n, info_n = blue_white_guard((0.8, 1.0, 1.30), (1.12, 1.18, 0.65))
+    assert d_n == (0.8, 1.0, 1.30) and not info_n["applied"]
+    rgb = BASE * 10.0 ** -np.array([[[0.1, 0.2, 0.3], [0.8, 1.0, 1.02]]], np.float32)
+    plain = invert_negative(rgb, BASE, white_pct=100)
+    res = invert_negative(rgb, BASE, white_pct=100, white_b_guard=(1.12, 1.18, 0.65))
+    assert plain.params.d_hi == pytest.approx((0.8, 1.0, 1.02), abs=1e-5) and "white_point" not in plain.report
+    assert res.params.d_hi[2] == pytest.approx(d[2], abs=1e-4) and res.report["white_point"]["blue_guard"]["applied"]
+    given = invert_negative(rgb, BASE, d_hi=(0.8, 1.0, 1.02), white_b_guard=(1.12, 1.18, 0.65))
+    assert given.params.d_hi == (0.8, 1.0, 1.02)  # a given (replayed) white point is never changed

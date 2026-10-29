@@ -18,7 +18,8 @@ from filmcolor.preview import load_preview
 
 from test_scanner import scan, write_dng
 
-APP_WP = dict(white_block=app.WHITE_BLOCK, white_pct=app.WHITE_PCT)  # the app's white point (T4b)
+# the app's white point (T4b; T4k: blue white point guard)
+APP_WP = dict(white_block=app.WHITE_BLOCK, white_pct=app.WHITE_PCT, white_b_guard=app.WHITE_B_GUARD)
 
 
 def decode_png(b):
@@ -111,12 +112,16 @@ def test_t4i_exiftool_is_found_outside_path(monkeypatch, tmp_path):
 
 def test_t4i_folder_of_several_rolls_is_not_routed_to_the_roll_base(server, monkeypatch):
     """T4i Bug 4: files from different capture dates (nlp_official: four rolls) are a collection: roll_info reports
-    mixed_rolls, flags no frame, and opening a frame keeps its own base even when it deviates from the folder's roll
-    base by >= 0.10 D; a single-date folder keeps the T4f routing."""
+    mixed_rolls and flags no frame. T4k: each (body, date) group is its own sub-roll, so a frame alone on its date
+    keeps its own base (also in the roll modes), while in a single-date folder of three consistent frames the
+    deviating frame (dC 0.23) is flagged and routed to roll_nat (T4k: only in a sub-roll of >= 3 frames without
+    warnings)."""
     _, root, tmp = server
     rgb, irl = scan()
+    for name in ("u.dng", "v.dng"):
+        write_dng(root / name, rgb, irl)
     write_dng(root / "t.dng", (rgb * np.array([0.35, 0.65, 0.95])).astype(rgb.dtype), irl)  # dC 0.23 vs s.dng
-    dates = {"s.dng": "2018:06:13", "t.dng": "2018:07:29"}
+    dates = {"s.dng": "2018:06:13", "u.dng": "2018:06:13", "v.dng": "2018:06:13", "t.dng": "2018:07:29"}
 
     def fake_exif(paths):
         return {p: dict(exposure=1.0, model="X-T2", date=dates[p.name]) for p in paths}
@@ -125,12 +130,71 @@ def test_t4i_folder_of_several_rolls_is_not_routed_to_the_roll_base(server, monk
     st = app.State(root, tmp / "out", allow_frozen=False)
     info = st.roll_info()
     assert info["mixed_rolls"]["n_dates"] == 2 and not any(f["flag"] for f in info["frames"].values())
+    assert info["roll"] is None and sorted(info["sub_rolls"]) == ["X-T2 2018:06:13", "X-T2 2018:07:29"]
+    t = info["frames"]["t.dng"]
+    assert t["sub_roll_single"] and t["roll_rgb"] == t["own_rgb"] == t["nat_rgb"] and t["chroma_part"] == 0
     assert st.open("t.dng", "color")["base"]["method"] == "auto"
+    m = st.open("t.dng", "color", base_mode="roll_nat")
+    assert m["base"]["method"] == "roll_nat" and m["base"]["rgb"] == pytest.approx(t["own_rgb"])
+    assert st.open("s.dng", "color")["base"]["method"] == "auto"
     dates["t.dng"] = "2018:06:13"
     one = app.State(root, tmp / "out", allow_frozen=False)
     info1 = one.roll_info()
-    assert info1["mixed_rolls"] is None
+    assert info1["mixed_rolls"] is None and list(info1["sub_rolls"]) == [""]
     assert info1["frames"]["t.dng"]["flag"] and one.open("t.dng", "color")["base"]["method"] == "roll_nat"
+
+
+def test_t4k_black_and_white_frame_of_a_collection_does_not_set_the_colour_roll_base(server, monkeypatch):
+    """T4k (nlp_official: _DSF9228 B&W with log2 R/G -0.92 among colour frames at +0.44 on the same date): inside one
+    (body, date) group a frame whose own-base chromaticity is more than SUBROLL_CHROMA_TOL from the others is its own
+    sub-roll; the colour frames' roll base is theirs alone (T4j took the B&W base for every frame: green rolls)."""
+    _, root, tmp = server
+    rgb, irl = scan()
+    for name in ("u.dng", "v.dng"):
+        write_dng(root / name, rgb, irl)
+    write_dng(root / "bw.dng", (rgb * np.array([0.3, 1.6, 2.4])).astype(rgb.dtype), irl)  # no orange mask, brighter G
+    dates = {"s.dng": "2018:07:28", "u.dng": "2018:07:28", "v.dng": "2018:07:28", "bw.dng": "2018:07:28",
+             "w.dng": "2018:07:29"}
+    write_dng(root / "w.dng", rgb, irl)
+
+    def fake_exif(paths):
+        return {p: dict(exposure=1.0, model="X-T2", date=dates[p.name]) for p in paths}
+
+    monkeypatch.setattr(app, "_exif_info", fake_exif)
+    st = app.State(root, tmp / "out", allow_frozen=False)
+    info = st.roll_info()
+    subs = info["sub_rolls"]
+    assert sorted(subs) == ["X-T2 2018:07:28 #1", "X-T2 2018:07:28 #2", "X-T2 2018:07:29"]
+    colour = next(v for v in subs.values() if "s.dng" in v["frames"])
+    assert sorted(colour["frames"]) == ["s.dng", "u.dng", "v.dng"] and "bw.dng" not in colour["roll"]["members"]
+    own = np.array(info["frames"]["s.dng"]["own_rgb"])
+    for r in ("s.dng", "u.dng", "v.dng"):
+        assert np.allclose(info["frames"][r]["roll_rgb"], own, rtol=0.01)
+    assert info["frames"]["bw.dng"]["sub_roll_single"]
+    whole = app.estimate_base_roll({r: info["frames"][r]["own_rgb"] for r in ("s.dng", "u.dng", "v.dng", "bw.dng")},
+                                   {r: 1.0 for r in ("s.dng", "u.dng", "v.dng", "bw.dng")})
+    assert whole.members == ["bw.dng"]  # one base for the whole date group: the B&W frame's
+
+
+def test_t4k_frame_much_denser_than_its_roll_base_is_routed_to_roll_nat(server, monkeypatch):
+    """T4k (A005 / A006 / A011 / A196: B0 found a scene shadow, not the base): in a sub-roll of >= 3 frames without
+    warnings a frame whose own base is ROLL_NAT_LEVEL_DIFF denser than the roll's, with the same chromaticity
+    (dC < 0.10), opens with roll_nat; with ROLL_NAT_LEVEL_DIFF None (T4j) it keeps its own base."""
+    _, root, tmp = server
+    rgb, irl = scan()
+    for name in ("u.dng", "v.dng"):
+        write_dng(root / name, rgb, irl)
+    write_dng(root / "d.dng", (rgb * 10 ** -0.3).astype(rgb.dtype), irl)  # 0.30 D denser, same colour
+
+    st = app.State(root, tmp / "out", allow_frozen=False)
+    info = st.roll_info()
+    d = info["frames"]["d.dng"]
+    assert info["mixed_rolls"] is None and d["chroma_part"] < 0.1 and d["level_diff"] >= app.ROLL_NAT_LEVEL_DIFF
+    assert not info["roll"]["warnings"]
+    assert st.open("d.dng", "color")["base"]["method"] == "roll_nat"
+    assert st.open("s.dng", "color")["base"]["method"] == "auto"
+    monkeypatch.setattr(app, "ROLL_NAT_LEVEL_DIFF", None)
+    assert st.open("d.dng", "color")["base"]["method"] == "auto"
 
 
 def test_manual_base_region(server):

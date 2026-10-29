@@ -28,6 +28,7 @@ scale). Metrics: ``compare.metrics`` per variant on the same aligned grid, plus 
 and C*. Summaries leave out frames whose alignment NCC is below 0.7 (eval_blueneg.NCC_MIN, fixed before T4d).
 """
 import hashlib
+import inspect
 import json
 import os
 import platform
@@ -75,8 +76,14 @@ def variant_cfg(spec: dict) -> dict:
     return dict(cfg, **{k: tuple(v) if isinstance(v, list) else v for k, v in over.items()})
 
 
-def roll_state(f: dict, states: dict, max_side: int):
-    """State on a folder of symlinks to the manifest's frames of ``f``'s roll (built once per roll)."""
+def roll_state(f: dict, states: dict, max_side: int, roll_folder: Path | None = None):
+    """State on a folder of symlinks to the manifest's frames of ``f``'s roll (built once per roll); with
+    ``roll_folder`` (T4k), a State on that folder itself for every frame (e.g. nlp_official, a collection)."""
+    if roll_folder is not None:
+        if "folder" not in states:
+            states["folder"] = fc_app.State(roll_folder, Path("/tmp/fc_t4d/out"), allow_frozen=False, max_side=max_side)
+            states["folder"].roll_info()
+        return states["folder"]
     key = (f["domain"], f["roll"])
     if key not in states:
         d = ROLLS / f["domain"] / f["roll"]
@@ -111,7 +118,8 @@ def med_lc(lab):
 
 
 def main(out_json: str, opts: list[str]):
-    domains, ids, variants, max_side = None, None, {"default": {}}, 1000
+    domains, ids, variants, max_side, app_config = None, None, {"default": {}}, 1000, {}
+    roll_folder, base_mode = None, None
     for opt in opts:
         k, v = opt.split("=", 1)
         if k == "--domains":
@@ -122,21 +130,34 @@ def main(out_json: str, opts: list[str]):
             variants = json.loads(v)
         elif k == "--max-side":
             max_side = int(v)
+        elif k == "--app-config":  # T4k: module constants of filmcolor.app for an ablation run (e.g. routing off)
+            app_config = json.loads(v)
+        elif k == "--roll-folder":  # T4k: open every frame from this folder (its own roll / sub-roll analysis)
+            roll_folder = (REPO / v).resolve()
+        elif k == "--base-mode":  # T4k: open with this base mode instead of the app's automatic choice
+            base_mode = v
         else:
             raise SystemExit(f"unknown option {k}")
     assert Path(filmcolor.__file__).resolve().is_relative_to(SRC), filmcolor.__file__
     commit = subprocess.run(["git", "-C", str(SRC), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     dirty = bool(subprocess.run(["git", "-C", str(SRC), "status", "--porcelain", "--", "."], capture_output=True,
                                 text=True).stdout.strip())
+    for name, value in app_config.items():
+        assert hasattr(fc_app, name), name
+        setattr(fc_app, name, tuple(value) if isinstance(value, list) else value)
     cfgs = {name: variant_cfg(spec) for name, spec in variants.items()}
+    # T4k: the estimator takes the inversion's G density range (load_preview passes it); older sources do not
+    span_ok = "span_d_g" in inspect.signature(noref.estimate_params_v2).parameters
     prof = MatrixTRCProfile(icc_profile("srgb"))
     sel = [f for f in FRAMES if (domains is None or f["domain"] in domains) and (ids is None or f["id"] in ids)]
     res = dict(src=str(SRC), git_commit=commit, src_dirty=dirty, src_content_sha256=src_content_sha256(SRC), manifest=str(MANIFEST.relative_to(REPO)),
                environment=dict(python=sys.version.split()[0], numpy=np.__version__, platform=platform.platform()),
-               variants=variants, ncc_min=NCC_MIN, max_side=max_side, frames={})
+               variants=variants, ncc_min=NCC_MIN, max_side=max_side, app_config=app_config,
+               roll_folder=str(roll_folder.relative_to(REPO)) if roll_folder else None, base_mode=base_mode, frames={})
     if Path(out_json).exists():
         previous = json.loads(Path(out_json).read_text())
-        for key in ("src_content_sha256", "variants", "ncc_min", "max_side", "manifest"):
+        for key in ("src_content_sha256", "variants", "ncc_min", "max_side", "manifest", "app_config", "roll_folder",
+                    "base_mode"):
             if previous.get(key) != res[key]:
                 raise ValueError(f"cannot resume {out_json}: {key} changed")
         res["frames"] = previous["frames"]
@@ -148,9 +169,9 @@ def main(out_json: str, opts: list[str]):
         raw = REPO / f["raw"] if not os.path.isabs(f["raw"]) else Path(f["raw"])
         ref = REPO / f["ref"] if not os.path.isabs(f["ref"]) else Path(f["ref"])
         check_source(raw), check_source(ref)
-        st = roll_state(f, states, max_side)
+        st = roll_state(f, states, max_side, roll_folder)
         try:
-            m = st.open(raw.name, "color")
+            m = st.open(raw.name, "color", base_mode=base_mode)
         except Exception as e:  # noqa: BLE001 - recorded, frame left out
             res["frames"][f["id"]] = dict(domain=f["domain"], roll=f["roll"], error=f"{type(e).__name__}: {e}")
             print(f["id"], "open failed:", e, flush=True)
@@ -161,6 +182,7 @@ def main(out_json: str, opts: list[str]):
         out = dict(domain=f["domain"], roll=f["roll"], base_method=m["base"]["method"], base=m["base"],
                    camera_matrix=cam is not None,
                    holder_share=float(pv.holder.mean()) if getattr(pv, "holder", None) is not None else None,
+                   d_hi=list(pv.inversion["d_hi"]), white_point=pv.report.get("white_point"),
                    raw_sha256=hashlib.file_digest(raw.open("rb"), "sha256").hexdigest(),
                    ref_sha256=hashlib.file_digest(ref.open("rb"), "sha256").hexdigest(), variants={})
         ref_small = al = None
@@ -169,7 +191,8 @@ def main(out_json: str, opts: list[str]):
             mix = variants[name].get("cam_mix", cfg.get("camera_matrix_mix", getattr(fc_app, "CAMERA_MATRIX_MIX", 0.0)))
             cfg_v = dict(cfg, matrix=camera_color_matrix(cam, mix)) if cam is not None else cfg
             t1 = time.time()
-            est = noref.estimate_params_v2(P4, mask4, cfg_v)
+            span = dict(span_d_g=float(pv.inversion["d_hi"][1] - pv.inversion["d_lo"][1])) if span_ok else {}
+            est = noref.estimate_params_v2(P4, mask4, cfg_v, **span)
             est_s = time.time() - t1
             disp = pv.render(est["params"])
             if variants[name].get("display_levels"):
@@ -217,7 +240,13 @@ def main(out_json: str, opts: list[str]):
             out["variants"][name] = dict(params=est["params"], flags=est.get("flags"), status=est.get("status"),
                                          backlit=est.get("diagnostics", {}).get("backlit_check"),
                                          wb_cool_cast=est.get("diagnostics", {}).get("wb", {}).get("diagnostics", {})
-                                         .get("cool_cast"), estimate_seconds=round(est_s, 3), cam_mix=mix if cam is not None else None,
+                                         .get("cool_cast"),
+                                         t4k={k: est.get("diagnostics", {}).get(k) for k in ("thin_negative", "tone_pixels")}
+                                         | dict(border_cells=est.get("diagnostics", {}).get("textured_cells", {})
+                                                .get("border_cells"),
+                                                gw_cool_undamped=est.get("diagnostics", {}).get("wb", {})
+                                                .get("diagnostics", {}).get("gw_cool_undamped")),
+                                         estimate_seconds=round(est_s, 3), cam_mix=mix if cam is not None else None,
                                          metrics=mt, ours_L_median=oL, ours_C_median=oC, ref_L_median=rL,
                                          ref_C_median=rC)
         if "error" in out:

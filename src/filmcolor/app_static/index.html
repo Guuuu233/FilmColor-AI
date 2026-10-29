@@ -399,10 +399,10 @@ async function scanRoll(folder) {
   try {
     const j = await api("/api/roll?folder=" + encodeURIComponent(folder));
     rollData[folder] = j;
-    if (j.roll && j.mixed_rolls) {
-      const ng = Object.keys(j.mixed_rolls.groups).length;
-      $("rollSummary").innerHTML = `此文件夹含多卷（${ng} 组机身 / 拍摄日期，${j.n_files} 帧）：不自动套用整卷片基，` +
-        `每帧用自己的片基；整卷模式仍可手动选择`;
+    if (j.mixed_rolls) {
+      const ng = Object.keys(j.mixed_rolls.groups).length, ns = Object.keys(j.sub_rolls || {}).length;
+      $("rollSummary").innerHTML = `此文件夹含多卷（${ng} 组机身 / 拍摄日期，${j.n_files} 帧）：整卷模式按 ${ns} 个子卷` +
+        `（机身、日期、片基色度）分别计算片基，单帧子卷用本帧片基`;
     } else if (j.roll) {
       const nWarn = Object.values(j.frames).filter(x => x.flag).length;
       $("rollSummary").innerHTML = `整卷片基已就绪（${j.n_files} 帧，基准 ${j.roll.used.map(x => x.split("_")[0]).join(", ")}）` +
