@@ -179,8 +179,11 @@ def test_t4k_black_and_white_frame_of_a_collection_does_not_set_the_colour_roll_
 def test_t4k_frame_much_denser_than_its_roll_base_is_routed_to_roll_nat(server, monkeypatch):
     """T4k (A005 / A006 / A011 / A196: B0 found a scene shadow, not the base): in a sub-roll of >= 3 frames without
     warnings a frame whose own base is ROLL_NAT_LEVEL_DIFF denser than the roll's, with the same chromaticity
-    (dC < 0.10), opens with roll_nat; with ROLL_NAT_LEVEL_DIFF None (T4j) it keeps its own base."""
+    (dC < 0.10), opens with roll_nat; with ROLL_NAT_LEVEL_DIFF None (T4j, the default: 0.22 measured 9 better / 14
+    worse) it keeps its own base."""
     _, root, tmp = server
+    assert app.ROLL_NAT_LEVEL_DIFF is None
+    monkeypatch.setattr(app, "ROLL_NAT_LEVEL_DIFF", 0.22)
     rgb, irl = scan()
     for name in ("u.dng", "v.dng"):
         write_dng(root / name, rgb, irl)

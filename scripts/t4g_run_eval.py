@@ -28,16 +28,12 @@ if TAG == "t4i":  # T4i ablations: each change alone off, both off (= T4h standa
                                       display_levels=dict(lo=1.0, hi=99.2, mix=0.8))
 if TAG == "t4j":  # T4j: the cool-cast check off is the T4h white balance (auto levels are off by default)
     VARIANTS["wb_t4h"] = dict(preset="standard", cfg=dict(wb_v3_cool_cast_check=False))
-if TAG == "t4k":  # T4k ablations: each estimator change off, and all of them off (= the T4j estimator)
-    T4K_WB_OFF = dict(wb_v3_cool_damp=1.0, wb_v3_tint_boost=1.0, base_tint=0.0, wb_v3_gw_cool_undamp=False,
-                      wb_v3_cast_max_temp=None)
-    T4K_TONE_OFF = dict(cell_border_filter=False, tone_border_filter=False)
-    VARIANTS["no_border"] = dict(preset="standard", cfg=T4K_TONE_OFF)
-    VARIANTS["no_sky_check"] = dict(preset="standard", cfg=dict(backlit_sky_check=False))
+if TAG == "t4k":  # T4k ablations: thin-negative cap off, white balance changes off, both off (= the T4j estimator);
+    # the task-list run (all seven changes on, t4k_tasklist/) is this branch at commit a15c1e1
+    T4K_WB_OFF = dict(wb_v3_cool_damp=1.0, wb_v3_tint_boost=1.0, base_tint=0.0, wb_v3_gw_cool_undamp=False)
     VARIANTS["no_thin"] = dict(preset="standard", cfg=dict(thin_neg_check=False))
     VARIANTS["wb_t4j"] = dict(preset="standard", cfg=T4K_WB_OFF)
-    VARIANTS["t4j_noref"] = dict(preset="standard", cfg=dict(T4K_WB_OFF, **T4K_TONE_OFF, backlit_sky_check=False,
-                                                             thin_neg_check=False))
+    VARIANTS["t4j_noref"] = dict(preset="standard", cfg=dict(T4K_WB_OFF, thin_neg_check=False))
 
 
 def main():

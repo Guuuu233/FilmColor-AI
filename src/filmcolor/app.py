@@ -90,15 +90,17 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4k"  # thumbnails rendered with the T4k NOREF_V3 (standard preset), white guard, holder shown dark
+THUMB_REV = "t4k"  # thumbnails rendered with the T4k NOREF_V3 (standard preset) and the film holder shown dark
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
-WHITE_B_GUARD = (1.12, 1.18, 0.65)  # T4k: colour film's blue white point guard (invert.blue_white_guard); None = off
+WHITE_B_GUARD = None  # T4k: colour film's blue white point guard (invert.blue_white_guard), e.g. (1.12, 1.18, 0.65);
+                      # off: on scanner DNGs (BlueNeg, d_hi B/G 0.24-0.69) it turned 26 of 27 frames yellow
 SUBROLL_CHROMA_TOL = 0.15  # T4k: own-base log2 R/G, B/G tolerance of one sub-roll inside a (body, date) group of a
                            # collection; a single-roll folder is never split by chromaticity (its frames' own bases
                            # range over 0.3-0.6 between the real base and scene shadows)
 ROLL_NAT_MIN_FRAMES = 3    # T4k: automatic roll_nat only in a sub-roll of at least this many frames without warnings
-ROLL_NAT_LEVEL_DIFF = 0.22  # T4k: ... and also when the own base is this much denser than the sub-roll's (D, channel
-                            # mean; scene shadow, not base); None = chroma_part / B0 failure only (T4j)
+ROLL_NAT_LEVEL_DIFF = None  # T4k: ... and also when the own base is this much denser than the sub-roll's (D, channel
+                            # mean), e.g. 0.22; None = chroma_part / B0 failure only (T4j; 0.22 measured 9 better /
+                            # 14 worse, DSC_3833 4.37 -> 6.23)
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)
 RATIO_D_G = (0.25, 0.75)  # density band (G, above the roll base) of the per-frame neutral-ratio statistic

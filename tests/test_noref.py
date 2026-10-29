@@ -609,15 +609,16 @@ def test_t4i_auto_slope_follows_green_between_shadows_and_highlights():
 
 
 def test_t4k_cool_cast_temp_is_capped():
-    """T4k: a cool-cast frame's temp is at most wb_v3_cast_max_temp (T4j pushed _DSF8948 and four other frames to the
-    +0.50 limit); without the cap it is higher."""
+    """T4k: with wb_v3_cast_max_temp set, a cool-cast frame's temp is at most that (T4j pushed _DSF8948 and four other
+    frames to the +0.50 limit); off by default (None: up to wb_max_shift, as T4j)."""
     from filmcolor.noref import NOREF_V3, estimate_wb_v3
 
+    assert NOREF_V3["wb_v3_cast_max_temp"] is None
     px = cool_cast_scene()
-    wb = estimate_wb_v3(px, NOREF_V3)
-    assert wb["diagnostics"]["cool_cast"] and wb["temp"] == pytest.approx(NOREF_V3["wb_v3_cast_max_temp"])
-    free = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_cast_max_temp=None))
-    assert free["temp"] > NOREF_V3["wb_v3_cast_max_temp"] + 0.05
+    wb = estimate_wb_v3(px, dict(NOREF_V3, wb_v3_cast_max_temp=0.38))
+    assert wb["diagnostics"]["cool_cast"] and wb["temp"] == pytest.approx(0.38)
+    free = estimate_wb_v3(px, NOREF_V3)
+    assert free["temp"] > 0.38 + 0.05
 
 
 def test_t4k_cooling_is_damped_and_a_green_cast_is_countered_more():
@@ -665,8 +666,12 @@ def test_t4k_grey_world_is_not_sky_damped_when_mid_greys_are_cool_everywhere():
 def test_t4k_black_rebate_is_not_metered():
     """T4k (_DSF9239): grainy black rebate across 30 % of the frame makes textured cells at its noise and its edge
     with the image, which the T4j metering took as the frame's shadows (anchor 1.16 D instead of 0.74 D, +1.05 EV);
-    with the border filter the anchor is the image's own and no extra exposure is given."""
-    from filmcolor.noref import NOREF_V3, _textured_cells, estimate_params_v3
+    with the border filter the anchor is the image's own and no extra exposure is given. Off by default (it also drops
+    dark foregrounds: A012); switched on here."""
+    from filmcolor.noref import NOREF_V3 as V3, _textured_cells, estimate_params_v3
+
+    assert not V3["cell_border_filter"] and not V3["tone_border_filter"]
+    NOREF_V3 = dict(V3, cell_border_filter=True, tone_border_filter=True)
 
     rng = np.random.default_rng(3)
     P = scene(median=0.18, stops=4.0, seed=81).copy()
@@ -686,8 +691,12 @@ def test_t4k_black_rebate_is_not_metered():
 
 def test_t4k_backlit_lift_needs_a_bright_background():
     """T4k: a dark foreground before a background that is only mid-bright (linear 0.35, below bright_luma) gets no
-    backlit lift (weight x ramp(bright share; 0.04, 0.12) = 0); the T4j weight would be about 0.5."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    backlit lift (weight x ramp(bright share; 0.04, 0.12) = 0); the T4j weight would be about 0.5. Off by default (0
+    better / 2 worse on the 185 frames); switched on here."""
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+
+    assert not V3["backlit_sky_check"]
+    NOREF_V3 = dict(V3, backlit_sky_check=True)
 
     rng = np.random.default_rng(37)
     n = 200_000

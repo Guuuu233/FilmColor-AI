@@ -147,8 +147,9 @@ def tables():
         dg = np.array([de(k, x) - de(g_off, x) for x in ok])
         lines.append(f"\nGuard alone (T4k standard vs the same with WHITE_B_GUARD None, {len(ok)} frames): better / worse "
                      f"{bw(dg)}, median {np.median(dg):+.2f}.")
-    ratios = np.array([j[x]["d_hi"][2] / j[x]["d_hi"][1] for x in common if j[x].get("d_hi")] or
-                      [((k[x].get("white_point") or {}).get("blue_guard") or {}).get("ratio_bg", np.nan) for x in common])
+    # the frame's own white point: before the blue guard where it ran, else the recorded d_hi
+    ratios = np.array([((k[x].get("white_point") or {}).get("blue_guard") or {}).get("ratio_bg")
+                       or k[x]["d_hi"][2] / k[x]["d_hi"][1] for x in common])
     lines.append(f"\nd_hi B/G over the frames (own white point): median {np.nanmedian(ratios):.3f}, below 1.12 on "
                  f"{int((ratios < 1.12).sum())} frames.")
 

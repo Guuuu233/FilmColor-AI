@@ -385,9 +385,9 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4k-2026-10-27",          # T4k: black rebate / frame gaps out of the metering, backlit needs a bright share,
-                                   # thin-negative ev cap, warm-scene cooling damped, green tint countered, cool-cast
-                                   # temp capped; T4j: no sky damping on a uniform cool cast (bright, mid-grey and grey
+    rev="t4k-2026-10-29",          # T4k: thin-negative ev cap, warm-scene cooling damped, green tint countered,
+                                   # cool mid greys keep the grey world undamped (the task list's rebate filter,
+                                   # backlit bright share and cool-cast temp cap measured and off by default); T4j: no sky damping on a uniform cool cast (bright, mid-grey and grey
                                    # world all cool), auto levels off by default; T4i (not adopted): sky split, auto levels;
                                    # T4h: sky damping on the grey-world blue axis only, milder portrait;
                                    # T4g: adaptive WB and softer portrait / natural presets; T4f: trimean anchor,
@@ -416,15 +416,18 @@ NOREF_V3 = dict(
     base_blacks=0.0,               # blacks of the preset (a constant; never estimated from the frame)
     temp_offset=0.0, tint_offset=0.0,  # preset colour offsets added after the white balance estimate
     base_tint=0.015,               # T4k: added to every preset's tint offset (counter the set's green lean)
-    # T4k: deep-black rebate / gaps between frames inside the central region are not metered: a cell counts only when
-    # its mean max channel exceeds cell_min_luma and cell_bright_px_share of its pixels have max channel above
-    # cell_min_luma_px (fewer than cell_min_textured textured cells left: the cells without this filter)
-    cell_border_filter=True, cell_min_luma=0.022, cell_bright_px_share=0.80, cell_min_luma_px=0.015, cell_min_textured=50,
-    # T4k: the EV refinement's p98 ceiling and the backlit check use the pixels with max channel above tone_min_luma
-    # (fewer than wb_v3_min_px: all); bright share = share of those with linear luminance above bright_luma
-    tone_border_filter=True, tone_min_luma=0.020, bright_luma=0.45,
-    # T4k: the backlit weight is multiplied by ramp(bright share; backlit_sky_share_lo, backlit_min_sky_share)
-    backlit_sky_check=True, backlit_sky_share_lo=0.04, backlit_min_sky_share=0.12,
+    # T4k (off by default: it also drops dark foregrounds, A012 4.02 -> 9.16): deep-black rebate / gaps between frames
+    # inside the central region are not metered: a cell counts only when its mean max channel exceeds cell_min_luma and
+    # cell_bright_px_share of its pixels have max channel above cell_min_luma_px (fewer than cell_min_textured textured
+    # cells left: the cells without this filter)
+    cell_border_filter=False, cell_min_luma=0.022, cell_bright_px_share=0.80, cell_min_luma_px=0.015, cell_min_textured=50,
+    # T4k (off by default, with cell_border_filter): the EV refinement's p98 ceiling and the backlit check use the
+    # pixels with max channel above tone_min_luma (fewer than wb_v3_min_px: all); bright share (for the backlit and thin
+    # checks) = share of the tone pixels with linear luminance above bright_luma
+    tone_border_filter=False, tone_min_luma=0.020, bright_luma=0.45,
+    # T4k (off by default: 0 better / 2 worse): the backlit weight is multiplied by ramp(bright share;
+    # backlit_sky_share_lo, backlit_min_sky_share)
+    backlit_sky_check=False, backlit_sky_share_lo=0.04, backlit_min_sky_share=0.12,
     # T4k: a thin negative (G density range of the inversion below thin_span_max and bright share below
     # thin_bright_share_max: its highlights were already stretched to the white point) gets a positive ev of at most
     # max(0, (span - thin_span_zero) / thin_span_ramp) x thin_ev_max; below thin_blacks_span, blacks is lowered by
@@ -465,7 +468,8 @@ NOREF_V3 = dict(
     wb_v3_cool_cast_check=True,
     wb_v3_cool_z0=(-0.05, 0.05), wb_v3_cool_z1=(-0.10, 0.10), wb_v3_cool_gw=(-0.20, 0.25),
     wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80, wb_v3_cast_strength=0.80,
-    wb_v3_cast_max_temp=0.38,      # T4k: a cool-cast frame's temp is at most this (T4j: up to wb_max_shift); None = off
+    wb_v3_cast_max_temp=None,      # T4k: a cool-cast frame's temp at most this (0.38 measured: _DSF8948 8.17 -> 9.21);
+                                   # None = up to wb_max_shift (T4j)
     # T4k: mid-grey zone and grey world both strongly cool (log2 R/G below [0], B/G above [1] of wb_v3_undamp_z1 /
     # wb_v3_undamp_gw) with a top-bottom spread below wb_v3_undamp_tb_max (no sky over ground): no grey-world sky damping
     wb_v3_gw_cool_undamp=True, wb_v3_undamp_z1=(-0.15, 0.15), wb_v3_undamp_gw=(-0.20, 0.25), wb_v3_undamp_tb_max=0.08,
