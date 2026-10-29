@@ -1,5 +1,5 @@
 """Run the unchanged 191-frame manifest split (T4d-T4f halves) in two processes, resuming matching checkpoints.
-Usage: python -I scripts/t4g_run_eval.py [TAG]   (TAG t4g, default, t4h, t4i, t4j or t4k; outputs experiments/t4_auto_ui/TAG/)
+Usage: python -I scripts/t4g_run_eval.py [TAG]   (TAG t4g, default, t4h, t4i, t4j, t4k or t4l; outputs experiments/t4_auto_ui/TAG/)
 Each TAG runs on the source of its commit (t4i on 65f038a: its switches are gone in T4j).
 """
 import json
@@ -34,6 +34,13 @@ if TAG == "t4k":  # T4k ablations: thin-negative cap off, white balance changes 
     VARIANTS["no_thin"] = dict(preset="standard", cfg=dict(thin_neg_check=False))
     VARIANTS["wb_t4j"] = dict(preset="standard", cfg=T4K_WB_OFF)
     VARIANTS["t4j_noref"] = dict(preset="standard", cfg=dict(T4K_WB_OFF, thin_neg_check=False))
+if TAG == "t4l":  # T4l ablations of the estimator changes (the inversion changes: scripts/t4l_run_checks.py)
+    VARIANTS["no_meter"] = dict(preset="standard", cfg=dict(meter_holder_box=False, meter_trim_strips=False))
+    VARIANTS["no_holder_box"] = dict(preset="standard", cfg=dict(meter_holder_box=False))
+    VARIANTS["no_strips"] = dict(preset="standard", cfg=dict(meter_trim_strips=False))
+    VARIANTS["no_ev_down"] = dict(preset="standard", cfg=dict(ev_down_adaptive=False))
+    VARIANTS["t4k_est"] = dict(preset="standard", cfg=dict(meter_holder_box=False, meter_trim_strips=False,
+                                                           ev_down_adaptive=False, min_span_d_g=None))
 
 
 def main():

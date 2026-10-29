@@ -90,8 +90,10 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4k"  # thumbnails rendered with the T4k NOREF_V3 (standard preset) and the film holder shown dark
+THUMB_REV = "t4l"  # thumbnails rendered with the T4l NOREF_V3 (standard preset) and inversion, holder shown dark
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
+SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
+WHITE_SELF_RATIO = (0.78, 0.85)  # T4l: colour film's invert.self_ratio_white_point (collapse, target); None = off
 WHITE_B_GUARD = None  # T4k: colour film's blue white point guard (invert.blue_white_guard), e.g. (1.12, 1.18, 0.65);
                       # off: on scanner DNGs (BlueNeg, d_hi B/G 0.24-0.69) it turned 26 of 27 frames yellow
 SUBROLL_CHROMA_TOL = 0.15  # T4k: own-base log2 R/G, B/G tolerance of one sub-roll inside a (body, date) group of a
@@ -540,7 +542,8 @@ class State:
         ck = self._colour_kwargs(p, film)
         try:  # sp is already 24 px block means
             inv = invert_negative(sp_in, inv_base, mask=mask, white_pct=WHITE_PCT,
-                                  white_b_guard=WHITE_B_GUARD if film != "bw" else None)
+                                  white_b_guard=WHITE_B_GUARD if film != "bw" else None,
+                                  white_self_ratio=WHITE_SELF_RATIO if film != "bw" else None, spike_clamp=SPIKE_CLAMP)
             pos = inv.positive
             est = estimate_params_v3(pos, mask, ck["auto"], span_d_g=inv.params.d_hi[1] - inv.params.d_lo[1])
             rp = RenderParams.from_dict(est["params"])
@@ -681,7 +684,8 @@ class State:
         self.token = None
         extra = self._roll_base_kwargs(rel, base_mode, softness) if base_mode != "auto" else {}
         ck = self._colour_kwargs(p, film, self.preset)
-        wk = dict(white_block=WHITE_BLOCK, white_pct=WHITE_PCT, white_b_guard=WHITE_B_GUARD)  # guard: colour only
+        wk = dict(white_block=WHITE_BLOCK, white_pct=WHITE_PCT, white_b_guard=WHITE_B_GUARD,  # guards: colour only
+                  white_self_ratio=WHITE_SELF_RATIO, spike_clamp=SPIKE_CLAMP)
         try:
             self.preview = load_preview(p, max_side=self.max_side, film=film, keep_full=True, **wk, **ck, **extra)
         except ValueError:

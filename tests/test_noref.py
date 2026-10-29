@@ -135,16 +135,18 @@ def test_information_isolation():
     mods = {n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)} | {
         a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
     assert not mods & {"fit", "compare", "colorimetry", "filmcolor.fit", "filmcolor.compare"}
-    assert mods <= {"__future__", "json", "pathlib", "numpy", "render"}
+    assert mods <= {"__future__", "json", "pathlib", "numpy", "render", "holder"}  # T4l: holder (the frame's own pixels)
 
 
 def test_noref_v3_adapts_exposure_and_protects_highlights_without_max_contrast():
     """T4 v2 (2026-10-23): NOREF_V3 (NegPy textured-cell Auto Density / Auto Grade / Highlight Hold / Shadow Hold)
     replaces fixed contrast=2.0 with adaptive contrast in [0.95, 1.38], lifts underexposed frames into the target
     encoded median band (0.45..0.52), and protects highlights within clip_budget. T4d / T4e: up to
-    backlit_contrast_cap on frames with a backlit weight."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    backlit_contrast_cap on frames with a backlit weight. T4l: with the adaptive ev lowering off (it lowers this frame,
+    whose textured cells sit above the band after the anchor's lift, further: test_t4l_ev_lowering_*)."""
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
 
+    NOREF_V3 = dict(V3, ev_down_adaptive=False)
     dark = scene(median=0.03, stops=5.0, seed=10)
     ed = estimate_params_v3(dark, None, NOREF_V3)
     assert ed["status"] == "ok"
@@ -168,8 +170,11 @@ def test_noref_v3_t4b_keeps_print_contrast_and_never_sets_blacks():
     print contrast centre 1.30 with no shadow lift and blacks 0 (T4 v2 gave contrast 0.95, shadows +0.15, blacks +0.10
     on such frames by comparing -log10 of the positive with print-density thresholds); a crushed frame gets a
     positive shadows lift and still blacks 0. T4d / T4e: the centre is base_contrast; the normal frame has no
-    backlit weight (T4f: 3.5 stops; the wider T4f backlit weight gives a 4-stop log-uniform scene w = 0.06)."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    backlit weight (T4f: 3.5 stops; the wider T4f backlit weight gives a 4-stop log-uniform scene w = 0.06). T4l: the
+    crushed frame's black top 40 % is a full black strip for the metering frame, so strip trimming is off here."""
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+
+    NOREF_V3 = dict(V3, meter_trim_strips=False)
 
     normal = estimate_params_v3(scene(median=0.18, stops=3.5, seed=21), None, NOREF_V3)
     assert normal["status"] == "ok" and normal["config_rev"] == NOREF_V3["rev"]
@@ -216,11 +221,11 @@ def test_noref_v3_t4c_backlit_frame_lifts_midtone_and_renders_the_given_matrix()
     each a step above the preset's own value at full weight); the estimate renders with cfg["matrix"] and
     chroma_preserve and returns them in its parameters. T4k: with the bright-share condition off (this scene's sky
     sits around 0.9 x 2^(-0.5..0.3)) and the tone pixel filter off (it leaves out the darkest foreground pixels, so
-    p25 rises a little); both tested in test_t4k_*."""
+    p25 rises a little); both tested in test_t4k_*. T4l: adaptive ev lowering off (this sky lowers the textured median)."""
     from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
     from filmcolor.render import IDENTITY
 
-    NOREF_V3 = dict(V3, backlit_sky_check=False, tone_border_filter=False)
+    NOREF_V3 = dict(V3, backlit_sky_check=False, tone_border_filter=False, ev_down_adaptive=False)
 
     P = backlit_scene()
     m = ((1.2, -0.1, -0.1), (-0.05, 1.2, -0.15), (0.0, -0.2, 1.2))
@@ -298,10 +303,10 @@ def test_t4d_white_balance_falls_back_to_neutral_and_presets_add_their_offsets()
 def test_t4d_backlit_weight_is_continuous():
     """T4d: the backlit weight grows continuously as the foreground gets darker under a bright sky (no switch);
     T4e: contrast is the preset's base_contrast + weight x backlit_contrast_step. T4k: bright-share condition and tone
-    pixel filter off (they move the weight of this scene a little)."""
+    pixel filter off (they move the weight of this scene a little); T4l: adaptive ev lowering off."""
     from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
 
-    NOREF_V3 = dict(V3, backlit_sky_check=False, tone_border_filter=False)
+    NOREF_V3 = dict(V3, backlit_sky_check=False, tone_border_filter=False, ev_down_adaptive=False)
     ws = []
     for fg in (0.20, 0.15, 0.09, 0.08, 0.075, 0.07, 0.05):
         e = estimate_params_v3(backlit_scene(fg=fg), None, NOREF_V3)
@@ -425,8 +430,12 @@ def test_t4f_textured_trimean_anchor_and_ev_refinement_ignore_a_large_sky():
     """T4f Bug 1: the anchor is the Tukey trimean of the textured cell densities, and the EV refinement measures the
     textured cells' encoded median, lowering exposure by at most ev_refine_down_max (and not below -it). On a sky over
     grass frame whose full-frame encoded median is far above the band at the anchor exposure (T4c-T4e bisected that
-    median down to the band: -1.08 EV on A013), the exposure stays within 0.20 EV of the anchor."""
-    from filmcolor.noref import NOREF_V3, _encoded_quantiles, _sample, _textured_cells, estimate_params_v3
+    median down to the band: -1.08 EV on A013), the exposure stays within 0.20 EV of the anchor. T4l: adaptive ev
+    lowering off (on this grass the textured p25 is 0.52, next to its median 0.535, so the T4l ramp widens the limit;
+    it lowers 0.04 EV more here)."""
+    from filmcolor.noref import NOREF_V3 as V3, _encoded_quantiles, _sample, _textured_cells, estimate_params_v3
+
+    NOREF_V3 = dict(V3, ev_down_adaptive=False)
 
     P = sky_over_grass()
     tc = _textured_cells(P, None, NOREF_V3)
@@ -671,7 +680,8 @@ def test_t4k_black_rebate_is_not_metered():
     from filmcolor.noref import NOREF_V3 as V3, _textured_cells, estimate_params_v3
 
     assert not V3["cell_border_filter"] and not V3["tone_border_filter"]
-    NOREF_V3 = dict(V3, cell_border_filter=True, tone_border_filter=True)
+    # T4l: the metering frame would cut these rebate rows first (test_t4l_metering_mask_*): off here
+    NOREF_V3 = dict(V3, cell_border_filter=True, tone_border_filter=True, meter_holder_box=False, meter_trim_strips=False)
 
     rng = np.random.default_rng(3)
     P = scene(median=0.18, stops=4.0, seed=81).copy()
@@ -728,3 +738,57 @@ def test_t4k_thin_negative_caps_positive_ev_and_lowers_blacks():
     bright = estimate_params_v3(scene(median=0.5, stops=3.0, seed=83), None, NOREF_V3, span_d_g=0.45)
     assert bright["diagnostics"]["tone_pixels"]["bright_share"] >= NOREF_V3["thin_bright_share_max"]
     assert not bright["diagnostics"]["thin_negative"]["applied"]
+
+
+def test_t4l_metering_mask_uses_the_inset_film_box_and_cuts_full_black_strips_only():
+    """T4l: with an opaque holder (holder.holder_mask) around the frame the metering mask is the film box inset by
+    meter_box_inset; full black strips at the mask's edges (rebate, gaps between frames: >= meter_strip_share of a
+    row at max channel <= meter_strip_luma) are cut with meter_strip_margin more; a dark subject inside the frame
+    (A012's foreground, under meter_strip_share of any row) is kept; both off give the mask unchanged."""
+    from filmcolor.noref import NOREF_V3, _metering_mask
+
+    P = scene(median=0.18, stops=4.0, seed=91).copy()  # 400 x 500
+    P[:40] = [300.0, 36.0, 3.6]  # holder above (positive far past white, as _DSF8948)
+    m, d = _metering_mask(P, None, NOREF_V3)
+    t, l, h, w = d["film_box"]
+    assert d["used"] and (t, h) == (40, 360) and d["box_inset"] == [round(0.08 * 360), round(0.08 * 500)]
+    assert not m[: 40 + d["box_inset"][0]].any() and m[200, 250]
+    Q = scene(median=0.18, stops=4.0, seed=92).copy()
+    Q[:30] = 0.004  # black gap between frames across the top
+    Q[300:, 100:250] = 0.006  # a dark subject: 30 % of those rows
+    m2, d2 = _metering_mask(Q, None, NOREF_V3)
+    assert d2["strips"]["top"] == 30 and not m2[: 30 + NOREF_V3["meter_strip_margin"]].any()
+    assert m2[350, 150] and d2["strips"]["bottom"] == 0
+    off = dict(NOREF_V3, meter_holder_box=False, meter_trim_strips=False)
+    assert _metering_mask(Q, None, off) == (None, None)
+
+
+def test_t4l_ev_lowering_widens_on_frames_bright_all_over():
+    """T4l: when the textured cells' encoded p25 is high (a frame bright all over, 13 BlueNeg rolls / A222) the ev
+    refinement may lower by ev_refine_down_max + ev_down_extra x ramp(p25; ev_down_q25), instead of 0.20; with p25
+    below the ramp (a sky over dark ground, A013) the limit stays 0.20 and the result is the T4k one."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    P = scene(median=0.75, stops=2.0, seed=93)
+    on = estimate_params_v3(P, None, NOREF_V3)
+    off = estimate_params_v3(P, None, dict(NOREF_V3, ev_down_adaptive=False))
+    r, r_off = on["diagnostics"]["ev_refine"], off["diagnostics"]["ev_refine"]
+    assert r["q25_tex"] >= NOREF_V3["ev_down_q25"][0] and r["down_max"] > NOREF_V3["ev_refine_down_max"] + 0.1
+    floor = min(r_off["ev_anchor"], max(r_off["ev_anchor"] - NOREF_V3["ev_refine_down_max"], -NOREF_V3["ev_refine_down_max"]))
+    assert off["params"]["ev"] >= floor - 1e-6 and on["params"]["ev"] < floor - 0.1
+    high = estimate_params_v3(P, None, dict(NOREF_V3, ev_down_q25=(0.95, 0.99)))  # p25 below the ramp: 0.20 as before
+    assert high["diagnostics"]["ev_refine"]["down_max"] == pytest.approx(NOREF_V3["ev_refine_down_max"])
+    assert high["params"]["ev"] == off["params"]["ev"]
+
+
+def test_t4l_too_short_a_density_range_is_left_for_manual_review():
+    """T4l (A1141, out of focus: 0.145 D): an inversion G density range below min_span_d_g gives
+    manual_review_required with neutral parameters; None turns the check off, and without span_d_g nothing changes."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    P = scene(median=0.18, stops=4.0, seed=94)
+    e = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.15)
+    assert e["status"] == "manual_review_required" and any("density range" in f for f in e["flags"])
+    assert e["params"]["ev"] == 0 and e["params"].get("temp", 0) == 0
+    assert estimate_params_v3(P, None, dict(NOREF_V3, min_span_d_g=None), span_d_g=0.15)["status"] == "ok"
+    assert estimate_params_v3(P, None, NOREF_V3)["status"] == "ok"

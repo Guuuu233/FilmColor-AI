@@ -122,7 +122,8 @@ def _scanner_input(path, *, base_regions, base_rgb, image_region):
 
 def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
              white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, film: str = "color",
-             white_block: int | None = None, white_ratio=None, white_b_guard=None) -> dict:
+             white_block: int | None = None, white_ratio=None, white_b_guard=None, white_self_ratio=None,
+             spike_clamp=None) -> dict:
     """The scene-linear positive of one negative before any render parameter: decode, film base, inversion,
     times the inversion exposure (``convert`` renders exactly this). Returns ``positive`` (H, W, 3 float32),
     ``mask`` (unsaturated pixels in the image region), ``image_region``, ``region_source``, ``inversion``
@@ -130,7 +131,8 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
     ``base_inside_image`` (share of auto base blocks inside the image region, or None). ``white_block``: automatic
     white point on block means of that size (``invert.block_white_point``); None = single pixels. ``white_ratio``: roll
     neutral density ratios for ``invert.neutral_ratio_white_point`` (None = not checked). ``white_b_guard``: colour
-    film only, ``invert.blue_white_guard`` on the automatic white point (None = not checked)."""
+    film only, ``invert.blue_white_guard`` on the automatic white point (None = not checked). ``white_self_ratio``:
+    colour film only, ``invert.self_ratio_white_point`` (T4l). ``spike_clamp``: ``invert.clamp_spikes`` (T4l)."""
     if film not in FILM_MODES:
         raise ValueError(f"film must be one of {FILM_MODES}, got {film!r}")
     if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
@@ -150,7 +152,8 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
         rgb, inv_base = neutral_transmission(rgb, base_rgb), (1.0, 1.0, 1.0)
     res = invert_negative(rgb, inv_base, mask=mask, white_pct=white_pct, gamma=gamma,
                           exposure=exposure, d_hi=d_hi, white_block=white_block, white_ratio=white_ratio,
-                          white_b_guard=white_b_guard if film == "color" else None)
+                          white_b_guard=white_b_guard if film == "color" else None,
+                          white_self_ratio=white_self_ratio if film == "color" else None, spike_clamp=spike_clamp)
     del rgb
     inside = None
     if regions is not None and base_info["method"] == "auto":
@@ -168,14 +171,15 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
             white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, encoding: str = "srgb",
             render_params=None, auto=None, film: str = "color", base_source: dict | None = None,
             white_block: int | None = None, white_point_source: dict | None = None, rot90: int = 0,
-            render_source: dict | None = None, white_b_guard=None):
+            render_source: dict | None = None, white_b_guard=None, white_self_ratio=None, spike_clamp=None):
     """Return (image in [0, 1] encoded per ``encoding``, sidecar dict without output fields).
 
     ``base_source``: for a ``base_rgb`` replayed from an earlier estimate (preview export), how that base was
     found (method, estimate / regions, base_inside_image); stored as ``base.source``, and its base_inside_image
     feeds the QC check that a given base would otherwise skip. Pixels do not depend on it.
     ``white_block``: automatic white point on block means (``positive``); ``white_b_guard``: colour film's
-    ``invert.blue_white_guard`` on the automatic white point (``positive``; the app's). ``white_point_source``: for a ``d_hi``
+    ``invert.blue_white_guard`` on the automatic white point (``positive``; the app's); ``white_self_ratio`` and
+    ``spike_clamp``: T4l, as ``positive`` (the clamp is kept in the inversion parameters and replayed). ``white_point_source``: for a ``d_hi``
     replayed from an earlier estimate (preview export), how it was estimated; stored as ``inversion.white_point``.
     ``rot90``: output turned by that many quarter turns counter-clockwise (numpy.rot90) after rendering; QC and all
     statistics are measured before the turn. 0 (default) keeps the sensor orientation and the previous sidecar.
@@ -201,7 +205,7 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     path = Path(path)
     p = positive(path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region, d_hi=d_hi,
                  white_pct=white_pct, gamma=gamma, exposure=exposure, film=film, white_block=white_block,
-                 white_b_guard=white_b_guard)
+                 white_b_guard=white_b_guard, white_self_ratio=white_self_ratio, spike_clamp=spike_clamp)
     pos, mask, image_region, res = p["positive"], p["mask"], p["image_region"], p["inversion"]
     base_info, input_info, decode_info = p["base_info"], p["input_info"], p["decode_info"]
     region_source, inside = p["region_source"], p["base_inside_image"]
@@ -289,6 +293,8 @@ def replay_kwargs(sidecar: dict) -> dict:
     kw = dict(base_rgb=p["base"], d_hi=p["d_hi"], image_region=sidecar["image_region"]["region"],
               white_pct=sidecar["inversion"]["white_pct"], gamma=p["gamma"], exposure=p["exposure"],
               encoding=sidecar["output"]["encoding"], render_params=sidecar.get("render", {}).get("params"))
+    if p.get("spike_clamp") is not None:  # T4l
+        kw["spike_clamp"] = tuple(p["spike_clamp"])
     if sidecar.get("film", {}).get("mode") == "bw":
         kw.update(film="bw", base_rgb=sidecar["base"]["rgb_render"])
     if sidecar["output"].get("rot90"):

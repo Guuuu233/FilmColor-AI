@@ -102,3 +102,22 @@ def test_bad_image_region_fails(tmp_path):
     write_dng(p, rgb)
     with pytest.raises(ValueError, match="outside"):
         convert(p, image_region=(0, 0, 1000, 10))
+
+
+def test_t4l_linearization_table_is_applied(tmp_path):
+    """T4l (A1283: VueScan's 8-bit Plustek DNG with a 256-entry LinearizationTable up to WhiteLevel 65535): stored
+    values are looked up in the table before the black / white scaling (DNG specification); the table length is
+    recorded; a decreasing table is refused."""
+    rng = np.random.default_rng(4)
+    a = rng.integers(0, 256, (120, 160, 3), dtype=np.uint8)
+    lut = np.round(65535 * (np.arange(256) / 255.0) ** 2.2).astype(np.uint16)
+    p = tmp_path / "s8.dng"
+    write_dng(p, a, extratags=[(50712, "H", 256, lut.tolist(), True), (50717, "H", 1, 65535, True)])
+    fr = load_scanner(p)
+    assert fr.white == 65535.0 and fr.meta["linearization_table_len"] == 256
+    np.testing.assert_allclose(fr.rgb, lut[a].astype(np.float32) / 65535, atol=1e-6)
+    assert fr.sat.sum() == int((a == 255).any(-1).sum())
+    q = tmp_path / "bad.dng"
+    write_dng(q, a, extratags=[(50712, "H", 256, lut[::-1].tolist(), True), (50717, "H", 1, 65535, True)])
+    with pytest.raises(ValueError, match="LinearizationTable"):
+        load_scanner(q)

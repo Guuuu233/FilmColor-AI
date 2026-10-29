@@ -18,8 +18,9 @@ from filmcolor.preview import load_preview
 
 from test_scanner import scan, write_dng
 
-# the app's white point (T4b; T4k: blue white point guard)
-APP_WP = dict(white_block=app.WHITE_BLOCK, white_pct=app.WHITE_PCT, white_b_guard=app.WHITE_B_GUARD)
+# the app's white point and inversion (T4b; T4k: blue white point guard)
+APP_WP = dict(white_block=app.WHITE_BLOCK, white_pct=app.WHITE_PCT, white_b_guard=app.WHITE_B_GUARD,
+              white_self_ratio=app.WHITE_SELF_RATIO, spike_clamp=app.SPIKE_CLAMP)  # T4l: self-ratio guard, spike clamp
 
 
 def decode_png(b):

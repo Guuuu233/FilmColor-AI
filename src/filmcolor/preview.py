@@ -25,39 +25,10 @@ from pathlib import Path
 import numpy as np
 
 from .compare import block_mean
+from .holder import HOLDER_GREY, HOLDER_OVER, HOLDER_PEAK, film_box, holder_mask  # noqa: F401 (T4i names, moved in T4l)
 from .noref import CONFIG_DIR, estimate_params_v2, estimation_input
 from .pipeline import BW_NEUTRAL, positive, sha256, write
 from .render import RenderParams, render, render_full
-
-# T4i: an opaque film holder / mask around the frame is far denser than the image, so its positive is many stops past
-# white with unequal channels (yellow or magenta after the white clip). Shown as one dark neutral instead (display
-# only: the export, the 1:1 crop and every estimate are unchanged).
-HOLDER_OVER = 2.0    # positive above this in two channels (one stop past the white point) ...
-HOLDER_PEAK = 16.0   # ... and above this in the brightest one (four stops; _DSF8948's holder: R ~300, G ~36, B ~3.6)
-HOLDER_GREY = 0.02   # sRGB-encoded value the holder is displayed with
-
-
-def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.ndarray:
-    """Pixels of positive ``P`` (h, w, 3) above ``over`` in two channels and ``peak`` in one that connect to the image
-    edge (a highlight inside the frame does not)."""
-    from scipy import ndimage
-
-    s = np.sort(np.asarray(P), axis=-1)
-    hot = (s[..., 1] > over) & (s[..., 2] > peak)
-    if not hot.any():
-        return hot
-    lab, _ = ndimage.label(hot)
-    edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
-    return np.isin(lab, edge[edge > 0])
-
-
-def film_box(holder: np.ndarray) -> list[int] | None:
-    """(top, left, height, width) of the pixels outside ``holder``, or None when the holder covers nothing."""
-    if not holder.any():
-        return None
-    keep = ~holder
-    rows, cols = np.where(keep.any(1))[0], np.where(keep.any(0))[0]
-    return [int(rows[0]), int(cols[0]), int(rows[-1] - rows[0] + 1), int(cols[-1] - cols[0] + 1)]
 
 
 @dataclass
@@ -168,7 +139,7 @@ class Preview:
                      image_region=self.image_region, white_pct=self.white_pct, gamma=self.inversion["gamma"],
                      exposure=self.inversion["exposure"], encoding=encoding, render_params=rp, film=self.film,
                      base_source=self.base_source(), white_point_source=self.report.get("white_point"), rot90=rot90,
-                     render_source=render_source)
+                     render_source=render_source, spike_clamp=self.inversion.get("spike_clamp"))
 
 
 class SourceChangedError(RuntimeError):
@@ -192,18 +163,21 @@ def auto_estimate(est_input, auto, film: str = "color", span_d_g: float | None =
 def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, base_rgb=None, image_region=None,
                  d_hi=None, white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0,
                  film: str = "color", keep_full: bool = False, base_source: dict | None = None,
-                 white_block: int | None = None, white_ratio=None, white_b_guard=None) -> Preview:
+                 white_block: int | None = None, white_ratio=None, white_b_guard=None, white_self_ratio=None,
+                 spike_clamp=None) -> Preview:
     """Full-resolution decode / base / inversion once; keep a block-mean copy of at most ``max_side`` pixels.
     ``auto``: a noref config (noref.NOREF_V2) estimated here on the full-resolution positive, exactly as
     ``convert(auto=...)`` does; the result is in ``Preview.auto`` (render with ``Preview.auto['params']``).
     ``white_block``: automatic white point on block means of that size (``invert.block_white_point``; the app uses
     it); None = single pixels as ``convert``. ``white_ratio``: roll neutral density ratios checked against the automatic
-    white point (``invert.neutral_ratio_white_point``); ``white_b_guard``: colour film's ``invert.blue_white_guard``.
-    The export replays the white point either way."""
+    white point (``invert.neutral_ratio_white_point``); ``white_b_guard``: colour film's ``invert.blue_white_guard``;
+    ``white_self_ratio`` / ``spike_clamp``: T4l (``pipeline.positive``). The export replays the white point and the
+    clamp either way."""
     path = Path(path)
     p = positive(path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region, d_hi=d_hi,
                  white_pct=white_pct, gamma=gamma, exposure=exposure, film=film, white_block=white_block,
-                 white_ratio=white_ratio, white_b_guard=white_b_guard)
+                 white_ratio=white_ratio, white_b_guard=white_b_guard, white_self_ratio=white_self_ratio,
+                 spike_clamp=spike_clamp)
     pos, mask = p["positive"], p["mask"]
     full_shape = pos.shape[:2]
     ei = estimation_input(pos, p["image_region"]) if auto is not None else None
@@ -225,5 +199,6 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
                    load_kwargs=dict(max_side=max_side, auto=auto, base_regions=base_regions, base_rgb=base_rgb,
                                     image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,
                                     exposure=exposure, film=film, keep_full=keep_full, base_source=base_source,
-                                    white_block=white_block, white_ratio=white_ratio, white_b_guard=white_b_guard),
+                                    white_block=white_block, white_ratio=white_ratio, white_b_guard=white_b_guard,
+                                    white_self_ratio=white_self_ratio, spike_clamp=spike_clamp),
                    full_positive=full, _base_source=base_source, est_input=ei, holder=holder_mask(small))

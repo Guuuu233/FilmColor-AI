@@ -1,0 +1,472 @@
+{
+ "src": "/private/tmp/fc_t4l/t4k_tree/src",
+ "git_commit": "",
+ "samples": {
+  "A1106.CR2": {
+   "path_name": "A1106.CR2",
+   "base_method": "auto",
+   "status": "manual_review_required",
+   "flags": [
+    "white_point_invalid: p99 11.36 stops past the inversion white point"
+   ],
+   "params": {
+    "ev": 0.0,
+    "temp": -0.0,
+    "tint": 0.0,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "blacks": null
+   },
+   "d_hi": [
+    0.9029303193092346,
+    1.120918869972229,
+    1.4694890975952148
+   ],
+   "d_lo": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "span_d_g": 1.120918869972229,
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 21600
+   },
+   "stats": {
+    "median": 0.7322403788566589,
+    "p1": 0.2554721087217331,
+    "p99": 2631.71826171875,
+    "p995": 2631.96265625,
+    "range_stops": 13.330551636442083,
+    "above_white": 0.246385,
+    "dark_share": 0.0,
+    "wb_chroma": [
+     -0.06387345492839813,
+     0.04236918315291405
+    ],
+    "wb_share": 0.6073466666666667,
+    "wb_mad": 0.1440754383802414
+   },
+   "holder_share": 0.20076392591117648,
+   "film_box": [
+    11,
+    62,
+    862,
+    1315
+   ],
+   "preview_shape": [
+    967,
+    1449
+   ],
+   "mask_share": 0.24991382281971733,
+   "positive_q": [
+    [
+     0.6882,
+     0.7295,
+     0.8001
+    ],
+    [
+     0.9881,
+     0.9905,
+     36439.4414
+    ],
+    [
+     1.0787,
+     1.0622,
+     72877.608
+    ],
+    [
+     1.7882,
+     1.7354,
+     182191.4844
+    ]
+   ],
+   "spike_px": 11462,
+   "spike_share": 0.032732205325908474,
+   "spike_channels": [
+    0,
+    0,
+    11462
+   ],
+   "camera": {
+    "model": "Canon EOS 5D Mark III"
+   },
+   "seconds": 4.1
+  },
+  "A1141.NEF": {
+   "path_name": "A1141.NEF",
+   "base_method": "auto",
+   "status": "ok",
+   "flags": [
+    "white_point_unrepresentative"
+   ],
+   "params": {
+    "ev": -0.25,
+    "temp": -0.0469,
+    "tint": 0.0432,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "blacks": null
+   },
+   "d_hi": [
+    0.12967678904533386,
+    0.1452249139547348,
+    0.12627241015434265
+   ],
+   "d_lo": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "span_d_g": 0.1452249139547348,
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 44118
+   },
+   "stats": {
+    "median": 0.7948504388332367,
+    "p1": 0.22598044946789742,
+    "p99": 1.1070669937133788,
+    "p995": 1.1398759287595752,
+    "range_stops": 2.2924726594174114,
+    "above_white": 0.205255,
+    "dark_share": 0.0,
+    "wb_chroma": [
+     0.0275378730148077,
+     -0.022540133446455002
+    ],
+    "wb_share": 0.3938066666666667,
+    "wb_mad": 0.1816909909248352
+   },
+   "holder_share": 0.00016843497150772913,
+   "film_box": [
+    0,
+    0,
+    920,
+    1381
+   ],
+   "preview_shape": [
+    920,
+    1381
+   ],
+   "mask_share": 0.2501810282404055,
+   "positive_q": [
+    [
+     0.8388,
+     0.7995,
+     0.6652
+    ],
+    [
+     1.0556,
+     1.0742,
+     1.281
+    ],
+    [
+     1.1261,
+     1.1645,
+     1.5139
+    ],
+    [
+     2.1356,
+     2.0325,
+     4.9041
+    ]
+   ],
+   "spike_px": 0,
+   "spike_share": 0.0,
+   "spike_channels": [
+    0,
+    0,
+    0
+   ],
+   "camera": {
+    "model": "NIKON Z 7_2"
+   },
+   "seconds": 7.4
+  },
+  "A1283.DNG": {
+   "path_name": "A1283.DNG",
+   "error": "ValueError: A1283.DNG: LinearizationTable not supported",
+   "seconds": 0.4
+  },
+  "A1100.ARW": {
+   "path_name": "A1100.ARW",
+   "base_method": "auto",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": 0.0931,
+    "temp": 0.1296,
+    "tint": 0.0712,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "blacks": null
+   },
+   "d_hi": [
+    0.6446217894554138,
+    0.8292646408081055,
+    1.0158798694610596
+   ],
+   "d_lo": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "span_d_g": 0.8292646408081055,
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 59004
+   },
+   "stats": {
+    "median": 0.2627875804901123,
+    "p1": 0.08382904395461083,
+    "p99": 0.9832248193025589,
+    "p995": 1.0008240681886673,
+    "range_stops": 3.551999252632762,
+    "above_white": 0.011375,
+    "dark_share": 0.0,
+    "wb_chroma": [
+     -0.014123328030109406,
+     -0.0425458699464798
+    ],
+    "wb_share": 0.21562,
+    "wb_mad": 0.12865372002124786
+   },
+   "holder_share": 0.06964263351031529,
+   "film_box": [
+    0,
+    7,
+    1062,
+    1534
+   ],
+   "preview_shape": [
+    1062,
+    1594
+   ],
+   "mask_share": 0.25,
+   "positive_q": [
+    [
+     0.1814,
+     0.2789,
+     0.3665
+    ],
+    [
+     0.9877,
+     0.9822,
+     0.9807
+    ],
+    [
+     1.0407,
+     1.0367,
+     1.0636
+    ],
+    [
+     1.4708,
+     2.012,
+     2.5656
+    ]
+   ],
+   "spike_px": 0,
+   "spike_share": 0.0,
+   "spike_channels": [
+    0,
+    0,
+    0
+   ],
+   "camera": {
+    "model": "ILCE-7RM4A"
+   },
+   "seconds": 8.4
+  },
+  "A1105.ARW": {
+   "path_name": "A1105.ARW",
+   "base_method": "auto",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": 1.0311,
+    "temp": 0.5,
+    "tint": 0.0592,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "blacks": null
+   },
+   "d_hi": [
+    0.6124234795570374,
+    0.6880030632019043,
+    0.7424978613853455
+   ],
+   "d_lo": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "span_d_g": 0.6880030632019043,
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 59004
+   },
+   "stats": {
+    "median": 0.20395031571388245,
+    "p1": 0.00855102675035596,
+    "p99": 0.9267484331130975,
+    "p995": 0.9686895042657858,
+    "range_stops": 6.7599363009909,
+    "above_white": 0.004435,
+    "dark_share": 5e-06,
+    "wb_chroma": [
+     -0.08460673689842224,
+     0.16356845200061798
+    ],
+    "wb_share": 0.15324666666666667,
+    "wb_mad": 0.08238277584314346
+   },
+   "holder_share": 0.06583775788207662,
+   "film_box": [
+    0,
+    1,
+    1062,
+    1546
+   ],
+   "preview_shape": [
+    1062,
+    1594
+   ],
+   "mask_share": 0.25,
+   "positive_q": [
+    [
+     0.1246,
+     0.2129,
+     0.3459
+    ],
+    [
+     0.9256,
+     0.9255,
+     0.9336
+    ],
+    [
+     1.0336,
+     1.0289,
+     1.038
+    ],
+    [
+     2.3823,
+     2.7563,
+     3.7431
+    ]
+   ],
+   "spike_px": 0,
+   "spike_share": 0.0,
+   "spike_channels": [
+    0,
+    0,
+    0
+   ],
+   "camera": {
+    "model": "ILCE-7RM4A"
+   },
+   "seconds": 8.4
+  },
+  "A222.NEF": {
+   "path_name": "A222.NEF",
+   "base_method": "auto",
+   "status": "ok",
+   "flags": [
+    "white_point_unrepresentative"
+   ],
+   "params": {
+    "ev": -0.2,
+    "temp": 0.065,
+    "tint": 0.0128,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "blacks": null
+   },
+   "d_hi": [
+    0.26651525497436523,
+    0.34966063499450684,
+    0.4417816400527954
+   ],
+   "d_lo": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "span_d_g": 0.34966063499450684,
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 44118
+   },
+   "stats": {
+    "median": 0.2991509735584259,
+    "p1": 0.00517083190381527,
+    "p99": 1.0384699821472168,
+    "p995": 1.068738441467283,
+    "range_stops": 7.649847393450261,
+    "above_white": 0.065545,
+    "dark_share": 0.041635,
+    "wb_chroma": [
+     -0.036278825253248215,
+     0.06078728288412094
+    ],
+    "wb_share": 0.49698,
+    "wb_mad": 0.15403063595294952
+   },
+   "holder_share": 0.00021093725403771685,
+   "film_box": [
+    0,
+    0,
+    920,
+    1381
+   ],
+   "preview_shape": [
+    920,
+    1381
+   ],
+   "mask_share": 0.2501810282404055,
+   "positive_q": [
+    [
+     0.2702,
+     0.2844,
+     0.3609
+    ],
+    [
+     1.0093,
+     1.0218,
+     1.0723
+    ],
+    [
+     1.1012,
+     1.0959,
+     1.1719
+    ],
+    [
+     1.485,
+     1.2235,
+     1.3915
+    ]
+   ],
+   "spike_px": 0,
+   "spike_share": 0.0,
+   "spike_channels": [
+    0,
+    0,
+    0
+   ],
+   "camera": {
+    "model": "NIKON Z 7_2"
+   },
+   "seconds": 7.2
+  }
+ }
+}

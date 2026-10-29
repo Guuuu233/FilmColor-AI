@@ -5,7 +5,8 @@ camera RAW path (filmcolor.raw / rawpy_io); both hand the shared inversion a lin
 
 Signal definition (verified on data/raw/public/blueneg samples, see data/manifests/SOURCES.md):
     rgb = (value - BlackLevel) / (WhiteLevel - BlackLevel), per DNG defaults 0 and 2**bits - 1
-    when the tags are absent. No CFA, no demosaic, no camera colour matrix.
+    when the tags are absent. No CFA, no demosaic, no camera colour matrix. With a LinearizationTable (T4l; VueScan's
+    8-bit Plustek DNGs: 256 entries up to WhiteLevel 65535), value = table[stored value] first (DNG specification).
 Not verified: whether the scanner software applied infrared dust removal or other processing to
 the RGB before writing (its job settings are recorded in the sidecar, not interpreted). The
 declared ColorMatrix1 is the standard XYZ->linear sRGB matrix, i.e. a nominal label, not a
@@ -97,8 +98,12 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
         main = _main_page(tf)
         if main is None:
             raise ValueError(f"{path.name}: no 3-sample LinearRaw image (not a linear scanner DNG)")
-        if main.tags.get("LinearizationTable") is not None:
-            raise ValueError(f"{path.name}: LinearizationTable not supported")
+        lut_tag = main.tags.get("LinearizationTable")
+        lut = None
+        if lut_tag is not None:
+            lut = np.atleast_1d(np.asarray(lut_tag.value, np.float64)).ravel()
+            if lut.size < 2 or not np.all(np.isfinite(lut)) or np.any(np.diff(lut) < 0):
+                raise ValueError(f"{path.name}: LinearizationTable must be finite and non-decreasing")
         bits = _tag(main, "BitsPerSample")
         bits = int(np.atleast_1d(bits)[0])
         black = _level(_tag(main, "BlackLevel"), 3, "BlackLevel")
@@ -108,6 +113,10 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
         if white <= black:
             raise ValueError(f"{path.name}: white level {white} <= black level {black}")
         a = main.asarray()
+        if lut is not None:
+            if a.dtype.kind not in "ui":
+                raise ValueError(f"{path.name}: LinearizationTable on non-integer samples ({a.dtype})")
+            a = lut.astype(np.float32)[np.minimum(a, lut.size - 1)]  # stored values past the table take its last entry
         ifd0 = tf.pages[0]
         ir = [p for p in _all_pages(tf) if p.samplesperpixel == 1 and p.shape[:2] == a.shape[:2]]
         ir_stats = None
@@ -123,6 +132,8 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
                     bits=bits, black_source="tag" if main.tags.get("BlackLevel") else "DNG default",
                     white_source="tag" if main.tags.get("WhiteLevel") else "DNG default",
                     infrared_layer=ir_stats, scanner_settings=silverfast_settings(_tag(ifd0, "XMP")))
+        if lut is not None:  # files without a table keep their previous field set
+            meta["linearization_table_len"] = int(lut.size)
     if a.ndim != 3 or a.shape[2] != 3:
         raise ValueError(f"{path.name}: unexpected image shape {a.shape}")
     sat = np.any(a >= white, -1)

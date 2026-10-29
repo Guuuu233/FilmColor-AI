@@ -92,7 +92,10 @@ def roll_state(f: dict, states: dict, max_side: int, roll_folder: Path | None = 
             if (g["domain"], g["roll"]) == key:
                 link = d / Path(g["raw"]).name
                 if not link.is_symlink():
-                    link.symlink_to((REPO / g["raw"]).resolve() if not os.path.isabs(g["raw"]) else Path(g["raw"]))
+                    try:  # another process of the same run may create it first
+                        link.symlink_to((REPO / g["raw"]).resolve() if not os.path.isabs(g["raw"]) else Path(g["raw"]))
+                    except FileExistsError:
+                        pass
         st = fc_app.State(d, Path("/tmp/fc_t4d/out"), allow_frozen=False, max_side=max_side)
         st.roll_info()
         states[key] = st
@@ -118,6 +121,7 @@ def med_lc(lab):
 
 
 def main(out_json: str, opts: list[str]):
+    global MANIFEST, FRAMES
     domains, ids, variants, max_side, app_config = None, None, {"default": {}}, 1000, {}
     roll_folder, base_mode = None, None
     for opt in opts:
@@ -126,6 +130,11 @@ def main(out_json: str, opts: list[str]):
             domains = set(v.split(","))
         elif k == "--ids":
             ids = set(v.split(","))
+        elif k == "--ids-from":  # T4l: one frame id per line
+            ids = {x.strip() for x in Path(v).read_text().splitlines() if x.strip()}
+        elif k == "--manifest":  # T4l: frames of another manifest (same fields as the dev manifest)
+            MANIFEST = (REPO / v).resolve()
+            FRAMES = json.loads(MANIFEST.read_text())["frames"]
         elif k == "--variants":
             variants = json.loads(v)
         elif k == "--max-side":
@@ -183,6 +192,7 @@ def main(out_json: str, opts: list[str]):
                    camera_matrix=cam is not None,
                    holder_share=float(pv.holder.mean()) if getattr(pv, "holder", None) is not None else None,
                    d_hi=list(pv.inversion["d_hi"]), white_point=pv.report.get("white_point"),
+                   spike_clamp=pv.report.get("spike_clamp"),
                    raw_sha256=hashlib.file_digest(raw.open("rb"), "sha256").hexdigest(),
                    ref_sha256=hashlib.file_digest(ref.open("rb"), "sha256").hexdigest(), variants={})
         ref_small = al = None
@@ -246,6 +256,7 @@ def main(out_json: str, opts: list[str]):
                                                 .get("border_cells"),
                                                 gw_cool_undamped=est.get("diagnostics", {}).get("wb", {})
                                                 .get("diagnostics", {}).get("gw_cool_undamped")),
+                                         t4l={k: est.get("diagnostics", {}).get(k) for k in ("metering", "ev_refine")},
                                          estimate_seconds=round(est_s, 3), cam_mix=mix if cam is not None else None,
                                          metrics=mt, ours_L_median=oL, ours_C_median=oC, ref_L_median=rL,
                                          ref_C_median=rC)

@@ -490,6 +490,16 @@ async function openFile(f, el, explicitBaseMode) {
   }
   buildSliders(); updateFileBadges(); showInfo(); refresh();
   status(`已打开 ${meta.path}（${BASE_LABELS[meta.base.method] || meta.base.method} + 「${presetLabel(presetSel)}」自动起点）`);
+  autoReviewStatus();
+}
+
+// T4l: the estimate asks for manual review (no automatic starting point): say why
+function autoReviewStatus() {
+  if (!meta || !meta.auto || meta.auto.status !== "manual_review_required") return;
+  const why = (meta.auto.flags || []).join("；");
+  status(/density range/.test(why)
+    ? `已打开 ${meta.path}：当前画格密度跨度过小（可能失焦、空白或未拍到画芯），已保持默认中立参数（${why}）`
+    : `已打开 ${meta.path}：自动估计需人工复核，已保持默认中立参数（${why}）`, true);
 }
 
 function presetLabel(id) { const p = presets.find(x => x.id === id); return p ? p.label : id; }

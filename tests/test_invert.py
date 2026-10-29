@@ -197,3 +197,46 @@ def test_t4k_blue_white_guard_lifts_a_collapsed_blue_white_point():
     assert res.params.d_hi[2] == pytest.approx(d[2], abs=1e-4) and res.report["white_point"]["blue_guard"]["applied"]
     given = invert_negative(rgb, BASE, d_hi=(0.8, 1.0, 1.02), white_b_guard=(1.12, 1.18, 0.65))
     assert given.params.d_hi == (0.8, 1.0, 1.02)  # a given (replayed) white point is never changed
+
+
+def test_t4l_spike_clamp_holds_single_channel_spikes_and_keeps_the_holder():
+    """T4l (A1106: blue at or below the black level behind the orange mask -> density floor 6 D -> positive ~36 000 x
+    white): where the middle channel's normalised density is at most mid_max, one channel is held to max(middle, 1) +
+    margin; an opaque holder (two channels far past white) and ordinary pixels are unchanged; the clamp is recorded in
+    the parameters (replayed) and the report counts the pixels."""
+    from filmcolor.invert import clamp_spikes
+
+    s = np.array([[0.5, 0.6, 0.55],     # ordinary
+                  [0.9, 1.0, 5.4],      # blue spike inside the image
+                  [3.0, 2.5, 9.0],      # opaque holder: middle channel far past white
+                  [1.02, 1.04, 1.10]],  # a highlight a little past white, within the margin
+                 np.float32)
+    out, n = clamp_spikes(s, (1.15, 0.12))
+    assert n == 1 and out[1, 2] == pytest.approx(1.12)
+    np.testing.assert_array_equal(out[[0, 2, 3]], s[[0, 2, 3]])
+    rgb = BASE * 10.0 ** -np.array([[[0.1, 0.2, 0.3], [0.8, 1.0, 1.2], [0.8, 1.0, 6.0]]], np.float32)
+    plain = invert_negative(rgb, BASE, d_hi=(0.8, 1.0, 1.2))
+    res = invert_negative(rgb, BASE, d_hi=(0.8, 1.0, 1.2), spike_clamp=(1.15, 0.12))
+    assert plain.positive[0, 2, 2] > 1e3 and res.positive[0, 2, 2] < 2.0
+    np.testing.assert_array_equal(res.positive[0, :2], plain.positive[0, :2])
+    assert res.params.to_dict()["spike_clamp"] == [1.15, 0.12] and "spike_clamp" not in plain.params.to_dict()
+    assert res.report["spike_clamp"]["pixels"] == 1 and "spike_clamp" not in plain.report
+
+
+def test_t4l_self_ratio_white_point_lifts_only_a_channel_collapsed_against_its_own_midtones():
+    """T4l: a white point channel ratio below collapse x the frame's own midtone ratio (DSC_3827: blue 0.91 against
+    midtones about 1.3) is set to target x the midtone ratio; a scanner-like frame whose midtones and highlights share
+    a low B / G (BlueNeg about 0.35) is unchanged (the T4k fixed 1.12 guard turned those yellow)."""
+    from filmcolor.invert import self_ratio_white_point
+
+    rng = np.random.default_rng(9)
+    g = rng.uniform(0.25, 0.70, 5000)
+    camera = np.stack([0.75 * g, g, 1.30 * g], -1)
+    d, info = self_ratio_white_point((0.75, 1.0, 0.91), camera, (0.78, 0.85))
+    assert info["applied"] and info["channels"] == ["B"]
+    assert d[0] == 0.75 and d[1] == 1.0 and d[2] == pytest.approx(0.85 * 1.30)
+    scanner = np.stack([0.60 * g, g, 0.35 * g], -1)
+    d_s, info_s = self_ratio_white_point((0.60, 1.0, 0.35), scanner, (0.78, 0.85))
+    assert d_s == (0.60, 1.0, 0.35) and not info_s["applied"]
+    few = self_ratio_white_point((0.75, 1.0, 0.91), camera[:100], (0.78, 0.85))[1]
+    assert not few["applied"] and few["n_mid"] < 500

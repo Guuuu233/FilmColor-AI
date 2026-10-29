@@ -25,6 +25,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .holder import film_box, holder_mask
 from .render import BOUNDS, EXTENDED_BOUNDS, IDENTITY, LUMA, RenderParams, render_full
 
 NOREF_V1 = dict(
@@ -385,7 +386,9 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4k-2026-10-29",          # T4k: thin-negative ev cap, warm-scene cooling damped, green tint countered,
+    rev="t4l-2026-10-29",          # T4l: metering inside the film box and off full black strips, wider ev lowering
+                                   # on frames bright all over, too short a density range for manual review;
+                                   # T4k: thin-negative ev cap, warm-scene cooling damped, green tint countered,
                                    # cool mid greys keep the grey world undamped (the task list's rebate filter,
                                    # backlit bright share and cool-cast temp cap measured and off by default); T4j: no sky damping on a uniform cool cast (bright, mid-grey and grey
                                    # world all cool), auto levels off by default; T4i (not adopted): sky split, auto levels;
@@ -434,6 +437,19 @@ NOREF_V3 = dict(
     # clip((thin_blacks_span - span) x thin_blacks_gain, 0, thin_blacks_max)
     thin_neg_check=True, thin_span_max=0.62, thin_bright_share_max=0.35, thin_span_zero=0.42, thin_span_ramp=0.20,
     thin_ev_max=0.60, thin_blacks_span=0.52, thin_blacks_gain=0.8, thin_blacks_max=0.12,
+    # T4l metering frame (_metering_mask): with an opaque holder covering >= meter_holder_min_share of the frame, the
+    # mask is cut to the film box (holder.film_box) inset by meter_box_inset of its height / width on each side;
+    # then rows / columns at the mask's edges with >= meter_strip_share of their mask pixels at max channel <=
+    # meter_strip_luma (full black strips: rebate, gaps between frames) are cut, scanning inward from each side, plus
+    # meter_strip_margin more
+    meter_holder_box=True, meter_holder_min_share=0.01, meter_box_inset=0.08,
+    meter_trim_strips=True, meter_strip_luma=0.012, meter_strip_share=0.80, meter_strip_margin=2,
+    meter_min_share=0.25,          # the metering mask keeps at least this share of the original mask, else unchanged
+    # T4l: lowering the ev on frames bright all over (textured-cell encoded p25 >= ev_down_q25[0]) by up to
+    # ev_refine_down_max + ev_down_extra x ramp(p25; ev_down_q25), instead of ev_refine_down_max alone (A013, a sky over
+    # dark ground, keeps 0.20)
+    ev_down_adaptive=True, ev_down_q25=(0.42, 0.55), ev_down_extra=0.45,
+    min_span_d_g=0.22,             # T4l: inversion G density range below this: low information, manual review; None = off
     target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance of the textured cells (T4g; T4d
                                    # 0.48..0.55 and T4c / T4e 0.45..0.52 on the full frame)
     ev_refine_down_max=0.20,       # T4f: the EV refinement lowers exposure by at most this, and not below -this
@@ -600,6 +616,65 @@ def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
         p98_dark_d=p98,
         textured_rgb=mean_rgb[tex],
     )
+
+
+def _metering_mask(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> tuple[np.ndarray | None, dict | None]:
+    """T4l: the estimator's mask without an opaque holder's surroundings (inset film box) and full black strips at its
+    edges (rebate, gaps between frames). A dark subject inside the frame (A012's foreground) is not a full row or
+    column of near-black pixels, so it stays. Returns (mask, diagnostics); diagnostics None when both are off."""
+    if not (cfg.get("meter_holder_box") or cfg.get("meter_trim_strips")):
+        return mask, None
+    h, w = P.shape[:2]
+    m0 = mask if mask is not None else np.ones((h, w), bool)
+    m = m0.copy()
+    diag = dict(mask_share_before=float(m0.mean()))
+    if cfg.get("meter_holder_box"):
+        hold = holder_mask(P)
+        share = float(hold.mean())
+        diag.update(holder_share=share)
+        if share >= cfg["meter_holder_min_share"]:
+            t, l, bh, bw = film_box(hold)
+            dt, dl = int(round(cfg["meter_box_inset"] * bh)), int(round(cfg["meter_box_inset"] * bw))
+            box = np.zeros_like(m)
+            box[t + dt : t + bh - dt, l + dl : l + bw - dl] = True
+            m &= box
+            diag.update(film_box=[t, l, bh, bw], box_inset=[dt, dl])
+    if cfg.get("meter_trim_strips") and m.any():
+        black = P.max(axis=-1) <= cfg["meter_strip_luma"]
+        trimmed = dict(top=0, bottom=0, left=0, right=0)
+        for side in trimmed:
+            while m.any():
+                rows, cols = np.where(m.any(1))[0], np.where(m.any(0))[0]
+                if side in ("top", "bottom"):
+                    i = rows[0] if side == "top" else rows[-1]
+                    line, sel = black[i], m[i]
+                else:
+                    i = cols[0] if side == "left" else cols[-1]
+                    line, sel = black[:, i], m[:, i]
+                if not sel.any() or float(line[sel].mean()) < cfg["meter_strip_share"]:
+                    break
+                if side in ("top", "bottom"):
+                    m[i] = False
+                else:
+                    m[:, i] = False
+                trimmed[side] += 1
+            if trimmed[side]:  # the strip's soft edge
+                rows, cols = np.where(m.any(1))[0], np.where(m.any(0))[0]
+                k = int(cfg["meter_strip_margin"])
+                if side == "top" and len(rows):
+                    m[rows[0] : rows[0] + k] = False
+                elif side == "bottom" and len(rows):
+                    m[max(rows[-1] - k + 1, 0) : rows[-1] + 1] = False
+                elif side == "left" and len(cols):
+                    m[:, cols[0] : cols[0] + k] = False
+                elif side == "right" and len(cols):
+                    m[:, max(cols[-1] - k + 1, 0) : cols[-1] + 1] = False
+        diag.update(strips=trimmed)
+    if m.sum() < cfg["meter_min_share"] * m0.sum():
+        diag.update(used=False, reason="too little left")
+        return mask, diag
+    diag.update(used=True, mask_share_after=float(m.mean()))
+    return m, diag
 
 
 def _huber_location(c, k: float, iters: int = 10) -> np.ndarray:
@@ -772,6 +847,10 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
        the backlit weight needs a bright share; with ``span_d_g`` (the inversion's G density range, white point minus
        black point) below ``thin_span_max`` the positive ev is capped and blacks lowered (thin / night negatives,
        whose highlights the inversion already stretched to white).
+    10. **Metering frame and wider lowering** (T4l): the mask is cut to the film box inside an opaque holder (inset) and
+       off full black strips at its edges (``_metering_mask``); a frame whose textured cells are bright down to their
+       p25 may be lowered by more than ``ev_refine_down_max``; a G density range below ``min_span_d_g`` is left for
+       manual review.
 
     T4b (2026-10-24) replaced the T4 v2 contrast / shadow / paper-black rules, which compared ``-log10`` of the
     scene-linear positive (``_textured_cells``) with print-density thresholds and so lowered contrast to its floor
@@ -782,12 +861,18 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
         raise ValueError(f"mask shape {mask.shape} != image shape {P.shape[:2]}")
     look = look or load_look(cfg["look"])
     lp = dict(look["params"])
+    mask, metering = _metering_mask(P, mask, cfg)
     st = frame_stats(P, mask, cfg)
     out = dict(config=cfg["id"], config_rev=cfg.get("rev"), preset=cfg.get("preset"), look=look["id"],
                groups=["brightness", "wb", "tone", "sat"], stats=st, diagnostics={})
+    if metering is not None:
+        out["diagnostics"]["metering"] = metering
     reasons = []
     if st["range_stops"] < cfg["low_info_range_stops"]:
         reasons.append(f"low_information: tonal range {st['range_stops']:.2f} stops")
+    if cfg.get("min_span_d_g") is not None and span_d_g is not None and span_d_g < cfg["min_span_d_g"]:
+        # T4l (A1141, out of focus): the inversion stretched less than this G density range to the white point
+        reasons.append(f"low_information: density range {span_d_g:.2f} D < {cfg['min_span_d_g']:.2f} D")
     if st["p99"] > 2 ** cfg["wp_invalid_stops"]:
         reasons.append(f"white_point_invalid: p99 {np.log2(st['p99']):.2f} stops past the inversion white point")
     base_p = dict(
@@ -918,6 +1003,11 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
         base_p["ev"] = float(max(ev0, ev_up))
     elif med_tex > t_hi_eff:
         tgt, dmax = t_hi_eff - 0.02, float(cfg["ev_refine_down_max"])
+        if cfg.get("ev_down_adaptive"):
+            # T4l: textured shadows bright too (encoded p25 high) is a frame bright all over, not a sky over dark ground
+            q25_tex = _encoded_quantiles(tex_px, RenderParams(**base_p), qs=(25,))[0]
+            dmax += float(cfg["ev_down_extra"]) * _ramp(q25_tex, *cfg["ev_down_q25"])
+            refine.update(q25_tex=q25_tex, down_max=dmax)
         floor = min(ev0, max(ev0 - dmax, -dmax))
         base_p["ev"] = bisect_ev(floor, ev0,
                                  lambda ev: _encoded_quantiles(tex_px, RenderParams(**dict(base_p, ev=ev)), qs=(50,))[0] <= tgt)

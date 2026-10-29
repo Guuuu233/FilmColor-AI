@@ -32,11 +32,14 @@ class InversionParams:
     d_hi: tuple[float, float, float] = (1.0, 1.0, 1.0)   # white point density per channel
     gamma: float = 0.6                                    # film gamma used to set the log range R
     exposure: float = 1.0                                 # linear gain applied before display encoding
+    spike_clamp: tuple[float, float] | None = None        # T4l: (mid_max, margin) for clamp_spikes; None = off
 
     def __post_init__(self):
         # plain floats so the parameters serialise to the sidecar whatever the caller passed
         for name in ("base", "d_lo", "d_hi"):
             setattr(self, name, tuple(float(x) for x in getattr(self, name)))
+        if self.spike_clamp is not None:
+            self.spike_clamp = tuple(float(x) for x in self.spike_clamp)
         self.gamma, self.exposure = float(self.gamma), float(self.exposure)
         if not np.all(np.isfinite([*self.base, *self.d_lo, *self.d_hi, self.gamma, self.exposure])):
             raise ValueError("inversion parameters must be finite")
@@ -52,7 +55,12 @@ class InversionParams:
         return float((self.d_hi[1] - self.d_lo[1]) / self.gamma)
 
     def to_dict(self) -> dict:
-        return asdict(self) | {"log_range": self.log_range}
+        d = asdict(self) | {"log_range": self.log_range}
+        if self.spike_clamp is None:  # sidecars without the clamp keep their previous field set
+            del d["spike_clamp"]
+        else:
+            d["spike_clamp"] = list(self.spike_clamp)
+        return d
 
 
 def base_from_regions(rgb, regions) -> dict:
@@ -190,9 +198,61 @@ def blue_white_guard(d_hi, guard) -> tuple[tuple[float, float, float], dict]:
     return (d[0], d[1], d_b), dict(info, applied=True, d_hi_b_own=d[2], ratio_bg_used=d_b / d[1])
 
 
-def invert(D, p: InversionParams) -> np.ndarray:
+SELF_RATIO_BAND = (0.20, 0.75)  # T4l: midtones for self_ratio_white_point, as shares of the frame's own d_hi_G
+SELF_RATIO_MIN_PX = 500
+
+
+def self_ratio_white_point(d_hi, Dm, guard) -> tuple[tuple[float, float, float], dict]:
+    """T4l: a channel's white point collapsed against the frame's own midtones. ``Dm`` (n, 3): densities of the image
+    pixels; ``guard`` = (collapse, target). r_mid = median of D_c / D_G over the pixels with
+    SELF_RATIO_BAND[0] x d_hi_G <= D_G <= SELF_RATIO_BAND[1] x d_hi_G (all channels above base), the device's and film's
+    own channel ratio (camera scan of C-41 about 0.75 / 1.3, BlueNeg scanner DNG about 0.4-0.7 for B / G); a channel
+    whose white point ratio d_hi_c / d_hi_G is below collapse x r_mid (no white object: a warm ridge lacks blue, a
+    blue sky lacks red) is set to target x r_mid x d_hi_G. Fewer than SELF_RATIO_MIN_PX midtone pixels: unchanged."""
+    collapse, target = (float(x) for x in guard)
+    d = np.asarray(d_hi, np.float64)
+    lo, hi = SELF_RATIO_BAND[0] * d[1], SELF_RATIO_BAND[1] * d[1]
+    sel = (Dm[:, 1] >= lo) & (Dm[:, 1] <= hi) & (Dm[:, 0] > 0) & (Dm[:, 2] > 0)
+    info = dict(guard=[collapse, target], band=list(SELF_RATIO_BAND), n_mid=int(sel.sum()), applied=False)
+    if int(sel.sum()) < SELF_RATIO_MIN_PX:
+        return tuple(float(x) for x in d), info
+    m = Dm[sel].astype(np.float64)
+    r_mid = np.median(m / m[:, 1:2], axis=0)
+    r_hi = d / d[1]
+    low = r_hi < collapse * r_mid
+    low[1] = False
+    info.update(ratio_mid=[float(r_mid[0]), float(r_mid[2])], ratio_hi=[float(r_hi[0]), float(r_hi[2])])
+    if not low.any():
+        return tuple(float(x) for x in d), info
+    out = np.where(low, target * r_mid * d[1], d)
+    return tuple(float(x) for x in out), dict(info, applied=True, channels=[c for c, x in zip("RGB", low) if x],
+                                              d_hi_own=[float(x) for x in d])
+
+
+def clamp_spikes(s, clamp) -> tuple[np.ndarray, int]:
+    """T4l: single-channel spikes of the normalised density ``s`` (..., 3). Where the middle channel is at most
+    ``clamp[0]`` (not an opaque holder, which is dense in two or more channels and stays for ``holder.holder_mask``),
+    one channel is held to max(middle, 1) + ``clamp[1]``: a signal at or below the black level (blue behind the orange
+    mask, A1106) gives the density floor 6 D and a positive tens of thousands of times past white. Returns the clamped
+    array and the number of pixels changed."""
+    mid_max, margin = (np.float32(x) for x in clamp)
+    s_mid = np.sort(s, axis=-1)[..., 1:2]
+    bound = np.where(s_mid > mid_max, np.float32(np.inf), np.maximum(s_mid, np.float32(1.0)) + margin)
+    over = s > bound
+    if not over.any():
+        return s, 0
+    return np.minimum(s, bound), int(over.any(axis=-1).sum())
+
+
+def invert(D, p: InversionParams, stats: dict | None = None) -> np.ndarray:
+    """P from density ``D``; with ``p.spike_clamp``, single-channel spikes are clamped first (``clamp_spikes``; the
+    number of pixels changed is added to ``stats["spike_px"]`` when ``stats`` is given)."""
     lo, hi = np.asarray(p.d_lo, np.float32), np.asarray(p.d_hi, np.float32)
     s = (D - lo) / (hi - lo)
+    if p.spike_clamp is not None and s.ndim >= 1 and s.shape[-1] == 3:
+        s, n = clamp_spikes(s, p.spike_clamp)
+        if stats is not None:
+            stats["spike_px"] = stats.get("spike_px", 0) + n
     R = np.float32(p.log_range)
     floor = np.float32(10.0 ** -p.log_range)
     return (np.power(np.float32(10.0), R * (s - 1)) - floor) / (1 - floor)
@@ -237,13 +297,16 @@ class InversionResult:
 
 def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: float = 0.6,
                     exposure: float = 1.0, d_lo=None, d_hi=None, white_block: int | None = None,
-                    white_ratio=None, white_b_guard=None) -> InversionResult:
+                    white_ratio=None, white_b_guard=None, white_self_ratio=None,
+                    spike_clamp=None) -> InversionResult:
     """Full chain with automatic white point unless ``d_hi`` is given. ``mask`` selects image pixels
     used for the white point and the report (exclude borders, rebate, holder and saturated areas).
     ``white_block``: estimate the automatic white point on block means of that size (``block_white_point``)
     instead of single pixels (None, the default: single pixels, unchanged). ``white_ratio``: roll neutral density
     ratios (D_R / D_G, D_B / D_G) checked against the automatic white point (``neutral_ratio_white_point``).
-    ``white_b_guard``: (min_ratio, target_ratio, weight) for ``blue_white_guard`` on the automatic white point."""
+    ``white_b_guard``: (min_ratio, target_ratio, weight) for ``blue_white_guard`` on the automatic white point.
+    ``white_self_ratio``: (collapse, target) for ``self_ratio_white_point`` on the automatic white point (T4l).
+    ``spike_clamp``: (mid_max, margin) for ``clamp_spikes`` (T4l), kept in the parameters (replayed on export)."""
     if not np.all(np.isfinite(rgb)):
         raise ValueError("input image contains NaN or infinite values")
     if not np.all(np.isfinite(base)) or np.any(np.asarray(base) <= 0):
@@ -261,6 +324,9 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
         if white_ratio is not None:
             d_hi, ratio_info = neutral_ratio_white_point(d_hi, white_ratio)
             white_info = dict(white_info or dict(method="pixel", pct=white_pct), neutral_ratio=ratio_info)
+        if white_self_ratio is not None:
+            d_hi, self_info = self_ratio_white_point(d_hi, Dm, white_self_ratio)
+            white_info = dict(white_info or dict(method="pixel", pct=white_pct), self_ratio=self_info)
         if white_b_guard is not None:
             d_hi, guard_info = blue_white_guard(d_hi, white_b_guard)
             white_info = dict(white_info or dict(method="pixel", pct=white_pct), blue_guard=guard_info)
@@ -270,23 +336,28 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
             raise ValueError(f"no density above the black point in channel(s) {''.join(flat)} of the image "
                              "region: blank or unexposed frame, or wrong image region / film base")
     p = InversionParams(base=tuple(float(x) for x in base), d_lo=tuple(d_lo or (0.0, 0.0, 0.0)),
-                        d_hi=tuple(float(x) for x in d_hi), gamma=gamma, exposure=exposure)
+                        d_hi=tuple(float(x) for x in d_hi), gamma=gamma, exposure=exposure, spike_clamp=spike_clamp)
     # share of the whole image denser than the white point: large values flag opaque areas
     # (holder mask) or highlights outside the region used for the white point
     hi = np.asarray(p.d_hi, np.float32)
+    clamp_stats = {}
     if rgb.ndim == 3:
         P = np.empty(rgb.shape, np.float32)
         n_above = np.zeros(3, np.int64)
         for r0 in range(0, rgb.shape[0], CHUNK_ROWS):
             D = density(rgb[r0 : r0 + CHUNK_ROWS], base)
-            P[r0 : r0 + CHUNK_ROWS] = invert(D, p)
+            P[r0 : r0 + CHUNK_ROWS] = invert(D, p, clamp_stats)
             n_above += np.count_nonzero(D > hi, axis=(0, 1))
         above_white = [float(k / (rgb.shape[0] * rgb.shape[1])) for k in n_above]
     else:
         D = density(rgb, base)
-        P = invert(D, p)
+        P = invert(D, p, clamp_stats)
         above_white = [float(np.mean(D[..., c] > p.d_hi[c])) for c in range(3)]
     report = dict(white_pct=white_pct, range=range_report(Dm, invert(Dm, p), p), full_image_above_white=above_white)
     if white_info is not None:  # reports of the default single-pixel white point keep their previous field set
         report["white_point"] = white_info
+    if spike_clamp is not None:
+        n_px = rgb.shape[0] * rgb.shape[1] if rgb.ndim == 3 else int(np.prod(rgb.shape[:-1]))
+        report["spike_clamp"] = dict(clamp=list(p.spike_clamp), pixels=int(clamp_stats.get("spike_px", 0)),
+                                     share=float(clamp_stats.get("spike_px", 0) / max(n_px, 1)))
     return InversionResult(positive=P, params=p, report=report)
