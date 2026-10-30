@@ -14,11 +14,15 @@ HOLDER_GREY = 0.02   # sRGB-encoded value the holder is displayed with
 
 def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.ndarray:
     """Pixels of positive ``P`` (h, w, 3) above ``over`` in two channels and ``peak`` in one that connect to the image
-    edge (a highlight inside the frame does not)."""
+    edge (a highlight inside the frame does not). T4m: default dual threshold ((s1>2)&(s2>16))|((s1>1.25)&(s2>8))."""
     from scipy import ndimage
 
     s = np.sort(np.asarray(P), axis=-1)
-    hot = (s[..., 1] > over) & (s[..., 2] > peak)
+    s1, s2 = s[..., 1], s[..., 2]
+    if over == HOLDER_OVER and peak == HOLDER_PEAK:
+        hot = ((s1 > 2.0) & (s2 > 16.0)) | ((s1 > 1.25) & (s2 > 8.0))
+    else:
+        hot = (s1 > over) & (s2 > peak)
     if not hot.any():
         return hot
     lab, _ = ndimage.label(hot)
@@ -27,9 +31,20 @@ def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.n
 
 
 def film_box(holder: np.ndarray) -> list[int] | None:
-    """(top, left, height, width) of the pixels outside ``holder``, or None when the holder covers nothing."""
+    """(top, left, height, width) of the pixels outside ``holder``, or None when the holder covers nothing
+    or no valid film area remains (T4m: row/col share > 0.60 when holder.mean >= 0.15)."""
     if not holder.any():
         return None
     keep = ~holder
-    rows, cols = np.where(keep.any(1))[0], np.where(keep.any(0))[0]
+    if not keep.any():
+        return None
+    if float(holder.mean()) >= 0.15:
+        rows = np.where(keep.mean(axis=1) > 0.60)[0]
+        cols = np.where(keep.mean(axis=0) > 0.60)[0]
+        if not len(rows) or not len(cols):
+            rows, cols = np.where(keep.any(1))[0], np.where(keep.any(0))[0]
+    else:
+        rows, cols = np.where(keep.any(1))[0], np.where(keep.any(0))[0]
+    if not len(rows) or not len(cols):
+        return None
     return [int(rows[0]), int(cols[0]), int(rows[-1] - rows[0] + 1), int(cols[-1] - cols[0] + 1)]

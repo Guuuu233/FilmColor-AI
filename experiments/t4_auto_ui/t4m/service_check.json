@@ -1,0 +1,33 @@
+{
+  "url": "http://127.0.0.1:62872",
+  "sub_rolls": 6,
+  "flagged": 0,
+  "sample": "_DSF9239.RAF",
+  "ev": 0.5492,
+  "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 23562,
+    "blue_guard": {
+      "guard": [
+        1.06,
+        1.18,
+        0.65,
+        0.48
+      ],
+      "ratio_bg": 1.1593113474430081,
+      "applied": false,
+      "base_bg": 0.3115600334729296
+    },
+    "d_hi": [
+      0.5601370334625244,
+      0.6064634323120117,
+      0.7030799388885498
+    ]
+  },
+  "render_png_bytes": 3362409,
+  "render_png_sha256": "b3f4c6c3616115ab02f3b7119dac75e8d1768242ee4c2b3e347133111dca75ff",
+  "source_config_rev": "t4m-2026-10-30",
+  "source_thumb_rev": "t4m"
+}

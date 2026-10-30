@@ -121,3 +121,118 @@ def test_t4l_linearization_table_is_applied(tmp_path):
     write_dng(q, a, extratags=[(50712, "H", 256, lut[::-1].tolist(), True), (50717, "H", 1, 65535, True)])
     with pytest.raises(ValueError, match="LinearizationTable"):
         load_scanner(q)
+
+
+def test_t4m_interleaved_4ch_rgbi_compatibility(tmp_path):
+    """T4m: 4-channel RGBI linear DNG is accepted by _main_page/load_scanner; RGB signal, sat mask,
+    base estimation, and end-to-end convert match the 3-channel version identically."""
+    rgb, _ = scan()
+    p3 = tmp_path / "s3.dng"
+    write_dng(p3, rgb)
+
+    ir_ch = np.linspace(30000, 60000, rgb.shape[0] * rgb.shape[1], dtype=np.uint16).reshape(rgb.shape[:2])
+    rgbi = np.dstack([rgb, ir_ch])
+    p4 = tmp_path / "s4.dng"
+    write_dng(p4, rgbi)
+
+    assert is_scanner_dng(p4)
+    fr3 = load_scanner(p3)
+    fr4 = load_scanner(p4)
+
+    assert fr4.rgb.shape == (rgb.shape[0], rgb.shape[1], 3)
+    np.testing.assert_array_equal(fr4.rgb, fr3.rgb)
+    np.testing.assert_array_equal(fr4.sat, fr3.sat)
+    assert (fr4.black, fr4.white) == (fr3.black, fr3.white)
+
+    # Metadata records interleaved_4ch source
+    ir_meta = fr4.meta["infrared_layer"]
+    assert ir_meta is not None
+    assert ir_meta["source"] == "interleaved_4ch"
+    assert ir_meta["used"] == "no (recorded only)"
+    assert np.isclose(ir_meta["percentiles"]["50"], np.percentile(ir_ch[::8, ::8], 50))
+
+    # Base estimation matches identically
+    est3 = estimate_base_scanner(fr3)
+    est4 = estimate_base_scanner(fr4)
+    np.testing.assert_allclose(est4.rgb, est3.rgb)
+    assert est4.regions == est3.regions
+
+    # Convert matches identically
+    out3, sc3 = convert(p3, image_region=(20, 120, 200, 220))
+    out4, sc4 = convert(p4, image_region=(20, 120, 200, 220))
+    np.testing.assert_array_equal(out4, out3)
+    np.testing.assert_allclose(sc4["base"]["rgb_render"], sc3["base"]["rgb_render"])
+
+
+def test_t4m_interleaved_ir_does_not_affect_rgb_sat_or_base(tmp_path):
+    """T4m: extreme values in the 4th (IR) channel do not affect RGB saturation mask or base estimation."""
+    rgb, _ = scan()
+    rgb[10, 20, 0] = 65535  # exactly one saturated pixel in RGB
+    # IR channel fully saturated (65535) everywhere
+    rgbi = np.dstack([rgb, np.full(rgb.shape[:2], 65535, dtype=np.uint16)])
+    p = tmp_path / "sat_ir.dng"
+    write_dng(p, rgbi)
+
+    fr = load_scanner(p)
+    # fr.sat must only reflect RGB channels (exactly 1 saturated pixel, not the whole frame)
+    assert fr.sat.sum() == 1
+    assert fr.sat[10, 20]
+    assert fr.meta["infrared_layer"]["percentiles"]["50"] == 65535.0
+
+    est = estimate_base_scanner(fr)
+    np.testing.assert_allclose(est.rgb, BASE, rtol=0.01)
+
+
+def test_t4m_black_and_white_level_tags_4ch(tmp_path):
+    """T4m: 4-sample BlackLevel and WhiteLevel tags are accepted when uniform; non-uniform rejected."""
+    rgb, _ = scan()
+    rgbi = np.dstack([rgb, np.full(rgb.shape[:2], 50000, dtype=np.uint16)])
+    p = tmp_path / "levels4.dng"
+    write_dng(p, rgbi, extratags=[
+        (50714, "H", 4, [1000, 1000, 1000, 1000], True),
+        (50717, "H", 4, [60000, 60000, 60000, 60000], True),
+    ])
+    fr = load_scanner(p)
+    assert (fr.black, fr.white) == (1000.0, 60000.0)
+    np.testing.assert_allclose(fr.rgb, (rgb.astype(np.float32) - 1000) / 59000, atol=1e-6)
+
+    # Non-uniform BlackLevel must be rejected
+    p_bad = tmp_path / "bad_levels4.dng"
+    write_dng(p_bad, rgbi, extratags=[
+        (50714, "H", 4, [1000, 1000, 2000, 1000], True),
+        (50717, "H", 4, [60000, 60000, 60000, 60000], True),
+    ])
+    with pytest.raises(ValueError, match="per-sample"):
+        load_scanner(p_bad)
+
+
+def test_t4m_separate_ir_page_priority_over_interleaved(tmp_path):
+    """T4m: when both a separate 1-sample IR page and an interleaved 4th channel exist, the separate page takes priority."""
+    rgb, _ = scan()
+    rgbi = np.dstack([rgb, np.full(rgb.shape[:2], 20000, dtype=np.uint16)])  # channel 4 has 20000
+    irl = np.full(rgb.shape[:2], 55000, dtype=np.uint16)  # separate IR page has 55000
+    p = tmp_path / "both_ir.dng"
+    write_dng(p, rgbi, irl=irl)
+
+    fr = load_scanner(p)
+    ir_meta = fr.meta["infrared_layer"]
+    assert "source" not in ir_meta  # separate page uses new_subfile_type, not source=interleaved_4ch
+    assert "new_subfile_type" in ir_meta
+    assert np.isclose(ir_meta["percentiles"]["50"], 55000.0)
+
+
+def test_t4m_interleaved_4ch_linearization_table(tmp_path):
+    """T4m: LinearizationTable path works on 4-channel RGBI."""
+    rng = np.random.default_rng(42)
+    a4 = rng.integers(0, 256, (120, 160, 4), dtype=np.uint8)
+    lut = np.round(65535 * (np.arange(256) / 255.0) ** 2.2).astype(np.uint16)
+    p = tmp_path / "s8_4ch.dng"
+    write_dng(p, a4, extratags=[(50712, "H", 256, lut.tolist(), True), (50717, "H", 1, 65535, True)])
+
+    fr = load_scanner(p)
+    assert fr.white == 65535.0 and fr.meta["linearization_table_len"] == 256
+    np.testing.assert_allclose(fr.rgb, lut[a4[:, :, :3]].astype(np.float32) / 65535, atol=1e-6)
+    assert fr.meta["infrared_layer"]["source"] == "interleaved_4ch"
+    # IR stats reflect linearized samples
+    ir_linearized = lut[a4[::8, ::8, 3]]
+    assert np.isclose(fr.meta["infrared_layer"]["percentiles"]["50"], np.percentile(ir_linearized, 50))

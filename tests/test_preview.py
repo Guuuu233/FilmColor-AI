@@ -122,3 +122,65 @@ def test_t4i_holder_mask_is_the_edge_connected_far_past_white_region():
     assert not m[:, 15:80].any()
     assert film_box(m) == [0, 15, 60, 65]
     assert not holder_mask(np.full((20, 20, 3), 0.5, np.float32)).any() and film_box(np.zeros((4, 4), bool)) is None
+
+
+def test_t4m_holder_dual_threshold_explicit_threshold_and_film_box():
+    """T4m: default dual threshold ((s1>2)&(s2>16))|((s1>1.25)&(s2>8)), explicit non-default thresholds,
+    film_box row/col ratio selection when holder >= 15%, fallback on full holder / empty rows, and
+    preview _paint_holder paints outer frame."""
+    from filmcolor.holder import HOLDER_GREY, film_box, holder_mask
+
+    # 1. Dual threshold default: second channel > 1.25 and peak > 8 is recognized if edge-connected
+    P = np.full((100, 100, 3), 0.3, np.float32)
+    P[:, :20] = (10.0, 1.5, 0.5)  # sorted: s1=1.5 > 1.25, s2=10.0 > 8.0, edge connected
+    m_default = holder_mask(P)
+    assert m_default[:, :20].all()
+
+    # With explicit non-default threshold (peak=17.0), this region (s1=1.5, s2=10.0) is NOT detected
+    m_explicit = holder_mask(P, peak=17.0)
+    assert not m_explicit.any()
+
+    # 2. Internal highlight not mistaken even if matching dual threshold or peak threshold
+    P_high = np.full((100, 100, 3), 0.3, np.float32)
+    P_high[40:60, 40:60] = (50.0, 20.0, 5.0)  # inside highlight, not edge-connected
+    assert not holder_mask(P_high).any()
+
+    # 3. Sprocket holes / holder frame and film_box selection with >60% keep ratio
+    # Simulate a 100x100 frame with holder on left/right (columns 0..15 and 85..100, image keep ratio 70% > 60%)
+    # plus isolated sprocket hole intrusions into holder (columns 13..14 have keep in only 20 rows -> keep ratio 20% <= 60%)
+    holder = np.zeros((100, 100), dtype=bool)
+    holder[:, :15] = True
+    holder[:, 85:] = True
+    holder[:, 13:15] = True
+    holder[40:60, 13:15] = False  # 20% keep in cols 13..14
+    assert holder.mean() >= 0.15
+    fb = film_box(holder)
+    assert fb == [0, 15, 100, 70]  # cols 13..14 excluded because keep col ratio = 0.20 <= 0.60
+
+    # 4. Fallback boundaries: all holder -> None
+    all_holder = np.ones((50, 50), dtype=bool)
+    assert film_box(all_holder) is None
+
+    # Fallback when keep exists but no row or col exceeds 0.60 (e.g. sparse keep)
+    sparse = np.ones((100, 100), dtype=bool)
+    sparse[::2, ::2] = False  # keep is 25% across all rows/cols, mean in each row/col is 0.5 <= 0.60
+    fb_sparse = film_box(sparse)
+    assert fb_sparse is not None  # falls back without IndexError
+    assert fb_sparse == [0, 0, 99, 99]
+
+    # 5. Preview._paint_holder: outer frame painted with HOLDER_GREY
+    from pathlib import Path
+    from filmcolor.preview import Preview
+    dummy_pos = np.full((100, 100, 3), 0.5, np.float32)
+    dummy_mask = np.ones((100, 100), dtype=bool)
+    pv = Preview(path=Path("dummy"), sha256="abc", factor=1, positive=dummy_pos, mask=dummy_mask,
+                 image_region=(0, 0, 100, 100), region_source="test", film="color", base_info={},
+                 inversion={}, white_pct=99.9, report={}, base_inside_image=None, full_shape=(100, 100),
+                 holder=holder)
+    e = np.full((100, 100, 3), 0.5, np.float32)
+    painted = pv._paint_holder(e)
+    # Both holder and outer film_box (e.g. cols 13..14) should be HOLDER_GREY
+    assert np.all(painted[:, :15] == np.float32(HOLDER_GREY))
+    assert np.all(painted[:, 85:] == np.float32(HOLDER_GREY))
+    # Inside film box stays 0.5
+    assert np.all(painted[:, 15:85] == 0.5)

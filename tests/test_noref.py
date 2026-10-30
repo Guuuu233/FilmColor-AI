@@ -721,9 +721,8 @@ def test_t4k_backlit_lift_needs_a_bright_background():
 
 
 def test_t4k_thin_negative_caps_positive_ev_and_lowers_blacks():
-    """T4k (A224, night frames): with the inversion's G density range span_d_g below thin_span_max and few bright
-    pixels, positive ev is at most max(0, (span - 0.42) / 0.20) x 0.60 and, below 0.52, blacks is lowered by
-    clip((0.52 - span) x 0.8, 0, 0.12); a normal range or no span given leaves the estimate unchanged."""
+    """Thin-negative cap and black lowering use the configured span thresholds; a normal range or no span given
+    leaves the estimate unchanged. T4m permits negative EV and deeper blacks on very thin negatives."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3
 
     P = scene(median=0.05, stops=4.0, seed=82)
@@ -733,7 +732,7 @@ def test_t4k_thin_negative_caps_positive_ev_and_lowers_blacks():
     cap = (0.45 - NOREF_V3["thin_span_zero"]) / NOREF_V3["thin_span_ramp"] * NOREF_V3["thin_ev_max"]
     assert free["params"]["ev"] > 1.0 and "thin_negative" not in free["diagnostics"]
     assert thin["diagnostics"]["thin_negative"]["applied"] and thin["params"]["ev"] == pytest.approx(cap, abs=1e-4)
-    assert thin["params"]["blacks"] == pytest.approx(-(0.52 - 0.45) * NOREF_V3["thin_blacks_gain"], abs=1e-4)
+    assert thin["params"]["blacks"] == pytest.approx(-(NOREF_V3["thin_blacks_span"] - 0.45) * NOREF_V3["thin_blacks_gain"], abs=1e-4)
     assert not wide["diagnostics"]["thin_negative"]["applied"] and wide["params"] == free["params"]
     bright = estimate_params_v3(scene(median=0.5, stops=3.0, seed=83), None, NOREF_V3, span_d_g=0.45)
     assert bright["diagnostics"]["tone_pixels"]["bright_share"] >= NOREF_V3["thin_bright_share_max"]
@@ -781,6 +780,44 @@ def test_t4l_ev_lowering_widens_on_frames_bright_all_over():
     high = estimate_params_v3(P, None, dict(NOREF_V3, ev_down_adaptive=True, ev_down_q25=(0.95, 0.99)))  # p25 below ramp
     assert high["diagnostics"]["ev_refine"]["down_max"] == pytest.approx(NOREF_V3["ev_refine_down_max"])
     assert high["params"]["ev"] == off["params"]["ev"]
+
+
+def test_t4m_very_thin_negative_darkens_without_a_backlit_lift():
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    P = backlit_scene(fg=0.02, sky=0.30, seed=91)
+    off = estimate_params_v3(P, None, dict(NOREF_V3, thin_neg_check=False), span_d_g=0.30)
+    assert off["diagnostics"]["backlit_check"]["weight"] > 0
+    on = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.30)
+    assert on["diagnostics"]["thin_negative"]["applied"]
+    assert on["params"]["ev"] <= NOREF_V3["thin_ev_min"] + 1e-4
+    assert on["params"]["blacks"] == pytest.approx(-NOREF_V3["thin_blacks_max"])
+    assert on["diagnostics"]["backlit_check"]["thin_suppressed"]
+    assert on["diagnostics"]["backlit_check"]["weight"] == 0 and "backlit_midtone" not in on["flags"]
+    assert on["params"]["midtone"] == NOREF_V3["base_midtone"]
+    wide = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.70)
+    assert wide["params"] == off["params"]  # ordinary dense negatives keep the backlit treatment
+
+
+def test_t4m_strong_cyan_without_neutrals_gets_a_confidence_floor():
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    P = scene(cast=(-1.4, -0.3), chroma=0.25, seed=92).reshape(-1, 3)
+    off_cfg = dict(NOREF_V3, wb_v3_cyan_conf_check=False)
+    off = estimate_wb_v3(P, off_cfg)
+    on = estimate_wb_v3(P, NOREF_V3)
+    assert not on["diagnostics"]["cool_cast"]
+    assert all(z["narrow_share"] < 0.04 for z in on["diagnostics"]["zones"])
+    assert on["chroma"][0] < -0.85 and on["diagnostics"]["cyan_conf_boost"]
+    assert off["confidence"] < on["confidence"]
+    assert on["confidence"] == pytest.approx(0.72)
+    assert on["temp"] > off["temp"]
+    for cast in ((-0.2, -0.1), (-0.5, -0.3), (0.9, -0.3)):
+        px = scene(cast=cast, seed=93).reshape(-1, 3)
+        a, b = estimate_wb_v3(px, NOREF_V3), estimate_wb_v3(px, off_cfg)
+        assert "cyan_conf_boost" not in a["diagnostics"] and a == b
+    cool = estimate_wb_v3(cool_cast_scene(), NOREF_V3)
+    assert cool["diagnostics"]["cool_cast"] and "cyan_conf_boost" not in cool["diagnostics"]
 
 
 def test_t4l_too_short_a_density_range_is_left_for_manual_review():

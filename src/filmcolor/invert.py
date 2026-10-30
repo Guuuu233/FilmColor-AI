@@ -183,15 +183,22 @@ def neutral_ratio_white_point(d_hi, ratio, *, anchor: float = 0.7, scale: float 
     return out, dict(info, applied=True, ratio_used=[float(r_eff[0]), float(r_eff[2])], d_hi_own=[float(x) for x in d])
 
 
-def blue_white_guard(d_hi, guard) -> tuple[tuple[float, float, float], dict]:
-    """T4k: a frame whose densest areas are warm (sunlit ridge, no white object) has a blue white point too close to
-    green, so every blue midtone is stretched (DSC_3827: d_hi_B / d_hi_G 1.02, the roll's frames about 1.35).
-    ``guard`` = (min_ratio, target_ratio, weight): when d_hi_B / d_hi_G < min_ratio, d_hi_B moves ``weight`` of the
-    way to max(d_hi_B, target_ratio x d_hi_G). Colour film only (a B&W positive is neutral by construction)."""
-    lo, target, weight = (float(x) for x in guard)
+def blue_white_guard(d_hi, guard, base=None) -> tuple[tuple[float, float, float], dict]:
+    """T4k: when d_hi_B / d_hi_G < min_ratio, d_hi_B moves ``weight`` of the way to
+    max(d_hi_B, target_ratio x d_hi_G). ``guard`` = (min_ratio, target_ratio, weight), optionally followed by
+    max_base_bg (T4m): only bases with B/G below that threshold pass the orange-mask gate. Colour film only."""
+    values = [float(x) for x in guard]
+    if len(values) not in (3, 4):
+        raise ValueError("blue white guard needs 3 or 4 values")
+    lo, target, weight = values[:3]
     d = [float(x) for x in d_hi]
     ratio = d[2] / d[1]
-    info = dict(guard=[lo, target, weight], ratio_bg=ratio, applied=False)
+    info = dict(guard=values, ratio_bg=ratio, applied=False)
+    if len(values) == 4 and base is not None:
+        bg = float(base[2] / max(base[1], EPS))
+        info["base_bg"] = bg
+        if bg >= values[3]:
+            return tuple(d), info
     if ratio >= lo:
         return tuple(d), info
     d_b = d[2] + weight * (max(d[2], target * d[1]) - d[2])
@@ -304,7 +311,7 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
     ``white_block``: estimate the automatic white point on block means of that size (``block_white_point``)
     instead of single pixels (None, the default: single pixels, unchanged). ``white_ratio``: roll neutral density
     ratios (D_R / D_G, D_B / D_G) checked against the automatic white point (``neutral_ratio_white_point``).
-    ``white_b_guard``: (min_ratio, target_ratio, weight) for ``blue_white_guard`` on the automatic white point.
+    ``white_b_guard``: (min_ratio, target_ratio, weight[, max_base_bg]) for ``blue_white_guard`` on the automatic white point.
     ``white_self_ratio``: (collapse, target) for ``self_ratio_white_point`` on the automatic white point (T4l).
     ``spike_clamp``: (mid_max, margin) for ``clamp_spikes`` (T4l), kept in the parameters (replayed on export)."""
     if not np.all(np.isfinite(rgb)):
@@ -328,7 +335,7 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
             d_hi, self_info = self_ratio_white_point(d_hi, Dm, white_self_ratio)
             white_info = dict(white_info or dict(method="pixel", pct=white_pct), self_ratio=self_info)
         if white_b_guard is not None:
-            d_hi, guard_info = blue_white_guard(d_hi, white_b_guard)
+            d_hi, guard_info = blue_white_guard(d_hi, white_b_guard, base=base)
             white_info = dict(white_info or dict(method="pixel", pct=white_pct), blue_guard=guard_info)
         lo = d_lo or (0.0, 0.0, 0.0)
         flat = [c for c, hi, l in zip("RGB", d_hi, lo) if hi <= l]

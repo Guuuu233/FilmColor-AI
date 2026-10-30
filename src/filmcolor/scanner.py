@@ -1,4 +1,4 @@
-"""Film-scanner input: linear RGB DNG (DNG PhotometricInterpretation LinearRaw, 3 samples), as
+"""Film-scanner input: linear RGB / RGBI DNG (DNG PhotometricInterpretation LinearRaw, 3 or 4 samples), as
 written by SilverFast for the Plustek OpticFilm scans of BlueNeg. A second input path next to the
 camera RAW path (filmcolor.raw / rawpy_io); both hand the shared inversion a linear, black-subtracted
 (H, W, 3) transmission image scaled to the white level, a saturation mask and a film base.
@@ -10,8 +10,8 @@ Signal definition (verified on data/raw/public/blueneg samples, see data/manifes
 Not verified: whether the scanner software applied infrared dust removal or other processing to
 the RGB before writing (its job settings are recorded in the sidecar, not interpreted). The
 declared ColorMatrix1 is the standard XYZ->linear sRGB matrix, i.e. a nominal label, not a
-calibration. A one-sample infrared layer (transparency mask) is kept out of the colour path; only
-its statistics are recorded.
+calibration. A one-sample infrared layer (transparency mask) or an interleaved fourth infrared
+channel is kept out of the colour path; only its statistics are recorded.
 """
 from __future__ import annotations
 
@@ -54,13 +54,13 @@ def _tag(page, name, default=None):
 
 
 def _main_page(tf):
-    cands = [p for p in _all_pages(tf) if p.photometric == LINEAR_RAW and p.samplesperpixel == 3
+    cands = [p for p in _all_pages(tf) if p.photometric == LINEAR_RAW and p.samplesperpixel in (3, 4)
              and not (_tag(p, "NewSubfileType", 0) or 0) & 1]
     return max(cands, key=lambda p: p.shape[0] * p.shape[1]) if cands else None
 
 
 def is_scanner_dng(path) -> bool:
-    """True for a DNG whose main image is 3-sample LinearRaw (no CFA)."""
+    """True for a DNG whose main image is 3- or 4-sample LinearRaw (no CFA)."""
     if Path(path).suffix.lower() != ".dng":
         return False
     with tifffile.TiffFile(path) as tf:
@@ -97,7 +97,7 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
     with tifffile.TiffFile(path) as tf:
         main = _main_page(tf)
         if main is None:
-            raise ValueError(f"{path.name}: no 3-sample LinearRaw image (not a linear scanner DNG)")
+            raise ValueError(f"{path.name}: no 3- or 4-sample LinearRaw image (not a linear scanner DNG)")
         lut_tag = main.tags.get("LinearizationTable")
         lut = None
         if lut_tag is not None:
@@ -106,8 +106,9 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
                 raise ValueError(f"{path.name}: LinearizationTable must be finite and non-decreasing")
         bits = _tag(main, "BitsPerSample")
         bits = int(np.atleast_1d(bits)[0])
-        black = _level(_tag(main, "BlackLevel"), 3, "BlackLevel")
-        white = _level(_tag(main, "WhiteLevel"), 3, "WhiteLevel")
+        n_samples = main.samplesperpixel
+        black = _level(_tag(main, "BlackLevel"), n_samples, "BlackLevel")
+        white = _level(_tag(main, "WhiteLevel"), n_samples, "WhiteLevel")
         black = 0.0 if black is None else black
         white = float(2 ** bits - 1) if white is None else white
         if white <= black:
@@ -125,6 +126,11 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
             ir_stats = dict(new_subfile_type=int(_tag(ir[0], "NewSubfileType", 0) or 0),
                             percentiles={str(q): float(np.percentile(m, q)) for q in (1, 5, 50, 95, 99)},
                             used="no (recorded only)")
+        elif a.ndim == 3 and a.shape[2] == 4:
+            m = a[::8, ::8, 3].astype(np.float64)
+            ir_stats = dict(source="interleaved_4ch",
+                            percentiles={str(q): float(np.percentile(m, q)) for q in (1, 5, 50, 95, 99)},
+                            used="no (recorded only)")
         meta = dict(make=_tag(ifd0, "Make"), model=_tag(ifd0, "Model"), software=_tag(ifd0, "Software"),
                     unique_camera_model=_tag(ifd0, "UniqueCameraModel"),
                     color_matrix1=list(_tag(ifd0, "ColorMatrix1") or []) or None,
@@ -134,11 +140,12 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
                     infrared_layer=ir_stats, scanner_settings=silverfast_settings(_tag(ifd0, "XMP")))
         if lut is not None:  # files without a table keep their previous field set
             meta["linearization_table_len"] = int(lut.size)
-    if a.ndim != 3 or a.shape[2] != 3:
+    if a.ndim != 3 or a.shape[2] not in (3, 4):
         raise ValueError(f"{path.name}: unexpected image shape {a.shape}")
-    sat = np.any(a >= white, -1)
-    rgb = ((a.astype(np.float32) - np.float32(black)) / np.float32(white - black))
-    del a
+    rgb_raw = a[:, :, :3]
+    sat = np.any(rgb_raw >= white, -1)
+    rgb = ((rgb_raw.astype(np.float32) - np.float32(black)) / np.float32(white - black))
+    del a, rgb_raw
     if not np.all(np.isfinite(rgb)):
         raise ValueError(f"{path.name}: non-finite samples")
     return ScannerFrame(rgb=rgb, sat=sat, black=black, white=white, meta=meta)

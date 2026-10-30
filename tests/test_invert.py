@@ -199,6 +199,30 @@ def test_t4k_blue_white_guard_lifts_a_collapsed_blue_white_point():
     assert given.params.d_hi == (0.8, 1.0, 1.02)  # a given (replayed) white point is never changed
 
 
+def test_t4m_blue_white_guard_is_gated_by_the_orange_base_and_replayed_once():
+    from filmcolor.invert import blue_white_guard
+
+    guard = (1.06, 1.18, 0.65, 0.48)
+    d = (0.8, 1.0, 1.02)
+    base = np.array((0.8, 0.5, 0.2), np.float32)
+    lifted, info = blue_white_guard(d, guard, base=base)
+    assert info["applied"] and info["base_bg"] == pytest.approx(0.4)
+    assert lifted == pytest.approx((0.8, 1.0, 1.124))
+    for bg in (0.48, 0.65, 1.05):
+        unchanged, diag = blue_white_guard(d, guard, base=(0.8, 1.0, bg))
+        assert unchanged == d and not diag["applied"]
+    unchanged, diag = blue_white_guard((0.8, 1.0, 1.06), guard, base=base)
+    assert unchanged[2] == 1.06 and not diag["applied"]
+    assert blue_white_guard(d, guard[:3], base=(1, 1, 1))[1]["applied"]  # legacy three-value guard
+    rgb = base * 10.0 ** -np.array([[[0.1, 0.2, 0.3], list(d)]], np.float32)
+    result = invert_negative(rgb, base, white_pct=100, white_b_guard=guard)
+    assert result.report["white_point"]["blue_guard"]["applied"]
+    assert result.params.d_hi == pytest.approx(lifted, abs=1e-5)
+    replay = invert_negative(rgb, base, d_hi=result.params.d_hi, white_b_guard=guard)
+    np.testing.assert_array_equal(result.positive, replay.positive)
+    assert "white_point" not in replay.report
+
+
 def test_t4l_spike_clamp_holds_single_channel_spikes_and_keeps_the_holder():
     """T4l (A1106: blue at or below the black level behind the orange mask -> density floor 6 D -> positive ~36 000 x
     white): where the middle channel's normalised density is at most mid_max, one channel is held to max(middle, 1) +

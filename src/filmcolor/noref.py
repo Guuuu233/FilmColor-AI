@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4l-2026-10-29",          # T4l: metering inside the film box and off full black strips, wider ev lowering
+    rev="t4m-2026-10-30",          # T4m: thin-negative darkening without backlit lift, strong cyan confidence floor;
+                                   # T4l: metering inside the film box and off full black strips, wider ev lowering
                                    # on frames bright all over, too short a density range for manual review;
                                    # T4k: thin-negative ev cap, warm-scene cooling damped, green tint countered,
                                    # cool mid greys keep the grey world undamped (the task list's rebate filter,
@@ -431,12 +432,13 @@ NOREF_V3 = dict(
     # T4k (off by default: 0 better / 2 worse): the backlit weight is multiplied by ramp(bright share;
     # backlit_sky_share_lo, backlit_min_sky_share)
     backlit_sky_check=False, backlit_sky_share_lo=0.04, backlit_min_sky_share=0.12,
-    # T4k: a thin negative (G density range of the inversion below thin_span_max and bright share below
-    # thin_bright_share_max: its highlights were already stretched to the white point) gets a positive ev of at most
-    # max(0, (span - thin_span_zero) / thin_span_ramp) x thin_ev_max; below thin_blacks_span, blacks is lowered by
-    # clip((thin_blacks_span - span) x thin_blacks_gain, 0, thin_blacks_max)
-    thin_neg_check=True, thin_span_max=0.62, thin_bright_share_max=0.35, thin_span_zero=0.42, thin_span_ramp=0.20,
-    thin_ev_max=0.60, thin_blacks_span=0.52, thin_blacks_gain=0.8, thin_blacks_max=0.12,
+    # T4m: a thin negative (G density range below thin_span_max and few bright pixels) gets ev capped at
+    # clip((span - thin_span_zero) / thin_span_ramp x thin_ev_max, thin_ev_min, thin_ev_max), including negative ev;
+    # below thin_blacks_span, blacks is lowered by clip((thin_blacks_span - span) x thin_blacks_gain, 0, thin_blacks_max).
+    # When applied below thin_suppress_backlit_span, the backlit lift is suppressed (its whites came from stretching).
+    thin_neg_check=True, thin_span_max=0.62, thin_bright_share_max=0.42, thin_span_zero=0.46, thin_span_ramp=0.16,
+    thin_ev_min=-0.45, thin_ev_max=0.60, thin_blacks_span=0.56, thin_blacks_gain=1.0, thin_blacks_max=0.20,
+    thin_suppress_backlit_span=0.58,
     # T4l metering frame (_metering_mask): with an opaque holder covering >= meter_holder_min_share of the frame, the
     # mask is cut to the film box (holder.film_box) inset by meter_box_inset of its height / width on each side;
     # then rows / columns at the mask's edges with >= meter_strip_share of their mask pixels at max channel <=
@@ -485,6 +487,8 @@ NOREF_V3 = dict(
     wb_v3_cool_cast_check=True,
     wb_v3_cool_z0=(-0.05, 0.05), wb_v3_cool_z1=(-0.10, 0.10), wb_v3_cool_gw=(-0.20, 0.25),
     wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80, wb_v3_cast_strength=0.80,
+    # T4m: neither zone has neutral evidence and the combined log2 R/G is strongly negative: confidence at least this
+    wb_v3_cyan_conf_check=True, wb_v3_cyan_narrow_max=0.04, wb_v3_cyan_r_max=-0.85, wb_v3_cyan_min_conf=0.72,
     wb_v3_cast_max_temp=None,      # T4k: a cool-cast frame's temp at most this (0.38 measured: _DSF8948 8.17 -> 9.21);
                                    # None = up to wb_max_shift (T4j)
     # T4k: mid-grey zone and grey world both strongly cool (log2 R/G below [0], B/G above [1] of wb_v3_undamp_z1 /
@@ -795,6 +799,11 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     if cool_cast:
         conf = max(conf, float(cfg["wb_v3_cast_conf"]))
         strength = cfg["wb_v3_cast_strength"]
+    elif (cfg.get("wb_v3_cyan_conf_check") and len(diag["zones"]) == 2
+          and all(z["narrow_share"] < cfg["wb_v3_cyan_narrow_max"] for z in diag["zones"])
+          and est[0] < cfg["wb_v3_cyan_r_max"]):
+        conf = max(conf, float(cfg["wb_v3_cyan_min_conf"]))
+        diag["cyan_conf_boost"] = True
     temp, tint = wb_from_chroma(strength * conf * est)
     diag["temp_tint_raw"] = [float(temp), float(tint)]
     # T4k: cooling a warm scene (warm wall, lamp light) is damped; a correction against green is strengthened
@@ -846,8 +855,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
        saturation, vibrance, blacks, colour offsets, camera matrix share, chroma_preserve); steps 1-7 are the same.
     9. **Borders and thin negatives** (T4k): cells and pixels on black rebate / gaps between frames are not metered;
        the backlit weight needs a bright share; with ``span_d_g`` (the inversion's G density range, white point minus
-       black point) below ``thin_span_max`` the positive ev is capped and blacks lowered (thin / night negatives,
-       whose highlights the inversion already stretched to white).
+       black point) below ``thin_span_max`` the ev is capped and blacks lowered (thin / night negatives,
+       whose highlights the inversion already stretched to white). T4m permits a negative cap and suppresses the
+       backlit lift below ``thin_suppress_backlit_span``.
     10. **Metering frame and wider lowering** (T4l): the mask is cut to the film box inside an opaque holder (inset) and
        off full black strips at its edges (``_metering_mask``); a frame whose textured cells are bright down to their
        p25 may be lowered by more than ``ev_refine_down_max``; a G density range below ``min_span_d_g`` is left for
@@ -1016,12 +1026,14 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
     refine.update(ev=base_p["ev"], med_tex_after=_encoded_quantiles(tex_px, RenderParams(**base_p), qs=(50,))[0])
     out["diagnostics"]["ev_refine"] = refine
 
-    # 4a. Thin negative (T4k): the inversion stretched a short G density range (night, underexposed) to the white point
-    #     already; more positive ev on top lifts the whole frame to grey
+    # 4a. Thin negative: the inversion stretched a short G density range (night, underexposed) to the white point
+    #     already; T4m lets the cap go negative to darken very thin negatives
+    thin = {}
     if cfg.get("thin_neg_check") and span_d_g is not None:
         thin = dict(span_d_g=float(span_d_g), bright_share=bright_share, applied=False)
         if span_d_g < cfg["thin_span_max"] and bright_share < cfg["thin_bright_share_max"]:
-            cap = max(0.0, (span_d_g - cfg["thin_span_zero"]) / cfg["thin_span_ramp"]) * cfg["thin_ev_max"]
+            cap = float(np.clip((span_d_g - cfg["thin_span_zero"]) / cfg["thin_span_ramp"] * cfg["thin_ev_max"],
+                                cfg.get("thin_ev_min", 0.0), cfg["thin_ev_max"]))
             thin.update(applied=True, ev_cap=float(cap), ev_before=base_p["ev"])
             base_p["ev"] = float(min(base_p["ev"], cap))
             if span_d_g < cfg["thin_blacks_span"]:
@@ -1044,6 +1056,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
         # T4k: a dark foreground needs a bright background to be backlit (_DSF9239: black frame gaps alone gave p25)
         w_bl *= _ramp(bright_share, cfg["backlit_sky_share_lo"], cfg["backlit_min_sky_share"])
         out["diagnostics"]["backlit_check"].update(weight=w_bl, bright_share=bright_share)
+    if thin.get("applied") and span_d_g < cfg.get("thin_suppress_backlit_span", 0.58):
+        out["diagnostics"]["backlit_check"].update(thin_suppressed=True, weight_before_thin=w_bl, weight=0.0)
+        w_bl = 0.0
     backlit = w_bl > 0
     if backlit:
         base_p["shoulder"] = min(float(cfg["backlit_shoulder_cap"]),

@@ -59,6 +59,14 @@ class Preview:
     def _paint_holder(self, e: np.ndarray) -> np.ndarray:
         if self.holder is not None and self.holder.any():
             e[self.holder] = np.float32(HOLDER_GREY)
+            if float(self.holder.mean()) >= 0.15:
+                fb = film_box(self.holder)
+                if fb is not None:
+                    t, l, h, w = fb
+                    outer = np.ones(e.shape[:2], dtype=bool)
+                    outer[t:t + h, l:l + w] = False
+                    if outer.any():
+                        e[outer] = np.float32(HOLDER_GREY)
         return e
 
     def render_crop(self, region, params=None) -> np.ndarray:

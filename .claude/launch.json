@@ -1,0 +1,21 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "FilmColor",
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": [
+        "FILMCOLOR_DATA_ROOT=/Volumes/waizhiyingpan/filmcolor_data",
+        "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python",
+        "-I",
+        "-m",
+        "filmcolor.app",
+        "--root",
+        "data/raw/public/nlp_official",
+        "--port",
+        "62872"
+      ],
+      "port": 62872
+    }
+  ]
+}
