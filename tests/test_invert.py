@@ -294,3 +294,102 @@ def test_t4l_self_ratio_white_point_lifts_only_a_channel_collapsed_against_its_o
     assert d_s == (0.60, 1.0, 0.35) and not info_s["applied"]
     few = self_ratio_white_point((0.75, 1.0, 0.91), camera[:100], (0.78, 0.85))[1]
     assert not few["applied"] and few["n_mid"] < 500
+
+
+def test_t4o_block_white_point_excludes_edge_connected_opaque_holder():
+    """T4o: when initial d_hi_G > 1.80, opaque holder connected to any of the 4 grid edges (middle > 1.85,
+    max > 2.10) dilated by 2 blocks is excluded from ok blocks; recalculates pct white point and logs excluded blocks."""
+    from filmcolor.invert import MIN_WHITE_BLOCKS, block_white_point
+
+    block = 16
+    h, w = 512, 512
+    rgb = np.zeros((h, w, 3), np.float32)
+    D_scene = np.array([0.8, 1.0, 1.2], np.float32)
+    rgb[:] = BASE * (10.0 ** -D_scene)
+
+    # Wide holder on top 8 rows of blocks (rows 0:128)
+    D_holder = np.array([2.0, 1.95, 2.3], np.float32)
+    rgb[:128, :] = BASE * (10.0 ** -D_holder)
+
+    # Central mask (rows 64:448, cols 64:448): spans 24x24 = 576 blocks, including 4 rows of holder
+    mask = np.zeros((h, w), bool)
+    mask[64:448, 64:448] = True
+
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+    assert info["holder_blocks_excluded"] == 144  # 6 rows (4 in holder + 2 dilated) * 24 cols
+    assert info["n_blocks"] == 432  # 576 - 144 >= MIN_WHITE_BLOCKS
+    assert d_hi[1] < 1.5
+    np.testing.assert_allclose(d_hi, D_scene, atol=1e-5)
+
+
+def test_t4o_block_white_point_keeps_isolated_internal_high_density():
+    """T4o: high-density blocks in the frame interior not connected to the image boundary are not excluded."""
+    from filmcolor.invert import block_white_point
+
+    block = 16
+    h, w = 512, 512
+    rgb = np.zeros((h, w, 3), np.float32)
+    D_scene = np.array([0.8, 1.0, 1.2], np.float32)
+    rgb[:] = BASE * (10.0 ** -D_scene)
+
+    # Isolated high density in center (rows 256:288, cols 256:288): 2x2 blocks
+    D_high = np.array([2.0, 1.95, 2.3], np.float32)
+    rgb[256:288, 256:288] = BASE * (10.0 ** -D_high)
+
+    mask = np.zeros((h, w), bool)
+    mask[64:448, 64:448] = True
+
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+    assert "holder_blocks_excluded" not in info
+    assert info["n_blocks"] == 576
+    np.testing.assert_allclose(d_hi, D_high, atol=1e-5)
+
+
+def test_t4o_block_white_point_gated_by_d_hi_g():
+    """T4o: when initial d_hi_G <= 1.80, the grid search is bypassed even if edge holder blocks exist."""
+    from filmcolor.invert import block_white_point
+
+    block = 16
+    h, w = 512, 512
+    rgb = np.zeros((h, w, 3), np.float32)
+    D_scene = np.array([0.8, 1.0, 1.2], np.float32)
+    rgb[:] = BASE * (10.0 ** -D_scene)
+
+    # Edge holder outside the mask: rows 0:32 (2 rows of blocks)
+    D_holder = np.array([2.0, 1.95, 2.3], np.float32)
+    rgb[:32, :] = BASE * (10.0 ** -D_holder)
+
+    # Mask only covers central rows 64:448 where D_G is 1.0 <= 1.80
+    mask = np.zeros((h, w), bool)
+    mask[64:448, 64:448] = True
+
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+    assert "holder_blocks_excluded" not in info
+    assert d_hi[1] == 1.0
+    assert info["n_blocks"] == 576
+
+
+def test_t4o_block_white_point_remaining_blocks_below_min_keeps_initial():
+    """T4o: if excluded holder blocks leave ok_clean < MIN_WHITE_BLOCKS, initial d_hi is retained unchanged."""
+    from filmcolor.invert import block_white_point
+
+    block = 16
+    h, w = 512, 512
+    rgb = np.zeros((h, w, 3), np.float32)
+
+    # Edge-connected holder across almost all the image
+    D_holder = np.array([2.0, 1.95, 2.3], np.float32)
+    rgb[:] = BASE * (10.0 ** -D_holder)
+
+    # Tiny scene island of 8x10 = 80 blocks (< MIN_WHITE_BLOCKS = 100)
+    D_scene = np.array([0.8, 1.0, 1.2], np.float32)
+    rgb[200:200 + 8 * 16, 200:200 + 10 * 16] = BASE * (10.0 ** -D_scene)
+
+    # Mask covers 12x12 = 144 blocks
+    mask = np.zeros((h, w), bool)
+    mask[160:352, 160:352] = True
+
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+    assert "holder_blocks_excluded" not in info
+    assert info["n_blocks"] == 144
+    assert d_hi[1] > 1.80  # initial calculation preserved

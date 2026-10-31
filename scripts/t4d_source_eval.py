@@ -260,6 +260,9 @@ def main(out_json: str, opts: list[str]):
                                          t4l={k: est.get("diagnostics", {}).get(k) for k in ("metering", "ev_refine")},
                                          t4m=dict(cyan_conf_boost=est.get("diagnostics", {}).get("wb", {})
                                                    .get("diagnostics", {}).get("cyan_conf_boost", False)),
+                                         wb_spatial={k: est.get("diagnostics", {}).get("wb", {}).get("diagnostics", {}).get(k)
+                                                     for k in ("split_sky", "top_bottom_spread", "zone_disagreement")},
+                                         clip_share=est.get("diagnostics", {}).get("clip_share"),
                                          estimate_seconds=round(est_s, 3), cam_mix=mix if cam is not None else None,
                                          metrics=mt, ours_L_median=oL, ours_C_median=oC, ref_L_median=rL,
                                          ref_C_median=rC)

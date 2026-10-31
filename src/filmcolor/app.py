@@ -90,7 +90,7 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4n"  # T4n base fallbacks, flare guard and mid-grey cyan check
+THUMB_REV = "t4o"  # T4o fallback routing, holder white point, capped backlit rescue and spatial WB gate
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
 WHITE_SELF_RATIO = None  # T4l: colour film's invert.self_ratio_white_point (collapse, target), e.g. (0.78, 0.85);
@@ -407,6 +407,7 @@ class State:
                     inside_image=sc["inside_image"],
                     own_warnings=sc["warnings"],
                     own_error=sc["error"],
+                    estimate=sc.get("estimate"),
                     block48_L_p01=sc["block48_L_p01"],
                     sub_roll=sub_of[r],
                     sub_roll_single=bool(mixed is not None and sub["n_base"] == 1 and sc["own_rgb"] is not None),
@@ -708,8 +709,10 @@ class State:
             return False
         if sub["n_base"] < ROLL_NAT_MIN_FRAMES or sub["roll"]["warnings"]:
             return False
+        diag = ((fe.get("estimate") or {}).get("diagnostics")) or {}
+        fallback = bool(diag.get("mode_seed") or diag.get("relaxed_uniformity"))
         dc, lv = fe.get("chroma_part"), fe.get("level_diff")
-        return bool(fe.get("own_error") or (dc is not None and dc >= 0.1)
+        return bool(fe.get("own_error") or fallback or (dc is not None and dc >= 0.1)
                     or (ROLL_NAT_LEVEL_DIFF is not None and lv is not None and lv >= ROLL_NAT_LEVEL_DIFF))
 
     def need(self, token) -> Preview:

@@ -820,20 +820,152 @@ def test_t4m_strong_cyan_without_neutrals_gets_a_confidence_floor():
     assert cool["diagnostics"]["cool_cast"] and "cyan_conf_boost" not in cool["diagnostics"]
 
 
-def test_t4n_cyan_confidence_requires_red_deficiency_in_the_midgrey_zone():
+def test_t4o_cyan_confidence_checks_blue_axis_threshold():
+    """T4o: cyan confidence boost requires est[1] <= wb_v3_cyan_b_max (0.20), replacing the old requirement that
+    mid-grey zone 1 be strongly red-deficient (chroma[0] < -0.65)."""
     from filmcolor.noref import NOREF_V3, estimate_wb_v3
 
     rng = np.random.default_rng(31)
     y = 2 ** rng.uniform(-6, 0, 100_000)
     red = np.where(rng.random(len(y)) < 0.8, -2.0, -0.5)
-    px = np.stack([y * 2 ** red, y, y * 2 ** -0.4], -1).astype(np.float32)
-    result = estimate_wb_v3(px, NOREF_V3)
-    diag = result["diagnostics"]
-    assert all(z["narrow_share"] < 0.04 for z in diag["zones"])
-    assert result["chroma"][0] < -0.85  # grey world pulls the combined estimate towards cyan
-    assert diag["zones"][1]["chroma"][0] >= -0.65
-    assert "cyan_conf_boost" not in diag
-    assert result == estimate_wb_v3(px, dict(NOREF_V3, wb_v3_cyan_conf_check=False))
+
+    # Blue axis <= 0.20: boosts confidence even when z1 chroma[0] >= -0.65
+    px_pass = np.stack([y * 2 ** red, y, y * 2 ** -0.4], -1).astype(np.float32)
+    res_pass = estimate_wb_v3(px_pass, NOREF_V3)
+    diag_pass = res_pass["diagnostics"]
+    assert all(z["narrow_share"] < 0.04 for z in diag_pass["zones"])
+    assert res_pass["chroma"][0] < -0.85
+    assert diag_pass["zones"][1]["chroma"][0] >= -0.65  # old T4n requirement not met
+    assert res_pass["chroma"][1] <= NOREF_V3["wb_v3_cyan_b_max"]  # new T4o blue-axis check passes
+    assert diag_pass["cyan_conf_boost"] is True
+    assert res_pass["confidence"] >= NOREF_V3["wb_v3_cyan_min_conf"]
+
+    # Blue axis > 0.20: boost is refused
+    px_fail = np.stack([y * 2 ** red, y, y * 2 ** 0.35], -1).astype(np.float32)
+    res_fail = estimate_wb_v3(px_fail, NOREF_V3)
+    diag_fail = res_fail["diagnostics"]
+    assert res_fail["chroma"][0] < -0.85
+    assert res_fail["chroma"][1] > NOREF_V3["wb_v3_cyan_b_max"]
+    assert "cyan_conf_boost" not in diag_fail
+    assert res_fail == estimate_wb_v3(px_fail, dict(NOREF_V3, wb_v3_cyan_conf_check=False))
+
+
+def test_t4o_spatial_cool_cast_gate_requires_both_spread_and_disagreement():
+    """T4o: cool cast detection is disabled (split_sky=True) only when BOTH top_bottom_spread and zone_disagreement
+    exceed 0.22; uniform cool cast remains enabled when either or neither threshold is exceeded."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    px = cool_cast_scene()
+    # 1. Uniform scene: neither threshold exceeded -> cool_cast active, split_sky False
+    res_uniform = estimate_wb_v3(px, NOREF_V3)
+    d_u = res_uniform["diagnostics"]
+    assert d_u["top_bottom_spread"] <= NOREF_V3["wb_v3_cast_max_tb_spread"]
+    assert d_u["zone_disagreement"] <= NOREF_V3["wb_v3_cast_max_zone_dis"]
+    assert not d_u["split_sky"] and d_u["cool_cast"]
+
+    # 2. Only top_bottom_spread exceeded -> split_sky False, cool_cast still active
+    cfg_tb = dict(NOREF_V3, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 0.5,
+                  wb_v3_cast_max_zone_dis=d_u["zone_disagreement"] * 2.0)
+    res_tb = estimate_wb_v3(px, cfg_tb)
+    assert not res_tb["diagnostics"]["split_sky"] and res_tb["diagnostics"]["cool_cast"]
+
+    # 3. Only zone_disagreement exceeded -> split_sky False, cool_cast still active
+    cfg_zd = dict(NOREF_V3, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 2.0,
+                  wb_v3_cast_max_zone_dis=d_u["zone_disagreement"] * 0.5)
+    res_zd = estimate_wb_v3(px, cfg_zd)
+    assert not res_zd["diagnostics"]["split_sky"] and res_zd["diagnostics"]["cool_cast"]
+
+    # 4. BOTH exceeded -> split_sky True, cool_cast suppressed
+    cfg_both = dict(NOREF_V3, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 0.5,
+                    wb_v3_cast_max_zone_dis=d_u["zone_disagreement"] * 0.5)
+    res_both = estimate_wb_v3(px, cfg_both)
+    assert res_both["diagnostics"]["split_sky"] and not res_both["diagnostics"]["cool_cast"]
+
+
+def test_t4o_capped_backlit_rescue_c1_and_c2():
+    """T4o: Step 5 backlit capped rescue lifts midtone/shoulder/shadows for c1 (sparse highlights capping EV)
+    or c2 (near backlit), without triggering on night frames (med < 0.24), low-span negatives, or stacking on
+    normal backlit frames; output clip share remains within clip_budget."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3, _clip_share, RenderParams
+
+    # Synthetic scene for c1: dark foreground with sparse highlights capping EV
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y = np.zeros(n)
+    y[:80000] = rng.uniform(0.02, 0.06, 80000)
+    y[80000:97000] = rng.uniform(0.12, 0.22, 17000)
+    y[97000:] = 1.8
+    c = rng.normal(0, 0.05, (n, 2))
+    px_c1 = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).reshape(200, 500, 3).astype(np.float32)
+
+    # 1. c1 trigger
+    e1 = estimate_params_v3(px_c1, None, NOREF_V3, span_d_g=1.1)
+    bc1 = e1["diagnostics"]["backlit_check"]
+    assert bc1.get("rescue_c1") is True
+    assert bc1.get("rescue_weight", 0) > 0
+    assert e1["params"]["midtone"] > NOREF_V3["base_midtone"]
+    assert e1["params"]["shoulder"] > NOREF_V3["base_shoulder"]
+    assert e1["params"].get("shadows", 0) > 0
+    assert "backlit_midtone" in e1["flags"]
+    assert _clip_share(px_c1, RenderParams(**e1["params"])) <= NOREF_V3["clip_budget"]
+
+    # 2. c2 trigger: near backlit conditions
+    cfg_c2 = dict(NOREF_V3, backlit_capped_rescue=True,
+                  backlit_capped_med_band=(0.0, 0.01),  # disable c1
+                  backlit_near_min_span=1.0,
+                  backlit_near_q90_band=(bc1["rescue_q90"] - 0.01, bc1["rescue_q90"] + 0.01),
+                  backlit_near_q25_band=(bc1["rescue_q25"] - 0.01, bc1["rescue_q25"] + 0.01))
+    e2 = estimate_params_v3(px_c1, None, cfg_c2, span_d_g=1.1)
+    bc2 = e2["diagnostics"]["backlit_check"]
+    assert bc2.get("rescue_c2") is True
+    assert bc2.get("rescue_weight", 0) > 0
+    assert e2["params"]["midtone"] > NOREF_V3["base_midtone"]
+    assert e2["params"]["shoulder"] > NOREF_V3["base_shoulder"]
+    assert e2["params"].get("shadows", 0) > 0
+    assert "backlit_midtone" in e2["flags"]
+    assert _clip_share(px_c1, RenderParams(**e2["params"])) <= NOREF_V3["clip_budget"]
+
+    # 3. Low span does not trigger rescue
+    e_low = estimate_params_v3(px_c1, None, NOREF_V3, span_d_g=0.8)
+    assert "rescue_weight" not in e_low["diagnostics"]["backlit_check"]
+
+    # 4. Night scene (med < 0.24) does not trigger rescue
+    y_night = np.zeros(n)
+    y_night[:80000] = rng.uniform(0.005, 0.02, 80000)
+    y_night[80000:97000] = rng.uniform(0.05, 0.10, 17000)
+    y_night[97000:] = 1.8
+    px_night = np.stack([y_night * 2 ** c[:, 0], y_night, y_night * 2 ** c[:, 1]], -1).reshape(200, 500, 3).astype(np.float32)
+    e_night = estimate_params_v3(px_night, None, NOREF_V3, span_d_g=1.1)
+    assert "rescue_weight" not in e_night["diagnostics"]["backlit_check"]
+
+    # 5. Regular backlit does not double-stack rescue
+    P_bl = backlit_scene(fg=0.05, sky=0.5, seed=31)
+    e_bl = estimate_params_v3(P_bl, None, NOREF_V3, span_d_g=1.2)
+    bc_bl = e_bl["diagnostics"]["backlit_check"]
+    assert bc_bl["weight"] > 0
+    assert "rescue_weight" not in bc_bl
+
+
+def test_t4o_rescue_rolls_back_when_shoulder_cannot_meet_clip_budget(monkeypatch):
+    from filmcolor import noref
+
+    rng = np.random.default_rng(42)
+    y = np.concatenate([rng.uniform(0.02, 0.06, 80_000), rng.uniform(0.12, 0.22, 17_000), np.full(3_000, 1.8)])
+    c = rng.normal(0, 0.05, (len(y), 2))
+    P = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).reshape(200, 500, 3).astype(np.float32)
+    original = noref._clip_share
+
+    def reject_lift(px, params):
+        if params.midtone > noref.NOREF_V3["base_midtone"]:
+            return 0.01
+        return original(px, params)
+
+    monkeypatch.setattr(noref, "_clip_share", reject_lift)
+    off = noref.estimate_params_v3(P, None, dict(noref.NOREF_V3, backlit_capped_rescue=False), span_d_g=1.1)
+    on = noref.estimate_params_v3(P, None, noref.NOREF_V3, span_d_g=1.1)
+    assert on["diagnostics"]["backlit_check"]["rescue_c1"]
+    assert on["diagnostics"]["backlit_check"]["rescue_weight"] == 0
+    assert on["params"] == off["params"] and "backlit_midtone" not in on["flags"]
 
 
 def test_t4l_too_short_a_density_range_is_left_for_manual_review():

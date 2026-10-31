@@ -159,8 +159,37 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
         return estimate_white_point(density(rgb[mask], base), None, pct), dict(method="pixel_fallback", block=block,
                                                                               pct=pct, n_blocks=n)
     means = (sums[ok] / (block * block)).astype(np.float32)
-    return estimate_white_point(density(means, base), None, pct), dict(method="block_mean", block=block, pct=pct,
-                                                                      n_blocks=n)
+    d_hi = estimate_white_point(density(means, base), None, pct)
+    info = dict(method="block_mean", block=block, pct=pct, n_blocks=n)
+
+    # T4o: when initial d_hi_G > 1.80, check full grid for opaque film holder intruding into mask
+    if d_hi[1] > 1.80:
+        grid_means = (sums / (block * block)).astype(np.float32)
+        D_grid = density(grid_means, base)
+        D_sort = np.sort(D_grid, axis=-1)
+        hot = (D_sort[..., 1] > 1.85) & (D_sort[..., 2] > 2.10)
+        if hot.any():
+            from scipy import ndimage
+
+            lab, n_features = ndimage.label(hot)
+            if n_features > 0:
+                edge_labels = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
+                edge_labels = edge_labels[edge_labels > 0]
+                if len(edge_labels) > 0:
+                    edge_connected = np.isin(lab, edge_labels)
+                    holder_blocks = ndimage.binary_dilation(edge_connected, iterations=2)
+                    excluded = ok & holder_blocks
+                    n_excluded = int(excluded.sum())
+                    if n_excluded > 0:
+                        ok_clean = ok & ~holder_blocks
+                        n_clean = int(ok_clean.sum())
+                        if n_clean >= MIN_WHITE_BLOCKS:
+                            means_clean = (sums[ok_clean] / (block * block)).astype(np.float32)
+                            d_hi = estimate_white_point(density(means_clean, base), None, pct)
+                            info["n_blocks"] = n_clean
+                            info["holder_blocks_excluded"] = n_excluded
+
+    return d_hi, info
 
 
 def neutral_ratio_white_point(d_hi, ratio, *, anchor: float = 0.7, scale: float = 0.94,

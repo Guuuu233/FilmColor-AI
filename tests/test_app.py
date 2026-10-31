@@ -486,3 +486,55 @@ def test_t4d_style_preset_re_estimates_the_open_photo_and_is_recorded_in_the_exp
     assert again["preset"] == "vivid" and again["auto"]["params"] == v["auto"]["params"]
     p, code, _ = call("/api/open", dict(path="s.dng", preset="portrait"))
     assert code == 200 and p["preset"] == "portrait"
+
+
+def test_t4o_route_roll_nat_fallback_and_estimate_in_roll_info(server):
+    """T4o: roll_info includes the frame's auto estimate; _route_roll_nat routes to roll_nat when a healthy sub-roll
+    (n_base >= 3, no warnings) has an auto estimate fallback diagnosis (mode_seed or relaxed_uniformity), while
+    singletons (< 3 frames) or sub-rolls with warnings are not routed."""
+    _, root, tmp = server
+    st = app.State(root, tmp / "out", allow_frozen=False)
+
+    # 1. roll_info records the frame's estimate
+    info = st.roll_info()
+    f_info = info["frames"]["s.dng"]
+    assert "estimate" in f_info and isinstance(f_info["estimate"], dict)
+
+    # 2. _route_roll_nat diagnostics check:
+    folder = "test_roll"
+    fe = {
+        "sub_roll": "sub_a",
+        "roll_rgb": [0.5, 0.5, 0.5],
+        "own_rgb": [0.5, 0.5, 0.5],
+        "chroma_part": 0.02,
+        "level_diff": 0.0,
+        "own_error": None,
+        "estimate": {"diagnostics": {}},
+    }
+    sub = {
+        "n_base": 3,
+        "roll": {"warnings": []},
+    }
+    st.roll_cache[folder] = {"frames": {"frame.dng": fe}, "sub_rolls": {"sub_a": sub}}
+
+    # Normal healthy frame with no fallback diagnosis: not routed
+    assert not st._route_roll_nat(folder, "frame.dng")
+
+    # Healthy sub-roll with fallback diagnosis: mode_seed -> routed
+    fe["estimate"]["diagnostics"] = {"mode_seed": True}
+    assert st._route_roll_nat(folder, "frame.dng")
+
+    # Healthy sub-roll with fallback diagnosis: relaxed_uniformity -> routed
+    fe["estimate"]["diagnostics"] = {"relaxed_uniformity": True}
+    assert st._route_roll_nat(folder, "frame.dng")
+
+    # Singleton or sub-roll with fewer than ROLL_NAT_MIN_FRAMES (3): not routed even with fallback
+    sub["n_base"] = 1
+    assert not st._route_roll_nat(folder, "frame.dng")
+    sub["n_base"] = 2
+    assert not st._route_roll_nat(folder, "frame.dng")
+
+    # Sub-roll with warnings: not routed even with fallback and n_base >= 3
+    sub["n_base"] = 3
+    sub["roll"]["warnings"] = ["density_range_low"]
+    assert not st._route_roll_nat(folder, "frame.dng")

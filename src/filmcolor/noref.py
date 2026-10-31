@@ -386,7 +386,7 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4n-2026-10-30",          # T4n: cyan confidence floor requires a strongly red-deficient mid-grey zone;
+    rev="t4o-2026-10-31",          # T4o: capped backlit rescue, spatial cool-cast gate and cyan blue-axis check;
                                    # T4m: thin-negative darkening without backlit lift, strong cyan confidence floor;
                                    # T4l: metering inside the film box and off full black strips, wider ev lowering
                                    # on frames bright all over, too short a density range for manual review;
@@ -488,8 +488,10 @@ NOREF_V3 = dict(
     wb_v3_cool_cast_check=True,
     wb_v3_cool_z0=(-0.05, 0.05), wb_v3_cool_z1=(-0.10, 0.10), wb_v3_cool_gw=(-0.20, 0.25),
     wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80, wb_v3_cast_strength=0.80,
+    wb_v3_cast_max_tb_spread=0.22, wb_v3_cast_max_zone_dis=0.22,
     # T4m: neither zone has neutral evidence and the combined log2 R/G is strongly negative: confidence at least this
     wb_v3_cyan_conf_check=True, wb_v3_cyan_narrow_max=0.04, wb_v3_cyan_r_max=-0.85, wb_v3_cyan_min_conf=0.72,
+    wb_v3_cyan_b_max=0.20,
     wb_v3_cast_max_temp=None,      # T4k: a cool-cast frame's temp at most this (0.38 measured: _DSF8948 8.17 -> 9.21);
                                    # None = up to wb_max_shift (T4j)
     # T4k: mid-grey zone and grey world both strongly cool (log2 R/G below [0], B/G above [1] of wb_v3_undamp_z1 /
@@ -525,6 +527,11 @@ NOREF_V3 = dict(
     backlit_midtone_step=0.09, backlit_midtone_cap=0.38,    # midtone towards the one lifting p25 to backlit_p25_target,
                                                             # searched up to min(cap, base midtone + step), x w
     backlit_p25_target=0.34,       # T4f (T4e 0.28)
+    # T4o: sparse highlights cap EV while q90 misses the ordinary backlit gate
+    backlit_capped_rescue=True, backlit_capped_min_span=1.00,
+    backlit_capped_med_band=(0.24, 0.40), backlit_capped_q25_band=(0.08, 0.25), backlit_capped_q90_min=0.45,
+    backlit_near_min_span=1.15, backlit_near_q90_band=(0.68, 0.72), backlit_near_q25_band=(0.15, 0.22),
+    backlit_rescue_shadows_step=0.16,
 )
 
 
@@ -743,20 +750,6 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     def cool(v, key):  # log2 R/G below and log2 B/G above the thresholds of cfg[key]
         return bool(v[0] < cfg[key][0] and v[1] > cfg[key][1])
 
-    # T4j: a uniform cool cast (_DSF8948: bright [-0.10, +0.17], mid-grey [-0.22, +0.31], grey world [-0.46, +0.61]);
-    # a sky over a warm or green ground has a mid-grey zone that is not cool (A008 [-0.12, -0.08]) and keeps the damping
-    cool_cast = bool(cfg.get("wb_v3_cool_cast_check", False) and found == [0, 1] and est_gw is not None
-                     and cool(ests[0], "wb_v3_cool_z0") and cool(ests[1], "wb_v3_cool_z1")
-                     and cool(est_gw, "wb_v3_cool_gw"))
-    diag["cool_cast"] = cool_cast
-    for k, i in enumerate(found):
-        if i == 0 and not cool_cast and ests[k][0] < sky_r and ests[k][1] > sky_b:
-            # T4f: a bright zone with red low and blue high reads as clear sky, not as a cool cast
-            weights[k] = weights[k] * float(cfg["wb_v3_sky_weight"])
-            diag["zones"][i].update(clear_sky=True)
-        diag["zones"][i].update(weight=float(weights[k]))
-    w = np.asarray(weights) / np.sum(weights)
-    est = (w[:, None] * np.asarray(ests)).sum(0)
     quads = []
     n = len(px)
     # quadrants are approximated by sample order: _sample keeps row-major order, so halves of the sample are the
@@ -769,6 +762,25 @@ def estimate_wb_v3(px, cfg=None) -> dict:
             quads.append(_huber_location(ch[selh], cfg["wb_v3_huber"]))
     if len(quads) == 2:
         diag["top_bottom_spread"] = float(np.linalg.norm(quads[0] - quads[1]))
+    if len(ests) == 2:
+        diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
+    split_sky = (diag.get("top_bottom_spread", 0.0) > cfg.get("wb_v3_cast_max_tb_spread", np.inf)
+                 and diag.get("zone_disagreement", 0.0) > cfg.get("wb_v3_cast_max_zone_dis", np.inf))
+    diag["split_sky"] = bool(split_sky)
+    # T4j: a uniform cool cast (_DSF8948: bright [-0.10, +0.17], mid-grey [-0.22, +0.31], grey world [-0.46, +0.61]);
+    # a sky over a warm or green ground has a mid-grey zone that is not cool (A008 [-0.12, -0.08]) and keeps the damping
+    cool_cast = bool(cfg.get("wb_v3_cool_cast_check", False) and found == [0, 1] and est_gw is not None
+                     and cool(ests[0], "wb_v3_cool_z0") and cool(ests[1], "wb_v3_cool_z1")
+                     and cool(est_gw, "wb_v3_cool_gw") and not split_sky)
+    diag["cool_cast"] = cool_cast
+    for k, i in enumerate(found):
+        if i == 0 and not cool_cast and ests[k][0] < sky_r and ests[k][1] > sky_b:
+            # T4f: a bright zone with red low and blue high reads as clear sky, not as a cool cast
+            weights[k] = weights[k] * float(cfg["wb_v3_sky_weight"])
+            diag["zones"][i].update(clear_sky=True)
+        diag["zones"][i].update(weight=float(weights[k]))
+    w = np.asarray(weights) / np.sum(weights)
+    est = (w[:, None] * np.asarray(ests)).sum(0)
     # T4k: mid-grey zone and grey world both strongly cool on a frame without a sky over ground (_DSF8951): the grey
     # world is a cast, not a sky
     gw_undamp = bool(cfg.get("wb_v3_gw_cool_undamp") and est_gw is not None and 1 in found
@@ -791,8 +803,6 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     mad = float(np.median(np.linalg.norm(allc - est, axis=1)))
     share = float(sum(z["share"] for z in diag["zones"] if "chroma" in z) / len(diag["zones"]))
     conf = _ramp(share, *cfg["wb_v3_share"]) * (1 - 0.5 * _ramp(mad, *cfg["wb_v3_mad"]))
-    if len(ests) == 2:
-        diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
     if diag.get("top_bottom_spread", 0.0) > cfg["wb_conflict"]:
         conf *= cfg["wb_v3_conflict_factor"]
         diag["conflict"] = True
@@ -803,7 +813,7 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     elif (cfg.get("wb_v3_cyan_conf_check") and len(diag["zones"]) == 2
           and all(z["narrow_share"] < cfg["wb_v3_cyan_narrow_max"] for z in diag["zones"])
           and est[0] < cfg["wb_v3_cyan_r_max"]
-          and diag["zones"][1].get("chroma", [0.0])[0] < -0.65):
+          and est[1] <= cfg.get("wb_v3_cyan_b_max", 0.20)):
         conf = max(conf, float(cfg["wb_v3_cyan_min_conf"]))
         diag["cyan_conf_boost"] = True
     temp, tint = wb_from_chroma(strength * conf * est)
@@ -1114,6 +1124,39 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
             ev_lowered += 0.1
     if ev_lowered > 0:
         flags.append(f"ev_lowered_for_highlights:{ev_lowered:.1f}")
+
+    # T4o: sparse highlights can cap EV without reaching the ordinary q90 backlit threshold.
+    if w_bl == 0.0 and cfg.get("backlit_capped_rescue") and span_d_g is not None:
+        med_after = _encoded_quantiles(tex_px, RenderParams(**base_p), qs=(50,))[0]
+        q25_res, q90_res = _encoded_quantiles(px_tone, RenderParams(**base_p), qs=(25, 90))
+        hl_capped = bool(refine.get("capped_by_p98") or refine.get("anchor_capped_by_p98") or ev_lowered > 0)
+        med_lo, med_hi = cfg["backlit_capped_med_band"]
+        q25_lo, q25_hi = cfg["backlit_capped_q25_band"]
+        near_lo, near_hi = cfg["backlit_near_q90_band"]
+        near_q25_lo, near_q25_hi = cfg["backlit_near_q25_band"]
+        c1 = (span_d_g >= cfg["backlit_capped_min_span"] and hl_capped and med_lo <= med_after < med_hi
+              and q25_lo <= q25_res <= q25_hi and q90_res >= cfg["backlit_capped_q90_min"])
+        c2 = (span_d_g >= cfg["backlit_near_min_span"] and near_lo <= q90_res < near_hi
+              and near_q25_lo <= q25_res <= near_q25_hi)
+        if c1 or c2:
+            before_rescue = dict(base_p)
+            w_res = min(0.85, max((q90_res - 0.44) / 0.16, 0.40)) * min(1.0, (0.26 - q25_res) / 0.08)
+            base_p["midtone"] = float(min(cfg["backlit_midtone_cap"], base_p["midtone"] + w_res * 0.08))
+            base_p["shoulder"] = float(min(cfg["backlit_shoulder_cap"], base_p["shoulder"] + w_res * 0.12))
+            base_p["shadows"] = float(max(base_p["shadows"], w_res * float(cfg["backlit_rescue_shadows_step"])))
+            # Recheck Highlight Hold after lifting; stronger shoulder first, otherwise retain the pre-rescue result.
+            if _clip_share(px, RenderParams(**base_p)) > cfg["clip_budget"]:
+                for shoulder in np.linspace(base_p["shoulder"], 0.85, 15):
+                    base_p["shoulder"] = float(shoulder)
+                    if _clip_share(px, RenderParams(**base_p)) <= cfg["clip_budget"]:
+                        break
+                else:
+                    base_p = before_rescue
+                    w_res = 0.0
+            out["diagnostics"]["backlit_check"].update(rescue_weight=float(w_res), rescue_c1=bool(c1), rescue_c2=bool(c2),
+                                                       rescue_med_before=med_after, rescue_q25=q25_res, rescue_q90=q90_res)
+            if w_res > 0:
+                flags.append("backlit_midtone")
 
     # 6. Contrast relief (T4b, encoded output): only a very wide frame (encoded luminance p90 - p10 above
     #    contrast_spread_max) with both ends clipped gets a lower contrast, down to the lower bound
