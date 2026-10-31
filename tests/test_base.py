@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pytest
 
-from filmcolor.base import estimate_base_auto, estimate_base_manual
+from filmcolor.base import estimate_base_auto, estimate_base_blocks, estimate_base_manual
 from filmcolor.raw import linearize, saturation_mask
 from synth import PATTERNS, black_for, film_scene, mosaic
 
@@ -121,3 +121,82 @@ def test_auto_is_deterministic():
     a = estimate_base_auto(lin, col, sat, n).to_dict()
     b = estimate_base_auto(lin, col, sat, n).to_dict()
     assert a == b
+
+
+def test_auto_mode_seed_on_empty_bimodal_consensus():
+    # Candidates with bimodal chromaticity: median falls between the modes where no points lie,
+    # causing 2-round median consensus to be empty. mode_seed must trigger.
+    hb, wb = 10, 10
+    sp = np.zeros((hb, wb, 3), dtype=np.float32)
+    # Cluster 1: upper half with G=0.5, log2(R/G)=+0.2, log2(B/G)=0.0
+    rgb1 = np.array([0.5 * (2 ** 0.2), 0.5, 0.5], dtype=np.float32)
+    # Cluster 2: lower half with G=0.5, log2(R/G)=-0.2, log2(B/G)=0.0
+    rgb2 = np.array([0.5 * (2 ** -0.2), 0.5, 0.5], dtype=np.float32)
+    sp[:5, :] = rgb1
+    sp[5:, :] = rgb2
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+
+    # With chroma_tol=0.05, median centre is [0, 0] which is 0.2 away from both clusters.
+    est = estimate_base_blocks(sp, sp_sat, block=24, top_frac=1.0, max_rel_std=0.03, chroma_tol=0.05)
+    assert est.diagnostics.get("mode_seed") is True
+    assert "relaxed_uniformity" not in est.diagnostics
+    # Exact argmax first tie selects cluster 1 (sp[:5, :])
+    assert rel_err(est.rgb, rgb1) < 0.005
+    assert est.diagnostics["n_kept"] == 24
+
+
+def test_auto_relaxed_uniformity_on_dense_fake_base():
+    # Fake base: dark shadow is very uniform (rel_std <= 0.03), real film base has mild variation
+    # (rel_std ~ 0.08 > 0.03, <= 0.25). Relaxation triggers, picks real base.
+    hb, wb = 20, 20
+    sp = np.zeros((hb, wb, 3), dtype=np.float32)
+    real_base = np.array(BASE, dtype=np.float32)
+    for r in range(hb):
+        for c in range(8):  # 40% of blocks
+            sp[r, c] = real_base * (1.0 + 0.1 * (r % 3 - 1))
+
+    dark_shadow = np.array([0.05, 0.04, 0.03], dtype=np.float32)
+    sp[:, 8:] = dark_shadow
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+
+    est = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.1, max_rel_std=0.03, chroma_tol=0.05)
+    assert est.diagnostics.get("relaxed_uniformity") is True
+    assert any("relaxed" in w for w in est.warnings)
+    # Recovered RGB is from the real base, not the fake dark shadow
+    assert rel_err(est.rgb, real_base) < 0.15
+    assert all(c < 8 * 24 for _, c, _, _ in est.regions)
+    assert "mode_seed" not in est.diagnostics
+
+
+def test_auto_normal_path_preserves_metadata():
+    lin, col, sat, n = prepared("bayer", film_scene(base=BASE))
+    est = estimate_base_auto(lin, col, sat, n)
+    assert rel_err(est.rgb, BASE) < 0.005
+    assert "mode_seed" not in est.diagnostics
+    assert "relaxed_uniformity" not in est.diagnostics
+    assert not any("relaxed" in w for w in est.warnings)
+
+
+def test_auto_relaxed_uniformity_respects_sat_and_crop():
+    hb, wb = 20, 20
+    sp = np.zeros((hb, wb, 3), dtype=np.float32)
+    real_base = np.array(BASE, dtype=np.float32)
+    for r in range(hb):
+        for c in range(8):
+            sp[r, c] = real_base * (1.0 + 0.1 * (r % 3 - 1))
+    dark_shadow = np.array([0.05, 0.04, 0.03], dtype=np.float32)
+    sp[:, 8:] = dark_shadow
+
+    # 1. Saturation test: saturated real base blocks are excluded, even when relaxed
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+    sp_sat[:, :8] = True
+    est_sat = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.1, max_rel_std=0.03)
+    assert all(c >= 8 * 24 for _, c, _, _ in est_sat.regions)
+    assert "relaxed_uniformity" not in est_sat.diagnostics
+
+    # 2. Crop test: real base blocks outside crop are excluded, even when relaxed
+    sp_sat[:] = False
+    crop = (0, 8 * 24, 20 * 24, 12 * 24)
+    est_crop = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.1, max_rel_std=0.03, crop=crop)
+    assert all(c >= 8 * 24 for _, c, _, _ in est_crop.regions)
+    assert "relaxed_uniformity" not in est_crop.diagnostics

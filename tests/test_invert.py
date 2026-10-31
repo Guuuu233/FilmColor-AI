@@ -247,6 +247,36 @@ def test_t4l_spike_clamp_holds_single_channel_spikes_and_keeps_the_holder():
     assert res.report["spike_clamp"]["pixels"] == 1 and "spike_clamp" not in plain.report
 
 
+def test_t4n_tiny_blue_white_point_stays_finite_without_changing_normal_pixels():
+    p = InversionParams(base=tuple(BASE), d_hi=(0.632, 0.637, 0.098), spike_clamp=(1.15, 0.12))
+    D = np.array([[[0.2, 0.3, 0.05], [3.0, 3.0, 6.0]]], np.float32)
+    with np.errstate(over="raise", invalid="raise"):
+        positive = invert(D, p)
+    assert np.isfinite(positive).all() and positive.dtype == np.float32
+    assert positive[0, 1, 2] > 1e10
+    from filmcolor.holder import holder_mask
+    assert holder_mask(positive)[0, 1]
+    s = D[0, :1] / np.asarray(p.d_hi, np.float32)
+    R = np.float32(p.log_range)
+    floor = np.float32(10.0 ** -p.log_range)
+    old = (np.power(np.float32(10.0), R * (s - 1)) - floor) / (1 - floor)
+    np.testing.assert_array_equal(positive[0, :1], old)
+
+
+def test_t4n_blue_guard_rejects_extreme_blue_collapse_but_keeps_warm_highlights():
+    from filmcolor.invert import blue_white_guard
+
+    guard = (1.06, 1.18, 0.65, 0.48)
+    base = (0.5, 0.3, 0.1)
+    for ratio in (0.154, 0.54999):
+        d = (0.632, 1.0, ratio)
+        out, info = blue_white_guard(d, guard, base=base)
+        assert out == d and not info["applied"] and info["reason"] == "below_valid_ratio"
+    for ratio in (0.55, 0.908, 1.038):
+        out, info = blue_white_guard((0.632, 1.0, ratio), guard, base=base)
+        assert info["applied"] and out[2] > ratio
+
+
 def test_t4l_self_ratio_white_point_lifts_only_a_channel_collapsed_against_its_own_midtones():
     """T4l: a white point channel ratio below collapse x the frame's own midtone ratio (DSC_3827: blue 0.91 against
     midtones about 1.3) is set to target x the midtone ratio; a scanner-like frame whose midtones and highlights share

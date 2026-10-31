@@ -199,6 +199,8 @@ def blue_white_guard(d_hi, guard, base=None) -> tuple[tuple[float, float, float]
         info["base_bg"] = bg
         if bg >= values[3]:
             return tuple(d), info
+    if ratio < 0.55:  # T4n: extreme collapse (e.g. blue flare) is not a missing blue highlight
+        return tuple(d), dict(info, reason="below_valid_ratio")
     if ratio >= lo:
         return tuple(d), info
     d_b = d[2] + weight * (max(d[2], target * d[1]) - d[2])
@@ -262,7 +264,9 @@ def invert(D, p: InversionParams, stats: dict | None = None) -> np.ndarray:
             stats["spike_px"] = stats.get("spike_px", 0) + n
     R = np.float32(p.log_range)
     floor = np.float32(10.0 ** -p.log_range)
-    return (np.power(np.float32(10.0), R * (s - 1)) - floor) / (1 - floor)
+    # T4n: a tiny channel white point can send holder densities past float32's exponent range.
+    exp = np.minimum(R * (s - 1), np.float32(12.0))
+    return (np.power(np.float32(10.0), exp) - floor) / (1 - floor)
 
 
 def srgb_oetf(x):

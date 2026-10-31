@@ -98,6 +98,51 @@ def _neighbourhood_rel_std(sp):
     return out
 
 
+def _consensus_candidates(sp, valid, rel_std_map, Y, current_rel_std, top_frac, chroma_tol):
+    uniform = valid & (rel_std_map <= current_rel_std)
+    n_uniform = int(uniform.sum())
+    if n_uniform == 0:
+        raise ValueError("no uniform unsaturated blocks; specify the film base region manually")
+
+    n_cand = min(n_uniform, max(10, int(round(top_frac * n_uniform))))
+    thr = float(np.sort(Y[uniform])[-n_cand])
+    cand = uniform & (Y >= thr)
+    idx = np.argwhere(cand)
+    vals = sp[cand]
+    chroma = np.log2(vals[:, [0, 2]] / vals[:, [1]])
+    consensus = np.ones(len(vals), bool)
+    for _ in range(2):
+        centre = np.median(chroma[consensus], 0)
+        consensus = np.all(np.abs(chroma - centre) <= chroma_tol, -1)
+        if not consensus.any():
+            break
+
+    mode_seed = False
+    if not consensus.any():
+        mode_seed = True
+        n = len(vals)
+        counts = np.zeros(n, dtype=np.int32)
+        chunk_size = 1024
+        for start in range(0, n, chunk_size):
+            end = min(start + chunk_size, n)
+            diff = np.abs(chroma[:, None, :] - chroma[start:end, :])
+            in_tol = np.all(diff <= chroma_tol, axis=-1)
+            counts[start:end] = in_tol.sum(axis=0)
+        seed_idx = int(np.argmax(counts))
+        seed_chroma = chroma[seed_idx]
+        consensus = np.all(np.abs(chroma - seed_chroma) <= chroma_tol, -1)
+        centre = np.median(chroma[consensus], 0)
+        consensus = np.all(np.abs(chroma - centre) <= chroma_tol, -1)
+        if not consensus.any():
+            raise ValueError("no chromatically consistent base candidates; specify region manually")
+
+    outlier_frac = float(1 - consensus.mean())
+    keep = consensus
+    kept = vals[keep]
+    rgb = tuple(float(x) for x in np.median(kept, 0))
+    return n_uniform, thr, idx, vals, keep, kept, rgb, centre, outlier_frac, mode_seed
+
+
 def estimate_base_auto(
     linear, colors, sat, pattern_size: int, *,
     block: int = 24, top_frac: float = 0.01, max_rel_std: float = 0.03,
@@ -240,34 +285,36 @@ def estimate_base_blocks(
         rows, cols = np.arange(hb) * block, np.arange(wb) * block
         inside = ((rows >= t) & (rows + block <= t + h))[:, None] & ((cols >= l) & (cols + block <= l + w))[None, :]
         valid &= inside
-    uniform = valid & (_neighbourhood_rel_std(sp) <= max_rel_std)
-    warnings: list[str] = []
-    n_uniform = int(uniform.sum())
-    if n_uniform == 0:
-        raise ValueError("no uniform unsaturated blocks; specify the film base region manually")
-
+    rel_std_map = _neighbourhood_rel_std(sp)
     Y = sp.mean(-1)
-    n_cand = min(n_uniform, max(10, int(round(top_frac * n_uniform))))
-    thr = float(np.sort(Y[uniform])[-n_cand])
-    cand = uniform & (Y >= thr)
-    idx = np.argwhere(cand)
-    vals = sp[cand]
-    chroma = np.log2(vals[:, [0, 2]] / vals[:, [1]])
-    consensus = np.ones(len(vals), bool)
-    for _ in range(2):
-        centre = np.median(chroma[consensus], 0)
-        consensus = np.all(np.abs(chroma - centre) <= chroma_tol, -1)
-        if not consensus.any():
-            raise ValueError("no chromatically consistent base candidates; specify region manually")
-    outlier_frac = float(1 - consensus.mean())
 
-    keep = consensus
+    n_uniform, thr, idx, vals, keep, kept, rgb, centre, outlier_frac, mode_seed = (
+        _consensus_candidates(sp, valid, rel_std_map, Y, max_rel_std, top_frac, chroma_tol)
+    )
+
+    vals_all = sp[valid]
+    relaxed_uniformity = False
+    if len(vals_all) > 0:
+        rgb_arr = np.asarray(rgb, dtype=np.float64)
+        p98 = np.percentile(vals_all, 98, axis=0)
+        if np.all(p98 > 2.2 * rgb_arr) and float(np.mean(np.all(vals_all > rgb_arr, axis=-1))) > 0.25:
+            relaxed_uniformity = True
+            relaxed_rel_std = max(max_rel_std, 0.25)
+            n_uniform, thr, idx, vals, keep, kept, rgb, centre, outlier_frac, mode_seed_relaxed = (
+                _consensus_candidates(sp, valid, rel_std_map, Y, relaxed_rel_std, top_frac, chroma_tol)
+            )
+            mode_seed = mode_seed or mode_seed_relaxed
+
+    warnings: list[str] = []
+    if relaxed_uniformity:
+        warnings.append(
+            f"initial base estimate suspiciously dense (>25% valid blocks brighter); "
+            f"relaxed max_rel_std to {relaxed_rel_std:.2f}"
+        )
     if outlier_frac > 0.2:
         warnings.append(f"{outlier_frac:.0%} of the brightest candidates rejected by chromaticity check; "
                         "possible light bypassing the film - verify base region")
 
-    kept = vals[keep]
-    rgb = tuple(float(x) for x in np.median(kept, 0))
     regions = [(int(r * block), int(c * block), block, block) for r, c in idx[keep]]
     stats = {}
     for i, name in enumerate(CHANNELS):
@@ -288,6 +335,10 @@ def estimate_base_blocks(
         kept_bbox=[int(kr.min()), int(kc.min()), int(kr.max() + block), int(kc.max() + block)],
         brightness_threshold=thr,
     )
+    if mode_seed:
+        diagnostics["mode_seed"] = True
+    if relaxed_uniformity:
+        diagnostics["relaxed_uniformity"] = True
     return BaseEstimate(rgb=rgb, method="auto", regions=regions, stats=stats, params=params,
                         diagnostics=diagnostics, warnings=warnings)
 

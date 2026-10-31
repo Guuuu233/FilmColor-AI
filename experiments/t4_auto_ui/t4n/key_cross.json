@@ -1,0 +1,222 @@
+{
+ "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+ "git_commit": "13db56501b66106c598c15f9ecd75b762d55a935",
+ "src_dirty": true,
+ "src_content_sha256": "6c6956f2c05aae6ed8416b6d3bdb7e79a4622e62e5b9b8c52be811b1a4517e55",
+ "manifest": "data/manifests/bn_rb_frames.json",
+ "environment": {
+  "python": "3.13.15",
+  "numpy": "2.5.4",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O"
+ },
+ "variants": {
+  "standard": {
+   "preset": "standard"
+  }
+ },
+ "ncc_min": 0.7,
+ "max_side": 1000,
+ "app_config": {},
+ "roll_folder": null,
+ "base_mode": null,
+ "frames": {
+  "blueneg:199807B-08-orlando-seaworld": {
+   "domain": "blueneg",
+   "roll": "ds-199807B",
+   "base_method": "auto",
+   "base": {
+    "method": "auto",
+    "rgb": [
+     0.4303196668624878,
+     0.18487830460071564,
+     0.15095750987529755
+    ],
+    "warnings": [
+     "35% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+    ],
+    "inside_image": 0.0,
+    "regions_preview": [],
+    "chroma_part": 0.00501290240508645,
+    "level_diff": 0.023628826231093986,
+    "d_lo_shared": null,
+    "softness": 0.5,
+    "roll_rgb": [
+     0.450947105884552,
+     0.19735094904899597,
+     0.15870562195777893
+    ],
+    "own_rgb": [
+     0.4299537241458893,
+     0.18475554883480072,
+     0.1510259062051773
+    ]
+   },
+   "camera_matrix": false,
+   "holder_share": 0.007012743266591242,
+   "d_hi": [
+    0.7659517526626587,
+    0.993238091468811,
+    0.3953671157360077
+   ],
+   "white_point": {
+    "method": "block_mean",
+    "block": 16,
+    "pct": 99.8,
+    "n_blocks": 67098,
+    "blue_guard": {
+     "guard": [
+      1.06,
+      1.18,
+      0.65,
+      0.48
+     ],
+     "ratio_bg": 0.3980587526112038,
+     "applied": false,
+     "base_bg": 0.8165236597194174
+    }
+   },
+   "spike_clamp": {
+    "clamp": [
+     1.15,
+     0.12
+    ],
+    "pixels": 73508,
+    "share": 0.0010648148148148149
+   },
+   "base_diagnostics": {
+    "n_blocks": 119850,
+    "n_saturated_blocks": 0,
+    "n_uniform": 69861,
+    "n_candidates": 699,
+    "n_kept": 453,
+    "chroma_outlier_frac": 0.351931330472103,
+    "chroma_centre_log2_RG_BG": [
+     1.2222650051116943,
+     -0.2881643772125244
+    ],
+    "rejected_mean_rgb": [
+     0.4061039984226227,
+     0.1524857133626938,
+     0.1388365477323532
+    ],
+    "kept_bbox": [
+     24,
+     120,
+     6744,
+     600
+    ],
+    "brightness_threshold": 0.2240455150604248
+   },
+   "raw_sha256": "4881d555701a759ca8a58131dfa3fde7fea690256d114a9264d4e01de4e3d08b",
+   "ref_sha256": "decd2ba85141d80577a58a5e522419595729398ac41e188b456e50ea15df6fcf",
+   "variants": {
+    "standard": {
+     "params": {
+      "ev": 0.211,
+      "temp": 0.5,
+      "tint": 0.2004,
+      "sat": 1.0101,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.2,
+      "chroma_preserve": 0.4
+     },
+     "flags": [],
+     "status": "ok",
+     "backlit": {
+      "p25": 0.36806371062994003,
+      "p90": 0.626807016134262,
+      "weight": 0.0
+     },
+     "wb_cool_cast": false,
+     "t4k": {
+      "thin_negative": {
+       "span_d_g": 0.993238091468811,
+       "bright_share": 0.05992,
+       "applied": false
+      },
+      "tone_pixels": {
+       "n": 50000,
+       "n_all": 50000,
+       "bright_share": 0.05992
+      },
+      "border_cells": null,
+      "gw_cool_undamped": false
+     },
+     "t4l": {
+      "metering": {
+       "mask_share_before": 0.25,
+       "holder_share": 0.0068198674268761875,
+       "strips": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0
+       },
+       "used": true,
+       "mask_share_after": 0.25
+      },
+      "ev_refine": {
+       "ev_anchor_raw": 0.21096223062705902,
+       "ev_anchor": 0.21096223062705902,
+       "med_tex_before": 0.49527253210544586,
+       "ev": 0.21096223062705902,
+       "med_tex_after": 0.49527253210544586
+      }
+     },
+     "t4m": {
+      "cyan_conf_boost": true
+     },
+     "estimate_seconds": 0.328,
+     "cam_mix": null,
+     "metrics": {
+      "n": 97410,
+      "de2000_median": 16.592069254961043,
+      "de2000_p90": 21.085300016678474,
+      "mean_dL": -15.934755463106132,
+      "mean_da": 3.9111059181730514,
+      "mean_db": 4.5616079096336515,
+      "chroma_ratio": 0.6322363747823045
+     },
+     "ours_L_median": 47.02024503763826,
+     "ours_C_median": 13.616511452036075,
+     "ref_L_median": 65.65581326441949,
+     "ref_C_median": 20.04518990436212
+    }
+   },
+   "alignment": {
+    "rot90": 0,
+    "mirror": false,
+    "scale": 0.8260000000000005,
+    "offset": [
+     28,
+     20
+    ],
+    "ncc": 0.8892853481178605,
+    "factor": 2,
+    "method": "eval_blueneg.register",
+    "ref_block_factor": 3
+   },
+   "ncc": 0.8892853481178605,
+   "seconds": 107.7
+  }
+ }
+}

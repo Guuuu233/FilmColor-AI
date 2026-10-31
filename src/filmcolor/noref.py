@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4m-2026-10-30",          # T4m: thin-negative darkening without backlit lift, strong cyan confidence floor;
+    rev="t4n-2026-10-30",          # T4n: cyan confidence floor requires a strongly red-deficient mid-grey zone;
+                                   # T4m: thin-negative darkening without backlit lift, strong cyan confidence floor;
                                    # T4l: metering inside the film box and off full black strips, wider ev lowering
                                    # on frames bright all over, too short a density range for manual review;
                                    # T4k: thin-negative ev cap, warm-scene cooling damped, green tint countered,
@@ -801,7 +802,8 @@ def estimate_wb_v3(px, cfg=None) -> dict:
         strength = cfg["wb_v3_cast_strength"]
     elif (cfg.get("wb_v3_cyan_conf_check") and len(diag["zones"]) == 2
           and all(z["narrow_share"] < cfg["wb_v3_cyan_narrow_max"] for z in diag["zones"])
-          and est[0] < cfg["wb_v3_cyan_r_max"]):
+          and est[0] < cfg["wb_v3_cyan_r_max"]
+          and diag["zones"][1].get("chroma", [0.0])[0] < -0.65):
         conf = max(conf, float(cfg["wb_v3_cyan_min_conf"]))
         diag["cyan_conf_boost"] = True
     temp, tint = wb_from_chroma(strength * conf * est)

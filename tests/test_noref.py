@@ -820,6 +820,22 @@ def test_t4m_strong_cyan_without_neutrals_gets_a_confidence_floor():
     assert cool["diagnostics"]["cool_cast"] and "cyan_conf_boost" not in cool["diagnostics"]
 
 
+def test_t4n_cyan_confidence_requires_red_deficiency_in_the_midgrey_zone():
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(31)
+    y = 2 ** rng.uniform(-6, 0, 100_000)
+    red = np.where(rng.random(len(y)) < 0.8, -2.0, -0.5)
+    px = np.stack([y * 2 ** red, y, y * 2 ** -0.4], -1).astype(np.float32)
+    result = estimate_wb_v3(px, NOREF_V3)
+    diag = result["diagnostics"]
+    assert all(z["narrow_share"] < 0.04 for z in diag["zones"])
+    assert result["chroma"][0] < -0.85  # grey world pulls the combined estimate towards cyan
+    assert diag["zones"][1]["chroma"][0] >= -0.65
+    assert "cyan_conf_boost" not in diag
+    assert result == estimate_wb_v3(px, dict(NOREF_V3, wb_v3_cyan_conf_check=False))
+
+
 def test_t4l_too_short_a_density_range_is_left_for_manual_review():
     """T4l (A1141, out of focus: 0.145 D): an inversion G density range below min_span_d_g gives
     manual_review_required with neutral parameters; None turns the check off, and without span_d_g nothing changes."""

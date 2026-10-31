@@ -90,7 +90,7 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4m"  # thumbnails rendered with the T4m NOREF_V3 (standard preset), gated white point and holder mask
+THUMB_REV = "t4n"  # T4n base fallbacks, flare guard and mid-grey cyan check
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
 WHITE_SELF_RATIO = None  # T4l: colour film's invert.self_ratio_white_point (collapse, target), e.g. (0.78, 0.85);
@@ -299,7 +299,7 @@ class State:
     def _disk_key(self, p: Path) -> str:
         rp = p.resolve()
         st = rp.stat()
-        raw = f"v1|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()
+        raw = f"t4n|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()  # base estimator changed; invalidate old scan results
         return hashlib.sha256(raw).hexdigest()[:24]
 
     def _scan_one(self, rel: str) -> dict:
