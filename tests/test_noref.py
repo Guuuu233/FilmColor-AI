@@ -852,31 +852,33 @@ def test_t4o_cyan_confidence_checks_blue_axis_threshold():
 
 def test_t4o_spatial_cool_cast_gate_requires_both_spread_and_disagreement():
     """T4o: cool cast detection is disabled (split_sky=True) only when BOTH top_bottom_spread and zone_disagreement
-    exceed 0.22; uniform cool cast remains enabled when either or neither threshold is exceeded."""
+    exceed 0.22; uniform cool cast remains enabled when either or neither threshold is exceeded.
+    Explicitly disable T4p bright_px_share gate to verify the original T4o dual-threshold contract alone."""
     from filmcolor.noref import NOREF_V3, estimate_wb_v3
 
+    cfg_base = dict(NOREF_V3, wb_v3_cast_max_bright_share=np.inf)
     px = cool_cast_scene()
     # 1. Uniform scene: neither threshold exceeded -> cool_cast active, split_sky False
-    res_uniform = estimate_wb_v3(px, NOREF_V3)
+    res_uniform = estimate_wb_v3(px, cfg_base)
     d_u = res_uniform["diagnostics"]
-    assert d_u["top_bottom_spread"] <= NOREF_V3["wb_v3_cast_max_tb_spread"]
-    assert d_u["zone_disagreement"] <= NOREF_V3["wb_v3_cast_max_zone_dis"]
+    assert d_u["top_bottom_spread"] <= cfg_base["wb_v3_cast_max_tb_spread"]
+    assert d_u["zone_disagreement"] <= cfg_base["wb_v3_cast_max_zone_dis"]
     assert not d_u["split_sky"] and d_u["cool_cast"]
 
     # 2. Only top_bottom_spread exceeded -> split_sky False, cool_cast still active
-    cfg_tb = dict(NOREF_V3, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 0.5,
+    cfg_tb = dict(cfg_base, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 0.5,
                   wb_v3_cast_max_zone_dis=d_u["zone_disagreement"] * 2.0)
     res_tb = estimate_wb_v3(px, cfg_tb)
     assert not res_tb["diagnostics"]["split_sky"] and res_tb["diagnostics"]["cool_cast"]
 
     # 3. Only zone_disagreement exceeded -> split_sky False, cool_cast still active
-    cfg_zd = dict(NOREF_V3, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 2.0,
+    cfg_zd = dict(cfg_base, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 2.0,
                   wb_v3_cast_max_zone_dis=d_u["zone_disagreement"] * 0.5)
     res_zd = estimate_wb_v3(px, cfg_zd)
     assert not res_zd["diagnostics"]["split_sky"] and res_zd["diagnostics"]["cool_cast"]
 
     # 4. BOTH exceeded -> split_sky True, cool_cast suppressed
-    cfg_both = dict(NOREF_V3, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 0.5,
+    cfg_both = dict(cfg_base, wb_v3_cast_max_tb_spread=d_u["top_bottom_spread"] * 0.5,
                     wb_v3_cast_max_zone_dis=d_u["zone_disagreement"] * 0.5)
     res_both = estimate_wb_v3(px, cfg_both)
     assert res_both["diagnostics"]["split_sky"] and not res_both["diagnostics"]["cool_cast"]
@@ -979,3 +981,249 @@ def test_t4l_too_short_a_density_range_is_left_for_manual_review():
     assert e["params"]["ev"] == 0 and e["params"].get("temp", 0) == 0
     assert estimate_params_v3(P, None, dict(NOREF_V3, min_span_d_g=None), span_d_g=0.15)["status"] == "ok"
     assert estimate_params_v3(P, None, NOREF_V3)["status"] == "ok"
+
+
+def test_t4p_highlight_hold_ev_max_drop_and_bounds():
+    """T4p: Step 5 highlight hold EV drop is bounded by ev_highlight_max_drop (default 0.60 EV),
+    supports fractional maxdrop (e.g. 0.25), respects ev_limits lower floor, and setting 3.0 restores
+    the uncapped drop path."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    # Scene with positive anchor EV and sparse bright highlights requiring large EV drop to clear clip budget
+    P = scene(median=0.03, stops=5.0, seed=12)
+    flat = P.reshape(-1, 3)
+    flat[:int(0.005 * len(flat))] = 2.7
+
+    # 1. Default T4p bounds drop to 0.60 EV
+    e_def = estimate_params_v3(P, None, NOREF_V3)
+    hh_def = e_def["diagnostics"]["highlight_hold"]
+    assert hh_def["ev_lowered"] == pytest.approx(0.60)
+    assert hh_def["max_drop"] == 0.60
+    assert "ev_lowered_for_highlights:0.6" in e_def["flags"]
+
+    # 2. Config max_drop=3.0 restores old deeper drop behavior (> 0.60 EV)
+    e_old = estimate_params_v3(P, None, dict(NOREF_V3, ev_highlight_max_drop=3.0))
+    hh_old = e_old["diagnostics"]["highlight_hold"]
+    assert hh_old["ev_lowered"] == pytest.approx(0.80)
+    assert e_old["params"]["ev"] < e_def["params"]["ev"] - 0.15
+
+    # 3. Fractional maxdrop (e.g. 0.25)
+    e_frac = estimate_params_v3(P, None, dict(NOREF_V3, ev_highlight_max_drop=0.25))
+    hh_frac = e_frac["diagnostics"]["highlight_hold"]
+    assert hh_frac["ev_lowered"] == pytest.approx(0.25)
+    assert e_frac["params"]["ev"] == pytest.approx(e_def["params"]["ev"] + 0.35)
+
+    # 4. ev_limits lower bound halts drop before max_drop is reached
+    e_floor = estimate_params_v3(P, None, dict(NOREF_V3, ev_limits=(1.80, 2.5), ev_highlight_max_drop=1.5))
+    hh_floor = e_floor["diagnostics"]["highlight_hold"]
+    assert e_floor["params"]["ev"] == pytest.approx(1.80)
+    assert hh_floor["ev_lowered"] == pytest.approx(0.50)
+
+
+def test_t4p_rescue_pre_hold_evidence_when_only_highlights_compressed():
+    """T4p: when Step 5 clears the clip budget by adjusting shoulder and highlights alone (ev_lowered == 0),
+    backlit capped rescue uses pre-hold Step 4b evidence for median and q25, with q90 = max(pre_q90, cur_q90),
+    so highlight compression alone does not pull q90 below threshold and rescue triggers on pre-hold evidence."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3, RenderParams, _encoded_quantiles
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y = np.zeros(n)
+    y[:80000] = rng.uniform(0.02, 0.06, 80000)
+    y[80000:97000] = rng.uniform(0.10, 0.155, 17000)
+    y[97000:] = 1.8
+    c = rng.normal(0, 0.05, (n, 2))
+    P = np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).reshape(200, 500, 3).astype(np.float32)
+
+    # 1. Run without rescue to capture the actual Step 5 parameters before rescue
+    e_off = estimate_params_v3(P, None, dict(NOREF_V3, backlit_capped_rescue=False), span_d_g=1.1)
+    p_step5 = RenderParams(**e_off["params"])
+    _, q90_held = _encoded_quantiles(P.reshape(-1, 3), p_step5, qs=(25, 90))
+
+    # 2. Run with rescue active
+    e_on = estimate_params_v3(P, None, NOREF_V3, span_d_g=1.1)
+    hh = e_on["diagnostics"]["highlight_hold"]
+    bc = e_on["diagnostics"]["backlit_check"]
+    r = e_on["diagnostics"]["ev_refine"]
+
+    assert hh["ev_lowered"] == 0.0
+    # Pre-hold Step 4b evidence is preserved for median and q25:
+    assert bc["rescue_med_before"] == r["med_tex_after"]
+    assert bc["rescue_q25"] == bc["p25"]
+
+    # True Step 5 highlight compression pulled post-hold q90 below capped_q90_min (0.45):
+    assert q90_held < NOREF_V3["backlit_capped_q90_min"]
+    # But rescue kept pre-hold Step 4b evidence (bc["p90"] >= 0.45) via max(q90_pre, q90_cur), triggering c1 rescue:
+    assert bc["rescue_q90"] == max(float(bc["p90"]), q90_held)
+    assert bc["rescue_q90"] >= NOREF_V3["backlit_capped_q90_min"]
+    assert bc["rescue_c1"] is True
+    assert bc["rescue_weight"] > 0
+
+
+def test_t4p_bright_share_gate_and_quads_fixed_radius():
+    """T4p/T4q: split_sky triggers when zone_disagreement > 0.22 and (top_bottom_spread > 0.22 or
+    bright_px_share >= 0.45). A high-brightness frame with zone disagreement (bright_share >= 0.45)
+    is identified as split_sky and suppresses false cool cast; a low-brightness frame with the same
+    zone disagreement (bright_share < 0.45) preserves cool_cast.
+    T4q: quads restored to fixed radius max(r for _, r, _ in cfg['wb_v3_zones']) (0.35), so quads
+    do not expand to adaptive zone radii."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    def cool_scene(median_y=0.18, seed=61):
+        rng = np.random.default_rng(seed)
+        n = 40000
+        y = median_y * 2 ** rng.uniform(-2, 2, n)
+        grey = rng.random(n) < 0.4
+        low = y < np.percentile(y, 70)
+        # Zone 0 (>= 70th percentile): cool with z0 = [-0.28, 0.06]
+        # Zone 1 (< 70th percentile): cool with z1 = [-0.11, 0.22]
+        # Disagreement between z0 and z1: norm([-0.17, -0.16]) = 0.2335 > 0.22
+        g = np.where(low[:, None], rng.normal([-0.11, 0.22], 0.02, (n, 2)), rng.normal([-0.28, 0.06], 0.02, (n, 2)))
+        c = np.where(grey[:, None], g, rng.normal([-0.6, 0.8], 0.1, (n, 2)))
+        return np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).astype(np.float32)
+
+    # 1. Low brightness (bright_px_share < 0.45): cool cast is preserved
+    dark_p = cool_scene(median_y=0.18)
+    wb_dark = estimate_wb_v3(dark_p, NOREF_V3)
+    d_dark = wb_dark["diagnostics"]
+    assert d_dark["zone_disagreement"] > NOREF_V3["wb_v3_cast_max_zone_dis"]
+    assert d_dark["top_bottom_spread"] <= NOREF_V3["wb_v3_cast_max_tb_spread"]
+    assert d_dark["bright_px_share"] < NOREF_V3["wb_v3_cast_max_bright_share"]
+    assert not d_dark["split_sky"]
+    assert d_dark["cool_cast"] is True
+
+    # 2. High brightness (bright_px_share >= 0.45): false cool cast inhibited via split_sky
+    bright_p = cool_scene(median_y=0.75)
+    wb_bright = estimate_wb_v3(bright_p, NOREF_V3)
+    d_bright = wb_bright["diagnostics"]
+    assert d_bright["zone_disagreement"] > NOREF_V3["wb_v3_cast_max_zone_dis"]
+    assert d_bright["top_bottom_spread"] <= NOREF_V3["wb_v3_cast_max_tb_spread"]
+    assert d_bright["bright_px_share"] >= NOREF_V3["wb_v3_cast_max_bright_share"]
+    assert d_bright["split_sky"] is True
+    assert not d_bright["cool_cast"]
+
+    # 3. Quads fixed radius: quads use fixed radius max(r for _, r, _ in cfg['wb_v3_zones'])
+    # When all pixels have chroma norm > 0.35, quads finds no pixels even though adaptive zones expand
+    rng_fixed = np.random.default_rng(88)
+    n = 40000
+    y_f = 0.18 * 2 ** rng_fixed.uniform(-1, 1, n)
+    theta = rng_fixed.uniform(0, 2 * np.pi, n)
+    radius = rng_fixed.uniform(0.36, 0.40, n)
+    c_f = np.stack([radius * np.cos(theta), radius * np.sin(theta)], axis=1)
+    px_f = np.stack([y_f * 2 ** c_f[:, 0], y_f, y_f * 2 ** c_f[:, 1]], -1).astype(np.float32)
+
+    r_quad_fixed = max(r for _, r, _ in NOREF_V3["wb_v3_zones"])
+    assert r_quad_fixed == 0.35
+    wb_f = estimate_wb_v3(px_f, NOREF_V3)
+    d_f = wb_f["diagnostics"]
+    # Zones adaptively expand radius_effective beyond 0.35:
+    assert any(z["radius_effective"] > r_quad_fixed for z in d_f["zones"])
+    # But quads stays strictly bounded by fixed r_quad_fixed (0.35), so no quadrant meets min_px:
+    assert "top_bottom_spread" not in d_f
+
+    # When pixels with chroma norm <= 0.35 are present in top and bottom halves:
+    c_f_pass = c_f.copy()
+    half = n // 2
+    c_f_pass[:1200] = [0.1, 0.1]
+    c_f_pass[half:half + 1200] = [-0.1, -0.1]
+    px_f_pass = np.stack([y_f * 2 ** c_f_pass[:, 0], y_f, y_f * 2 ** c_f_pass[:, 1]], -1).astype(np.float32)
+    wb_f_pass = estimate_wb_v3(px_f_pass, NOREF_V3)
+    assert "top_bottom_spread" in wb_f_pass["diagnostics"]
+
+
+def test_t4q_overlift_damp_end_to_end_and_diagnostics():
+    """T4q: Step 5 rescue-to-Step 6 overlift_damp check:
+    - Triggers when base_p['ev'] >= overlift_ev_min (1.50) and Step 4b q25 >= overlift_q25_min (0.35).
+    - Computes ramp_ev, pull, and blacks drop according to formula and clamps pull <= max_pull (0.65).
+    - Lowers ev and blacks; sets diagnostics overlift_damp.
+    - Does NOT trigger when EV < 1.50 or q25 < 0.35, or when overlift_damp_check=False.
+    - Validates boundary thresholds (= ev_min, = q25_min) and max_pull capping.
+    - Verifies Step 4b backlit and Step 5 highlight hold / rescue diagnostics remain invariant ON vs OFF."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y = rng.uniform(0.02, 0.08, n)
+    P = np.stack([y, y, y], -1).reshape(200, 500, 3).astype(np.float32)
+
+    # 1. Triggered on default config (ON vs OFF)
+    res_on = estimate_params_v3(P, None, NOREF_V3, span_d_g=1.1)
+    res_off = estimate_params_v3(P, None, dict(NOREF_V3, overlift_damp_check=False), span_d_g=1.1)
+
+    assert "overlift_damp" in res_on["diagnostics"]
+    od = res_on["diagnostics"]["overlift_damp"]
+    assert od["applied"] is True
+    assert "overlift_damp" not in res_off["diagnostics"]
+
+    # Verify mathematical formula for pull and blacks drop:
+    ev0 = od["ev_before"]
+    q25 = od["q25_before"]
+    assert ev0 >= NOREF_V3["overlift_ev_min"]
+    assert q25 >= NOREF_V3["overlift_q25_min"]
+    assert ev0 == pytest.approx(res_off["params"]["ev"], abs=1e-4)
+
+    expected_ramp = float(np.clip((ev0 - 1.30) / 0.50, 0.0, 1.0))
+    expected_pull = float(np.clip(3.2 * (q25 - 0.33) * expected_ramp, 0.0, 0.65))
+    expected_blk_drop = float(min(0.06, expected_pull * 0.10))
+    expected_ev_after = ev0 - expected_pull
+
+    assert od["pull"] == pytest.approx(expected_pull, abs=1e-6)
+    assert od["ev_after"] == pytest.approx(expected_ev_after, abs=1e-6)
+    assert od["blacks_lowered"] == pytest.approx(expected_blk_drop, abs=1e-6)
+    assert res_on["params"]["ev"] == round(expected_ev_after, 4)
+    assert res_on["params"]["blacks"] == round(-expected_blk_drop, 4)
+    assert res_on["params"]["ev"] < res_off["params"]["ev"]
+
+    # Invariance of Step 4b backlit & Step 5 highlight hold diagnostics between ON and OFF:
+    assert res_on["diagnostics"]["backlit_check"] == res_off["diagnostics"]["backlit_check"]
+    assert res_on["diagnostics"]["highlight_hold"] == res_off["diagnostics"]["highlight_hold"]
+
+    # 2. Invariance on backlit rescue frame (Step 5 highlight / rescue diagnostics match):
+    y_res = np.zeros(n)
+    y_res[:80000] = rng.uniform(0.02, 0.06, 80000)
+    y_res[80000:97000] = rng.uniform(0.12, 0.22, 17000)
+    y_res[97000:] = 1.8
+    c_res = rng.normal(0, 0.05, (n, 2))
+    P_res = np.stack([y_res * 2 ** c_res[:, 0], y_res, y_res * 2 ** c_res[:, 1]], -1).reshape(200, 500, 3).astype(np.float32)
+
+    res_res_on = estimate_params_v3(P_res, None, NOREF_V3, span_d_g=1.1)
+    res_res_off = estimate_params_v3(P_res, None, dict(NOREF_V3, overlift_damp_check=False), span_d_g=1.1)
+    assert res_res_on["diagnostics"]["backlit_check"] == res_res_off["diagnostics"]["backlit_check"]
+    assert res_res_on["diagnostics"]["highlight_hold"] == res_res_off["diagnostics"]["highlight_hold"]
+
+    # 3. Non-trigger case: current EV < 1.50 (high median scene)
+    y_med = rng.uniform(0.10, 0.25, n)
+    P_med = np.stack([y_med, y_med, y_med], -1).reshape(200, 500, 3).astype(np.float32)
+    res_med = estimate_params_v3(P_med, None, NOREF_V3)
+    assert res_med["params"]["ev"] < 1.50
+    assert "overlift_damp" not in res_med["diagnostics"]
+
+    # 4. Non-trigger case: Step 4b q25 < 0.35 (wide dynamic range scene with dark shadows)
+    y_wide = np.concatenate([rng.uniform(0.005, 0.02, 35000), rng.uniform(0.02, 0.15, 65000)])
+    P_wide = np.stack([y_wide, y_wide, y_wide], -1).reshape(200, 500, 3).astype(np.float32)
+    res_wide = estimate_params_v3(P_wide, None, NOREF_V3)
+    assert res_wide["params"]["ev"] >= 1.50
+    assert res_wide["diagnostics"]["backlit_check"]["p25"] < 0.35
+    assert "overlift_damp" not in res_wide["diagnostics"]
+
+    # 5. Boundary equality tests (= ev_min, = q25_min)
+    # Exactly at ev_min: triggers
+    res_ev_bnd = estimate_params_v3(P, None, dict(NOREF_V3, overlift_ev_min=ev0))
+    assert res_ev_bnd["diagnostics"].get("overlift_damp", {}).get("applied") is True
+    # Strictly above ev_min: does not trigger
+    res_ev_bnd_fail = estimate_params_v3(P, None, dict(NOREF_V3, overlift_ev_min=ev0 + 1e-4))
+    assert "overlift_damp" not in res_ev_bnd_fail["diagnostics"]
+
+    # Exactly at q25_min: triggers
+    res_q25_bnd = estimate_params_v3(P, None, dict(NOREF_V3, overlift_q25_min=q25))
+    assert res_q25_bnd["diagnostics"].get("overlift_damp", {}).get("applied") is True
+    # Strictly above q25_min: does not trigger
+    res_q25_bnd_fail = estimate_params_v3(P, None, dict(NOREF_V3, overlift_q25_min=q25 + 1e-4))
+    assert "overlift_damp" not in res_q25_bnd_fail["diagnostics"]
+
+    # 6. Max pull limit clamping
+    res_clamped = estimate_params_v3(P, None, dict(NOREF_V3, overlift_max_pull=0.20))
+    od_clamped = res_clamped["diagnostics"]["overlift_damp"]
+    assert od_clamped["pull"] == 0.20
+    assert od_clamped["ev_after"] == pytest.approx(ev0 - 0.20, abs=1e-6)
+    assert od_clamped["blacks_lowered"] == pytest.approx(0.02, abs=1e-6)

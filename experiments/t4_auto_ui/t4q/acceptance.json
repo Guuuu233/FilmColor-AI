@@ -1,0 +1,108 @@
+{
+  "dev": {
+    "n": 185,
+    "better_025": 5,
+    "worse_025": 0,
+    "better_005": 5,
+    "worse_005": 0,
+    "max_regression": 0.0,
+    "metrics_before": {
+      "median": 9.027891734866627,
+      "mean": 9.450289020194285,
+      "p90": 14.142964735916426
+    },
+    "metrics_after": {
+      "median": 9.007480799616108,
+      "mean": 9.382649806163718,
+      "p90": 14.089628658737038
+    },
+    "source_sha256": "8abc02b946fcd9408cf2f3eaff137837781a4841387facb6f874259ceadf5f4c",
+    "overlift_applied": 4,
+    "overlift_better_025": 4,
+    "overlift_worse_005": 0,
+    "primary_variant": "standard",
+    "presets": {
+      "standard": {
+        "better_025": 5,
+        "worse_025": 0,
+        "better_005": 5,
+        "worse_005": 0,
+        "max_regression": 0.0,
+        "regressions_over_005": {}
+      },
+      "natural": {
+        "better_025": 9,
+        "worse_025": 2,
+        "better_005": 10,
+        "worse_005": 3,
+        "max_regression": 1.4574995774524186,
+        "regressions_over_005": {
+          "ext:A033": 1.4574995774524186,
+          "ext:A038": 0.44241464395831454,
+          "ext:A123": 0.15377876021215275
+        }
+      },
+      "portrait": {
+        "better_025": 15,
+        "worse_025": 1,
+        "better_005": 17,
+        "worse_005": 3,
+        "max_regression": 1.2460575961436717,
+        "regressions_over_005": {
+          "ext:A033": 1.2460575961436717,
+          "ext:A038": 0.14002454402504494,
+          "ext:A123": 0.1718742281347474
+        }
+      },
+      "vivid": {
+        "better_025": 4,
+        "worse_025": 0,
+        "better_005": 4,
+        "worse_005": 0,
+        "max_regression": 0.0,
+        "regressions_over_005": {}
+      },
+      "print_classic": {
+        "better_025": 4,
+        "worse_025": 0,
+        "better_005": 4,
+        "worse_005": 0,
+        "max_regression": 0.009255350837861442,
+        "regressions_over_005": {}
+      }
+    }
+  },
+  "cross": {
+    "n": 123,
+    "better_025": 9,
+    "worse_025": 0,
+    "better_005": 10,
+    "worse_005": 0,
+    "max_regression": 0.0,
+    "metrics_before": {
+      "median": 13.843007443861598,
+      "mean": 14.429734270167891,
+      "p90": 20.73019069016116
+    },
+    "metrics_after": {
+      "median": 13.772807091167099,
+      "mean": 14.314420404302835,
+      "p90": 20.634656586087218
+    },
+    "source_sha256": "8abc02b946fcd9408cf2f3eaff137837781a4841387facb6f874259ceadf5f4c",
+    "overlift_applied": 9,
+    "overlift_better_025": 7,
+    "overlift_worse_005": 0,
+    "primary_variant": "standard",
+    "presets": {
+      "standard": {
+        "better_025": 9,
+        "worse_025": 0,
+        "better_005": 10,
+        "worse_005": 0,
+        "max_regression": 0.0,
+        "regressions_over_005": {}
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-"""Film-scanner input: linear RGB / RGBI DNG (DNG PhotometricInterpretation LinearRaw, 3 or 4 samples), as
+"""Film-scanner input: linear RGB / RGBI / monochrome DNG (DNG PhotometricInterpretation LinearRaw, 1, 3 or 4 samples), as
 written by SilverFast for the Plustek OpticFilm scans of BlueNeg. A second input path next to the
 camera RAW path (filmcolor.raw / rawpy_io); both hand the shared inversion a linear, black-subtracted
 (H, W, 3) transmission image scaled to the white level, a saturation mask and a film base.
@@ -54,13 +54,16 @@ def _tag(page, name, default=None):
 
 
 def _main_page(tf):
-    cands = [p for p in _all_pages(tf) if p.photometric == LINEAR_RAW and p.samplesperpixel in (3, 4)
-             and not (_tag(p, "NewSubfileType", 0) or 0) & 1]
-    return max(cands, key=lambda p: p.shape[0] * p.shape[1]) if cands else None
+    for n_samples in ((3, 4), (1,)):
+        cands = [p for p in _all_pages(tf) if p.photometric == LINEAR_RAW and p.samplesperpixel in n_samples
+                 and not (_tag(p, "NewSubfileType", 0) or 0) & 1]
+        if cands:
+            return max(cands, key=lambda p: p.shape[0] * p.shape[1])
+    return None
 
 
 def is_scanner_dng(path) -> bool:
-    """True for a DNG whose main image is 3- or 4-sample LinearRaw (no CFA)."""
+    """True for a DNG whose main image is 1-, 3- or 4-sample LinearRaw (no CFA)."""
     if Path(path).suffix.lower() != ".dng":
         return False
     with tifffile.TiffFile(path) as tf:
@@ -97,7 +100,7 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
     with tifffile.TiffFile(path) as tf:
         main = _main_page(tf)
         if main is None:
-            raise ValueError(f"{path.name}: no 3- or 4-sample LinearRaw image (not a linear scanner DNG)")
+            raise ValueError(f"{path.name}: no 1-, 3- or 4-sample LinearRaw image (not a linear scanner DNG)")
         lut_tag = main.tags.get("LinearizationTable")
         lut = None
         if lut_tag is not None:
@@ -119,7 +122,9 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
                 raise ValueError(f"{path.name}: LinearizationTable on non-integer samples ({a.dtype})")
             a = lut.astype(np.float32)[np.minimum(a, lut.size - 1)]  # stored values past the table take its last entry
         ifd0 = tf.pages[0]
-        ir = [p for p in _all_pages(tf) if p.samplesperpixel == 1 and p.shape[:2] == a.shape[:2]]
+        ir = [p for p in _all_pages(tf)
+              if p is not main and getattr(p, "offset", None) != getattr(main, "offset", -1)
+              and p.samplesperpixel == 1 and p.shape[:2] == a.shape[:2]]
         ir_stats = None
         if ir:
             m = ir[0].asarray()[::8, ::8].astype(np.float64)
@@ -138,11 +143,18 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
                     bits=bits, black_source="tag" if main.tags.get("BlackLevel") else "DNG default",
                     white_source="tag" if main.tags.get("WhiteLevel") else "DNG default",
                     infrared_layer=ir_stats, scanner_settings=silverfast_settings(_tag(ifd0, "XMP")))
+        if n_samples == 1:
+            meta["monochrome_dng"] = True
         if lut is not None:  # files without a table keep their previous field set
             meta["linearization_table_len"] = int(lut.size)
-    if a.ndim != 3 or a.shape[2] not in (3, 4):
+    if a.ndim == 2:
+        rgb_raw = np.repeat(a[:, :, None], 3, axis=2)
+    elif a.ndim == 3 and a.shape[2] == 1:
+        rgb_raw = np.repeat(a, 3, axis=2)
+    elif a.ndim == 3 and a.shape[2] in (3, 4):
+        rgb_raw = a[:, :, :3]
+    else:
         raise ValueError(f"{path.name}: unexpected image shape {a.shape}")
-    rgb_raw = a[:, :, :3]
     sat = np.any(rgb_raw >= white, -1)
     rgb = ((rgb_raw.astype(np.float32) - np.float32(black)) / np.float32(white - black))
     del a, rgb_raw

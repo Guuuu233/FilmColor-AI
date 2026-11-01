@@ -236,3 +236,106 @@ def test_t4m_interleaved_4ch_linearization_table(tmp_path):
     # IR stats reflect linearized samples
     ir_linearized = lut[a4[::8, ::8, 3]]
     assert np.isclose(fr.meta["infrared_layer"]["percentiles"]["50"], np.percentile(ir_linearized, 50))
+
+
+def test_t4p_monochrome_single_channel_identification_and_equal_rgb(tmp_path):
+    """T4p: 1-channel LinearRaw (H, W) or (H, W, 1) is identified as scanner DNG and loaded as equal 3-channel RGB.
+    monochrome_dng=True is set in meta (and omitted for RGB/RGBI); saturation mask and levels match."""
+    rng = np.random.default_rng(101)
+    m = rng.integers(1000, 60000, (120, 160), dtype=np.uint16)
+    m[10, 20] = 65535  # saturated pixel
+    p_mono = tmp_path / "mono_2d.dng"
+    with tifffile.TiffWriter(p_mono) as tw:
+        tw.write(m, photometric=34892)
+
+    assert is_scanner_dng(p_mono)
+    fr = load_scanner(p_mono)
+    assert fr.meta.get("monochrome_dng") is True
+    assert fr.rgb.shape == (120, 160, 3)
+    # Equal RGB across all 3 channels
+    np.testing.assert_array_equal(fr.rgb[:, :, 0], fr.rgb[:, :, 1])
+    np.testing.assert_array_equal(fr.rgb[:, :, 1], fr.rgb[:, :, 2])
+    np.testing.assert_allclose(fr.rgb[:, :, 0], m.astype(np.float32) / 65535.0, atol=1e-6)
+    # Saturation mask
+    assert fr.sat.shape == (120, 160)
+    assert fr.sat[10, 20] and fr.sat.sum() == 1
+    # Levels
+    assert (fr.black, fr.white) == (0.0, 65535.0)
+    # IR list should exclude main itself
+    assert fr.meta["infrared_layer"] is None
+
+    # (H, W, 1) 3D single channel
+    p_mono3d = tmp_path / "mono_3d.dng"
+    with tifffile.TiffWriter(p_mono3d) as tw:
+        tw.write(m[:, :, None], photometric=34892, planarconfig="contig")
+    fr3d = load_scanner(p_mono3d)
+    assert fr3d.meta.get("monochrome_dng") is True
+    np.testing.assert_array_equal(fr3d.rgb, fr.rgb)
+    np.testing.assert_array_equal(fr3d.sat, fr.sat)
+
+
+def test_t4p_monochrome_levels_and_lut(tmp_path):
+    """T4p: single-channel BlackLevel/WhiteLevel and LinearizationTable apply correctly."""
+    rng = np.random.default_rng(202)
+    m = rng.integers(0, 256, (80, 100), dtype=np.uint8)
+    lut = np.round(65535 * (np.arange(256) / 255.0) ** 2.0).astype(np.uint16)
+    p = tmp_path / "mono_lut.dng"
+    with tifffile.TiffWriter(p) as tw:
+        tw.write(m, photometric=34892, extratags=[
+            (50712, "H", 256, lut.tolist(), True),
+            (50714, "H", 1, 500, True),
+            (50717, "H", 1, 62000, True),
+        ])
+
+    fr = load_scanner(p)
+    assert fr.meta.get("monochrome_dng") is True
+    assert fr.meta["linearization_table_len"] == 256
+    assert (fr.black, fr.white) == (500.0, 62000.0)
+    expected_linear = lut[m].astype(np.float32)
+    expected_rgb_ch = (expected_linear - 500.0) / (62000.0 - 500.0)
+    np.testing.assert_allclose(fr.rgb[:, :, 0], expected_rgb_ch, atol=1e-6)
+    np.testing.assert_array_equal(fr.rgb[:, :, 0], fr.rgb[:, :, 1])
+    np.testing.assert_array_equal(fr.rgb[:, :, 1], fr.rgb[:, :, 2])
+    assert np.array_equal(fr.sat, expected_linear >= 62000.0)
+
+
+def test_t4p_monochrome_with_separate_ir_layer(tmp_path):
+    """T4p: monochrome main page with a separate 1-sample IR page extracts IR stats without self-exclusion error."""
+    m = np.full((100, 100), 20000, dtype=np.uint16)
+    ir_data = np.full((100, 100), 45000, dtype=np.uint16)
+    p = tmp_path / "mono_with_ir.dng"
+    with tifffile.TiffWriter(p) as tw:
+        tw.write(m, photometric=34892)
+        tw.write(ir_data, photometric="minisblack")
+
+    fr = load_scanner(p)
+    assert fr.meta.get("monochrome_dng") is True
+    ir_meta = fr.meta["infrared_layer"]
+    assert ir_meta is not None
+    assert np.isclose(ir_meta["percentiles"]["50"], 45000.0)
+    assert ir_meta["used"].startswith("no")
+
+
+def test_t4p_rgb_priority_over_monochrome_main_page(tmp_path):
+    """T4p: when both RGB (samplesperpixel=3) and monochrome (samplesperpixel=1) LinearRaw pages exist,
+    RGB is selected as main page regardless of page order."""
+    rgb, _ = scan(100, 100)
+    mono = np.full((100, 100), 12345, dtype=np.uint16)
+
+    # Order 1: mono first, then rgb
+    p1 = tmp_path / "mono_then_rgb.dng"
+    with tifffile.TiffWriter(p1) as tw:
+        tw.write(mono, photometric=34892)
+        tw.write(rgb, photometric=34892, planarconfig="contig")
+    fr1 = load_scanner(p1)
+    assert "monochrome_dng" not in fr1.meta
+    np.testing.assert_allclose(fr1.rgb, rgb / 65535.0, atol=1e-6)
+
+    # Order 2: rgb first, then mono (mono acts as IR candidate if same shape)
+    p2 = tmp_path / "rgb_then_mono.dng"
+    with tifffile.TiffWriter(p2) as tw:
+        tw.write(rgb, photometric=34892, planarconfig="contig")
+        tw.write(mono, photometric=34892)
+    fr2 = load_scanner(p2)
+    assert "monochrome_dng" not in fr2.meta
+    np.testing.assert_allclose(fr2.rgb, rgb / 65535.0, atol=1e-6)

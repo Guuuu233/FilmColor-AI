@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4o-2026-10-31",          # T4o: capped backlit rescue, spatial cool-cast gate and cyan blue-axis check;
+    rev="t4q-2026-11-01",          # T4q: fixed spatial radius and bounded darkening of lifted shadows;
+                                   # T4p: bounded highlight EV drop, pre-hold rescue evidence and bright-sky split;
                                    # T4m: thin-negative darkening without backlit lift, strong cyan confidence floor;
                                    # T4l: metering inside the film box and off full black strips, wider ev lowering
                                    # on frames bright all over, too short a density range for manual review;
@@ -457,6 +458,11 @@ NOREF_V3 = dict(
     target_encoded_band=(0.45, 0.52),  # target sRGB-encoded median luminance of the textured cells (T4g; T4d
                                    # 0.48..0.55 and T4c / T4e 0.45..0.52 on the full frame)
     ev_refine_down_max=0.20,       # T4f: the EV refinement lowers exposure by at most this, and not below -this
+    ev_highlight_max_drop=0.60,    # T4p: limit global darkening for sparse border / lamp highlights in Step 5
+    # T4q: after Highlight Hold, pull back large EV gains when Step 4b's encoded shadows were already bright
+    overlift_damp_check=True, overlift_ev_min=1.50, overlift_ev_pivot=1.30, overlift_ev_ramp=0.50,
+    overlift_q25_min=0.35, overlift_q25_pivot=0.33, overlift_gain=3.2, overlift_max_pull=0.65,
+    overlift_blacks_gain=0.10, overlift_blacks_max=0.06,
     ev_refine_p98_max=0.96,        # T4f: the EV refinement brightens only while full-frame encoded p98 stays <= this
     ev_anchor_p98_cap=True,        # T4f: a positive anchor ev is held to the same p98 ceiling (the task list puts the
                                    # ceiling on the refinement only, which left A012 at the anchor's +2.50 EV)
@@ -488,7 +494,7 @@ NOREF_V3 = dict(
     wb_v3_cool_cast_check=True,
     wb_v3_cool_z0=(-0.05, 0.05), wb_v3_cool_z1=(-0.10, 0.10), wb_v3_cool_gw=(-0.20, 0.25),
     wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80, wb_v3_cast_strength=0.80,
-    wb_v3_cast_max_tb_spread=0.22, wb_v3_cast_max_zone_dis=0.22,
+    wb_v3_cast_max_tb_spread=0.22, wb_v3_cast_max_zone_dis=0.22, wb_v3_cast_max_bright_share=0.45,
     # T4m: neither zone has neutral evidence and the combined log2 R/G is strongly negative: confidence at least this
     wb_v3_cyan_conf_check=True, wb_v3_cyan_narrow_max=0.04, wb_v3_cyan_r_max=-0.85, wb_v3_cyan_min_conf=0.72,
     wb_v3_cyan_b_max=0.20,
@@ -754,19 +760,22 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     n = len(px)
     # quadrants are approximated by sample order: _sample keeps row-major order, so halves of the sample are the
     # top and bottom of the frame; left / right are not separable here, so only top vs bottom is checked
+    r_quad = max(r for _, r, _ in cfg["wb_v3_zones"])
     for half in (slice(0, n // 2), slice(n // 2, n)):
         ch, yh, nh = c[half], y[half], norm[half]
         lo, hi = np.percentile(yh, [25, 96])
-        selh = (yh >= lo) & (yh <= hi) & (nh <= max(r for _, r, _ in cfg["wb_v3_zones"]))
+        selh = (yh >= lo) & (yh <= hi) & (nh <= r_quad)
         if selh.sum() >= cfg["wb_v3_min_px"]:
             quads.append(_huber_location(ch[selh], cfg["wb_v3_huber"]))
     if len(quads) == 2:
         diag["top_bottom_spread"] = float(np.linalg.norm(quads[0] - quads[1]))
     if len(ests) == 2:
         diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
-    split_sky = (diag.get("top_bottom_spread", 0.0) > cfg.get("wb_v3_cast_max_tb_spread", np.inf)
-                 and diag.get("zone_disagreement", 0.0) > cfg.get("wb_v3_cast_max_zone_dis", np.inf))
-    diag["split_sky"] = bool(split_sky)
+    bright_px_share = float(np.mean(y > cfg.get("bright_luma", 0.45)))
+    split_sky = (diag.get("zone_disagreement", 0.0) > cfg.get("wb_v3_cast_max_zone_dis", np.inf)
+                 and (diag.get("top_bottom_spread", 0.0) > cfg.get("wb_v3_cast_max_tb_spread", np.inf)
+                      or bright_px_share >= cfg.get("wb_v3_cast_max_bright_share", 0.45)))
+    diag.update(split_sky=bool(split_sky), bright_px_share=bright_px_share)
     # T4j: a uniform cool cast (_DSF8948: bright [-0.10, +0.17], mid-grey [-0.22, +0.31], grey world [-0.46, +0.61]);
     # a sky over a warm or green ground has a mid-grey zone that is not cool (A008 [-0.12, -0.08]) and keeps the damping
     cool_cast = bool(cfg.get("wb_v3_cool_cast_check", False) and found == [0, 1] and est_gw is not None
@@ -1117,18 +1126,28 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
     ev_lowered = 0.0
     if not found:
         base_p["shoulder"], base_p["highlights"] = 0.85, -0.65
+        max_drop = float(cfg.get("ev_highlight_max_drop", 3.0))
         for _ in range(30):
-            if _clip_share(px, RenderParams(**base_p)) <= cfg["clip_budget"] or base_p["ev"] <= cfg["ev_limits"][0]:
+            if (_clip_share(px, RenderParams(**base_p)) <= cfg["clip_budget"]
+                    or base_p["ev"] <= cfg["ev_limits"][0] or ev_lowered + 1e-9 >= max_drop):
                 break
-            base_p["ev"] = float(max(base_p["ev"] - 0.1, cfg["ev_limits"][0]))
-            ev_lowered += 0.1
+            step = min(0.1, max(0.0, max_drop - ev_lowered))
+            if step <= 1e-9:
+                break
+            base_p["ev"] = float(max(base_p["ev"] - step, cfg["ev_limits"][0]))
+            ev_lowered = round(ev_lowered + step, 4)
+    out["diagnostics"]["highlight_hold"] = dict(ev_lowered=ev_lowered, max_drop=cfg.get("ev_highlight_max_drop", 3.0))
     if ev_lowered > 0:
         flags.append(f"ev_lowered_for_highlights:{ev_lowered:.1f}")
 
     # T4o: sparse highlights can cap EV without reaching the ordinary q90 backlit threshold.
     if w_bl == 0.0 and cfg.get("backlit_capped_rescue") and span_d_g is not None:
-        med_after = _encoded_quantiles(tex_px, RenderParams(**base_p), qs=(50,))[0]
-        q25_res, q90_res = _encoded_quantiles(px_tone, RenderParams(**base_p), qs=(25, 90))
+        med_after = (min(float(refine["med_tex_after"]),
+                         _encoded_quantiles(tex_px, RenderParams(**base_p), qs=(50,))[0])
+                     if ev_lowered > 0 else float(refine["med_tex_after"]))
+        q25_cur, q90_cur = _encoded_quantiles(px_tone, RenderParams(**base_p), qs=(25, 90))
+        q25_res = q25_cur if ev_lowered > 0 else float(q25)
+        q90_res = max(float(q90), q90_cur)
         hl_capped = bool(refine.get("capped_by_p98") or refine.get("anchor_capped_by_p98") or ev_lowered > 0)
         med_lo, med_hi = cfg["backlit_capped_med_band"]
         q25_lo, q25_hi = cfg["backlit_capped_q25_band"]
@@ -1157,6 +1176,21 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
                                                        rescue_med_before=med_after, rescue_q25=q25_res, rescue_q90=q90_res)
             if w_res > 0:
                 flags.append("backlit_midtone")
+
+    # T4q: use Step 4b's shadow evidence after the backlit / highlight decisions, so their inputs stay unchanged
+    if (cfg.get("overlift_damp_check") and base_p["ev"] >= cfg["overlift_ev_min"]
+            and q25 >= cfg["overlift_q25_min"]):
+        ev0_ol = float(base_p["ev"])
+        ramp_ev = float(np.clip((ev0_ol - cfg["overlift_ev_pivot"]) / cfg["overlift_ev_ramp"], 0.0, 1.0))
+        pull = float(np.clip(cfg["overlift_gain"] * (q25 - cfg["overlift_q25_pivot"]) * ramp_ev,
+                             0.0, cfg["overlift_max_pull"]))
+        if pull > 0.0:
+            blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
+            base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
+            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
+            out["diagnostics"]["overlift_damp"] = dict(
+                applied=True, ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
+                q25_before=float(q25), blacks_lowered=blk_drop)
 
     # 6. Contrast relief (T4b, encoded output): only a very wide frame (encoded luminance p90 - p10 above
     #    contrast_spread_max) with both ends clipped gets a lower contrast, down to the lower bound

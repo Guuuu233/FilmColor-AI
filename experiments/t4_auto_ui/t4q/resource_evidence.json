@@ -1,0 +1,22 @@
+{
+  "candidate_a": {
+    "log_sha256": "ecab0d4ab162f6e2a06ed0508aff809a3d62a228d51d42c33c5334f8a4440293",
+    "peak_memory_footprint_bytes": 6177838384
+  },
+  "candidate_cross": {
+    "log_sha256": "20e077720bbc2911a0883f0e1091753c5d6acb8d1480a703956dd1100c9ac43a",
+    "peak_memory_footprint_bytes": 6842848872
+  },
+  "devices_candidate_bw": {
+    "log_sha256": "d7fce4a5e3e1f76e52d7a7fd64f79ace48c3a0080269de53f40d9e184031075f",
+    "peak_memory_footprint_bytes": 1160267336
+  },
+  "devices_candidate_color": {
+    "log_sha256": "be3096768cadcefae4377959f3e40879582b40c67c3dd4691db40011caaa3a39",
+    "peak_memory_footprint_bytes": 3685912032
+  },
+  "tests": {
+    "log_sha256": "a888b7759b219c4b82e23e9cdb9c0ab7f51ddacb1cbb912d1414fbe2def5e8b4",
+    "peak_memory_footprint_bytes": 2971290552
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "url": "http://127.0.0.1:62872",
+  "sub_rolls": 6,
+  "flagged": 0,
+  "sample": "_DSF9239.RAF",
+  "status": "ok",
+  "ev": 0.5492,
+  "highlight_hold": {
+    "ev_lowered": 0.0,
+    "max_drop": 0.6
+  },
+  "render_png_bytes": 3362409,
+  "render_sha256": "b3f4c6c3616115ab02f3b7119dac75e8d1768242ee4c2b3e347133111dca75ff",
+  "source_thumb_rev": "t4p",
+  "source_config_rev": "t4p-2026-10-31"
+}
