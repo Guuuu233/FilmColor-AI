@@ -528,6 +528,10 @@ def test_t4o_route_roll_nat_fallback_and_estimate_in_roll_info(server):
     fe["estimate"]["diagnostics"] = {"relaxed_uniformity": True}
     assert st._route_roll_nat(folder, "frame.dng")
 
+    # T4r: Healthy sub-roll with fallback diagnosis: bare_backlight_excluded -> routed
+    fe["estimate"]["diagnostics"] = {"bare_backlight_excluded": True}
+    assert st._route_roll_nat(folder, "frame.dng")
+
     # Singleton or sub-roll with fewer than ROLL_NAT_MIN_FRAMES (3): not routed even with fallback
     sub["n_base"] = 1
     assert not st._route_roll_nat(folder, "frame.dng")

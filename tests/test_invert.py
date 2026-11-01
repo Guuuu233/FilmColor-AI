@@ -393,3 +393,69 @@ def test_t4o_block_white_point_remaining_blocks_below_min_keeps_initial():
     assert "holder_blocks_excluded" not in info
     assert info["n_blocks"] == 144
     assert d_hi[1] > 1.80  # initial calculation preserved
+
+
+def test_t4r_clamp_spikes_escape_rate_gating_and_holder_protection():
+    """T4r: clamp_spikes gates secondary escape clamping (bound_z = max(min, 1) + margin) on escape.mean > 0.01.
+    Tests:
+    1. escape <= 1%: escape pixels are NOT clamped by bound_z (remain unclamped or governed by original bound).
+    2. escape > 1%: escape pixels (min <= 1.6) are clamped to min(bound_z, bound).
+    3. holder min > 1.6: retains original bound (e.g. inf when mid > mid_max), not clamped by bound_z."""
+    from filmcolor.invert import clamp_spikes
+
+    clamp = (1.15, 0.12)
+    mid_max, margin = clamp
+
+    # Case 1: escape <= 1% boundary (exact 2 / 200 = 1.0% <= 1% and 1 / 200 = 0.5% < 1%)
+    n_pix = 200
+    s_exact = np.full((n_pix, 3), [0.8, 0.9, 0.85], dtype=np.float32)
+    # Exactly 2 escape pixels: mid=1.3 > 1.15, min=0.8 <= 1.6, max=6.0 > 5.0 -> 2/200 = 0.0100 (<= 1%)
+    s_exact[:2] = [0.8, 1.3, 6.0]
+    out_exact, count_exact = clamp_spikes(s_exact, clamp)
+    # Since escape.mean == 0.010 <= 0.01, escape logic does not trigger (strictly > 0.01 needed)
+    # mid=1.3 > mid_max -> bound=inf -> no clamping occurs
+    assert count_exact == 0
+    np.testing.assert_allclose(out_exact[:2], [[0.8, 1.3, 6.0], [0.8, 1.3, 6.0]], atol=1e-5)
+
+    # Case 2: escape > 1% (e.g. 3 escape pixels out of 200 = 1.5% > 1%)
+    s_high = np.full((n_pix, 3), [0.8, 0.9, 0.85], dtype=np.float32)
+    # Escape pixels with min <= 1.6: e.g. [0.8, 1.3, 6.0] -> s_min=0.8, bound_z = max(0.8, 1.0) + 0.12 = 1.12
+    s_high[:3] = [0.8, 1.3, 6.0]
+    out_high, count_high = clamp_spikes(s_high, clamp)
+    assert count_high >= 3
+    # For pixel 0, max channel (6.0) is clamped to bound_z = 1.12 (min(1.12, inf) = 1.12)
+    np.testing.assert_allclose(out_high[0], [0.8, 1.12, 1.12], atol=1e-5)
+
+    # Case 3: opaque holder with min > 1.6 (e.g. [1.8, 2.5, 9.0])
+    # Add a holder pixel into s_high where escape > 1%
+    s_high_with_holder = s_high.copy()
+    s_high_with_holder[10] = [1.8, 2.5, 9.0]
+    out_holder, _ = clamp_spikes(s_high_with_holder, clamp)
+    # For holder: min=1.8 > 1.6, so bound_z is not applied, bound remains inf because mid=2.5 > mid_max
+    np.testing.assert_allclose(out_holder[10], [1.8, 2.5, 9.0], atol=1e-5)
+
+
+def test_t4r_invert_negative_chunk_rows_local_escape_scope():
+    """T4r: contract test documenting that invert_negative processes the image in CHUNK_ROWS (256-row blocks).
+    If escape pixels are concentrated in one 256-row chunk (> 1% locally), that chunk triggers clamp_spikes,
+    even if across the entire image escape pixels are <= 1%."""
+    from filmcolor.invert import CHUNK_ROWS
+
+    # Create a 2-chunk image: 512 rows x 100 cols = 51200 pixels
+    h, w = CHUNK_ROWS * 2, 100
+    D = np.full((h, w, 3), [0.8, 1.0, 1.0], dtype=np.float32)
+
+    # Chunk 0 (rows 0:256): 25600 pixels. Put 300 escape pixels (300 / 25600 = 1.17% > 1% locally)
+    # Escape in s: min <= 1.6, mid > 1.15, max > 5.0
+    # For d_hi = (1.0, 1.0, 1.0) and d_lo = 0, s = D:
+    D[:3, :100] = [0.8, 1.3, 6.0]  # 300 pixels with min=0.8, mid=1.3, max=6.0
+
+    # Total escape pixels across full image = 300 / 51200 = 0.586% <= 1% globally!
+    # Chunk 1 (rows 256:512): 0 escape pixels (0% locally).
+    rgb = BASE * (10.0 ** -D)
+    res = invert_negative(rgb, BASE, d_hi=(1.0, 1.0, 1.0), spike_clamp=(1.15, 0.12))
+
+    # Because chunk 0 has local escape > 1%, clamp_spikes fires in chunk 0:
+    # rows 0:3 have max channel (6.0) clamped to bound_z = 1.12, so positive is bounded.
+    assert res.report["spike_clamp"]["pixels"] == 300
+    assert res.positive[:3, :100, 2].max() < 2.0

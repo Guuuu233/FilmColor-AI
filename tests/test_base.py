@@ -174,7 +174,66 @@ def test_auto_normal_path_preserves_metadata():
     assert rel_err(est.rgb, BASE) < 0.005
     assert "mode_seed" not in est.diagnostics
     assert "relaxed_uniformity" not in est.diagnostics
+    assert "bare_backlight_excluded" not in est.diagnostics
     assert not any("relaxed" in w for w in est.warnings)
+    assert not any("bare backlight" in w for w in est.warnings)
+
+
+def test_auto_bare_backlight_exclusion_triggers_on_bright_gap():
+    """T4r: when bare backlight (Y >> film) is present, len(valid)>=100, p98Y > 5*p90Y,
+    and mean(Y_valid <= 0.25*thr) > 0.88, bare backlight blocks are excluded and consensus is rerun."""
+    hb, wb = 30, 30  # 900 blocks >= 100
+    sp = np.zeros((hb, wb, 3), dtype=np.float32)
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+
+    # Film base blocks: Y = 0.01
+    film_base = np.array([0.012, 0.010, 0.008], dtype=np.float32)
+    sp[:] = film_base
+
+    # Bare backlight leak: 5x10 = 50 blocks (5.5% of area)
+    # Interior 3x8 = 24 blocks are uniform (>= 10)
+    backlight = np.array([1.0, 1.0, 1.0], dtype=np.float32)
+    sp[10:15, 10:20] = backlight
+
+    # Initial candidates will be top_frac of uniform blocks (backlight), thr ~ 1.0
+    # 0.25 * thr = 0.25. Film blocks have Y ~ 0.01 <= 0.25 (94.4% > 88%).
+    # p90 of Y_valid is ~0.01, p98 of Y_valid is 1.0 (> 5 * 0.01).
+    # valid_film excludes backlight (Y <= 2.5 * p90Y = 0.025), reruns consensus.
+    est = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.01, max_rel_std=0.03, chroma_tol=0.05)
+    assert est.diagnostics.get("bare_backlight_excluded") is True
+    assert any("bare backlight" in w for w in est.warnings)
+    assert rel_err(est.rgb, film_base) < 0.01
+
+
+def test_auto_bare_backlight_insufficient_samples_protection():
+    """T4r: when len(valid) < 100, bare backlight check is bypassed."""
+    hb, wb = 8, 8  # 64 blocks < 100
+    sp = np.zeros((hb, wb, 3), dtype=np.float32)
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+
+    film_base = np.array([0.06, 0.05, 0.04], dtype=np.float32)
+    sp[:7, :] = film_base
+    backlight = np.array([1.0, 1.0, 1.0], dtype=np.float32)
+    sp[7, :] = backlight
+
+    est = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.05, max_rel_std=0.03, chroma_tol=0.05)
+    assert "bare_backlight_excluded" not in est.diagnostics
+
+
+def test_auto_bare_backlight_untriggered_on_normal_scene():
+    """T4r: when p98Y <= 5*p90Y or mean(Y <= 0.25*thr) <= 0.88, bare backlight check does not trigger."""
+    hb, wb = 20, 20
+    sp = np.zeros((hb, wb, 3), dtype=np.float32)
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+
+    # Gradient of film base from 0.4 to 0.6: p98 is never 5x p90
+    base_grad = np.linspace(0.4, 0.6, hb * wb, dtype=np.float32).reshape(hb, wb, 1)
+    sp[...] = base_grad * np.array([1.2, 1.0, 0.5], dtype=np.float32)
+
+    est = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.05, max_rel_std=0.03, chroma_tol=0.05)
+    assert "bare_backlight_excluded" not in est.diagnostics
+    assert not any("bare backlight" in w for w in est.warnings)
+
 
 
 def test_auto_relaxed_uniformity_respects_sat_and_crop():

@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4q-2026-11-01",          # T4q: fixed spatial radius and bounded darkening of lifted shadows;
+    rev="t4r-2026-11-01",          # T4r: wide-bright over-lift exemption and sparse / conflicting WB gates;
+                                   # T4q: fixed spatial radius and bounded darkening of lifted shadows;
                                    # T4p: bounded highlight EV drop, pre-hold rescue evidence and bright-sky split;
                                    # T4m: thin-negative darkening without backlit lift, strong cyan confidence floor;
                                    # T4l: metering inside the film box and off full black strips, wider ev lowering
@@ -463,6 +464,7 @@ NOREF_V3 = dict(
     overlift_damp_check=True, overlift_ev_min=1.50, overlift_ev_pivot=1.30, overlift_ev_ramp=0.50,
     overlift_q25_min=0.35, overlift_q25_pivot=0.33, overlift_gain=3.2, overlift_max_pull=0.65,
     overlift_blacks_gain=0.10, overlift_blacks_max=0.06,
+    overlift_max_span=1.15, overlift_max_bright_share=0.05,  # T4r: exempt wide-range bright scenes
     ev_refine_p98_max=0.96,        # T4f: the EV refinement brightens only while full-frame encoded p98 stays <= this
     ev_anchor_p98_cap=True,        # T4f: a positive anchor ev is held to the same p98 ceiling (the task list puts the
                                    # ceiling on the refinement only, which left A012 at the anchor's +2.50 EV)
@@ -495,9 +497,10 @@ NOREF_V3 = dict(
     wb_v3_cool_z0=(-0.05, 0.05), wb_v3_cool_z1=(-0.10, 0.10), wb_v3_cool_gw=(-0.20, 0.25),
     wb_v3_cast_gw_weight=0.60, wb_v3_cast_conf=0.80, wb_v3_cast_strength=0.80,
     wb_v3_cast_max_tb_spread=0.22, wb_v3_cast_max_zone_dis=0.22, wb_v3_cast_max_bright_share=0.45,
+    wb_v3_cast_max_bright_share_no_tb=0.12,  # T4r: sparse neutral evidence cannot supply a half-frame comparison
     # T4m: neither zone has neutral evidence and the combined log2 R/G is strongly negative: confidence at least this
     wb_v3_cyan_conf_check=True, wb_v3_cyan_narrow_max=0.04, wb_v3_cyan_r_max=-0.85, wb_v3_cyan_min_conf=0.72,
-    wb_v3_cyan_b_max=0.20,
+    wb_v3_cyan_b_max=0.20, wb_v3_cyan_max_zone_dis=0.60,  # T4r: do not boost conflicting scene colours
     wb_v3_cast_max_temp=None,      # T4k: a cool-cast frame's temp at most this (0.38 measured: _DSF8948 8.17 -> 9.21);
                                    # None = up to wb_max_shift (T4j)
     # T4k: mid-grey zone and grey world both strongly cool (log2 R/G below [0], B/G above [1] of wb_v3_undamp_z1 /
@@ -772,9 +775,11 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     if len(ests) == 2:
         diag["zone_disagreement"] = float(np.linalg.norm(ests[0] - ests[1]))
     bright_px_share = float(np.mean(y > cfg.get("bright_luma", 0.45)))
+    br_thr = (cfg.get("wb_v3_cast_max_bright_share", 0.45) if "top_bottom_spread" in diag
+              else cfg.get("wb_v3_cast_max_bright_share_no_tb", 0.12))
     split_sky = (diag.get("zone_disagreement", 0.0) > cfg.get("wb_v3_cast_max_zone_dis", np.inf)
                  and (diag.get("top_bottom_spread", 0.0) > cfg.get("wb_v3_cast_max_tb_spread", np.inf)
-                      or bright_px_share >= cfg.get("wb_v3_cast_max_bright_share", 0.45)))
+                      or bright_px_share >= br_thr))
     diag.update(split_sky=bool(split_sky), bright_px_share=bright_px_share)
     # T4j: a uniform cool cast (_DSF8948: bright [-0.10, +0.17], mid-grey [-0.22, +0.31], grey world [-0.46, +0.61]);
     # a sky over a warm or green ground has a mid-grey zone that is not cool (A008 [-0.12, -0.08]) and keeps the damping
@@ -822,7 +827,8 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     elif (cfg.get("wb_v3_cyan_conf_check") and len(diag["zones"]) == 2
           and all(z["narrow_share"] < cfg["wb_v3_cyan_narrow_max"] for z in diag["zones"])
           and est[0] < cfg["wb_v3_cyan_r_max"]
-          and est[1] <= cfg.get("wb_v3_cyan_b_max", 0.20)):
+          and est[1] <= cfg.get("wb_v3_cyan_b_max", 0.20)
+          and diag.get("zone_disagreement", 0.0) <= cfg.get("wb_v3_cyan_max_zone_dis", 0.60)):
         conf = max(conf, float(cfg["wb_v3_cyan_min_conf"]))
         diag["cyan_conf_boost"] = True
     temp, tint = wb_from_chroma(strength * conf * est)
@@ -1178,7 +1184,9 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
                 flags.append("backlit_midtone")
 
     # T4q: use Step 4b's shadow evidence after the backlit / highlight decisions, so their inputs stay unchanged
-    if (cfg.get("overlift_damp_check") and base_p["ev"] >= cfg["overlift_ev_min"]
+    ol_wide_bright = (span_d_g is not None and span_d_g >= cfg.get("overlift_max_span", 1.15)
+                      and bright_share >= cfg.get("overlift_max_bright_share", 0.05))
+    if (cfg.get("overlift_damp_check") and not ol_wide_bright and base_p["ev"] >= cfg["overlift_ev_min"]
             and q25 >= cfg["overlift_q25_min"]):
         ev0_ol = float(base_p["ev"])
         ramp_ev = float(np.clip((ev0_ol - cfg["overlift_ev_pivot"]) / cfg["overlift_ev_ramp"], 0.0, 1.0))

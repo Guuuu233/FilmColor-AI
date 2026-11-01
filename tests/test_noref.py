@@ -1227,3 +1227,211 @@ def test_t4q_overlift_damp_end_to_end_and_diagnostics():
     assert od_clamped["pull"] == 0.20
     assert od_clamped["ev_after"] == pytest.approx(ev0 - 0.20, abs=1e-6)
     assert od_clamped["blacks_lowered"] == pytest.approx(0.02, abs=1e-6)
+
+
+def test_t4r_overlift_wide_bright_exemption_and_damping_conditions():
+    """T4r: scenes with wide negative density span (span_d_g >= overlift_max_span = 1.15) AND bright content
+    (bright_share >= overlift_max_bright_share = 0.05) are exempt from overlift damping even when base EV >= 1.50
+    and q25 >= 0.35.
+    - Both met (span >= 1.15 and bright_share >= 0.05): overlift_damp is bypassed.
+    - Only wide (span >= 1.15, bright_share < 0.05): damping continues.
+    - Only bright (span < 1.15, bright_share >= 0.05): damping continues.
+    - Neither (span < 1.15, bright_share < 0.05): damping continues.
+    - span_d_g=None (unknown span): continues legacy damping behavior regardless of bright_share.
+    - Boundary checks: exactly at span=1.15 (exempt) vs span < 1.15 (damped); exactly at bright_share=0.05."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y_base = rng.uniform(0.02, 0.08, n)
+
+    # 1. Wide and bright scene: bright_share >= 0.05 (6000 px = 6.0% at 0.46)
+    y_wb = y_base.copy()
+    y_wb[:6000] = 0.46
+    P_wb = np.stack([y_wb, y_wb, y_wb], -1).reshape(200, 500, 3).astype(np.float32)
+
+    # Verify scene properties when undamped
+    res_exempt = estimate_params_v3(P_wb, None, NOREF_V3, span_d_g=1.20)
+    assert res_exempt["diagnostics"]["tone_pixels"]["bright_share"] >= NOREF_V3["overlift_max_bright_share"]
+    assert res_exempt["diagnostics"]["backlit_check"]["p25"] >= NOREF_V3["overlift_q25_min"]
+    assert res_exempt["params"]["ev"] >= NOREF_V3["overlift_ev_min"]
+    # Damping exempt:
+    assert "overlift_damp" not in res_exempt["diagnostics"]
+
+    # 2. Only wide (span=1.20 >= 1.15, but bright_share < 0.05: 2000 px = 2.0%)
+    y_ow = y_base.copy()
+    y_ow[:2000] = 0.46
+    P_ow = np.stack([y_ow, y_ow, y_ow], -1).reshape(200, 500, 3).astype(np.float32)
+    res_ow = estimate_params_v3(P_ow, None, NOREF_V3, span_d_g=1.20)
+    assert res_ow["diagnostics"]["tone_pixels"]["bright_share"] < NOREF_V3["overlift_max_bright_share"]
+    assert "overlift_damp" in res_ow["diagnostics"]
+    assert res_ow["diagnostics"]["overlift_damp"]["applied"] is True
+
+    # 3. Only bright (bright_share >= 0.05, but span=1.10 < 1.15)
+    res_ob = estimate_params_v3(P_wb, None, NOREF_V3, span_d_g=1.10)
+    assert "overlift_damp" in res_ob["diagnostics"]
+    assert res_ob["diagnostics"]["overlift_damp"]["applied"] is True
+
+    # 4. Neither wide nor bright (span=1.10 < 1.15, bright_share < 0.05)
+    res_neither = estimate_params_v3(P_ow, None, NOREF_V3, span_d_g=1.10)
+    assert "overlift_damp" in res_neither["diagnostics"]
+    assert res_neither["diagnostics"]["overlift_damp"]["applied"] is True
+
+    # 5. span_d_g=None: legacy behavior continues (damped even when bright_share >= 0.05)
+    res_none = estimate_params_v3(P_wb, None, NOREF_V3, span_d_g=None)
+    assert "overlift_damp" in res_none["diagnostics"]
+    assert res_none["diagnostics"]["overlift_damp"]["applied"] is True
+
+    # 6. Boundary conditions for span_d_g threshold (1.15)
+    res_span_exact = estimate_params_v3(P_wb, None, NOREF_V3, span_d_g=1.15)
+    assert "overlift_damp" not in res_span_exact["diagnostics"]
+
+    res_span_below = estimate_params_v3(P_wb, None, NOREF_V3, span_d_g=1.15 - 1e-4)
+    assert "overlift_damp" in res_span_below["diagnostics"]
+    assert res_span_below["diagnostics"]["overlift_damp"]["applied"] is True
+
+    # 7. Boundary conditions for bright_share threshold (0.05)
+    bs_actual = res_exempt["diagnostics"]["tone_pixels"]["bright_share"]
+    # Exact threshold: exempt
+    res_bs_exact = estimate_params_v3(P_wb, None, dict(NOREF_V3, overlift_max_bright_share=bs_actual), span_d_g=1.20)
+    assert "overlift_damp" not in res_bs_exact["diagnostics"]
+    # Strictly above actual bright_share: damped
+    res_bs_above = estimate_params_v3(P_wb, None, dict(NOREF_V3, overlift_max_bright_share=bs_actual + 1e-4), span_d_g=1.20)
+    assert "overlift_damp" in res_bs_above["diagnostics"]
+    assert res_bs_above["diagnostics"]["overlift_damp"]["applied"] is True
+
+
+def test_t4r_split_sky_no_tb_spread_and_threshold_boundaries():
+    """T4r: when top_bottom_spread cannot be measured (e.g. sparse neutral evidence in quads), split_sky uses a lower
+    bright_px_share threshold (wb_v3_cast_max_bright_share_no_tb = 0.12) instead of the standard 0.45.
+    - Without top_bottom_spread:
+      * bright_px_share >= 0.12 triggers split_sky=True and suppresses false cool cast.
+      * bright_px_share < 0.12 keeps split_sky=False and preserves cool cast.
+    - With top_bottom_spread present:
+      * bright_px_share between 0.12 and 0.45 (with tb_spread <= 0.22) does NOT trigger split_sky (uses 0.45).
+    - Boundary checks around 0.12 threshold without top_bottom_spread."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    def make_cool_scene(median_y, suppress_quads=True, seed=61):
+        rng = np.random.default_rng(seed)
+        n = 40000
+        y = median_y * 2 ** rng.uniform(-2, 2, n)
+        grey = rng.random(n) < 0.4
+        low = y < np.percentile(y, 70)
+        if suppress_quads:
+            # Chroma norm in [0.36, 0.40], strictly above fixed quads radius 0.35 -> no quads pixels
+            # Zone 0 vs Zone 1 diff: [-0.08 - (-0.30), 0.38 - 0.22] = [0.22, 0.16] -> norm 0.272 > 0.22
+            g = np.where(low[:, None], rng.normal([-0.08, 0.38], 0.01, (n, 2)), rng.normal([-0.30, 0.22], 0.01, (n, 2)))
+        else:
+            # Chroma within quads radius 0.35 -> top_bottom_spread is measured
+            g = np.where(low[:, None], rng.normal([-0.11, 0.22], 0.02, (n, 2)), rng.normal([-0.28, 0.06], 0.02, (n, 2)))
+        c = np.where(grey[:, None], g, rng.normal([-0.6, 0.8], 0.1, (n, 2)))
+        return np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).astype(np.float32)
+
+    # 1. No top_bottom_spread, bright_px_share >= 0.12 (median_y=0.18 gives ~0.160 > 0.12):
+    # Under T4r no-tb threshold (0.12), split_sky triggers and suppresses cool_cast.
+    # Note: under old 0.45 threshold, 0.160 would NOT trigger split_sky.
+    px_no_tb_bright = make_cool_scene(0.18, suppress_quads=True)
+    res_no_tb_bright = estimate_wb_v3(px_no_tb_bright, NOREF_V3)
+    d_ntb_b = res_no_tb_bright["diagnostics"]
+    assert "top_bottom_spread" not in d_ntb_b
+    assert d_ntb_b["zone_disagreement"] > NOREF_V3["wb_v3_cast_max_zone_dis"]
+    assert d_ntb_b["bright_px_share"] >= NOREF_V3["wb_v3_cast_max_bright_share_no_tb"]
+    assert d_ntb_b["bright_px_share"] < NOREF_V3["wb_v3_cast_max_bright_share"]
+    assert d_ntb_b["split_sky"] is True
+    assert not d_ntb_b["cool_cast"]
+
+    # Under explicit old config (setting no_tb threshold to 0.45): split_sky is False
+    res_old_cfg = estimate_wb_v3(px_no_tb_bright, dict(NOREF_V3, wb_v3_cast_max_bright_share_no_tb=0.45))
+    assert res_old_cfg["diagnostics"]["split_sky"] is False
+    assert res_old_cfg["diagnostics"]["cool_cast"] is True
+
+    # 2. No top_bottom_spread, dark scene (median_y=0.10 gives bright_share=0.0 < 0.12):
+    # split_sky is False, cool_cast preserved.
+    px_no_tb_dark = make_cool_scene(0.10, suppress_quads=True)
+    res_no_tb_dark = estimate_wb_v3(px_no_tb_dark, NOREF_V3)
+    d_ntb_d = res_no_tb_dark["diagnostics"]
+    assert "top_bottom_spread" not in d_ntb_d
+    assert d_ntb_d["zone_disagreement"] > NOREF_V3["wb_v3_cast_max_zone_dis"]
+    assert d_ntb_d["bright_px_share"] < NOREF_V3["wb_v3_cast_max_bright_share_no_tb"]
+    assert not d_ntb_d["split_sky"]
+    assert d_ntb_d["cool_cast"] is True
+
+    # 3. With top_bottom_spread present and <= 0.22:
+    # bright_px_share ~0.159 is compared against 0.45 (not 0.12) -> split_sky is False!
+    px_with_tb = make_cool_scene(0.18, suppress_quads=False)
+    res_with_tb = estimate_wb_v3(px_with_tb, NOREF_V3)
+    d_wtb = res_with_tb["diagnostics"]
+    assert "top_bottom_spread" in d_wtb
+    assert d_wtb["top_bottom_spread"] <= NOREF_V3["wb_v3_cast_max_tb_spread"]
+    assert d_wtb["zone_disagreement"] > NOREF_V3["wb_v3_cast_max_zone_dis"]
+    assert d_wtb["bright_px_share"] >= NOREF_V3["wb_v3_cast_max_bright_share_no_tb"]
+    assert d_wtb["bright_px_share"] < NOREF_V3["wb_v3_cast_max_bright_share"]
+    assert not d_wtb["split_sky"]
+    assert d_wtb["cool_cast"] is True
+
+    # 4. Threshold boundary checks on no_tb threshold:
+    br_share = d_ntb_b["bright_px_share"]
+    # Exactly at threshold: triggers
+    r_exact = estimate_wb_v3(px_no_tb_bright, dict(NOREF_V3, wb_v3_cast_max_bright_share_no_tb=br_share))
+    assert r_exact["diagnostics"]["split_sky"] is True
+    # Strictly above threshold: does not trigger
+    r_above = estimate_wb_v3(px_no_tb_bright, dict(NOREF_V3, wb_v3_cast_max_bright_share_no_tb=br_share + 1e-4))
+    assert r_above["diagnostics"]["split_sky"] is False
+    assert r_above["diagnostics"]["cool_cast"] is True
+
+
+def test_t4r_cyan_confidence_boost_zone_disagreement_gate():
+    """T4r: cyan confidence boost (wb_v3_cyan_conf_check) requires zone_disagreement <= wb_v3_cyan_max_zone_dis (0.60)
+    in addition to est[0] < -0.85, est[1] <= 0.20, and all zones narrow_share < 0.04.
+    - When zone_disagreement <= 0.60: cyan confidence boost is applied (confidence floor >= 0.72).
+    - When zone_disagreement > 0.60: conflicting scene colours suppress the boost.
+    - Boundary checks around 0.60 threshold."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y = 2 ** rng.uniform(-6, 0, n)
+    p25, p70, p75, p96 = np.percentile(y, [25, 70, 75, 96])
+
+    def make_cyan_scene(dis):
+        c = np.zeros((n, 2), dtype=np.float32)
+        z0 = (y >= p70) & (y <= p96)
+        z1_only = (y >= p25) & (y < p70)
+        rest = ~(z0 | z1_only)
+        c[z0] = [-1.0 - dis / 2, -0.1]
+        c[z1_only] = [-1.0 + dis / 2, -0.1]
+        c[rest] = [-1.0, -0.1]
+        return np.stack([y * 2 ** c[:, 0], y, y * 2 ** c[:, 1]], -1).astype(np.float32)
+
+    # 1. Consistent cyan scene (dis = 0.40 -> zone_disagreement ~0.39 <= 0.60):
+    px_pass = make_cyan_scene(0.40)
+    res_pass = estimate_wb_v3(px_pass, NOREF_V3)
+    d_pass = res_pass["diagnostics"]
+    assert all(z["narrow_share"] < NOREF_V3["wb_v3_cyan_narrow_max"] for z in d_pass["zones"])
+    assert res_pass["chroma"][0] < NOREF_V3["wb_v3_cyan_r_max"]
+    assert res_pass["chroma"][1] <= NOREF_V3["wb_v3_cyan_b_max"]
+    assert d_pass["zone_disagreement"] <= NOREF_V3["wb_v3_cyan_max_zone_dis"]
+    assert d_pass.get("cyan_conf_boost") is True
+    assert res_pass["confidence"] >= NOREF_V3["wb_v3_cyan_min_conf"]
+
+    # 2. Conflicting cyan scene (dis = 0.70 -> zone_disagreement ~0.69 > 0.60):
+    px_fail = make_cyan_scene(0.70)
+    res_fail = estimate_wb_v3(px_fail, NOREF_V3)
+    d_fail = res_fail["diagnostics"]
+    assert all(z["narrow_share"] < NOREF_V3["wb_v3_cyan_narrow_max"] for z in d_fail["zones"])
+    assert res_fail["chroma"][0] < NOREF_V3["wb_v3_cyan_r_max"]
+    assert res_fail["chroma"][1] <= NOREF_V3["wb_v3_cyan_b_max"]
+    assert d_fail["zone_disagreement"] > NOREF_V3["wb_v3_cyan_max_zone_dis"]
+    # Boost is refused due to zone disagreement:
+    assert "cyan_conf_boost" not in d_fail
+    assert res_fail == estimate_wb_v3(px_fail, dict(NOREF_V3, wb_v3_cyan_conf_check=False))
+
+    # 3. Boundary check on zone_disagreement threshold
+    zd_pass = d_pass["zone_disagreement"]
+    # Exact threshold: boost triggers
+    res_bnd_pass = estimate_wb_v3(px_pass, dict(NOREF_V3, wb_v3_cyan_max_zone_dis=zd_pass))
+    assert res_bnd_pass["diagnostics"].get("cyan_conf_boost") is True
+    # Strictly below actual zone_disagreement: boost refused
+    res_bnd_fail = estimate_wb_v3(px_pass, dict(NOREF_V3, wb_v3_cyan_max_zone_dis=zd_pass - 1e-4))
+    assert "cyan_conf_boost" not in res_bnd_fail["diagnostics"]

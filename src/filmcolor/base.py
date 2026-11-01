@@ -292,6 +292,23 @@ def estimate_base_blocks(
         _consensus_candidates(sp, valid, rel_std_map, Y, max_rel_std, top_frac, chroma_tol)
     )
 
+    bare_backlight_excluded = False
+    vals_valid = sp[valid]
+    if len(vals_valid) >= 100:
+        Y_valid = Y[valid]
+        p90_Y = float(np.percentile(Y_valid, 90))
+        p98_Y = float(np.percentile(Y_valid, 98))
+        if p98_Y > 5.0 * max(p90_Y, 1e-9) and float(np.mean(Y_valid <= 0.25 * thr)) > 0.88:
+            valid_film = valid & (Y <= 2.5 * p90_Y)
+            n_uniform_film = int((valid_film & (rel_std_map <= max_rel_std)).sum())
+            if n_uniform_film >= 10:
+                bare_backlight_excluded = True
+                valid = valid_film
+                (
+                    n_uniform, thr, idx, vals, keep, kept, rgb, centre, outlier_frac, mode_seed_bare
+                ) = _consensus_candidates(sp, valid, rel_std_map, Y, max_rel_std, top_frac, chroma_tol)
+                mode_seed = mode_seed or mode_seed_bare
+
     vals_all = sp[valid]
     relaxed_uniformity = False
     if len(vals_all) > 0:
@@ -306,6 +323,8 @@ def estimate_base_blocks(
             mode_seed = mode_seed or mode_seed_relaxed
 
     warnings: list[str] = []
+    if bare_backlight_excluded:
+        warnings.append("bare backlight area excluded (>5x brighter than 90th percentile of valid blocks)")
     if relaxed_uniformity:
         warnings.append(
             f"initial base estimate suspiciously dense (>25% valid blocks brighter); "
@@ -337,6 +356,8 @@ def estimate_base_blocks(
     )
     if mode_seed:
         diagnostics["mode_seed"] = True
+    if bare_backlight_excluded:
+        diagnostics["bare_backlight_excluded"] = True
     if relaxed_uniformity:
         diagnostics["relaxed_uniformity"] = True
     return BaseEstimate(rgb=rgb, method="auto", regions=regions, stats=stats, params=params,

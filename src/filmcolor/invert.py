@@ -268,14 +268,26 @@ def self_ratio_white_point(d_hi, Dm, guard) -> tuple[tuple[float, float, float],
 
 
 def clamp_spikes(s, clamp) -> tuple[np.ndarray, int]:
-    """T4l: single-channel spikes of the normalised density ``s`` (..., 3). Where the middle channel is at most
+    """T4l/T4r: single-channel spikes of the normalised density ``s`` (..., 3). Where the middle channel is at most
     ``clamp[0]`` (not an opaque holder, which is dense in two or more channels and stays for ``holder.holder_mask``),
     one channel is held to max(middle, 1) + ``clamp[1]``: a signal at or below the black level (blue behind the orange
-    mask, A1106) gives the density floor 6 D and a positive tens of thousands of times past white. Returns the clamped
-    array and the number of pixels changed."""
+    mask, A1106) gives the density floor 6 D and a positive tens of thousands of times past white.
+    T4r: when escape pixels (mid > mid_max, min <= 1.6, max > 5) exceed 1% of the array, pixels with min <= 1.6 are
+    also clamped to min(bound_z, bound).
+    Returns the clamped array and the number of pixels changed."""
     mid_max, margin = (np.float32(x) for x in clamp)
-    s_mid = np.sort(s, axis=-1)[..., 1:2]
+    s_sort = np.sort(s, axis=-1)
+    s_min = s_sort[..., 0:1]
+    s_mid = s_sort[..., 1:2]
+    s_max = s_sort[..., 2:3]
+
     bound = np.where(s_mid > mid_max, np.float32(np.inf), np.maximum(s_mid, np.float32(1.0)) + margin)
+
+    escape = (s_mid > mid_max) & (s_min <= 1.6) & (s_max > 5.0)
+    if float(np.mean(escape)) > 0.01:
+        bound_z = np.maximum(s_min, np.float32(1.0)) + margin
+        bound = np.where(s_min <= 1.6, np.minimum(bound_z, bound), bound)
+
     over = s > bound
     if not over.any():
         return s, 0
