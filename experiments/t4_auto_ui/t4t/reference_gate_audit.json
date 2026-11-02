@@ -1,0 +1,41 @@
+{
+  "nonerror_records": 309,
+  "includes_low_ncc_check_record": true,
+  "channel_cap_hits": [],
+  "slide_mount_initial_signature_hits": [],
+  "max_non_green_white_point_ratio": {
+    "record": "blueneg:199807A-21-orlando-disney",
+    "value": 1.8112435493975136
+  },
+  "max_white_point": {
+    "record": "ext:A093",
+    "value": 1.7385001182556152
+  },
+  "max_zone_disagreement": {
+    "record": "blueneg:19960808B-08-new-orleans-siggraph96:standard",
+    "value": 1.1843349933624268
+  },
+  "cyan_boost_bright_shares": {
+    "ext:A006:standard": 0.2603534793736523,
+    "ext:A006:natural": 0.2603534793736523,
+    "ext:A006:portrait": 0.2603534793736523,
+    "ext:A006:vivid": 0.2603534793736523,
+    "ext:A006:print_classic": 0.2603534793736523,
+    "ext:A011:standard": 0.38133285273739437,
+    "ext:A011:natural": 0.38133285273739437,
+    "ext:A011:portrait": 0.38133285273739437,
+    "ext:A011:vivid": 0.38133285273739437,
+    "ext:A011:print_classic": 0.38133285273739437,
+    "ext:A196:standard": 0.5101913477537438,
+    "ext:A196:natural": 0.5101913477537438,
+    "ext:A196:portrait": 0.5101913477537438,
+    "ext:A196:vivid": 0.5101913477537438,
+    "ext:A196:print_classic": 0.5101913477537438
+  },
+  "historical_artifact_sha256": {
+    "experiments/t4_auto_ui/t4s/candidate_a.json": "ffbddbd7bcca8eea93c6e8a93c0b2e5773934e09b2a95d2e86f56fa9a8afdc10",
+    "experiments/t4_auto_ui/t4s/candidate_b.json": "5045484225dfb6fd318d3b5530620f9bdcf2bad995b396b90be9df74851b4618",
+    "experiments/t4_auto_ui/t4s/candidate_cross.json": "a3bb3431ffeead1609a890c0187f4e6b35145777c278859fc78fd8a9d5764288"
+  },
+  "limits": "Stored diagnostics cannot recompute Dm escape rates or edge-ring density shares; no claim is made for those."
+}

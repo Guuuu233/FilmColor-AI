@@ -1,0 +1,11 @@
+{
+  "base_commit": "7c5107c26274a87768a0c97b85c9846e054b8613",
+  "frozen_manifest_sha256": {
+    "data/manifests/frozen_test_v1.json": "a020accbc78c6648451927660b2395354fc15789e5939871feb7b5cab78d1810",
+    "data/manifests/frozen_test_v1_photos.json": "dea04ed3095322c282284d247101101801876032872f900491f90cbb3aacd2da",
+    "data/manifests/frozen_test_v2_ds.json": "9a4a3bcceded411a5a4967041437d6a69f4c998432b28fb77e698d870d554a88",
+    "data/manifests/frozen_test_v2_ds_addendum_20261022.json": "e8777c8ed137002f7489ccf763e0caedba5b31585f3f2e92a0b433f44c005fa5",
+    "data/manifests/frozen_test_v3.json": "61e515f17fb044d26ec870570e852ac7fc4c428b37694f11827a573c0776a0e6"
+  },
+  "task_book_sha256": "30ab6b5de24c2923bc6903b847fda91536bfb22b3c8457de016128e1ba5de8b6"
+}

@@ -1,5 +1,5 @@
 {
-  "source_config_rev": "t4s-2026-11-02",
+  "source_config_rev": "t4t-2026-11-02",
   "preset": "standard",
   "config": {
     "id": "noref_v3",
@@ -44,7 +44,7 @@
     "wb_conflict_factor": 0.3,
     "wb_max_shift": 0.5,
     "roll_consistency": 0.1,
-    "rev": "t4s-2026-11-02",
+    "rev": "t4t-2026-11-02",
     "look": "global_look_v1",
     "preset": "standard",
     "cell_size": 8,
@@ -199,6 +199,9 @@
     "wb_v3_cyan_min_conf": 0.72,
     "wb_v3_cyan_b_max": 0.2,
     "wb_v3_cyan_max_zone_dis": 0.6,
+    "wb_v3_cyan_min_bright_share": 0.1,
+    "wb_v3_tint_max_zone_dis": 1.25,
+    "wb_v3_tint_conflict_damp": 0.55,
     "wb_v3_cast_max_temp": null,
     "wb_v3_gw_cool_undamp": true,
     "wb_v3_undamp_z1": [

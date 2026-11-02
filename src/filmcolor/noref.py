@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4s-2026-11-02",          # T4s: scanner TIFF, global zero-escape evidence and B&W roll routing;
+    rev="t4t-2026-11-02",          # T4t: zero-clipped white points, slide mounts and conflicting tint evidence;
+                                   # T4s: scanner TIFF, global zero-escape evidence and B&W roll routing;
                                    # T4r: wide-bright over-lift exemption and sparse / conflicting WB gates;
                                    # T4q: fixed spatial radius and bounded darkening of lifted shadows;
                                    # T4p: bounded highlight EV drop, pre-hold rescue evidence and bright-sky split;
@@ -502,6 +503,8 @@ NOREF_V3 = dict(
     # T4m: neither zone has neutral evidence and the combined log2 R/G is strongly negative: confidence at least this
     wb_v3_cyan_conf_check=True, wb_v3_cyan_narrow_max=0.04, wb_v3_cyan_r_max=-0.85, wb_v3_cyan_min_conf=0.72,
     wb_v3_cyan_b_max=0.20, wb_v3_cyan_max_zone_dis=0.60,  # T4r: do not boost conflicting scene colours
+    wb_v3_cyan_min_bright_share=0.10,  # T4t: dark monochrome foliage does not support a strong cyan correction
+    wb_v3_tint_max_zone_dis=1.25, wb_v3_tint_conflict_damp=0.55,  # T4t: damp positive tint on extreme zone conflicts
     wb_v3_cast_max_temp=None,      # T4k: a cool-cast frame's temp at most this (0.38 measured: _DSF8948 8.17 -> 9.21);
                                    # None = up to wb_max_shift (T4j)
     # T4k: mid-grey zone and grey world both strongly cool (log2 R/G below [0], B/G above [1] of wb_v3_undamp_z1 /
@@ -829,7 +832,8 @@ def estimate_wb_v3(px, cfg=None) -> dict:
           and all(z["narrow_share"] < cfg["wb_v3_cyan_narrow_max"] for z in diag["zones"])
           and est[0] < cfg["wb_v3_cyan_r_max"]
           and est[1] <= cfg.get("wb_v3_cyan_b_max", 0.20)
-          and diag.get("zone_disagreement", 0.0) <= cfg.get("wb_v3_cyan_max_zone_dis", 0.60)):
+          and diag.get("zone_disagreement", 0.0) <= cfg.get("wb_v3_cyan_max_zone_dis", 0.60)
+          and bright_px_share >= cfg.get("wb_v3_cyan_min_bright_share", 0.0)):
         conf = max(conf, float(cfg["wb_v3_cyan_min_conf"]))
         diag["cyan_conf_boost"] = True
     temp, tint = wb_from_chroma(strength * conf * est)
@@ -838,7 +842,11 @@ def estimate_wb_v3(px, cfg=None) -> dict:
     if temp < 0:
         temp *= float(cfg.get("wb_v3_cool_damp", 1.0))
     if tint > 0:
-        tint *= float(cfg.get("wb_v3_tint_boost", 1.0))
+        if diag.get("zone_disagreement", 0.0) > cfg.get("wb_v3_tint_max_zone_dis", np.inf):
+            tint *= float(cfg.get("wb_v3_tint_conflict_damp", 0.55))
+            diag["tint_conflict_damped"] = True
+        else:
+            tint *= float(cfg.get("wb_v3_tint_boost", 1.0))
     if cool_cast and cfg.get("wb_v3_cast_max_temp") is not None:
         temp = min(temp, float(cfg["wb_v3_cast_max_temp"]))  # T4k: T4j pushed cool-cast frames to +0.50
     m = cfg["wb_max_shift"]

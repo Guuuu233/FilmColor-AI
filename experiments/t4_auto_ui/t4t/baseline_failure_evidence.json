@@ -1,0 +1,10 @@
+{
+  "baseline_source_sha256": "27ba01f3aa13d29905af25f17284b68bc99da2897a40c957c2a5f4d898b9efb5",
+  "failed": 5,
+  "deselected": 85,
+  "log_sha256": "d171689da47f36affcc8c81e655657bbd94ae7e19009a70a726a5a598f243f96",
+  "test_sha256": {
+    "tests/test_invert.py": "24164fa32b229194eb45be070073c78d8f68c625fd695e01032a4c50a1e6b13d",
+    "tests/test_noref.py": "fe515407f49718239e4b052e67f042f13f3c0d54ac7ebe51ea221d36bd8feeee"
+  }
+}

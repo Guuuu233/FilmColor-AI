@@ -531,3 +531,131 @@ def test_t4s_invert_negative_mask_without_escape_preserves_local_chunk_escape_sc
     # Chunk 0 still triggers local clamp_spikes because zero_escape=False retains local gating
     assert res.report["spike_clamp"]["pixels"] == 300
     assert res.positive[:3, :100, 2].max() < 2.0
+
+
+def test_t4t_block_white_point_caps_extreme_single_channel_zero_clip():
+    """T4t: block_white_point caps non-green channels whose density exceeds max(2.5, 2.2 * d_hi_G)
+    to 1.45 * d_hi_G when d_hi_G >= 0.20, logging raw values in info['channel_cap'].
+    Normal range white points and boundary conditions remain unchanged."""
+    from filmcolor.invert import block_white_point
+
+    block = 16
+    h, w = 256, 256
+    # 16x16 = 256 blocks total
+    rgb = np.zeros((h, w, 3), np.float32)
+    D_scene = np.array([0.40, 0.45, 0.50], np.float32)
+    rgb[:] = BASE * (10.0 ** -D_scene)
+
+    # In 2 blocks (~0.8% of blocks), simulate blue-channel zero-clip:
+    # linear signal = 0 in blue -> D_B = 6.0
+    D_clip = np.array([0.40, 0.45, 6.0], np.float32)
+    rgb[0:block, 0:block * 2] = BASE * (10.0 ** -D_clip)
+
+    mask = np.ones((h, w), bool)
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+
+    # Blue channel was > max(2.5, 2.2 * 0.45 = 2.5) -> capped to 1.45 * 0.45 = 0.6525
+    assert "channel_cap" in info
+    assert "B" in info["channel_cap"]
+    assert info["channel_cap"]["B"] > 2.5
+    assert d_hi[2] == pytest.approx(1.45 * d_hi[1], abs=1e-5)
+    assert d_hi[0] == pytest.approx(0.40, abs=1e-2)
+    assert d_hi[1] == pytest.approx(0.45, abs=1e-2)
+
+    # Normal white point unchanged
+    rgb_normal = np.zeros((h, w, 3), np.float32)
+    D_normal = np.array([0.80, 1.00, 1.35], np.float32)
+    rgb_normal[:] = BASE * (10.0 ** -D_normal)
+    d_hi_norm, info_norm = block_white_point(rgb_normal, BASE, mask, block=block, pct=99.8)
+    assert "channel_cap" not in info_norm
+    np.testing.assert_allclose(d_hi_norm, D_normal, atol=1e-4)
+
+    # Boundary: d_hi_G < 0.20 must NOT trigger channel_cap even if R/B is high
+    rgb_low_g = np.zeros((h, w, 3), np.float32)
+    D_low_g = np.array([0.15, 0.18, 3.0], np.float32)
+    rgb_low_g[:] = BASE * (10.0 ** -D_low_g)
+    d_hi_low, info_low = block_white_point(rgb_low_g, BASE, mask, block=block, pct=99.8)
+    assert "channel_cap" not in info_low
+
+
+def test_t4t_block_white_point_excludes_surrounding_slide_mount():
+    """T4t: when initial d_hi_G > 1.15 and d_hi_R > d_hi_G + 0.25 (slide mount signature),
+    and edge ring of cand blocks (D_sort[1] > 1.05 & D_sort[2] > 1.45) has mean >= 0.75,
+    connected border is excluded; internal islands and partial rings (< 0.75) are preserved,
+    and MIN_WHITE_BLOCKS constraint is respected."""
+    from filmcolor.invert import MIN_WHITE_BLOCKS, block_white_point
+
+    block = 16
+    h, w = 512, 512
+    # 32x32 = 1024 blocks total
+
+    # 1. Full surrounding slide mount:
+    # Border 4 blocks thick on all 4 sides (rows 0:64, 448:512, cols 0:64, 448:512)
+    rgb = np.zeros((h, w, 3), np.float32)
+    D_scene = np.array([0.85, 0.90, 1.00], np.float32)
+    rgb[:] = BASE * (10.0 ** -D_scene)
+
+    # Mount: D = [1.70, 1.25, 1.50], so D_sort = [1.25, 1.50, 1.70] -> D_sort[1]=1.50 > 1.05 & D_sort[2]=1.70 > 1.45
+    # d_hi_G = 1.25 > 1.15, d_hi_R = 1.70 > 1.25 + 0.25 = 1.50
+    D_mount = np.array([1.70, 1.25, 1.50], np.float32)
+    rgb[:64, :] = BASE * (10.0 ** -D_mount)
+    rgb[448:, :] = BASE * (10.0 ** -D_mount)
+    rgb[:, :64] = BASE * (10.0 ** -D_mount)
+    rgb[:, 448:] = BASE * (10.0 ** -D_mount)
+
+    mask = np.ones((h, w), bool)
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+
+    assert info.get("holder_blocks_excluded", 0) > 0
+    np.testing.assert_allclose(d_hi, D_scene, atol=0.05)
+
+    # 2. Incomplete ring (< 0.75 on edge ring): e.g. only top edge has mount blocks
+    rgb_partial = np.zeros((h, w, 3), np.float32)
+    rgb_partial[:] = BASE * (10.0 ** -D_scene)
+    rgb_partial[:64, :] = BASE * (10.0 ** -D_mount)
+    # Edge ring mean will be ~ 32 / (32*4 - 4) ~ 0.26 < 0.75 -> must NOT peel
+    d_hi_part, info_part = block_white_point(rgb_partial, BASE, mask, block=block, pct=99.8)
+    assert "holder_blocks_excluded" not in info_part
+
+    # 3. Isolated internal high density island not touching edge: must NOT peel
+    rgb_island = np.zeros((h, w, 3), np.float32)
+    rgb_island[:] = BASE * (10.0 ** -D_scene)
+    rgb_island[200:300, 200:300] = BASE * (10.0 ** -D_mount)
+    d_hi_isl, info_isl = block_white_point(rgb_island, BASE, mask, block=block, pct=99.8)
+    assert "holder_blocks_excluded" not in info_isl
+
+
+def test_t4t_invert_negative_dm_zero_escape_at_sub_percent_rate():
+    """T4t: invert_negative checks zero_escape on global Dm with threshold > 0.001 (0.1%),
+    so an escape rate of 0.35% (e.g. A305.tif, > 0.001 but <= 0.01) triggers global zero_escape = True,
+    clamping positive escape pixels to < 2.0; while strict rate <= 0.1% does not trigger."""
+    from filmcolor.invert import CHUNK_ROWS
+
+    h, w = CHUNK_ROWS * 2, 100
+    n_pix = h * w  # 51200
+    D = np.full((h, w, 3), [0.8, 1.0, 1.0], dtype=np.float32)
+
+    # 0.35% of 51200 = 179 pixels distributed across chunk 0 and chunk 1
+    # Chunk 0 has 100 escape pixels (100 / 25600 = 0.39% <= 1% locally)
+    # Chunk 1 has 79 escape pixels (79 / 25600 = 0.31% <= 1% locally)
+    # Neither chunk has > 1% locally! But globally 179 / 51200 = 0.3496% > 0.1% (0.001).
+    D[:CHUNK_ROWS].reshape(-1, 3)[:100] = [0.8, 1.3, 6.0]
+    D[CHUNK_ROWS:].reshape(-1, 3)[:79] = [0.8, 1.3, 6.0]
+
+    rgb = BASE * (10.0 ** -D)
+    res = invert_negative(rgb, BASE, d_hi=(1.0, 1.0, 1.0), spike_clamp=(1.15, 0.12))
+
+    # Under T4t (threshold 0.001), zero_escape triggers globally, clamping all 179 pixels:
+    assert res.report["spike_clamp"]["pixels"] == 179
+    assert res.positive[:CHUNK_ROWS, :, 2].max() < 2.0
+    assert res.positive[CHUNK_ROWS:, :, 2].max() < 2.0
+
+    # Strict sub-threshold boundary: 0.08% (40 / 51200 = 0.00078 <= 0.001) must NOT trigger global zero_escape
+    D_sub = np.full((h, w, 3), [0.8, 1.0, 1.0], dtype=np.float32)
+    D_sub[:CHUNK_ROWS].reshape(-1, 3)[:20] = [0.8, 1.3, 6.0]
+    D_sub[CHUNK_ROWS:].reshape(-1, 3)[:20] = [0.8, 1.3, 6.0]
+    rgb_sub = BASE * (10.0 ** -D_sub)
+    res_sub = invert_negative(rgb_sub, BASE, d_hi=(1.0, 1.0, 1.0), spike_clamp=(1.15, 0.12))
+    # Neither chunk has > 1% locally, and globally <= 0.1% -> no clamping
+    assert res_sub.report["spike_clamp"]["pixels"] == 0
+    assert res_sub.positive[..., 2].max() > 10.0

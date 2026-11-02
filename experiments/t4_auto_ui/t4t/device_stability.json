@@ -1,0 +1,15 @@
+{
+  "acros": {
+    "count": 28,
+    "all_ok": true,
+    "params_inversion_status_exact": true,
+    "finite_preserved": true
+  },
+  "tiff": {
+    "count": 8,
+    "all_ok": true,
+    "params_inversion_status_exact": true,
+    "finite_preserved": true
+  },
+  "source_sha256": "1e0130e978687017ddb8760373783e5030a35cffc1cc2d069b549b3b710c8099"
+}

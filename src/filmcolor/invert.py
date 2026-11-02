@@ -162,12 +162,17 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
     d_hi = estimate_white_point(density(means, base), None, pct)
     info = dict(method="block_mean", block=block, pct=pct, n_blocks=n)
 
-    # T4o: when initial d_hi_G > 1.80, check full grid for opaque film holder intruding into mask
-    if d_hi[1] > 1.80:
+    # T4o/T4t: dense opaque holders or surrounding warm slide mounts can intrude into the central mask
+    if d_hi[1] > 1.80 or (d_hi[1] > 1.15 and d_hi[0] > d_hi[1] + 0.25):
         grid_means = (sums / (block * block)).astype(np.float32)
         D_grid = density(grid_means, base)
         D_sort = np.sort(D_grid, axis=-1)
-        hot = (D_sort[..., 1] > 1.85) & (D_sort[..., 2] > 2.10)
+        if d_hi[1] > 1.80:
+            hot = (D_sort[..., 1] > 1.85) & (D_sort[..., 2] > 2.10)
+        else:
+            cand = (D_sort[..., 1] > 1.05) & (D_sort[..., 2] > 1.45)
+            edge_ring = np.concatenate([cand[0], cand[-1], cand[:, 0], cand[:, -1]])
+            hot = cand if float(edge_ring.mean()) >= 0.75 else np.zeros_like(cand)
         if hot.any():
             from scipy import ndimage
 
@@ -188,6 +193,17 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
                             d_hi = estimate_white_point(density(means_clean, base), None, pct)
                             info["n_blocks"] = n_clean
                             info["holder_blocks_excluded"] = n_excluded
+
+    # T4t: a non-green white point far above G can be dominated by digitally zeroed samples
+    if d_hi[1] >= 0.20 and any(d_hi[c] > max(2.5, 2.2 * d_hi[1]) for c in (0, 2)):
+        d_list = list(d_hi)
+        capped = {}
+        for c, name in ((0, "R"), (2, "B")):
+            if d_list[c] > max(2.5, 2.2 * d_list[1]):
+                capped[name] = float(d_list[c])
+                d_list[c] = float(1.45 * d_list[1])
+        d_hi = tuple(d_list)
+        info["channel_cap"] = capped
 
     return d_hi, info
 
@@ -396,7 +412,7 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
     if spike_clamp is not None and Dm.ndim >= 1 and Dm.shape[-1] == 3 and len(Dm) > 0:
         mid_max = np.float32(spike_clamp[0])
         sm = np.sort((Dm - lo) / (hi - lo), axis=-1)
-        zero_escape = float(np.mean((sm[..., 1] > mid_max) & (sm[..., 0] <= 1.6) & (sm[..., 2] > 5.0))) > 0.01
+        zero_escape = float(np.mean((sm[..., 1] > mid_max) & (sm[..., 0] <= 1.6) & (sm[..., 2] > 5.0))) > 0.001
         del sm
     # share of the whole image denser than the white point: large values flag opaque areas
     # (holder mask) or highlights outside the region used for the white point

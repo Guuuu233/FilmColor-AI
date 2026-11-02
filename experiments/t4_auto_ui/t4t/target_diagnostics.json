@@ -1,0 +1,47 @@
+{
+  "source_sha256": "1e0130e978687017ddb8760373783e5030a35cffc1cc2d069b549b3b710c8099",
+  "probe_sha256": "469f6d099c27f720326c8cb0829b79f78497895adc8802ace323f65374ee5f7a",
+  "a239": {
+    "bright_px_share": 0.03954,
+    "cyan_conf_boost": false,
+    "confidence_without_boost": 0.5604796393739002,
+    "chroma": [
+      -1.1328611499071122,
+      -0.5046633887290954
+    ],
+    "tint_raw_recomputed": 0.29828472793623856,
+    "tint_wb_recomputed": 0.35794167352348627,
+    "tint_final_recomputed": 0.3729,
+    "task_tint_gate_lt": 0.22,
+    "passes": false,
+    "note": "The specified bright-share gate removes the 0.72 floor, but does not cap the remaining confidence."
+  },
+  "a1040": {
+    "baseline_white_point": [
+      0.1385643184185028,
+      0.41008248925209045,
+      6.0
+    ],
+    "candidate_white_point": [
+      0.1385643184185028,
+      0.41008248925209045,
+      0.5946196094155312
+    ],
+    "channel_cap": {
+      "B": 6.0
+    },
+    "srgb_q50": [
+      0.0,
+      0.0,
+      0.16936975717544556
+    ],
+    "task_green_q50_gate_gt": 0.05,
+    "passes": false,
+    "upper_band_p99": [
+      1.4229106903076172,
+      1.6274911165237427,
+      2060412.25
+    ],
+    "note": "Capping the blue white point does not repair lost channels, the base estimate, or all out-of-mask zero clips."
+  }
+}

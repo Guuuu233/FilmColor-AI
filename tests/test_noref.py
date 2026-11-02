@@ -1435,3 +1435,124 @@ def test_t4r_cyan_confidence_boost_zone_disagreement_gate():
     # Strictly below actual zone_disagreement: boost refused
     res_bnd_fail = estimate_wb_v3(px_pass, dict(NOREF_V3, wb_v3_cyan_max_zone_dis=zd_pass - 1e-4))
     assert "cyan_conf_boost" not in res_bnd_fail["diagnostics"]
+
+
+def test_t4t_wb_v3_cyan_conf_requires_min_bright_share():
+    """T4t: cyan confidence boost (wb_v3_cyan_conf_check) requires bright_px_share >= wb_v3_cyan_min_bright_share (0.10).
+    Dark monochrome foliage (e.g. A239 with bright_px_share ~0.04 < 0.10) is intercepted and does NOT trigger cyan_conf_boost,
+    preventing green foliage from being pushed to purple/magenta tint.
+    Bright cyan scenes (e.g. bright_px_share ~0.25 >= 0.10) trigger cyan_conf_boost normally."""
+    from filmcolor.noref import LUMA, NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(55)
+    n = 100_000
+
+    # Helper to generate scene with controlled true luma bright_px_share (px @ LUMA > bright_luma=0.45)
+    # and consistent cyan chroma (est[0] < -0.85, est[1] <= 0.20, low zone_disagreement, narrow_share < 0.04)
+    def make_scene_with_bright_share(bright_target):
+        n_bright = int(n * bright_target)
+        n_dark = n - n_bright
+        y_bright = rng.uniform(0.46, 0.95, n_bright)
+        y_dark = rng.uniform(0.02, 0.44, n_dark)
+        y_target = np.concatenate([y_bright, y_dark]).astype(np.float32)
+
+        # Base chromaticity ratios: log2(R/G) = -1.1, log2(B/G) = -0.1
+        ratios = np.array([2.0 ** -1.1, 1.0, 2.0 ** -0.1], dtype=np.float32)
+        unit_luma = float(np.dot(ratios, LUMA))
+        unit_px = ratios / unit_luma
+
+        # Add small jitter so norm is > radius (narrow_share < 0.04)
+        c_jitter = rng.normal(0, 0.02, (n, 3)).astype(np.float32)
+        c_jitter[:, 1] = 0.0
+        px = y_target[:, None] * (unit_px[None, :] * (2.0 ** c_jitter))
+        return px.astype(np.float32)
+
+    # 1. Dark foliage scene: bright_px_share = 0.04 < 0.10 -> cyan_conf_boost must NOT trigger
+    px_dark = make_scene_with_bright_share(0.04)
+    res_dark = estimate_wb_v3(px_dark, NOREF_V3)
+    d_dark = res_dark["diagnostics"]
+    assert all(z["narrow_share"] < NOREF_V3["wb_v3_cyan_narrow_max"] for z in d_dark["zones"])
+    assert res_dark["chroma"][0] < NOREF_V3["wb_v3_cyan_r_max"]
+    assert res_dark["chroma"][1] <= NOREF_V3["wb_v3_cyan_b_max"]
+    assert d_dark.get("zone_disagreement", 0.0) <= NOREF_V3["wb_v3_cyan_max_zone_dis"]
+    # Key check: bright_px_share < 0.10 suppresses cyan boost
+    assert "cyan_conf_boost" not in d_dark
+    assert res_dark["confidence"] < NOREF_V3["wb_v3_cyan_min_conf"]
+
+    # 2. Bright cyan scene: bright_px_share = 0.25 >= 0.10 -> cyan_conf_boost triggers
+    px_bright = make_scene_with_bright_share(0.25)
+    res_bright = estimate_wb_v3(px_bright, NOREF_V3)
+    d_bright = res_bright["diagnostics"]
+    assert all(z["narrow_share"] < NOREF_V3["wb_v3_cyan_narrow_max"] for z in d_bright["zones"])
+    assert res_bright["chroma"][0] < NOREF_V3["wb_v3_cyan_r_max"]
+    assert res_bright["chroma"][1] <= NOREF_V3["wb_v3_cyan_b_max"]
+    assert d_bright.get("zone_disagreement", 0.0) <= NOREF_V3["wb_v3_cyan_max_zone_dis"]
+    assert d_bright.get("cyan_conf_boost") is True
+    assert res_bright["confidence"] >= NOREF_V3["wb_v3_cyan_min_conf"]
+
+
+def test_t4t_wb_v3_extreme_zone_disagreement_damps_positive_tint():
+    """T4t: when zone_disagreement > wb_v3_tint_max_zone_dis (1.25), extreme two-tone split scenes
+    (e.g. A281 golden dome vs cyan shadows) damp positive tint by multiplying by
+    wb_v3_tint_conflict_damp (0.55) and setting diag['tint_conflict_damped'] = True,
+    instead of boosting by wb_v3_tint_boost (1.20).
+    Negative tint and boundary condition (zone_disagreement <= 1.25) remain unaffected."""
+    from filmcolor.noref import LUMA, NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(77)
+    n = 100_000
+    y_target = (2.0 ** rng.uniform(-5, 0, n)).astype(np.float32)
+    p25, p70, p75, p96 = np.percentile(y_target, [25, 70, 75, 96])
+
+    # Helper to create split-tone scene with specified zone disagreement and tint direction,
+    # strictly normalizing by LUMA so true luma percentiles match p25/p70/p75/p96
+    def make_split_scene(c_z0, c_z1):
+        z0 = (y_target >= p70) & (y_target <= p96)
+        z1 = (y_target >= p25) & (y_target < p70)
+        c = np.zeros((n, 2), dtype=np.float32)
+        c[z0] = c_z0
+        c[z1] = c_z1
+        rest = ~(z0 | z1)
+        c[rest] = 0.5 * (np.array(c_z0) + np.array(c_z1))
+        rgb_ratios = np.stack([2.0 ** c[:, 0], np.ones(n, dtype=np.float32), 2.0 ** c[:, 1]], axis=-1)
+        unit_luma = rgb_ratios @ LUMA.astype(np.float32)
+        px = (y_target / unit_luma)[:, None] * rgb_ratios
+        return px.astype(np.float32)
+
+    # 1. Extreme two-tone split: zone_disagreement ~ 1.50 > 1.25, positive tint raw
+    c0 = [-0.5, -1.6]
+    c1 = [-1.0, -0.2]
+    px_extreme = make_split_scene(c0, c1)
+
+    res_extreme = estimate_wb_v3(px_extreme, NOREF_V3)
+    d_extreme = res_extreme["diagnostics"]
+    assert d_extreme.get("zone_disagreement", 0.0) > 1.25
+    # Raw tint must be positive
+    assert d_extreme["temp_tint_raw"][1] > 0
+    # Must be damped by 0.55 instead of boosted by 1.20:
+    assert d_extreme.get("tint_conflict_damped") is True
+    expected_damped_tint = d_extreme["temp_tint_raw"][1] * 0.55
+    assert res_extreme["tint"] == pytest.approx(expected_damped_tint, abs=1e-5)
+
+    # 2. Moderate disagreement: zone_disagreement <= 1.25 (e.g. diff norm ~ 0.8)
+    # Positive tint gets normal 1.20 boost
+    c0_mod = [-0.5, -1.0]
+    c1_mod = [-0.9, -0.4]
+    px_mod = make_split_scene(c0_mod, c1_mod)
+    res_mod = estimate_wb_v3(px_mod, NOREF_V3)
+    d_mod = res_mod["diagnostics"]
+    assert d_mod.get("zone_disagreement", 0.0) <= 1.25
+    assert d_mod.get("tint_conflict_damped") is not True
+    expected_boosted_tint = d_mod["temp_tint_raw"][1] * NOREF_V3["wb_v3_tint_boost"]
+    assert res_mod["tint"] == pytest.approx(expected_boosted_tint, abs=1e-5)
+
+    # 3. Negative tint raw with extreme disagreement: must NOT damp (tint <= 0 untouched)
+    c0_neg = [0.0, 1.5]
+    c1_neg = [0.0, 3.0]
+    px_neg = make_split_scene(c0_neg, c1_neg)
+    res_neg = estimate_wb_v3(px_neg, NOREF_V3)
+    d_neg = res_neg["diagnostics"]
+    assert d_neg.get("zone_disagreement", 0.0) > 1.25
+    assert d_neg["temp_tint_raw"][1] < 0
+    assert d_neg.get("tint_conflict_damped") is not True
+    assert res_neg["tint"] == pytest.approx(d_neg["temp_tint_raw"][1], abs=1e-5)
