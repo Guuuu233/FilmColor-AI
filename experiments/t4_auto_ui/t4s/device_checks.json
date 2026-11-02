@@ -1,0 +1,201 @@
+{
+  "all_passed": false,
+  "failures": [
+    "A1296 upper_band_p99 Blue 1.0749907493591309 > 1.0 (hard acceptance failed; baseline=10583540.0)"
+  ],
+  "a1296": {
+    "status": "ok",
+    "status_ok": true,
+    "center_p99": [
+      1.1940137147903442,
+      1.227334976196289,
+      1.24726140499115
+    ],
+    "center_under_1_35": true,
+    "upper_band_p99": [
+      0.6813378930091858,
+      0.7631505131721497,
+      1.0749907493591309
+    ],
+    "upper_band_p99_baseline": [
+      0.6822951436042786,
+      0.796877384185791,
+      10583540.0
+    ],
+    "band_b_under_1": false,
+    "raw_sha256_match": true,
+    "full_positive_finite": true,
+    "render_preserves_positive": true,
+    "note": "1600px preview: center < 1.35 passed (center=[1.1940137147903442, 1.227334976196289, 1.24726140499115]), upper band Blue < 1.0 failed (candidate B=1.0749907493591309, baseline B=10583540.0)"
+  },
+  "a1296_sensitivity_1000px": {
+    "max_side": 1000,
+    "shape": [
+      645,
+      966,
+      3
+    ],
+    "raw_sha256": "dbe4de488370f3b32acc2f683e3400e61ae06dd021998740567e9974c2998997",
+    "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+    "src_content_sha256": "27ba01f3aa13d29905af25f17284b68bc99da2897a40c957c2a5f4d898b9efb5",
+    "center_p99": [
+      1.1311981678009033,
+      1.1575795412063599,
+      1.148000717163086
+    ],
+    "upper_band_p99": [
+      0.6591564416885376,
+      0.724258303642273,
+      0.9649619460105896
+    ],
+    "upper_band_max": [
+      0.9041735529899597,
+      0.9645647406578064,
+      1.163277268409729
+    ],
+    "upper_band_share_any_channel_gt_10": 0.0,
+    "status": "ok"
+  },
+  "acros": {
+    "count": 28,
+    "note": "Validated all 28 existing Acros NEFs B002..B029; 4 designated targets B003/B011/B016/B017 checked for span>=.24 & flags==[]",
+    "all_status_ok": true,
+    "all_finite": true,
+    "hashes_match": true,
+    "designated_targets_count": 4,
+    "designated_all_span_ge_024": true,
+    "designated_all_flags_empty": true,
+    "designated_targets": {
+      "B003.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.2869361639022827,
+        "flags": [],
+        "span_ge_024": true,
+        "flags_empty": true
+      },
+      "B011.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.24547621607780457,
+        "flags": [],
+        "span_ge_024": true,
+        "flags_empty": true
+      },
+      "B016.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.29845577478408813,
+        "flags": [],
+        "span_ge_024": true,
+        "flags_empty": true
+      },
+      "B017.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.2976711094379425,
+        "flags": [],
+        "span_ge_024": true,
+        "flags_empty": true
+      }
+    },
+    "other_roll_nat_routed": {
+      "B009.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.44475504755973816,
+        "flags": []
+      },
+      "B010.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.36141932010650635,
+        "flags": []
+      },
+      "B012.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.39557430148124695,
+        "flags": []
+      },
+      "B013.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.4718320369720459,
+        "flags": []
+      },
+      "B019.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.2891765832901001,
+        "flags": []
+      },
+      "B020.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.4455438256263733,
+        "flags": []
+      },
+      "B021.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.34674352407455444,
+        "flags": []
+      },
+      "B022.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.38665348291397095,
+        "flags": []
+      },
+      "B025.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.3444465100765228,
+        "flags": []
+      },
+      "B026.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.9915256500244141,
+        "flags": [
+          "backlit_midtone"
+        ]
+      },
+      "B029.NEF": {
+        "base_method": "roll_nat",
+        "span_d_g": 0.3591294288635254,
+        "flags": []
+      }
+    }
+  },
+  "tiff": {
+    "count": 8,
+    "expected_set_matched": true,
+    "all_status_ok": true,
+    "all_finite": true,
+    "samples": {
+      "A1027.TIF": {
+        "status": "ok",
+        "finite": true
+      },
+      "A1310.TIF": {
+        "status": "ok",
+        "finite": true
+      },
+      "A304.tif": {
+        "status": "ok",
+        "finite": true
+      },
+      "A1301.TIF": {
+        "status": "ok",
+        "finite": true
+      },
+      "A255.tif": {
+        "status": "ok",
+        "finite": true
+      },
+      "A1028.TIF": {
+        "status": "ok",
+        "finite": true
+      },
+      "B032.tif": {
+        "status": "ok",
+        "finite": true
+      },
+      "B034.tiff": {
+        "status": "ok",
+        "finite": true
+      }
+    }
+  },
+  "all_status_ok": true,
+  "all_finite": true,
+  "all_preserve_positive": true
+}

@@ -1,0 +1,44 @@
+{
+  "base_source_sha256": "16862d53f8873cdf82d9659674da0f372114c8ab6ad7a284fca2dd1a0c1158a7",
+  "candidate_source_sha256": "6770b111d51f00e729b5567821e5be4a87b5a2351971e511ca0e8507b68d0110",
+  "task_claimed_acros": 24,
+  "actual_acros": 28,
+  "members": [
+    "B002.NEF",
+    "B003.NEF",
+    "B004.NEF",
+    "B005.NEF",
+    "B006.NEF",
+    "B007.NEF",
+    "B008.NEF",
+    "B009.NEF",
+    "B010.NEF",
+    "B011.NEF",
+    "B012.NEF",
+    "B013.NEF",
+    "B014.NEF",
+    "B015.NEF",
+    "B016.NEF",
+    "B017.NEF",
+    "B018.NEF",
+    "B019.NEF",
+    "B020.NEF",
+    "B021.NEF",
+    "B022.NEF",
+    "B023.NEF",
+    "B024.NEF",
+    "B025.NEF",
+    "B026.NEF",
+    "B027.NEF",
+    "B028.NEF",
+    "B029.NEF"
+  ],
+  "baseline_status_counts": {
+    "manual_review_required": 4,
+    "ok": 24
+  },
+  "initial_candidate_interruption": {
+    "source_sha256": "01c3072448fb3b228d152faa9728f9e83bd542cfbd4d46961be292755f0e7dd5",
+    "reason": "LZW consumed-bit buffer was unbounded; candidate runs stopped, checkpoints quarantined, final source rerun"
+  }
+}

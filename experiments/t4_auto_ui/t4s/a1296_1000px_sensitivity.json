@@ -1,0 +1,28 @@
+{
+  "max_side": 1000,
+  "shape": [
+    645,
+    966,
+    3
+  ],
+  "raw_sha256": "dbe4de488370f3b32acc2f683e3400e61ae06dd021998740567e9974c2998997",
+  "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+  "src_content_sha256": "27ba01f3aa13d29905af25f17284b68bc99da2897a40c957c2a5f4d898b9efb5",
+  "center_p99": [
+    1.1311981678009033,
+    1.1575795412063599,
+    1.148000717163086
+  ],
+  "upper_band_p99": [
+    0.6591564416885376,
+    0.724258303642273,
+    0.9649619460105896
+  ],
+  "upper_band_max": [
+    0.9041735529899597,
+    0.9645647406578064,
+    1.163277268409729
+  ],
+  "upper_band_share_any_channel_gt_10": 0.0,
+  "status": "ok"
+}

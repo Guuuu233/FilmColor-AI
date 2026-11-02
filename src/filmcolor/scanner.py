@@ -25,9 +25,13 @@ import numpy as np
 import tifffile
 
 from .base import estimate_base_blocks
-from .frozen import check_name
+from .frozen import check_source
 
 LINEAR_RAW = 34892
+PHOTOMETRIC_MINISBLACK = 1
+PHOTOMETRIC_RGB = 2
+SCANNER_SUFFIXES = (".dng", ".tif", ".tiff")
+TIFF_COMPRESSIONS = (1, 5, 8, 32773, 32946)  # Uncompressed, LZW, Deflate (Adobe/PKZIP), PackBits
 SILVERFAST_KEYS = ("General_NegativeMode", "isWithIR", "MultiExposure", "General_HdrMode",
                    "IsLayerActive_ISRD", "IsLayerActive_SRDX", "ImageFormat", "General_Bitdepth")
 
@@ -39,6 +43,209 @@ class ScannerFrame:
     black: float
     white: float
     meta: dict
+
+
+def _decode_packbits(data: bytes, expected_len: int | None = None) -> bytes:
+    """Decode TIFF PackBits byte-oriented run-length compressed stream."""
+    out = bytearray()
+    i = 0
+    n = len(data)
+    while i < n:
+        if expected_len is not None and len(out) >= expected_len:
+            break
+        header = data[i]
+        i += 1
+        if header < 128:  # 0..127: literal run of (header + 1) bytes
+            count = header + 1
+            if i + count > n:
+                raise ValueError("PackBits stream truncated in literal run")
+            out.extend(data[i:i + count])
+            i += count
+        elif header > 128:  # 129..255 (-127..-1): repeat next byte (257 - header) times
+            count = 257 - header
+            if i >= n:
+                raise ValueError("PackBits stream truncated in repeat run")
+            b = data[i]
+            i += 1
+            out.extend(bytes([b]) * count)
+        else:  # header == 128 (0x80): no-op
+            pass
+    if expected_len is not None and len(out) != expected_len:
+        raise ValueError(f"PackBits decoded length {len(out)} != expected {expected_len}")
+    return bytes(out)
+
+
+def _decode_tiff_lzw(data: bytes, expected_len: int | None = None) -> bytes:
+    """Decode TIFF LZW stream (MSB-first, 9..12-bit variable code length with early change)."""
+    pos = 0
+    bit_buf = 0
+    bits_in_buf = 0
+    n_data = len(data)
+
+    def get_code(size):
+        nonlocal pos, bit_buf, bits_in_buf
+        while bits_in_buf < size:
+            if pos >= n_data:
+                return None
+            bit_buf = (bit_buf << 8) | data[pos]
+            pos += 1
+            bits_in_buf += 8
+        bits_in_buf -= size
+        code = (bit_buf >> bits_in_buf) & ((1 << size) - 1)
+        bit_buf &= (1 << bits_in_buf) - 1
+        return code
+
+    out = bytearray()
+    table = [bytes([i]) for i in range(256)] + [None, None]
+    code_size = 9
+    old_code = None
+    eoi_found = False
+
+    while True:
+        if expected_len is not None and len(out) >= expected_len:
+            break
+        code = get_code(code_size)
+        if code is None:
+            break
+        if code == 257:  # EOI
+            eoi_found = True
+            break
+        if code == 256:  # ClearCode
+            table = [bytes([i]) for i in range(256)] + [None, None]
+            code_size = 9
+            old_code = None
+            continue
+        if old_code is None:
+            if code >= 256:
+                raise ValueError(f"invalid initial LZW code {code}")
+            entry = table[code]
+            out.extend(entry)
+            old_code = code
+            if expected_len is not None and len(out) > expected_len:
+                raise ValueError(f"LZW decoded length {len(out)} exceeds expected {expected_len}")
+            continue
+        if code < len(table):
+            entry = table[code]
+        elif code == len(table):
+            entry = table[old_code] + table[old_code][:1]
+        else:
+            raise ValueError(f"corrupt LZW code {code} out of range (table len {len(table)})")
+        out.extend(entry)
+        if expected_len is not None and len(out) > expected_len:
+            raise ValueError(f"LZW decoded length {len(out)} exceeds expected {expected_len}")
+        if len(table) < 4096:
+            table.append(table[old_code] + entry[:1])
+            if len(table) + 1 == (1 << code_size) and code_size < 12:
+                code_size += 1
+        old_code = code
+
+    if expected_len is not None:
+        if len(out) != expected_len:
+            raise ValueError(f"LZW decoded length {len(out)} != expected {expected_len}")
+    elif not eoi_found:
+        raise ValueError("LZW stream truncated (missing EOI code)")
+    return bytes(out)
+
+
+def _read_page_array(page) -> np.ndarray:
+    """Read a TIFF page array; fallback to pure Python/NumPy for LZW/PackBits strips if imagecodecs is absent."""
+    try:
+        arr = page.asarray()
+        planarconfig = getattr(page, "planarconfig", 1) or 1
+        if planarconfig == 2 and arr.ndim == 3 and arr.shape[0] in (3, 4):
+            arr = np.transpose(arr, (1, 2, 0))
+        return arr
+    except ValueError as exc:
+        if "imagecodecs" not in str(exc):
+            raise
+
+    # Strictly reject unsupported layouts to prevent silent corruption
+    if getattr(page, "is_tiled", False):
+        raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: tiled TIFF fallback decoding not supported")
+    compression = page.compression
+    if compression not in (5, 32773):
+        raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: unsupported compression {compression}")
+    predictor = int(_tag(page, "Predictor", 1) or 1)
+    if predictor not in (1, 2):
+        raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: unsupported Predictor {predictor}")
+    bits = np.atleast_1d(_tag(page, "BitsPerSample", 0))
+    if not (len(bits) > 0 and all(b == 16 for b in bits) and page.dtype.itemsize == 2 and np.dtype(page.dtype).kind == "u"):
+        raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: fallback only supports uint16 samples")
+
+    h = page.imagelength
+    w = page.imagewidth
+    spp = page.samplesperpixel
+    rows_per_strip = page.rowsperstrip if page.rowsperstrip is not None else h
+    rows_per_strip = max(1, min(rows_per_strip, h))
+    offsets = page.dataoffsets
+    bytecounts = page.databytecounts
+    bo = page.parent.byteorder
+    dt = np.dtype(f"{bo}u2")
+    planarconfig = getattr(page, "planarconfig", 1) or 1
+    fh = page.parent.filehandle
+
+    def _decode_strip(strip_idx: int, rh: int, channels: int) -> np.ndarray:
+        expected_bytes = rh * w * channels * 2
+        fh.seek(offsets[strip_idx])
+        raw = fh.read(bytecounts[strip_idx])
+        if len(raw) < bytecounts[strip_idx]:
+            raise ValueError(f"truncated strip {strip_idx} in TIFF file")
+        dec = _decode_tiff_lzw(raw, expected_bytes) if compression == 5 else _decode_packbits(raw, expected_bytes)
+        sarr = np.frombuffer(dec, dtype=dt).astype(page.dtype, copy=False)
+        if channels > 1:
+            sarr = sarr.reshape(rh, w, channels)
+        else:
+            sarr = sarr.reshape(rh, w)
+        if predictor == 2:
+            sarr = np.cumsum(sarr, axis=1, dtype=np.uint16)
+        return sarr
+
+    if planarconfig == 1:
+        n_strips = (h + rows_per_strip - 1) // rows_per_strip
+        if len(offsets) < n_strips or len(bytecounts) < n_strips:
+            raise ValueError(f"insufficient strip offsets or bytecounts ({len(offsets)}, {len(bytecounts)} < {n_strips})")
+        strips = [_decode_strip(i, min(rows_per_strip, h - i * rows_per_strip), spp) for i in range(n_strips)]
+        arr = np.concatenate(strips, axis=0)
+    elif planarconfig == 2:
+        n_strips_per_plane = (h + rows_per_strip - 1) // rows_per_strip
+        total_strips = spp * n_strips_per_plane
+        if len(offsets) < total_strips or len(bytecounts) < total_strips:
+            raise ValueError(f"insufficient strip offsets or bytecounts for planar TIFF ({len(offsets)}, {len(bytecounts)} < {total_strips})")
+        planes = []
+        for c in range(spp):
+            plane_strips = [
+                _decode_strip(c * n_strips_per_plane + j, min(rows_per_strip, h - j * rows_per_strip), 1)
+                for j in range(n_strips_per_plane)
+            ]
+            planes.append(np.concatenate(plane_strips, axis=0))
+        arr = np.stack(planes, axis=-1) if spp > 1 else planes[0]
+    else:
+        raise ValueError(f"unsupported PlanarConfiguration {planarconfig}")
+
+    if arr.dtype != page.dtype:
+        arr = arr.astype(page.dtype, copy=False)
+    return arr
+
+
+def _is_filmcolor_export(tf) -> bool:
+    """True if this TIFF is a positive export written by FilmColor itself."""
+    if not tf.pages:
+        return False
+    ifd0 = tf.pages[0]
+    software = str(_tag(ifd0, "Software", "") or "").strip().lower()
+    if software.startswith("filmcolor"):
+        return True
+    icc = _tag(ifd0, "InterColorProfile")
+    if icc is None:
+        icc = _tag(ifd0, 34675)
+    if icc is not None:
+        try:
+            raw_icc = bytes(icc)
+            if b"FilmColor uncalibrated camera RGB" in raw_icc:
+                return True
+        except Exception:
+            pass
+    return False
 
 
 def _all_pages(tf):
@@ -53,21 +260,49 @@ def _tag(page, name, default=None):
     return default if t is None else t.value
 
 
-def _main_page(tf):
+def _main_page(tf, *, allow_tiff: bool = False):
+    if not allow_tiff:
+        for n_samples in ((3, 4), (1,)):
+            cands = [p for p in _all_pages(tf) if p.photometric == LINEAR_RAW and p.samplesperpixel in n_samples
+                     and not (_tag(p, "NewSubfileType", 0) or 0) & 1]
+            if cands:
+                return max(cands, key=lambda p: p.shape[0] * p.shape[1])
+        return None
+
+    if _is_filmcolor_export(tf):
+        return None
+
+    allowed_photo = (LINEAR_RAW, PHOTOMETRIC_RGB, PHOTOMETRIC_MINISBLACK)
     for n_samples in ((3, 4), (1,)):
-        cands = [p for p in _all_pages(tf) if p.photometric == LINEAR_RAW and p.samplesperpixel in n_samples
-                 and not (_tag(p, "NewSubfileType", 0) or 0) & 1]
+        cands = []
+        for p in _all_pages(tf):
+            if (p.photometric in allowed_photo
+                    and p.samplesperpixel in n_samples
+                    and p.compression in TIFF_COMPRESSIONS
+                    and not (_tag(p, "NewSubfileType", 0) or 0) & 1):
+                bits = np.atleast_1d(_tag(p, "BitsPerSample", 0))
+                if (len(bits) > 0 and all(b == 16 for b in bits)
+                        and getattr(p, "dtype", None) is not None
+                        and p.dtype.itemsize == 2 and np.dtype(p.dtype).kind == "u"):
+                    cands.append(p)
         if cands:
             return max(cands, key=lambda p: p.shape[0] * p.shape[1])
     return None
 
 
-def is_scanner_dng(path) -> bool:
-    """True for a DNG whose main image is 1-, 3- or 4-sample LinearRaw (no CFA)."""
-    if Path(path).suffix.lower() != ".dng":
+def is_scanner_dng(path, *, allow_frozen: bool = False) -> bool:
+    """True for a DNG whose main image is 1-, 3- or 4-sample LinearRaw (no CFA),
+    or a 16-bit scanner negative TIFF (RGB, RGBI, or MinIsBlack)."""
+    p = Path(path)
+    suf = p.suffix.lower()
+    if suf not in SCANNER_SUFFIXES:
         return False
-    with tifffile.TiffFile(path) as tf:
-        return _main_page(tf) is not None
+    try:
+        check_source(p, allow_frozen=allow_frozen)
+        with tifffile.TiffFile(p) as tf:
+            return _main_page(tf, allow_tiff=(suf != ".dng")) is not None
+    except (tifffile.TiffFileError, OSError, ValueError):
+        return False
 
 
 def _level(value, n, what):
@@ -94,13 +329,15 @@ def silverfast_settings(xmp) -> dict:
 
 def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
     path = Path(path)
-    check_name(path, allow_frozen=allow_frozen)  # sealed dataset frames, also before any hash exists
+    check_source(path, allow_frozen=allow_frozen)  # sealed dataset frames, also before any hash exists
     if not path.is_file():
         raise FileNotFoundError(path)
+    suf = path.suffix.lower()
+    allow_tiff = suf in (".tif", ".tiff")
     with tifffile.TiffFile(path) as tf:
-        main = _main_page(tf)
+        main = _main_page(tf, allow_tiff=allow_tiff)
         if main is None:
-            raise ValueError(f"{path.name}: no 1-, 3- or 4-sample LinearRaw image (not a linear scanner DNG)")
+            raise ValueError(f"{path.name}: no 1-, 3- or 4-sample LinearRaw/16-bit scanner image")
         lut_tag = main.tags.get("LinearizationTable")
         lut = None
         if lut_tag is not None:
@@ -116,7 +353,7 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
         white = float(2 ** bits - 1) if white is None else white
         if white <= black:
             raise ValueError(f"{path.name}: white level {white} <= black level {black}")
-        a = main.asarray()
+        a = _read_page_array(main)
         if lut is not None:
             if a.dtype.kind not in "ui":
                 raise ValueError(f"{path.name}: LinearizationTable on non-integer samples ({a.dtype})")
@@ -127,7 +364,7 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
               and p.samplesperpixel == 1 and p.shape[:2] == a.shape[:2]]
         ir_stats = None
         if ir:
-            m = ir[0].asarray()[::8, ::8].astype(np.float64)
+            m = _read_page_array(ir[0])[::8, ::8].astype(np.float64)
             ir_stats = dict(new_subfile_type=int(_tag(ir[0], "NewSubfileType", 0) or 0),
                             percentiles={str(q): float(np.percentile(m, q)) for q in (1, 5, 50, 95, 99)},
                             used="no (recorded only)")

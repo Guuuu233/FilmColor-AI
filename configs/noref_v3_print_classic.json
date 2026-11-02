@@ -1,0 +1,269 @@
+{
+  "source_config_rev": "t4s-2026-11-02",
+  "preset": "print_classic",
+  "config": {
+    "id": "noref_v3",
+    "n_sample": 200000,
+    "min_luma": 0.002,
+    "low_info_range_stops": 0.6,
+    "median_band": [
+      0.12,
+      0.3
+    ],
+    "headroom": 1.2,
+    "ev_limits": [
+      -2.0,
+      2.5
+    ],
+    "clip_budget": 0.002,
+    "shoulder_steps": 21,
+    "spread_band": [
+      0.62,
+      0.8
+    ],
+    "contrast_limits": [
+      0.7,
+      1.8
+    ],
+    "sat": 1.2,
+    "sat_colourful": 0.9,
+    "wb_luma_pct": [
+      20,
+      95
+    ],
+    "wb_radius": 0.3,
+    "wb_share": [
+      0.05,
+      0.3
+    ],
+    "wb_mad": [
+      0.06,
+      0.15
+    ],
+    "wb_conflict": 0.15,
+    "wb_conflict_factor": 0.3,
+    "wb_max_shift": 0.5,
+    "roll_consistency": 0.1,
+    "rev": "t4s-2026-11-02",
+    "look": "global_look_v1",
+    "preset": "print_classic",
+    "cell_size": 8,
+    "activity_thr_d": 0.05,
+    "min_textured_share": 0.08,
+    "anchor_target_density": 0.75,
+    "anchor_band_d": 0.08,
+    "base_contrast": 1.4,
+    "contrast_bounds_v3": [
+      1.05,
+      1.38
+    ],
+    "contrast_spread_max": 0.78,
+    "end_clip_share": 0.005,
+    "base_sat": 1.02,
+    "base_vibrance": 0.04,
+    "base_midtone": 0.21,
+    "base_shoulder": 0.18,
+    "base_shadows": 0.0,
+    "base_highlights": 0.0,
+    "base_slope_r": 0.0,
+    "base_slope_b": 0.0,
+    "base_blacks": -0.07,
+    "temp_offset": 0.01,
+    "tint_offset": 0.0,
+    "base_tint": 0.015,
+    "cell_border_filter": false,
+    "cell_min_luma": 0.022,
+    "cell_bright_px_share": 0.8,
+    "cell_min_luma_px": 0.015,
+    "cell_min_textured": 50,
+    "tone_border_filter": false,
+    "tone_min_luma": 0.02,
+    "bright_luma": 0.45,
+    "backlit_sky_check": false,
+    "backlit_sky_share_lo": 0.04,
+    "backlit_min_sky_share": 0.12,
+    "thin_neg_check": true,
+    "thin_span_max": 0.62,
+    "thin_bright_share_max": 0.42,
+    "thin_span_zero": 0.46,
+    "thin_span_ramp": 0.16,
+    "thin_ev_min": -0.45,
+    "thin_ev_max": 0.6,
+    "thin_blacks_span": 0.56,
+    "thin_blacks_gain": 1.0,
+    "thin_blacks_max": 0.2,
+    "thin_suppress_backlit_span": 0.58,
+    "meter_holder_box": true,
+    "meter_holder_min_share": 0.01,
+    "meter_box_inset": 0.08,
+    "meter_trim_strips": true,
+    "meter_strip_luma": 0.012,
+    "meter_strip_share": 0.8,
+    "meter_strip_margin": 2,
+    "meter_min_share": 0.25,
+    "ev_down_adaptive": false,
+    "ev_down_q25": [
+      0.42,
+      0.55
+    ],
+    "ev_down_extra": 0.45,
+    "min_span_d_g": 0.22,
+    "target_encoded_band": [
+      0.42,
+      0.49
+    ],
+    "ev_refine_down_max": 0.2,
+    "ev_highlight_max_drop": 0.6,
+    "overlift_damp_check": true,
+    "overlift_ev_min": 1.5,
+    "overlift_ev_pivot": 1.3,
+    "overlift_ev_ramp": 0.5,
+    "overlift_q25_min": 0.35,
+    "overlift_q25_pivot": 0.33,
+    "overlift_gain": 3.2,
+    "overlift_max_pull": 0.65,
+    "overlift_blacks_gain": 0.1,
+    "overlift_blacks_max": 0.06,
+    "overlift_max_span": 1.15,
+    "overlift_max_bright_share": 0.05,
+    "ev_refine_p98_max": 0.96,
+    "ev_anchor_p98_cap": true,
+    "shadow_p25_floor": 0.12,
+    "shadow_gain": 2.5,
+    "shadow_max": 0.35,
+    "wb_prior_weight": 0.0,
+    "wb_v3_adaptive_share": 0.12,
+    "wb_v3_adaptive_pct": 15.0,
+    "wb_v3_gw_weight": 0.45,
+    "wb_v3_gw_threshold": 0.18,
+    "wb_v3_gw_huber": 0.18,
+    "wb_v3_gw_sky_red": 0.75,
+    "wb_v3_zones": [
+      [
+        [
+          70,
+          96
+        ],
+        0.35,
+        0.6
+      ],
+      [
+        [
+          25,
+          75
+        ],
+        0.25,
+        0.4
+      ]
+    ],
+    "wb_v3_min_px": 200,
+    "wb_v3_huber": 0.08,
+    "wb_v3_share": [
+      0.01,
+      0.08
+    ],
+    "wb_v3_mad": [
+      0.1,
+      0.35
+    ],
+    "wb_v3_conflict_factor": 0.75,
+    "wb_v3_strength": 0.65,
+    "wb_v3_sky": [
+      -0.05,
+      0.05
+    ],
+    "wb_v3_sky_weight": 0.35,
+    "wb_v3_cool_cast_check": true,
+    "wb_v3_cool_z0": [
+      -0.05,
+      0.05
+    ],
+    "wb_v3_cool_z1": [
+      -0.1,
+      0.1
+    ],
+    "wb_v3_cool_gw": [
+      -0.2,
+      0.25
+    ],
+    "wb_v3_cast_gw_weight": 0.6,
+    "wb_v3_cast_conf": 0.8,
+    "wb_v3_cast_strength": 0.8,
+    "wb_v3_cast_max_tb_spread": 0.22,
+    "wb_v3_cast_max_zone_dis": 0.22,
+    "wb_v3_cast_max_bright_share": 0.45,
+    "wb_v3_cast_max_bright_share_no_tb": 0.12,
+    "wb_v3_cyan_conf_check": true,
+    "wb_v3_cyan_narrow_max": 0.04,
+    "wb_v3_cyan_r_max": -0.85,
+    "wb_v3_cyan_min_conf": 0.72,
+    "wb_v3_cyan_b_max": 0.2,
+    "wb_v3_cyan_max_zone_dis": 0.6,
+    "wb_v3_cast_max_temp": null,
+    "wb_v3_gw_cool_undamp": true,
+    "wb_v3_undamp_z1": [
+      -0.15,
+      0.15
+    ],
+    "wb_v3_undamp_gw": [
+      -0.2,
+      0.25
+    ],
+    "wb_v3_undamp_tb_max": 0.08,
+    "wb_v3_cool_damp": 0.55,
+    "wb_v3_tint_boost": 1.2,
+    "auto_slope": false,
+    "auto_slope_pct": [
+      2.0,
+      98.0
+    ],
+    "auto_slope_min_delta": 0.1,
+    "auto_slope_max": 0.08,
+    "auto_contrast": false,
+    "auto_contrast_spread": 0.42,
+    "auto_contrast_gain": 1.3,
+    "auto_contrast_max": 0.22,
+    "auto_blacks": false,
+    "auto_blacks_p2": 0.06,
+    "auto_blacks_offset": 0.05,
+    "auto_blacks_gain": 1.1,
+    "auto_blacks_max": 0.28,
+    "auto_blacks_bound": 0.35,
+    "wp_invalid_stops": 1.5,
+    "matrix": null,
+    "camera_matrix_mix": 0.35,
+    "chroma_preserve": 0.35,
+    "backlit_p90": 0.72,
+    "backlit_p25": 0.4,
+    "backlit_ramp": 0.08,
+    "backlit_ramp_p25": 0.1,
+    "backlit_contrast_step": 0.1,
+    "backlit_contrast_cap": 1.65,
+    "backlit_shoulder_step": 0.15,
+    "backlit_shoulder_cap": 0.55,
+    "backlit_midtone_step": 0.09,
+    "backlit_midtone_cap": 0.38,
+    "backlit_p25_target": 0.34,
+    "backlit_capped_rescue": true,
+    "backlit_capped_min_span": 1.0,
+    "backlit_capped_med_band": [
+      0.24,
+      0.4
+    ],
+    "backlit_capped_q25_band": [
+      0.08,
+      0.25
+    ],
+    "backlit_capped_q90_min": 0.45,
+    "backlit_near_min_span": 1.15,
+    "backlit_near_q90_band": [
+      0.68,
+      0.72
+    ],
+    "backlit_near_q25_band": [
+      0.15,
+      0.22
+    ],
+    "backlit_rescue_shadows_step": 0.16
+  }
+}

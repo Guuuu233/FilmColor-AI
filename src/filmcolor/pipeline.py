@@ -90,7 +90,7 @@ def _camera_input(path, *, base_regions, base_rgb, image_region):
 
 
 def _scanner_input(path, *, base_regions, base_rgb, image_region):
-    """Linear RGB scanner DNG: analysis and render path are the same image (no CFA)."""
+    """Scanner DNG / 16-bit TIFF: analysis and render use the same signal (no CFA)."""
     fr = load_scanner(path)
     if image_region is not None:
         check_region(tuple(int(x) for x in image_region), fr.sat.shape)
@@ -112,11 +112,16 @@ def _scanner_input(path, *, base_regions, base_rgb, image_region):
         base_rgb = rb["rgb"]
         base_info["rgb_render"] = list(rb["rgb"])
         base_info["render_stats"] = rb
-    input_info = dict(kind="scanner_linear_dng", shape=list(sat.shape), black=fr.black, white=fr.white,
-                      meta=fr.meta)
+    is_tiff = Path(path).suffix.lower() in (".tif", ".tiff")
+    input_info = dict(kind="scanner_tiff16" if is_tiff else "scanner_linear_dng",
+                      shape=list(sat.shape), black=fr.black, white=fr.white, meta=fr.meta)
     decode_info = dict(analysis="same as render (no CFA)",
                        render="tifffile %s, LinearRaw main image, (v - black) / (white - black), "
                               "infrared layer excluded" % tifffile.__version__)
+    if is_tiff:
+        decode_info["render"] = ("tifffile %s with native LZW / PackBits strip fallback, 16-bit scanner image, "
+                                 "(v - black) / (white - black), infrared excluded; signal assumed linear, "
+                                 "ICC / TRC not applied" % tifffile.__version__)
     return rgb, sat, base_rgb, base_info, regions, input_info, decode_info
 
 

@@ -1,0 +1,28 @@
+{
+  "max_side": 1000,
+  "shape": [
+    645,
+    966,
+    3
+  ],
+  "raw_sha256": "dbe4de488370f3b32acc2f683e3400e61ae06dd021998740567e9974c2998997",
+  "src": "/private/tmp/filmcolor_t4s_baseline_fbd48a0/src",
+  "src_content_sha256": "16862d53f8873cdf82d9659674da0f372114c8ab6ad7a284fca2dd1a0c1158a7",
+  "center_p99": [
+    1.1311981678009033,
+    1.1575795412063599,
+    1.148000717163086
+  ],
+  "upper_band_p99": [
+    0.660399854183197,
+    0.7521317601203918,
+    9407591.0
+  ],
+  "upper_band_max": [
+    0.9066765308380127,
+    11.571074485778809,
+    28222772.0
+  ],
+  "upper_band_share_any_channel_gt_10": 0.07981931712501661,
+  "status": "ok"
+}

@@ -339,3 +339,420 @@ def test_t4p_rgb_priority_over_monochrome_main_page(tmp_path):
     fr2 = load_scanner(p2)
     assert "monochrome_dng" not in fr2.meta
     np.testing.assert_allclose(fr2.rgb, rgb / 65535.0, atol=1e-6)
+
+
+# ---------------------------------------------------------------------------
+# T4s: 16-bit scanner TIFF support, LZW/PackBits/Predictor2 fallback & guards
+# ---------------------------------------------------------------------------
+
+def encode_packbits(data: bytes) -> bytes:
+    """Encode bytes using TIFF PackBits run-length compression."""
+    out = bytearray()
+    i = 0
+    n = len(data)
+    while i < n:
+        # Check for repeated bytes
+        run_len = 1
+        while i + run_len < n and data[i + run_len] == data[i] and run_len < 128:
+            run_len += 1
+        if run_len >= 3 or (run_len == 2 and i + 2 == n):
+            out.append(257 - run_len)
+            out.append(data[i])
+            i += run_len
+        else:
+            # Literal run
+            lit_start = i
+            while i < n and (i - lit_start < 128):
+                if i + 2 < n and data[i] == data[i + 1] == data[i + 2]:
+                    break
+                i += 1
+            lit_count = i - lit_start
+            out.append(lit_count - 1)
+            out.extend(data[lit_start:i])
+    return bytes(out)
+
+
+def encode_tiff_lzw(data: bytes, *, include_eoi: bool = True) -> bytes:
+    """Encode bytes using TIFF LZW with MSB-first bit-packing and early change."""
+    table = {bytes([b]): b for b in range(256)}
+    next_code = 258
+    code_size = 9
+    out_bits = []
+
+    def put_code(c, bits):
+        for b in range(bits - 1, -1, -1):
+            out_bits.append((c >> b) & 1)
+
+    put_code(256, code_size)  # ClearCode
+    s = b""
+    for byte in data:
+        c = bytes([byte])
+        sc = s + c
+        if sc in table:
+            s = sc
+        else:
+            put_code(table[s], code_size)
+            if next_code < 4096:
+                table[sc] = next_code
+                next_code += 1
+                if next_code == (1 << code_size) and code_size < 12:
+                    code_size += 1
+            s = c
+    if s:
+        put_code(table[s], code_size)
+    if include_eoi:
+        put_code(257, code_size)  # EOI
+
+    pad = (8 - len(out_bits) % 8) % 8
+    out_bits.extend([0] * pad)
+    out_bytes = bytearray()
+    for j in range(0, len(out_bits), 8):
+        val = 0
+        for bit in out_bits[j:j + 8]:
+            val = (val << 1) | bit
+        out_bytes.append(val)
+    return bytes(out_bytes)
+
+
+def build_synthetic_tiff(strips_data: list[bytes], width: int, height: int, spp: int = 3,
+                         photometric: int = 2, compression: int = 1, predictor: int = 1,
+                         planarconfig: int = 1, rows_per_strip: int | None = None,
+                         byteorder: str = "<") -> bytes:
+    """Build a valid standalone TIFF in memory with custom strip data and compression."""
+    import struct
+    if rows_per_strip is None:
+        rows_per_strip = height
+    bo = byteorder
+    header = b"II\x2a\x00" if bo == "<" else b"MM\x00\x2a"
+
+    offset = 8
+    strip_offsets = []
+    strip_bytecounts = []
+    all_data = b""
+    for s in strips_data:
+        strip_offsets.append(offset + len(all_data))
+        strip_bytecounts.append(len(s))
+        all_data += s
+
+    ifd_offset = offset + len(all_data)
+    if ifd_offset % 2 == 1:
+        all_data += b"\x00"
+        ifd_offset += 1
+
+    entries = [
+        (256, 4, 1, width),
+        (257, 4, 1, height),
+        (258, 3, spp, [16] * spp),
+        (259, 3, 1, compression),
+        (262, 3, 1, photometric),
+        (273, 4, len(strip_offsets), strip_offsets),
+        (277, 3, 1, spp),
+        (278, 4, 1, rows_per_strip),
+        (279, 4, len(strip_bytecounts), strip_bytecounts),
+    ]
+    if planarconfig != 1:
+        entries.append((284, 3, 1, planarconfig))
+    if predictor != 1:
+        entries.append((317, 3, 1, predictor))
+
+    entries.sort(key=lambda x: x[0])
+    ifd_len = 2 + len(entries) * 12 + 4
+    extra_data_offset = ifd_offset + ifd_len
+
+    ifd_bytes = bytearray(struct.pack(f"{bo}H", len(entries)))
+    extra_data = bytearray()
+
+    for tag, type_id, count, val in entries:
+        if type_id == 3:
+            raw = struct.pack(f"{bo}{count}H", *(val if isinstance(val, (list, tuple)) else [val]))
+        elif type_id == 4:
+            raw = struct.pack(f"{bo}{count}I", *(val if isinstance(val, (list, tuple)) else [val]))
+        else:
+            raise ValueError(f"unsupported type_id {type_id}")
+
+        if len(raw) <= 4:
+            field_val = raw.ljust(4, b"\x00")
+        else:
+            data_pos = extra_data_offset + len(extra_data)
+            field_val = struct.pack(f"{bo}I", data_pos)
+            extra_data.extend(raw)
+            if len(extra_data) % 2 == 1:
+                extra_data.append(0)
+
+        ifd_bytes.extend(struct.pack(f"{bo}HHI", tag, type_id, count) + field_val)
+
+    ifd_bytes.extend(struct.pack(f"{bo}I", 0))
+    return header + struct.pack(f"{bo}I", ifd_offset) + all_data + bytes(ifd_bytes) + bytes(extra_data)
+
+
+def test_t4s_scanner_tiff16_rgb_minisblack_and_4ch(tmp_path):
+    """T4s: .tif / .tiff with 16-bit RGB, 16-bit MinIsBlack, and 16-bit 4ch RGBI are accepted by
+    is_scanner_dng and loaded correctly by load_scanner. 8-bit, 32-bit float, and .dng with photometric=rgb are rejected."""
+    # 1. 16-bit 3-channel RGB .tif
+    rgb = np.arange(10 * 12 * 3, dtype=np.uint16).reshape(10, 12, 3) * 50
+    p_rgb = tmp_path / "neg.tif"
+    tifffile.imwrite(p_rgb, rgb, photometric="rgb")
+    assert is_scanner_dng(p_rgb)
+    fr_rgb = load_scanner(p_rgb)
+    assert fr_rgb.rgb.shape == (10, 12, 3)
+    np.testing.assert_allclose(fr_rgb.rgb, rgb / 65535.0, atol=1e-6)
+    assert "monochrome_dng" not in fr_rgb.meta
+
+    # Also test .tiff suffix
+    p_tiff = tmp_path / "neg.tiff"
+    tifffile.imwrite(p_tiff, rgb, photometric="rgb")
+    assert is_scanner_dng(p_tiff)
+
+    # 2. 16-bit 1-channel MinIsBlack .tif
+    mono = np.arange(10 * 12, dtype=np.uint16).reshape(10, 12) * 200
+    p_mono = tmp_path / "bw.tif"
+    tifffile.imwrite(p_mono, mono, photometric="minisblack")
+    assert is_scanner_dng(p_mono)
+    fr_mono = load_scanner(p_mono)
+    assert fr_mono.meta.get("monochrome_dng") is True
+    assert fr_mono.rgb.shape == (10, 12, 3)
+    np.testing.assert_allclose(fr_mono.rgb[:, :, 0], mono / 65535.0, atol=1e-6)
+    np.testing.assert_array_equal(fr_mono.rgb[:, :, 0], fr_mono.rgb[:, :, 1])
+
+    # 3. 16-bit 4-channel RGBI .tif
+    ir = np.full((10, 12), 48000, dtype=np.uint16)
+    rgbi = np.dstack([rgb, ir])
+    p_rgbi = tmp_path / "rgbi.tif"
+    tifffile.imwrite(p_rgbi, rgbi, photometric="rgb")
+    assert is_scanner_dng(p_rgbi)
+    fr_rgbi = load_scanner(p_rgbi)
+    assert fr_rgbi.rgb.shape == (10, 12, 3)
+    assert fr_rgbi.meta["infrared_layer"]["source"] == "interleaved_4ch"
+    np.testing.assert_allclose(fr_rgbi.rgb, rgb / 65535.0, atol=1e-6)
+
+    # 4. 8-bit .tif is rejected
+    rgb8 = (rgb // 256).astype(np.uint8)
+    p_8bit = tmp_path / "neg8.tif"
+    tifffile.imwrite(p_8bit, rgb8, photometric="rgb")
+    assert not is_scanner_dng(p_8bit)
+    with pytest.raises(ValueError, match="LinearRaw"):
+        load_scanner(p_8bit)
+
+    # 5. 32-bit float .tif is rejected
+    p_float = tmp_path / "float32.tif"
+    tifffile.imwrite(p_float, (rgb / 65535.0).astype(np.float32), photometric="rgb")
+    assert not is_scanner_dng(p_float)
+    with pytest.raises(ValueError, match="LinearRaw"):
+        load_scanner(p_float)
+
+    # 6. DNG with photometric="rgb" is STILL rejected (DNG LinearRaw contract preserved)
+    p_dng_rgb = tmp_path / "rgb_not_linear.dng"
+    tifffile.imwrite(p_dng_rgb, rgb, photometric="rgb")
+    assert not is_scanner_dng(p_dng_rgb)
+    with pytest.raises(ValueError, match="LinearRaw"):
+        load_scanner(p_dng_rgb)
+
+
+def test_t4s_scanner_tiff_lzw_and_packbits_predictor2_decode(tmp_path):
+    """T4s: pure-python LZW and PackBits strips with Predictor=2 (Contig and Separate, LE and BE)
+    decode 100% identically to original uint16 pixels without imagecodecs."""
+    h, w, spp = 16, 24, 3
+    rng = np.random.default_rng(2026)
+    orig = rng.integers(1000, 60000, (h, w, spp), dtype=np.uint16)
+    rows_per_strip = 4
+    n_strips = (h + rows_per_strip - 1) // rows_per_strip
+
+    # Case A: LZW + Predictor=2, Contig, Little-Endian
+    diff_contig = orig.copy()
+    diff_contig[:, 1:, :] = (orig[:, 1:, :] - orig[:, :-1, :]).astype(np.uint16)
+    strips_lzw_contig = []
+    for s_idx in range(n_strips):
+        r0 = s_idx * rows_per_strip
+        r1 = min(r0 + rows_per_strip, h)
+        chunk = diff_contig[r0:r1].astype("<u2").tobytes()
+        strips_lzw_contig.append(encode_tiff_lzw(chunk))
+
+    raw_tiff_lzw = build_synthetic_tiff(strips_lzw_contig, w, h, spp=spp, photometric=2,
+                                        compression=5, predictor=2, planarconfig=1,
+                                        rows_per_strip=rows_per_strip, byteorder="<")
+    p_lzw = tmp_path / "lzw_contig.tif"
+    p_lzw.write_bytes(raw_tiff_lzw)
+
+    assert is_scanner_dng(p_lzw)
+    fr_lzw = load_scanner(p_lzw)
+    np.testing.assert_allclose(fr_lzw.rgb, orig / 65535.0, atol=1e-6)
+
+    # Case B: LZW + Predictor=2, Planar/Separate (planarconfig=2), Little-Endian
+    # When planarconfig=2, each plane is diffed across columns independently
+    strips_lzw_separate = []
+    for c in range(spp):
+        plane = orig[:, :, c]
+        diff_plane = plane.copy()
+        diff_plane[:, 1:] = (plane[:, 1:] - plane[:, :-1]).astype(np.uint16)
+        for s_idx in range(n_strips):
+            r0 = s_idx * rows_per_strip
+            r1 = min(r0 + rows_per_strip, h)
+            chunk = diff_plane[r0:r1].astype("<u2").tobytes()
+            strips_lzw_separate.append(encode_tiff_lzw(chunk))
+
+    raw_tiff_lzw_sep = build_synthetic_tiff(strips_lzw_separate, w, h, spp=spp, photometric=2,
+                                            compression=5, predictor=2, planarconfig=2,
+                                            rows_per_strip=rows_per_strip, byteorder="<")
+    p_lzw_sep = tmp_path / "lzw_separate.tif"
+    p_lzw_sep.write_bytes(raw_tiff_lzw_sep)
+
+    assert is_scanner_dng(p_lzw_sep)
+    fr_lzw_sep = load_scanner(p_lzw_sep)
+    np.testing.assert_allclose(fr_lzw_sep.rgb, orig / 65535.0, atol=1e-6)
+
+    # Case C: PackBits, Contig, No predictor
+    strips_packbits = []
+    for s_idx in range(n_strips):
+        r0 = s_idx * rows_per_strip
+        r1 = min(r0 + rows_per_strip, h)
+        chunk = orig[r0:r1].astype("<u2").tobytes()
+        strips_packbits.append(encode_packbits(chunk))
+
+    raw_tiff_pb = build_synthetic_tiff(strips_packbits, w, h, spp=spp, photometric=2,
+                                       compression=32773, predictor=1, planarconfig=1,
+                                       rows_per_strip=rows_per_strip, byteorder="<")
+    p_pb = tmp_path / "packbits.tif"
+    p_pb.write_bytes(raw_tiff_pb)
+
+    assert is_scanner_dng(p_pb)
+    fr_pb = load_scanner(p_pb)
+    np.testing.assert_allclose(fr_pb.rgb, orig / 65535.0, atol=1e-6)
+
+    # Case D: LZW, Big-Endian (byteorder=">")
+    strips_lzw_be = []
+    for s_idx in range(n_strips):
+        r0 = s_idx * rows_per_strip
+        r1 = min(r0 + rows_per_strip, h)
+        chunk = orig[r0:r1].astype(">u2").tobytes()
+        strips_lzw_be.append(encode_tiff_lzw(chunk))
+
+    raw_tiff_be = build_synthetic_tiff(strips_lzw_be, w, h, spp=spp, photometric=2,
+                                       compression=5, predictor=1, planarconfig=1,
+                                       rows_per_strip=rows_per_strip, byteorder=">")
+    p_be = tmp_path / "lzw_be.tif"
+    p_be.write_bytes(raw_tiff_be)
+
+    assert is_scanner_dng(p_be)
+    fr_be = load_scanner(p_be)
+    np.testing.assert_allclose(fr_be.rgb, orig / 65535.0, atol=1e-6)
+
+
+def test_t4s_refuses_filmcolor_exported_positive_tiff(tmp_path):
+    """T4s: FilmColor exported positive TIFFs (written by export.write_tiff16 with software='filmcolor'
+    and embedded ICC description) are strictly rejected from being treated as scanner negatives."""
+    from filmcolor.export import write_tiff16
+    pos_data = np.full((30, 40, 3), 0.5, dtype=np.float32)
+    p_pos = tmp_path / "exported_positive.tif"
+    write_tiff16(p_pos, pos_data, "srgb")
+
+    assert not is_scanner_dng(p_pos)
+    with pytest.raises(ValueError, match="LinearRaw"):
+        load_scanner(p_pos)
+
+
+def test_t4s_scanner_truncated_and_unsupported_layout_rejected(tmp_path):
+    """T4s: truncated compression streams, corrupt codes, and unsupported layouts are rejected,
+    while valid strips that decode to full expected length without EOI (e.g. VueScan output) succeed."""
+    from filmcolor.scanner import _decode_tiff_lzw, _decode_packbits
+    # 1. Valid LZW strip without trailing EOI and with trailing padding bytes succeeds when expected_len is met
+    h, w, spp = 8, 10, 3
+    orig = np.full((h, w, spp), 1000, dtype="<u2")
+    raw_expected = orig.tobytes()
+    expected_bytes = len(raw_expected)
+    lzw_no_eoi = encode_tiff_lzw(raw_expected, include_eoi=False) + b"\x00\x00"
+
+    dec_no_eoi = _decode_tiff_lzw(lzw_no_eoi, expected_len=expected_bytes)
+    assert dec_no_eoi == raw_expected
+
+    # File-level: load_scanner succeeds on strip without EOI
+    raw_tiff_no_eoi = build_synthetic_tiff([lzw_no_eoi], w, h, spp=spp, photometric=2,
+                                           compression=5, predictor=1, planarconfig=1)
+    p_no_eoi = tmp_path / "valid_no_eoi.tif"
+    p_no_eoi.write_bytes(raw_tiff_no_eoi)
+    fr_no_eoi = load_scanner(p_no_eoi)
+    np.testing.assert_allclose(fr_no_eoi.rgb, orig / 65535.0, atol=1e-6)
+
+    # Missing EOI in standalone decode without expected_len must still be rejected
+    with pytest.raises(ValueError, match="missing EOI"):
+        _decode_tiff_lzw(lzw_no_eoi, expected_len=None)
+
+    # Truncated LZW strip (under expected length) must be rejected
+    bad_lzw = lzw_no_eoi[:len(lzw_no_eoi) // 2]
+    raw_bad_lzw = build_synthetic_tiff([bad_lzw], w, h, spp=spp, photometric=2,
+                                       compression=5, predictor=1, planarconfig=1)
+    p_bad_lzw = tmp_path / "truncated_lzw.tif"
+    p_bad_lzw.write_bytes(raw_bad_lzw)
+
+    with pytest.raises(ValueError):
+        load_scanner(p_bad_lzw)
+
+    with pytest.raises(ValueError, match="decoded length|truncated"):
+        _decode_tiff_lzw(bad_lzw, expected_len=expected_bytes)
+
+    # 2. Corrupt LZW code
+    # Construct stream with code >= 258 immediately without table setup
+    with pytest.raises(ValueError, match="invalid initial LZW code"):
+        # Put 9-bit code 300: (300 >> 1) in byte 0, (300 & 1) << 7 in byte 1
+        _decode_tiff_lzw(bytes([150, 0, 0]))
+
+    # 3. Truncated PackBits strip
+    good_pb = encode_packbits(orig.tobytes())
+    bad_pb = good_pb[:len(good_pb) // 2]
+    raw_bad_pb = build_synthetic_tiff([bad_pb], w, h, spp=spp, photometric=2,
+                                      compression=32773, predictor=1, planarconfig=1)
+    p_bad_pb = tmp_path / "truncated_pb.tif"
+    p_bad_pb.write_bytes(raw_bad_pb)
+
+    # load_scanner raises on corrupted/truncated packbits strip
+    with pytest.raises(ValueError):
+        load_scanner(p_bad_pb)
+
+    # Standalone _decode_packbits raises on truncated stream / length mismatch
+    with pytest.raises(ValueError, match="PackBits"):
+        _decode_packbits(bad_pb, expected_len=expected_bytes)
+
+    # 4. Unsupported Predictor (e.g. Predictor=3)
+    good_lzw = encode_tiff_lzw(raw_expected)
+    raw_bad_pred = build_synthetic_tiff([good_lzw], w, h, spp=spp, photometric=2,
+                                        compression=5, predictor=3, planarconfig=1)
+    p_bad_pred = tmp_path / "bad_predictor.tif"
+    p_bad_pred.write_bytes(raw_bad_pred)
+    with pytest.raises(ValueError, match="Predictor"):
+        load_scanner(p_bad_pred)
+
+
+def test_t4s_is_scanner_dng_and_load_scanner_frozen_guard(tmp_path, monkeypatch):
+    """T4s: verify is_scanner_dng and load_scanner strictly propagate FrozenDataError on frozen inputs,
+    and nonexistent files return False for is_scanner_dng without unhandled error."""
+    from filmcolor.frozen import FrozenDataError
+    # Nonexistent file returns False
+    assert not is_scanner_dng(tmp_path / "nonexistent.tif")
+
+    p = tmp_path / "frozen_test.dng"
+    p.write_bytes(b"dummy")
+
+    def mock_check_source(path, *, allow_frozen=False, frozen=None):
+        if not allow_frozen:
+            raise FrozenDataError(f"mock frozen hit: {path}")
+        return "mock_sha"
+
+    monkeypatch.setattr("filmcolor.scanner.check_source", mock_check_source)
+
+    with pytest.raises(FrozenDataError):
+        is_scanner_dng(p, allow_frozen=False)
+
+    with pytest.raises(FrozenDataError):
+        load_scanner(p, allow_frozen=False)
+
+
+def test_t4s_scanner_large_lzw_strip_bounded_time():
+    """T4s: ensure LZW get_code masks bit_buf so multi-megabyte strips decode in linear O(N) time."""
+    from filmcolor.scanner import _decode_tiff_lzw
+    import time
+    raw = (np.arange(100000, dtype=np.uint16) % 256).astype(np.uint8).tobytes()
+    enc = encode_tiff_lzw(raw)
+    t0 = time.perf_counter()
+    dec = _decode_tiff_lzw(enc, len(raw))
+    t1 = time.perf_counter()
+    assert dec == raw
+    assert (t1 - t0) < 0.2, f"LZW decode took {t1 - t0:.4f}s, expected < 0.2s"

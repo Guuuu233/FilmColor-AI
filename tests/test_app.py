@@ -542,3 +542,147 @@ def test_t4o_route_roll_nat_fallback_and_estimate_in_roll_info(server):
     sub["n_base"] = 3
     sub["roll"]["warnings"] = ["density_range_low"]
     assert not st._route_roll_nat(folder, "frame.dng")
+
+
+def test_t4s_bw_roll_nat_routing_by_level_diff(server):
+    """T4s: 3 healthy frames + 1 darker frame (0.09 D darker, chroma_part < 0.01).
+    color mode keeps auto (ROLL_NAT_LEVEL_DIFF is None).
+    bw mode routes to roll_nat (ROLL_NAT_BW_LEVEL_DIFF = 0.06)."""
+    _, root, tmp = server
+    rgb, irl = scan()
+    for name in ("u.dng", "v.dng"):
+        write_dng(root / name, rgb, irl)
+    # 0.09 D denser than roll base, identical chroma
+    dark_rgb = np.clip(np.round(rgb * (10 ** -0.09)), 0, 65535).astype(np.uint16)
+    write_dng(root / "m.dng", dark_rgb, irl)
+
+    st = app.State(root, tmp / "out", allow_frozen=False)
+    info = st.roll_info()
+    m_info = info["frames"]["m.dng"]
+    assert m_info["chroma_part"] < 0.01
+    assert 0.06 <= m_info["level_diff"] < 0.22
+    assert not info["roll"]["warnings"]
+    assert info["sub_rolls"][""]["n_base"] >= 3
+
+    assert st.open("m.dng", "color")["base"]["method"] == "auto"
+    assert st.open("m.dng", "bw")["base"]["method"] == "roll_nat"
+
+
+def test_t4s_bw_roll_nat_health_thresholds(server):
+    """T4s: B&W roll_nat routing requires level_diff >= 0.06, sub-roll n_base >= 3, and no warnings."""
+    _, root, tmp = server
+    st = app.State(root, tmp / "out", allow_frozen=False)
+    folder = "bw_roll"
+    fe = {
+        "sub_roll": "sub_bw",
+        "roll_rgb": [0.3, 0.3, 0.3],
+        "own_rgb": [0.3, 0.3, 0.3],
+        "chroma_part": 0.005,
+        "level_diff": 0.08,
+        "own_error": None,
+        "estimate": {"diagnostics": {}},
+    }
+    sub = {
+        "n_base": 3,
+        "roll": {"warnings": []},
+    }
+    st.roll_cache[folder] = {"frames": {"frame.dng": fe}, "sub_rolls": {"sub_bw": sub}}
+
+    # Health check passes and level_diff 0.08 >= 0.06:
+    assert not st._route_roll_nat(folder, "frame.dng", film="color")
+    assert st._route_roll_nat(folder, "frame.dng", film="bw")
+
+    # level_diff < 0.06 (e.g. 0.04 D): not routed in bw
+    fe["level_diff"] = 0.04
+    assert not st._route_roll_nat(folder, "frame.dng", film="bw")
+
+    # level_diff >= 0.06 but sub-roll n_base < 3: not routed
+    fe["level_diff"] = 0.08
+    sub["n_base"] = 2
+    assert not st._route_roll_nat(folder, "frame.dng", film="bw")
+
+    # level_diff >= 0.06, n_base >= 3, but roll has warnings: not routed
+    sub["n_base"] = 3
+    sub["roll"]["warnings"] = ["density_range_low"]
+    assert not st._route_roll_nat(folder, "frame.dng", film="bw")
+
+
+def test_t4s_refuses_filmcolor_exported_positive_tiff(server):
+    """T4s: FilmColor exported positive TIFF must be excluded from files() and refused by open()."""
+    from filmcolor.export import write_tiff16
+    _, root, tmp = server
+    img = np.full((120, 180, 3), 0.5, dtype=np.float32)
+    pos_path = root / "exported_pos.tif"
+    write_tiff16(pos_path, img)
+
+    st = app.State(root, tmp / "out", allow_frozen=False)
+    file_list = st.files()
+    assert "exported_pos.tif" not in file_list
+    with pytest.raises(ValueError, match="16-bit scanner negative TIFF only"):
+        st.open("exported_pos.tif", "color")
+
+
+def test_t4s_app_tiff_frozen_guard(server, monkeypatch):
+    """T4s: Frozen TIFF guard in files() and resolve():
+    - files() excludes frozen TIFF without decoding it
+    - resolve() raises FrozenDataError at check_source before is_scanner_dng"""
+    from pathlib import Path
+    import tifffile
+    _, root, tmp = server
+    rgb, _ = scan()
+    f_path = root / "frozen_scan.tif"
+    tifffile.imwrite(f_path, rgb, photometric="rgb")
+
+    def mock_check_source(cand, *, allow_frozen: bool = False):
+        if Path(cand).name == "frozen_scan.tif" and not allow_frozen:
+            raise FrozenDataError("frozen file access blocked")
+        return "mock_sha"
+
+    monkeypatch.setattr(app, "check_source", mock_check_source)
+
+    st_guarded = app.State(root, tmp / "out", allow_frozen=False)
+    # files() should not include the frozen TIFF and must not crash
+    assert "frozen_scan.tif" not in st_guarded.files()
+    # resolve() must raise FrozenDataError
+    with pytest.raises(FrozenDataError, match="frozen file access blocked"):
+        st_guarded.resolve("frozen_scan.tif")
+
+    # allow_frozen=True allows resolving
+    st_allowed = app.State(root, tmp / "out", allow_frozen=True)
+    assert st_allowed.resolve("frozen_scan.tif") == f_path.resolve()
+
+
+def test_t4s_app_opens_and_exports_scanner_tiff(server):
+    """T4s: 16-bit scanner negative TIFF opens and exports via full HTTP API pipeline."""
+    import tifffile
+    call, root, tmp = server
+    rgb, _ = scan()
+    scan_neg = root / "scan_neg.tif"
+    tifffile.imwrite(scan_neg, rgb, photometric="rgb")
+
+    files, code, _ = call("/api/files")
+    assert code == 200
+    assert "scan_neg.tif" in files["files"]
+
+    meta, code, _ = call("/api/open", dict(path="scan_neg.tif", film="color"))
+    assert code == 200
+    assert meta["base"]["method"] == "auto"
+    assert "config_rev" in meta["auto"]
+    assert meta["auto"]["config_rev"] == app.NOREF_V3["rev"]
+
+    tok = meta["token"]
+    png, code, _ = call(f"/api/render?token={tok}&p={q({})}")
+    assert code == 200
+    assert len(png) > 0
+
+    neg, code, _ = call(f"/api/negative?token={tok}")
+    assert code == 200
+    assert len(neg) > 0
+
+    out, code, _ = call("/api/export", dict(params={}, token=tok))
+    assert code == 200
+    assert out["path"].endswith(".tif")
+    assert (tmp / "out").exists()
+    sc = json.loads(open(out["sidecar"]).read())
+    assert sc["input"]["kind"] == "scanner_tiff16"
+    assert "ICC / TRC not applied" in sc["decode"]["render"]

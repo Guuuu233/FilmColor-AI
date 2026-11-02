@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4r-2026-11-01",          # T4r: wide-bright over-lift exemption and sparse / conflicting WB gates;
+    rev="t4s-2026-11-02",          # T4s: scanner TIFF, global zero-escape evidence and B&W roll routing;
+                                   # T4r: wide-bright over-lift exemption and sparse / conflicting WB gates;
                                    # T4q: fixed spatial radius and bounded darkening of lifted shadows;
                                    # T4p: bounded highlight EV drop, pre-hold rescue evidence and bright-sky split;
                                    # T4m: thin-negative darkening without backlit lift, strong cyan confidence floor;

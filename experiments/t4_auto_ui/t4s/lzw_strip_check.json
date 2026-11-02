@@ -1,0 +1,108 @@
+{
+  "target": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1027.TIF",
+  "input_sha256": "90ef51ebf2cfd488c64a78d0f14fc5b6f43c8efc53444f77af1d138435ea1d40",
+  "libtiff_path": "/Volumes/waizhiyingpan/FilmColor-AI/.venv/lib/python3.13/site-packages/PIL/.dylibs/libtiff.6.dylib",
+  "strips_tested_count": 11,
+  "all_strips_matched": true,
+  "strips": [
+    {
+      "strip_index": 0,
+      "raw_bytecount": 62163,
+      "raw_sha256": "bfee8b186e452b3b0b23ec6d472604b5bf3da068dd8f1e9bb49072cc3035cac9",
+      "expected_bytes": 83200,
+      "py_sha256": "54e84a03151817da7e0071dd6be9544ae7105b3a72fad6691feebacf1e5b2c71",
+      "libtiff_sha256": "54e84a03151817da7e0071dd6be9544ae7105b3a72fad6691feebacf1e5b2c71",
+      "match": true
+    },
+    {
+      "strip_index": 100,
+      "raw_bytecount": 62495,
+      "raw_sha256": "a7f4a5bd58c562f52118657d45a5f5ef344b7ce6610ab4865e0574a83ad1d5ca",
+      "expected_bytes": 83200,
+      "py_sha256": "a54aae5a8675d191b9ed9e93463ffbcd483b34a100a491c7156bce258e068c3b",
+      "libtiff_sha256": "a54aae5a8675d191b9ed9e93463ffbcd483b34a100a491c7156bce258e068c3b",
+      "match": true
+    },
+    {
+      "strip_index": 405,
+      "raw_bytecount": 81352,
+      "raw_sha256": "4c96b3848693e3f201bcea678d9b19ce049e3e68d43eea4648960c6e3081ab44",
+      "expected_bytes": 83200,
+      "py_sha256": "d66d08145242b63ced244b97412a84c7b154c4a7faef4d8f464ba91c2e85a678",
+      "libtiff_sha256": "d66d08145242b63ced244b97412a84c7b154c4a7faef4d8f464ba91c2e85a678",
+      "match": true
+    },
+    {
+      "strip_index": 1000,
+      "raw_bytecount": 80186,
+      "raw_sha256": "0365b2ca15efdb271790c9ff0cc4177c8c77bb744e97b5ed059825faed4ea95e",
+      "expected_bytes": 83200,
+      "py_sha256": "14326ed2b8dd7a9fff779c7d8b272b550725c2c9db5987db7e8343e8e16bba6d",
+      "libtiff_sha256": "14326ed2b8dd7a9fff779c7d8b272b550725c2c9db5987db7e8343e8e16bba6d",
+      "match": true
+    },
+    {
+      "strip_index": 2000,
+      "raw_bytecount": 79451,
+      "raw_sha256": "1dbdb13a56c224752140beffcbb1b2f4cc55ff444ec3fb1accb0f4d9c0785605",
+      "expected_bytes": 83200,
+      "py_sha256": "797061da8ed6364691c1fe7e10491d1718dba11d0837578ee1c4c8e2733ddd49",
+      "libtiff_sha256": "797061da8ed6364691c1fe7e10491d1718dba11d0837578ee1c4c8e2733ddd49",
+      "match": true
+    },
+    {
+      "strip_index": 3000,
+      "raw_bytecount": 81735,
+      "raw_sha256": "8262fad887bba8f02a05e8ffa51631a79b59675d8f7b53dc8f4a05dbf1db8f5e",
+      "expected_bytes": 83200,
+      "py_sha256": "3e896803a033a07a141b0f8ab0969b773448c7007a777dec87e553e329b3040f",
+      "libtiff_sha256": "3e896803a033a07a141b0f8ab0969b773448c7007a777dec87e553e329b3040f",
+      "match": true
+    },
+    {
+      "strip_index": 4000,
+      "raw_bytecount": 82674,
+      "raw_sha256": "f56b93580ca8b6f734b58b769ae14e9e5cd1d67742ec1c00925d32d806b0c02e",
+      "expected_bytes": 83200,
+      "py_sha256": "c6093a5aae30a095835ab6d5216362a7a1066e3191e47fcc29c63b26ead4a322",
+      "libtiff_sha256": "c6093a5aae30a095835ab6d5216362a7a1066e3191e47fcc29c63b26ead4a322",
+      "match": true
+    },
+    {
+      "strip_index": 5000,
+      "raw_bytecount": 83039,
+      "raw_sha256": "9a85523934a69afd25d06fe418088408fa427c3b264688a234f4c792316d2b22",
+      "expected_bytes": 83200,
+      "py_sha256": "e1fc1664d77cdcb0347e02490d09b5af721da86412912e7fd6029b68b98e3707",
+      "libtiff_sha256": "e1fc1664d77cdcb0347e02490d09b5af721da86412912e7fd6029b68b98e3707",
+      "match": true
+    },
+    {
+      "strip_index": 6000,
+      "raw_bytecount": 82967,
+      "raw_sha256": "78a8065e2bdadab92e7012816b0bce7abafc545349769343ae288e3458e57d92",
+      "expected_bytes": 83200,
+      "py_sha256": "976312cfeb55ce780314c9a0e97685d725e81cac0274415b742acd210b45880e",
+      "libtiff_sha256": "976312cfeb55ce780314c9a0e97685d725e81cac0274415b742acd210b45880e",
+      "match": true
+    },
+    {
+      "strip_index": 7000,
+      "raw_bytecount": 80920,
+      "raw_sha256": "8e6cbccb84fbe680773a2de6c2233a2ac29395ed592ef68d0dbfc70e626f5f02",
+      "expected_bytes": 83200,
+      "py_sha256": "f203c0cf683a98643fbfc9c49276ceec3061714e222c89d7261bde4cf4a95828",
+      "libtiff_sha256": "f203c0cf683a98643fbfc9c49276ceec3061714e222c89d7261bde4cf4a95828",
+      "match": true
+    },
+    {
+      "strip_index": 7503,
+      "raw_bytecount": 60650,
+      "raw_sha256": "7364ae051b31a16f5d5899a93594f1c97ed874e8a11acc3e97710423daea8982",
+      "expected_bytes": 83200,
+      "py_sha256": "93920d6fa95e8783fcbcabf1b11ee61f34294223b135577ff0797468e9381959",
+      "libtiff_sha256": "93920d6fa95e8783fcbcabf1b11ee61f34294223b135577ff0797468e9381959",
+      "match": true
+    }
+  ]
+}

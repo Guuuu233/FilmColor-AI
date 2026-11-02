@@ -86,11 +86,11 @@ from .render import (BOUNDS, CURVE_PRESETS, EXTENDED_BOUNDS, EXTENDED_SCALARS, R
 from .scanner import block_means, is_scanner_dng, load_scanner
 
 STATIC = Path(__file__).parent / "app_static"
-EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".pef", ".srw", ".dng"}
+EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".pef", ".srw", ".dng", ".tif", ".tiff"}
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4r"  # T4r backlight base filtering, zero-clip protection and WB / over-lift gates
+THUMB_REV = "t4s"  # T4s 16-bit scanner TIFF support, chunk-consistent zero_escape, and B&W roll_nat routing
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
 WHITE_SELF_RATIO = None  # T4l: colour film's invert.self_ratio_white_point (collapse, target), e.g. (0.78, 0.85);
@@ -103,6 +103,7 @@ ROLL_NAT_MIN_FRAMES = 3    # T4k: automatic roll_nat only in a sub-roll of at le
 ROLL_NAT_LEVEL_DIFF = None  # T4k: ... and also when the own base is this much denser than the sub-roll's (D, channel
                             # mean), e.g. 0.22; None = chroma_part / B0 failure only (T4j; 0.22 measured 9 better /
                             # 14 worse, DSC_3833 4.37 -> 6.23)
+ROLL_NAT_BW_LEVEL_DIFF = 0.06  # T4s: B&W film has no orange mask (chroma_part ~ 0); route when own base is >= 0.06 D denser than roll base
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)
 RATIO_D_G = (0.25, 0.75)  # density band (G, above the roll base) of the per-frame neutral-ratio statistic
@@ -289,17 +290,31 @@ class State:
             raise ValueError(f"unsupported file type {cand.suffix} (camera RAW or scanner DNG only)")
         if not self.allow_frozen:
             check_source(cand)  # sealed test sets: refused unless --allow-frozen
+        if cand.suffix.lower() in (".tif", ".tiff") and not is_scanner_dng(cand, allow_frozen=self.allow_frozen):
+            raise ValueError(f"unsupported TIFF file {cand.name} (16-bit scanner negative TIFF only)")
         return cand
+
+    def _is_valid_candidate(self, p: Path) -> bool:
+        suf = p.suffix.lower()
+        if suf not in (".tif", ".tiff"):
+            return True
+        if not self.allow_frozen:
+            try:
+                check_source(p)
+            except FrozenDataError:
+                return False
+        return is_scanner_dng(p, allow_frozen=self.allow_frozen)
 
     def files(self) -> list[str]:
         return sorted(str(p.relative_to(self.root)) for p in self.root.rglob("*")
                       if (p.is_file() or p.is_symlink()) and p.suffix.lower() in EXTENSIONS
-                      and not p.name.startswith(".") and p.exists())
+                      and not p.name.startswith(".") and p.exists()
+                      and self._is_valid_candidate(p))
 
     def _disk_key(self, p: Path) -> str:
         rp = p.resolve()
         st = rp.stat()
-        raw = f"t4r|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()  # bare-backlight base filtering changed; invalidate old scans
+        raw = f"t4s|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()  # T4s 16-bit scanner TIFF support and B&W routing; invalidate old scans
         return hashlib.sha256(raw).hexdigest()[:24]
 
     def _scan_one(self, rel: str) -> dict:
@@ -320,7 +335,7 @@ class State:
                 return res
             except Exception:  # noqa: BLE001
                 pass
-        if is_scanner_dng(p):
+        if is_scanner_dng(p, allow_frozen=self.allow_frozen):
             fr = load_scanner(p, allow_frozen=self.allow_frozen)
             sp, sp_sat = block_means(fr.rgb, fr.sat, 24)
             crop, shape = None, fr.sat.shape
@@ -481,7 +496,7 @@ class State:
         key = str(p.resolve())
         if key not in self.raw_meta:
             meta = {}
-            if not is_scanner_dng(p):
+            if not is_scanner_dng(p, allow_frozen=self.allow_frozen):
                 try:
                     with rawpy.imread(str(p)) as r:
                         meta = dict(flip=int(r.sizes.flip), rgb_xyz_matrix=np.asarray(r.rgb_xyz_matrix)[:3].tolist())
@@ -519,7 +534,7 @@ class State:
         if sp_file.exists():
             sp = np.load(sp_file).astype(np.float32)
         else:
-            if is_scanner_dng(p):
+            if is_scanner_dng(p, allow_frozen=self.allow_frozen):
                 fr = load_scanner(p, allow_frozen=self.allow_frozen)
                 sp, _ = block_means(fr.rgb, fr.sat, 24)
             else:
@@ -657,7 +672,8 @@ class State:
                 own_rgb=src.get("own_rgb", f_roll.get("own_rgb")),
             ),
             auto=dict(params=pv.auto["params"], status=pv.auto.get("status"), flags=pv.auto.get("flags"),
-                      config=pv.auto.get("config"), diagnostics=pv.auto.get("diagnostics"))
+                      config=pv.auto.get("config"), config_rev=pv.auto.get("config_rev"),
+                      diagnostics=pv.auto.get("diagnostics"))
             if pv.auto else None,
             image_region=list(pv.image_region), region_source=pv.region_source,
             sliders=all_bounds, curve_presets=CURVE_PRESETS,
@@ -678,7 +694,7 @@ class State:
         # ROLL_NAT_LEVEL_DIFF denser than it; only in a sub-roll of ROLL_NAT_MIN_FRAMES frames without warnings
         # (T4k; T4i-T4j: never in a folder of several rolls)
         if base_mode is None:
-            base_mode = "roll_nat" if self._route_roll_nat(folder, rel) else "auto"
+            base_mode = "roll_nat" if self._route_roll_nat(folder, rel, film=film) else "auto"
         if base_mode not in BASE_MODES:
             raise ValueError(f"base_mode must be one of {BASE_MODES}")
         self.preview = None  # free the previous full-resolution positive first
@@ -701,7 +717,7 @@ class State:
         self.negative = None
         return self.meta()
 
-    def _route_roll_nat(self, folder: str, rel: str) -> bool:
+    def _route_roll_nat(self, folder: str, rel: str, film: str = "color") -> bool:
         rinfo = self.roll_cache.get(folder) or {}
         fe = rinfo.get("frames", {}).get(rel)
         sub = rinfo.get("sub_rolls", {}).get((fe or {}).get("sub_roll"))
@@ -712,8 +728,9 @@ class State:
         diag = ((fe.get("estimate") or {}).get("diagnostics")) or {}
         fallback = bool(diag.get("mode_seed") or diag.get("relaxed_uniformity") or diag.get("bare_backlight_excluded"))
         dc, lv = fe.get("chroma_part"), fe.get("level_diff")
+        lvl_thr = ROLL_NAT_BW_LEVEL_DIFF if film == "bw" else ROLL_NAT_LEVEL_DIFF
         return bool(fe.get("own_error") or fallback or (dc is not None and dc >= 0.1)
-                    or (ROLL_NAT_LEVEL_DIFF is not None and lv is not None and lv >= ROLL_NAT_LEVEL_DIFF))
+                    or (lvl_thr is not None and lv is not None and lv >= lvl_thr))
 
     def need(self, token) -> Preview:
         if self.preview is None:

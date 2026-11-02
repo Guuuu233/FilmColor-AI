@@ -1,0 +1,28 @@
+{
+  "encoder": "Pillow libtiff",
+  "pillow_libtiff": "4.7.1",
+  "cases": {
+    "random_full_dictionary": {
+      "shape": [
+        512,
+        1024
+      ],
+      "pixels_equal": true,
+      "expected_sha256": "5c779da7f80686ac870a0aa6c79a49ccde6cad6b5127918f3c252a98942a7ada",
+      "actual_sha256": "5c779da7f80686ac870a0aa6c79a49ccde6cad6b5127918f3c252a98942a7ada",
+      "seconds": 0.4089086669846438,
+      "strips": 16
+    },
+    "gradient_wrap": {
+      "shape": [
+        512,
+        1024
+      ],
+      "pixels_equal": true,
+      "expected_sha256": "d4f92fc6969b59f5d2cdd2aa9956e8dbff37fcc56b964d86ae0a7f4871c2efdb",
+      "actual_sha256": "d4f92fc6969b59f5d2cdd2aa9956e8dbff37fcc56b964d86ae0a7f4871c2efdb",
+      "seconds": 0.4041987499804236,
+      "strips": 16
+    }
+  }
+}

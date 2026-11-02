@@ -267,13 +267,13 @@ def self_ratio_white_point(d_hi, Dm, guard) -> tuple[tuple[float, float, float],
                                               d_hi_own=[float(x) for x in d])
 
 
-def clamp_spikes(s, clamp) -> tuple[np.ndarray, int]:
+def clamp_spikes(s, clamp, *, zero_escape: bool = False) -> tuple[np.ndarray, int]:
     """T4l/T4r: single-channel spikes of the normalised density ``s`` (..., 3). Where the middle channel is at most
     ``clamp[0]`` (not an opaque holder, which is dense in two or more channels and stays for ``holder.holder_mask``),
     one channel is held to max(middle, 1) + ``clamp[1]``: a signal at or below the black level (blue behind the orange
     mask, A1106) gives the density floor 6 D and a positive tens of thousands of times past white.
-    T4r: when escape pixels (mid > mid_max, min <= 1.6, max > 5) exceed 1% of the array, pixels with min <= 1.6 are
-    also clamped to min(bound_z, bound).
+    T4r/T4s: when escape pixels (mid > mid_max, min <= 1.6, max > 5) exceed 1% of the array or ``zero_escape`` is True,
+    pixels with min <= 1.6 are also clamped to min(bound_z, bound).
     Returns the clamped array and the number of pixels changed."""
     mid_max, margin = (np.float32(x) for x in clamp)
     s_sort = np.sort(s, axis=-1)
@@ -283,8 +283,10 @@ def clamp_spikes(s, clamp) -> tuple[np.ndarray, int]:
 
     bound = np.where(s_mid > mid_max, np.float32(np.inf), np.maximum(s_mid, np.float32(1.0)) + margin)
 
-    escape = (s_mid > mid_max) & (s_min <= 1.6) & (s_max > 5.0)
-    if float(np.mean(escape)) > 0.01:
+    if not zero_escape:
+        escape = (s_mid > mid_max) & (s_min <= 1.6) & (s_max > 5.0)
+        zero_escape = float(np.mean(escape)) > 0.01
+    if zero_escape:
         bound_z = np.maximum(s_min, np.float32(1.0)) + margin
         bound = np.where(s_min <= 1.6, np.minimum(bound_z, bound), bound)
 
@@ -294,13 +296,13 @@ def clamp_spikes(s, clamp) -> tuple[np.ndarray, int]:
     return np.minimum(s, bound), int(over.any(axis=-1).sum())
 
 
-def invert(D, p: InversionParams, stats: dict | None = None) -> np.ndarray:
+def invert(D, p: InversionParams, stats: dict | None = None, *, zero_escape: bool = False) -> np.ndarray:
     """P from density ``D``; with ``p.spike_clamp``, single-channel spikes are clamped first (``clamp_spikes``; the
     number of pixels changed is added to ``stats["spike_px"]`` when ``stats`` is given)."""
     lo, hi = np.asarray(p.d_lo, np.float32), np.asarray(p.d_hi, np.float32)
     s = (D - lo) / (hi - lo)
     if p.spike_clamp is not None and s.ndim >= 1 and s.shape[-1] == 3:
-        s, n = clamp_spikes(s, p.spike_clamp)
+        s, n = clamp_spikes(s, p.spike_clamp, zero_escape=zero_escape)
         if stats is not None:
             stats["spike_px"] = stats.get("spike_px", 0) + n
     R = np.float32(p.log_range)
@@ -389,23 +391,30 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
                              "region: blank or unexposed frame, or wrong image region / film base")
     p = InversionParams(base=tuple(float(x) for x in base), d_lo=tuple(d_lo or (0.0, 0.0, 0.0)),
                         d_hi=tuple(float(x) for x in d_hi), gamma=gamma, exposure=exposure, spike_clamp=spike_clamp)
+    lo, hi = np.asarray(p.d_lo, np.float32), np.asarray(p.d_hi, np.float32)
+    zero_escape = False
+    if spike_clamp is not None and Dm.ndim >= 1 and Dm.shape[-1] == 3 and len(Dm) > 0:
+        mid_max = np.float32(spike_clamp[0])
+        sm = np.sort((Dm - lo) / (hi - lo), axis=-1)
+        zero_escape = float(np.mean((sm[..., 1] > mid_max) & (sm[..., 0] <= 1.6) & (sm[..., 2] > 5.0))) > 0.01
+        del sm
     # share of the whole image denser than the white point: large values flag opaque areas
     # (holder mask) or highlights outside the region used for the white point
-    hi = np.asarray(p.d_hi, np.float32)
     clamp_stats = {}
     if rgb.ndim == 3:
         P = np.empty(rgb.shape, np.float32)
         n_above = np.zeros(3, np.int64)
         for r0 in range(0, rgb.shape[0], CHUNK_ROWS):
             D = density(rgb[r0 : r0 + CHUNK_ROWS], base)
-            P[r0 : r0 + CHUNK_ROWS] = invert(D, p, clamp_stats)
+            P[r0 : r0 + CHUNK_ROWS] = invert(D, p, clamp_stats, zero_escape=zero_escape)
             n_above += np.count_nonzero(D > hi, axis=(0, 1))
         above_white = [float(k / (rgb.shape[0] * rgb.shape[1])) for k in n_above]
     else:
         D = density(rgb, base)
-        P = invert(D, p, clamp_stats)
+        P = invert(D, p, clamp_stats, zero_escape=zero_escape)
         above_white = [float(np.mean(D[..., c] > p.d_hi[c])) for c in range(3)]
-    report = dict(white_pct=white_pct, range=range_report(Dm, invert(Dm, p), p), full_image_above_white=above_white)
+    report = dict(white_pct=white_pct, range=range_report(Dm, invert(Dm, p, zero_escape=zero_escape), p),
+                  full_image_above_white=above_white)
     if white_info is not None:  # reports of the default single-pixel white point keep their previous field set
         report["white_point"] = white_info
     if spike_clamp is not None:

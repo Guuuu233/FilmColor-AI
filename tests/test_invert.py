@@ -459,3 +459,75 @@ def test_t4r_invert_negative_chunk_rows_local_escape_scope():
     # rows 0:3 have max channel (6.0) clamped to bound_z = 1.12, so positive is bounded.
     assert res.report["spike_clamp"]["pixels"] == 300
     assert res.positive[:3, :100, 2].max() < 2.0
+
+
+def test_t4s_invert_negative_global_dm_zero_escape_consistency():
+    """T4s: invert_negative checks zero_escape on global Dm before chunk loop.
+    In a 512x100 image (2 chunks of 256 rows):
+    - Chunk 0 has 4.0% escape pixels (1024 / 25600)
+    - Chunk 1 has 0.5% escape pixels (128 / 25600)
+    Globally Dm has (1024 + 128) / 51200 = 2.25% > 1.0% escape pixels.
+    Global zero_escape propagates to Chunk 1 so its 0.5% escape pixels are also clamped
+    by bound_z and do not blow up (> 1000)."""
+    from filmcolor.invert import CHUNK_ROWS
+
+    h, w = CHUNK_ROWS * 2, 100
+    D = np.full((h, w, 3), [0.8, 1.0, 1.0], dtype=np.float32)
+
+    # Chunk 0: rows 0:256, 25600 px -> 4% = 1024 px
+    D_c0 = D[:CHUNK_ROWS].reshape(-1, 3)
+    D_c0[:1024] = [0.8, 1.3, 6.0]
+
+    # Chunk 1: rows 256:512, 25600 px -> 0.5% = 128 px
+    D_c1 = D[CHUNK_ROWS:].reshape(-1, 3)
+    D_c1[:128] = [0.8, 1.3, 6.0]
+
+    rgb = BASE * (10.0 ** -D)
+    res = invert_negative(rgb, BASE, d_hi=(1.0, 1.0, 1.0), spike_clamp=(1.15, 0.12))
+
+    # Chunk 1 must be clamped via global zero_escape
+    assert res.report["spike_clamp"]["pixels"] == 1024 + 128
+    assert res.positive[CHUNK_ROWS:, :, 2].max() < 2.0
+
+
+def test_t4s_invert_negative_chunk_rows_invariance_under_global_zero_escape(monkeypatch):
+    """T4s: positive output is identical regardless of CHUNK_ROWS when global zero_escape is active."""
+    import filmcolor.invert as inv
+
+    h, w = 512, 100
+    D = np.full((h, w, 3), [0.8, 1.0, 1.0], dtype=np.float32)
+    # Global escape rate = (1024 + 128) / 51200 = 2.25% > 1.0%
+    D[:256].reshape(-1, 3)[:1024] = [0.8, 1.3, 6.0]
+    D[256:].reshape(-1, 3)[:128] = [0.8, 1.3, 6.0]
+    rgb = BASE * (10.0 ** -D)
+
+    monkeypatch.setattr(inv, "CHUNK_ROWS", 256)
+    res_256 = inv.invert_negative(rgb, BASE, d_hi=(1.0, 1.0, 1.0), spike_clamp=(1.15, 0.12))
+
+    monkeypatch.setattr(inv, "CHUNK_ROWS", 128)
+    res_128 = inv.invert_negative(rgb, BASE, d_hi=(1.0, 1.0, 1.0), spike_clamp=(1.15, 0.12))
+
+    np.testing.assert_allclose(res_256.positive, res_128.positive, atol=1e-6)
+    assert res_256.report["spike_clamp"]["pixels"] == res_128.report["spike_clamp"]["pixels"] == 1152
+
+
+def test_t4s_invert_negative_mask_without_escape_preserves_local_chunk_escape_scope():
+    """T4s: when mask selects only clean pixels so global zero_escape is False, local chunks
+    with > 1% escape pixels still trigger clamp_spikes via local fallback."""
+    from filmcolor.invert import CHUNK_ROWS
+
+    h, w = CHUNK_ROWS * 2, 100
+    D = np.full((h, w, 3), [0.8, 1.0, 1.0], dtype=np.float32)
+    # Chunk 0 has 300 escape pixels (300 / 25600 = 1.17% > 1% locally)
+    D[:3, :100] = [0.8, 1.3, 6.0]
+    rgb = BASE * (10.0 ** -D)
+
+    # Mask only selects Chunk 1 (clean pixels, 0% escape, Dm has 0 escape -> zero_escape = False)
+    mask = np.zeros((h, w), dtype=bool)
+    mask[CHUNK_ROWS:] = True
+
+    res = invert_negative(rgb, BASE, mask=mask, d_hi=(1.0, 1.0, 1.0), spike_clamp=(1.15, 0.12))
+
+    # Chunk 0 still triggers local clamp_spikes because zero_escape=False retains local gating
+    assert res.report["spike_clamp"]["pixels"] == 300
+    assert res.positive[:3, :100, 2].max() < 2.0
