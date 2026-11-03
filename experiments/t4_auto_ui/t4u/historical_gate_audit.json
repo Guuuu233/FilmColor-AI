@@ -1,0 +1,582 @@
+{
+  "nonerror_records": 309,
+  "low_ratio_records": {
+    "blueneg:19941217A-15-tokyo": {
+      "base_bg": 0.8953083367253963,
+      "ratio_bg": 0.3311423175534366
+    },
+    "blueneg:19941217B-08-tokyo": {
+      "base_bg": 0.6320732517539142,
+      "ratio_bg": 0.33882262753078346
+    },
+    "blueneg:19941218B-23-tokyo": {
+      "base_bg": 0.5903379929564768,
+      "ratio_bg": 0.36150311324313755
+    },
+    "blueneg:19941218C-05-tokyo": {
+      "base_bg": 0.623709146326624,
+      "ratio_bg": 0.24331365503783717
+    },
+    "blueneg:19941220D-20-kamakura": {
+      "base_bg": 0.8037571256414769,
+      "ratio_bg": 0.38105000007259854
+    },
+    "blueneg:19941221D-25-kyoto": {
+      "base_bg": 0.8205981860063346,
+      "ratio_bg": 0.338034149101755
+    },
+    "blueneg:19941222D-32-kyoto": {
+      "base_bg": 0.8175019507231721,
+      "ratio_bg": 0.31824653956434606
+    },
+    "blueneg:19941222E-04-nara": {
+      "base_bg": 0.6374750662093723,
+      "ratio_bg": 0.3370561581000855
+    },
+    "blueneg:19941223E-17-osaka": {
+      "base_bg": 0.8484767103888269,
+      "ratio_bg": 0.2929323931389961
+    },
+    "blueneg:19941224E-23-nagasaki": {
+      "base_bg": 0.6115229029345983,
+      "ratio_bg": 0.35557383706419315
+    },
+    "blueneg:19941225E-34-nagasaki": {
+      "base_bg": 0.766698955655003,
+      "ratio_bg": 0.3166147954626074
+    },
+    "blueneg:19941225F-03-nagasaki": {
+      "base_bg": 0.60378462149985,
+      "ratio_bg": 0.3578445394197311
+    },
+    "blueneg:19941228F-12-tokyo": {
+      "base_bg": 0.6428406443949205,
+      "ratio_bg": 0.35675866958780833
+    },
+    "blueneg:19960808B-03-new-orleans-siggraph96": {
+      "base_bg": 0.6622133424889076,
+      "ratio_bg": 0.4355457093948733
+    },
+    "blueneg:19960809B-14-new-orleans-siggraph96": {
+      "base_bg": 0.7434079479354048,
+      "ratio_bg": 0.3915153904891553
+    },
+    "blueneg:19960811B-28-arizona-london-bridge": {
+      "base_bg": 0.6914868069974254,
+      "ratio_bg": 0.4632087448009902
+    },
+    "blueneg:19960812D-17-las-vegas": {
+      "base_bg": 0.6762348482797021,
+      "ratio_bg": 0.37985298455506794
+    },
+    "blueneg:19970619A-14-white-chapel": {
+      "base_bg": 0.8312057975322611,
+      "ratio_bg": 0.28138048443376557
+    },
+    "blueneg:19970619B-09-notre-dame": {
+      "base_bg": 0.740195130903706,
+      "ratio_bg": 0.24770775376800333
+    },
+    "blueneg:19970620C-10-st-michel": {
+      "base_bg": 0.7300042847596163,
+      "ratio_bg": 0.29167278445475775
+    },
+    "blueneg:199807A-06-hk": {
+      "base_bg": 0.94406578526982,
+      "ratio_bg": 0.4328396444946081
+    },
+    "blueneg:199807B-10-orlando-seaworld": {
+      "base_bg": 0.8065231247823312,
+      "ratio_bg": 0.46307534079737234
+    },
+    "blueneg:19960812D-09-las-vegas": {
+      "base_bg": 0.6720386587580566,
+      "ratio_bg": 0.4628218742287134
+    },
+    "blueneg:199807A-09-orlando-siggraph": {
+      "base_bg": 0.8185134063401227,
+      "ratio_bg": 0.44304082978975734
+    },
+    "blueneg:199807B-16-seattle": {
+      "base_bg": 0.8216907647071429,
+      "ratio_bg": 0.4086353054154627
+    },
+    "blueneg:19941217A-08-tokyo": {
+      "base_bg": 0.8918040040902324,
+      "ratio_bg": 0.333315545925744
+    },
+    "blueneg:19941217A-10-tokyo": {
+      "base_bg": 0.8788903707188013,
+      "ratio_bg": 0.3285424091282615
+    },
+    "blueneg:19941217A-16-tokyo": {
+      "base_bg": 0.8604490563275771,
+      "ratio_bg": 0.3411165997542326
+    },
+    "blueneg:19941217A-27-tokyo": {
+      "base_bg": 0.8411179720538738,
+      "ratio_bg": 0.3267043844423733
+    },
+    "blueneg:19941217A-35-tokyo": {
+      "base_bg": 0.8229475031340687,
+      "ratio_bg": 0.34005311851760817
+    },
+    "blueneg:19941217B-07-tokyo": {
+      "base_bg": 0.6024019500645721,
+      "ratio_bg": 0.3500126837227598
+    },
+    "blueneg:19941217B-11-tokyo": {
+      "base_bg": 0.6131946145687317,
+      "ratio_bg": 0.37773652167627847
+    },
+    "blueneg:19941218B-25-tokyo": {
+      "base_bg": 0.6048022245507273,
+      "ratio_bg": 0.34338798608526877
+    },
+    "blueneg:19941218C-03-tokyo": {
+      "base_bg": 0.6117154004363402,
+      "ratio_bg": 0.25463518991854134
+    },
+    "blueneg:19941218C-04-tokyo": {
+      "base_bg": 0.6468585483897871,
+      "ratio_bg": 0.2565668565874702
+    },
+    "blueneg:19941218C-06-tokyo": {
+      "base_bg": 0.6579686931721405,
+      "ratio_bg": 0.23495989421910984
+    },
+    "blueneg:19941218C-07-tokyo": {
+      "base_bg": 0.6266689536412144,
+      "ratio_bg": 0.24626246774850793
+    },
+    "blueneg:19941218C-08-tokyo": {
+      "base_bg": 0.6185303788875217,
+      "ratio_bg": 0.27387853293006514
+    },
+    "blueneg:19941220D-18-kamakura": {
+      "base_bg": 0.8212264381705996,
+      "ratio_bg": 0.31661658594948866
+    },
+    "blueneg:19941220D-19-kamakura": {
+      "base_bg": 0.8686547380742766,
+      "ratio_bg": 0.32505269532003034
+    },
+    "blueneg:19941220D-22-kamakura": {
+      "base_bg": 0.8428011194838028,
+      "ratio_bg": 0.3417576819132036
+    },
+    "blueneg:19941220D-23-kamakura": {
+      "base_bg": 0.8048347857310869,
+      "ratio_bg": 0.3531678432888002
+    },
+    "blueneg:19941221D-30-kyoto": {
+      "base_bg": 0.789203381110639,
+      "ratio_bg": 0.4560324231710129
+    },
+    "blueneg:19941222E-01-nara": {
+      "base_bg": 0.8272382494006917,
+      "ratio_bg": 0.3211826688991315
+    },
+    "blueneg:19941222E-02-nara": {
+      "base_bg": 0.5958262960891796,
+      "ratio_bg": 0.3623785316058356
+    },
+    "blueneg:19941222E-07-nara": {
+      "base_bg": 0.6617278058733602,
+      "ratio_bg": 0.32950954381210784
+    },
+    "blueneg:19941222E-10-nara": {
+      "base_bg": 0.5944226611238882,
+      "ratio_bg": 0.3890167306977719
+    },
+    "blueneg:19941223E-13-osaka": {
+      "base_bg": 0.6226320444091797,
+      "ratio_bg": 0.3398229897170082
+    },
+    "blueneg:19941223E-20-kyoto": {
+      "base_bg": 0.662392951866399,
+      "ratio_bg": 0.33464356277426677
+    },
+    "blueneg:19941224E-21-nagasaki": {
+      "base_bg": 0.6264184477691983,
+      "ratio_bg": 0.35376842888853216
+    },
+    "blueneg:19941224E-27-nagasaki": {
+      "base_bg": 0.617696528019123,
+      "ratio_bg": 0.32227085332641814
+    },
+    "blueneg:19941225F-04-nagasaki": {
+      "base_bg": 0.601474458368319,
+      "ratio_bg": 0.3552134100346426
+    },
+    "blueneg:19960808B-04-new-orleans-siggraph96": {
+      "base_bg": 0.6674887163960547,
+      "ratio_bg": 0.38769415382345224
+    },
+    "blueneg:19960808B-05-new-orleans-siggraph96": {
+      "base_bg": 0.6639353515173974,
+      "ratio_bg": 0.40800719185610457
+    },
+    "blueneg:19960808B-06-new-orleans-siggraph96": {
+      "base_bg": 0.6780003894641083,
+      "ratio_bg": 0.3715792874732857
+    },
+    "blueneg:19960808B-07-new-orleans-siggraph96": {
+      "base_bg": 0.6686415961597587,
+      "ratio_bg": 0.4012184044262145
+    },
+    "blueneg:19960808B-08-new-orleans-siggraph96": {
+      "base_bg": 0.6675368333749722,
+      "ratio_bg": 0.39519401893318645
+    },
+    "blueneg:19960808B-09-new-orleans-siggraph96": {
+      "base_bg": 0.6710418419529969,
+      "ratio_bg": 0.4088040437192443
+    },
+    "blueneg:19960808B-10-new-orleans-siggraph96": {
+      "base_bg": 0.682450029873595,
+      "ratio_bg": 0.3660562644391151
+    },
+    "blueneg:19960808B-11-new-orleans-siggraph96": {
+      "base_bg": 0.6679454940187649,
+      "ratio_bg": 0.39223253853619267
+    },
+    "blueneg:19960809B-15-new-orleans-siggraph96": {
+      "base_bg": 0.703795999748718,
+      "ratio_bg": 0.42394370619303007
+    },
+    "blueneg:19960811B-17-arizona-london-bridge": {
+      "base_bg": 0.6733085655070794,
+      "ratio_bg": 0.4265318774760634
+    },
+    "blueneg:19960811B-20-arizona-london-bridge": {
+      "base_bg": 0.7519529939335905,
+      "ratio_bg": 0.42897422279724456
+    },
+    "blueneg:19960811B-21-arizona-london-bridge": {
+      "base_bg": 0.6860545658400077,
+      "ratio_bg": 0.4247190252362347
+    },
+    "blueneg:19960811B-25-arizona-london-bridge": {
+      "base_bg": 0.6775577571771718,
+      "ratio_bg": 0.47125848264200915
+    },
+    "blueneg:19960811B-29-arizona-london-bridge": {
+      "base_bg": 0.6734808366653646,
+      "ratio_bg": 0.4349225554169112
+    },
+    "blueneg:19960811B-34-laughlin": {
+      "base_bg": 0.6669207870702858,
+      "ratio_bg": 0.4090046826655053
+    },
+    "blueneg:19960811B-35-laughlin": {
+      "base_bg": 0.6664854312185988,
+      "ratio_bg": 0.4110525274992579
+    },
+    "blueneg:19960811B-36-laughlin": {
+      "base_bg": 0.6661048753161901,
+      "ratio_bg": 0.3942680880195554
+    },
+    "blueneg:19960812D-01-hoover-dam": {
+      "base_bg": 0.6893047393690473,
+      "ratio_bg": 0.43049651628691343
+    },
+    "blueneg:19960812D-02-hoover-dam": {
+      "base_bg": 0.8699448627582623,
+      "ratio_bg": 0.42512944614183873
+    },
+    "blueneg:19960812D-05-hoover-dam": {
+      "base_bg": 0.9048670190143073,
+      "ratio_bg": 0.34640744823897207
+    },
+    "blueneg:19960812D-06-hoover-dam": {
+      "base_bg": 0.9233141102294165,
+      "ratio_bg": 0.37490703539576586
+    },
+    "blueneg:19960812D-07-hoover-dam": {
+      "base_bg": 0.6847573215842291,
+      "ratio_bg": 0.415362018174741
+    },
+    "blueneg:19960812D-08-hoover-dam": {
+      "base_bg": 0.7227051050624663,
+      "ratio_bg": 0.4224790144885688
+    },
+    "blueneg:19960812D-10-las-vegas": {
+      "base_bg": 0.6657296736905949,
+      "ratio_bg": 0.4202386829208863
+    },
+    "blueneg:19960812D-11-las-vegas": {
+      "base_bg": 0.6733676287535914,
+      "ratio_bg": 0.3769357268062597
+    },
+    "blueneg:19960812D-12-las-vegas": {
+      "base_bg": 0.6770395718894014,
+      "ratio_bg": 0.4411692663503532
+    },
+    "blueneg:19960812D-13-las-vegas": {
+      "base_bg": 0.6705346634014333,
+      "ratio_bg": 0.36883168831474955
+    },
+    "blueneg:19960812D-14-las-vegas": {
+      "base_bg": 0.6705346634014332,
+      "ratio_bg": 0.3552117306488097
+    },
+    "blueneg:19960812D-15-las-vegas": {
+      "base_bg": 0.6718401586726397,
+      "ratio_bg": 0.3781425649627733
+    },
+    "blueneg:19960812D-20-las-vegas": {
+      "base_bg": 0.6736756306359079,
+      "ratio_bg": 0.38985085512463463
+    },
+    "blueneg:19960812D-22-las-vegas": {
+      "base_bg": 0.674435611311894,
+      "ratio_bg": 0.5295611901039889
+    },
+    "blueneg:19960812D-25-las-vegas": {
+      "base_bg": 0.6860590951765444,
+      "ratio_bg": 0.4114995670599144
+    },
+    "blueneg:19960812D-26-las-vegas": {
+      "base_bg": 0.683156345817818,
+      "ratio_bg": 0.389539719102029
+    },
+    "blueneg:19960812D-27-las-vegas": {
+      "base_bg": 0.6678099608181672,
+      "ratio_bg": 0.4148614945136031
+    },
+    "blueneg:19960812D-28-las-vegas": {
+      "base_bg": 0.6701252013834639,
+      "ratio_bg": 0.4078143433040174
+    },
+    "blueneg:19960812D-29-las-vegas": {
+      "base_bg": 0.6705346634014332,
+      "ratio_bg": 0.3644976994740765
+    },
+    "blueneg:19960812D-30-las-vegas": {
+      "base_bg": 0.6679659780777254,
+      "ratio_bg": 0.4000843783535824
+    },
+    "blueneg:19960812D-31-las-vegas": {
+      "base_bg": 0.6753745834999624,
+      "ratio_bg": 0.3845794373982862
+    },
+    "blueneg:19960812D-32-las-vegas": {
+      "base_bg": 0.669731724065075,
+      "ratio_bg": 0.38098076464839886
+    },
+    "blueneg:19960812D-33-las-vegas": {
+      "base_bg": 0.6755032339051283,
+      "ratio_bg": 0.4608710680982839
+    },
+    "blueneg:19960812D-34-las-vegas": {
+      "base_bg": 0.678139964814338,
+      "ratio_bg": 0.3884850826762441
+    },
+    "blueneg:19960812D-35-las-vegas": {
+      "base_bg": 0.6665013073379928,
+      "ratio_bg": 0.3864447607515481
+    },
+    "blueneg:19970619A-15-white-chapel": {
+      "base_bg": 1.0355698166831218,
+      "ratio_bg": 0.204362305122226
+    },
+    "blueneg:19970619B-07-notre-dame": {
+      "base_bg": 0.7309473657004768,
+      "ratio_bg": 0.2774191253350151
+    },
+    "blueneg:19970619B-10-notre-dame": {
+      "base_bg": 0.7669574515957773,
+      "ratio_bg": 0.2984892675813396
+    },
+    "blueneg:199807A-08-hk": {
+      "base_bg": 0.899564171150409,
+      "ratio_bg": 0.37600718193752924
+    },
+    "blueneg:199807A-10-orlando-siggraph": {
+      "base_bg": 0.8244226187739272,
+      "ratio_bg": 0.4823002495007972
+    },
+    "blueneg:199807A-11-orlando-siggraph": {
+      "base_bg": 0.8086651257390811,
+      "ratio_bg": 0.4538406138525034
+    },
+    "blueneg:199807A-12-orlando-universal-studio": {
+      "base_bg": 0.8233019315829702,
+      "ratio_bg": 0.4928397621854173
+    },
+    "blueneg:199807A-13-orlando-universal-studio": {
+      "base_bg": 0.8459643444801913,
+      "ratio_bg": 0.4702164789058257
+    },
+    "blueneg:199807A-14-orlando-universal-studio": {
+      "base_bg": 0.8161776532918367,
+      "ratio_bg": 0.4943862877373949
+    },
+    "blueneg:199807A-17-orlando-universal-studio": {
+      "base_bg": 0.8321580892464866,
+      "ratio_bg": 0.47370758628464965
+    },
+    "blueneg:199807A-18-orlando-universal-studio": {
+      "base_bg": 0.8544471825703838,
+      "ratio_bg": 0.37671086210005567
+    },
+    "blueneg:199807A-19-orlando-disney": {
+      "base_bg": 0.8079682019054976,
+      "ratio_bg": 0.39669941150333304
+    },
+    "blueneg:199807A-20-orlando-disney": {
+      "base_bg": 0.8064054312237819,
+      "ratio_bg": 0.4048786713135905
+    },
+    "blueneg:199807A-21-orlando-disney": {
+      "base_bg": 0.8193344191723171,
+      "ratio_bg": 0.43357878421074403
+    },
+    "blueneg:199807A-22-orlando-disney": {
+      "base_bg": 0.8123840368587839,
+      "ratio_bg": 0.38571036419016536
+    },
+    "blueneg:199807A-23-orlando-disney": {
+      "base_bg": 0.8391556678229763,
+      "ratio_bg": 0.45184267091129454
+    },
+    "blueneg:199807A-27-orlando-disney": {
+      "base_bg": 0.8156101149855943,
+      "ratio_bg": 0.5191004199237659
+    },
+    "blueneg:199807A-28-orlando-disney": {
+      "base_bg": 0.8189358535086941,
+      "ratio_bg": 0.4806761110815269
+    },
+    "blueneg:199807A-29-orlando-disney": {
+      "base_bg": 0.8245586444950949,
+      "ratio_bg": 0.4147440050000285
+    },
+    "blueneg:199807A-30-orlando-disney": {
+      "base_bg": 0.8280902342992709,
+      "ratio_bg": 0.4432142880271358
+    },
+    "blueneg:199807A-31-orlando-disney": {
+      "base_bg": 0.8343726727117834,
+      "ratio_bg": 0.4101009772226643
+    },
+    "blueneg:199807A-32-orlando-disney": {
+      "base_bg": 0.8344381398778352,
+      "ratio_bg": 0.38399117542896877
+    },
+    "blueneg:199807A-33-orlando-disney": {
+      "base_bg": 0.8258917218449482,
+      "ratio_bg": 0.37687070112057797
+    },
+    "blueneg:199807A-34-orlando-disney": {
+      "base_bg": 0.826288436380725,
+      "ratio_bg": 0.40247958483553237
+    },
+    "blueneg:199807A-35-orlando-disney": {
+      "base_bg": 0.8302226130402198,
+      "ratio_bg": 0.3907517981582108
+    },
+    "blueneg:199807A-36-orlando-disney": {
+      "base_bg": 0.8143851881368424,
+      "ratio_bg": 0.41473650569170967
+    },
+    "blueneg:199807A-37-orlando-disney": {
+      "base_bg": 0.8214899038734303,
+      "ratio_bg": 0.4076976759617254
+    },
+    "blueneg:199807B-01-orlando-seaworld": {
+      "base_bg": 0.8419616106209314,
+      "ratio_bg": 0.4188285198264476
+    },
+    "blueneg:199807B-02-orlando-seaworld": {
+      "base_bg": 0.8925109365679061,
+      "ratio_bg": 0.3955673728370328
+    },
+    "blueneg:199807B-03-orlando-seaworld": {
+      "base_bg": 0.8157873636437539,
+      "ratio_bg": 0.4432764452291459
+    },
+    "blueneg:199807B-04-orlando-seaworld": {
+      "base_bg": 0.835244402531598,
+      "ratio_bg": 0.44672473952147257
+    },
+    "blueneg:199807B-05-orlando-seaworld": {
+      "base_bg": 0.9211993809945239,
+      "ratio_bg": 0.42658957708536926
+    },
+    "blueneg:199807B-06-orlando-seaworld": {
+      "base_bg": 0.7972712672724077,
+      "ratio_bg": 0.43307338118664435
+    },
+    "blueneg:199807B-07-orlando-seaworld": {
+      "base_bg": 0.8262343764298192,
+      "ratio_bg": 0.4346607533615509
+    },
+    "blueneg:199807B-08-orlando-seaworld": {
+      "base_bg": 0.8165236597194174,
+      "ratio_bg": 0.3980587526112038
+    },
+    "blueneg:199807B-09-orlando-seaworld": {
+      "base_bg": 0.8041796744457378,
+      "ratio_bg": 0.37390294575683414
+    },
+    "blueneg:199807B-11-orlando-seaworld": {
+      "base_bg": 0.801502683839968,
+      "ratio_bg": 0.4815542048339531
+    },
+    "blueneg:199807B-13-orlando-seaworld": {
+      "base_bg": 0.8137551916363532,
+      "ratio_bg": 0.4333075539729314
+    },
+    "blueneg:199807B-14-orlando-seaworld": {
+      "base_bg": 0.8152245644296884,
+      "ratio_bg": 0.435856387819738
+    },
+    "blueneg:199807B-15-orlando-seaworld": {
+      "base_bg": 0.8257702269581909,
+      "ratio_bg": 0.4138094661065025
+    },
+    "blueneg:199807B-17-seattle": {
+      "base_bg": 0.818014861882385,
+      "ratio_bg": 0.43349596196156853
+    },
+    "blueneg:199807B-18-seattle": {
+      "base_bg": 0.9097366851536002,
+      "ratio_bg": 0.3838671592825843
+    },
+    "blueneg:199807B-19-seattle": {
+      "base_bg": 0.8042767376749924,
+      "ratio_bg": 0.4019899881601047
+    },
+    "blueneg:199807B-20-seattle": {
+      "base_bg": 0.8393436523891528,
+      "ratio_bg": 0.4621812213161479
+    },
+    "blueneg:199910-03-korea": {
+      "base_bg": 0.6289134402080424,
+      "ratio_bg": 0.5440818726759359
+    },
+    "blueneg:199910-09-hk": {
+      "base_bg": 0.6054191502698839,
+      "ratio_bg": 0.4843890212684449
+    }
+  },
+  "narrow_blue_new_branch_candidates": {},
+  "manifest_suffix_counts": {
+    "s3_dev_frames.json": {
+      ".raf": 11,
+      ".nef": 153,
+      ".dng": 27
+    },
+    "bn_rb_frames.json": {
+      ".dng": 151
+    }
+  },
+  "historical_artifact_sha256": {
+    "experiments/t4_auto_ui/t4t/candidate_a.json": "5682000b08dffb960625286ba7df290f752640e8b25164ac888c19efa7ce7448",
+    "experiments/t4_auto_ui/t4t/candidate_b.json": "8caa35ff896f813ed87a72fbb7c3f349ee6168b28efae9e195a234060b4641a6",
+    "experiments/t4_auto_ui/t4t/candidate_cross.json": "11f1cfcd11b9b25b275623918828b3ecd10d35a05974485868437c454f1dd3c8"
+  },
+  "limits": "Rounded stored params cannot prove exact pre-boost Tint maxima; full rerun checks exact params/metrics equivalence."
+}

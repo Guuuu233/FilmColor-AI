@@ -756,3 +756,62 @@ def test_t4s_scanner_large_lzw_strip_bounded_time():
     t1 = time.perf_counter()
     assert dec == raw
     assert (t1 - t0) < 0.2, f"LZW decode took {t1 - t0:.4f}s, expected < 0.2s"
+
+
+def test_t4u_scanner_tiff_single_channel_prestretched_orange_mask_sat(tmp_path):
+    from filmcolor.scanner import estimate_base_scanner, is_scanner_dng, load_scanner
+
+    h, w = 96, 96
+    rgb16 = np.zeros((h, w, 3), dtype=np.uint16)
+    rgb16[:, :] = [55000, 43000, 36000]
+
+    # R channel: 80% saturated (65535), remaining 20% normal
+    n_sat = int(0.80 * h * w)
+    rgb16.reshape(-1, 3)[:n_sat, 0] = 65535
+
+    p_tiff = tmp_path / "orange_prestretched.tif"
+    tifffile.imwrite(p_tiff, rgb16, photometric="rgb")
+    assert is_scanner_dng(p_tiff)
+
+    fr = load_scanner(p_tiff)
+    assert fr.meta.get("single_channel_prestretched") == "R"
+    assert fr.sat.mean() == 0.0
+    base = estimate_base_scanner(fr, block=24)
+    assert base is not None
+    assert len(base.rgb) == 3
+
+
+def test_t4u_scanner_tiff_true_multi_channel_saturation_still_masked(tmp_path):
+    from filmcolor.scanner import is_scanner_dng, load_scanner
+
+    h, w = 48, 48
+    rgb16 = np.zeros((h, w, 3), dtype=np.uint16)
+    rgb16[:, :, 0] = 50000
+    rgb16[:, :, 1] = 40000
+    rgb16[:, :, 2] = 30000
+
+    # > 10% saturated in both R and G (e.g. 15% = ~345 pixels)
+    n_sat = int(0.15 * h * w)
+    rgb16.reshape(-1, 3)[:n_sat, 0] = 65535
+    rgb16.reshape(-1, 3)[:n_sat, 1] = 65535
+
+    p_multi = tmp_path / "multi_sat.tif"
+    tifffile.imwrite(p_multi, rgb16, photometric="rgb")
+    assert is_scanner_dng(p_multi)
+
+    fr = load_scanner(p_multi)
+    assert "single_channel_prestretched" not in fr.meta
+    expected_sat = np.any(rgb16 >= 65535, -1)
+    np.testing.assert_array_equal(fr.sat, expected_sat)
+    assert fr.sat.mean() == pytest.approx(0.15, abs=1e-3)
+
+    # Also verify .dng single-channel saturation does NOT trigger single_channel_prestretched
+    p_dng = tmp_path / "single_sat.dng"
+    dng_raw = np.full((h, w, 3), 30000, dtype=np.uint16)
+    dng_raw.reshape(-1, 3)[:int(0.50 * h * w), 0] = 65535
+    with tifffile.TiffWriter(p_dng) as tw:
+        tw.write(dng_raw, photometric=34892, planarconfig="contig")
+    assert is_scanner_dng(p_dng)
+    fr_dng = load_scanner(p_dng)
+    assert "single_channel_prestretched" not in fr_dng.meta
+    np.testing.assert_array_equal(fr_dng.sat, np.any(dng_raw >= 65535, -1))

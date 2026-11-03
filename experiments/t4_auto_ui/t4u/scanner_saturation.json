@@ -1,0 +1,27 @@
+{
+  "frames": {
+    "A1040.TIF": {
+      "raw_sha256": "3463fe6a00e603841c497c07e71d556df72971b6981289712313617ab7aeacad",
+      "saturation_share_rgb": [
+        0.8448289285868766,
+        0.0,
+        0.0
+      ],
+      "saturation_mask_share": 0.0,
+      "single_channel_prestretched": "R",
+      "gb_mask_exact": true
+    },
+    "A1041.TIF": {
+      "raw_sha256": "984bdfd317ca03c352c58a3ab975f74b8a0adb171acb4f7f5d0ef74683929000",
+      "saturation_share_rgb": [
+        0.6038521340831029,
+        0.0,
+        0.0
+      ],
+      "saturation_mask_share": 0.0,
+      "single_channel_prestretched": "R",
+      "gb_mask_exact": true
+    }
+  },
+  "source_sha256": "0c92000ec933c17b559b238d6b54800a7bd0b9aa2eaf3211a1b4f4c30b3995ca"
+}

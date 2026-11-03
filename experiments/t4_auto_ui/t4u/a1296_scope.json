@@ -1,0 +1,41 @@
+{
+  "raw_sha256": "dbe4de488370f3b32acc2f683e3400e61ae06dd021998740567e9974c2998997",
+  "full_shape": [
+    3870,
+    5796,
+    3
+  ],
+  "regions": {
+    "whole_image": {
+      "n_pixels": 22430520,
+      "any_channel_gt_10_count": 876718,
+      "any_channel_gt_10_share": 0.039085941832824204,
+      "max_rgb": [
+        1210480896.0,
+        929199296.0,
+        169336624.0
+      ]
+    },
+    "center": {
+      "n_pixels": 8073594,
+      "any_channel_gt_10_count": 419,
+      "any_channel_gt_10_share": 5.189758117636334e-05,
+      "max_rgb": [
+        59.713584899902344,
+        929199296.0,
+        169336624.0
+      ]
+    },
+    "upper_band": {
+      "n_pixels": 1345599,
+      "any_channel_gt_10_count": 0,
+      "any_channel_gt_10_share": 0.0,
+      "max_rgb": [
+        4.827593803405762,
+        6.059083938598633,
+        9.050447463989258
+      ]
+    }
+  },
+  "source_sha256": "0c92000ec933c17b559b238d6b54800a7bd0b9aa2eaf3211a1b4f4c30b3995ca"
+}

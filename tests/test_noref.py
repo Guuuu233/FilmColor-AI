@@ -1535,14 +1535,18 @@ def test_t4t_wb_v3_extreme_zone_disagreement_damps_positive_tint():
     assert res_extreme["tint"] == pytest.approx(expected_damped_tint, abs=1e-5)
 
     # 2. Moderate disagreement: zone_disagreement <= 1.25 (e.g. diff norm ~ 0.8)
-    # Positive tint gets normal 1.20 boost
+    # Positive tint gets normal 1.20 boost when neutral evidence is present in at least one zone
     c0_mod = [-0.5, -1.0]
     c1_mod = [-0.9, -0.4]
     px_mod = make_split_scene(c0_mod, c1_mod)
+    # Provide 5% neutral evidence in z0 so no_narrow_tint_capped does not apply
+    idx0 = np.where((y_target >= p70) & (y_target <= p96))[0]
+    px_mod[idx0[:int(0.06 * len(idx0))]] = y_target[idx0[:int(0.06 * len(idx0)), None]]
     res_mod = estimate_wb_v3(px_mod, NOREF_V3)
     d_mod = res_mod["diagnostics"]
     assert d_mod.get("zone_disagreement", 0.0) <= 1.25
     assert d_mod.get("tint_conflict_damped") is not True
+    assert "no_narrow_tint_capped" not in d_mod
     expected_boosted_tint = d_mod["temp_tint_raw"][1] * NOREF_V3["wb_v3_tint_boost"]
     assert res_mod["tint"] == pytest.approx(expected_boosted_tint, abs=1e-5)
 
@@ -1556,3 +1560,73 @@ def test_t4t_wb_v3_extreme_zone_disagreement_damps_positive_tint():
     assert d_neg["temp_tint_raw"][1] < 0
     assert d_neg.get("tint_conflict_damped") is not True
     assert res_neg["tint"] == pytest.approx(d_neg["temp_tint_raw"][1], abs=1e-5)
+
+
+def test_t4u_wb_v3_caps_positive_tint_when_both_zones_lack_narrow_neutrals():
+    from filmcolor.noref import LUMA, NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(239)
+    n = 100_000
+    y_dark = rng.uniform(0.04, 0.35, n).astype(np.float32)
+
+    c = np.full((n, 2), [-1.20, 0.00], dtype=np.float32)
+    c += rng.normal(0, 0.01, (n, 2)).astype(np.float32)
+
+    rgb_ratios = np.stack([2.0 ** c[:, 0], np.ones(n, dtype=np.float32), 2.0 ** c[:, 1]], axis=-1)
+    unit_luma = rgb_ratios @ LUMA.astype(np.float32)
+    px = (y_dark / unit_luma)[:, None] * rgb_ratios
+
+    wb = estimate_wb_v3(px.astype(np.float32), NOREF_V3)
+    d = wb["diagnostics"]
+
+    assert not d.get("cool_cast")
+    assert not d.get("cyan_conf_boost")
+    assert len(d["zones"]) == 2
+    assert all(z["narrow_share"] < NOREF_V3["wb_v3_cyan_narrow_max"] for z in d["zones"])
+    assert d.get("zone_disagreement", 0.0) <= NOREF_V3.get("wb_v3_tint_max_zone_dis", np.inf)
+    assert d["temp_tint_raw"][1] > 0.25
+    assert d.get("no_narrow_tint_capped") is True
+    assert wb["tint"] == pytest.approx(0.18)
+
+
+def test_t4u_wb_v3_preserves_tint_when_narrow_neutrals_present_or_cyan_boosted():
+    from filmcolor.noref import LUMA, NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(240)
+    n = 100_000
+    y_dark = rng.uniform(0.04, 0.35, n).astype(np.float32)
+
+    # 1. When narrow-band neutral evidence is present in a zone (narrow_share >= 0.04)
+    c_neutral = np.full((n, 2), [-0.85, 0.00], dtype=np.float32)
+    p70, p96 = np.percentile(y_dark, [70, 96])
+    z0 = (y_dark >= p70) & (y_dark <= p96)
+    z0_indices = np.where(z0)[0]
+    c_neutral[z0_indices[:int(0.06 * len(z0_indices))]] = [0.0, 0.0]
+
+    rgb_ratios = np.stack([2.0 ** c_neutral[:, 0], np.ones(n, dtype=np.float32), 2.0 ** c_neutral[:, 1]], axis=-1)
+    unit_luma = rgb_ratios @ LUMA.astype(np.float32)
+    px_neutral = (y_dark / unit_luma)[:, None] * rgb_ratios
+
+    wb_neutral = estimate_wb_v3(px_neutral.astype(np.float32), NOREF_V3)
+    d_n = wb_neutral["diagnostics"]
+    assert any(z["narrow_share"] >= NOREF_V3["wb_v3_cyan_narrow_max"] for z in d_n["zones"])
+    assert "no_narrow_tint_capped" not in d_n
+    assert d_n["temp_tint_raw"][1] > 0.25
+    assert wb_neutral["tint"] == pytest.approx(d_n["temp_tint_raw"][1] * NOREF_V3["wb_v3_tint_boost"], abs=1e-5)
+
+    # 2. When cyan_conf_boost is True (bright cyan scene)
+    n_bright = int(0.25 * n)
+    y_bright = np.concatenate([rng.uniform(0.46, 0.95, n_bright), rng.uniform(0.02, 0.44, n - n_bright)]).astype(np.float32)
+    c_cyan = np.full((n, 2), [-1.10, -0.10], dtype=np.float32)
+    c_cyan += rng.normal(0, 0.01, (n, 2)).astype(np.float32)
+    rgb_ratios_c = np.stack([2.0 ** c_cyan[:, 0], np.ones(n, dtype=np.float32), 2.0 ** c_cyan[:, 1]], axis=-1)
+    unit_luma_c = rgb_ratios_c @ LUMA.astype(np.float32)
+    px_cyan = (y_bright / unit_luma_c)[:, None] * rgb_ratios_c
+
+    wb_cyan = estimate_wb_v3(px_cyan.astype(np.float32), NOREF_V3)
+    d_c = wb_cyan["diagnostics"]
+    assert d_c.get("cyan_conf_boost") is True
+    assert "no_narrow_tint_capped" not in d_c
+    assert d_c["temp_tint_raw"][1] > 0.25
+    assert wb_cyan["tint"] == pytest.approx(d_c["temp_tint_raw"][1] * NOREF_V3["wb_v3_tint_boost"], abs=1e-5)
+    assert "no_narrow_tint_capped" not in d_c

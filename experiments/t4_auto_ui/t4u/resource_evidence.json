@@ -1,0 +1,30 @@
+{
+  "a1296_scope": {
+    "log_sha256": "cc3fc4d6fe8b1ada5fffc0b68d3c32d05370841c67298a96f08e9abed4ffd8c2",
+    "peak_memory_footprint_bytes": 1164576256
+  },
+  "candidate_a": {
+    "log_sha256": "c511ffa0aae0ad04e786828035bb9c58b95409325eeaa09248edd3c1d5c2c063",
+    "peak_memory_footprint_bytes": 5969384608
+  },
+  "candidate_b": {
+    "log_sha256": "f1a88678baca654389cec11b9f4a5e47406b380234b2dfb7efdffd4d02ff1f4b",
+    "peak_memory_footprint_bytes": 5388227408
+  },
+  "candidate_cross": {
+    "log_sha256": "812448c8902c0aa6e2cbed9da32c55eeccf77274129b38d2724403828c690c79",
+    "peak_memory_footprint_bytes": 8898895096
+  },
+  "devices_baseline": {
+    "log_sha256": "d7a7c83d3d1dabb62d6ca174c7f4cfb45160b0b4e1e456eef2d40c697f28ebc9",
+    "peak_memory_footprint_bytes": 3409824864
+  },
+  "devices_candidate": {
+    "log_sha256": "e0a510c7e31536e81f96043fc48e5715b389f823ef29e1cd91d8ddecdf5b5341",
+    "peak_memory_footprint_bytes": 4367667232
+  },
+  "tests": {
+    "log_sha256": "9e91d2b386c645a64fa812a69361deb3d433d74b192226a6c625634f67f00e45",
+    "peak_memory_footprint_bytes": 2998913976
+  }
+}

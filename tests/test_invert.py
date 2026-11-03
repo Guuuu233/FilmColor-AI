@@ -277,6 +277,47 @@ def test_t4n_blue_guard_rejects_extreme_blue_collapse_but_keeps_warm_highlights(
         assert info["applied"] and out[2] > ratio
 
 
+def test_t4u_blue_white_guard_rescues_warm_highlight_narrow_blue_span_only():
+    from filmcolor.invert import blue_white_guard
+
+    guard = (1.06, 1.18, 0.65, 0.48)
+    base_warm = (0.17, 0.225, 0.095)  # base_bg = 0.095 / 0.225 = 0.422 < 0.48
+
+    # 1. Warm highlight with narrow blue span (A1006 signature):
+    # d_hi = (0.92, 0.78, 0.086): ratio_bg = 0.086 / 0.78 = 0.110 < 0.55
+    # Red-to-green ratio: d[0] / d[1] = 0.92 / 0.78 = 1.179 > 1.10
+    # Expected rescue:
+    # d_b = 0.086 + 0.25 * 0.65 * (max(0.086, 1.18 * 0.78) - 0.086)
+    # 1.18 * 0.78 = 0.9204
+    # d_b = 0.086 + 0.1625 * (0.9204 - 0.086) = 0.086 + 0.1625 * 0.8344 = 0.22159
+    d_warm = (0.92, 0.78, 0.086)
+    out_warm, info_warm = blue_white_guard(d_warm, guard, base=base_warm)
+    assert info_warm.get("applied") is True
+    assert info_warm.get("narrow_blue_rescue") is True
+    assert out_warm[0] == pytest.approx(0.92)
+    assert out_warm[1] == pytest.approx(0.78)
+    assert out_warm[2] == pytest.approx(0.22159, abs=1e-3)
+    assert info_warm["d_hi_b_own"] == pytest.approx(0.086)
+    assert info_warm["ratio_bg_used"] == pytest.approx(out_warm[2] / 0.78)
+
+    # 2. Blue flare / extreme collapse with low R/G (d[0] <= 1.10 * d[1]):
+    # d_flare = (0.632, 1.0, 0.154): d[0] / d[1] = 0.632 <= 1.10
+    d_flare = (0.632, 1.0, 0.154)
+    out_flare, info_flare = blue_white_guard(d_flare, guard, base=base_warm)
+    assert out_flare == d_flare
+    assert not info_flare.get("applied")
+    assert info_flare.get("reason") == "below_valid_ratio"
+    assert "narrow_blue_rescue" not in info_flare
+
+    # 3. High blue/green base ratio (base_bg >= 0.48):
+    base_cool = (0.50, 0.30, 0.20)  # base_bg = 0.20 / 0.30 = 0.667 >= 0.48
+    out_cool_base, info_cool_base = blue_white_guard(d_warm, guard, base=base_cool)
+    assert out_cool_base == d_warm
+    assert not info_cool_base.get("applied")
+    assert "narrow_blue_rescue" not in info_cool_base
+
+
+
 def test_t4l_self_ratio_white_point_lifts_only_a_channel_collapsed_against_its_own_midtones():
     """T4l: a white point channel ratio below collapse x the frame's own midtone ratio (DSC_3827: blue 0.91 against
     midtones about 1.3) is set to target x the midtone ratio; a scanner-like frame whose midtones and highlights share

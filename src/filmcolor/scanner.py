@@ -392,7 +392,15 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
         rgb_raw = a[:, :, :3]
     else:
         raise ValueError(f"{path.name}: unexpected image shape {a.shape}")
-    sat = np.any(rgb_raw >= white, -1)
+    sat_ch = rgb_raw >= white
+    if (allow_tiff and n_samples >= 3 and float(sat_ch[:, :, 0].mean()) > 0.30
+            and float(sat_ch[:, :, 1].mean()) < 0.05 and float(sat_ch[:, :, 2].mean()) < 0.05):
+        # T4u: a pre-stretched orange mask can clip R while G and B retain usable signal
+        sat = sat_ch[:, :, 1] | sat_ch[:, :, 2]
+        meta["single_channel_prestretched"] = "R"
+    else:
+        sat = np.any(sat_ch, -1)
+    del sat_ch
     rgb = ((rgb_raw.astype(np.float32) - np.float32(black)) / np.float32(white - black))
     del a, rgb_raw
     if not np.all(np.isfinite(rgb)):

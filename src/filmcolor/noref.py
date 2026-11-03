@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4t-2026-11-02",          # T4t: zero-clipped white points, slide mounts and conflicting tint evidence;
+    rev="t4u-2026-11-03",          # T4u: pre-stretched TIFFs, unsupported positive tint and narrow-blue rescue;
+                                   # T4t: zero-clipped white points, slide mounts and conflicting tint evidence;
                                    # T4s: scanner TIFF, global zero-escape evidence and B&W roll routing;
                                    # T4r: wide-bright over-lift exemption and sparse / conflicting WB gates;
                                    # T4q: fixed spatial radius and bounded darkening of lifted shadows;
@@ -505,6 +506,7 @@ NOREF_V3 = dict(
     wb_v3_cyan_b_max=0.20, wb_v3_cyan_max_zone_dis=0.60,  # T4r: do not boost conflicting scene colours
     wb_v3_cyan_min_bright_share=0.10,  # T4t: dark monochrome foliage does not support a strong cyan correction
     wb_v3_tint_max_zone_dis=1.25, wb_v3_tint_conflict_damp=0.55,  # T4t: damp positive tint on extreme zone conflicts
+    wb_v3_no_narrow_max_tint=0.18,  # T4u: cap positive tint without narrow neutral evidence or a cast boost
     wb_v3_cast_max_temp=None,      # T4k: a cool-cast frame's temp at most this (0.38 measured: _DSF8948 8.17 -> 9.21);
                                    # None = up to wb_max_shift (T4j)
     # T4k: mid-grey zone and grey world both strongly cool (log2 R/G below [0], B/G above [1] of wb_v3_undamp_z1 /
@@ -845,6 +847,12 @@ def estimate_wb_v3(px, cfg=None) -> dict:
         if diag.get("zone_disagreement", 0.0) > cfg.get("wb_v3_tint_max_zone_dis", np.inf):
             tint *= float(cfg.get("wb_v3_tint_conflict_damp", 0.55))
             diag["tint_conflict_damped"] = True
+        elif (not cool_cast and not diag.get("cyan_conf_boost")
+              and len(diag["zones"]) == 2
+              and all(z["narrow_share"] < cfg["wb_v3_cyan_narrow_max"] for z in diag["zones"])
+              and tint > float(cfg.get("wb_v3_no_narrow_max_tint", np.inf))):
+            tint = float(cfg.get("wb_v3_no_narrow_max_tint", np.inf))
+            diag["no_narrow_tint_capped"] = True
         else:
             tint *= float(cfg.get("wb_v3_tint_boost", 1.0))
     if cool_cast and cfg.get("wb_v3_cast_max_temp") is not None:

@@ -1,0 +1,279 @@
+{
+  "source_sha256": "0c92000ec933c17b559b238d6b54800a7bd0b9aa2eaf3211a1b4f4c30b3995ca",
+  "frames": {
+    "A305.tif": {
+      "raw_sha256": "cbc31e6f2b20e45ee22964eecfff7b1698c6cc5359137661dd554f84433854ec",
+      "baseline_status": "ok",
+      "status": "ok",
+      "baseline_srgb_q50": [
+        0.2953188419342041,
+        0.24535667896270752,
+        0.19999921321868896
+      ],
+      "srgb_q50": [
+        0.2953188419342041,
+        0.24535667896270752,
+        0.19999921321868896
+      ],
+      "baseline_tint": 0.0422,
+      "tint": 0.0422,
+      "d_hi": [
+        0.9239867329597473,
+        1.1351163387298584,
+        1.0756611824035645
+      ],
+      "no_narrow_tint_capped": false,
+      "narrow_blue_rescue": false,
+      "upper_band_p99": [
+        0.5010305643081665,
+        0.6709933876991272,
+        1.0053662061691284
+      ]
+    },
+    "A1040.TIF": {
+      "raw_sha256": "3463fe6a00e603841c497c07e71d556df72971b6981289712313617ab7aeacad",
+      "baseline_status": "ok",
+      "status": "ok",
+      "baseline_srgb_q50": [
+        0.0,
+        0.0,
+        0.16936975717544556
+      ],
+      "srgb_q50": [
+        0.0,
+        0.1609511524438858,
+        0.24637402594089508
+      ],
+      "baseline_tint": -0.0643,
+      "tint": 0.1834,
+      "d_hi": [
+        0.14108677208423615,
+        0.37428587675094604,
+        0.5427145212888718
+      ],
+      "no_narrow_tint_capped": false,
+      "narrow_blue_rescue": false,
+      "upper_band_p99": [
+        1.570494532585144,
+        1.8062083721160889,
+        1.8632408380508423
+      ]
+    },
+    "A1041.TIF": {
+      "raw_sha256": "984bdfd317ca03c352c58a3ab975f74b8a0adb171acb4f7f5d0ef74683929000",
+      "baseline_status": "ok",
+      "status": "ok",
+      "baseline_srgb_q50": [
+        0.0,
+        0.19982603192329407,
+        0.3447136878967285
+      ],
+      "srgb_q50": [
+        0.0,
+        0.21465542912483215,
+        0.39837372303009033
+      ],
+      "baseline_tint": -0.2868,
+      "tint": -0.2366,
+      "d_hi": [
+        0.19579766690731049,
+        0.4825460910797119,
+        0.6996918320655823
+      ],
+      "no_narrow_tint_capped": false,
+      "narrow_blue_rescue": false,
+      "upper_band_p99": [
+        1.1893236637115479,
+        0.8149124383926392,
+        0.9849837422370911
+      ]
+    },
+    "A232.NEF": {
+      "raw_sha256": "400fd9c59af6d8bfda1a6decbeff3940b1aa868237c002e539d650e89d5d7acf",
+      "baseline_status": "ok",
+      "status": "ok",
+      "baseline_srgb_q50": [
+        0.019999999552965164,
+        0.019999999552965164,
+        0.019999999552965164
+      ],
+      "srgb_q50": [
+        0.019999999552965164,
+        0.019999999552965164,
+        0.019999999552965164
+      ],
+      "baseline_tint": 0.0772,
+      "tint": 0.0772,
+      "d_hi": [
+        0.8779557943344116,
+        0.924209713935852,
+        1.025090728521347
+      ],
+      "no_narrow_tint_capped": false,
+      "narrow_blue_rescue": false,
+      "upper_band_p99": [
+        92.03599548339844,
+        8.528458595275879,
+        1.797904372215271
+      ]
+    },
+    "A1069.NEF": {
+      "raw_sha256": "269d77bed5e821cfb9c21e4dcece60b0a551f3cb41bd77bf43359a9c6f318a2f",
+      "baseline_status": "ok",
+      "status": "ok",
+      "baseline_srgb_q50": [
+        0.019999999552965164,
+        0.019999999552965164,
+        0.019999999552965164
+      ],
+      "srgb_q50": [
+        0.019999999552965164,
+        0.019999999552965164,
+        0.019999999552965164
+      ],
+      "baseline_tint": 0.0772,
+      "tint": 0.0772,
+      "d_hi": [
+        0.8779557943344116,
+        0.924209713935852,
+        1.025090728521347
+      ],
+      "no_narrow_tint_capped": false,
+      "narrow_blue_rescue": false,
+      "upper_band_p99": [
+        92.03599548339844,
+        8.528458595275879,
+        1.797904372215271
+      ]
+    },
+    "A239.ORF": {
+      "raw_sha256": "5e5fe39f6616dc6d24721579db64c1e4b87fa10def384c6879f072c32ae354f8",
+      "baseline_status": "ok",
+      "status": "ok",
+      "baseline_srgb_q50": [
+        0.24980071187019348,
+        0.3254198729991913,
+        0.28828543424606323
+      ],
+      "srgb_q50": [
+        0.23598593473434448,
+        0.333690345287323,
+        0.27017349004745483
+      ],
+      "baseline_tint": 0.3729,
+      "tint": 0.195,
+      "d_hi": [
+        1.5321805477142334,
+        1.6825815439224243,
+        1.8699046062231064
+      ],
+      "no_narrow_tint_capped": true,
+      "narrow_blue_rescue": false,
+      "upper_band_p99": [
+        0.6057363748550415,
+        0.5269034504890442,
+        0.32689735293388367
+      ]
+    },
+    "A281.RAF": {
+      "raw_sha256": "6c1a52729ada8c25687595b07c82e4c4f39d0c65881d27e4aa94ad17f7852ad1",
+      "baseline_status": "ok",
+      "status": "ok",
+      "baseline_srgb_q50": [
+        0.6020013689994812,
+        0.8477295637130737,
+        0.2775372862815857
+      ],
+      "srgb_q50": [
+        0.6020013689994812,
+        0.8477295637130737,
+        0.2775372862815857
+      ],
+      "baseline_tint": 0.1447,
+      "tint": 0.1447,
+      "d_hi": [
+        1.297792911529541,
+        1.2670344114303589,
+        1.250804443359375
+      ],
+      "no_narrow_tint_capped": false,
+      "narrow_blue_rescue": false,
+      "upper_band_p99": [
+        1.6113923788070679,
+        1.4179130792617798,
+        0.22626447677612305
+      ]
+    },
+    "A1006.CR2": {
+      "raw_sha256": "115d9ca9da3c790f2d882709e5fd22b2d4e459763b01345c8970ff34d5a22679",
+      "baseline_status": "ok",
+      "status": "ok",
+      "baseline_srgb_q50": [
+        0.3383568823337555,
+        0.4127662777900696,
+        0.725518524646759
+      ],
+      "srgb_q50": [
+        0.37737733125686646,
+        0.44943785667419434,
+        0.4111279249191284
+      ],
+      "baseline_tint": 0.0268,
+      "tint": 0.1836,
+      "d_hi": [
+        0.9192954301834106,
+        0.7810931205749512,
+        0.22193181225657463
+      ],
+      "no_narrow_tint_capped": false,
+      "narrow_blue_rescue": true,
+      "upper_band_p99": [
+        1.0406612157821655,
+        1.0305663347244263,
+        0.13113494217395782
+      ]
+    }
+  },
+  "a1296": {
+    "whole_image": {
+      "n_pixels": 22430520,
+      "any_channel_gt_10_count": 876718,
+      "any_channel_gt_10_share": 0.039085941832824204,
+      "max_rgb": [
+        1210480896.0,
+        929199296.0,
+        169336624.0
+      ]
+    },
+    "center": {
+      "n_pixels": 8073594,
+      "any_channel_gt_10_count": 419,
+      "any_channel_gt_10_share": 5.189758117636334e-05,
+      "max_rgb": [
+        59.713584899902344,
+        929199296.0,
+        169336624.0
+      ]
+    },
+    "upper_band": {
+      "n_pixels": 1345599,
+      "any_channel_gt_10_count": 0,
+      "any_channel_gt_10_share": 0.0,
+      "max_rgb": [
+        4.827593803405762,
+        6.059083938598633,
+        9.050447463989258
+      ]
+    }
+  },
+  "limits": [
+    "R-saturation decoupling changes sample eligibility; it cannot recover the clipped R signal.",
+    "A1040 still has visible blue bias and grain; the green-median gate does not prove accurate colour.",
+    "A1006 passes the whole-image B-G median gate but retains local yellow/blue colour differences.",
+    "A1296 whole-image and center extreme values remain diagnostic; only the explicitly named regions and thresholds are accepted."
+  ],
+  "artifact_sha256": {
+    "devices_baseline.json": "d7cf375e274d4727a4424ef43a6d2d3d2f0ce6b4b6005dfff897e9a45d9a6445",
+    "devices_candidate.json": "4d22d48afbd56a553b661bbcca11cc595c3a9de89aca73cb4c532ebc7b9ff31f"
+  }
+}
