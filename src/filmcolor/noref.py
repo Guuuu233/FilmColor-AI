@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4u-2026-11-03",          # T4u: pre-stretched TIFFs, unsupported positive tint and narrow-blue rescue;
+    rev="t4v-2026-11-03",          # T4v: TIFF transfer curves, 8-bit input and pre-stretched signal reconstruction;
+                                   # T4u: pre-stretched TIFFs, unsupported positive tint and narrow-blue rescue;
                                    # T4t: zero-clipped white points, slide mounts and conflicting tint evidence;
                                    # T4s: scanner TIFF, global zero-escape evidence and B&W roll routing;
                                    # T4r: wide-bright over-lift exemption and sparse / conflicting WB gates;

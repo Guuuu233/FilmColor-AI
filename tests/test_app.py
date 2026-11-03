@@ -685,4 +685,5 @@ def test_t4s_app_opens_and_exports_scanner_tiff(server):
     assert (tmp / "out").exists()
     sc = json.loads(open(out["sidecar"]).read())
     assert sc["input"]["kind"] == "scanner_tiff16"
-    assert "ICC / TRC not applied" in sc["decode"]["render"]
+    assert "signal assumed linear; no TRC applied" in sc["decode"]["render"]
+    assert "no ICC colour matrix transform" in sc["decode"]["render"]

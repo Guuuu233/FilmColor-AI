@@ -1,5 +1,5 @@
 {
-  "source_config_rev": "t4u-2026-11-03",
+  "source_config_rev": "t4v-2026-11-03",
   "preset": "standard",
   "config": {
     "id": "noref_v3",
@@ -44,7 +44,7 @@
     "wb_conflict_factor": 0.3,
     "wb_max_shift": 0.5,
     "roll_consistency": 0.1,
-    "rev": "t4u-2026-11-03",
+    "rev": "t4v-2026-11-03",
     "look": "global_look_v1",
     "preset": "standard",
     "cell_size": 8,

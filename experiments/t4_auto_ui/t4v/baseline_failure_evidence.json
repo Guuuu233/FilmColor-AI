@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python",
+    "-I",
+    "-c",
+    "import sys; sys.path.insert(0, sys.argv[1]); import filmcolor.scanner as scanner; print('baseline_scanner=' + scanner.__file__, flush=True); import pytest; raise SystemExit(pytest.main([sys.argv[2], '-k', 't4v', '-q']))",
+    "/private/tmp/fc_t4v_baseline_20261103/src",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_scanner.py"
+  ],
+  "baseline_source_sha256": "0c92000ec933c17b559b238d6b54800a7bd0b9aa2eaf3211a1b4f4c30b3995ca",
+  "failed": 4,
+  "passed": 1,
+  "deselected": 24,
+  "log_sha256": "c97edabdc4ded12493faf0103c573754bf21c15fc4d1f4d83e19dbe1edbdd749",
+  "test_sha256": {
+    "tests/test_scanner.py": "f64688b44eb4bab06ba2d04e6e19e819ff53e154ac02b471e73bdb81ff35a5c1"
+  }
+}

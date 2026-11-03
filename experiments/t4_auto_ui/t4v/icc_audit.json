@@ -1,0 +1,182 @@
+{
+  "A1040.TIF": {
+    "raw_sha256": "3463fe6a00e603841c497c07e71d556df72971b6981289712313617ab7aeacad",
+    "bits": 16,
+    "compression": 1,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "A1041.TIF": {
+    "raw_sha256": "984bdfd317ca03c352c58a3ab975f74b8a0adb171acb4f7f5d0ef74683929000",
+    "bits": 16,
+    "compression": 1,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "A1228.tif": {
+    "raw_sha256": "c06c4f7015085589ae495104cfe08277cd08160a4978f230ac2bc228f32d02b2",
+    "bits": 16,
+    "compression": 1,
+    "device_class": "mntr",
+    "icc_sha256": "0a8ef7d1d958d98225b3b71d93d9e8e3cecd9c302e014973d025d2a977ecf27c",
+    "mode": "gamma",
+    "gamma": 1.80078125,
+    "lut_entries": null
+  },
+  "A229.TIF": {
+    "raw_sha256": "d62cf4ce80af64a81e05c87d3cecd84ef042ac9e0efd901fc1ce2299d6d8cfe9",
+    "bits": 8,
+    "compression": 1,
+    "device_class": "mntr",
+    "icc_sha256": "9d0774f002bc0238173d688dab55ecf2b093f8a257310e05b5887c6722c8798d",
+    "mode": "lut",
+    "gamma": null,
+    "lut_entries": 4096
+  },
+  "A655.tif": {
+    "raw_sha256": "949f2c00405e1b12d583bb91995da7fbe3e8a28f79798b3691533ae62914dd86",
+    "bits": 8,
+    "compression": 1,
+    "device_class": "mntr",
+    "icc_sha256": "0ff6958f98684c61f6bbdce1368ddeaf3873baf84545baba482e920d92a914c0",
+    "mode": "srgb",
+    "gamma": 2.4,
+    "lut_entries": null
+  },
+  "A849.tif": {
+    "raw_sha256": "f284b91330dfdeceb1e1301927d82321ec7f7a350c97ec4c1ca4a5553e11ed62",
+    "bits": 8,
+    "compression": 1,
+    "device_class": "mntr",
+    "icc_sha256": "0ff6958f98684c61f6bbdce1368ddeaf3873baf84545baba482e920d92a914c0",
+    "mode": "srgb",
+    "gamma": 2.4,
+    "lut_entries": null
+  },
+  "A850.tif": {
+    "raw_sha256": "dd92a590e4c632f246d46289e61bad67a07e79f34a533e17a4d6f9f48bc71f23",
+    "bits": 8,
+    "compression": 8,
+    "device_class": "mntr",
+    "icc_sha256": "cb51de38e482ee974c0c76b9689e16aad04bad16e226fed2f30c842d15ff3a3d",
+    "mode": "srgb",
+    "gamma": 2.4,
+    "lut_entries": null
+  },
+  "A1093.tif": {
+    "raw_sha256": "9a4bd549a9d63606a3b3ff1260a9b131db9042e000b5d69c26fad2c93092aeb1",
+    "bits": 8,
+    "compression": 1,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "srgb",
+    "gamma": 2.4,
+    "lut_entries": null
+  },
+  "B036.tif": {
+    "raw_sha256": "61f393c928c48615be236efe354541bfcef7a622b0f3b6fadbb1b2c437927e6f",
+    "bits": 8,
+    "compression": 5,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "srgb",
+    "gamma": 2.4,
+    "lut_entries": null
+  },
+  "A1310.TIF": {
+    "raw_sha256": "c05affdde0b75bd2eaa52b40067ed6b41c0efe84bdbabe983a8002ef2fd41a0a",
+    "bits": 16,
+    "compression": 1,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "A304.tif": {
+    "raw_sha256": "9f8e8639b9b854fbbda5c89a38cef147a6c86a65ccb03ebf2803e1e1333e9aeb",
+    "bits": 16,
+    "compression": 1,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "A1301.TIF": {
+    "raw_sha256": "6969f02dad5eb1a051f1ff86f1b79f81d9b3c7593f84ba2d1d1e46525a718cc6",
+    "bits": 16,
+    "compression": 1,
+    "device_class": "scnr",
+    "icc_sha256": "82290726c4bb14e382415c1d9bb0bdf6b27b14bcc35dcc9ca62ab00cc649e60e",
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "A255.tif": {
+    "raw_sha256": "bdc4062ae534fba8ea43536db2596bc226559827fe09ae5badc0f5380824dc46",
+    "bits": 16,
+    "compression": 5,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "A1027.TIF": {
+    "raw_sha256": "90ef51ebf2cfd488c64a78d0f14fc5b6f43c8efc53444f77af1d138435ea1d40",
+    "bits": 16,
+    "compression": 5,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "A1028.TIF": {
+    "raw_sha256": "9a50505336a823d2b5a5ab905457a9319a9eaa60323dbd863d80610a172bb58f",
+    "bits": 16,
+    "compression": 5,
+    "device_class": "scnr",
+    "icc_sha256": "b939dc73c820a307c3d989559c0530a23ff002b72cbd1c92cc23d4e8554a5e87",
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "B032.tif": {
+    "raw_sha256": "1a064c05841ac9100bb886765ab349a3ed46a38c8bff46078950a17d0193275b",
+    "bits": 16,
+    "compression": 1,
+    "device_class": "scnr",
+    "icc_sha256": "58ab0c2d8d43b2110eb6317b7d71ceee0cfbf454f1544309543dc1db0654ff37",
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "B034.tiff": {
+    "raw_sha256": "c87f481a9a1e907822412018550a4d1e7927d4c7df7f800a62b8ed2a4771d57d",
+    "bits": 16,
+    "compression": 1,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  },
+  "A305.tif": {
+    "raw_sha256": "cbc31e6f2b20e45ee22964eecfff7b1698c6cc5359137661dd554f84433854ec",
+    "bits": 16,
+    "compression": 1,
+    "device_class": null,
+    "icc_sha256": null,
+    "mode": "linear",
+    "gamma": 1.0,
+    "lut_entries": null
+  }
+}

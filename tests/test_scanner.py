@@ -1,10 +1,17 @@
 """Scanner input path (linear RGB DNG) on synthetic files."""
+import struct
+import zlib
 import numpy as np
 import pytest
 import tifffile
 
 from filmcolor.pipeline import convert
 from filmcolor.scanner import block_means, estimate_base_scanner, is_scanner_dng, load_scanner
+
+
+def srgb_eotf_ref(e):
+    e = np.clip(e, 0.0, 1.0)
+    return np.where(e <= 0.04045, e / 12.92, ((e + 0.055) / 1.055) ** 2.4)
 
 BASE = np.array([0.45, 0.20, 0.30])  # orange-ish base transmission, fraction of white
 
@@ -417,9 +424,9 @@ def encode_tiff_lzw(data: bytes, *, include_eoi: bool = True) -> bytes:
 def build_synthetic_tiff(strips_data: list[bytes], width: int, height: int, spp: int = 3,
                          photometric: int = 2, compression: int = 1, predictor: int = 1,
                          planarconfig: int = 1, rows_per_strip: int | None = None,
-                         byteorder: str = "<") -> bytes:
+                         byteorder: str = "<", bits_per_sample: int = 16,
+                         extra_entries: list | None = None) -> bytes:
     """Build a valid standalone TIFF in memory with custom strip data and compression."""
-    import struct
     if rows_per_strip is None:
         rows_per_strip = height
     bo = byteorder
@@ -442,7 +449,7 @@ def build_synthetic_tiff(strips_data: list[bytes], width: int, height: int, spp:
     entries = [
         (256, 4, 1, width),
         (257, 4, 1, height),
-        (258, 3, spp, [16] * spp),
+        (258, 3, spp, [bits_per_sample] * spp),
         (259, 3, 1, compression),
         (262, 3, 1, photometric),
         (273, 4, len(strip_offsets), strip_offsets),
@@ -454,6 +461,8 @@ def build_synthetic_tiff(strips_data: list[bytes], width: int, height: int, spp:
         entries.append((284, 3, 1, planarconfig))
     if predictor != 1:
         entries.append((317, 3, 1, predictor))
+    if extra_entries:
+        entries.extend(extra_entries)
 
     entries.sort(key=lambda x: x[0])
     ifd_len = 2 + len(entries) * 12 + 4
@@ -463,10 +472,18 @@ def build_synthetic_tiff(strips_data: list[bytes], width: int, height: int, spp:
     extra_data = bytearray()
 
     for tag, type_id, count, val in entries:
-        if type_id == 3:
+        if type_id == 1:
+            raw = bytes(val)
+        elif type_id == 2:
+            raw = (val.encode("ascii") + b"\x00") if isinstance(val, str) else bytes(val)
+            count = len(raw)
+        elif type_id == 3:
             raw = struct.pack(f"{bo}{count}H", *(val if isinstance(val, (list, tuple)) else [val]))
         elif type_id == 4:
             raw = struct.pack(f"{bo}{count}I", *(val if isinstance(val, (list, tuple)) else [val]))
+        elif type_id == 7:
+            raw = bytes(val)
+            count = len(raw)
         else:
             raise ValueError(f"unsupported type_id {type_id}")
 
@@ -485,9 +502,58 @@ def build_synthetic_tiff(strips_data: list[bytes], width: int, height: int, spp:
     return header + struct.pack(f"{bo}I", ifd_offset) + all_data + bytes(ifd_bytes) + bytes(extra_data)
 
 
+def build_synthetic_icc(dev_class: bytes = b"mntr", sig: bytes = b"rTRC",
+                        trc_type: str = "curv", gamma: float | None = None,
+                        lut: np.ndarray | None = None, ftype: int = 3,
+                        corrupt: str | None = None) -> bytes:
+    """Build a minimal valid or intentionally corrupted ICC profile for testing TRC parsing."""
+    if corrupt == "truncated":
+        return b"short_icc"
+    hdr = bytearray(128)
+    hdr[12:16] = dev_class
+
+    t_data = bytearray()
+    if corrupt == "unknown_type":
+        t_data.extend(b"xxxx\x00\x00\x00\x00\x00\x00\x00\x00")
+    elif trc_type == "curv":
+        t_data.extend(b"curv\x00\x00\x00\x00")
+        if gamma is not None:
+            t_data.extend(struct.pack(">I", 1))
+            t_data.extend(struct.pack(">H", max(0, min(65535, int(round(gamma * 256.0))))))
+        elif lut is not None:
+            cnt = len(lut)
+            t_data.extend(struct.pack(">I", cnt))
+            t_data.extend((np.clip(lut, 0.0, 1.0) * 65535.0).astype(">u2").tobytes())
+        else:
+            t_data.extend(struct.pack(">I", 0))
+    elif trc_type == "para":
+        t_data.extend(b"para\x00\x00\x00\x00")
+        t_data.extend(struct.pack(">H", ftype))
+        t_data.extend(b"\x00\x00")
+        gam_val = int(round((gamma if gamma is not None else 2.2) * 65536.0))
+        t_data.extend(struct.pack(">i", gam_val))
+
+    tag_count = 1
+    t_off = 132 + 12
+    t_sz = len(t_data)
+    if corrupt == "offset_overflow":
+        t_off = 999999
+
+    tag_entry = struct.pack(">4sII", sig, t_off, t_sz)
+    total_len = 128 + 4 + 12 + t_sz
+    struct.pack_into(">I", hdr, 0, total_len)
+
+    icc = bytes(hdr + struct.pack(">I", tag_count) + tag_entry + t_data)
+    if corrupt == "tag_count_overflow":
+        icc = bytearray(icc)
+        struct.pack_into(">I", icc, 128, 99999)
+        icc = bytes(icc)
+    return icc
+
+
 def test_t4s_scanner_tiff16_rgb_minisblack_and_4ch(tmp_path):
-    """T4s: .tif / .tiff with 16-bit RGB, 16-bit MinIsBlack, and 16-bit 4ch RGBI are accepted by
-    is_scanner_dng and loaded correctly by load_scanner. 8-bit, 32-bit float, and .dng with photometric=rgb are rejected."""
+    """T4s/T4v: .tif / .tiff with 8/16-bit RGB, 8/16-bit MinIsBlack, and 16-bit 4ch RGBI are accepted by
+    is_scanner_dng and loaded correctly by load_scanner. Non-standard bits, 32-bit float, and .dng with photometric=rgb are rejected."""
     # 1. 16-bit 3-channel RGB .tif
     rgb = np.arange(10 * 12 * 3, dtype=np.uint16).reshape(10, 12, 3) * 50
     p_rgb = tmp_path / "neg.tif"
@@ -525,13 +591,25 @@ def test_t4s_scanner_tiff16_rgb_minisblack_and_4ch(tmp_path):
     assert fr_rgbi.meta["infrared_layer"]["source"] == "interleaved_4ch"
     np.testing.assert_allclose(fr_rgbi.rgb, rgb / 65535.0, atol=1e-6)
 
-    # 4. 8-bit .tif is rejected
+    # 4. 8-bit .tif is accepted and linearised via sRGB EOTF
     rgb8 = (rgb // 256).astype(np.uint8)
     p_8bit = tmp_path / "neg8.tif"
     tifffile.imwrite(p_8bit, rgb8, photometric="rgb")
-    assert not is_scanner_dng(p_8bit)
-    with pytest.raises(ValueError, match="LinearRaw"):
-        load_scanner(p_8bit)
+    assert is_scanner_dng(p_8bit)
+    fr8 = load_scanner(p_8bit)
+    assert fr8.rgb.shape == (10, 12, 3)
+    assert fr8.meta["bits"] == 8
+    assert fr8.meta["tiff_eotf"] == "srgb"
+    np.testing.assert_allclose(fr8.rgb, srgb_eotf_ref(rgb8 / 255.0), atol=1e-5)
+
+    # 4b. 12-bit / non-standard bit depth .tif is rejected
+    raw_12bit = build_synthetic_tiff([rgb.astype("<u2").tobytes()], 12, 10, spp=3, photometric=2,
+                                     bits_per_sample=12)
+    p_12bit = tmp_path / "neg12.tif"
+    p_12bit.write_bytes(raw_12bit)
+    assert not is_scanner_dng(p_12bit)
+    with pytest.raises(ValueError, match="LinearRaw|scanner image"):
+        load_scanner(p_12bit)
 
     # 5. 32-bit float .tif is rejected
     p_float = tmp_path / "float32.tif"
@@ -815,3 +893,269 @@ def test_t4u_scanner_tiff_true_multi_channel_saturation_still_masked(tmp_path):
     fr_dng = load_scanner(p_dng)
     assert "single_channel_prestretched" not in fr_dng.meta
     np.testing.assert_array_equal(fr_dng.sat, np.any(dng_raw >= 65535, -1))
+
+
+def test_t4v_scanner_tiff8_lzw_deflate_packbits_and_predictor2_fallback(tmp_path, monkeypatch):
+    """T4v: pure-Python fallback decodes 8-bit 1ch/3ch/4ch strips under LZW (5), Deflate (8 and 32946),
+    and PackBits (32773) with Predictor=2, and rejects truncated/corrupt Deflate streams."""
+    def mock_asarray(self, *args, **kwargs):
+        raise ValueError("codec requires the 'imagecodecs' package")
+
+    monkeypatch.setattr(tifffile.TiffPage, "asarray", mock_asarray)
+
+    # 1. 8-bit 1-channel MinIsBlack (spp=1), Deflate (compression=8), Predictor=2
+    h, w = 12, 16
+    rng = np.random.default_rng(2026)
+    orig_mono = rng.integers(10, 240, (h, w), dtype=np.uint8)
+    diff_mono = orig_mono.copy()
+    diff_mono[:, 1:] = (orig_mono[:, 1:] - orig_mono[:, :-1]).astype(np.uint8)
+    strip_def8 = zlib.compress(diff_mono.tobytes())
+    raw_mono = build_synthetic_tiff([strip_def8], w, h, spp=1, photometric=1, compression=8,
+                                    predictor=2, bits_per_sample=8)
+    p_mono = tmp_path / "mono8_def8.tif"
+    p_mono.write_bytes(raw_mono)
+    assert is_scanner_dng(p_mono)
+    fr_mono = load_scanner(p_mono)
+    assert fr_mono.rgb.shape == (h, w, 3)
+    assert fr_mono.meta["bits"] == 8
+    assert fr_mono.meta["monochrome_dng"] is True
+    assert fr_mono.meta["tiff_eotf"] == "srgb"
+    np.testing.assert_allclose(fr_mono.rgb[:, :, 0], srgb_eotf_ref(orig_mono / 255.0), atol=1e-5)
+    np.testing.assert_array_equal(fr_mono.rgb[:, :, 0], fr_mono.rgb[:, :, 1])
+
+    # 2. 8-bit 3-channel RGB (spp=3), Deflate (compression=32946), Predictor=2
+    orig_rgb = rng.integers(10, 240, (h, w, 3), dtype=np.uint8)
+    diff_rgb = orig_rgb.copy()
+    diff_rgb[:, 1:, :] = (orig_rgb[:, 1:, :] - orig_rgb[:, :-1, :]).astype(np.uint8)
+    strip_def32946 = zlib.compress(diff_rgb.tobytes())
+    raw_rgb = build_synthetic_tiff([strip_def32946], w, h, spp=3, photometric=2, compression=32946,
+                                   predictor=2, bits_per_sample=8)
+    p_rgb = tmp_path / "rgb8_def32946.tif"
+    p_rgb.write_bytes(raw_rgb)
+    assert is_scanner_dng(p_rgb)
+    fr_rgb = load_scanner(p_rgb)
+    assert fr_rgb.rgb.shape == (h, w, 3)
+    assert fr_rgb.meta["bits"] == 8
+    assert fr_rgb.meta["tiff_eotf"] == "srgb"
+    np.testing.assert_allclose(fr_rgb.rgb, srgb_eotf_ref(orig_rgb / 255.0), atol=1e-5)
+
+    # 3. 8-bit 4-channel RGBI (spp=4), LZW (compression=5), Predictor=2
+    orig_rgbi = rng.integers(10, 240, (h, w, 4), dtype=np.uint8)
+    diff_rgbi = orig_rgbi.copy()
+    diff_rgbi[:, 1:, :] = (orig_rgbi[:, 1:, :] - orig_rgbi[:, :-1, :]).astype(np.uint8)
+    strip_lzw = encode_tiff_lzw(diff_rgbi.tobytes())
+    raw_rgbi = build_synthetic_tiff([strip_lzw], w, h, spp=4, photometric=2, compression=5,
+                                    predictor=2, bits_per_sample=8)
+    p_rgbi = tmp_path / "rgbi8_lzw.tif"
+    p_rgbi.write_bytes(raw_rgbi)
+    assert is_scanner_dng(p_rgbi)
+    fr_rgbi = load_scanner(p_rgbi)
+    assert fr_rgbi.rgb.shape == (h, w, 3)
+    assert fr_rgbi.meta["infrared_layer"]["source"] == "interleaved_4ch"
+    np.testing.assert_allclose(fr_rgbi.rgb, srgb_eotf_ref(orig_rgbi[:, :, :3] / 255.0), atol=1e-5)
+
+    # 4. 8-bit 3-channel RGB (spp=3), PackBits (compression=32773), Predictor=2
+    strip_pb = encode_packbits(diff_rgb.tobytes())
+    raw_pb = build_synthetic_tiff([strip_pb], w, h, spp=3, photometric=2, compression=32773,
+                                  predictor=2, bits_per_sample=8)
+    p_pb = tmp_path / "rgb8_packbits.tif"
+    p_pb.write_bytes(raw_pb)
+    assert is_scanner_dng(p_pb)
+    fr_pb = load_scanner(p_pb)
+    np.testing.assert_allclose(fr_pb.rgb, srgb_eotf_ref(orig_rgb / 255.0), atol=1e-5)
+
+    # 5. Corrupt / truncated Deflate stream is rejected with ValueError
+    corrupt_strip = b"\x78\x9c\xff\xff\x00"
+    raw_corrupt = build_synthetic_tiff([corrupt_strip], w, h, spp=3, photometric=2, compression=8,
+                                       predictor=1, bits_per_sample=8)
+    p_corrupt = tmp_path / "corrupt_deflate.tif"
+    p_corrupt.write_bytes(raw_corrupt)
+    with pytest.raises(ValueError, match="corrupt Deflate strip|imagecodecs"):
+        load_scanner(p_corrupt)
+
+
+def test_t4v_scanner_tiff16_mntr_icc_gamma_and_lut_eotf_applied_scnr_ignored(tmp_path):
+    """T4v: 16-bit TIFFs with display/space ICC (mntr/spac) apply gamma or LUT EOTF and record tiff_eotf,
+    while scanner profile (scnr) preserves raw linear values; malformed tags fall back safely."""
+    h, w = 8, 12
+    orig = np.linspace(1000, 64000, h * w * 3, dtype=np.uint16).reshape(h, w, 3)
+    data = orig.astype("<u2").tobytes()
+
+    # 1. mntr class ICC with single gamma (e.g. 1.80 ROMM RGB curv)
+    icc_gamma = build_synthetic_icc(dev_class=b"mntr", sig=b"rTRC", trc_type="curv", gamma=1.80)
+    raw_gamma = build_synthetic_tiff([data], w, h, spp=3, photometric=2, bits_per_sample=16,
+                                     extra_entries=[(34675, 7, len(icc_gamma), icc_gamma)])
+    p_gamma = tmp_path / "mntr_gamma18.tif"
+    p_gamma.write_bytes(raw_gamma)
+    assert is_scanner_dng(p_gamma)
+    fr_gamma = load_scanner(p_gamma)
+    assert fr_gamma.meta["tiff_eotf"] == f"gamma:{461.0 / 256.0:.4f}"
+    expected_gamma = np.power(orig / 65535.0, np.float32(461.0 / 256.0))
+    np.testing.assert_allclose(fr_gamma.rgb, expected_gamma, atol=1e-5)
+
+    # 2. mntr class ICC with 256-point LUT
+    lut = (np.linspace(0.0, 1.0, 256) ** 2.2).astype(np.float32)
+    icc_lut = build_synthetic_icc(dev_class=b"mntr", sig=b"gTRC", trc_type="curv", lut=lut)
+    raw_lut = build_synthetic_tiff([data], w, h, spp=3, photometric=2, bits_per_sample=16,
+                                   extra_entries=[(34675, 7, len(icc_lut), icc_lut)])
+    p_lut = tmp_path / "mntr_lut.tif"
+    p_lut.write_bytes(raw_lut)
+    assert is_scanner_dng(p_lut)
+    fr_lut = load_scanner(p_lut)
+    assert fr_lut.meta["tiff_eotf"] == "icc_lut:256"
+    # The stored 16-bit LUT is quantized to uint16 / 65535.0
+    lut_quantized = ((np.clip(lut, 0.0, 1.0) * 65535.0).astype(">u2")).astype(np.float32) / 65535.0
+    expected_lut = np.interp(orig / 65535.0, np.linspace(0.0, 1.0, 256), lut_quantized)
+    np.testing.assert_allclose(fr_lut.rgb, expected_lut, atol=1e-6)
+
+    # 3. scnr class ICC with gamma 2.2 (scanner input device profile: must be kept linear)
+    icc_scnr = build_synthetic_icc(dev_class=b"scnr", sig=b"rTRC", trc_type="curv", gamma=2.20)
+    raw_scnr = build_synthetic_tiff([data], w, h, spp=3, photometric=2, bits_per_sample=16,
+                                    extra_entries=[(34675, 7, len(icc_scnr), icc_scnr)])
+    p_scnr = tmp_path / "scnr_gamma.tif"
+    p_scnr.write_bytes(raw_scnr)
+    assert is_scanner_dng(p_scnr)
+    fr_scnr = load_scanner(p_scnr)
+    assert "tiff_eotf" not in fr_scnr.meta
+    np.testing.assert_allclose(fr_scnr.rgb, orig / 65535.0, atol=1e-6)
+
+    # 4. Boundary & corrupt ICC tags default safely to linear (16-bit) without crash
+    for err_type in ("truncated", "tag_count_overflow", "offset_overflow", "unknown_type"):
+        bad_icc = build_synthetic_icc(dev_class=b"mntr", corrupt=err_type)
+        if err_type == "unknown_type":
+            assert bad_icc[144:148] == b"xxxx"
+        raw_bad = build_synthetic_tiff([data], w, h, spp=3, photometric=2, bits_per_sample=16,
+                                       extra_entries=[(34675, 7, len(bad_icc), bad_icc)])
+        p_bad = tmp_path / f"bad_{err_type}.tif"
+        p_bad.write_bytes(raw_bad)
+        assert is_scanner_dng(p_bad)
+        fr_bad = load_scanner(p_bad)
+        assert "tiff_eotf" not in fr_bad.meta
+        np.testing.assert_allclose(fr_bad.rgb, orig / 65535.0, atol=1e-6)
+
+
+def test_t4v_prestretched_tiff_pedestal_and_r_tail_reconstruction(tmp_path):
+    """T4v: 16-bit negative TIFF with pre-stretched R saturation (>50% saturated, r_p01>0.45)
+    and zero-crushed blue pedestal (b_p01<0.03) triggers reconstruction, smooth R tail, and avoids channel cap."""
+    from filmcolor.invert import invert_negative
+
+    h, w = 96, 128
+    rgb16 = np.zeros((h, w, 3), dtype=np.uint16)
+    # Left 48 columns: unexposed film base area
+    rgb16[:, :48] = [65535, 42000, 30000]
+
+    # Right 80 columns: negative scene
+    scene_w = 80
+    rgb16[:, 48:, 1] = np.linspace(4000, 40000, h * scene_w).reshape(h, scene_w).astype(np.uint16)
+    b_vals = np.linspace(0, 30000, h * scene_w)
+    b_vals[:int(0.10 * h * scene_w)] = 0  # bottom 10% crushed to 0
+    rgb16[:, 48:, 2] = b_vals.reshape(h, scene_w).astype(np.uint16)
+
+    r_vals = np.full(h * scene_w, 65535, dtype=np.uint16)
+    unclip_count = int(0.40 * h * scene_w)
+    r_vals[:unclip_count] = np.linspace(32000, 64000, unclip_count).astype(np.uint16)
+    rgb16[:, 48:, 0] = r_vals.reshape(h, scene_w)
+
+    p = tmp_path / "prestretched_neg.tif"
+    tifffile.imwrite(p, rgb16, photometric="rgb")
+    assert is_scanner_dng(p)
+
+    fr = load_scanner(p)
+    assert fr.meta.get("single_channel_prestretched") == "R"
+    assert "prestretched_reconstruction" in fr.meta
+    rinfo = fr.meta["prestretched_reconstruction"]
+    assert rinfo["gamma_eotf"] == 2.2
+    assert rinfo["pedestal_p0"] > 0
+    assert rinfo["r_base_est"] >= 1.0
+    assert 0 < fr.rgb.min() < fr.rgb.max() <= 1.0
+
+    # Invert and verify white point channel_cap is avoided
+    base = estimate_base_scanner(fr, block=16)
+    res = invert_negative(fr.rgb, base.rgb, white_block=16)
+    assert "channel_cap" not in res.report.get("white_point", {})
+
+    from filmcolor.scanner import _reconstruct_prestretched_rgb
+
+    transition = np.empty((16, 1001, 3), dtype=np.float32)
+    transition[..., 0] = np.linspace(0.989, 1.0, 1001, dtype=np.float32)
+    transition[..., 1] = 0.6
+    transition[..., 2] = 0.0
+    before = transition.copy()
+    reconstructed, info = _reconstruct_prestretched_rgb(transition)
+    assert info is not None
+    steps = np.diff(reconstructed[0, :, 0])
+    assert np.all(steps >= 0.0)
+    assert float(steps.max()) < 1e-3
+    np.testing.assert_array_equal(transition, before)
+
+
+def test_t4v_prestretched_tiff_without_zero_crushed_blue_skips_reconstruction(tmp_path):
+    """T4v: single-channel R saturation without zero-crushed blue (b_p01 >= 0.03) or with mntr ICC
+    only decouples saturation mask and skips prestretched_reconstruction."""
+    h, w = 96, 96
+    rgb16 = np.zeros((h, w, 3), dtype=np.uint16)
+    rgb16[:, :] = [55000, 43000, 36000]
+    n_sat = int(0.70 * h * w)
+    rgb16.reshape(-1, 3)[:n_sat, 0] = 65535
+
+    # Case A: b_p01 is 36000/65535 = 0.549 >= 0.03
+    p_uncrushed = tmp_path / "uncrushed_r_sat.tif"
+    tifffile.imwrite(p_uncrushed, rgb16, photometric="rgb")
+    fr_a = load_scanner(p_uncrushed)
+    assert fr_a.meta.get("single_channel_prestretched") == "R"
+    assert fr_a.sat.mean() == 0.0
+    assert "prestretched_reconstruction" not in fr_a.meta
+
+    # Case B: zero-crushed blue, BUT has mntr ICC (mode != 'linear')
+    rgb16_crushed = rgb16.copy()
+    rgb16_crushed.reshape(-1, 3)[:int(0.10 * h * w), 2] = 0
+    icc = build_synthetic_icc(dev_class=b"mntr", gamma=1.8)
+    data = rgb16_crushed.astype("<u2").tobytes()
+    raw_icc = build_synthetic_tiff([data], w, h, spp=3, photometric=2, bits_per_sample=16,
+                                   extra_entries=[(34675, 7, len(icc), icc)])
+    p_icc = tmp_path / "crushed_with_icc.tif"
+    p_icc.write_bytes(raw_icc)
+    fr_b = load_scanner(p_icc)
+    assert fr_b.meta.get("single_channel_prestretched") == "R"
+    assert "prestretched_reconstruction" not in fr_b.meta
+    assert fr_b.meta.get("tiff_eotf") == f"gamma:{461.0 / 256.0:.4f}"
+
+
+def test_t4v_refuses_8bit_filmcolor_export_and_unsupported_bit_depths(tmp_path):
+    """T4v: FilmColor 8-bit positive exports and unsupported bit depths (4-bit, 32-bit) are rejected."""
+    # 1. 8-bit positive export with Software="FilmColor positive export"
+    data8 = np.full((16, 16, 3), 128, dtype=np.uint8)
+    raw_fc_soft = build_synthetic_tiff([data8.tobytes()], 16, 16, spp=3, photometric=2,
+                                       bits_per_sample=8, extra_entries=[(305, 2, 0, "FilmColor positive export")])
+    p_fc_soft = tmp_path / "fc8_software.tif"
+    p_fc_soft.write_bytes(raw_fc_soft)
+    assert not is_scanner_dng(p_fc_soft)
+    with pytest.raises(ValueError, match="LinearRaw|scanner image"):
+        load_scanner(p_fc_soft)
+
+    # 2. 8-bit positive export with FilmColor ICC description
+    fc_desc_icc = b"\x00" * 128 + b"\x00" * 4 + b"FilmColor uncalibrated camera RGB"
+    raw_fc_icc = build_synthetic_tiff([data8.tobytes()], 16, 16, spp=3, photometric=2,
+                                      bits_per_sample=8, extra_entries=[(34675, 7, len(fc_desc_icc), fc_desc_icc)])
+    p_fc_icc = tmp_path / "fc8_icc.tif"
+    p_fc_icc.write_bytes(raw_fc_icc)
+    assert not is_scanner_dng(p_fc_icc)
+    with pytest.raises(ValueError, match="LinearRaw|scanner image"):
+        load_scanner(p_fc_icc)
+
+    # 3. 4-bit TIFF is rejected
+    raw_4bit = build_synthetic_tiff([data8.tobytes()[:16 * 8]], 16, 16, spp=1, photometric=1,
+                                    bits_per_sample=4)
+    p_4bit = tmp_path / "unsupported_4bit.tif"
+    p_4bit.write_bytes(raw_4bit)
+    assert not is_scanner_dng(p_4bit)
+    with pytest.raises(ValueError, match="LinearRaw|scanner image"):
+        load_scanner(p_4bit)
+
+    # 4. 32-bit TIFF is rejected
+    data32 = np.full((16, 16, 3), 50000, dtype=np.uint32)
+    p_32bit = tmp_path / "unsupported_32bit.tif"
+    tifffile.imwrite(p_32bit, data32, photometric="rgb")
+    assert not is_scanner_dng(p_32bit)
+    with pytest.raises(ValueError, match="LinearRaw|scanner image"):
+        load_scanner(p_32bit)

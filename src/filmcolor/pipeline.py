@@ -113,15 +113,19 @@ def _scanner_input(path, *, base_regions, base_rgb, image_region):
         base_info["rgb_render"] = list(rb["rgb"])
         base_info["render_stats"] = rb
     is_tiff = Path(path).suffix.lower() in (".tif", ".tiff")
-    input_info = dict(kind="scanner_tiff16" if is_tiff else "scanner_linear_dng",
+    input_info = dict(kind=("scanner_tiff8" if fr.meta["bits"] == 8 else "scanner_tiff16") if is_tiff else "scanner_linear_dng",
                       shape=list(sat.shape), black=fr.black, white=fr.white, meta=fr.meta)
     decode_info = dict(analysis="same as render (no CFA)",
                        render="tifffile %s, LinearRaw main image, (v - black) / (white - black), "
                               "infrared layer excluded" % tifffile.__version__)
     if is_tiff:
-        decode_info["render"] = ("tifffile %s with native LZW / PackBits strip fallback, 16-bit scanner image, "
-                                 "(v - black) / (white - black), infrared excluded; signal assumed linear, "
-                                 "ICC / TRC not applied" % tifffile.__version__)
+        signal = ("cross-channel R-tail and pedestal reconstruction, gamma 2.2 assumed"
+                  if fr.meta.get("prestretched_reconstruction") is not None
+                  else f"TRC linearisation {fr.meta['tiff_eotf']}" if "tiff_eotf" in fr.meta
+                  else "signal assumed linear; no TRC applied")
+        decode_info["render"] = (f"tifffile {tifffile.__version__} with native LZW / PackBits / Deflate strip fallback, "
+                                 f"{fr.meta['bits']}-bit scanner image, (v - black) / (white - black), infrared excluded; "
+                                 f"{signal}; no ICC colour matrix transform")
     return rgb, sat, base_rgb, base_info, regions, input_info, decode_info
 
 

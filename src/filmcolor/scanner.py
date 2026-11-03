@@ -17,7 +17,9 @@ from __future__ import annotations
 
 import html
 import re
+import struct
 import urllib.parse
+import zlib
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -163,14 +165,16 @@ def _read_page_array(page) -> np.ndarray:
     if getattr(page, "is_tiled", False):
         raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: tiled TIFF fallback decoding not supported")
     compression = page.compression
-    if compression not in (5, 32773):
+    if compression not in (5, 8, 32773, 32946):
         raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: unsupported compression {compression}")
     predictor = int(_tag(page, "Predictor", 1) or 1)
     if predictor not in (1, 2):
         raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: unsupported Predictor {predictor}")
     bits = np.atleast_1d(_tag(page, "BitsPerSample", 0))
-    if not (len(bits) > 0 and all(b == 16 for b in bits) and page.dtype.itemsize == 2 and np.dtype(page.dtype).kind == "u"):
-        raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: fallback only supports uint16 samples")
+    itemsize = page.dtype.itemsize
+    if not (len(bits) > 0 and itemsize in (1, 2) and all(b == 8 * itemsize for b in bits)
+            and np.dtype(page.dtype).kind == "u"):
+        raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: fallback only supports uint8/uint16 samples")
 
     h = page.imagelength
     w = page.imagewidth
@@ -180,24 +184,34 @@ def _read_page_array(page) -> np.ndarray:
     offsets = page.dataoffsets
     bytecounts = page.databytecounts
     bo = page.parent.byteorder
-    dt = np.dtype(f"{bo}u2")
+    dt = np.dtype("u1" if itemsize == 1 else f"{bo}u2")
     planarconfig = getattr(page, "planarconfig", 1) or 1
     fh = page.parent.filehandle
 
     def _decode_strip(strip_idx: int, rh: int, channels: int) -> np.ndarray:
-        expected_bytes = rh * w * channels * 2
+        expected_bytes = rh * w * channels * itemsize
         fh.seek(offsets[strip_idx])
         raw = fh.read(bytecounts[strip_idx])
         if len(raw) < bytecounts[strip_idx]:
             raise ValueError(f"truncated strip {strip_idx} in TIFF file")
-        dec = _decode_tiff_lzw(raw, expected_bytes) if compression == 5 else _decode_packbits(raw, expected_bytes)
+        if compression == 5:
+            dec = _decode_tiff_lzw(raw, expected_bytes)
+        elif compression == 32773:
+            dec = _decode_packbits(raw, expected_bytes)
+        else:
+            try:
+                dec = zlib.decompress(raw)
+            except zlib.error as exc:
+                raise ValueError(f"corrupt Deflate strip {strip_idx}: {exc}") from exc
+            if len(dec) != expected_bytes:
+                raise ValueError(f"Deflate decoded length {len(dec)} != expected {expected_bytes}")
         sarr = np.frombuffer(dec, dtype=dt).astype(page.dtype, copy=False)
         if channels > 1:
             sarr = sarr.reshape(rh, w, channels)
         else:
             sarr = sarr.reshape(rh, w)
         if predictor == 2:
-            sarr = np.cumsum(sarr, axis=1, dtype=np.uint16)
+            sarr = np.cumsum(sarr, axis=1, dtype=np.uint8 if itemsize == 1 else np.uint16)
         return sarr
 
     if planarconfig == 1:
@@ -281,9 +295,9 @@ def _main_page(tf, *, allow_tiff: bool = False):
                     and p.compression in TIFF_COMPRESSIONS
                     and not (_tag(p, "NewSubfileType", 0) or 0) & 1):
                 bits = np.atleast_1d(_tag(p, "BitsPerSample", 0))
-                if (len(bits) > 0 and all(b == 16 for b in bits)
+                if (len(bits) > 0 and (all(b == 16 for b in bits) or all(b == 8 for b in bits))
                         and getattr(p, "dtype", None) is not None
-                        and p.dtype.itemsize == 2 and np.dtype(p.dtype).kind == "u"):
+                        and p.dtype.itemsize in (1, 2) and np.dtype(p.dtype).kind == "u"):
                     cands.append(p)
         if cands:
             return max(cands, key=lambda p: p.shape[0] * p.shape[1])
@@ -327,6 +341,92 @@ def silverfast_settings(xmp) -> dict:
     return out
 
 
+def _srgb_eotf(e):
+    e = np.clip(e, 0.0, 1.0)
+    return np.where(e <= 0.04045, e / 12.92, ((e + 0.055) / 1.055) ** 2.4)
+
+
+def _parse_tiff_eotf(icc_bytes, bits: int) -> tuple[str, float | None, np.ndarray | None]:
+    """Read a single ICC TRC under the TIFF input policy; this is not an ICC colour transform."""
+    try:
+        b = bytes(icc_bytes) if icc_bytes is not None else b""
+    except (TypeError, ValueError):
+        b = b""
+    if len(b) >= 132 and (bits == 8 or b[12:16] in (b"mntr", b"spac")):
+        count = struct.unpack_from(">I", b, 128)[0]
+        for i in range(min(count, 64)):
+            off = 132 + 12 * i
+            if off + 12 > len(b):
+                break
+            sig, start, size = struct.unpack_from(">4sII", b, off)
+            if sig not in (b"gTRC", b"rTRC", b"kTRC"):
+                continue
+            if size < 12 or start + size > len(b):
+                break
+            tag = b[start:start + size]
+            if tag[:4] == b"curv":
+                n = struct.unpack_from(">I", tag, 8)[0]
+                if n == 0:
+                    return "linear", 1.0, None
+                if n == 1 and len(tag) >= 14:
+                    gamma = struct.unpack_from(">H", tag, 12)[0] / 256.0
+                    return ("gamma", gamma, None) if gamma > 0 else ("linear", 1.0, None)
+                if n >= 2 and 12 + 2 * n <= len(tag):
+                    curve = np.frombuffer(tag, dtype=">u2", count=n, offset=12).astype(np.float32) / 65535.0
+                    if np.all(np.diff(curve) >= 0):
+                        return "lut", None, curve
+            elif tag[:4] == b"para" and len(tag) >= 16:
+                function = struct.unpack_from(">H", tag, 8)[0]
+                gamma = struct.unpack_from(">i", tag, 12)[0] / 65536.0
+                if function == 3:
+                    return "srgb", 2.4, None
+                if gamma > 0:
+                    return "gamma", gamma, None
+            break
+    return ("srgb", 2.4, None) if bits == 8 else ("linear", 1.0, None)
+
+
+def _reconstruct_prestretched_rgb(rgb: np.ndarray) -> tuple[np.ndarray, dict | None]:
+    """Estimate a shared pedestal and clipped R tail using the task's cross-channel/gamma assumptions."""
+    sub = rgb[::4, ::4] if rgb.shape[0] >= 32 and rgb.shape[1] >= 32 else rgb
+    r_s, g_s, b_s = sub[..., 0], sub[..., 1], sub[..., 2]
+    b_p01, r_p01 = float(np.percentile(b_s, 1.0)), float(np.percentile(r_s, 1.0))
+    if not (b_p01 < 0.03 and r_p01 > 0.40):
+        return rgb, None
+    g_p95, b_p95 = float(np.percentile(g_s, 95.0)), float(np.percentile(b_s, 95.0))
+    g_p01 = float(np.percentile(g_s, 1.0))
+    unclip = (r_s < 0.998) & (g_p95 - g_s > 0.03)
+    if int(unclip.sum()) >= 100:
+        slope_rg = float(np.clip(np.median((1.0 - r_s[unclip]) / (g_p95 - g_s[unclip])), 0.35, 1.20))
+        boundary = (r_s >= 0.985) & (r_s < 0.999)
+        g_bound = float(np.median(g_s[boundary])) if int(boundary.sum()) >= 20 else g_p95
+        delta_r = float(np.clip(slope_rg * max(0.0, g_p95 - g_bound), 0.0, 0.25))
+    else:
+        slope_rg, delta_r = 0.65, 0.08
+    r_base_est = 1.0 + delta_r
+    best_p0, best_err = 0.0, 1e9
+    for candidate in np.linspace(0.02, 0.55, 107):
+        dg = np.log10((g_p95 + candidate) / max(g_p01 + candidate, 1e-4))
+        db = np.log10((b_p95 + candidate) / max(b_p01 + candidate, 1e-4))
+        error = abs(db / max(dg, 1e-4) - 1.18)
+        if error < best_err:
+            best_err, best_p0 = error, float(candidate)
+    scale, p0 = np.float32(r_base_est + best_p0), np.float32(best_p0)
+    out = np.empty_like(rgb, dtype=np.float32)
+    for r0 in range(0, rgb.shape[0], 256):
+        sl = rgb[r0:r0 + 256]
+        r_pred = np.clip(np.float32(r_base_est) - np.float32(slope_rg)
+                         * np.maximum(np.float32(0.0), np.float32(g_p95) - sl[..., 1]),
+                         np.float32(1.0), np.float32(r_base_est))
+        weight = np.clip((sl[..., 0] - np.float32(0.990)) / np.float32(0.009), 0.0, 1.0)
+        r_rec = (np.float32(1.0) - weight) * sl[..., 0] + weight * r_pred
+        out[r0:r0 + 256, :, 0] = np.power((r_rec + p0) / scale, np.float32(2.2))
+        out[r0:r0 + 256, :, 1] = np.power((sl[..., 1] + p0) / scale, np.float32(2.2))
+        out[r0:r0 + 256, :, 2] = np.power((sl[..., 2] + p0) / scale, np.float32(2.2))
+    return out, dict(r_base_est=round(r_base_est, 4), slope_rg=round(slope_rg, 4),
+                     pedestal_p0=round(best_p0, 4), gamma_eotf=2.2)
+
+
 def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
     path = Path(path)
     check_source(path, allow_frozen=allow_frozen)  # sealed dataset frames, also before any hash exists
@@ -337,7 +437,7 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
     with tifffile.TiffFile(path) as tf:
         main = _main_page(tf, allow_tiff=allow_tiff)
         if main is None:
-            raise ValueError(f"{path.name}: no 1-, 3- or 4-sample LinearRaw/16-bit scanner image")
+            raise ValueError(f"{path.name}: no 1-, 3- or 4-sample LinearRaw/8-/16-bit scanner image")
         lut_tag = main.tags.get("LinearizationTable")
         lut = None
         if lut_tag is not None:
@@ -384,6 +484,12 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
             meta["monochrome_dng"] = True
         if lut is not None:  # files without a table keep their previous field set
             meta["linearization_table_len"] = int(lut.size)
+        mode, gamma, curve = "linear", 1.0, None
+        if allow_tiff and lut is None:
+            icc = _tag(main, "InterColorProfile")
+            if icc is None:
+                icc = _tag(ifd0, "InterColorProfile")
+            mode, gamma, curve = _parse_tiff_eotf(icc, bits)
     if a.ndim == 2:
         rgb_raw = np.repeat(a[:, :, None], 3, axis=2)
     elif a.ndim == 3 and a.shape[2] == 1:
@@ -403,6 +509,27 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
     del sat_ch
     rgb = ((rgb_raw.astype(np.float32) - np.float32(black)) / np.float32(white - black))
     del a, rgb_raw
+    if allow_tiff and lut is None:
+        reconstruction = None
+        if bits == 16 and meta.get("single_channel_prestretched") == "R" and mode == "linear":
+            rgb, reconstruction = _reconstruct_prestretched_rgb(rgb)
+        if reconstruction is not None:
+            meta["prestretched_reconstruction"] = reconstruction
+        elif mode != "linear":
+            for r0 in range(0, rgb.shape[0], 256):
+                sl = np.clip(rgb[r0:r0 + 256], 0.0, 1.0)
+                if mode == "srgb":
+                    rgb[r0:r0 + 256] = _srgb_eotf(sl)
+                elif mode == "gamma" and abs(gamma - 1.0) > 0.05:
+                    rgb[r0:r0 + 256] = np.power(sl, np.float32(gamma))
+                elif mode == "lut":
+                    rgb[r0:r0 + 256] = np.interp(sl, np.linspace(0.0, 1.0, len(curve)), curve)
+            if mode == "srgb":
+                meta["tiff_eotf"] = "srgb"
+            elif mode == "gamma" and abs(gamma - 1.0) > 0.05:
+                meta["tiff_eotf"] = f"gamma:{gamma:.4f}"
+            elif mode == "lut":
+                meta["tiff_eotf"] = f"icc_lut:{len(curve)}"
     if not np.all(np.isfinite(rgb)):
         raise ValueError(f"{path.name}: non-finite samples")
     return ScannerFrame(rgb=rgb, sat=sat, black=black, white=white, meta=meta)
