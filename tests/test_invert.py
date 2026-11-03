@@ -317,6 +317,53 @@ def test_t4u_blue_white_guard_rescues_warm_highlight_narrow_blue_span_only():
     assert "narrow_blue_rescue" not in info_cool_base
 
 
+def test_t4w_blue_white_guard_rescues_near_equal_rg_narrow_blue_but_rejects_flare():
+    """T4w (fixes A1005.CR2 & A1007.CR2): relaxes narrow blue rescue R/G threshold from 1.10 to 0.96.
+    1) d_hi = (0.632, 0.637, 0.098) (d[0]/d[1] = 0.992 > 0.96, A1005 signature) and
+       (0.680, 0.696, 0.225) (d[0]/d[1] = 0.977 > 0.96, A1007 signature) under base_bg < 0.48
+       trigger narrow_blue_rescue = True and lift d_hi_B.
+    2) Low R/G flare (0.632, 1.0, 0.154) (d[0]/d[1] = 0.632 <= 0.96) is still rejected (reason='below_valid_ratio')."""
+    from filmcolor.invert import blue_white_guard
+
+    guard = (1.06, 1.18, 0.65, 0.48)
+    base_warm = (0.17, 0.225, 0.095)  # base_bg = 0.095 / 0.225 = 0.422 < 0.48
+
+    # 1. A1005 signature: d_hi = (0.632, 0.637, 0.098), d[0]/d[1] = 0.9915 > 0.96
+    d_a1005 = (0.632, 0.637, 0.098)
+    out_1005, info_1005 = blue_white_guard(d_a1005, guard, base=base_warm)
+    assert info_1005.get("applied") is True
+    assert info_1005.get("narrow_blue_rescue") is True
+    assert out_1005[0] == pytest.approx(0.632)
+    assert out_1005[1] == pytest.approx(0.637)
+    # Expected d_b: 0.098 + 0.25 * 0.65 * (max(0.098, 1.18 * 0.637) - 0.098)
+    # 1.18 * 0.637 = 0.75166
+    # d_b = 0.098 + 0.1625 * (0.75166 - 0.098) = 0.20422
+    assert out_1005[2] == pytest.approx(0.20422, abs=1e-3)
+    assert info_1005["d_hi_b_own"] == pytest.approx(0.098)
+    assert info_1005["ratio_bg_used"] == pytest.approx(out_1005[2] / 0.637)
+
+    # 2. A1007 signature: d_hi = (0.680, 0.696, 0.225), d[0]/d[1] = 0.9765 > 0.96
+    d_a1007 = (0.680, 0.696, 0.225)
+    out_1007, info_1007 = blue_white_guard(d_a1007, guard, base=base_warm)
+    assert info_1007.get("applied") is True
+    assert info_1007.get("narrow_blue_rescue") is True
+    assert out_1007[0] == pytest.approx(0.680)
+    assert out_1007[1] == pytest.approx(0.696)
+    # Expected d_b: 0.225 + 0.25 * 0.65 * (max(0.225, 1.18 * 0.696) - 0.225)
+    # 1.18 * 0.696 = 0.82128
+    # d_b = 0.225 + 0.1625 * (0.82128 - 0.225) = 0.32189
+    assert out_1007[2] == pytest.approx(0.32189, abs=1e-3)
+    assert info_1007["d_hi_b_own"] == pytest.approx(0.225)
+    assert info_1007["ratio_bg_used"] == pytest.approx(out_1007[2] / 0.696)
+
+    # 3. Flare rejection: d_hi = (0.632, 1.0, 0.154), d[0]/d[1] = 0.632 <= 0.96
+    d_flare = (0.632, 1.0, 0.154)
+    out_flare, info_flare = blue_white_guard(d_flare, guard, base=base_warm)
+    assert out_flare == d_flare
+    assert not info_flare.get("applied")
+    assert info_flare.get("reason") == "below_valid_ratio"
+    assert "narrow_blue_rescue" not in info_flare
+
 
 def test_t4l_self_ratio_white_point_lifts_only_a_channel_collapsed_against_its_own_midtones():
     """T4l: a white point channel ratio below collapse x the frame's own midtone ratio (DSC_3827: blue 0.91 against

@@ -259,3 +259,51 @@ def test_auto_relaxed_uniformity_respects_sat_and_crop():
     est_crop = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.1, max_rel_std=0.03, crop=crop)
     assert all(c >= 8 * 24 for _, c, _, _ in est_crop.regions)
     assert "relaxed_uniformity" not in est_crop.diagnostics
+
+
+def test_t4w_bare_backlight_preserves_true_orange_mask_border_on_dense_overexposed_frame():
+    """T4w (fixes A1004.DNG): dense overexposed negative with transparent orange mask border (R > G and B/G < 0.43).
+    When film border has true orange mask chromaticity (e.g. RGB = [0.102, 0.098, 0.039]), bare backlight exclusion
+    must NOT trigger, preserving the true film base."""
+    hb, wb = 30, 30  # 900 blocks
+    sp = np.zeros((hb, wb, 3), dtype=np.float32)
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+
+    # Synthetic overexposed negative:
+    # 33% black frame / holder (Y ~ 0.0001)
+    # ~61% dense overexposed film image ([0.015, 0.009, 0.003], Y ~ 0.01)
+    # 5.5% true orange mask film border ([0.102, 0.098, 0.039], R > G and B/G = 0.398 < 0.43)
+    dense_image = np.array([0.015, 0.009, 0.003], dtype=np.float32)
+    black_holder = np.array([0.0001, 0.0001, 0.0001], dtype=np.float32)
+    orange_base = np.array([0.102, 0.098, 0.039], dtype=np.float32)
+
+    sp[:] = dense_image
+    sp[:10, :] = black_holder  # 300 blocks (33%)
+    sp[10:15, 10:20] = orange_base  # 50 blocks (5.5%)
+
+    est = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.01, max_rel_std=0.03, chroma_tol=0.05)
+    assert est.diagnostics.get("bare_backlight_excluded") is not True
+    assert not any("bare backlight" in w for w in est.warnings)
+    assert rel_err(est.rgb, orange_base) < 0.01
+
+
+def test_t4w_bare_backlight_still_excludes_neutral_or_cool_light_leak():
+    """T4w: same geometry as above, but the bright gap is a true neutral/cool bare backlight leak (R <= G or B/G >= 0.43).
+    Verifies bare_backlight_excluded is True and film base falls back to the film area."""
+    hb, wb = 30, 30  # 900 blocks
+    sp = np.zeros((hb, wb, 3), dtype=np.float32)
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+
+    dense_image = np.array([0.015, 0.009, 0.003], dtype=np.float32)
+    black_holder = np.array([0.0001, 0.0001, 0.0001], dtype=np.float32)
+    # Neutral/cool leak: RGB = [0.117, 0.119, 0.057], B/G = 0.479 >= 0.43 and R <= G
+    backlight_leak = np.array([0.117, 0.119, 0.057], dtype=np.float32)
+
+    sp[:] = dense_image
+    sp[:10, :] = black_holder  # 300 blocks (33%)
+    sp[10:15, 10:20] = backlight_leak  # 50 blocks (5.5%)
+
+    est = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.01, max_rel_std=0.03, chroma_tol=0.05)
+    assert est.diagnostics.get("bare_backlight_excluded") is True
+    assert any("bare backlight" in w for w in est.warnings)
+    assert rel_err(est.rgb, dense_image) < 0.01

@@ -1,0 +1,74 @@
+{
+  "source_sha256": "0b711db2f9f61cc53f50aaeb9a3b6503b436c9916014e6a899e50affb9819071",
+  "frames": {
+    "ext:A124": {
+      "raw_sha256": "a8feee71e812206c4a582c496e70d503d3bdd5cb54f0196fc7f75dda58cada46",
+      "preview_image": "ext_A124_baseline.jpg",
+      "preview_image_sha256": "9f17ce07b2fb8f4367cf828fa6eeb6bffbd181be770453b8c95ffc8fc87b273e",
+      "params": {
+        "ev": 1.0492,
+        "temp": -0.0581,
+        "tint": 0.1248,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.1097265765068025,
+            -0.034523549444346345,
+            -0.07520302706245617
+          ],
+          [
+            -0.0433450999741582,
+            1.1686619027925926,
+            -0.1253168028184345
+          ],
+          [
+            0.0021249076998353872,
+            -0.14109266742039034,
+            1.138967759720555
+          ]
+        ],
+        "highlights": -0.4,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 7.996288814564196
+    },
+    "blueneg:19960812D-25-las-vegas": {
+      "raw_sha256": "ff763aa8da0e5124b22bd46d0d1dbcb1128df1e27865bf1e470d30631d0c8c18",
+      "preview_image": "blueneg_19960812D-25-las-vegas_baseline.jpg",
+      "preview_image_sha256": "fe5a0e45dec23b729914ffbbc9f5a752a5d0783ace68386059968a1a73fe69f8",
+      "params": {
+        "ev": 1.2288,
+        "temp": 0.0195,
+        "tint": -0.0865,
+        "sat": 1.0127,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.256,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 25.800944499840725
+    }
+  }
+}

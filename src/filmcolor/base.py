@@ -298,7 +298,8 @@ def estimate_base_blocks(
         Y_valid = Y[valid]
         p90_Y = float(np.percentile(Y_valid, 90))
         p98_Y = float(np.percentile(Y_valid, 98))
-        if p98_Y > 5.0 * max(p90_Y, 1e-9) and float(np.mean(Y_valid <= 0.25 * thr)) > 0.88:
+        if (p98_Y > 5.0 * max(p90_Y, 1e-9) and float(np.mean(Y_valid <= 0.25 * thr)) > 0.88
+                and not (rgb[0] > rgb[1] and rgb[2] < 0.43 * rgb[1])):
             valid_film = valid & (Y <= 2.5 * p90_Y)
             n_uniform_film = int((valid_film & (rel_std_map <= max_rel_std)).sum())
             if n_uniform_film >= 10:

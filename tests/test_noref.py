@@ -1146,9 +1146,10 @@ def test_t4q_overlift_damp_end_to_end_and_diagnostics():
     y = rng.uniform(0.02, 0.08, n)
     P = np.stack([y, y, y], -1).reshape(200, 500, 3).astype(np.float32)
 
-    # 1. Triggered on default config (ON vs OFF)
-    res_on = estimate_params_v3(P, None, NOREF_V3, span_d_g=1.1)
-    res_off = estimate_params_v3(P, None, dict(NOREF_V3, overlift_damp_check=False), span_d_g=1.1)
+    # Isolate the legacy high-EV branch from T4w's independently enabled moderate branch.
+    cfg = dict(NOREF_V3, overlift_mod_check=False)
+    res_on = estimate_params_v3(P, None, cfg, span_d_g=1.1)
+    res_off = estimate_params_v3(P, None, dict(cfg, overlift_damp_check=False), span_d_g=1.1)
 
     assert "overlift_damp" in res_on["diagnostics"]
     od = res_on["diagnostics"]["overlift_damp"]
@@ -1630,3 +1631,76 @@ def test_t4u_wb_v3_preserves_tint_when_narrow_neutrals_present_or_cyan_boosted()
     assert d_c["temp_tint_raw"][1] > 0.25
     assert wb_cyan["tint"] == pytest.approx(d_c["temp_tint_raw"][1] * NOREF_V3["wb_v3_tint_boost"], abs=1e-5)
     assert "no_narrow_tint_capped" not in d_c
+
+
+def test_t4w_overlift_moderate_damps_bright_shadow_mid_ev_frames():
+    """T4w: fills [0.85, 1.50) EV moderate overlift blind spot on non-wide frames with bright Step 4b shadows.
+    Triggers diagnostics['overlift_damp']['mode'] == 'moderate' and lowers EV and blacks."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y = rng.uniform(0.07 * 0.5, 0.07 * 1.5, n)
+    P = np.stack([y, y, y], -1).reshape(200, 500, 3).astype(np.float32)
+
+    res_on = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.85)
+    res_off = estimate_params_v3(P, None, dict(NOREF_V3, overlift_mod_check=False), span_d_g=0.85)
+
+    assert "overlift_damp" in res_on["diagnostics"]
+    od = res_on["diagnostics"]["overlift_damp"]
+    assert od["applied"] is True
+    assert od.get("mode") == "moderate"
+    assert "overlift_damp" not in res_off["diagnostics"]
+
+    ev0 = od["ev_before"]
+    q25 = od["q25_before"]
+    assert NOREF_V3["overlift_mod_ev_min"] <= ev0 < NOREF_V3["overlift_ev_min"]
+    assert q25 >= NOREF_V3["overlift_mod_q25_min"]
+    assert ev0 == pytest.approx(res_off["params"]["ev"], abs=1e-4)
+
+    assert 0.0 < od["pull"] <= NOREF_V3["overlift_mod_max_pull"]
+    assert od["ev_after"] < ev0
+    assert od["blacks_lowered"] > 0.0
+    assert res_on["params"]["ev"] < res_off["params"]["ev"]
+    assert res_on["params"]["blacks"] < res_off["params"].get("blacks", 0.0)
+
+
+def test_t4w_overlift_moderate_respects_bright_share_wide_span_and_preset_shadow_comp():
+    """T4w: verifies moderate overlift damping respects bright_share, span_d_g, and preset shadow compensation."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3, preset_config
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y = rng.uniform(0.07 * 0.5, 0.07 * 1.5, n)
+    P = np.stack([y, y, y], -1).reshape(200, 500, 3).astype(np.float32)
+
+    # 1. Wide negative density span (span_d_g >= 1.15): no moderate damping
+    res_wide = estimate_params_v3(P, None, NOREF_V3, span_d_g=1.15)
+    assert "overlift_damp" not in res_wide["diagnostics"]
+
+    # 2. Bright share >= 0.20 (25% pixels at 0.46): no moderate damping
+    y_bright = y.copy()
+    y_bright[:25000] = 0.46
+    P_bright = np.stack([y_bright, y_bright, y_bright], -1).reshape(200, 500, 3).astype(np.float32)
+    res_bright = estimate_params_v3(P_bright, None, NOREF_V3, span_d_g=0.85)
+    assert res_bright["diagnostics"]["tone_pixels"]["bright_share"] >= 0.20
+    assert "overlift_damp" not in res_bright["diagnostics"]
+
+    # 3. Portrait preset shadow compensation protection (base_shadows=0.12 -> threshold 0.442):
+    # Scene with q25 ~ 0.428 (< 0.442) has moderate damping bypassed due to shadow compensation.
+    rng_p = np.random.default_rng(123)
+    y_p = 0.06 * 2.0 ** rng_p.uniform(-1.5, 1.5, n)
+    P_p = np.stack([y_p, y_p, y_p], -1).reshape(200, 500, 3).astype(np.float32)
+
+    cfg_portrait = preset_config("portrait")
+    assert cfg_portrait.get("base_shadows") == 0.12
+
+    res_portrait = estimate_params_v3(P_p, None, cfg_portrait, span_d_g=0.85)
+    q25_portrait = res_portrait["diagnostics"]["backlit_check"]["p25"]
+    assert 0.40 <= q25_portrait < 0.40 + 0.35 * 0.12
+    assert "overlift_damp" not in res_portrait["diagnostics"]
+
+    # Without shadow compensation, the same scene triggers moderate damping:
+    cfg_uncomp = dict(cfg_portrait, overlift_mod_shadow_comp=0.0)
+    res_uncomp = estimate_params_v3(P_p, None, cfg_uncomp, span_d_g=0.85)
+    assert res_uncomp["diagnostics"].get("overlift_damp", {}).get("mode") == "moderate"

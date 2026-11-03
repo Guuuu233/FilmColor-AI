@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4v-2026-11-03",          # T4v: TIFF transfer curves, 8-bit input and pre-stretched signal reconstruction;
+    rev="t4w-2026-11-03",          # T4w: moderate-EV lifted-shadow damping and orange-mask / narrow-blue guards;
+                                   # T4v: TIFF transfer curves, 8-bit input and pre-stretched signal reconstruction;
                                    # T4u: pre-stretched TIFFs, unsupported positive tint and narrow-blue rescue;
                                    # T4t: zero-clipped white points, slide mounts and conflicting tint evidence;
                                    # T4s: scanner TIFF, global zero-escape evidence and B&W roll routing;
@@ -469,6 +470,10 @@ NOREF_V3 = dict(
     overlift_q25_min=0.35, overlift_q25_pivot=0.33, overlift_gain=3.2, overlift_max_pull=0.65,
     overlift_blacks_gain=0.10, overlift_blacks_max=0.06,
     overlift_max_span=1.15, overlift_max_bright_share=0.05,  # T4r: exempt wide-range bright scenes
+    # T4w: moderate EV on short-range frames with lifted shadows, allowing for the preset's shadow lift
+    overlift_mod_check=True, overlift_mod_ev_min=0.85, overlift_mod_ev_pivot=0.70, overlift_mod_ev_ramp=0.45,
+    overlift_mod_q25_min=0.40, overlift_mod_q25_pivot=0.38, overlift_mod_max_bright_share=0.20,
+    overlift_mod_gain=4.0, overlift_mod_max_pull=0.45, overlift_mod_shadow_comp=0.35,
     ev_refine_p98_max=0.96,        # T4f: the EV refinement brightens only while full-frame encoded p98 stays <= this
     ev_anchor_p98_cap=True,        # T4f: a positive anchor ev is held to the same p98 ceiling (the task list puts the
                                    # ceiling on the refinement only, which left A012 at the anchor's +2.50 EV)
@@ -1216,6 +1221,25 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
             base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
             out["diagnostics"]["overlift_damp"] = dict(
                 applied=True, ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
+                q25_before=float(q25), blacks_lowered=blk_drop)
+    elif (cfg.get("overlift_mod_check") and span_d_g is not None
+          and span_d_g < cfg.get("overlift_max_span", 1.15)
+          and bright_share < cfg.get("overlift_mod_max_bright_share", 0.20)
+          and base_p["ev"] >= cfg["overlift_mod_ev_min"]
+          and q25 >= cfg["overlift_mod_q25_min"] + cfg.get("overlift_mod_shadow_comp", 0.35)
+          * max(0.0, float(cfg.get("base_shadows", 0.0)))):
+        ev0_ol = float(base_p["ev"])
+        sh_comp = float(cfg.get("overlift_mod_shadow_comp", 0.35)) * max(0.0, float(cfg.get("base_shadows", 0.0)))
+        q25_piv = float(cfg["overlift_mod_q25_pivot"]) + sh_comp
+        ramp_ev = float(np.clip((ev0_ol - cfg["overlift_mod_ev_pivot"]) / cfg["overlift_mod_ev_ramp"], 0.0, 1.0))
+        pull = float(np.clip(cfg["overlift_mod_gain"] * (q25 - q25_piv) * ramp_ev,
+                             0.0, cfg["overlift_mod_max_pull"]))
+        if pull > 0.0:
+            blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
+            base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
+            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
+            out["diagnostics"]["overlift_damp"] = dict(
+                applied=True, mode="moderate", ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
                 q25_before=float(q25), blacks_lowered=blk_drop)
 
     # 6. Contrast relief (T4b, encoded output): only a very wide frame (encoded luminance p90 - p10 above

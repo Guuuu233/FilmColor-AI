@@ -1,0 +1,76 @@
+{
+  "source_sha256": "368eb01a8ba68160612c2f3f29209883a015eb3f6a0c48ace129b17995da3251",
+  "frames": {
+    "ext:A124": {
+      "raw_sha256": "a8feee71e812206c4a582c496e70d503d3bdd5cb54f0196fc7f75dda58cada46",
+      "preview_image": "ext_A124_candidate.jpg",
+      "preview_image_sha256": "94587a3222f03c94a637d76d67f621447a9dc6c69789e09b2b8218cac9b1a573",
+      "params": {
+        "ev": 0.9839,
+        "temp": -0.0581,
+        "tint": 0.1248,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.1097265765068025,
+            -0.034523549444346345,
+            -0.07520302706245617
+          ],
+          [
+            -0.0433450999741582,
+            1.1686619027925926,
+            -0.1253168028184345
+          ],
+          [
+            0.0021249076998353872,
+            -0.14109266742039034,
+            1.138967759720555
+          ]
+        ],
+        "highlights": -0.4,
+        "blacks": -0.0065,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 7.3444875758008346
+    },
+    "blueneg:19960812D-25-las-vegas": {
+      "raw_sha256": "ff763aa8da0e5124b22bd46d0d1dbcb1128df1e27865bf1e470d30631d0c8c18",
+      "preview_image": "blueneg_19960812D-25-las-vegas_candidate.jpg",
+      "preview_image_sha256": "4508cbb8dc2cccac7ff186bb13f01cfba6a0faeae1615cd0172061ba613f4c51",
+      "params": {
+        "ev": 0.8143,
+        "temp": 0.0195,
+        "tint": -0.0865,
+        "sat": 1.0127,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.256,
+        "blacks": -0.0415,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 21.521030720150986
+    }
+  }
+}
