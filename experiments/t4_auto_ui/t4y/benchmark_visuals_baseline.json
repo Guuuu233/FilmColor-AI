@@ -1,0 +1,108 @@
+{
+  "source_sha256": "967dbd1fbf4ab5762df118bf132ecd8fc5481b5cdaf402f5300ba6a09e53ece2",
+  "frames": {
+    "blueneg:199807B-20-seattle": {
+      "raw_sha256": "143a7712fd568b9c5b23abcb4fa9c6afb0e5909186c4ac8dba7c62a149509074",
+      "preview_image": "blueneg_199807B-20-seattle_baseline.jpg",
+      "preview_image_sha256": "a2a216724e7db1b8e0949b30d1d2514b2790fa4b99754926217ce5c5aa7dc27d",
+      "params": {
+        "ev": 0.8482,
+        "temp": 0.1172,
+        "tint": 0.015,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.4,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 10.603968025853682
+    },
+    "blueneg:19960811B-25-arizona-london-bridge": {
+      "raw_sha256": "2dd0d972c90438c2287b323bb8cfd6efa8adce08eebd49415784b8a0a6944a74",
+      "preview_image": "blueneg_19960811B-25-arizona-london-bridge_baseline.jpg",
+      "preview_image_sha256": "53e6864bdbe9c99059d30f280600bbcf632255633b162750f9b2aa3d23278b6d",
+      "params": {
+        "ev": 0.667,
+        "temp": 0.0371,
+        "tint": 0.0467,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.4,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 15.831706197138509
+    },
+    "ext:A205": {
+      "raw_sha256": "1bba26750c01ac10a907d7fbd93b192f44b170a38f1763640e5f1ff95a7759bd",
+      "preview_image": "ext_A205_baseline.jpg",
+      "preview_image_sha256": "e5505ecd8354e4d855ce1fc86905c39c5af66312eee7fc5d5e9dcbefe1beea4d",
+      "params": {
+        "ev": 0.8079,
+        "temp": 0.1144,
+        "tint": 0.0105,
+        "sat": 1.0105,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.1097265765068025,
+            -0.034523549444346345,
+            -0.07520302706245617
+          ],
+          [
+            -0.0433450999741582,
+            1.1686619027925926,
+            -0.1253168028184345
+          ],
+          [
+            0.0021249076998353872,
+            -0.14109266742039034,
+            1.138967759720555
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 8.168878784116924
+    }
+  }
+}

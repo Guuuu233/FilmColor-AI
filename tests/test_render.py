@@ -270,3 +270,46 @@ def test_t4c_camera_color_matrix():
     assert camera_color_matrix(cam_xyz, 0.0) == IDENTITY
     with pytest.raises(ValueError):
         camera_color_matrix(np.zeros((3, 3)), 0.5)
+
+
+def test_t4y_camera_color_matrix_accepts_canon_eos_and_sony_a7_primaries():
+    """T4y: MATRIX_DIAG=(0.5, 2.4), MATRIX_OFF_DIAG=(-1.6, 0.8) allows physical camera matrices
+    from Canon EOS and Sony A7/A7II, while still rejecting pathological out-of-bound matrices."""
+    from filmcolor.render import RenderParams, camera_color_matrix
+
+    # Canon EOS 500D / 5D Mark II / 6D Mark II rgb_xyz_matrix
+    canon_xyz = np.array([
+        [0.6875, -0.0970, -0.0932],
+        [-0.4691, 1.2459, 0.2501],
+        [-0.0874, 0.1953, 0.5809],
+    ])
+    canon_full = camera_color_matrix(canon_xyz, 1.0)
+    canon_mix = camera_color_matrix(canon_xyz, 0.4)
+    assert np.allclose(np.sum(canon_full, axis=1), 1.0, atol=1e-9)
+    assert np.allclose(np.sum(canon_mix, axis=1), 1.0, atol=1e-9)
+    assert np.isclose(canon_full[0][0], 1.8622692, atol=1e-4)
+    assert np.isclose(canon_mix[0][0], 1.3449077, atol=1e-4)
+    # Validates cleanly through RenderParams(matrix=...)
+    p_canon = RenderParams(matrix=canon_full)
+    assert p_canon.matrix == canon_full
+
+    # Sony ILCE-7 (A7) rgb_xyz_matrix
+    sony_xyz = np.array([
+        [0.5271, -0.0712, -0.0347],
+        [-0.6153, 1.3653, 0.2763],
+        [-0.1601, 0.2366, 0.7242],
+    ])
+    sony_full = camera_color_matrix(sony_xyz, 1.0)
+    sony_mix = camera_color_matrix(sony_xyz, 0.4)
+    assert np.allclose(np.sum(sony_full, axis=1), 1.0, atol=1e-9)
+    assert np.allclose(np.sum(sony_mix, axis=1), 1.0, atol=1e-9)
+    assert np.isclose(sony_full[0][0], 2.0123623, atol=1e-4)
+    assert np.isclose(sony_mix[0][0], 1.4049449, atol=1e-4)
+    p_sony = RenderParams(matrix=sony_full)
+    assert p_sony.matrix == sony_full
+
+    # Pathological matrices remain rejected
+    with pytest.raises(ValueError, match="colour matrix diagonal outside"):
+        RenderParams(matrix=((2.5, -1.0, -0.5), (-0.5, 2.0, -0.5), (-0.5, -0.5, 2.0)))
+    with pytest.raises(ValueError, match="colour matrix off-diagonal outside"):
+        RenderParams(matrix=((1.0, 0.9, -0.9), (-0.5, 2.0, -0.5), (-0.5, -0.5, 2.0)))

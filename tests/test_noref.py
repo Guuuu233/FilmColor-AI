@@ -1863,3 +1863,78 @@ def test_t4x_overlift_moderate_covers_070_to_085_ev_band():
     assert od["blacks_lowered"] > 0.0
     assert res_on["params"]["ev"] < res_off["params"]["ev"]
     assert res_on["params"]["blacks"] < res_off["params"].get("blacks", 0.0)
+
+
+def test_t4y_overlift_bright_damps_short_span_lifted_midgrey_shadows():
+    """T4y: short density span (span_d_g < 0.76) where shadows are already lifted to mid-grey
+    ([0.475, 0.68]) under positive EV (ev >= 0.45) with bright_share >= 0.20, moderate anchor
+    (ev_anchor_raw <= 1.40) and healthy texture (med_tex_before >= 0.46) triggers bright_short_span
+    damping, lowering both EV and blacks."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    img = np.zeros((200, 500, 3), dtype=np.float32)
+    # Bright background / sky (bright_share ~ 0.30 >= 0.20):
+    img[:60, :] = rng.uniform(0.55, 0.65, (60, 500, 3))
+    # Textured foreground cells with mean around 0.10:
+    base_tex = rng.uniform(0.08, 0.12, (140, 500, 1))
+    noise = rng.normal(0, 0.03, (140, 500, 3))
+    img[60:, :] = np.clip(base_tex + noise, 0.01, 1.0)
+
+    span = 0.62  # < 0.76
+    res_on = estimate_params_v3(img, None, NOREF_V3, span_d_g=span)
+    res_off = estimate_params_v3(img, None, dict(NOREF_V3, overlift_bright_check=False), span_d_g=span)
+
+    ref = res_on["diagnostics"]["ev_refine"]
+    assert float(ref["ev_anchor_raw"]) <= NOREF_V3["overlift_bright_anc_max"]
+    assert float(ref["med_tex_before"]) >= NOREF_V3["overlift_bright_med0_min"]
+    assert res_on["diagnostics"]["tone_pixels"]["bright_share"] >= NOREF_V3["overlift_bright_min_share"]
+
+    od = res_on["diagnostics"].get("overlift_damp")
+    assert od is not None
+    assert od["applied"] is True
+    assert od.get("mode") == "bright_short_span"
+    assert od["ev_before"] >= NOREF_V3["overlift_bright_ev_min"]
+    q25_lo, q25_hi = NOREF_V3["overlift_bright_q25_band"]
+    assert q25_lo <= od["q25_before"] <= q25_hi
+    assert od["pull"] > 0.0
+    assert od["blacks_lowered"] > 0.0
+    assert res_on["params"]["ev"] < res_off["params"]["ev"]
+    assert res_on["params"]["blacks"] < res_off["params"].get("blacks", 0.0)
+
+
+def test_t4y_overlift_bright_protects_snow_highkey_dark_anchor_and_wide_span():
+    """T4y: verify 3 protective boundaries strictly exempt bright_short_span damping:
+    1) Snow / high-key scenes where q25 > 0.68 (e.g. DSC_3833).
+    2) Normal or wide span negatives where span_d_g >= 0.76 (e.g. ext:A013).
+    3) Dark foreground silhouette frames where ev_anchor_raw > 1.40 (e.g. ext:A005)."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    # Base synthetic scene
+    img = np.zeros((200, 500, 3), dtype=np.float32)
+    img[:60, :] = rng.uniform(0.55, 0.65, (60, 500, 3))
+    base_tex = rng.uniform(0.08, 0.12, (140, 500, 1))
+    noise = rng.normal(0, 0.03, (140, 500, 3))
+    img[60:, :] = np.clip(base_tex + noise, 0.01, 1.0)
+
+    # 1. Wide density span (span_d_g >= 0.76)
+    res_wide = estimate_params_v3(img, None, NOREF_V3, span_d_g=0.78)
+    assert res_wide["diagnostics"].get("overlift_damp", {}).get("mode") != "bright_short_span"
+
+    # 2. Dark foreground silhouette (ev_anchor_raw > 1.40)
+    img_dark_anc = img.copy()
+    base_dark = rng.uniform(0.02, 0.03, (140, 500, 1))
+    img_dark_anc[60:, :] = np.clip(base_dark + rng.normal(0, 0.005, (140, 500, 3)), 0.005, 1.0)
+    res_dark_anc = estimate_params_v3(img_dark_anc, None, NOREF_V3, span_d_g=0.62)
+    assert float(res_dark_anc["diagnostics"]["ev_refine"]["ev_anchor_raw"]) > 1.40
+    assert res_dark_anc["diagnostics"].get("overlift_damp", {}).get("mode") != "bright_short_span"
+
+    # 3. Snow / high-key scene (q25 > 0.68)
+    img_snow = np.zeros((200, 500, 3), dtype=np.float32)
+    img_snow[:100, :] = rng.uniform(0.80, 0.95, (100, 500, 3))
+    base_snow = rng.uniform(0.48, 0.55, (100, 500, 1))
+    img_snow[100:, :] = np.clip(base_snow + rng.normal(0, 0.05, (100, 500, 3)), 0.05, 1.0)
+    res_snow = estimate_params_v3(img_snow, None, NOREF_V3, span_d_g=0.62)
+    assert res_snow["diagnostics"]["backlit_check"]["p25"] > 0.68
+    assert res_snow["diagnostics"].get("overlift_damp", {}).get("mode") != "bright_short_span"

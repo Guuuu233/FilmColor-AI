@@ -272,6 +272,7 @@ def natural_roll_base(
 def estimate_base_blocks(
     sp, sp_sat, *, block: int, top_frac: float = 0.01, max_rel_std: float = 0.03,
     chroma_tol: float = 0.05, crop: tuple[int, int, int, int] | None = None,
+    exclude_near_saturated: bool = True,
 ) -> BaseEstimate:
     """Steps 2-5 of ``estimate_base_auto`` on precomputed (hb, wb, 3) block means ``sp`` and
     block saturation flags ``sp_sat``; ``block`` is the block size in input pixels. Shared by the
@@ -289,7 +290,7 @@ def estimate_base_blocks(
     sp_max = sp.max(-1)
     near_sat = valid & (sp_max > 0.9985) & (sp_max < 1.0)
     near_sat_blocks = 0
-    if near_sat.any() and int((valid & ~near_sat).sum()) >= 100:
+    if exclude_near_saturated and near_sat.any() and int((valid & ~near_sat).sum()) >= 100:
         near_sat_blocks = int(near_sat.sum())
         valid = valid & ~near_sat
     rel_std_map = _neighbourhood_rel_std(sp)

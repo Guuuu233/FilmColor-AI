@@ -687,3 +687,57 @@ def test_t4s_app_opens_and_exports_scanner_tiff(server):
     assert sc["input"]["kind"] == "scanner_tiff16"
     assert "signal assumed linear; no TRC applied" in sc["decode"]["render"]
     assert "no ICC colour matrix transform" in sc["decode"]["render"]
+
+
+def test_t4y_app_scan_isolates_near_sat_between_camera_and_scanner(server, monkeypatch, tmp_path):
+    """T4y: State._scan_one routes exclude_near_saturated=not is_scan, and THUMB_REV is 't4y'."""
+    from filmcolor import app
+    assert app.THUMB_REV == "t4y"
+
+    _, root, _ = server
+
+    recorded_calls = []
+    orig_estimate = app.estimate_base_blocks
+
+    def recording_estimate_base_blocks(sp, sp_sat, **kwargs):
+        recorded_calls.append(dict(kwargs))
+        return orig_estimate(sp, sp_sat, **kwargs)
+
+    monkeypatch.setattr(app, "estimate_base_blocks", recording_estimate_base_blocks)
+
+    # 1. Scanner DNG: is_scan is True -> exclude_near_saturated should be False
+    cache_scan = tmp_path / "cache_scan"
+    cache_scan.mkdir()
+    st_scan = app.State(root, tmp_path / "out_scan", allow_frozen=False)
+    st_scan.cache_dir = cache_scan
+
+    res_scan = st_scan._scan_one("s.dng")
+    assert res_scan is not None
+    assert len(recorded_calls) == 1
+    assert recorded_calls[0].get("exclude_near_saturated") is False
+
+    # 2. Camera RAW: mock is_scanner_dng to False and mosaic RGGB pattern
+    class DummyPattern:
+        shape = (2, 2)
+
+    class DummyRaw:
+        # Standard 2x2 Bayer: RGGB
+        colors = np.tile(np.array([[0, 1], [1, 2]], dtype=np.int32), (24, 24))
+        crop = (0, 0, 48, 48)
+        cfa = np.zeros((48, 48), dtype=np.uint16)
+        pattern = DummyPattern()
+
+    monkeypatch.setattr(app, "is_scanner_dng", lambda *args, **kwargs: False)
+    monkeypatch.setattr(app, "load_raw", lambda *args, **kwargs: DummyRaw())
+    monkeypatch.setattr(app, "linearize", lambda *args, **kwargs: np.full((48, 48), 0.5, dtype=np.float32))
+    monkeypatch.setattr(app, "saturation_mask", lambda *args, **kwargs: np.zeros((48, 48), dtype=bool))
+
+    cache_cam = tmp_path / "cache_cam"
+    cache_cam.mkdir()
+    st_cam = app.State(root, tmp_path / "out_cam", allow_frozen=False)
+    st_cam.cache_dir = cache_cam
+
+    res_cam = st_cam._scan_one("s.dng")
+    assert res_cam is not None
+    assert len(recorded_calls) == 2
+    assert recorded_calls[1].get("exclude_near_saturated") is True

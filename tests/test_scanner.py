@@ -1159,3 +1159,31 @@ def test_t4v_refuses_8bit_filmcolor_export_and_unsupported_bit_depths(tmp_path):
     assert not is_scanner_dng(p_32bit)
     with pytest.raises(ValueError, match="LinearRaw|scanner image"):
         load_scanner(p_32bit)
+
+
+def test_t4y_scanner_base_exempt_from_craw_near_saturated_exclusion():
+    """T4y: 16-bit scanner TIFFs/DNGs with 0.9990 bright base blocks are exempt from
+    cRAW near-saturated block exclusion and select the near-saturated film base,
+    while camera RAW path excludes them and falls back to darker valid blocks."""
+    from filmcolor.base import estimate_base_blocks
+    from filmcolor.scanner import ScannerFrame, block_means, estimate_base_scanner
+
+    # 16 rows x 16 cols of 24px blocks = 256 blocks
+    h, w = 16 * 24, 16 * 24
+    rgb = np.full((h, w, 3), [0.30, 0.20, 0.10], dtype=np.float32)
+    # 8 * 13 = 104 blocks of near-saturated film base (0.9990)
+    # leaving 152 valid blocks of [0.30, 0.20, 0.10]
+    rgb[:8 * 24, :13 * 24] = [65470.0 / 65535.0, 32768.0 / 65535.0, 26214.0 / 65535.0]
+    sat = np.zeros((h, w), dtype=bool)
+    fr = ScannerFrame(rgb=rgb, sat=sat, black=0.0, white=65535.0, meta={})
+
+    # Scanner path: exclude_near_saturated=False -> near-sat area is selected as film base
+    est_scan = estimate_base_scanner(fr, block=24)
+    assert "near_saturated_blocks_excluded" not in est_scan.diagnostics
+    assert est_scan.rgb[0] > 0.99
+
+    # Camera path: exclude_near_saturated=True -> near-sat area is excluded
+    sp, sp_sat = block_means(rgb, sat, 24)
+    est_cam = estimate_base_blocks(sp, sp_sat, block=24)
+    assert est_cam.diagnostics.get("near_saturated_blocks_excluded") == 104
+    assert est_cam.rgb[0] < 0.35

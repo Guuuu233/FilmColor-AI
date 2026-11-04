@@ -548,4 +548,5 @@ def block_means(rgb, sat, block: int):
 def estimate_base_scanner(frame: ScannerFrame, *, block: int = 24, **kwargs):
     """Automatic film base on the scanner image (same block selection as the camera path)."""
     sp, sp_sat = block_means(frame.rgb, frame.sat, block)
+    kwargs.setdefault("exclude_near_saturated", False)
     return estimate_base_blocks(sp, sp_sat, block=block, **kwargs)

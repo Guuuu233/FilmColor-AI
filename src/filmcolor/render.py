@@ -65,8 +65,8 @@ def experimental_bounds(**overrides):
         BOUNDS.update(saved)
 
 
-MATRIX_DIAG = (0.5, 2.0)
-MATRIX_OFF_DIAG = (-0.8, 0.8)
+MATRIX_DIAG = (0.5, 2.4)
+MATRIX_OFF_DIAG = (-1.6, 0.8)
 MATRIX_MAX_COND = 10.0
 
 

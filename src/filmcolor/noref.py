@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4x-2026-11-03",          # T4x: flat-negative recovery, lower moderate-EV band and bounded blue rescue;
+    rev="t4y-2026-11-04",          # T4y: bright short-span lifted-shadow damping and camera matrix support;
+                                   # T4x: flat-negative recovery, lower moderate-EV band and bounded blue rescue;
                                    # T4w: moderate-EV lifted-shadow damping and orange-mask / narrow-blue guards;
                                    # T4v: TIFF transfer curves, 8-bit input and pre-stretched signal reconstruction;
                                    # T4u: pre-stretched TIFFs, unsupported positive tint and narrow-blue rescue;
@@ -484,6 +485,12 @@ NOREF_V3 = dict(
     overlift_mod_check=True, overlift_mod_ev_min=0.70, overlift_mod_ev_pivot=0.58, overlift_mod_ev_ramp=0.55,
     overlift_mod_q25_min=0.40, overlift_mod_q25_pivot=0.38, overlift_mod_max_bright_share=0.20,
     overlift_mod_gain=4.0, overlift_mod_max_pull=0.45, overlift_mod_shadow_comp=0.35,
+    # T4y: short-span bright scenes with shadows already lifted to mid-grey under positive EV
+    overlift_bright_check=True, overlift_bright_span_max=0.76, overlift_bright_min_share=0.20,
+    overlift_bright_ev_min=0.45, overlift_bright_ev_pivot=0.30, overlift_bright_ev_ramp=0.45,
+    overlift_bright_anc_max=1.40, overlift_bright_med0_min=0.46,
+    overlift_bright_q25_band=(0.475, 0.68), overlift_bright_q25_pivot=0.45,
+    overlift_bright_gain=2.8, overlift_bright_max_pull=0.42,
     ev_refine_p98_max=0.96,        # T4f: the EV refinement brightens only while full-frame encoded p98 stays <= this
     ev_anchor_p98_cap=True,        # T4f: a positive anchor ev is held to the same p98 ceiling (the task list puts the
                                    # ceiling on the refinement only, which left A012 at the anchor's +2.50 EV)
@@ -1281,6 +1288,27 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
             out["diagnostics"]["overlift_damp"] = dict(
                 applied=True, mode="moderate", ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
                 q25_before=float(q25), blacks_lowered=blk_drop)
+    elif (cfg.get("overlift_bright_check") and span_d_g is not None
+          and span_d_g < cfg["overlift_bright_span_max"]
+          and bright_share >= cfg["overlift_bright_min_share"]
+          and base_p["ev"] >= cfg["overlift_bright_ev_min"]
+          and float(refine["ev_anchor_raw"]) <= cfg["overlift_bright_anc_max"]
+          and float(refine["med_tex_before"]) >= cfg["overlift_bright_med0_min"]):
+        sh_comp = float(cfg.get("overlift_mod_shadow_comp", 0.35)) * max(0.0, float(cfg.get("base_shadows", 0.0)))
+        q25_lo, q25_hi = cfg["overlift_bright_q25_band"]
+        if (q25_lo + sh_comp) <= q25 <= (q25_hi + sh_comp):
+            ev0_ol = float(base_p["ev"])
+            q25_piv = float(cfg["overlift_bright_q25_pivot"]) + sh_comp
+            ramp_ev = float(np.clip((ev0_ol - cfg["overlift_bright_ev_pivot"]) / cfg["overlift_bright_ev_ramp"], 0.0, 1.0))
+            pull = float(np.clip(cfg["overlift_bright_gain"] * (q25 - q25_piv) * ramp_ev,
+                                 0.0, min(cfg["overlift_bright_max_pull"], ev0_ol)))
+            if pull > 0.0:
+                blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
+                base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
+                base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
+                out["diagnostics"]["overlift_damp"] = dict(
+                    applied=True, mode="bright_short_span", ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
+                    q25_before=float(q25), blacks_lowered=blk_drop)
 
     # 6. Contrast relief (T4b, encoded output): only a very wide frame (encoded luminance p90 - p10 above
     #    contrast_spread_max) with both ends clipped gets a lower contrast, down to the lower bound

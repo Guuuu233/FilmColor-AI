@@ -90,7 +90,7 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4x"  # T4x flat-negative recovery, bounded blue rescue and near-saturation base exclusion
+THUMB_REV = "t4y"  # T4y camera matrices, bright short-span damping and scanner base isolation
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
 WHITE_SELF_RATIO = None  # T4l: colour film's invert.self_ratio_white_point (collapse, target), e.g. (0.78, 0.85);
@@ -314,7 +314,7 @@ class State:
     def _disk_key(self, p: Path) -> str:
         rp = p.resolve()
         st = rp.stat()
-        raw = f"t4x|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()  # T4x: invalidate previous scan diagnostics
+        raw = f"t4y|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()  # T4y: invalidate previous scan diagnostics
         return hashlib.sha256(raw).hexdigest()[:24]
 
     def _scan_one(self, rel: str) -> dict:
@@ -335,7 +335,8 @@ class State:
                 return res
             except Exception:  # noqa: BLE001
                 pass
-        if is_scanner_dng(p, allow_frozen=self.allow_frozen):
+        is_scan = is_scanner_dng(p, allow_frozen=self.allow_frozen)
+        if is_scan:
             fr = load_scanner(p, allow_frozen=self.allow_frozen)
             sp, sp_sat = block_means(fr.rgb, fr.sat, 24)
             crop, shape = None, fr.sat.shape
@@ -354,7 +355,7 @@ class State:
             pass
         p01 = block48_L_p01(sp, sp_sat, block=24, crop=crop)
         try:
-            est = estimate_base_blocks(sp, sp_sat, block=24, crop=crop)
+            est = estimate_base_blocks(sp, sp_sat, block=24, crop=crop, exclude_near_saturated=not is_scan)
             t, l, h, w = central_region(shape)
             centres = [(r + rh / 2, c + rw / 2) for r, c, rh, rw in est.regions]
             inside = float(np.mean([t <= y < t + h and l <= x < l + w for y, x in centres]))

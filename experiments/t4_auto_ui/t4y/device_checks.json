@@ -1,0 +1,1282 @@
+{
+  "all_passed": true,
+  "gates": {
+    "A1296:input_sha": true,
+    "A1296:ok_finite_preserved": true,
+    "A1296:1600px": true,
+    "A1296:center_p99_lt_1_35": true,
+    "A1296:band_blue_p99_le_1_15": true,
+    "A1296:band_blue_max_lt_2": true,
+    "A1296:full_band_any_gt_10_zero": true,
+    "A1296:status_exact_vs_t4x": true,
+    "A1296:inversion_exact_vs_t4x": true,
+    "A1296:bare_backlight_excluded": true,
+    "targets:membership": true,
+    "A305.tif:input_sha": true,
+    "A305.tif:ok_finite_preserved": true,
+    "A305.tif:no_white_point_invalid": true,
+    "A1040.TIF:input_sha": true,
+    "A1040.TIF:ok_finite_preserved": true,
+    "A1040.TIF:reconstruction_present": true,
+    "A1040.TIF:no_white_point_unrep": true,
+    "A1040.TIF:srgb_q50_R_gt_0_10": true,
+    "A1040.TIF:srgb_q50_G_gt_0_10": true,
+    "A1040.TIF:srgb_q50_B_minus_G_lt_0_08": true,
+    "A1041.TIF:input_sha": true,
+    "A1041.TIF:ok_finite_preserved": true,
+    "A1041.TIF:reconstruction_present": true,
+    "A1041.TIF:no_white_point_unrep": true,
+    "A1041.TIF:srgb_q50_R_gt_0_15": true,
+    "A1041.TIF:srgb_q50_G_gt_0_15": true,
+    "A1041.TIF:no_near_sat_excluded": true,
+    "A1041.TIF:base_exact_vs_t4w": true,
+    "A1041.TIF:d_hi_exact_vs_t4w": true,
+    "A1041.TIF:params_exact_vs_t4w": true,
+    "A232.NEF:input_sha": true,
+    "A232.NEF:ok_finite_preserved": true,
+    "A232.NEF:holder_excluded": true,
+    "A232.NEF:white_points_lt_1_15": true,
+    "A232.NEF:holder_share_gt_0_50": true,
+    "A232.NEF:ev_lt_0_50": true,
+    "A1069.NEF:input_sha": true,
+    "A1069.NEF:ok_finite_preserved": true,
+    "A1069.NEF:holder_excluded": true,
+    "A1069.NEF:white_points_lt_1_15": true,
+    "A1069.NEF:holder_share_gt_0_50": true,
+    "A1069.NEF:ev_lt_0_50": true,
+    "A239.ORF:input_sha": true,
+    "A239.ORF:ok_finite_preserved": true,
+    "A239.ORF:no_cyan_conf_boost": true,
+    "A239.ORF:no_narrow_tint_capped": true,
+    "A239.ORF:tint_lt_0_22": true,
+    "A281.RAF:input_sha": true,
+    "A281.RAF:ok_finite_preserved": true,
+    "A281.RAF:tint_conflict_damped": true,
+    "A281.RAF:tint_lt_0_18": true,
+    "A1006.CR2:input_sha": true,
+    "A1006.CR2:ok_finite_preserved": true,
+    "acros:membership": true,
+    "tiff:membership": true,
+    "B002.NEF:input_sha": true,
+    "B002.NEF:ok_finite_preserved": true,
+    "B003.NEF:input_sha": true,
+    "B003.NEF:ok_finite_preserved": true,
+    "B004.NEF:input_sha": true,
+    "B004.NEF:ok_finite_preserved": true,
+    "B005.NEF:input_sha": true,
+    "B005.NEF:ok_finite_preserved": true,
+    "B006.NEF:input_sha": true,
+    "B006.NEF:ok_finite_preserved": true,
+    "B007.NEF:input_sha": true,
+    "B007.NEF:ok_finite_preserved": true,
+    "B008.NEF:input_sha": true,
+    "B008.NEF:ok_finite_preserved": true,
+    "B009.NEF:input_sha": true,
+    "B009.NEF:ok_finite_preserved": true,
+    "B010.NEF:input_sha": true,
+    "B010.NEF:ok_finite_preserved": true,
+    "B011.NEF:input_sha": true,
+    "B011.NEF:ok_finite_preserved": true,
+    "B012.NEF:input_sha": true,
+    "B012.NEF:ok_finite_preserved": true,
+    "B013.NEF:input_sha": true,
+    "B013.NEF:ok_finite_preserved": true,
+    "B014.NEF:input_sha": true,
+    "B014.NEF:ok_finite_preserved": true,
+    "B015.NEF:input_sha": true,
+    "B015.NEF:ok_finite_preserved": true,
+    "B016.NEF:input_sha": true,
+    "B016.NEF:ok_finite_preserved": true,
+    "B017.NEF:input_sha": true,
+    "B017.NEF:ok_finite_preserved": true,
+    "B018.NEF:input_sha": true,
+    "B018.NEF:ok_finite_preserved": true,
+    "B019.NEF:input_sha": true,
+    "B019.NEF:ok_finite_preserved": true,
+    "B020.NEF:input_sha": true,
+    "B020.NEF:ok_finite_preserved": true,
+    "B021.NEF:input_sha": true,
+    "B021.NEF:ok_finite_preserved": true,
+    "B022.NEF:input_sha": true,
+    "B022.NEF:ok_finite_preserved": true,
+    "B023.NEF:input_sha": true,
+    "B023.NEF:ok_finite_preserved": true,
+    "B024.NEF:input_sha": true,
+    "B024.NEF:ok_finite_preserved": true,
+    "B025.NEF:input_sha": true,
+    "B025.NEF:ok_finite_preserved": true,
+    "B026.NEF:input_sha": true,
+    "B026.NEF:ok_finite_preserved": true,
+    "B027.NEF:input_sha": true,
+    "B027.NEF:ok_finite_preserved": true,
+    "B028.NEF:input_sha": true,
+    "B028.NEF:ok_finite_preserved": true,
+    "B029.NEF:input_sha": true,
+    "B029.NEF:ok_finite_preserved": true,
+    "A1310.TIF:input_sha": true,
+    "A1310.TIF:ok_finite_preserved": true,
+    "A304.tif:input_sha": true,
+    "A304.tif:ok_finite_preserved": true,
+    "A1301.TIF:input_sha": true,
+    "A1301.TIF:ok_finite_preserved": true,
+    "A255.tif:input_sha": true,
+    "A255.tif:ok_finite_preserved": true,
+    "A1027.TIF:input_sha": true,
+    "A1027.TIF:ok_finite_preserved": true,
+    "A1027.TIF:no_near_sat_excluded": true,
+    "A1027.TIF:base_exact_vs_t4w": true,
+    "A1027.TIF:d_hi_exact_vs_t4w": true,
+    "A1028.TIF:input_sha": true,
+    "A1028.TIF:ok_finite_preserved": true,
+    "B032.tif:input_sha": true,
+    "B032.tif:ok_finite_preserved": true,
+    "B034.tiff:input_sha": true,
+    "B034.tiff:ok_finite_preserved": true,
+    "new_tiff:membership": true,
+    "B036.tif:input_sha": true,
+    "B036.tif:candidate_ok": true,
+    "B036.tif:full_positive_finite": true,
+    "B036.tif:render_preserves_positive": true,
+    "B036.tif:bits8": true,
+    "A850.tif:input_sha": true,
+    "A850.tif:candidate_ok": true,
+    "A850.tif:full_positive_finite": true,
+    "A850.tif:render_preserves_positive": true,
+    "A850.tif:bits8": true,
+    "A655.tif:input_sha": true,
+    "A655.tif:candidate_ok": true,
+    "A655.tif:full_positive_finite": true,
+    "A655.tif:render_preserves_positive": true,
+    "A655.tif:bits8": true,
+    "A849.tif:input_sha": true,
+    "A849.tif:candidate_ok": true,
+    "A849.tif:full_positive_finite": true,
+    "A849.tif:render_preserves_positive": true,
+    "A849.tif:bits8": true,
+    "A1228.tif:input_sha": true,
+    "A1228.tif:candidate_ok": true,
+    "A1228.tif:full_positive_finite": true,
+    "A1228.tif:render_preserves_positive": true,
+    "A1228.tif:flags_empty": true,
+    "A1228.tif:green_white_point_gt_0_30": true,
+    "A229.TIF:input_sha": true,
+    "A229.TIF:candidate_ok": true,
+    "A229.TIF:full_positive_finite": true,
+    "A229.TIF:render_preserves_positive": true,
+    "A229.TIF:bits8": true,
+    "A1093.tif:input_sha": true,
+    "A1093.tif:candidate_ok": true,
+    "A1093.tif:full_positive_finite": true,
+    "A1093.tif:render_preserves_positive": true,
+    "A1093.tif:bits8": true,
+    "new_targets:membership": true,
+    "A1004.DNG:input_sha": true,
+    "A1004.DNG:candidate_ok": true,
+    "A1004.DNG:full_positive_finite": true,
+    "A1004.DNG:render_preserves_positive": true,
+    "A1005.CR2:input_sha": true,
+    "A1005.CR2:candidate_ok": true,
+    "A1005.CR2:full_positive_finite": true,
+    "A1005.CR2:render_preserves_positive": true,
+    "A1007.CR2:input_sha": true,
+    "A1007.CR2:candidate_ok": true,
+    "A1007.CR2:full_positive_finite": true,
+    "A1007.CR2:render_preserves_positive": true,
+    "A1033.CR2:input_sha": true,
+    "A1033.CR2:candidate_ok": true,
+    "A1033.CR2:full_positive_finite": true,
+    "A1033.CR2:render_preserves_positive": true,
+    "A262.arw:input_sha": true,
+    "A262.arw:candidate_ok": true,
+    "A262.arw:full_positive_finite": true,
+    "A262.arw:render_preserves_positive": true,
+    "A262.arw:max_inversion_base_lt_0_95": true,
+    "A262.arw:near_sat_blocks_excluded_cand_gt_1000": true,
+    "A263.arw:input_sha": true,
+    "A263.arw:candidate_ok": true,
+    "A263.arw:full_positive_finite": true,
+    "A263.arw:render_preserves_positive": true,
+    "A263.arw:max_inversion_base_lt_0_95": true,
+    "A263.arw:near_sat_blocks_excluded_cand_gt_1000": true,
+    "A1061.CR2:input_sha": true,
+    "A1061.CR2:candidate_ok": true,
+    "A1061.CR2:full_positive_finite": true,
+    "A1061.CR2:render_preserves_positive": true,
+    "A237.cr2:input_sha": true,
+    "A237.cr2:candidate_ok": true,
+    "A237.cr2:full_positive_finite": true,
+    "A237.cr2:render_preserves_positive": true,
+    "A1004.DNG:candidate_present": true,
+    "A1004.DNG:candidate_status_ok": true,
+    "A1004.DNG:matrix_present": true,
+    "A1004.DNG:matrix_00_gt_1_25": true,
+    "A1004.DNG:matrix_not_identity": true,
+    "A1005.CR2:candidate_present": true,
+    "A1005.CR2:candidate_status_ok": true,
+    "A1005.CR2:matrix_present": true,
+    "A1005.CR2:matrix_00_gt_1_25": true,
+    "A1005.CR2:matrix_not_identity": true,
+    "A1006.CR2:candidate_present": true,
+    "A1006.CR2:candidate_status_ok": true,
+    "A1006.CR2:matrix_present": true,
+    "A1006.CR2:matrix_00_gt_1_25": true,
+    "A1006.CR2:matrix_not_identity": true,
+    "A1007.CR2:candidate_present": true,
+    "A1007.CR2:candidate_status_ok": true,
+    "A1007.CR2:matrix_present": true,
+    "A1007.CR2:matrix_00_gt_1_25": true,
+    "A1007.CR2:matrix_not_identity": true,
+    "A1033.CR2:candidate_present": true,
+    "A1033.CR2:candidate_status_ok": true,
+    "A1033.CR2:matrix_present": true,
+    "A1033.CR2:matrix_00_gt_1_25": true,
+    "A1033.CR2:matrix_not_identity": true,
+    "A1296.CR2:candidate_present": true,
+    "A1296.CR2:candidate_status_ok": true,
+    "A1296.CR2:matrix_present": true,
+    "A1296.CR2:matrix_00_gt_1_25": true,
+    "A1296.CR2:matrix_not_identity": true,
+    "A1061.CR2:candidate_present": true,
+    "A1061.CR2:candidate_status_ok": true,
+    "A1061.CR2:matrix_present": true,
+    "A1061.CR2:matrix_00_gt_1_25": true,
+    "A1061.CR2:matrix_not_identity": true,
+    "A237.cr2:candidate_present": true,
+    "A237.cr2:candidate_status_ok": true,
+    "A237.cr2:matrix_present": true,
+    "A237.cr2:matrix_00_gt_1_25": true,
+    "A237.cr2:matrix_not_identity": true,
+    "A305.tif:scanner_meta_present": true,
+    "A1040.TIF:scanner_meta_present": true,
+    "A1041.TIF:scanner_meta_present": true,
+    "A1310.TIF:scanner_meta_present": true,
+    "A304.tif:scanner_meta_present": true,
+    "A1301.TIF:scanner_meta_present": true,
+    "A255.tif:scanner_meta_present": true,
+    "A1027.TIF:scanner_meta_present": true,
+    "A1028.TIF:scanner_meta_present": true,
+    "B032.tif:scanner_meta_present": true,
+    "B034.tiff:scanner_meta_present": true,
+    "A1228.tif:scanner_meta_present": true,
+    "A229.TIF:scanner_meta_present": true,
+    "A655.tif:scanner_meta_present": true,
+    "A849.tif:scanner_meta_present": true,
+    "A850.tif:scanner_meta_present": true,
+    "A1093.tif:scanner_meta_present": true,
+    "B036.tif:scanner_meta_present": true,
+    "A1296:scope_raw_sha_exact_vs_t4x": true,
+    "A1296:scope_full_shape_exact_vs_t4x": true,
+    "A1296:scope_all_regions_exact_vs_t4x": true,
+    "A1296:scope_upper_band_any_gt_10_zero": true,
+    "A1296:scope_center_any_gt_10_lt_1e_4": true
+  },
+  "failures": [],
+  "param_changes": [
+    {
+      "frame": "A1296.CR2",
+      "params_before": {
+        "ev": -0.25,
+        "temp": 0.0458,
+        "tint": 0.0177,
+        "sat": 1.0127,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.193,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.25,
+        "temp": 0.0458,
+        "tint": 0.0177,
+        "sat": 1.0127,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.3857598160752616,
+            -0.44788401305658854,
+            0.062124196981327054
+          ],
+          [
+            -0.09646246197606977,
+            1.2694887638878627,
+            -0.17302630191179308
+          ],
+          [
+            0.005554752780844564,
+            -0.21992798451892376,
+            1.2143732317380793
+          ]
+        ],
+        "highlights": -0.193,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.25,
+      "ev_after": -0.25,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.3857598160752616,
+          -0.44788401305658854,
+          0.062124196981327054
+        ],
+        [
+          -0.09646246197606977,
+          1.2694887638878627,
+          -0.17302630191179308
+        ],
+        [
+          0.005554752780844564,
+          -0.21992798451892376,
+          1.2143732317380793
+        ]
+      ],
+      "reason": "camera_matrix_unblock"
+    },
+    {
+      "frame": "A1041.TIF",
+      "params_before": {
+        "ev": -0.0655,
+        "temp": -0.034,
+        "tint": -0.1875,
+        "sat": 1.0043,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.1175,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.0653,
+        "temp": -0.0335,
+        "tint": -0.1875,
+        "sat": 1.0043,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.1174,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.0655,
+      "ev_after": -0.0653,
+      "blacks_before": -0.1175,
+      "blacks_after": -0.1174,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reason": "scanner_near_sat_isolation"
+    },
+    {
+      "frame": "A1006.CR2",
+      "params_before": {
+        "ev": 1.4988,
+        "temp": 0.0326,
+        "tint": 0.1635,
+        "sat": 1.0063,
+        "contrast": 1.3284,
+        "midtone": 0.23,
+        "shoulder": 0.2627,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.65,
+        "blacks": -0.0072,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": 1.6245,
+        "temp": 0.0326,
+        "tint": 0.1635,
+        "sat": 1.0063,
+        "contrast": 1.3008,
+        "midtone": 0.23,
+        "shoulder": 0.2211,
+        "matrix": [
+          [
+            1.344907683781889,
+            -0.40639344271850714,
+            0.06148575893661833
+          ],
+          [
+            -0.07611891062121516,
+            1.2773058884451753,
+            -0.2011869778239602
+          ],
+          [
+            0.001944697636451654,
+            -0.20630935442297152,
+            1.2043646567865198
+          ]
+        ],
+        "highlights": -0.65,
+        "blacks": -0.0222,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": 1.4988,
+      "ev_after": 1.6245,
+      "blacks_before": -0.0072,
+      "blacks_after": -0.0222,
+      "contrast_before": 1.3284,
+      "contrast_after": 1.3008,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.344907683781889,
+          -0.40639344271850714,
+          0.06148575893661833
+        ],
+        [
+          -0.07611891062121516,
+          1.2773058884451753,
+          -0.2011869778239602
+        ],
+        [
+          0.001944697636451654,
+          -0.20630935442297152,
+          1.2043646567865198
+        ]
+      ],
+      "reason": "overlift_damp"
+    },
+    {
+      "frame": "A1027.TIF",
+      "params_before": {
+        "ev": 1.0788,
+        "temp": 0.1135,
+        "tint": 0.0555,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.4,
+        "blacks": -0.0241,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": 1.0784,
+        "temp": 0.1135,
+        "tint": 0.0555,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.4,
+        "blacks": -0.0241,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": 1.0788,
+      "ev_after": 1.0784,
+      "blacks_before": -0.0241,
+      "blacks_after": -0.0241,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reason": "moderate"
+    },
+    {
+      "frame": "A1004.DNG",
+      "params_before": {
+        "ev": -0.7505,
+        "temp": -0.016,
+        "tint": 0.0538,
+        "sat": 1.02,
+        "contrast": 1.7254,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.2753,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.7779,
+        "temp": -0.016,
+        "tint": 0.0538,
+        "sat": 1.02,
+        "contrast": 1.7487,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.4049449388604354,
+            -0.3619426827060628,
+            -0.043002256154372503
+          ],
+          [
+            -0.04783845729308038,
+            1.2255822847773699,
+            -0.17774382748428946
+          ],
+          [
+            0.016064387966687795,
+            -0.18431382021549134,
+            1.1682494322488035
+          ]
+        ],
+        "blacks": -0.2903,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.7505,
+      "ev_after": -0.7779,
+      "blacks_before": -0.2753,
+      "blacks_after": -0.2903,
+      "contrast_before": 1.7254,
+      "contrast_after": 1.7487,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.4049449388604354,
+          -0.3619426827060628,
+          -0.043002256154372503
+        ],
+        [
+          -0.04783845729308038,
+          1.2255822847773699,
+          -0.17774382748428946
+        ],
+        [
+          0.016064387966687795,
+          -0.18431382021549134,
+          1.1682494322488035
+        ]
+      ],
+      "reason": "camera_matrix_unblock"
+    },
+    {
+      "frame": "A1005.CR2",
+      "params_before": {
+        "ev": 0.1114,
+        "temp": -0.0995,
+        "tint": 0.1703,
+        "sat": 1.0061,
+        "contrast": 1.3549,
+        "midtone": 0.2359,
+        "shoulder": 0.3024,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": 0.1114,
+        "temp": -0.0995,
+        "tint": 0.1703,
+        "sat": 1.0061,
+        "contrast": 1.357,
+        "midtone": 0.2359,
+        "shoulder": 0.3055,
+        "matrix": [
+          [
+            1.344907683781889,
+            -0.40639344271850714,
+            0.06148575893661833
+          ],
+          [
+            -0.07611891062121516,
+            1.2773058884451753,
+            -0.2011869778239602
+          ],
+          [
+            0.001944697636451654,
+            -0.20630935442297152,
+            1.2043646567865198
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "ev_before": 0.1114,
+      "ev_after": 0.1114,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3549,
+      "contrast_after": 1.357,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.344907683781889,
+          -0.40639344271850714,
+          0.06148575893661833
+        ],
+        [
+          -0.07611891062121516,
+          1.2773058884451753,
+          -0.2011869778239602
+        ],
+        [
+          0.001944697636451654,
+          -0.20630935442297152,
+          1.2043646567865198
+        ]
+      ],
+      "reason": "camera_matrix_unblock"
+    },
+    {
+      "frame": "A1007.CR2",
+      "params_before": {
+        "ev": -0.25,
+        "temp": -0.0582,
+        "tint": 0.1376,
+        "sat": 1.0084,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.25,
+        "temp": -0.0582,
+        "tint": 0.1376,
+        "sat": 1.0084,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.344907683781889,
+            -0.40639344271850714,
+            0.06148575893661833
+          ],
+          [
+            -0.07611891062121516,
+            1.2773058884451753,
+            -0.2011869778239602
+          ],
+          [
+            0.001944697636451654,
+            -0.20630935442297152,
+            1.2043646567865198
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.25,
+      "ev_after": -0.25,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.344907683781889,
+          -0.40639344271850714,
+          0.06148575893661833
+        ],
+        [
+          -0.07611891062121516,
+          1.2773058884451753,
+          -0.2011869778239602
+        ],
+        [
+          0.001944697636451654,
+          -0.20630935442297152,
+          1.2043646567865198
+        ]
+      ],
+      "reason": "camera_matrix_unblock"
+    },
+    {
+      "frame": "A1033.CR2",
+      "params_before": {
+        "ev": -0.4366,
+        "temp": 0.07,
+        "tint": 0.0185,
+        "sat": 1.02,
+        "contrast": 1.4586,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.1026,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.4261,
+        "temp": 0.07,
+        "tint": 0.0185,
+        "sat": 1.02,
+        "contrast": 1.4497,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.3857598160752616,
+            -0.44788401305658854,
+            0.062124196981327054
+          ],
+          [
+            -0.09646246197606977,
+            1.2694887638878627,
+            -0.17302630191179308
+          ],
+          [
+            0.005554752780844564,
+            -0.21992798451892376,
+            1.2143732317380793
+          ]
+        ],
+        "blacks": -0.0969,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.4366,
+      "ev_after": -0.4261,
+      "blacks_before": -0.1026,
+      "blacks_after": -0.0969,
+      "contrast_before": 1.4586,
+      "contrast_after": 1.4497,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.3857598160752616,
+          -0.44788401305658854,
+          0.062124196981327054
+        ],
+        [
+          -0.09646246197606977,
+          1.2694887638878627,
+          -0.17302630191179308
+        ],
+        [
+          0.005554752780844564,
+          -0.21992798451892376,
+          1.2143732317380793
+        ]
+      ],
+      "reason": "camera_matrix_unblock"
+    },
+    {
+      "frame": "A1061.CR2",
+      "params_before": {
+        "ev": -0.2,
+        "temp": -0.065,
+        "tint": 0.1291,
+        "sat": 1.0086,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.2,
+        "temp": -0.065,
+        "tint": 0.1291,
+        "sat": 1.0086,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.3517834974552878,
+            -0.4130311134190777,
+            0.06124761596378991
+          ],
+          [
+            -0.08791407148509081,
+            1.2861068356129741,
+            -0.19819276412788342
+          ],
+          [
+            0.002764682283456254,
+            -0.20598900638014275,
+            1.2032243240966864
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.2,
+      "ev_after": -0.2,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.3517834974552878,
+          -0.4130311134190777,
+          0.06124761596378991
+        ],
+        [
+          -0.08791407148509081,
+          1.2861068356129741,
+          -0.19819276412788342
+        ],
+        [
+          0.002764682283456254,
+          -0.20598900638014275,
+          1.2032243240966864
+        ]
+      ],
+      "reason": "camera_matrix_unblock"
+    },
+    {
+      "frame": "A237.cr2",
+      "params_before": {
+        "ev": 0.6681,
+        "temp": 0.1958,
+        "tint": 0.1048,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.2,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": 0.6681,
+        "temp": 0.1958,
+        "tint": 0.1048,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.3951783492267382,
+            -0.46390541009595715,
+            0.06872706086921888
+          ],
+          [
+            -0.0792695684932206,
+            1.300381828596887,
+            -0.22111226010366633
+          ],
+          [
+            0.012818400247883955,
+            -0.2484417590238914,
+            1.2356233587760075
+          ]
+        ],
+        "highlights": -0.2,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": 0.6681,
+      "ev_after": 0.6681,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "matrix_before": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "matrix_after": [
+        [
+          1.3951783492267382,
+          -0.46390541009595715,
+          0.06872706086921888
+        ],
+        [
+          -0.0792695684932206,
+          1.300381828596887,
+          -0.22111226010366633
+        ],
+        [
+          0.012818400247883955,
+          -0.2484417590238914,
+          1.2356233587760075
+        ]
+      ],
+      "reason": "camera_matrix_unblock"
+    }
+  ]
+}

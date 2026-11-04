@@ -1,5 +1,5 @@
 {
-  "source_config_rev": "t4x-2026-11-03",
+  "source_config_rev": "t4y-2026-11-04",
   "preset": "natural",
   "config": {
     "id": "noref_v3",
@@ -44,7 +44,7 @@
     "wb_conflict_factor": 0.3,
     "wb_max_shift": 0.5,
     "roll_consistency": 0.1,
-    "rev": "t4x-2026-11-03",
+    "rev": "t4y-2026-11-04",
     "look": "global_look_v1",
     "preset": "natural",
     "cell_size": 8,
@@ -155,6 +155,21 @@
     "overlift_mod_gain": 4.0,
     "overlift_mod_max_pull": 0.45,
     "overlift_mod_shadow_comp": 0.35,
+    "overlift_bright_check": true,
+    "overlift_bright_span_max": 0.76,
+    "overlift_bright_min_share": 0.2,
+    "overlift_bright_ev_min": 0.45,
+    "overlift_bright_ev_pivot": 0.3,
+    "overlift_bright_ev_ramp": 0.45,
+    "overlift_bright_anc_max": 1.4,
+    "overlift_bright_med0_min": 0.46,
+    "overlift_bright_q25_band": [
+      0.475,
+      0.68
+    ],
+    "overlift_bright_q25_pivot": 0.45,
+    "overlift_bright_gain": 2.8,
+    "overlift_bright_max_pull": 0.42,
     "ev_refine_p98_max": 0.96,
     "ev_anchor_p98_cap": true,
     "shadow_p25_floor": 0.12,
