@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:62872",
+  "source_sha256": "967dbd1fbf4ab5762df118bf132ecd8fc5481b5cdaf402f5300ba6a09e53ece2",
+  "open_method": "POST",
+  "sub_rolls": 6,
+  "flagged": 0,
+  "sample": "_DSF9239.RAF",
+  "status": "ok",
+  "ev": 0.5492,
+  "http_config_rev": "t4x-2026-11-03",
+  "render_png_bytes": 3362409,
+  "render_sha256": "b3f4c6c3616115ab02f3b7119dac75e8d1768242ee4c2b3e347133111dca75ff",
+  "source_thumb_rev": "t4x",
+  "source_config_rev": "t4x-2026-11-03"
+}

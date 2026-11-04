@@ -1,0 +1,1116 @@
+{
+  "all_passed": true,
+  "gates": {
+    "A1296:input_sha": true,
+    "A1296:ok_finite_preserved": true,
+    "A1296:1600px": true,
+    "A1296:center_p99_lt_1_35": true,
+    "A1296:band_blue_p99_le_1_15": true,
+    "A1296:band_blue_max_lt_2": true,
+    "A1296:full_band_any_gt_10_zero": true,
+    "A1296:status_exact_vs_t4w": true,
+    "A1296:inversion_exact_vs_t4w": true,
+    "A1296:params_exact_vs_t4w": true,
+    "A1296:bare_backlight_excluded": true,
+    "targets:membership": true,
+    "A305.tif:input_sha": true,
+    "A305.tif:ok_finite_preserved": true,
+    "A305.tif:no_white_point_invalid": true,
+    "A1040.TIF:input_sha": true,
+    "A1040.TIF:ok_finite_preserved": true,
+    "A1040.TIF:reconstruction_present": true,
+    "A1040.TIF:no_white_point_unrep": true,
+    "A1040.TIF:srgb_q50_R_gt_0_10": true,
+    "A1040.TIF:srgb_q50_G_gt_0_10": true,
+    "A1040.TIF:srgb_q50_B_minus_G_lt_0_08": true,
+    "A1041.TIF:input_sha": true,
+    "A1041.TIF:ok_finite_preserved": true,
+    "A1041.TIF:reconstruction_present": true,
+    "A1041.TIF:no_white_point_unrep": true,
+    "A1041.TIF:srgb_q50_R_gt_0_15": true,
+    "A1041.TIF:srgb_q50_G_gt_0_15": true,
+    "A232.NEF:input_sha": true,
+    "A232.NEF:ok_finite_preserved": true,
+    "A232.NEF:holder_excluded": true,
+    "A232.NEF:white_points_lt_1_15": true,
+    "A232.NEF:holder_share_gt_0_50": true,
+    "A232.NEF:ev_lt_0_50": true,
+    "A1069.NEF:input_sha": true,
+    "A1069.NEF:ok_finite_preserved": true,
+    "A1069.NEF:holder_excluded": true,
+    "A1069.NEF:white_points_lt_1_15": true,
+    "A1069.NEF:holder_share_gt_0_50": true,
+    "A1069.NEF:ev_lt_0_50": true,
+    "A239.ORF:input_sha": true,
+    "A239.ORF:ok_finite_preserved": true,
+    "A239.ORF:no_cyan_conf_boost": true,
+    "A239.ORF:no_narrow_tint_capped": true,
+    "A239.ORF:tint_lt_0_22": true,
+    "A281.RAF:input_sha": true,
+    "A281.RAF:ok_finite_preserved": true,
+    "A281.RAF:tint_conflict_damped": true,
+    "A281.RAF:tint_lt_0_18": true,
+    "A1006.CR2:input_sha": true,
+    "A1006.CR2:ok_finite_preserved": true,
+    "A1006.CR2:narrow_blue_rescue": true,
+    "A1006.CR2:ratio_bg_used_bounded": true,
+    "A1006.CR2:blue_white_point_gt_0_18": true,
+    "A1006.CR2:no_blue_cast": true,
+    "acros:membership": true,
+    "tiff:membership": true,
+    "B002.NEF:input_sha": true,
+    "B002.NEF:ok_finite_preserved": true,
+    "B003.NEF:input_sha": true,
+    "B003.NEF:ok_finite_preserved": true,
+    "B004.NEF:input_sha": true,
+    "B004.NEF:ok_finite_preserved": true,
+    "B005.NEF:input_sha": true,
+    "B005.NEF:ok_finite_preserved": true,
+    "B006.NEF:input_sha": true,
+    "B006.NEF:ok_finite_preserved": true,
+    "B007.NEF:input_sha": true,
+    "B007.NEF:ok_finite_preserved": true,
+    "B008.NEF:input_sha": true,
+    "B008.NEF:ok_finite_preserved": true,
+    "B009.NEF:input_sha": true,
+    "B009.NEF:ok_finite_preserved": true,
+    "B010.NEF:input_sha": true,
+    "B010.NEF:ok_finite_preserved": true,
+    "B011.NEF:input_sha": true,
+    "B011.NEF:ok_finite_preserved": true,
+    "B012.NEF:input_sha": true,
+    "B012.NEF:ok_finite_preserved": true,
+    "B013.NEF:input_sha": true,
+    "B013.NEF:ok_finite_preserved": true,
+    "B014.NEF:input_sha": true,
+    "B014.NEF:ok_finite_preserved": true,
+    "B015.NEF:input_sha": true,
+    "B015.NEF:ok_finite_preserved": true,
+    "B016.NEF:input_sha": true,
+    "B016.NEF:ok_finite_preserved": true,
+    "B017.NEF:input_sha": true,
+    "B017.NEF:ok_finite_preserved": true,
+    "B018.NEF:input_sha": true,
+    "B018.NEF:ok_finite_preserved": true,
+    "B019.NEF:input_sha": true,
+    "B019.NEF:ok_finite_preserved": true,
+    "B020.NEF:input_sha": true,
+    "B020.NEF:ok_finite_preserved": true,
+    "B021.NEF:input_sha": true,
+    "B021.NEF:ok_finite_preserved": true,
+    "B022.NEF:input_sha": true,
+    "B022.NEF:ok_finite_preserved": true,
+    "B023.NEF:input_sha": true,
+    "B023.NEF:ok_finite_preserved": true,
+    "B024.NEF:input_sha": true,
+    "B024.NEF:ok_finite_preserved": true,
+    "B025.NEF:input_sha": true,
+    "B025.NEF:ok_finite_preserved": true,
+    "B026.NEF:input_sha": true,
+    "B026.NEF:ok_finite_preserved": true,
+    "B027.NEF:input_sha": true,
+    "B027.NEF:ok_finite_preserved": true,
+    "B028.NEF:input_sha": true,
+    "B028.NEF:ok_finite_preserved": true,
+    "B029.NEF:input_sha": true,
+    "B029.NEF:ok_finite_preserved": true,
+    "A1310.TIF:input_sha": true,
+    "A1310.TIF:ok_finite_preserved": true,
+    "A304.tif:input_sha": true,
+    "A304.tif:ok_finite_preserved": true,
+    "A1301.TIF:input_sha": true,
+    "A1301.TIF:ok_finite_preserved": true,
+    "A255.tif:input_sha": true,
+    "A255.tif:ok_finite_preserved": true,
+    "A1027.TIF:input_sha": true,
+    "A1027.TIF:ok_finite_preserved": true,
+    "A1028.TIF:input_sha": true,
+    "A1028.TIF:ok_finite_preserved": true,
+    "B032.tif:input_sha": true,
+    "B032.tif:ok_finite_preserved": true,
+    "B034.tiff:input_sha": true,
+    "B034.tiff:ok_finite_preserved": true,
+    "new_tiff:membership": true,
+    "A1228.tif:input_sha": true,
+    "A1228.tif:candidate_ok": true,
+    "A1228.tif:full_positive_finite": true,
+    "A1228.tif:render_preserves_positive": true,
+    "A1228.tif:flags_empty": true,
+    "A1228.tif:green_white_point_gt_0_30": true,
+    "A850.tif:input_sha": true,
+    "A850.tif:candidate_ok": true,
+    "A850.tif:full_positive_finite": true,
+    "A850.tif:render_preserves_positive": true,
+    "A850.tif:bits8": true,
+    "B036.tif:input_sha": true,
+    "B036.tif:candidate_ok": true,
+    "B036.tif:full_positive_finite": true,
+    "B036.tif:render_preserves_positive": true,
+    "B036.tif:bits8": true,
+    "A655.tif:input_sha": true,
+    "A655.tif:candidate_ok": true,
+    "A655.tif:full_positive_finite": true,
+    "A655.tif:render_preserves_positive": true,
+    "A655.tif:bits8": true,
+    "A229.TIF:input_sha": true,
+    "A229.TIF:candidate_ok": true,
+    "A229.TIF:full_positive_finite": true,
+    "A229.TIF:render_preserves_positive": true,
+    "A229.TIF:bits8": true,
+    "A1093.tif:input_sha": true,
+    "A1093.tif:candidate_ok": true,
+    "A1093.tif:full_positive_finite": true,
+    "A1093.tif:render_preserves_positive": true,
+    "A1093.tif:bits8": true,
+    "A849.tif:input_sha": true,
+    "A849.tif:candidate_ok": true,
+    "A849.tif:full_positive_finite": true,
+    "A849.tif:render_preserves_positive": true,
+    "A849.tif:bits8": true,
+    "new_targets:membership": true,
+    "A1004.DNG:input_sha": true,
+    "A1004.DNG:candidate_ok": true,
+    "A1004.DNG:full_positive_finite": true,
+    "A1004.DNG:render_preserves_positive": true,
+    "A1004.DNG:ultra_flat_applied": true,
+    "A1004.DNG:ev_le_minus_0_60": true,
+    "A1004.DNG:blacks_le_minus_0_20": true,
+    "A1004.DNG:contrast_ge_1_60": true,
+    "A1005.CR2:input_sha": true,
+    "A1005.CR2:candidate_ok": true,
+    "A1005.CR2:full_positive_finite": true,
+    "A1005.CR2:render_preserves_positive": true,
+    "A1005.CR2:narrow_blue_rescue": true,
+    "A1005.CR2:ratio_bg_used_bounded": true,
+    "A1007.CR2:input_sha": true,
+    "A1007.CR2:candidate_ok": true,
+    "A1007.CR2:full_positive_finite": true,
+    "A1007.CR2:render_preserves_positive": true,
+    "A1007.CR2:narrow_blue_not_rescued": true,
+    "A1007.CR2:d_hi_b_matches_baseline_own": true,
+    "A1033.CR2:input_sha": true,
+    "A1033.CR2:candidate_ok": true,
+    "A1033.CR2:full_positive_finite": true,
+    "A1033.CR2:render_preserves_positive": true,
+    "A1033.CR2:ultra_flat_applied": true,
+    "A1033.CR2:ev_le_minus_0_38": true,
+    "A1033.CR2:contrast_ge_1_40": true,
+    "A262.arw:input_sha": true,
+    "A262.arw:candidate_ok": true,
+    "A262.arw:full_positive_finite": true,
+    "A262.arw:render_preserves_positive": true,
+    "A262.arw:max_inversion_base_lt_0_95": true,
+    "A262.arw:near_sat_blocks_excluded_cand": true,
+    "A262.arw:near_sat_blocks_excluded_base_zero": true,
+    "A263.arw:input_sha": true,
+    "A263.arw:candidate_ok": true,
+    "A263.arw:full_positive_finite": true,
+    "A263.arw:render_preserves_positive": true,
+    "A263.arw:max_inversion_base_lt_0_95": true,
+    "A263.arw:near_sat_blocks_excluded_cand": true,
+    "A263.arw:near_sat_blocks_excluded_base_zero": true,
+    "A305.tif:scanner_meta_present": true,
+    "A1040.TIF:scanner_meta_present": true,
+    "A1041.TIF:scanner_meta_present": true,
+    "A1310.TIF:scanner_meta_present": true,
+    "A304.tif:scanner_meta_present": true,
+    "A1301.TIF:scanner_meta_present": true,
+    "A255.tif:scanner_meta_present": true,
+    "A1027.TIF:scanner_meta_present": true,
+    "A1028.TIF:scanner_meta_present": true,
+    "B032.tif:scanner_meta_present": true,
+    "B034.tiff:scanner_meta_present": true,
+    "A1228.tif:scanner_meta_present": true,
+    "A229.TIF:scanner_meta_present": true,
+    "A655.tif:scanner_meta_present": true,
+    "A849.tif:scanner_meta_present": true,
+    "A850.tif:scanner_meta_present": true,
+    "A1093.tif:scanner_meta_present": true,
+    "B036.tif:scanner_meta_present": true,
+    "A1296:scope_upper_band_any_gt_10_zero": true,
+    "A1296:scope_center_any_gt_10_lt_1e_4": true
+  },
+  "failures": [],
+  "diagnostic_checks": {
+    "A305.tif:d_hi_exact_vs_t4w": true,
+    "A1040.TIF:d_hi_exact_vs_t4w": true,
+    "A1041.TIF:d_hi_exact_vs_t4w": false,
+    "A1041.TIF:params_change_valid": false,
+    "A232.NEF:d_hi_exact_vs_t4w": true,
+    "A1069.NEF:d_hi_exact_vs_t4w": true,
+    "A239.ORF:d_hi_exact_vs_t4w": true,
+    "A281.RAF:d_hi_exact_vs_t4w": true,
+    "A1006.CR2:params_change_valid": true,
+    "B002.NEF:d_hi_exact_vs_t4w": true,
+    "B003.NEF:d_hi_exact_vs_t4w": true,
+    "B004.NEF:d_hi_exact_vs_t4w": true,
+    "B005.NEF:d_hi_exact_vs_t4w": true,
+    "B006.NEF:d_hi_exact_vs_t4w": true,
+    "B007.NEF:d_hi_exact_vs_t4w": true,
+    "B008.NEF:d_hi_exact_vs_t4w": true,
+    "B009.NEF:d_hi_exact_vs_t4w": true,
+    "B010.NEF:d_hi_exact_vs_t4w": true,
+    "B010.NEF:params_change_valid": true,
+    "B011.NEF:d_hi_exact_vs_t4w": true,
+    "B012.NEF:d_hi_exact_vs_t4w": true,
+    "B013.NEF:d_hi_exact_vs_t4w": true,
+    "B014.NEF:d_hi_exact_vs_t4w": true,
+    "B015.NEF:d_hi_exact_vs_t4w": true,
+    "B016.NEF:d_hi_exact_vs_t4w": true,
+    "B017.NEF:d_hi_exact_vs_t4w": true,
+    "B018.NEF:d_hi_exact_vs_t4w": true,
+    "B019.NEF:d_hi_exact_vs_t4w": true,
+    "B020.NEF:d_hi_exact_vs_t4w": true,
+    "B021.NEF:d_hi_exact_vs_t4w": true,
+    "B022.NEF:d_hi_exact_vs_t4w": true,
+    "B023.NEF:d_hi_exact_vs_t4w": true,
+    "B024.NEF:d_hi_exact_vs_t4w": true,
+    "B025.NEF:d_hi_exact_vs_t4w": true,
+    "B026.NEF:d_hi_exact_vs_t4w": true,
+    "B027.NEF:d_hi_exact_vs_t4w": true,
+    "B028.NEF:d_hi_exact_vs_t4w": true,
+    "B029.NEF:d_hi_exact_vs_t4w": true,
+    "A1310.TIF:d_hi_exact_vs_t4w": true,
+    "A304.tif:d_hi_exact_vs_t4w": true,
+    "A1301.TIF:d_hi_exact_vs_t4w": true,
+    "A255.tif:d_hi_exact_vs_t4w": true,
+    "A1027.TIF:d_hi_exact_vs_t4w": false,
+    "A1027.TIF:params_change_valid": false,
+    "A1028.TIF:d_hi_exact_vs_t4w": true,
+    "B032.tif:d_hi_exact_vs_t4w": true,
+    "B034.tiff:d_hi_exact_vs_t4w": true,
+    "A1228.tif:d_hi_exact_vs_t4w": true,
+    "A850.tif:d_hi_exact_vs_t4w": true,
+    "B036.tif:d_hi_exact_vs_t4w": true,
+    "A655.tif:d_hi_exact_vs_t4w": true,
+    "A229.TIF:d_hi_exact_vs_t4w": true,
+    "A1093.tif:d_hi_exact_vs_t4w": true,
+    "A849.tif:d_hi_exact_vs_t4w": true,
+    "A1004.DNG:params_change_valid": true,
+    "A1005.CR2:params_change_valid": true,
+    "A1007.CR2:params_change_valid": true,
+    "A1033.CR2:params_change_valid": false,
+    "A262.arw:params_change_valid": true,
+    "A263.arw:params_change_valid": true
+  },
+  "diagnostic_differences": [
+    "A1041.TIF:d_hi_exact_vs_t4w",
+    "A1041.TIF:params_change_valid",
+    "A1027.TIF:d_hi_exact_vs_t4w",
+    "A1027.TIF:params_change_valid",
+    "A1033.CR2:params_change_valid"
+  ],
+  "param_changes": [
+    {
+      "frame": "A1041.TIF",
+      "params_before": {
+        "ev": -0.0653,
+        "temp": -0.0335,
+        "tint": -0.1875,
+        "sat": 1.0043,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.1174,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.0655,
+        "temp": -0.034,
+        "tint": -0.1875,
+        "sat": 1.0043,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.1175,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.0653,
+      "ev_after": -0.0655,
+      "blacks_before": -0.1174,
+      "blacks_after": -0.1175,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "diagnostics": {
+        "overlift": {},
+        "thin": {
+          "span_d_g": 0.4425244927406311,
+          "bright_share": 0.07464,
+          "applied": true,
+          "ev_cap": -0.06553315222263344,
+          "ev_before": 0.8442335259392304,
+          "blacks_lowered": 0.11747550725936895
+        },
+        "ultra": {}
+      },
+      "reason": "unexplained",
+      "valid": false
+    },
+    {
+      "frame": "A1006.CR2",
+      "params_before": {
+        "ev": 1.5166,
+        "temp": -0.0048,
+        "tint": 0.1836,
+        "sat": 1.0058,
+        "contrast": 1.327,
+        "midtone": 0.23,
+        "shoulder": 0.2605,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.586,
+        "blacks": -0.0082,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": 1.4988,
+        "temp": 0.0326,
+        "tint": 0.1635,
+        "sat": 1.0063,
+        "contrast": 1.3284,
+        "midtone": 0.23,
+        "shoulder": 0.2627,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.65,
+        "blacks": -0.0072,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": 1.5166,
+      "ev_after": 1.4988,
+      "blacks_before": -0.0082,
+      "blacks_after": -0.0072,
+      "contrast_before": 1.327,
+      "contrast_after": 1.3284,
+      "diagnostics": {
+        "blue_guard": {
+          "guard": [
+            1.06,
+            1.18,
+            0.65,
+            0.48
+          ],
+          "ratio_bg": 0.1103042084256421,
+          "applied": true,
+          "base_bg": 0.4203212843483711,
+          "narrow_blue_rescue": true,
+          "d_hi_b_own": 0.08615785837173462,
+          "ratio_bg_used": 0.25454563126384633
+        }
+      },
+      "reason": "bounded_blue_rescue",
+      "valid": true
+    },
+    {
+      "frame": "B010.NEF",
+      "params_before": {
+        "ev": -0.25,
+        "temp": 0.0,
+        "tint": 0.0,
+        "sat": 1.0,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.3616,
+        "temp": 0.0,
+        "tint": 0.0,
+        "sat": 1.0,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.0502,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.25,
+      "ev_after": -0.3616,
+      "blacks_before": null,
+      "blacks_after": -0.0502,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "diagnostics": {
+        "overlift": {},
+        "thin": {
+          "span_d_g": 0.36141932010650635,
+          "bright_share": 0.73736,
+          "applied": true,
+          "mode": "flat_bright",
+          "ev_before": -0.25,
+          "ev_after": -0.36161898672580706,
+          "pull": 0.11161898672580703,
+          "blacks_lowered": 0.05022854402661316,
+          "q25": 0.6744645684957504,
+          "iqr_25_90": 0.12267620265483858
+        },
+        "ultra": {}
+      },
+      "reason": "thin_flat",
+      "valid": true
+    },
+    {
+      "frame": "A1027.TIF",
+      "params_before": {
+        "ev": 1.0784,
+        "temp": 0.1135,
+        "tint": 0.0555,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.4,
+        "blacks": -0.0241,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": 1.0788,
+        "temp": 0.1135,
+        "tint": 0.0555,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.4,
+        "blacks": -0.0241,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": 1.0784,
+      "ev_after": 1.0788,
+      "blacks_before": -0.0241,
+      "blacks_after": -0.0241,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "diagnostics": {
+        "overlift": {
+          "applied": true,
+          "mode": "moderate",
+          "ev_before": 1.319735493449457,
+          "ev_after": 1.0787594173233583,
+          "pull": 0.24097607612609862,
+          "q25_before": 0.44024401903152466,
+          "blacks_lowered": 0.024097607612609862
+        },
+        "thin": {
+          "span_d_g": 0.8001934289932251,
+          "bright_share": 0.06856,
+          "applied": false
+        },
+        "ultra": {}
+      },
+      "reason": "unexplained",
+      "valid": false
+    },
+    {
+      "frame": "A1004.DNG",
+      "params_before": {
+        "ev": -0.25,
+        "temp": -0.016,
+        "tint": 0.0538,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.7505,
+        "temp": -0.016,
+        "tint": 0.0538,
+        "sat": 1.02,
+        "contrast": 1.7254,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.2753,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.25,
+      "ev_after": -0.7505,
+      "blacks_before": null,
+      "blacks_after": -0.2753,
+      "contrast_before": 1.3,
+      "contrast_after": 1.7254,
+      "diagnostics": {
+        "overlift": {},
+        "thin": {
+          "span_d_g": 1.0649588108062744,
+          "bright_share": 0.97504,
+          "applied": false
+        },
+        "ultra": {
+          "applied": true,
+          "ev_before": -0.25,
+          "ev_after": -0.750492679119111,
+          "pull": 0.500492679119111,
+          "blacks_lowered": 0.27527097351551105,
+          "contrast_after": 1.7254187772512444,
+          "q25": 0.7753063440322876,
+          "iqr_25_90": 0.040194851160049394
+        }
+      },
+      "reason": "ultra_flat_bright",
+      "valid": true
+    },
+    {
+      "frame": "A1005.CR2",
+      "params_before": {
+        "ev": 0.1265,
+        "temp": -0.1494,
+        "tint": 0.2263,
+        "sat": 1.0054,
+        "contrast": 1.3541,
+        "midtone": 0.2364,
+        "shoulder": 0.3012,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": 0.1114,
+        "temp": -0.0995,
+        "tint": 0.1703,
+        "sat": 1.0061,
+        "contrast": 1.3549,
+        "midtone": 0.2359,
+        "shoulder": 0.3024,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "ev_before": 0.1265,
+      "ev_after": 0.1114,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3541,
+      "contrast_after": 1.3549,
+      "diagnostics": {
+        "blue_guard": {
+          "guard": [
+            1.06,
+            1.18,
+            0.65,
+            0.48
+          ],
+          "ratio_bg": 0.15390683693129137,
+          "applied": true,
+          "base_bg": 0.42323897572111474,
+          "narrow_blue_rescue": true,
+          "d_hi_b_own": 0.0980275496840477,
+          "ratio_bg_used": 0.2610860255396937
+        }
+      },
+      "reason": "bounded_blue_rescue",
+      "valid": true
+    },
+    {
+      "frame": "A1007.CR2",
+      "params_before": {
+        "ev": -0.25,
+        "temp": -0.1755,
+        "tint": 0.195,
+        "sat": 1.0061,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.25,
+        "temp": -0.0582,
+        "tint": 0.1376,
+        "sat": 1.0084,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.25,
+      "ev_after": -0.25,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "diagnostics": {
+        "blue_guard": {
+          "guard": [
+            1.06,
+            1.18,
+            0.65,
+            0.48
+          ],
+          "ratio_bg": 0.3237627337530844,
+          "applied": false,
+          "base_bg": 0.4331423358384038,
+          "reason": "below_valid_ratio"
+        }
+      },
+      "reason": "blue_rescue_off_natural_wb",
+      "valid": true
+    },
+    {
+      "frame": "A1033.CR2",
+      "params_before": {
+        "ev": -0.25,
+        "temp": 0.07,
+        "tint": 0.0185,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.033,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.4366,
+        "temp": 0.07,
+        "tint": 0.0185,
+        "sat": 1.02,
+        "contrast": 1.4586,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.1026,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.25,
+      "ev_after": -0.4366,
+      "blacks_before": null,
+      "blacks_after": -0.1026,
+      "contrast_before": 1.3,
+      "contrast_after": 1.4586,
+      "diagnostics": {
+        "overlift": {},
+        "thin": {
+          "span_d_g": 1.120918869972229,
+          "bright_share": 0.8505,
+          "applied": false
+        },
+        "ultra": {
+          "applied": true,
+          "ev_before": -0.25,
+          "ev_after": -0.4365776112079621,
+          "pull": 0.18657761120796212,
+          "blacks_lowered": 0.10261768616437918,
+          "contrast_after": 1.4585909695267678,
+          "q25": 0.7545004338026047,
+          "iqr_25_90": 0.05763457715511322
+        }
+      },
+      "reason": "unexplained",
+      "valid": false
+    },
+    {
+      "frame": "A262.arw",
+      "params_before": {
+        "ev": 1.4518,
+        "temp": 0.1165,
+        "tint": -0.0348,
+        "sat": 1.0177,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.31,
+        "matrix": [
+          [
+            1.3280094072419708,
+            -0.2906642439656874,
+            -0.037345163276283365
+          ],
+          [
+            -0.06702215123083978,
+            1.2817019018476614,
+            -0.2146797506168217
+          ],
+          [
+            0.0003522404680219252,
+            -0.16174072573789897,
+            1.161388485269877
+          ]
+        ],
+        "highlights": -0.104,
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": 1.4942,
+        "temp": -0.0344,
+        "tint": 0.1096,
+        "sat": 1.0159,
+        "contrast": 1.3827,
+        "midtone": 0.2522,
+        "shoulder": 0.3441,
+        "matrix": [
+          [
+            1.3280094072419708,
+            -0.2906642439656874,
+            -0.037345163276283365
+          ],
+          [
+            -0.06702215123083978,
+            1.2817019018476614,
+            -0.2146797506168217
+          ],
+          [
+            0.0003522404680219252,
+            -0.16174072573789897,
+            1.161388485269877
+          ]
+        ],
+        "highlights": -0.2,
+        "chroma_preserve": 0.4
+      },
+      "ev_before": 1.4518,
+      "ev_after": 1.4942,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3827,
+      "diagnostics": {
+        "base_diagnostics": {
+          "near_saturated_blocks_excluded": 1977
+        }
+      },
+      "reason": "sony_craw_base_recovery",
+      "valid": true
+    },
+    {
+      "frame": "A263.arw",
+      "params_before": {
+        "ev": -0.25,
+        "temp": 0.1391,
+        "tint": 0.0394,
+        "sat": 1.0141,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.3280094072419708,
+            -0.2906642439656874,
+            -0.037345163276283365
+          ],
+          [
+            -0.06702215123083978,
+            1.2817019018476614,
+            -0.2146797506168217
+          ],
+          [
+            0.0003522404680219252,
+            -0.16174072573789897,
+            1.161388485269877
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "params_after": {
+        "ev": -0.25,
+        "temp": 0.0895,
+        "tint": 0.1325,
+        "sat": 1.0112,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.3280094072419708,
+            -0.2906642439656874,
+            -0.037345163276283365
+          ],
+          [
+            -0.06702215123083978,
+            1.2817019018476614,
+            -0.2146797506168217
+          ],
+          [
+            0.0003522404680219252,
+            -0.16174072573789897,
+            1.161388485269877
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "ev_before": -0.25,
+      "ev_after": -0.25,
+      "blacks_before": null,
+      "blacks_after": null,
+      "contrast_before": 1.3,
+      "contrast_after": 1.3,
+      "diagnostics": {
+        "base_diagnostics": {
+          "near_saturated_blocks_excluded": 2246
+        }
+      },
+      "reason": "sony_craw_base_recovery",
+      "valid": true
+    }
+  ]
+}

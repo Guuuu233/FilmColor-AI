@@ -285,6 +285,13 @@ def estimate_base_blocks(
         rows, cols = np.arange(hb) * block, np.arange(wb) * block
         inside = ((rows >= t) & (rows + block <= t + h))[:, None] & ((cols >= l) & (cols + block <= l + w))[None, :]
         valid &= inside
+    # T4x: lossy cRAW can clip just below the nominal white level; keep exact unit-white fixtures.
+    sp_max = sp.max(-1)
+    near_sat = valid & (sp_max > 0.9985) & (sp_max < 1.0)
+    near_sat_blocks = 0
+    if near_sat.any() and int((valid & ~near_sat).sum()) >= 100:
+        near_sat_blocks = int(near_sat.sum())
+        valid = valid & ~near_sat
     rel_std_map = _neighbourhood_rel_std(sp)
     Y = sp.mean(-1)
 
@@ -357,6 +364,8 @@ def estimate_base_blocks(
     )
     if mode_seed:
         diagnostics["mode_seed"] = True
+    if near_sat_blocks > 0:
+        diagnostics["near_saturated_blocks_excluded"] = near_sat_blocks
     if bare_backlight_excluded:
         diagnostics["bare_backlight_excluded"] = True
     if relaxed_uniformity:

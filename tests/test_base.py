@@ -307,3 +307,54 @@ def test_t4w_bare_backlight_still_excludes_neutral_or_cool_light_leak():
     assert est.diagnostics.get("bare_backlight_excluded") is True
     assert any("bare backlight" in w for w in est.warnings)
     assert rel_err(est.rgb, dense_image) < 0.01
+
+
+def test_t4x_near_saturated_sony_craw_blocks_excluded_but_unit_white_preserved():
+    """T4x (fixes A262.arw, A263.arw): Sony lossy cRAW clips highlight quantization just below white level (~0.9993).
+    1) When near-saturated blocks (0.9985 < sp_max < 1.0) appear alongside real film base and remaining valid blocks >= 100:
+       - estimate_base_blocks excludes the near-saturated blocks and logs near_saturated_blocks_excluded > 0.
+       - Base is accurately estimated from the real film base.
+    2) Unit white (sp == 1.0) blocks are preserved (sp_max < 1.0 condition), keeping exact synthetic fixtures intact.
+    3) When remaining valid blocks < 100: near_saturated blocks are NOT excluded (failsafe protection)."""
+    hb, wb = 30, 30  # 900 blocks
+    block = 24
+
+    # 1. Near-saturated Sony cRAW blocks (e.g. 5% = 45 blocks of [0.9993, 0.9991, 0.9993])
+    # Real orange base blocks (e.g. 100 blocks of [0.14, 0.28, 0.13])
+    # Dense film image (755 blocks of [0.02, 0.04, 0.02])
+    sp1 = np.zeros((hb, wb, 3), dtype=np.float32)
+    sp_sat1 = np.zeros((hb, wb), dtype=bool)
+
+    dense_img = np.array([0.02, 0.04, 0.02], dtype=np.float32)
+    real_base = np.array([0.14, 0.28, 0.13], dtype=np.float32)
+    sony_craw_clip = np.array([0.9993, 0.9991, 0.9993], dtype=np.float32)
+
+    sp1[:] = dense_img
+    sp1[:3, :] = sony_craw_clip  # 90 blocks of near-sat (sp_max ~ 0.9993)
+    sp1[5:10, :20] = real_base   # 100 blocks of true film base
+
+    est1 = estimate_base_blocks(sp1, sp_sat1, block=block, top_frac=0.05, max_rel_std=0.03, chroma_tol=0.05)
+    assert est1.diagnostics.get("near_saturated_blocks_excluded", 0) == 90
+    assert rel_err(est1.rgb, real_base) < 0.02
+    assert max(est1.rgb) < 0.50  # Must not pick the near-saturated ~0.9993 blocks
+
+    # 2. Synthetic ideal unit-white fixture: sp == 1.0 is preserved (not in (0.9985, 1.0))
+    # When all valid blocks are ideal 1.0 white base, it should not be excluded by near_sat.
+    sp2 = np.ones((hb, wb, 3), dtype=np.float32)
+    sp_sat2 = np.zeros((hb, wb), dtype=bool)
+
+    est2 = estimate_base_blocks(sp2, sp_sat2, block=block, top_frac=0.10, max_rel_std=0.03, chroma_tol=0.05)
+    assert "near_saturated_blocks_excluded" not in est2.diagnostics
+    assert np.allclose(est2.rgb, [1.0, 1.0, 1.0], atol=1e-3)
+
+    # 3. Failsafe protection: if remaining valid blocks < 100, near_sat exclusion does NOT trigger
+    sp3 = np.zeros((hb, wb, 3), dtype=np.float32)
+    sp_sat3 = np.zeros((hb, wb), dtype=bool)
+    # 70 blocks of near-sat ([0.9993, 0.9991, 0.9993]) and 50 blocks of real base ([0.14, 0.28, 0.13])
+    # Total valid blocks = 120, so valid & ~near_sat = 50 < 100 blocks
+    sp3[10:14, 10:20] = sony_craw_clip   # 40 blocks of 3x3 uniform interior
+    sp3[16:20, 10:20] = real_base        # 40 blocks of 3x3 uniform interior
+    # Remaining blocks are 0 (invalid)
+
+    est3 = estimate_base_blocks(sp3, sp_sat3, block=block, top_frac=0.20, max_rel_std=0.03, chroma_tol=0.20)
+    assert "near_saturated_blocks_excluded" not in est3.diagnostics

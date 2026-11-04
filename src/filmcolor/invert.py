@@ -244,9 +244,9 @@ def blue_white_guard(d_hi, guard, base=None) -> tuple[tuple[float, float, float]
         info["base_bg"] = bg
         if bg >= values[3]:
             return tuple(d), info
-    if ratio < 0.55:  # T4n/T4u/T4w: retain low-R/G flare rejection; rescue normal/warm narrow-blue spans
-        if d[0] > 0.96 * d[1]:
-            d_b = d[2] + 0.25 * weight * (max(d[2], target * d[1]) - d[2])
+    if ratio < 0.55:  # T4x: retain low-R/G flare rejection; bounded rescue for collapsed narrow-blue spans
+        if d[0] > 0.96 * d[1] and ratio < 0.28:
+            d_b = d[2] + 0.85 * (0.28 * d[1] - d[2])
             return (d[0], d[1], d_b), dict(info, applied=True, narrow_blue_rescue=True,
                                           d_hi_b_own=d[2], ratio_bg_used=d_b / d[1])
         return tuple(d), dict(info, reason="below_valid_ratio")

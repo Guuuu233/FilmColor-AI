@@ -1704,3 +1704,162 @@ def test_t4w_overlift_moderate_respects_bright_share_wide_span_and_preset_shadow
     cfg_uncomp = dict(cfg_portrait, overlift_mod_shadow_comp=0.0)
     res_uncomp = estimate_params_v3(P_p, None, cfg_uncomp, span_d_g=0.85)
     assert res_uncomp["diagnostics"].get("overlift_damp", {}).get("mode") == "moderate"
+
+
+def test_t4x_thin_flat_check_darkens_washed_out_short_span_frame():
+    """T4x (fixes 19960812D-22-las-vegas): flat high-q25 thin negatives where stretched floor
+    bypassed thin_bright_share_max (bright_share >= 0.42).
+    - When span_d_g < 0.60, base_p['ev'] <= 0.0, q25 >= 0.62, and (q90 - q25) <= 0.145:
+      triggers thin_negative with mode='flat_bright', pulling down EV and blacks."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+    # Scene with range_stops >= 1.0 (so not low info), bright_share > 0.45,
+    # and tightly clustered high-q25 / narrow IQR:
+    y = np.concatenate([
+        rng.uniform(0.12, 0.18, 2000),
+        rng.uniform(0.48, 0.62, 96000),
+        rng.uniform(0.80, 0.90, 2000),
+    ]).astype(np.float32)
+    rng.shuffle(y)
+    P = np.stack([y, y, y], -1).reshape(200, 500, 3)
+
+    span = 0.51  # < 0.60
+    res = estimate_params_v3(P, None, NOREF_V3, span_d_g=span)
+
+    assert res["status"] == "ok"
+    tn = res["diagnostics"].get("thin_negative")
+    assert tn is not None
+    assert tn["applied"] is True
+    assert tn.get("mode") == "flat_bright"
+    assert tn["span_d_g"] == pytest.approx(span)
+    assert tn["bright_share"] > 0.45
+    assert tn["q25"] >= 0.64
+    assert tn["iqr_25_90"] <= 0.10
+    assert tn["pull"] > 0.0
+    assert tn["blacks_lowered"] > 0.0
+    assert res["params"]["ev"] < tn["ev_before"]
+    assert res["params"]["blacks"] < 0.0
+
+
+def test_t4x_thin_flat_check_skips_normal_iqr_highkey_frames():
+    """T4x: thin_flat_check does NOT trigger on:
+    1) High-key frames with normal dynamic gradation (iqr_25_90 > 0.145), even with short span.
+    2) Dense or normal negatives where span_d_g >= 0.60."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+
+    # 1. High-key frame with normal dynamic gradation (q25 >= 0.62 but iqr > 0.145):
+    # e.g. q25 ~ 0.65, q90 ~ 0.80 -> iqr ~ 0.156 > 0.145
+    y_normal_iqr = np.concatenate([
+        rng.uniform(0.35, 0.40, 30000),
+        rng.uniform(0.40, 0.70, 40000),
+        rng.uniform(0.70, 0.90, 30000),
+    ]).astype(np.float32)
+    P_normal_iqr = np.stack([y_normal_iqr, y_normal_iqr, y_normal_iqr], -1).reshape(200, 500, 3)
+
+    res_iqr = estimate_params_v3(P_normal_iqr, None, NOREF_V3, span_d_g=0.51)
+    tn_iqr = res_iqr["diagnostics"].get("thin_negative")
+    bc_iqr = res_iqr["diagnostics"]["backlit_check"]
+    assert bc_iqr["p25"] >= 0.62
+    assert (bc_iqr["p90"] - bc_iqr["p25"]) > 0.145
+    assert tn_iqr is None or not tn_iqr.get("applied") or tn_iqr.get("mode") != "flat_bright"
+
+    # 2. Scene with span_d_g = 0.65 >= 0.60:
+    y_flat = np.concatenate([
+        rng.uniform(0.12, 0.18, 2000),
+        rng.uniform(0.48, 0.62, 96000),
+        rng.uniform(0.80, 0.90, 2000),
+    ]).astype(np.float32)
+    rng.shuffle(y_flat)
+    P_flat = np.stack([y_flat, y_flat, y_flat], -1).reshape(200, 500, 3)
+
+    res_span = estimate_params_v3(P_flat, None, NOREF_V3, span_d_g=0.65)
+    tn_span = res_span["diagnostics"].get("thin_negative")
+    assert tn_span is None or not tn_span.get("applied") or tn_span.get("mode") != "flat_bright"
+
+
+def test_t4x_ultra_flat_bright_recovers_contrast_on_overexposed_plateau_but_skips_narrow_cloud_frame():
+    """T4x (fixes A1004.DNG, A1033.CR2):
+    1) Overexposed plateau negative: all pixels sit on dense shoulder, range_stops >= 1.20,
+       q25 >= 0.72, and iqr_25_90 <= 0.068:
+       - Triggers ultra_flat_bright: applied=True
+       - Pulls down EV and blacks, while boosting contrast.
+    2) Narrow dynamic range cloud frame (e.g. A135, range_stops < 1.20):
+       - Strictly skips ultra_flat_bright, preserving soft flat clouds."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+
+    # 1. Overexposed plateau with ground/subject range_stops >= 1.20 (e.g. ~2.5 stops)
+    y_uf = np.concatenate([
+        rng.uniform(0.12, 0.18, 2000),
+        rng.uniform(0.68, 0.76, 96000),
+        rng.uniform(0.85, 0.95, 2000),
+    ]).astype(np.float32)
+    rng.shuffle(y_uf)
+    P_uf = np.stack([y_uf, y_uf, y_uf], -1).reshape(200, 500, 3)
+
+    # Use span_d_g = 1.0 (>= 0.60) to isolate from thin_flat_check
+    res_uf = estimate_params_v3(P_uf, None, NOREF_V3, span_d_g=1.0)
+    assert res_uf["stats"]["range_stops"] >= 1.20
+    uf = res_uf["diagnostics"].get("ultra_flat_bright")
+    assert uf is not None
+    assert uf["applied"] is True
+    assert uf["pull"] > 0.0
+    assert uf["blacks_lowered"] > 0.0
+    assert uf["contrast_after"] > NOREF_V3["base_contrast"]
+    assert res_uf["params"]["ev"] < uf["ev_before"]
+    assert res_uf["params"]["blacks"] < 0.0
+    assert res_uf["params"]["contrast"] == pytest.approx(uf["contrast_after"], abs=5e-5)
+
+    # 2. Narrow cloud frame: range_stops < 1.20 (e.g. ~0.95 stops, modeled after A135)
+    y_cloud = np.concatenate([
+        rng.uniform(0.38, 0.42, 2000),
+        rng.uniform(0.68, 0.76, 96000),
+        rng.uniform(0.78, 0.82, 2000),
+    ]).astype(np.float32)
+    rng.shuffle(y_cloud)
+    P_cloud = np.stack([y_cloud, y_cloud, y_cloud], -1).reshape(200, 500, 3)
+
+    res_cloud = estimate_params_v3(P_cloud, None, NOREF_V3, span_d_g=1.0)
+    assert 0.85 <= res_cloud["stats"]["range_stops"] < 1.20
+    assert "ultra_flat_bright" not in res_cloud["diagnostics"]
+
+
+def test_t4x_overlift_moderate_covers_070_to_085_ev_band():
+    """T4x: overlift_mod_check threshold lowered from 0.85 to 0.70 EV (ev_pivot: 0.58, ev_ramp: 0.55).
+    Verifies scenes in the [0.70, 0.85) EV band with span_d_g < 1.15, bright_share < 0.20,
+    and q25 >= 0.40 trigger moderate overlift damping."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    n = 100_000
+    # y centered around 0.095..0.100 produces ev_before in [0.72, 0.84]
+    y = rng.uniform(0.098 * 0.7, 0.098 * 1.3, n).astype(np.float32)
+    P = np.stack([y, y, y], -1).reshape(200, 500, 3)
+
+    span = 0.82
+    res_on = estimate_params_v3(P, None, NOREF_V3, span_d_g=span)
+    res_off = estimate_params_v3(P, None, dict(NOREF_V3, overlift_mod_check=False), span_d_g=span)
+
+    assert "overlift_damp" in res_on["diagnostics"]
+    od = res_on["diagnostics"]["overlift_damp"]
+    assert od["applied"] is True
+    assert od.get("mode") == "moderate"
+    assert "overlift_damp" not in res_off["diagnostics"]
+
+    ev0 = od["ev_before"]
+    q25 = od["q25_before"]
+    # Key check: EV falls strictly in the newly covered [0.70, 0.85) EV range
+    assert 0.70 <= ev0 < 0.85
+    assert q25 >= NOREF_V3["overlift_mod_q25_min"]
+    assert od["pull"] > 0.0
+    assert od["ev_after"] < ev0
+    assert od["blacks_lowered"] > 0.0
+    assert res_on["params"]["ev"] < res_off["params"]["ev"]
+    assert res_on["params"]["blacks"] < res_off["params"].get("blacks", 0.0)

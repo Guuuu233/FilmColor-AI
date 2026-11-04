@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4w-2026-11-03",          # T4w: moderate-EV lifted-shadow damping and orange-mask / narrow-blue guards;
+    rev="t4x-2026-11-03",          # T4x: flat-negative recovery, lower moderate-EV band and bounded blue rescue;
+                                   # T4w: moderate-EV lifted-shadow damping and orange-mask / narrow-blue guards;
                                    # T4v: TIFF transfer curves, 8-bit input and pre-stretched signal reconstruction;
                                    # T4u: pre-stretched TIFFs, unsupported positive tint and narrow-blue rescue;
                                    # T4t: zero-clipped white points, slide mounts and conflicting tint evidence;
@@ -447,6 +448,15 @@ NOREF_V3 = dict(
     thin_neg_check=True, thin_span_max=0.62, thin_bright_share_max=0.42, thin_span_zero=0.46, thin_span_ramp=0.16,
     thin_ev_min=-0.45, thin_ev_max=0.60, thin_blacks_span=0.56, thin_blacks_gain=1.0, thin_blacks_max=0.20,
     thin_suppress_backlit_span=0.58,
+    # T4x: stretched high-q25 floors that bypass the ordinary thin-negative bright-share gate
+    thin_flat_check=True, thin_flat_span_max=0.60, thin_flat_q25_min=0.62,
+    thin_flat_iqr_max=0.145, thin_flat_iqr_pivot=0.145, thin_flat_ev_min=-0.65,
+    thin_flat_ev_gain=5.0, thin_flat_blacks_max=0.18,
+    # T4x: dense overexposed plateaus with enough full-frame range to separate them from flat clouds
+    ultra_flat_check=True, ultra_flat_min_range_stops=1.20, ultra_flat_q25_min=0.72,
+    ultra_flat_iqr_max=0.068, ultra_flat_iqr_pivot=0.068, ultra_flat_ev_gain=18.0,
+    ultra_flat_max_pull=0.55, ultra_flat_blacks_gain=0.55, ultra_flat_blacks_max=0.30,
+    ultra_flat_contrast_gain=0.85, ultra_flat_contrast_cap=1.75,
     # T4l metering frame (_metering_mask): with an opaque holder covering >= meter_holder_min_share of the frame, the
     # mask is cut to the film box (holder.film_box) inset by meter_box_inset of its height / width on each side;
     # then rows / columns at the mask's edges with >= meter_strip_share of their mask pixels at max channel <=
@@ -471,7 +481,7 @@ NOREF_V3 = dict(
     overlift_blacks_gain=0.10, overlift_blacks_max=0.06,
     overlift_max_span=1.15, overlift_max_bright_share=0.05,  # T4r: exempt wide-range bright scenes
     # T4w: moderate EV on short-range frames with lifted shadows, allowing for the preset's shadow lift
-    overlift_mod_check=True, overlift_mod_ev_min=0.85, overlift_mod_ev_pivot=0.70, overlift_mod_ev_ramp=0.45,
+    overlift_mod_check=True, overlift_mod_ev_min=0.70, overlift_mod_ev_pivot=0.58, overlift_mod_ev_ramp=0.55,
     overlift_mod_q25_min=0.40, overlift_mod_q25_pivot=0.38, overlift_mod_max_bright_share=0.20,
     overlift_mod_gain=4.0, overlift_mod_max_pull=0.45, overlift_mod_shadow_comp=0.35,
     ev_refine_p98_max=0.96,        # T4f: the EV refinement brightens only while full-frame encoded p98 stays <= this
@@ -1102,6 +1112,36 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
     rmp25 = float(cfg.get("backlit_ramp_p25", rmp))
     w_bl = _ramp(q90, cfg["backlit_p90"], cfg["backlit_p90"] + rmp) * _ramp(cfg["backlit_p25"] - q25, 0.0, rmp25)
     out["diagnostics"]["backlit_check"] = dict(p25=q25, p90=q90, weight=w_bl)
+    iqr_25_90 = float(q90 - q25)
+    if (cfg.get("thin_flat_check") and span_d_g is not None and not thin.get("applied")
+            and span_d_g < cfg["thin_flat_span_max"] and base_p["ev"] <= 0.0
+            and q25 >= cfg["thin_flat_q25_min"] and iqr_25_90 <= cfg["thin_flat_iqr_max"]):
+        pull_f = float(np.clip((cfg["thin_flat_iqr_pivot"] - iqr_25_90) * cfg["thin_flat_ev_gain"],
+                               0.0, max(0.0, base_p["ev"] - cfg["thin_flat_ev_min"])))
+        if pull_f > 0.0:
+            ev_b4 = float(base_p["ev"])
+            blk_f = float(min(cfg["thin_flat_blacks_max"], pull_f * 0.45))
+            base_p["ev"] = float(ev_b4 - pull_f)
+            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_f, *EXTENDED_BOUNDS["blacks"]))
+            thin.update(applied=True, mode="flat_bright", ev_before=ev_b4, ev_after=base_p["ev"],
+                        pull=pull_f, blacks_lowered=blk_f, q25=float(q25), iqr_25_90=iqr_25_90)
+            out["diagnostics"]["thin_negative"] = thin
+    elif (cfg.get("ultra_flat_check") and st["range_stops"] >= cfg["ultra_flat_min_range_stops"]
+          and base_p["ev"] <= 0.0 and q25 >= cfg["ultra_flat_q25_min"]
+          and iqr_25_90 <= cfg["ultra_flat_iqr_max"]):
+        pull_uf = float(np.clip((cfg["ultra_flat_iqr_pivot"] - iqr_25_90) * cfg["ultra_flat_ev_gain"],
+                                0.0, cfg["ultra_flat_max_pull"]))
+        if pull_uf > 0.0:
+            ev_b4 = float(base_p["ev"])
+            blk_uf = float(min(cfg["ultra_flat_blacks_max"], pull_uf * cfg["ultra_flat_blacks_gain"]))
+            c_uf = float(min(cfg["ultra_flat_contrast_cap"],
+                             base_p["contrast"] + pull_uf * cfg["ultra_flat_contrast_gain"]))
+            base_p["ev"] = float(max(cfg["ev_limits"][0], ev_b4 - pull_uf))
+            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_uf, *EXTENDED_BOUNDS["blacks"]))
+            base_p["contrast"] = c_uf
+            out["diagnostics"]["ultra_flat_bright"] = dict(
+                applied=True, ev_before=ev_b4, ev_after=base_p["ev"], pull=pull_uf,
+                blacks_lowered=blk_uf, contrast_after=c_uf, q25=float(q25), iqr_25_90=iqr_25_90)
     if cfg.get("backlit_sky_check") and w_bl > 0:
         # T4k: a dark foreground needs a bright background to be backlit (_DSF9239: black frame gaps alone gave p25)
         w_bl *= _ramp(bright_share, cfg["backlit_sky_share_lo"], cfg["backlit_min_sky_share"])

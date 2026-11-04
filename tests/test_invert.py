@@ -284,24 +284,22 @@ def test_t4u_blue_white_guard_rescues_warm_highlight_narrow_blue_span_only():
     base_warm = (0.17, 0.225, 0.095)  # base_bg = 0.095 / 0.225 = 0.422 < 0.48
 
     # 1. Warm highlight with narrow blue span (A1006 signature):
-    # d_hi = (0.92, 0.78, 0.086): ratio_bg = 0.086 / 0.78 = 0.110 < 0.55
-    # Red-to-green ratio: d[0] / d[1] = 0.92 / 0.78 = 1.179 > 1.10
-    # Expected rescue:
-    # d_b = 0.086 + 0.25 * 0.65 * (max(0.086, 1.18 * 0.78) - 0.086)
-    # 1.18 * 0.78 = 0.9204
-    # d_b = 0.086 + 0.1625 * (0.9204 - 0.086) = 0.086 + 0.1625 * 0.8344 = 0.22159
+    # d_hi = (0.92, 0.78, 0.086): ratio_bg = 0.086 / 0.78 = 0.110 < 0.28
+    # Red-to-green ratio: d[0] / d[1] = 0.92 / 0.78 = 1.179 > 0.96
+    # T4x bounded rescue:
+    # d_b = 0.086 + 0.85 * (0.28 * 0.78 - 0.086) = 0.086 + 0.85 * (0.2184 - 0.086) = 0.19854
     d_warm = (0.92, 0.78, 0.086)
     out_warm, info_warm = blue_white_guard(d_warm, guard, base=base_warm)
     assert info_warm.get("applied") is True
     assert info_warm.get("narrow_blue_rescue") is True
     assert out_warm[0] == pytest.approx(0.92)
     assert out_warm[1] == pytest.approx(0.78)
-    assert out_warm[2] == pytest.approx(0.22159, abs=1e-3)
+    assert out_warm[2] == pytest.approx(0.19854, abs=1e-3)
     assert info_warm["d_hi_b_own"] == pytest.approx(0.086)
     assert info_warm["ratio_bg_used"] == pytest.approx(out_warm[2] / 0.78)
 
-    # 2. Blue flare / extreme collapse with low R/G (d[0] <= 1.10 * d[1]):
-    # d_flare = (0.632, 1.0, 0.154): d[0] / d[1] = 0.632 <= 1.10
+    # 2. Blue flare / extreme collapse with low R/G (d[0] <= 0.96 * d[1]):
+    # d_flare = (0.632, 1.0, 0.154): d[0] / d[1] = 0.632 <= 0.96
     d_flare = (0.632, 1.0, 0.154)
     out_flare, info_flare = blue_white_guard(d_flare, guard, base=base_warm)
     assert out_flare == d_flare
@@ -318,43 +316,37 @@ def test_t4u_blue_white_guard_rescues_warm_highlight_narrow_blue_span_only():
 
 
 def test_t4w_blue_white_guard_rescues_near_equal_rg_narrow_blue_but_rejects_flare():
-    """T4w (fixes A1005.CR2 & A1007.CR2): relaxes narrow blue rescue R/G threshold from 1.10 to 0.96.
-    1) d_hi = (0.632, 0.637, 0.098) (d[0]/d[1] = 0.992 > 0.96, A1005 signature) and
-       (0.680, 0.696, 0.225) (d[0]/d[1] = 0.977 > 0.96, A1007 signature) under base_bg < 0.48
-       trigger narrow_blue_rescue = True and lift d_hi_B.
-    2) Low R/G flare (0.632, 1.0, 0.154) (d[0]/d[1] = 0.632 <= 0.96) is still rejected (reason='below_valid_ratio')."""
+    """T4w/T4x (fixes A1005.CR2 & A1007.CR2):
+    1) d_hi = (0.632, 0.637, 0.098) (d[0]/d[1] = 0.992 > 0.96, ratio = 0.1538 < 0.28, A1005 signature)
+       under base_bg < 0.48 triggers narrow_blue_rescue = True and lifts d_hi_B to bounded 0.166306.
+    2) d_hi = (0.680, 0.696, 0.225) (ratio = 0.3233 >= 0.28, A1007 signature) under T4x is NOT rescued
+       (applied is False, reason='below_valid_ratio', out_1007 == d_a1007) avoiding yellow-green overcorrection.
+    3) Low R/G flare (0.632, 1.0, 0.154) (d[0]/d[1] = 0.632 <= 0.96) is still rejected (reason='below_valid_ratio')."""
     from filmcolor.invert import blue_white_guard
 
     guard = (1.06, 1.18, 0.65, 0.48)
     base_warm = (0.17, 0.225, 0.095)  # base_bg = 0.095 / 0.225 = 0.422 < 0.48
 
-    # 1. A1005 signature: d_hi = (0.632, 0.637, 0.098), d[0]/d[1] = 0.9915 > 0.96
+    # 1. A1005 signature: d_hi = (0.632, 0.637, 0.098), d[0]/d[1] = 0.9915 > 0.96, ratio = 0.1538 < 0.28
     d_a1005 = (0.632, 0.637, 0.098)
     out_1005, info_1005 = blue_white_guard(d_a1005, guard, base=base_warm)
     assert info_1005.get("applied") is True
     assert info_1005.get("narrow_blue_rescue") is True
     assert out_1005[0] == pytest.approx(0.632)
     assert out_1005[1] == pytest.approx(0.637)
-    # Expected d_b: 0.098 + 0.25 * 0.65 * (max(0.098, 1.18 * 0.637) - 0.098)
-    # 1.18 * 0.637 = 0.75166
-    # d_b = 0.098 + 0.1625 * (0.75166 - 0.098) = 0.20422
-    assert out_1005[2] == pytest.approx(0.20422, abs=1e-3)
+    # T4x: d_b = 0.098 + 0.85 * (0.28 * 0.637 - 0.098) = 0.166306
+    assert out_1005[2] == pytest.approx(0.166306, abs=1e-3)
     assert info_1005["d_hi_b_own"] == pytest.approx(0.098)
     assert info_1005["ratio_bg_used"] == pytest.approx(out_1005[2] / 0.637)
 
-    # 2. A1007 signature: d_hi = (0.680, 0.696, 0.225), d[0]/d[1] = 0.9765 > 0.96
+    # 2. A1007 signature: d_hi = (0.680, 0.696, 0.225), ratio = 0.225 / 0.696 = 0.3233 >= 0.28
+    # In T4x, ratio >= 0.28 does not trigger narrow_blue_rescue, leaving clear sky/sea untouched.
     d_a1007 = (0.680, 0.696, 0.225)
     out_1007, info_1007 = blue_white_guard(d_a1007, guard, base=base_warm)
-    assert info_1007.get("applied") is True
-    assert info_1007.get("narrow_blue_rescue") is True
-    assert out_1007[0] == pytest.approx(0.680)
-    assert out_1007[1] == pytest.approx(0.696)
-    # Expected d_b: 0.225 + 0.25 * 0.65 * (max(0.225, 1.18 * 0.696) - 0.225)
-    # 1.18 * 0.696 = 0.82128
-    # d_b = 0.225 + 0.1625 * (0.82128 - 0.225) = 0.32189
-    assert out_1007[2] == pytest.approx(0.32189, abs=1e-3)
-    assert info_1007["d_hi_b_own"] == pytest.approx(0.225)
-    assert info_1007["ratio_bg_used"] == pytest.approx(out_1007[2] / 0.696)
+    assert out_1007 == d_a1007
+    assert info_1007.get("applied") is False
+    assert info_1007.get("reason") == "below_valid_ratio"
+    assert "narrow_blue_rescue" not in info_1007
 
     # 3. Flare rejection: d_hi = (0.632, 1.0, 0.154), d[0]/d[1] = 0.632 <= 0.96
     d_flare = (0.632, 1.0, 0.154)
@@ -363,6 +355,55 @@ def test_t4w_blue_white_guard_rescues_near_equal_rg_narrow_blue_but_rejects_flar
     assert not info_flare.get("applied")
     assert info_flare.get("reason") == "below_valid_ratio"
     assert "narrow_blue_rescue" not in info_flare
+
+
+def test_t4x_blue_white_guard_caps_narrow_rescue_at_028_and_leaves_moderate_blue_untouched():
+    """T4x: narrow blue rescue caps target at 0.28 * d_G and only triggers when ratio < 0.28.
+    - Extreme collapsed ratios (0.11, 0.15) are rescued towards 0.28 * d_G (closing 85% of gap),
+      reaching ~0.255..0.261 < 0.28.
+    - Moderate blue spans (0.29, 0.32 >= 0.28) are untouched, avoiding yellow-green overcorrection."""
+    from filmcolor.invert import blue_white_guard
+
+    guard = (1.06, 1.18, 0.65, 0.48)
+    base_warm = (0.17, 0.225, 0.095)  # base_bg = 0.422 < 0.48
+
+    # 1. Extreme ratio = 0.1103 (e.g. A1006 signature: d_G = 0.78, d_B = 0.086):
+    # Target cap: 0.28 * 0.78 = 0.2184
+    # Rescued d_B = 0.086 + 0.85 * (0.2184 - 0.086) = 0.19854
+    # ratio_bg_used = 0.19854 / 0.78 = 0.25454
+    d1 = (0.92, 0.78, 0.086)
+    out1, info1 = blue_white_guard(d1, guard, base=base_warm)
+    assert info1.get("applied") is True
+    assert info1.get("narrow_blue_rescue") is True
+    assert out1[2] == pytest.approx(0.19854, abs=1e-4)
+    assert 0.25 <= info1["ratio_bg_used"] <= 0.26
+
+    # 2. Extreme ratio = 0.1538 (e.g. A1005 signature: d_G = 0.637, d_B = 0.098):
+    # Target cap: 0.28 * 0.637 = 0.17836
+    # Rescued d_B = 0.098 + 0.85 * (0.17836 - 0.098) = 0.166306
+    # ratio_bg_used = 0.166306 / 0.637 = 0.261077
+    d2 = (0.632, 0.637, 0.098)
+    out2, info2 = blue_white_guard(d2, guard, base=base_warm)
+    assert info2.get("applied") is True
+    assert info2.get("narrow_blue_rescue") is True
+    assert out2[2] == pytest.approx(0.166306, abs=1e-4)
+    assert 0.26 <= info2["ratio_bg_used"] <= 0.265
+
+    # 3. Moderate blue span with ratio = 0.29 >= 0.28 (d_G = 1.0, d_B = 0.29, d_R = 1.0):
+    d3 = (1.0, 1.0, 0.29)
+    out3, info3 = blue_white_guard(d3, guard, base=base_warm)
+    assert out3 == d3
+    assert info3.get("applied") is False
+    assert info3.get("reason") == "below_valid_ratio"
+    assert "narrow_blue_rescue" not in info3
+
+    # 4. Moderate blue span with ratio = 0.3233 >= 0.28 (e.g. A1007 signature: d_G = 0.696, d_B = 0.225):
+    d4 = (0.680, 0.696, 0.225)
+    out4, info4 = blue_white_guard(d4, guard, base=base_warm)
+    assert out4 == d4
+    assert info4.get("applied") is False
+    assert info4.get("reason") == "below_valid_ratio"
+    assert "narrow_blue_rescue" not in info4
 
 
 def test_t4l_self_ratio_white_point_lifts_only_a_channel_collapsed_against_its_own_midtones():

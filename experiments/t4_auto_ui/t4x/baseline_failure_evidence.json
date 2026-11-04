@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python",
+    "-I",
+    "-c",
+    "import sys; sys.path.insert(0,sys.argv[1]); import filmcolor.noref as n; print('baseline_noref=' + n.__file__,flush=True); import pytest; raise SystemExit(pytest.main(sys.argv[2:]+['-k','t4x','-q']))",
+    "/private/tmp/fc_t4x_baseline_20261104/src",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_noref.py",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_base.py",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_invert.py"
+  ],
+  "baseline_source_sha256": "368eb01a8ba68160612c2f3f29209883a015eb3f6a0c48ace129b17995da3251",
+  "failed": 5,
+  "passed": 1,
+  "deselected": 120,
+  "log_sha256": "e52b4f3a44049575167c3756539de4b9d82900ef59a91ac55ac023dd492bf265",
+  "test_sha256": {
+    "tests/test_noref.py": "b56149cba808c7584f9a91716346dd3cbb68ba757d96f2916a035f48e979a036",
+    "tests/test_base.py": "aec68d76f9c79d0db8ea98cffd09d74d75f72d8a2e5f4cb51124fc0613e24848",
+    "tests/test_invert.py": "0e808eb8f7312cdf7f57e5129c7eaa4c74138d9f7b1462da027edc64864287ae"
+  }
+}

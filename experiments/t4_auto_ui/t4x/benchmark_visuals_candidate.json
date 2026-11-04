@@ -1,0 +1,111 @@
+{
+  "source_sha256": "967dbd1fbf4ab5762df118bf132ecd8fc5481b5cdaf402f5300ba6a09e53ece2",
+  "frames": {
+    "blueneg:19960812D-22-las-vegas": {
+      "raw_sha256": "343e0f50d86c6274dd7425f661a5bc0df404c91554d53fb5e2ed87ab116cb46d",
+      "preview_image": "blueneg_19960812D-22-las-vegas_candidate.jpg",
+      "preview_image_sha256": "5c94ce43e4d6db7ce068e323043978e9a07253ca36897330a3b980760c91c415",
+      "params": {
+        "ev": -0.5654,
+        "temp": 0.1109,
+        "tint": -0.0723,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.1419,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 34.13932860049783
+    },
+    "blueneg:199807A-13-orlando-universal-studio": {
+      "raw_sha256": "43cf478bdbe8bcbddc059508cb99c2ccf5d4c6e7e92ccfc72dd8cb86dfa2ca5b",
+      "preview_image": "blueneg_199807A-13-orlando-universal-studio_candidate.jpg",
+      "preview_image_sha256": "a944ea41d416aee42ae137a3ad0757db39158198287995ac722a44f004cbb10f",
+      "params": {
+        "ev": 0.6633,
+        "temp": 0.1577,
+        "tint": -0.0026,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.2,
+        "blacks": -0.012,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 18.278245579103054
+    },
+    "shop:DSC_3825": {
+      "raw_sha256": "f37fa6738b3acfef27e89ec2ea542fb2a0240d67450e1a519ed5562a56d16b80",
+      "preview_image": "shop_DSC_3825_candidate.jpg",
+      "preview_image_sha256": "c9e0cec641944b1730fc4844d8f76d836579c95cb2a2efafb8906c7130cc9deb",
+      "params": {
+        "ev": 0.6389,
+        "temp": 0.0334,
+        "tint": 0.0862,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.1097265765068025,
+            -0.034523549444346345,
+            -0.07520302706245617
+          ],
+          [
+            -0.0433450999741582,
+            1.1686619027925926,
+            -0.1253168028184345
+          ],
+          [
+            0.0021249076998353872,
+            -0.14109266742039034,
+            1.138967759720555
+          ]
+        ],
+        "blacks": -0.0076,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 10.80957608773415
+    }
+  }
+}
