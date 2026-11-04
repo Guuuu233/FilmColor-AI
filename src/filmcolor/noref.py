@@ -386,7 +386,8 @@ def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4y-2026-11-04",          # T4y: bright short-span lifted-shadow damping and camera matrix support;
+    rev="t4z-2026-11-05",          # T4z: night backlit damping, extended flat negatives and holder metering;
+                                   # T4y: bright short-span lifted-shadow damping and camera matrix support;
                                    # T4x: flat-negative recovery, lower moderate-EV band and bounded blue rescue;
                                    # T4w: moderate-EV lifted-shadow damping and orange-mask / narrow-blue guards;
                                    # T4v: TIFF transfer curves, 8-bit input and pre-stretched signal reconstruction;
@@ -450,8 +451,8 @@ NOREF_V3 = dict(
     thin_ev_min=-0.45, thin_ev_max=0.60, thin_blacks_span=0.56, thin_blacks_gain=1.0, thin_blacks_max=0.20,
     thin_suppress_backlit_span=0.58,
     # T4x: stretched high-q25 floors that bypass the ordinary thin-negative bright-share gate
-    thin_flat_check=True, thin_flat_span_max=0.60, thin_flat_q25_min=0.62,
-    thin_flat_iqr_max=0.145, thin_flat_iqr_pivot=0.145, thin_flat_ev_min=-0.65,
+    thin_flat_check=True, thin_flat_span_max=0.72, thin_flat_q25_min=0.62,
+    thin_flat_iqr_max=0.20, thin_flat_iqr_pivot=0.20, thin_flat_ev_min=-0.65,
     thin_flat_ev_gain=5.0, thin_flat_blacks_max=0.18,
     # T4x: dense overexposed plateaus with enough full-frame range to separate them from flat clouds
     ultra_flat_check=True, ultra_flat_min_range_stops=1.20, ultra_flat_q25_min=0.72,
@@ -491,6 +492,12 @@ NOREF_V3 = dict(
     overlift_bright_anc_max=1.40, overlift_bright_med0_min=0.46,
     overlift_bright_q25_band=(0.475, 0.68), overlift_bright_q25_pivot=0.45,
     overlift_bright_gain=2.8, overlift_bright_max_pull=0.42,
+    # T4z: damp simultaneous backlit midtone and high-EV lifts in sparse-light night scenes
+    overlift_night_bl_check=True, overlift_night_bl_min_weight=0.65,
+    overlift_night_bl_max_bright_share=0.090,
+    overlift_night_bl_ev_min=1.50, overlift_night_bl_ev_pivot=1.35, overlift_night_bl_ev_ramp=0.55,
+    overlift_night_bl_q25_min=0.175, overlift_night_bl_q25_pivot=0.155,
+    overlift_night_bl_gain=3.6, overlift_night_bl_max_pull=0.55,
     ev_refine_p98_max=0.96,        # T4f: the EV refinement brightens only while full-frame encoded p98 stays <= this
     ev_anchor_p98_cap=True,        # T4f: a positive anchor ev is held to the same p98 ceiling (the task list puts the
                                    # ceiling on the refinement only, which left A012 at the anchor's +2.50 EV)
@@ -689,6 +696,7 @@ def _metering_mask(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> tuple[n
             box = np.zeros_like(m)
             box[t + dt : t + bh - dt, l + dl : l + bw - dl] = True
             m &= box
+            m &= ~hold
             diag.update(film_box=[t, l, bh, bw], box_inset=[dt, dl])
     if cfg.get("meter_trim_strips") and m.any():
         black = P.max(axis=-1) <= cfg["meter_strip_luma"]
@@ -1309,6 +1317,23 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
                 out["diagnostics"]["overlift_damp"] = dict(
                     applied=True, mode="bright_short_span", ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
                     q25_before=float(q25), blacks_lowered=blk_drop)
+    elif (cfg.get("overlift_night_bl_check")
+          and w_bl >= cfg["overlift_night_bl_min_weight"]
+          and bright_share < cfg["overlift_night_bl_max_bright_share"]
+          and base_p["ev"] >= cfg["overlift_night_bl_ev_min"]
+          and ev_lowered == 0.0
+          and q25 >= cfg["overlift_night_bl_q25_min"]):
+        ev0_ol = float(base_p["ev"])
+        ramp_ev = float(np.clip((ev0_ol - cfg["overlift_night_bl_ev_pivot"]) / cfg["overlift_night_bl_ev_ramp"], 0.0, 1.0))
+        pull = float(np.clip(cfg["overlift_night_bl_gain"] * (q25 - cfg["overlift_night_bl_q25_pivot"]) * ramp_ev,
+                             0.0, cfg["overlift_night_bl_max_pull"]))
+        if pull > 0.0:
+            blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
+            base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
+            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
+            out["diagnostics"]["overlift_damp"] = dict(
+                applied=True, mode="night_backlit_double", ev_before=ev0_ol, ev_after=base_p["ev"],
+                pull=pull, q25_before=float(q25), w_bl=float(w_bl), blacks_lowered=blk_drop)
 
     # 6. Contrast relief (T4b, encoded output): only a very wide frame (encoded luminance p90 - p10 above
     #    contrast_spread_max) with both ends clipped gets a lower contrast, down to the lower bound

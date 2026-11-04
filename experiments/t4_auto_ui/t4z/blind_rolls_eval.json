@@ -1,0 +1,3852 @@
+{
+  "source_content_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+  "rolls": {
+    "A7R5_RAW": {
+      "single_frame": [
+        {
+          "rel": "DSC01683.ARW",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.25,
+            "temp": -0.112,
+            "tint": 0.0644,
+            "sat": 1.0125,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.11366445571184158,
+              0.1592736691236496,
+              0.0643930733203888
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            0.7474101185798645,
+            0.8306458592414856,
+            0.9340059861540795
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.5635428428649902,
+            0.5572091341018677,
+            0.3962189555168152
+          ],
+          "core_srgb_q50": [
+            0.5679770708084106,
+            0.5616004467010498,
+            0.3989620804786682
+          ],
+          "raw_sha256": "04a4bdac6718dc180cd01b4ad6aeec0115379129016e17acfd512cc0219aae0b",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01683.ARW"
+        },
+        {
+          "rel": "DSC01684.ARW",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 1.1648,
+            "temp": -0.0999,
+            "tint": 0.0918,
+            "sat": 1.0181,
+            "contrast": 1.3165,
+            "midtone": 0.2369,
+            "shoulder": 0.2448,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "highlights": -0.016,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.11363393813371658,
+              0.1590295284986496,
+              0.0644998848438263
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            0.8935546875,
+            1.0843727588653564,
+            1.2329068751335144
+          ],
+          "ev": 1.1648,
+          "srgb_q50": [
+            0.48093560338020325,
+            0.4270065426826477,
+            0.3513087332248688
+          ],
+          "core_srgb_q50": [
+            0.48929131031036377,
+            0.4358004629611969,
+            0.35930073261260986
+          ],
+          "raw_sha256": "93e9af542653dfc78d0351ad5faa11beb64450fcf5d0190af5d7fa0e9bdd6180",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01684.ARW"
+        },
+        {
+          "rel": "DSC01688.ARW",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 1.3056,
+            "temp": -0.1062,
+            "tint": 0.0877,
+            "sat": 1.0085,
+            "contrast": 1.301,
+            "midtone": 0.23,
+            "shoulder": 0.2215,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "highlights": -0.4,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.11567864567041397,
+              0.16305790841579437,
+              0.06620889902114868
+            ],
+            "warnings": [
+              "31% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.0357006788253784,
+            1.172123670578003,
+            1.3324946477413175
+          ],
+          "ev": 1.3056,
+          "srgb_q50": [
+            0.5126379728317261,
+            0.446368932723999,
+            0.34690621495246887
+          ],
+          "core_srgb_q50": [
+            0.5215668678283691,
+            0.45366907119750977,
+            0.35477444529533386
+          ],
+          "raw_sha256": "4913327896ba79dace7058dde98fc00f1176fb715038bd56e9401fbb3a4bf5a9",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01688.ARW"
+        },
+        {
+          "rel": "DSC01692.ARW",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 0.0924,
+            "temp": 0.1228,
+            "tint": 0.0678,
+            "sat": 1.0161,
+            "contrast": 1.4,
+            "midtone": 0.2831,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.24617379903793335,
+              0.6625772714614868,
+              0.4168459475040436
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.320205569267273,
+            1.756451964378357,
+            1.9244402647018433
+          ],
+          "ev": 0.0924,
+          "srgb_q50": [
+            0.3720587193965912,
+            0.4376600384712219,
+            0.43559229373931885
+          ],
+          "core_srgb_q50": [
+            0.37767353653907776,
+            0.44256091117858887,
+            0.4414612650871277
+          ],
+          "raw_sha256": "4003b0891e408c2147584ad1e1fca3b0636d33d8c20c8a51d9fb8b9a5664878a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01692.ARW"
+        },
+        {
+          "rel": "DSC01694.ARW",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.0552,
+            "temp": 0.0459,
+            "tint": 0.2214,
+            "sat": 1.0114,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.11447317898273468,
+              0.16255435347557068,
+              0.06640726327896118
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            0.9296652674674988,
+            0.942011296749115,
+            1.0345376914143563
+          ],
+          "ev": -0.0552,
+          "srgb_q50": [
+            0.47443950176239014,
+            0.5610154867172241,
+            0.4127289354801178
+          ],
+          "core_srgb_q50": [
+            0.48064929246902466,
+            0.5677614212036133,
+            0.419741153717041
+          ],
+          "raw_sha256": "cd1152242c8bc9d831c06277ab5392fe7bff44d7bc9a1497d12ffa32fc9dcbfd",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01694.ARW"
+        },
+        {
+          "rel": "DSC01695.ARW",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 1.2357,
+            "temp": -0.1453,
+            "tint": 0.0377,
+            "sat": 1.0138,
+            "contrast": 1.3,
+            "midtone": 0.2945,
+            "shoulder": 0.3167,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "highlights": -0.436,
+            "shadows": 0.1289,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.11316090822219849,
+              0.1590295284986496,
+              0.06500343233346939
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.122499704360962,
+            1.3708124160766602,
+            1.5009896755218506
+          ],
+          "ev": 1.2357,
+          "srgb_q50": [
+            0.45864659547805786,
+            0.39221030473709106,
+            0.33081409335136414
+          ],
+          "core_srgb_q50": [
+            0.46291279792785645,
+            0.39769458770751953,
+            0.3353729546070099
+          ],
+          "raw_sha256": "c59ab4a86841027a4a34f1b2f4c0601fa8e8ac224b333806cf4a2e541b848e6a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01695.ARW"
+        }
+      ],
+      "whole_roll": [
+        {
+          "rel": "DSC01683.ARW",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.25,
+            "temp": 0.0344,
+            "tint": -0.0106,
+            "sat": 1.0183,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.22455327723859608,
+              0.6044348628412044,
+              0.38021681063896706
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.2535413729381285,
+            "level_diff": 0.588947785246524,
+            "d_lo_shared": 0.42909992730104274,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.2462177723646164,
+              0.6627496480941772,
+              0.4168994426727295
+            ],
+            "own_rgb": [
+              0.11373993754386902,
+              0.15918445587158203,
+              0.06427516788244247
+            ]
+          },
+          "d_hi": [
+            1.043104887008667,
+            1.4098514318466187,
+            1.6194796562194824
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.498494029045105,
+            0.5791311264038086,
+            0.5171807408332825
+          ],
+          "core_srgb_q50": [
+            0.503480076789856,
+            0.5829300880432129,
+            0.5195478200912476
+          ],
+          "raw_sha256": "04a4bdac6718dc180cd01b4ad6aeec0115379129016e17acfd512cc0219aae0b",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01683.ARW"
+        },
+        {
+          "rel": "DSC01684.ARW",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 1.025,
+            "temp": 0.2095,
+            "tint": 0.1057,
+            "sat": 1.019,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.22455327723859608,
+              0.6044348628412044,
+              0.38021681063896706
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.2533521924383884,
+            "level_diff": 0.588979194582487,
+            "d_lo_shared": 0.42909992730104274,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.2462177723646164,
+              0.6627496480941772,
+              0.4168994426727295
+            ],
+            "own_rgb": [
+              0.11368218064308167,
+              0.15896350145339966,
+              0.06438323855400085
+            ]
+          },
+          "d_hi": [
+            1.1893659830093384,
+            1.664244532585144,
+            1.9167380332946777
+          ],
+          "ev": 1.025,
+          "srgb_q50": [
+            0.4059104919433594,
+            0.4392954111099243,
+            0.4550812840461731
+          ],
+          "core_srgb_q50": [
+            0.4134666919708252,
+            0.4464104175567627,
+            0.46160709857940674
+          ],
+          "raw_sha256": "93e9af542653dfc78d0351ad5faa11beb64450fcf5d0190af5d7fa0e9bdd6180",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01684.ARW"
+        },
+        {
+          "rel": "DSC01688.ARW",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 1.0052,
+            "temp": 0.0908,
+            "tint": 0.0804,
+            "sat": 1.0129,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "highlights": -0.178,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.2710280403898089,
+              0.7295319775942127,
+              0.4589085422309312
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.2510525185491578,
+            "level_diff": 0.5789721171963681,
+            "d_lo_shared": 0.3474051000171425,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.2462177723646164,
+              0.6627496480941772,
+              0.4168994426727295
+            ],
+            "own_rgb": [
+              0.11571770161390305,
+              0.1629728078842163,
+              0.0661102682352066
+            ]
+          },
+          "d_hi": [
+            1.4054616689682007,
+            1.8228261470794678,
+            2.0793118476867676
+          ],
+          "ev": 1.0052,
+          "srgb_q50": [
+            0.4144105911254883,
+            0.440746545791626,
+            0.4319387376308441
+          ],
+          "core_srgb_q50": [
+            0.4233657419681549,
+            0.4471037983894348,
+            0.43928253650665283
+          ],
+          "raw_sha256": "4913327896ba79dace7058dde98fc00f1176fb715038bd56e9401fbb3a4bf5a9",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01688.ARW"
+        },
+        {
+          "rel": "DSC01692.ARW",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 0.0915,
+            "temp": 0.114,
+            "tint": 0.0649,
+            "sat": 1.0161,
+            "contrast": 1.4,
+            "midtone": 0.2825,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.25862481587402086,
+              0.696145952677626,
+              0.43790722563905116
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.0,
+            "level_diff": 0.0,
+            "d_lo_shared": 0.367749130567472,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.2462177723646164,
+              0.6627496480941772,
+              0.4168994426727295
+            ],
+            "own_rgb": [
+              0.2462177723646164,
+              0.6627496480941772,
+              0.4168994426727295
+            ]
+          },
+          "d_hi": [
+            1.341633915901184,
+            1.7779157161712646,
+            1.9458467960357666
+          ],
+          "ev": 0.0915,
+          "srgb_q50": [
+            0.3732864260673523,
+            0.4372277855873108,
+            0.4347360134124756
+          ],
+          "core_srgb_q50": [
+            0.3788774013519287,
+            0.4421261250972748,
+            0.440616250038147
+          ],
+          "raw_sha256": "4003b0891e408c2147584ad1e1fca3b0636d33d8c20c8a51d9fb8b9a5664878a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01692.ARW"
+        },
+        {
+          "rel": "DSC01694.ARW",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.0985,
+            "temp": 0.0557,
+            "tint": 0.0757,
+            "sat": 1.0133,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.22455327723859608,
+              0.6044348628412044,
+              0.38021681063896706
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.24858300940683736,
+            "level_diff": 0.5806905612292951,
+            "d_lo_shared": 0.42909992730104274,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.2462177723646164,
+              0.6627496480941772,
+              0.4168994426727295
+            ],
+            "own_rgb": [
+              0.11460718512535095,
+              0.16233836114406586,
+              0.0662209689617157
+            ]
+          },
+          "d_hi": [
+            1.2222809791564941,
+            1.5123622417449951,
+            1.649287223815918
+          ],
+          "ev": -0.0985,
+          "srgb_q50": [
+            0.346486359834671,
+            0.5680378675460815,
+            0.5723060369491577
+          ],
+          "core_srgb_q50": [
+            0.3526068925857544,
+            0.5742119550704956,
+            0.579153299331665
+          ],
+          "raw_sha256": "cd1152242c8bc9d831c06277ab5392fe7bff44d7bc9a1497d12ffa32fc9dcbfd",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01694.ARW"
+        },
+        {
+          "rel": "DSC01695.ARW",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 1.2679,
+            "temp": 0.013,
+            "tint": 0.1209,
+            "sat": 1.02,
+            "contrast": 1.3,
+            "midtone": 0.2698,
+            "shoulder": 0.2797,
+            "matrix": [
+              [
+                1.208874796100452,
+                -0.13590924056914425,
+                -0.07296555553130782
+              ],
+              [
+                -0.0675482236146753,
+                1.2530294254473704,
+                -0.18548120183269512
+              ],
+              [
+                -0.005122984539798909,
+                -0.16718261507372392,
+                1.1723055996135228
+              ]
+            ],
+            "highlights": -0.521,
+            "shadows": 0.0796,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.22455327723859608,
+              0.6044348628412044,
+              0.38021681063896706
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.2523259989329298,
+            "level_diff": 0.5894465768637158,
+            "d_lo_shared": 0.42909992730104274,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.2462177723646164,
+              0.6627496480941772,
+              0.4168994426727295
+            ],
+            "own_rgb": [
+              0.11329188942909241,
+              0.1582634150981903,
+              0.06468165665864944
+            ]
+          },
+          "d_hi": [
+            1.4201226234436035,
+            1.9506840705871582,
+            2.268084764480591
+          ],
+          "ev": 1.2679,
+          "srgb_q50": [
+            0.37708184123039246,
+            0.3838759660720825,
+            0.3832817077636719
+          ],
+          "core_srgb_q50": [
+            0.3812820613384247,
+            0.38880693912506104,
+            0.38711413741111755
+          ],
+          "raw_sha256": "c59ab4a86841027a4a34f1b2f4c0601fa8e8ac224b333806cf4a2e541b848e6a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/A7R5_RAW/DSC01695.ARW"
+        }
+      ],
+      "contact_sheet_single": "blind_A7R5_RAW_single_mosaic.jpg",
+      "contact_sheet_whole": "blind_A7R5_RAW_whole_mosaic.jpg"
+    },
+    "Eastman5294": {
+      "single_frame": [
+        {
+          "rel": "DSC_8046.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 1.5146,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.85,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.2,
+            "blacks": -0.0207,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.1277943104505539,
+              0.2863050401210785,
+              0.27823299169540405
+            ],
+            "warnings": [
+              "38% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.4697999954223633,
+            1.4697999954223633,
+            1.4697999954223633
+          ],
+          "ev": 1.5146,
+          "srgb_q50": [
+            0.45057567954063416,
+            0.45057567954063416,
+            0.45057567954063416
+          ],
+          "core_srgb_q50": [
+            0.45057567954063416,
+            0.45057567954063416,
+            0.45057567954063416
+          ],
+          "raw_sha256": "fe090d26cb47797be14178e31682801076ea64767cf0e1bae9edaa2a25edce72",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_8046.NEF"
+        },
+        {
+          "rel": "DSC_8057.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": -0.125,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3986,
+            "midtone": 0.2727,
+            "shoulder": 0.3679,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.10615701228380203,
+              0.2997024357318878,
+              0.3680170774459839
+            ],
+            "warnings": [
+              "25% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+            ],
+            "inside_image": 0.6570048309178744,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.6796050071716309,
+            1.6796050071716309,
+            1.6796050071716309
+          ],
+          "ev": -0.125,
+          "srgb_q50": [
+            0.20409131050109863,
+            0.20409131050109863,
+            0.20409131050109863
+          ],
+          "core_srgb_q50": [
+            0.20409131050109863,
+            0.20409131050109863,
+            0.20409131050109863
+          ],
+          "raw_sha256": "b90e5e8ae8aa948c84c930b91bf9244186af90566529f10de2bed29ddbb3ffe7",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_8057.NEF"
+        },
+        {
+          "rel": "DSC_3702.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "white_point_unrepresentative",
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 0.6648,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.4,
+            "midtone": 0.32,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.523,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.19044022262096405,
+              0.44227510690689087,
+              0.4889753460884094
+            ],
+            "warnings": [
+              "30% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+              "R base blocks spread 14.7% (p05-p95)",
+              "G base blocks spread 14.6% (p05-p95)",
+              "B base blocks spread 13.7% (p05-p95)",
+              "512 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.23333333333333334,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.5737565755844116,
+            1.5737565755844116,
+            1.5737565755844116
+          ],
+          "ev": 0.6648,
+          "srgb_q50": [
+            0.381181925535202,
+            0.381181925535202,
+            0.381181925535202
+          ],
+          "core_srgb_q50": [
+            0.381181925535202,
+            0.381181925535202,
+            0.381181925535202
+          ],
+          "raw_sha256": "877e5057c76f4658f68ad240b46d43b9742fa53cdce44163448c9c88ce8c94e4",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1/\u539f\u4ef6/DSC_3702.NEF"
+        },
+        {
+          "rel": "DSC_3713.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": -0.0552,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3049,
+            "midtone": 0.23,
+            "shoulder": 0.2273,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.079,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.16598764061927795,
+              0.4064164161682129,
+              0.442694753408432
+            ],
+            "warnings": [
+              "22% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+              "10 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.7333333333333333,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.8104281425476074,
+            1.8104281425476074,
+            1.8104281425476074
+          ],
+          "ev": -0.0552,
+          "srgb_q50": [
+            0.15088996291160583,
+            0.15088996291160583,
+            0.15088996291160583
+          ],
+          "core_srgb_q50": [
+            0.15088996291160583,
+            0.15088996291160583,
+            0.15088996291160583
+          ],
+          "raw_sha256": "1cc5d1ec3a9017e0550b3a286ed74748700ba4a3dddb93efc3091ec4ea783d38",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1/\u539f\u4ef6/DSC_3713.NEF"
+        },
+        {
+          "rel": "DSC_3724.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.25,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.1912108063697815,
+              0.46945905685424805,
+              0.5051499009132385
+            ],
+            "warnings": [
+              "24% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+              "R base blocks spread 20.1% (p05-p95)",
+              "G base blocks spread 17.5% (p05-p95)",
+              "B base blocks spread 15.8% (p05-p95)"
+            ],
+            "inside_image": 0.03164556962025317,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.8475717306137085,
+            1.8475717306137085,
+            1.8475717306137085
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.2731457054615021,
+            0.2731457054615021,
+            0.2731457054615021
+          ],
+          "core_srgb_q50": [
+            0.2731457054615021,
+            0.2731457054615021,
+            0.2731457054615021
+          ],
+          "raw_sha256": "bdd280ae5a1e02ba388594b173f70020dfe27a1cabdf4890ad8aebaf44c714b7",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1/\u539f\u4ef6/DSC_3724.NEF"
+        },
+        {
+          "rel": "DSC_3734.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 0.7999,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.58,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.0799267590045929,
+              0.19607843458652496,
+              0.2072938084602356
+            ],
+            "warnings": [],
+            "inside_image": 0.900398406374502,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.2966010570526123,
+            1.2966010570526123,
+            1.2966010570526123
+          ],
+          "ev": 0.7999,
+          "srgb_q50": [
+            0.41071170568466187,
+            0.41071170568466187,
+            0.41071170568466187
+          ],
+          "core_srgb_q50": [
+            0.41071170568466187,
+            0.41071170568466187,
+            0.41071170568466187
+          ],
+          "raw_sha256": "097e7ec66c3447c7862847a7f55631e15e74c986f7fa52a1796d56c852e7318e",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1/\u539f\u4ef6/DSC_3734.NEF"
+        },
+        {
+          "rel": "DSC_3746.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "ev_lowered_for_highlights:0.3"
+          ],
+          "params": {
+            "ev": 2.0099,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.85,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.65,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.06959640234708786,
+              0.1573662906885147,
+              0.1754940152168274
+            ],
+            "warnings": [],
+            "inside_image": 1.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.5299105644226074,
+            1.5299105644226074,
+            1.5299105644226074
+          ],
+          "ev": 2.0099,
+          "srgb_q50": [
+            0.23521879315376282,
+            0.23521879315376282,
+            0.23521879315376282
+          ],
+          "core_srgb_q50": [
+            0.23615792393684387,
+            0.23615792393684387,
+            0.23615792393684387
+          ],
+          "raw_sha256": "0163b0ac3c132e520abaa1fe4e098257835a8484d6fcad2c6bc24774e16ccde8",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2/\u539f\u4ef6/DSC_3746.NEF"
+        },
+        {
+          "rel": "DSC_3757.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 0.9268,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.343,
+            "midtone": 0.2395,
+            "shoulder": 0.2845,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.407,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.054734110832214355,
+              0.11589226871728897,
+              0.12204165756702423
+            ],
+            "warnings": [],
+            "inside_image": 0.9813953488372092,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            0.6983532905578613,
+            0.6983532905578613,
+            0.6983532905578613
+          ],
+          "ev": 0.9268,
+          "srgb_q50": [
+            0.5571376085281372,
+            0.5571376085281372,
+            0.5571376085281372
+          ],
+          "core_srgb_q50": [
+            0.5571376085281372,
+            0.5571376085281372,
+            0.5571376085281372
+          ],
+          "raw_sha256": "33cc9c31a5019b694b6bdc45a3b81c5c145a3e5f3fc1cbafe75ac02069ee1669",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2/\u539f\u4ef6/DSC_3757.NEF"
+        },
+        {
+          "rel": "DSC_3768.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "ev_lowered_for_highlights:0.3"
+          ],
+          "params": {
+            "ev": 2.2,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.85,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.65,
+            "shadows": 0.2689,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.059525445103645325,
+              0.14805829524993896,
+              0.16301213204860687
+            ],
+            "warnings": [],
+            "inside_image": 0.7916666666666666,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            2.0259382724761963,
+            2.0259382724761963,
+            2.0259382724761963
+          ],
+          "ev": 2.2,
+          "srgb_q50": [
+            0.09409027546644211,
+            0.09409027546644211,
+            0.09409027546644211
+          ],
+          "core_srgb_q50": [
+            0.09409027546644211,
+            0.09409027546644211,
+            0.09409027546644211
+          ],
+          "raw_sha256": "d578b5c495058b258a49b54a1f2f1694d0ddae7b95a68a23f7f6f40a53e59da7",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2/\u539f\u4ef6/DSC_3768.NEF"
+        },
+        {
+          "rel": "DSC_3779.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 0.1414,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.2,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.11335927248001099,
+              0.22679483890533447,
+              0.16337834298610687
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.2770261764526367,
+            1.2770261764526367,
+            1.2770261764526367
+          ],
+          "ev": 0.1414,
+          "srgb_q50": [
+            0.26390892267227173,
+            0.26390892267227173,
+            0.26390892267227173
+          ],
+          "core_srgb_q50": [
+            0.26390892267227173,
+            0.26390892267227173,
+            0.26390892267227173
+          ],
+          "raw_sha256": "9372513d4c0858421bf3cb4942582c1aaec53678713ce2d491789ba5e384731d",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2/\u539f\u4ef6/DSC_3779.NEF"
+        }
+      ],
+      "whole_roll": [
+        {
+          "rel": "DSC_8046.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 1.4563,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.805,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "blacks": -0.0133,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.6478236670201613,
+              1.2722077015146667,
+              0.9350998131118938
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.09981811698872745,
+            "level_diff": 0.667076380621058,
+            "d_lo_shared": 0.03770906646141914,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.7103245258331298,
+              1.3949480056762693,
+              1.0253165562947588
+            ],
+            "own_rgb": [
+              0.12775948643684387,
+              0.28552937507629395,
+              0.2777152359485626
+            ]
+          },
+          "d_hi": [
+            2.096174478530884,
+            2.096174478530884,
+            2.096174478530884
+          ],
+          "ev": 1.4563,
+          "srgb_q50": [
+            0.46329930424690247,
+            0.46329930424690247,
+            0.46329930424690247
+          ],
+          "core_srgb_q50": [
+            0.46329930424690247,
+            0.46329930424690247,
+            0.46329930424690247
+          ],
+          "raw_sha256": "fe090d26cb47797be14178e31682801076ea64767cf0e1bae9edaa2a25edce72",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_8046.NEF"
+        },
+        {
+          "rel": "DSC_8057.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "white_point_unrepresentative",
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": -0.25,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3721,
+            "midtone": 0.2416,
+            "shoulder": 0.3282,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.65,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.7474888465617247,
+              1.4679319632861538,
+              1.078961322821416
+            ],
+            "warnings": [],
+            "inside_image": 0.6570048309178744,
+            "regions_preview": [],
+            "chroma_part": 0.20116017174939016,
+            "level_diff": 0.7087453817954242,
+            "d_lo_shared": -0.02443884028742537,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.8196052221151499,
+              1.609555391164926,
+              1.183057564955491
+            ],
+            "own_rgb": [
+              0.1060347780585289,
+              0.299372136592865,
+              0.3676382303237915
+            ]
+          },
+          "d_hi": [
+            2.1199562549591064,
+            2.1199562549591064,
+            2.1199562549591064
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.26327282190322876,
+            0.26327282190322876,
+            0.26327282190322876
+          ],
+          "core_srgb_q50": [
+            0.26327282190322876,
+            0.26327282190322876,
+            0.26327282190322876
+          ],
+          "raw_sha256": "b90e5e8ae8aa948c84c930b91bf9244186af90566529f10de2bed29ddbb3ffe7",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_8057.NEF"
+        },
+        {
+          "rel": "DSC_3702.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.25,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.027,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              1.7877922060670608,
+              3.693352268422925,
+              3.5477532460150374
+            ],
+            "warnings": [
+              "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.23333333333333334,
+            "regions_preview": [],
+            "chroma_part": 0.05831896489455979,
+            "level_diff": 0.9598328383157383,
+            "d_lo_shared": -0.45656372597581574,
+            "softness": 0.5,
+            "roll_rgb": [
+              1.960275173187256,
+              4.049680233001709,
+              3.8900340795516968
+            ],
+            "own_rgb": [
+              0.19066870212554932,
+              0.4379996061325073,
+              0.4880221486091614
+            ]
+          },
+          "d_hi": [
+            1.669296383857727,
+            1.669296383857727,
+            1.669296383857727
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.019999999552965164,
+            0.019999999552965164,
+            0.019999999552965164
+          ],
+          "core_srgb_q50": [
+            0.6951686143875122,
+            0.6951686143875122,
+            0.6951686143875122
+          ],
+          "raw_sha256": "877e5057c76f4658f68ad240b46d43b9742fa53cdce44163448c9c88ce8c94e4",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1/\u539f\u4ef6/DSC_3702.NEF"
+        },
+        {
+          "rel": "DSC_3713.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "white_point_unrepresentative"
+          ],
+          "params": {
+            "ev": -0.2474,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.4,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.8938961030335304,
+              1.8466761342114624,
+              1.7738766230075182
+            ],
+            "warnings": [
+              "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.7333333333333333,
+            "regions_preview": [],
+            "chroma_part": 0.06780298937301676,
+            "level_diff": 0.7033475640211643,
+            "d_lo_shared": -0.15553373031183448,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.980137586593628,
+              2.0248401165008545,
+              1.9450170397758484
+            ],
+            "own_rgb": [
+              0.16601085662841797,
+              0.4063533842563629,
+              0.44413819909095764
+            ]
+          },
+          "d_hi": [
+            2.371964931488037,
+            2.371964931488037,
+            2.371964931488037
+          ],
+          "ev": -0.2474,
+          "srgb_q50": [
+            0.17862042784690857,
+            0.17862042784690857,
+            0.17862042784690857
+          ],
+          "core_srgb_q50": [
+            0.17862042784690857,
+            0.17862042784690857,
+            0.17862042784690857
+          ],
+          "raw_sha256": "1cc5d1ec3a9017e0550b3a286ed74748700ba4a3dddb93efc3091ec4ea783d38",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1/\u539f\u4ef6/DSC_3713.NEF"
+        },
+        {
+          "rel": "DSC_3724.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "manual_review_required",
+          "flags": [
+            "white_point_invalid: p99 3.33 stops past the inversion white point"
+          ],
+          "params": {
+            "ev": 0.0,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              1.1173701287919129,
+              2.3083451677643283,
+              2.2173457787593978
+            ],
+            "warnings": [
+              "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.03164556962025317,
+            "regions_preview": [],
+            "chroma_part": 0.0678028251830265,
+            "level_diff": 0.740643401157771,
+            "d_lo_shared": -0.25244374331989095,
+            "softness": 0.5,
+            "roll_rgb": [
+              1.225171983242035,
+              2.531050145626068,
+              2.4312712997198105
+            ],
+            "own_rgb": [
+              0.19043678045272827,
+              0.4696211814880371,
+              0.5057111382484436
+            ]
+          },
+          "d_hi": [
+            1.6682076454162598,
+            1.6682076454162598,
+            1.6682076454162598
+          ],
+          "ev": 0.0,
+          "srgb_q50": [
+            0.34414273500442505,
+            0.34414273500442505,
+            0.34414273500442505
+          ],
+          "core_srgb_q50": [
+            0.4183141887187958,
+            0.4183141887187958,
+            0.4183141887187958
+          ],
+          "raw_sha256": "bdd280ae5a1e02ba388594b173f70020dfe27a1cabdf4890ad8aebaf44c714b7",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1/\u539f\u4ef6/DSC_3724.NEF"
+        },
+        {
+          "rel": "DSC_3734.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 0.7632,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.58,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.11823705000088308,
+              0.24426277022040882,
+              0.2346334638423524
+            ],
+            "warnings": [
+              "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.900398406374502,
+            "regions_preview": [],
+            "chroma_part": 0.06364258496219483,
+            "level_diff": 0.12206809750896874,
+            "d_lo_shared": 0.7229997280556154,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.1225171983242035,
+              0.2531050145626068,
+              0.24312712997198105
+            ],
+            "own_rgb": [
+              0.07988888770341873,
+              0.19596634805202484,
+              0.20723307132720947
+            ]
+          },
+          "d_hi": [
+            1.4030319452285767,
+            1.4030319452285767,
+            1.4030319452285767
+          ],
+          "ev": 0.7632,
+          "srgb_q50": [
+            0.41259264945983887,
+            0.41259264945983887,
+            0.41259264945983887
+          ],
+          "core_srgb_q50": [
+            0.41259264945983887,
+            0.41259264945983887,
+            0.41259264945983887
+          ],
+          "raw_sha256": "097e7ec66c3447c7862847a7f55631e15e74c986f7fa52a1796d56c852e7318e",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1/\u539f\u4ef6/DSC_3734.NEF"
+        },
+        {
+          "rel": "DSC_3746.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 2.1655,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.76,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.261,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.15501525544614453,
+              0.3102041709696033,
+              0.223563774253948
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 1.0,
+            "regions_preview": [],
+            "chroma_part": 0.14390150119034578,
+            "level_diff": 0.29002957910849486,
+            "d_lo_shared": 0.65619216461562,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.16997084766626358,
+              0.34013210982084274,
+              0.24513280391693115
+            ],
+            "own_rgb": [
+              0.06949413567781448,
+              0.15707723796367645,
+              0.1750948429107666
+            ]
+          },
+          "d_hi": [
+            1.779131531715393,
+            1.779131531715393,
+            1.779131531715393
+          ],
+          "ev": 2.1655,
+          "srgb_q50": [
+            0.27683186531066895,
+            0.27683186531066895,
+            0.27683186531066895
+          ],
+          "core_srgb_q50": [
+            0.277742862701416,
+            0.277742862701416,
+            0.277742862701416
+          ],
+          "raw_sha256": "0163b0ac3c132e520abaa1fe4e098257835a8484d6fcad2c6bc24774e16ccde8",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2/\u539f\u4ef6/DSC_3746.NEF"
+        },
+        {
+          "rel": "DSC_3757.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.2,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.15501525544614453,
+              0.3102041709696033,
+              0.223563774253948
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.9813953488372092,
+            "regions_preview": [],
+            "chroma_part": 0.11760403611420672,
+            "level_diff": 0.42077752335781815,
+            "d_lo_shared": 0.65619216461562,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.16997084766626358,
+              0.34013210982084274,
+              0.24513280391693115
+            ],
+            "own_rgb": [
+              0.05479764938354492,
+              0.11590470373630524,
+              0.12196295708417892
+            ]
+          },
+          "d_hi": [
+            1.0792208909988403,
+            1.0792208909988403,
+            1.0792208909988403
+          ],
+          "ev": -0.2,
+          "srgb_q50": [
+            0.4735022187232971,
+            0.4735022187232971,
+            0.4735022187232971
+          ],
+          "core_srgb_q50": [
+            0.4735022187232971,
+            0.4735022187232971,
+            0.4735022187232971
+          ],
+          "raw_sha256": "33cc9c31a5019b694b6bdc45a3b81c5c145a3e5f3fc1cbafe75ac02069ee1669",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2/\u539f\u4ef6/DSC_3757.NEF"
+        },
+        {
+          "rel": "DSC_3768.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "ev_lowered_for_highlights:0.3"
+          ],
+          "params": {
+            "ev": 2.2,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.85,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.65,
+            "shadows": 0.1915,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.15501525544614453,
+              0.3102041709696033,
+              0.223563774253948
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.7916666666666666,
+            "regions_preview": [],
+            "chroma_part": 0.15458236041842108,
+            "level_diff": 0.33190509956036773,
+            "d_lo_shared": 0.65619216461562,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.16997084766626358,
+              0.34013210982084274,
+              0.24513280391693115
+            ],
+            "own_rgb": [
+              0.05934824049472809,
+              0.14798635244369507,
+              0.16295912861824036
+            ]
+          },
+          "d_hi": [
+            2.3172805309295654,
+            2.3172805309295654,
+            2.3172805309295654
+          ],
+          "ev": 2.2,
+          "srgb_q50": [
+            0.10484611988067627,
+            0.10484611988067627,
+            0.10484611988067627
+          ],
+          "core_srgb_q50": [
+            0.10484611988067627,
+            0.10484611988067627,
+            0.10484611988067627
+          ],
+          "raw_sha256": "d578b5c495058b258a49b54a1f2f1694d0ddae7b95a68a23f7f6f40a53e59da7",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2/\u539f\u4ef6/DSC_3768.NEF"
+        },
+        {
+          "rel": "DSC_3779.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 0.124,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.01,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.11916273023200157,
+              0.23845895576990392,
+              0.17185708364249835
+            ],
+            "warnings": [
+              "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 3.214424888510958e-17,
+            "level_diff": -1.6072124442554786e-17,
+            "d_lo_shared": 0.7704261597923554,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.1133138984441757,
+              0.22675473988056183,
+              0.1634218692779541
+            ],
+            "own_rgb": [
+              0.11331389844417572,
+              0.22675473988056183,
+              0.1634218692779541
+            ]
+          },
+          "d_hi": [
+            1.298838496208191,
+            1.298838496208191,
+            1.298838496208191
+          ],
+          "ev": 0.124,
+          "srgb_q50": [
+            0.2657041549682617,
+            0.2657041549682617,
+            0.2657041549682617
+          ],
+          "core_srgb_q50": [
+            0.2657041549682617,
+            0.2657041549682617,
+            0.2657041549682617
+          ],
+          "raw_sha256": "9372513d4c0858421bf3cb4942582c1aaec53678713ce2d491789ba5e384731d",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2/\u539f\u4ef6/DSC_3779.NEF"
+        }
+      ],
+      "contact_sheet_single": "blind_Eastman5294_single_mosaic.jpg",
+      "contact_sheet_whole": "blind_Eastman5294_whole_mosaic.jpg"
+    },
+    "fomapan100": {
+      "single_frame": [
+        {
+          "rel": "DSC_7400.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.0295,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.127,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.3670405149459839,
+              0.7777523398399353,
+              0.6357061266899109
+            ],
+            "warnings": [
+              "R base blocks spread 11.8% (p05-p95)",
+              "G base blocks spread 11.7% (p05-p95)",
+              "B base blocks spread 11.9% (p05-p95)",
+              "6936 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.0097341537475586,
+            1.0097341537475586,
+            1.0097341537475586
+          ],
+          "ev": -0.0295,
+          "srgb_q50": [
+            0.6807191371917725,
+            0.6807191371917725,
+            0.6807191371917725
+          ],
+          "core_srgb_q50": [
+            0.6807191371917725,
+            0.6807191371917725,
+            0.6807191371917725
+          ],
+          "raw_sha256": "dbc91c5708d877411c289b3600d1685672c66a6892ee9c23156ef6a56ddc6610",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7400.NEF"
+        },
+        {
+          "rel": "DSC_7405.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "white_point_unrepresentative"
+          ],
+          "params": {
+            "ev": -0.25,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.13690394163131714,
+              0.2889753580093384,
+              0.23572136461734772
+            ],
+            "warnings": [
+              "R base blocks spread 189.1% (p05-p95)",
+              "G base blocks spread 188.6% (p05-p95)",
+              "B base blocks spread 192.7% (p05-p95)",
+              "4879 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.18085106382978725,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            0.3144499957561493,
+            0.3144499957561493,
+            0.3144499957561493
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.7456587553024292,
+            0.7456587553024292,
+            0.7456587553024292
+          ],
+          "core_srgb_q50": [
+            0.7456587553024292,
+            0.7456587553024292,
+            0.7456587553024292
+          ],
+          "raw_sha256": "d51a57ab81475515992016072e4c12714c58fb9b75ceff241a3b080e3a47e231",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7405.NEF"
+        },
+        {
+          "rel": "DSC_7409.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 2.5,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.49,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.65,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.2658579349517822,
+              0.5576104521751404,
+              0.46594950556755066
+            ],
+            "warnings": [],
+            "inside_image": 0.8028169014084507,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.7294520139694214,
+            1.7294520139694214,
+            1.7294520139694214
+          ],
+          "ev": 2.5,
+          "srgb_q50": [
+            0.24555331468582153,
+            0.24555331468582153,
+            0.24555331468582153
+          ],
+          "core_srgb_q50": [
+            0.24555331468582153,
+            0.24555331468582153,
+            0.24555331468582153
+          ],
+          "raw_sha256": "450415ee5e234e0f1a10f83f0dc50e650826882fafd8ed42e6e60e6ef6e70f8c",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7409.NEF"
+        },
+        {
+          "rel": "DSC_7414.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 0.8054,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.4,
+            "midtone": 0.32,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.611,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.45163652300834656,
+              0.9511405825614929,
+              0.7903715372085571
+            ],
+            "warnings": [
+              "12435 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.8676583766937256,
+            1.8676583766937256,
+            1.8676583766937256
+          ],
+          "ev": 0.8054,
+          "srgb_q50": [
+            0.3156138062477112,
+            0.3156138062477112,
+            0.3156138062477112
+          ],
+          "core_srgb_q50": [
+            0.3156138062477112,
+            0.3156138062477112,
+            0.3156138062477112
+          ],
+          "raw_sha256": "b024608fe234908d841fbd9c4f872334d52b7105a0f45095c164b338cf2d198a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7414.NEF"
+        },
+        {
+          "rel": "DSC_7418.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 2.0168,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3881,
+            "midtone": 0.3093,
+            "shoulder": 0.3522,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.65,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.32460516691207886,
+              0.6804455518722534,
+              0.5674830079078674
+            ],
+            "warnings": [],
+            "inside_image": 0.018691588785046728,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.851550817489624,
+            1.851550817489624,
+            1.851550817489624
+          ],
+          "ev": 2.0168,
+          "srgb_q50": [
+            0.25731712579727173,
+            0.25731712579727173,
+            0.25731712579727173
+          ],
+          "core_srgb_q50": [
+            0.25731712579727173,
+            0.25731712579727173,
+            0.25731712579727173
+          ],
+          "raw_sha256": "89cb5fae6b7b8d34646569bcdc49d3e6b807def703a38967158723c47192229a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7418.NEF"
+        },
+        {
+          "rel": "DSC_7423.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": -0.0293,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.4,
+            "midtone": 0.32,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.156,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.3833523988723755,
+              0.808712899684906,
+              0.6643778085708618
+            ],
+            "warnings": [
+              "R base blocks spread 13.3% (p05-p95)",
+              "G base blocks spread 13.3% (p05-p95)",
+              "B base blocks spread 13.7% (p05-p95)",
+              "15161 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.9714285714285714,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.2482409477233887,
+            1.2482409477233887,
+            1.2482409477233887
+          ],
+          "ev": -0.0293,
+          "srgb_q50": [
+            0.5434065461158752,
+            0.5434065461158752,
+            0.5434065461158752
+          ],
+          "core_srgb_q50": [
+            0.5434065461158752,
+            0.5434065461158752,
+            0.5434065461158752
+          ],
+          "raw_sha256": "c4f5293e2d381d2b6dcb923d6c6d14ea07f4b72641015715fdcf832c04eeea33",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7423.NEF"
+        },
+        {
+          "rel": "DSC_7428.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 1.3326,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3164,
+            "midtone": 0.2424,
+            "shoulder": 0.2446,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.454,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.30163270235061646,
+              0.6321355104446411,
+              0.5241473913192749
+            ],
+            "warnings": [
+              "R base blocks spread 44.9% (p05-p95)",
+              "G base blocks spread 45.3% (p05-p95)",
+              "B base blocks spread 45.8% (p05-p95)",
+              "106 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.4955357142857143,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.3815267086029053,
+            1.3815267086029053,
+            1.3815267086029053
+          ],
+          "ev": 1.3326,
+          "srgb_q50": [
+            0.4566134214401245,
+            0.4566134214401245,
+            0.4566134214401245
+          ],
+          "core_srgb_q50": [
+            0.4566134214401245,
+            0.4566134214401245,
+            0.4566134214401245
+          ],
+          "raw_sha256": "2fbaccfe9d07e6bd08ff83c044afa2633a0686033246f8cccd65cea89b878638",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7428.NEF"
+        },
+        {
+          "rel": "DSC_7432.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 0.0865,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.4,
+            "midtone": 0.32,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.185,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.30614176392555237,
+              0.6466315984725952,
+              0.5336690545082092
+            ],
+            "warnings": [
+              "R base blocks spread 33.8% (p05-p95)",
+              "G base blocks spread 33.3% (p05-p95)",
+              "B base blocks spread 32.7% (p05-p95)",
+              "17175 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.08759124087591241,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.2134239673614502,
+            1.2134239673614502,
+            1.2134239673614502
+          ],
+          "ev": 0.0865,
+          "srgb_q50": [
+            0.5185383558273315,
+            0.5185383558273315,
+            0.5185383558273315
+          ],
+          "core_srgb_q50": [
+            0.5185383558273315,
+            0.5185383558273315,
+            0.5185383558273315
+          ],
+          "raw_sha256": "e6f514458aa788d410ca63b31dcd50a9da19c66112de97d5a7e36dce7d12f776",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7432.NEF"
+        },
+        {
+          "rel": "DSC_7437.NEF",
+          "base_mode_requested": null,
+          "status": "ok",
+          "flags": [
+            "white_point_unrepresentative",
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": -0.25,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.304,
+            "midtone": 0.23,
+            "shoulder": 0.226,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.047,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "auto",
+            "rgb": [
+              0.221255823969841,
+              0.46471351385116577,
+              0.3804226815700531
+            ],
+            "warnings": [
+              "R base blocks spread 99.0% (p05-p95)",
+              "G base blocks spread 98.4% (p05-p95)",
+              "B base blocks spread 98.3% (p05-p95)",
+              "27319 blocks contain saturated samples (excluded)"
+            ],
+            "inside_image": 0.17010309278350516,
+            "regions_preview": [],
+            "chroma_part": null,
+            "level_diff": null,
+            "d_lo_shared": null,
+            "softness": 0.5,
+            "roll_rgb": null,
+            "own_rgb": null
+          },
+          "d_hi": [
+            1.1847827434539795,
+            1.1847827434539795,
+            1.1847827434539795
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.29948216676712036,
+            0.29948216676712036,
+            0.29948216676712036
+          ],
+          "core_srgb_q50": [
+            0.29948216676712036,
+            0.29948216676712036,
+            0.29948216676712036
+          ],
+          "raw_sha256": "c8f64e0f5d50a66c4a2236332f23e029bcd2591862a64497e10f446bc9c2b01a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7437.NEF"
+        }
+      ],
+      "whole_roll": [
+        {
+          "rel": "DSC_7400.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": -0.0616,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.111,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              4.528800491243601,
+              9.509985335171223,
+              7.956018671393394
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.005723775458435831,
+            "level_diff": 1.092423708531869,
+            "d_lo_shared": -0.844952943296108,
+            "softness": 0.5,
+            "roll_rgb": [
+              4.528800491243601,
+              9.509985335171223,
+              7.9560186713933945
+            ],
+            "own_rgb": [
+              0.3667229413986206,
+              0.77750164270401,
+              0.6346704959869385
+            ]
+          },
+          "d_hi": [
+            2.101749897003174,
+            2.101749897003174,
+            2.101749897003174
+          ],
+          "ev": -0.0616,
+          "srgb_q50": [
+            0.6833367347717285,
+            0.6833367347717285,
+            0.6833367347717285
+          ],
+          "core_srgb_q50": [
+            0.6833367347717285,
+            0.6833367347717285,
+            0.6833367347717285
+          ],
+          "raw_sha256": "dbc91c5708d877411c289b3600d1685672c66a6892ee9c23156ef6a56ddc6610",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7400.NEF"
+        },
+        {
+          "rel": "DSC_7405.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "white_point_unrepresentative"
+          ],
+          "params": {
+            "ev": -0.25,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.22,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.2,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              9.419905021786692,
+              19.780769497156147,
+              16.54851883649826
+            ],
+            "warnings": [],
+            "inside_image": 0.18085106382978725,
+            "regions_preview": [],
+            "chroma_part": 0.0066696726661954475,
+            "level_diff": 1.850054718575014,
+            "d_lo_shared": -1.1630162782588696,
+            "softness": 0.5,
+            "roll_rgb": [
+              9.41990502178669,
+              19.780769497156143,
+              16.54851883649826
+            ],
+            "own_rgb": [
+              0.1331779658794403,
+              0.28341156244277954,
+              0.2301625907421112
+            ]
+          },
+          "d_hi": [
+            2.1500916481018066,
+            2.1500916481018066,
+            2.1500916481018066
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.7643062472343445,
+            0.7643062472343445,
+            0.7643062472343445
+          ],
+          "core_srgb_q50": [
+            0.7643062472343445,
+            0.7643062472343445,
+            0.7643062472343445
+          ],
+          "raw_sha256": "d51a57ab81475515992016072e4c12714c58fb9b75ceff241a3b080e3a47e231",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7405.NEF"
+        },
+        {
+          "rel": "DSC_7409.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [],
+          "params": {
+            "ev": 2.5,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3,
+            "midtone": 0.23,
+            "shoulder": 0.49,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.65,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.36230403929948807,
+              0.7607988268136978,
+              0.6364814937114716
+            ],
+            "warnings": [],
+            "inside_image": 0.8028169014084507,
+            "regions_preview": [],
+            "chroma_part": 0.0006386411970418227,
+            "level_diff": 0.1359693575120424,
+            "d_lo_shared": 0.2519570697119484,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.36230403929948807,
+              0.7607988268136978,
+              0.6364814937114716
+            ],
+            "own_rgb": [
+              0.2652849853038788,
+              0.5563271641731262,
+              0.4647054672241211
+            ]
+          },
+          "d_hi": [
+            1.8643884658813477,
+            1.8643884658813477,
+            1.8643884658813477
+          ],
+          "ev": 2.5,
+          "srgb_q50": [
+            0.2545520067214966,
+            0.2545520067214966,
+            0.2545520067214966
+          ],
+          "core_srgb_q50": [
+            0.2545520067214966,
+            0.2545520067214966,
+            0.2545520067214966
+          ],
+          "raw_sha256": "450415ee5e234e0f1a10f83f0dc50e650826882fafd8ed42e6e60e6ef6e70f8c",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7409.NEF"
+        },
+        {
+          "rel": "DSC_7414.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 0.8054,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.4,
+            "midtone": 0.32,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.611,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.7246080785989761,
+              1.5215976536273956,
+              1.2729629874229431
+            ],
+            "warnings": [],
+            "inside_image": 0.0,
+            "regions_preview": [],
+            "chroma_part": 0.0013244859774340922,
+            "level_diff": 0.206040280301376,
+            "d_lo_shared": -0.04907292595203277,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.7246080785989761,
+              1.5215976536273956,
+              1.2729629874229431
+            ],
+            "own_rgb": [
+              0.4508870840072632,
+              0.9496840238571167,
+              0.789679765701294
+            ]
+          },
+          "d_hi": [
+            2.0731093883514404,
+            2.0731093883514404,
+            2.0731093883514404
+          ],
+          "ev": 0.8054,
+          "srgb_q50": [
+            0.31805962324142456,
+            0.31805962324142456,
+            0.31805962324142456
+          ],
+          "core_srgb_q50": [
+            0.31805962324142456,
+            0.31805962324142456,
+            0.31805962324142456
+          ],
+          "raw_sha256": "b024608fe234908d841fbd9c4f872334d52b7105a0f45095c164b338cf2d198a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7414.NEF"
+        },
+        {
+          "rel": "DSC_7418.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 2.0161,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3885,
+            "midtone": 0.3097,
+            "shoulder": 0.3528,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.65,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.4830720523993174,
+              1.0143984357515972,
+              0.8486419916152954
+            ],
+            "warnings": [],
+            "inside_image": 0.018691588785046728,
+            "regions_preview": [],
+            "chroma_part": 0.0011421647632255394,
+            "level_diff": 0.17447766999415792,
+            "d_lo_shared": 0.1270183331036485,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.4830720523993174,
+              1.0143984357515972,
+              0.8486419916152954
+            ],
+            "own_rgb": [
+              0.32394444942474365,
+              0.679104745388031,
+              0.5663757920265198
+            ]
+          },
+          "d_hi": [
+            2.025165319442749,
+            2.025165319442749,
+            2.025165319442749
+          ],
+          "ev": 2.0161,
+          "srgb_q50": [
+            0.2647464871406555,
+            0.2647464871406555,
+            0.2647464871406555
+          ],
+          "core_srgb_q50": [
+            0.2647464871406555,
+            0.2647464871406555,
+            0.2647464871406555
+          ],
+          "raw_sha256": "89cb5fae6b7b8d34646569bcdc49d3e6b807def703a38967158723c47192229a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7418.NEF"
+        },
+        {
+          "rel": "DSC_7423.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 0.0185,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.4,
+            "midtone": 0.32,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.181,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              2.8984323143959045,
+              6.086390614509583,
+              5.0918519496917725
+            ],
+            "warnings": [],
+            "inside_image": 0.9714285714285714,
+            "regions_preview": [],
+            "chroma_part": 0.004574014277236693,
+            "level_diff": 0.8823644728172141,
+            "d_lo_shared": -0.6511329172799951,
+            "softness": 0.5,
+            "roll_rgb": [
+              2.8984323143959045,
+              6.0863906145095825,
+              5.0918519496917725
+            ],
+            "own_rgb": [
+              0.38147538900375366,
+              0.8033439517021179,
+              0.6605980396270752
+            ]
+          },
+          "d_hi": [
+            2.1281046867370605,
+            2.1281046867370605,
+            2.1281046867370605
+          ],
+          "ev": 0.0185,
+          "srgb_q50": [
+            0.5573638677597046,
+            0.5573638677597046,
+            0.5573638677597046
+          ],
+          "core_srgb_q50": [
+            0.5573638677597046,
+            0.5573638677597046,
+            0.5573638677597046
+          ],
+          "raw_sha256": "c4f5293e2d381d2b6dcb923d6c6d14ea07f4b72641015715fdcf832c04eeea33",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7423.NEF"
+        },
+        {
+          "rel": "DSC_7428.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": 1.355,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3249,
+            "midtone": 0.2445,
+            "shoulder": 0.2574,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.436,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              0.5573908296915201,
+              1.170459733559535,
+              0.9792022980176485
+            ],
+            "warnings": [],
+            "inside_image": 0.4955357142857143,
+            "regions_preview": [],
+            "chroma_part": 0.0027197177271418016,
+            "level_diff": 0.27042883545188284,
+            "d_lo_shared": 0.06487042635480404,
+            "softness": 0.5,
+            "roll_rgb": [
+              0.5573908296915201,
+              1.170459733559535,
+              0.9792022980176485
+            ],
+            "own_rgb": [
+              0.30008649826049805,
+              0.6296973824501038,
+              0.5220641493797302
+            ]
+          },
+          "d_hi": [
+            1.6500756740570068,
+            1.6500756740570068,
+            1.6500756740570068
+          ],
+          "ev": 1.355,
+          "srgb_q50": [
+            0.47227561473846436,
+            0.47227561473846436,
+            0.47227561473846436
+          ],
+          "core_srgb_q50": [
+            0.47227561473846436,
+            0.47227561473846436,
+            0.47227561473846436
+          ],
+          "raw_sha256": "2fbaccfe9d07e6bd08ff83c044afa2633a0686033246f8cccd65cea89b878638",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7428.NEF"
+        },
+        {
+          "rel": "DSC_7432.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": -0.099,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.4,
+            "midtone": 0.32,
+            "shoulder": 0.37,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.085,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              2.415360261996587,
+              5.071992178757985,
+              4.243209958076477
+            ],
+            "warnings": [],
+            "inside_image": 0.08759124087591241,
+            "regions_preview": [],
+            "chroma_part": 0.0027314578542096957,
+            "level_diff": 0.901002994672163,
+            "d_lo_shared": -0.5719516712323703,
+            "softness": 0.5,
+            "roll_rgb": [
+              2.415360261996587,
+              5.071992178757985,
+              4.243209958076477
+            ],
+            "own_rgb": [
+              0.30370599031448364,
+              0.6403723955154419,
+              0.5296147465705872
+            ]
+          },
+          "d_hi": [
+            2.1107583045959473,
+            2.1107583045959473,
+            2.1107583045959473
+          ],
+          "ev": -0.099,
+          "srgb_q50": [
+            0.512147068977356,
+            0.512147068977356,
+            0.512147068977356
+          ],
+          "core_srgb_q50": [
+            0.512147068977356,
+            0.512147068977356,
+            0.512147068977356
+          ],
+          "raw_sha256": "e6f514458aa788d410ca63b31dcd50a9da19c66112de97d5a7e36dce7d12f776",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7432.NEF"
+        },
+        {
+          "rel": "DSC_7437.NEF",
+          "base_mode_requested": "roll_nat",
+          "status": "ok",
+          "flags": [
+            "white_point_unrepresentative",
+            "backlit_midtone"
+          ],
+          "params": {
+            "ev": -0.25,
+            "temp": 0.0,
+            "tint": 0.0,
+            "sat": 1.0,
+            "contrast": 1.3071,
+            "midtone": 0.23,
+            "shoulder": 0.2306,
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "highlights": -0.2,
+            "vibrance": 0.08,
+            "chroma_preserve": 0.4
+          },
+          "base": {
+            "method": "roll_nat",
+            "rgb": [
+              1.4492161571979523,
+              3.0431953072547913,
+              2.5459259748458862
+            ],
+            "warnings": [],
+            "inside_image": 0.17010309278350516,
+            "regions_preview": [],
+            "chroma_part": 0.006360800414598744,
+            "level_diff": 0.8207932322481158,
+            "d_lo_shared": -0.3501029216160139,
+            "softness": 0.5,
+            "roll_rgb": [
+              1.4492161571979523,
+              3.0431953072547913,
+              2.5459259748458862
+            ],
+            "own_rgb": [
+              0.21984031796455383,
+              0.4646543264389038,
+              0.37904584407806396
+            ]
+          },
+          "d_hi": [
+            2.004103422164917,
+            2.004103422164917,
+            2.004103422164917
+          ],
+          "ev": -0.25,
+          "srgb_q50": [
+            0.31716465950012207,
+            0.31716465950012207,
+            0.31716465950012207
+          ],
+          "core_srgb_q50": [
+            0.31716465950012207,
+            0.31716465950012207,
+            0.31716465950012207
+          ],
+          "raw_sha256": "c8f64e0f5d50a66c4a2236332f23e029bcd2591862a64497e10f446bc9c2b01a",
+          "full_path": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-/\u539f\u4ef6/DSC_7437.NEF"
+        }
+      ],
+      "contact_sheet_single": "blind_fomapan100_single_mosaic.jpg",
+      "contact_sheet_whole": "blind_fomapan100_whole_mosaic.jpg"
+    }
+  }
+}

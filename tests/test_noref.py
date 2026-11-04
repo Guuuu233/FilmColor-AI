@@ -1746,8 +1746,11 @@ def test_t4x_thin_flat_check_darkens_washed_out_short_span_frame():
 def test_t4x_thin_flat_check_skips_normal_iqr_highkey_frames():
     """T4x: thin_flat_check does NOT trigger on:
     1) High-key frames with normal dynamic gradation (iqr_25_90 > 0.145), even with short span.
-    2) Dense or normal negatives where span_d_g >= 0.60."""
+    2) Dense or normal negatives where span_d_g >= 0.60.
+    Frozen to historical T4x thresholds (span_max=0.60, iqr_max=0.145) to preserve the original contract."""
     from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    cfg_t4x = dict(NOREF_V3, thin_flat_span_max=0.60, thin_flat_iqr_max=0.145, thin_flat_iqr_pivot=0.145)
 
     rng = np.random.default_rng(42)
     n = 100_000
@@ -1761,7 +1764,7 @@ def test_t4x_thin_flat_check_skips_normal_iqr_highkey_frames():
     ]).astype(np.float32)
     P_normal_iqr = np.stack([y_normal_iqr, y_normal_iqr, y_normal_iqr], -1).reshape(200, 500, 3)
 
-    res_iqr = estimate_params_v3(P_normal_iqr, None, NOREF_V3, span_d_g=0.51)
+    res_iqr = estimate_params_v3(P_normal_iqr, None, cfg_t4x, span_d_g=0.51)
     tn_iqr = res_iqr["diagnostics"].get("thin_negative")
     bc_iqr = res_iqr["diagnostics"]["backlit_check"]
     assert bc_iqr["p25"] >= 0.62
@@ -1777,7 +1780,7 @@ def test_t4x_thin_flat_check_skips_normal_iqr_highkey_frames():
     rng.shuffle(y_flat)
     P_flat = np.stack([y_flat, y_flat, y_flat], -1).reshape(200, 500, 3)
 
-    res_span = estimate_params_v3(P_flat, None, NOREF_V3, span_d_g=0.65)
+    res_span = estimate_params_v3(P_flat, None, cfg_t4x, span_d_g=0.65)
     tn_span = res_span["diagnostics"].get("thin_negative")
     assert tn_span is None or not tn_span.get("applied") or tn_span.get("mode") != "flat_bright"
 
@@ -1938,3 +1941,140 @@ def test_t4y_overlift_bright_protects_snow_highkey_dark_anchor_and_wide_span():
     res_snow = estimate_params_v3(img_snow, None, NOREF_V3, span_d_g=0.62)
     assert res_snow["diagnostics"]["backlit_check"]["p25"] > 0.68
     assert res_snow["diagnostics"].get("overlift_damp", {}).get("mode") != "bright_short_span"
+
+
+def test_t4z_night_backlit_double_lift_damped():
+    """T4z: night scene with dual backlit midtone lift (w_bl >= 0.65) and high EV anchor (ev >= 1.50)
+    under low bright_share (< 0.090) and q25 >= 0.175 triggers night_backlit_double damping."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    m = 0.055
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y = np.zeros(n, dtype=np.float32)
+    y[:1000] = rng.uniform(0.50, 1.20, 1000)
+    y[1000:1500] = rng.uniform(0.30, 0.42, 500)
+    y[1500:13500] = rng.uniform(0.22, 0.30, 12000)
+    y[13500:60000] = rng.uniform(m - 0.015, m + 0.015, 46500)
+    y[60000:] = rng.uniform(0.012, 0.022, 40000)
+    P = np.stack([y, y, y], -1).reshape(200, 500, 3)
+
+    res_on = estimate_params_v3(P, None, NOREF_V3, span_d_g=1.1)
+    res_off = estimate_params_v3(P, None, dict(NOREF_V3, overlift_night_bl_check=False), span_d_g=1.1)
+
+    bc = res_on["diagnostics"]["backlit_check"]
+    tp = res_on["diagnostics"]["tone_pixels"]
+    assert bc["weight"] >= NOREF_V3["overlift_night_bl_min_weight"]
+    assert tp["bright_share"] < NOREF_V3["overlift_night_bl_max_bright_share"]
+
+    od = res_on["diagnostics"].get("overlift_damp")
+    assert od is not None
+    assert od["applied"] is True
+    assert od["mode"] == "night_backlit_double"
+    assert od["ev_before"] >= NOREF_V3["overlift_night_bl_ev_min"]
+    assert od["q25_before"] >= NOREF_V3["overlift_night_bl_q25_min"]
+    assert od["pull"] > 0.0
+    assert od["blacks_lowered"] > 0.0
+    assert res_on["params"]["ev"] < res_off["params"]["ev"]
+    assert res_on["params"]["blacks"] < res_off["params"].get("blacks", 0.0)
+
+
+def test_t4z_night_bl_skips_bright_share_090():
+    """T4z: night_backlit_double damping is strictly skipped when bright_share >= 0.090 (e.g. 0.0913),
+    while satisfying all other night backlit gates (w_bl >= 0.65, ev >= 1.50, ev_lowered == 0, q25 >= 0.175)."""
+    import pytest
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    m = 0.055
+    rng = np.random.default_rng(42)
+    n = 100_000
+    y = np.zeros(n, dtype=np.float32)
+    y[:9130] = rng.uniform(0.50, 0.60, 9130)
+    y[9130:21130] = rng.uniform(0.22, 0.30, 12000)
+    y[21130:60000] = rng.uniform(m - 0.015, m + 0.015, 38870)
+    y[60000:] = rng.uniform(0.012, 0.022, 40000)
+    P = np.stack([y, y, y], -1).reshape(200, 500, 3)
+
+    res = estimate_params_v3(P, None, NOREF_V3, span_d_g=1.1)
+    tp = res["diagnostics"]["tone_pixels"]
+    bc = res["diagnostics"]["backlit_check"]
+    hh = res["diagnostics"]["highlight_hold"]
+
+    assert tp["bright_share"] == pytest.approx(0.0913, abs=5e-4)
+    assert tp["bright_share"] >= NOREF_V3["overlift_night_bl_max_bright_share"]
+    assert bc["weight"] >= NOREF_V3["overlift_night_bl_min_weight"]
+    assert bc["p25"] >= NOREF_V3["overlift_night_bl_q25_min"]
+    assert hh["ev_lowered"] == 0.0
+    assert res["params"]["ev"] >= NOREF_V3["overlift_night_bl_ev_min"]
+
+    od = res["diagnostics"].get("overlift_damp")
+    assert od is None or od.get("mode") != "night_backlit_double"
+
+    # Confirms it is genuinely at the bright_share boundary: with relaxed 0.095 threshold, it triggers
+    res_relaxed = estimate_params_v3(P, None, dict(NOREF_V3, overlift_night_bl_max_bright_share=0.095), span_d_g=1.1)
+    od_rel = res_relaxed["diagnostics"].get("overlift_damp")
+    assert od_rel is not None and od_rel.get("mode") == "night_backlit_double"
+
+
+def test_t4z_thin_flat_extended_span_072():
+    """T4z: flat negative with span_d_g = 0.70 and iqr ~ 0.19 triggers extended thin_flat_check (span_max=0.72, iqr_max=0.20)."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    hi_lo, hi_hi = 0.95, 1.30
+    rng = np.random.default_rng(123)
+    n = 100_000
+    y = np.concatenate([
+        rng.uniform(0.32, 0.38, 25000),
+        rng.uniform(0.38, hi_lo, 65000),
+        rng.uniform(hi_lo, hi_hi, 10000),
+    ]).astype(np.float32)
+    P = np.stack([y, y, y], -1).reshape(200, 500, 3)
+
+    res_t4z = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.70)
+    bc = res_t4z["diagnostics"]["backlit_check"]
+    iqr = bc["p90"] - bc["p25"]
+    assert 0.145 < iqr <= 0.20
+    assert bc["p25"] >= NOREF_V3["thin_flat_q25_min"]
+
+    tn = res_t4z["diagnostics"].get("thin_negative")
+    assert tn is not None and tn["applied"] is True
+    assert tn["mode"] == "flat_bright"
+    assert res_t4z["params"]["ev"] < tn["ev_before"]
+
+    # Boundary: span_d_g = 0.73 > 0.72 does not trigger
+    res_span = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.73)
+    tn_span = res_span["diagnostics"].get("thin_negative")
+    assert tn_span is None or not tn_span.get("applied") or tn_span.get("mode") != "flat_bright"
+
+
+def test_t4z_metering_mask_drops_holder_pixels():
+    """T4z: _metering_mask excludes holder pixels within the bounding box (m &= ~hold), protected by meter_min_share."""
+    from filmcolor.noref import _metering_mask, NOREF_V3
+    from filmcolor.holder import holder_mask, film_box
+
+    h, w = 100, 100
+    P = np.full((h, w, 3), 0.20, dtype=np.float32)
+    P[0, :] = [3.0, 20.0, 0.5]
+    P[-1, :] = [3.0, 20.0, 0.5]
+    P[:, 0] = [3.0, 20.0, 0.5]
+    P[:, -1] = [3.0, 20.0, 0.5]
+    P[:15, :15] = [3.0, 20.0, 0.5]
+
+    hold = holder_mask(P)
+    fb = film_box(hold)
+    t, l, bh, bw = fb
+    dt, dl = int(round(NOREF_V3["meter_box_inset"] * bh)), int(round(NOREF_V3["meter_box_inset"] * bw))
+    box = np.zeros((h, w), bool)
+    box[t + dt : t + bh - dt, l + dl : l + bw - dl] = True
+    assert (box & hold).any()
+
+    m, diag = _metering_mask(P, None, NOREF_V3)
+    assert diag["used"] is True
+    assert not (m & hold).any()
+
+    # Protection: drops below meter_min_share falls back to uncropped mask
+    cfg_protect = dict(NOREF_V3, meter_min_share=0.90)
+    m_p, diag_p = _metering_mask(P, None, cfg_protect)
+    assert diag_p["used"] is False
+    assert diag_p["reason"] == "too little left"
+    assert m_p is None

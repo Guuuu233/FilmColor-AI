@@ -690,9 +690,9 @@ def test_t4s_app_opens_and_exports_scanner_tiff(server):
 
 
 def test_t4y_app_scan_isolates_near_sat_between_camera_and_scanner(server, monkeypatch, tmp_path):
-    """T4y: State._scan_one routes exclude_near_saturated=not is_scan, and THUMB_REV is 't4y'."""
+    """T4y/T4z: State._scan_one routes exclude_near_saturated=not is_scan, and THUMB_REV is 't4z'."""
     from filmcolor import app
-    assert app.THUMB_REV == "t4y"
+    assert app.THUMB_REV == "t4z"
 
     _, root, _ = server
 

@@ -186,6 +186,14 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
                     excluded = ok & holder_blocks
                     n_excluded = int(excluded.sum())
                     if n_excluded > 0:
+                        if (ok & ~holder_blocks & hot).any():
+                            # T4z: bridge a thin window mullion, retaining only the original dense blocks.
+                            bridged, _ = ndimage.label(ndimage.binary_dilation(hot, iterations=1))
+                            edge_ids = np.unique(np.concatenate([bridged[0], bridged[-1], bridged[:, 0], bridged[:, -1]]))
+                            edge_ids = edge_ids[edge_ids > 0]
+                            edge_hot = np.isin(bridged, edge_ids) & hot
+                            holder_blocks = ndimage.binary_dilation(edge_hot, iterations=2)
+                            n_excluded = int((ok & holder_blocks).sum())
                         ok_clean = ok & ~holder_blocks
                         n_clean = int(ok_clean.sum())
                         if n_clean >= MIN_WHITE_BLOCKS:

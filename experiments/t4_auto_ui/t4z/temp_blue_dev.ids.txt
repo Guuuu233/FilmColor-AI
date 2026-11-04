@@ -1,0 +1,5 @@
+blueneg:19941217B-08-tokyo
+blueneg:19941220D-20-kamakura
+blueneg:19960809B-14-new-orleans-siggraph96
+blueneg:19960812D-17-las-vegas
+blueneg:19970619A-14-white-chapel

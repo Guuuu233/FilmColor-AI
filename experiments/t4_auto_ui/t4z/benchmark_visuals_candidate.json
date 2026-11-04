@@ -1,0 +1,189 @@
+{
+  "source_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+  "frames": {
+    "ext:A105": {
+      "frame_id": "ext:A105",
+      "variant": "standard",
+      "raw_sha256": "1dda5a87b44be3e5f8c16840bfa44edeaaf9e62e81ea1b2e5707e1c7f24b6d95",
+      "preview_image": "ext_A105_candidate.jpg",
+      "preview_image_sha256": "000051cf7989ed92135162106c6b80ed49dc5362dfd013e36ac8d2385fe64fdf",
+      "params": {
+        "ev": 1.9217,
+        "temp": -0.0103,
+        "tint": 0.0803,
+        "sat": 1.0178,
+        "contrast": 1.3317,
+        "midtone": 0.23,
+        "shoulder": 0.6836,
+        "matrix": [
+          [
+            1.1097265765068025,
+            -0.034523549444346345,
+            -0.07520302706245617
+          ],
+          [
+            -0.0433450999741582,
+            1.1686619027925926,
+            -0.1253168028184345
+          ],
+          [
+            0.0021249076998353872,
+            -0.14109266742039034,
+            1.138967759720555
+          ]
+        ],
+        "highlights": -0.4,
+        "blacks": -0.0123,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 13.810335765012459
+    },
+    "ext:A105_print_classic": {
+      "frame_id": "ext:A105",
+      "variant": "print_classic",
+      "raw_sha256": "1dda5a87b44be3e5f8c16840bfa44edeaaf9e62e81ea1b2e5707e1c7f24b6d95",
+      "preview_image": "ext_A105_print_classic_candidate.jpg",
+      "preview_image_sha256": "22455e1cbc869614ba527bc435e9c6bd6a2484efd773ba5f3d5b067c5b7b18d6",
+      "params": {
+        "ev": 1.3366,
+        "temp": -0.0003,
+        "tint": 0.0803,
+        "sat": 1.0178,
+        "contrast": 1.4752,
+        "midtone": 0.2316,
+        "shoulder": 0.5714,
+        "matrix": [
+          [
+            1.0960107544434523,
+            -0.030208105763803145,
+            -0.06580264867964923
+          ],
+          [
+            -0.03792696247738835,
+            1.1475791649435185,
+            -0.1096522024661301
+          ],
+          [
+            0.0018592942373558896,
+            -0.1234560839928416,
+            1.1215967897554857
+          ]
+        ],
+        "highlights": -0.4,
+        "blacks": -0.1238,
+        "chroma_preserve": 0.35
+      },
+      "de2000_median": 7.994877170795906
+    },
+    "blueneg:199910-01-korea": {
+      "frame_id": "blueneg:199910-01-korea",
+      "variant": "standard",
+      "raw_sha256": "60941f5f333041c208d0019bb6dd50e859903fe83dfb69c5a6575a06ce5ed5b3",
+      "preview_image": "blueneg_199910-01-korea_candidate.jpg",
+      "preview_image_sha256": "0ee6732aacfa853179a6f7f787095142ddd16bd26899d8cd68a1eac0c7c05bee",
+      "params": {
+        "ev": 1.7269,
+        "temp": 0.5,
+        "tint": -0.0246,
+        "sat": 1.0115,
+        "contrast": 1.3804,
+        "midtone": 0.2497,
+        "shoulder": 0.4134,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "highlights": -0.599,
+        "blacks": -0.055,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 13.008015465106162
+    },
+    "ext:A198": {
+      "frame_id": "ext:A198",
+      "variant": "standard",
+      "raw_sha256": "66a6e134d10973ec4d9a7e38d2297a35fdb3b06c24677e21adf61289b68d2cc7",
+      "preview_image": "ext_A198_candidate.jpg",
+      "preview_image_sha256": "ae04668e7023b7ed1cc7e11cf4027aafcfaac51533a5c955419898357f877d80",
+      "params": {
+        "ev": -0.3778,
+        "temp": 0.081,
+        "tint": 0.0095,
+        "sat": 1.0114,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.1097265765068025,
+            -0.034523549444346345,
+            -0.07520302706245617
+          ],
+          [
+            -0.0433450999741582,
+            1.1686619027925926,
+            -0.1253168028184345
+          ],
+          [
+            0.0021249076998353872,
+            -0.14109266742039034,
+            1.138967759720555
+          ]
+        ],
+        "blacks": -0.0575,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 8.668541745020462
+    },
+    "blueneg:19970619A-15-white-chapel": {
+      "frame_id": "blueneg:19970619A-15-white-chapel",
+      "variant": "standard",
+      "raw_sha256": "5961e6ba9540b46795ec7afd4221fd2c2c8179b3e87173e6a5aef02cdde5404c",
+      "preview_image": "blueneg_19970619A-15-white-chapel_candidate.jpg",
+      "preview_image_sha256": "c3b6db3b1921e35a6f4a19b9ddeb9ed0326a9bfaf857fb106fe5df2c5e97f0e0",
+      "params": {
+        "ev": -0.5984,
+        "temp": -0.1045,
+        "tint": 0.0722,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "blacks": -0.1568,
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "de2000_median": 19.376726339108682
+    }
+  }
+}

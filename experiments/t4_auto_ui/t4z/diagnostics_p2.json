@@ -1,0 +1,394 @@
+{
+  "source_content_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+  "diag_1_b094": {
+    "file": "/Volumes/waizhiyingpan/\u80f6\u7247\u8d1f\u7247\u7d20\u6750/02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B094.tif",
+    "raw_sha256": "4045d5a39ef07313e9a1e5701d13f2cc9d0b6d53d0611e2ee4e71427f8da88bb",
+    "total_blocks_grid": [
+      416,
+      262
+    ],
+    "total_hot_blocks": 12567,
+    "edge_connected_hot_blocks": 11644,
+    "production_gate_condition": {
+      "d_hi_initial_gate_passed": true,
+      "d_hi_initial": [
+        3.413954019546509,
+        3.413954019546509,
+        3.413954019546509
+      ],
+      "n_excluded_initial": 0,
+      "has_remaining_hot": true,
+      "entered_change_c_branch": false,
+      "explanation": "In production invert.py lines 188-189, Change C requires BOTH n_excluded > 0 and (ok & ~holder_blocks & hot).any(). While remaining hot is True (296 blocks), n_excluded == 0 because edge-connected holder blocks do not intersect the central ok mask. Thus Change C is NOT entered for B094."
+    },
+    "internal_hot_blocks_in_ok": {
+      "count": 296,
+      "rows_range": [
+        233,
+        311
+      ],
+      "cols_range": [
+        111,
+        195
+      ],
+      "d_g_min": 2.1009788513183594,
+      "d_g_median": 2.537569522857666,
+      "d_g_max": 4.146116256713867
+    },
+    "production_result": {
+      "d_hi": [
+        3.413954019546509,
+        3.413954019546509,
+        3.413954019546509
+      ],
+      "status": "manual_review_required",
+      "flags": [
+        "white_point_invalid: p99 3.67 stops past the inversion white point"
+      ],
+      "covered_by_change_c": false
+    }
+  },
+  "diag_2_8bit_quantization": {
+    "A850.tif": {
+      "raw_sha256": "dd92a590e4c632f246d46289e61bad67a07e79f34a533e17a4d6f9f48bc71f23",
+      "bits": 8,
+      "eotf": "srgb",
+      "threshold_linear": 0.0006070539820939302,
+      "total_ok_blocks": 10292,
+      "too_dark_blocks_excluded": 14,
+      "unconstrained": {
+        "d_hi": [
+          2.957364082336426,
+          3.0526185035705566,
+          3.0930001735687256
+        ],
+        "ev": 1.1845,
+        "status": "ok",
+        "flags": [
+          "ev_lowered_for_highlights:0.6"
+        ],
+        "srgb_q50": [
+          0.007337409071624279,
+          0.006627129390835762,
+          0.01021735928952694
+        ]
+      },
+      "constrained": {
+        "d_hi": [
+          2.9369587898254395,
+          2.997312545776367,
+          3.064178943634033
+        ],
+        "ev": 0.9325,
+        "status": "ok",
+        "flags": [
+          "ev_lowered_for_highlights:0.6"
+        ],
+        "srgb_q50": [
+          0.007479695603251457,
+          0.006848210468888283,
+          0.010396528989076614
+        ]
+      },
+      "direction": {
+        "d_hi_reduction": [
+          0.020405292510986328,
+          0.05530595779418945,
+          0.028821229934692383
+        ],
+        "srgb_q50_lift": [
+          0.0001422865316271782,
+          0.00022108107805252075,
+          0.000179169699549675
+        ],
+        "ev_delta": -0.2520000000000001
+      }
+    },
+    "A851.tif": {
+      "raw_sha256": "34a2c9a358b948c045d79e4adba3f2d1444d231ddc423c80aed32fefe1ccce46",
+      "bits": 8,
+      "eotf": "srgb",
+      "threshold_linear": 0.0006070539820939302,
+      "total_ok_blocks": 10292,
+      "too_dark_blocks_excluded": 10,
+      "unconstrained": {
+        "d_hi": [
+          2.9532015323638916,
+          3.0541701316833496,
+          3.10048508644104
+        ],
+        "ev": 1.2016,
+        "status": "ok",
+        "flags": [
+          "ev_lowered_for_highlights:0.6"
+        ],
+        "srgb_q50": [
+          0.007373108994215727,
+          0.006761488970369101,
+          0.01033485122025013
+        ]
+      },
+      "constrained": {
+        "d_hi": [
+          2.936603546142578,
+          3.017575263977051,
+          3.0755324363708496
+        ],
+        "ev": 1.0551,
+        "status": "ok",
+        "flags": [
+          "ev_lowered_for_highlights:0.6"
+        ],
+        "srgb_q50": [
+          0.007581783924251795,
+          0.007019308395683765,
+          0.01059255376458168
+        ]
+      },
+      "direction": {
+        "d_hi_reduction": [
+          0.016597986221313477,
+          0.03659486770629883,
+          0.02495265007019043
+        ],
+        "srgb_q50_lift": [
+          0.00020867493003606796,
+          0.00025781942531466484,
+          0.0002577025443315506
+        ],
+        "ev_delta": -0.14650000000000007
+      }
+    },
+    "A852.tif": {
+      "raw_sha256": "79e0fbf61282d7699e60795b6638a2de138588487e3070fa588505a60f2c1595",
+      "bits": 8,
+      "eotf": "srgb",
+      "threshold_linear": 0.0006070539820939302,
+      "total_ok_blocks": 10292,
+      "too_dark_blocks_excluded": 137,
+      "unconstrained": {
+        "d_hi": [
+          2.86382794380188,
+          3.195373773574829,
+          3.5220272541046143
+        ],
+        "ev": 1.6123,
+        "status": "ok",
+        "flags": [
+          "ev_lowered_for_highlights:0.6"
+        ],
+        "srgb_q50": [
+          0.007696851622313261,
+          0.0058644553646445274,
+          0.007172761484980583
+        ]
+      },
+      "constrained": {
+        "d_hi": [
+          2.8642737865448,
+          2.927093505859375,
+          3.0715904235839844
+        ],
+        "ev": 0.0,
+        "status": "manual_review_required",
+        "flags": [
+          "white_point_invalid: p99 11.12 stops past the inversion white point"
+        ],
+        "srgb_q50": [
+          0.0016743093729019165,
+          0.002084239386022091,
+          0.005958904512226582
+        ]
+      },
+      "direction": {
+        "d_hi_reduction": [
+          -0.0004458427429199219,
+          0.2682802677154541,
+          0.4504368305206299
+        ],
+        "srgb_q50_lift": [
+          -0.0060225422494113445,
+          -0.0037802159786224365,
+          -0.0012138569727540016
+        ],
+        "ev_delta": -1.6123
+      }
+    }
+  },
+  "diag_3_base_chromaticity": {
+    "rule_specification": "Reject candidate base if (R/G < 0.85 and B/G > 0.42 and mean(base_rgb) > 0.20) indicating bare backlight intrusion rather than orange film mask.",
+    "targets": {
+      "A251.cr2": {
+        "raw_sha256": "6d9df7e89f7ffb9598ee7de7bac927d36d1a8c45588bf29295c7fb5efb07d66b",
+        "base_rgb": [
+          0.30948346853256226,
+          0.43546196818351746,
+          0.21676966547966003
+        ],
+        "r_g": 0.7107014874881935,
+        "b_g": 0.4977924166004468,
+        "mean_base": 0.32057170073191327,
+        "ev": -0.0908,
+        "srgb_q50": [
+          0.5229359865188599,
+          0.5699498057365417,
+          0.5885381698608398
+        ],
+        "matches_spec_rule": true
+      },
+      "A252.cr2": {
+        "raw_sha256": "65fb38bc106fc028754c087bfe4c5efa35fe245cd3aa0d97fb5d0d68c89a1b15",
+        "base_rgb": [
+          0.5072861909866333,
+          0.766826868057251,
+          0.3849546015262604
+        ],
+        "r_g": 0.6615394062441218,
+        "b_g": 0.5020097985110243,
+        "mean_base": 0.5530225535233816,
+        "ev": -0.1851,
+        "srgb_q50": [
+          0.8550649881362915,
+          0.7291909456253052,
+          0.8365840911865234
+        ],
+        "matches_spec_rule": true
+      },
+      "A253.cr2": {
+        "raw_sha256": "47b779c1c86f7c5489287e85b25fb5249abbb842bc3e8e7ca5735d62443bc0c8",
+        "base_rgb": [
+          0.3956206738948822,
+          0.539559006690979,
+          0.24824902415275574
+        ],
+        "r_g": 0.7332296727306149,
+        "b_g": 0.46009615458969644,
+        "mean_base": 0.3944762349128723,
+        "ev": -0.2489,
+        "srgb_q50": [
+          0.6860188245773315,
+          0.6950430870056152,
+          0.6076662540435791
+        ],
+        "matches_spec_rule": true
+      }
+    },
+    "benchmark_audit": {
+      "total_frames_checked": 315,
+      "matching_frames_count": 0,
+      "matching_frames": [],
+      "conclusion": "Across 315 evaluated benchmark frames, exactly 0 frame(s) matched the (R/G < 0.85 & B/G > 0.42 & mean > 0.20) threshold. Pure chromaticity (R/G < 0.85 & B/G > 0.42) alone hit ext:A196 (dense negative, mean=0.064), while combining with brightness (>0.20) isolates bare lightboxes."
+    }
+  },
+  "diag_4_blue_cast_relaxation": {
+    "task": "T4z Section 5.4 Blue Cast Relaxation Diagnostic",
+    "source_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+    "counts": {
+      "valid308_total": 308,
+      "low_ratio_total": 114,
+      "all_toggled_subset": 46,
+      "strict_3way_subset": 25
+    },
+    "statistics_strict_3way": {
+      "n_evaluated": 25,
+      "better_delta_de_gt_0_05": 17,
+      "worse_delta_de_gt_0_05": 7,
+      "better_delta_de_gt_0_25": 15,
+      "worse_delta_de_gt_0_25": 5,
+      "mean_de2000_before": 13.447728702339226,
+      "mean_de2000_after": 12.941247668693238,
+      "mean_db_before": -7.67013230196857,
+      "mean_db_after": -5.253968451294531
+    },
+    "statistics_all_toggled": {
+      "n_evaluated": 46,
+      "better_delta_de_gt_0_05": 30,
+      "worse_delta_de_gt_0_05": 15,
+      "better_delta_de_gt_0_25": 26,
+      "worse_delta_de_gt_0_25": 8,
+      "mean_de2000_before": 13.196618772765923,
+      "mean_de2000_after": 12.799921559084982,
+      "mean_db_before": -7.087026512023258,
+      "mean_db_after": -5.087587626884051
+    },
+    "target_ids_strict_3way": [
+      "blueneg:19941220D-22-kamakura",
+      "blueneg:19960808B-06-new-orleans-siggraph96",
+      "blueneg:19960808B-08-new-orleans-siggraph96",
+      "blueneg:19960808B-09-new-orleans-siggraph96",
+      "blueneg:19960808B-11-new-orleans-siggraph96",
+      "blueneg:19960811B-35-laughlin",
+      "blueneg:19960812D-07-hoover-dam",
+      "blueneg:19960812D-11-las-vegas",
+      "blueneg:19960812D-15-las-vegas",
+      "blueneg:19960812D-17-las-vegas",
+      "blueneg:19960812D-25-las-vegas",
+      "blueneg:19960812D-26-las-vegas",
+      "blueneg:19960812D-27-las-vegas",
+      "blueneg:19960812D-28-las-vegas",
+      "blueneg:19960812D-29-las-vegas",
+      "blueneg:19960812D-31-las-vegas",
+      "blueneg:19960812D-35-las-vegas",
+      "blueneg:199807A-19-orlando-disney",
+      "blueneg:199807A-29-orlando-disney",
+      "blueneg:199807A-31-orlando-disney",
+      "blueneg:199807A-36-orlando-disney",
+      "blueneg:199807A-37-orlando-disney",
+      "blueneg:199807B-01-orlando-seaworld",
+      "blueneg:199807B-14-orlando-seaworld",
+      "blueneg:199807B-15-orlando-seaworld"
+    ],
+    "all_toggled_ids": [
+      "blueneg:19941217A-08-tokyo",
+      "blueneg:19941217B-08-tokyo",
+      "blueneg:19941220D-20-kamakura",
+      "blueneg:19941220D-22-kamakura",
+      "blueneg:19941220D-23-kamakura",
+      "blueneg:19960808B-04-new-orleans-siggraph96",
+      "blueneg:19960808B-05-new-orleans-siggraph96",
+      "blueneg:19960808B-06-new-orleans-siggraph96",
+      "blueneg:19960808B-07-new-orleans-siggraph96",
+      "blueneg:19960808B-08-new-orleans-siggraph96",
+      "blueneg:19960808B-09-new-orleans-siggraph96",
+      "blueneg:19960808B-11-new-orleans-siggraph96",
+      "blueneg:19960809B-14-new-orleans-siggraph96",
+      "blueneg:19960811B-17-arizona-london-bridge",
+      "blueneg:19960811B-21-arizona-london-bridge",
+      "blueneg:19960811B-29-arizona-london-bridge",
+      "blueneg:19960811B-34-laughlin",
+      "blueneg:19960811B-35-laughlin",
+      "blueneg:19960811B-36-laughlin",
+      "blueneg:19960812D-06-hoover-dam",
+      "blueneg:19960812D-07-hoover-dam",
+      "blueneg:19960812D-10-las-vegas",
+      "blueneg:19960812D-11-las-vegas",
+      "blueneg:19960812D-13-las-vegas",
+      "blueneg:19960812D-15-las-vegas",
+      "blueneg:19960812D-17-las-vegas",
+      "blueneg:19960812D-20-las-vegas",
+      "blueneg:19960812D-25-las-vegas",
+      "blueneg:19960812D-26-las-vegas",
+      "blueneg:19960812D-27-las-vegas",
+      "blueneg:19960812D-28-las-vegas",
+      "blueneg:19960812D-29-las-vegas",
+      "blueneg:19960812D-31-las-vegas",
+      "blueneg:19960812D-32-las-vegas",
+      "blueneg:19960812D-34-las-vegas",
+      "blueneg:19960812D-35-las-vegas",
+      "blueneg:19970619A-14-white-chapel",
+      "blueneg:199807A-19-orlando-disney",
+      "blueneg:199807A-29-orlando-disney",
+      "blueneg:199807A-31-orlando-disney",
+      "blueneg:199807A-33-orlando-disney",
+      "blueneg:199807A-36-orlando-disney",
+      "blueneg:199807A-37-orlando-disney",
+      "blueneg:199807B-01-orlando-seaworld",
+      "blueneg:199807B-14-orlando-seaworld",
+      "blueneg:199807B-15-orlando-seaworld"
+    ],
+    "files": {
+      "diagnostic_json": "experiments/t4_auto_ui/t4z/blue_cast_diagnostic.json",
+      "eval_json": "experiments/t4_auto_ui/t4z/eval_blue_cast_relaxation.json"
+    }
+  }
+}

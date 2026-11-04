@@ -1,0 +1,4465 @@
+{
+  "source_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+  "baseline": {
+    "commit": "4bd014ea956c7a569b0e2113ded6f054c6f1a34e",
+    "source_dir": "/private/tmp/fc_t4z_baseline_20261105/src",
+    "src_content_sha256": "db2d825798bc3edf7fe99e128d57ae56df27c466db876b633b067cca91fbc629",
+    "paths_runtime_sha256": "fced78f38a0787e473d882024d289878b99a224c604242f6561c7fb05e8be913",
+    "paths_committed_sha256": "a3db2697c0e2a4a5e6ae7ceec13456951ae81042482c177a877713fcd797c353",
+    "n_files": 39
+  },
+  "evaluations": {
+    "dev": {
+      "n": 185,
+      "identity": {
+        "t4r": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.5499999999999998,
+          "max_abs_diff_metrics": 6.606231825344814,
+          "param_diffs_by_key": {
+            "ev": 0.5499999999999998,
+            "blacks": 0.0545
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 1.105581065759398,
+            "chroma_ratio": 0.10234578417254991,
+            "de2000_p90": 6.606231825344814,
+            "mean_dL": 6.55567265990652,
+            "de2000_median": 5.032349817950449,
+            "mean_da": 0.7360167557912201
+          },
+          "diff_count": 648,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0029,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.7,
+              "prior": 0.7291,
+              "diff": 0.029100000000000015
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.0065994199422736,
+              "prior": 0.9906930204179085,
+              "diff": 0.015906399524365122
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.6594491286451425,
+              "prior": 0.6624489423721373,
+              "diff": 0.00299981372699476
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 22.32710450935108,
+              "prior": 22.653284034545752,
+              "diff": 0.3261795251946715
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 16.202086200385324,
+              "prior": 16.56643010661168,
+              "diff": 0.36434390622635604
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 18.552949870775542,
+              "prior": 18.884094585358753,
+              "diff": 0.3311447145832105
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.129324991061199,
+              "prior": -6.140905267970886,
+              "diff": 0.011580276909687548
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0031,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6976,
+              "prior": 0.7291,
+              "diff": 0.03149999999999997
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.948441566489707,
+              "prior": 1.9344948750613276,
+              "diff": 0.013946691428379454
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5592184979055288,
+              "prior": 0.5614054977955992,
+              "diff": 0.002186999890070429
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.076394262559997,
+              "prior": 24.397848459559498,
+              "diff": 0.3214541969995004
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 17.6728756507967,
+              "prior": 18.030656547636248,
+              "diff": 0.3577808968395466
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.904979611623464,
+              "prior": 20.239325378358387,
+              "diff": 0.33434576673492344
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -5.982301006509554,
+              "prior": -5.990443525954109,
+              "diff": 0.008142519444554353
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0035,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6943,
+              "prior": 0.7291,
+              "diff": 0.03479999999999994
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.5383056576105423,
+              "prior": 1.5293185747193763,
+              "diff": 0.00898708289116601
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5733792040567269,
+              "prior": 0.5752720978509265,
+              "diff": 0.001892893794199546
+            }
+          ]
+        },
+        "t4s": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.5499999999999998,
+          "max_abs_diff_metrics": 6.606231825344814,
+          "param_diffs_by_key": {
+            "ev": 0.5499999999999998,
+            "blacks": 0.0545
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 1.105581065759398,
+            "chroma_ratio": 0.10234578417254991,
+            "de2000_p90": 6.606231825344814,
+            "mean_dL": 6.55567265990652,
+            "de2000_median": 5.032349817950449,
+            "mean_da": 0.7360167557912201
+          },
+          "diff_count": 648,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0029,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.7,
+              "prior": 0.7291,
+              "diff": 0.029100000000000015
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.0065994199422736,
+              "prior": 0.9906930204179085,
+              "diff": 0.015906399524365122
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.6594491286451425,
+              "prior": 0.6624489423721373,
+              "diff": 0.00299981372699476
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 22.32710450935108,
+              "prior": 22.653284034545752,
+              "diff": 0.3261795251946715
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 16.202086200385324,
+              "prior": 16.56643010661168,
+              "diff": 0.36434390622635604
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 18.552949870775542,
+              "prior": 18.884094585358753,
+              "diff": 0.3311447145832105
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.129324991061199,
+              "prior": -6.140905267970886,
+              "diff": 0.011580276909687548
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0031,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6976,
+              "prior": 0.7291,
+              "diff": 0.03149999999999997
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.948441566489707,
+              "prior": 1.9344948750613276,
+              "diff": 0.013946691428379454
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5592184979055288,
+              "prior": 0.5614054977955992,
+              "diff": 0.002186999890070429
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.076394262559997,
+              "prior": 24.397848459559498,
+              "diff": 0.3214541969995004
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 17.6728756507967,
+              "prior": 18.030656547636248,
+              "diff": 0.3577808968395466
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.904979611623464,
+              "prior": 20.239325378358387,
+              "diff": 0.33434576673492344
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -5.982301006509554,
+              "prior": -5.990443525954109,
+              "diff": 0.008142519444554353
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0035,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6943,
+              "prior": 0.7291,
+              "diff": 0.03479999999999994
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.5383056576105423,
+              "prior": 1.5293185747193763,
+              "diff": 0.00898708289116601
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5733792040567269,
+              "prior": 0.5752720978509265,
+              "diff": 0.001892893794199546
+            }
+          ]
+        },
+        "t4t": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.5499999999999998,
+          "max_abs_diff_metrics": 6.606231825344814,
+          "param_diffs_by_key": {
+            "ev": 0.5499999999999998,
+            "blacks": 0.0545
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 1.105581065759398,
+            "chroma_ratio": 0.10234578417254991,
+            "de2000_p90": 6.606231825344814,
+            "mean_dL": 6.55567265990652,
+            "de2000_median": 5.032349817950449,
+            "mean_da": 0.7360167557912201
+          },
+          "diff_count": 648,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0029,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.7,
+              "prior": 0.7291,
+              "diff": 0.029100000000000015
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.0065994199422736,
+              "prior": 0.9906930204179085,
+              "diff": 0.015906399524365122
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.6594491286451425,
+              "prior": 0.6624489423721373,
+              "diff": 0.00299981372699476
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 22.32710450935108,
+              "prior": 22.653284034545752,
+              "diff": 0.3261795251946715
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 16.202086200385324,
+              "prior": 16.56643010661168,
+              "diff": 0.36434390622635604
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 18.552949870775542,
+              "prior": 18.884094585358753,
+              "diff": 0.3311447145832105
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.129324991061199,
+              "prior": -6.140905267970886,
+              "diff": 0.011580276909687548
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0031,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6976,
+              "prior": 0.7291,
+              "diff": 0.03149999999999997
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.948441566489707,
+              "prior": 1.9344948750613276,
+              "diff": 0.013946691428379454
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5592184979055288,
+              "prior": 0.5614054977955992,
+              "diff": 0.002186999890070429
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.076394262559997,
+              "prior": 24.397848459559498,
+              "diff": 0.3214541969995004
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 17.6728756507967,
+              "prior": 18.030656547636248,
+              "diff": 0.3577808968395466
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.904979611623464,
+              "prior": 20.239325378358387,
+              "diff": 0.33434576673492344
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -5.982301006509554,
+              "prior": -5.990443525954109,
+              "diff": 0.008142519444554353
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0035,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6943,
+              "prior": 0.7291,
+              "diff": 0.03479999999999994
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.5383056576105423,
+              "prior": 1.5293185747193763,
+              "diff": 0.00898708289116601
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5733792040567269,
+              "prior": 0.5752720978509265,
+              "diff": 0.001892893794199546
+            }
+          ]
+        },
+        "t4u": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.5499999999999998,
+          "max_abs_diff_metrics": 6.606231825344814,
+          "param_diffs_by_key": {
+            "ev": 0.5499999999999998,
+            "blacks": 0.0545
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 1.105581065759398,
+            "chroma_ratio": 0.10234578417254991,
+            "de2000_p90": 6.606231825344814,
+            "mean_dL": 6.55567265990652,
+            "de2000_median": 5.032349817950449,
+            "mean_da": 0.7360167557912201
+          },
+          "diff_count": 648,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0029,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.7,
+              "prior": 0.7291,
+              "diff": 0.029100000000000015
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.0065994199422736,
+              "prior": 0.9906930204179085,
+              "diff": 0.015906399524365122
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.6594491286451425,
+              "prior": 0.6624489423721373,
+              "diff": 0.00299981372699476
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 22.32710450935108,
+              "prior": 22.653284034545752,
+              "diff": 0.3261795251946715
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 16.202086200385324,
+              "prior": 16.56643010661168,
+              "diff": 0.36434390622635604
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 18.552949870775542,
+              "prior": 18.884094585358753,
+              "diff": 0.3311447145832105
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.129324991061199,
+              "prior": -6.140905267970886,
+              "diff": 0.011580276909687548
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0031,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6976,
+              "prior": 0.7291,
+              "diff": 0.03149999999999997
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.948441566489707,
+              "prior": 1.9344948750613276,
+              "diff": 0.013946691428379454
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5592184979055288,
+              "prior": 0.5614054977955992,
+              "diff": 0.002186999890070429
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.076394262559997,
+              "prior": 24.397848459559498,
+              "diff": 0.3214541969995004
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 17.6728756507967,
+              "prior": 18.030656547636248,
+              "diff": 0.3577808968395466
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.904979611623464,
+              "prior": 20.239325378358387,
+              "diff": 0.33434576673492344
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -5.982301006509554,
+              "prior": -5.990443525954109,
+              "diff": 0.008142519444554353
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0035,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6943,
+              "prior": 0.7291,
+              "diff": 0.03479999999999994
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.5383056576105423,
+              "prior": 1.5293185747193763,
+              "diff": 0.00898708289116601
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5733792040567269,
+              "prior": 0.5752720978509265,
+              "diff": 0.001892893794199546
+            }
+          ]
+        },
+        "t4v": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.5499999999999998,
+          "max_abs_diff_metrics": 6.606231825344814,
+          "param_diffs_by_key": {
+            "ev": 0.5499999999999998,
+            "blacks": 0.0545
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 1.105581065759398,
+            "chroma_ratio": 0.10234578417254991,
+            "de2000_p90": 6.606231825344814,
+            "mean_dL": 6.55567265990652,
+            "de2000_median": 5.032349817950449,
+            "mean_da": 0.7360167557912201
+          },
+          "diff_count": 648,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0029,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.7,
+              "prior": 0.7291,
+              "diff": 0.029100000000000015
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.0065994199422736,
+              "prior": 0.9906930204179085,
+              "diff": 0.015906399524365122
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.6594491286451425,
+              "prior": 0.6624489423721373,
+              "diff": 0.00299981372699476
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 22.32710450935108,
+              "prior": 22.653284034545752,
+              "diff": 0.3261795251946715
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 16.202086200385324,
+              "prior": 16.56643010661168,
+              "diff": 0.36434390622635604
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 18.552949870775542,
+              "prior": 18.884094585358753,
+              "diff": 0.3311447145832105
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.129324991061199,
+              "prior": -6.140905267970886,
+              "diff": 0.011580276909687548
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0031,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6976,
+              "prior": 0.7291,
+              "diff": 0.03149999999999997
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.948441566489707,
+              "prior": 1.9344948750613276,
+              "diff": 0.013946691428379454
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5592184979055288,
+              "prior": 0.5614054977955992,
+              "diff": 0.002186999890070429
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.076394262559997,
+              "prior": 24.397848459559498,
+              "diff": 0.3214541969995004
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 17.6728756507967,
+              "prior": 18.030656547636248,
+              "diff": 0.3577808968395466
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.904979611623464,
+              "prior": 20.239325378358387,
+              "diff": 0.33434576673492344
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -5.982301006509554,
+              "prior": -5.990443525954109,
+              "diff": 0.008142519444554353
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0035,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6943,
+              "prior": 0.7291,
+              "diff": 0.03479999999999994
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.5383056576105423,
+              "prior": 1.5293185747193763,
+              "diff": 0.00898708289116601
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5733792040567269,
+              "prior": 0.5752720978509265,
+              "diff": 0.001892893794199546
+            }
+          ]
+        },
+        "t4w": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.5499999999999998,
+          "max_abs_diff_metrics": 6.606231825344814,
+          "param_diffs_by_key": {
+            "ev": 0.5499999999999998,
+            "blacks": 0.0545
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 1.105581065759398,
+            "chroma_ratio": 0.10234578417254991,
+            "de2000_p90": 6.606231825344814,
+            "mean_dL": 6.55567265990652,
+            "de2000_median": 5.032349817950449,
+            "mean_da": 0.7360167557912201
+          },
+          "diff_count": 616,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0029,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.7,
+              "prior": 0.7291,
+              "diff": 0.029100000000000015
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.0065994199422736,
+              "prior": 0.9906930204179085,
+              "diff": 0.015906399524365122
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.6594491286451425,
+              "prior": 0.6624489423721373,
+              "diff": 0.00299981372699476
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 22.32710450935108,
+              "prior": 22.653284034545752,
+              "diff": 0.3261795251946715
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 16.202086200385324,
+              "prior": 16.56643010661168,
+              "diff": 0.36434390622635604
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 18.552949870775542,
+              "prior": 18.884094585358753,
+              "diff": 0.3311447145832105
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.129324991061199,
+              "prior": -6.140905267970886,
+              "diff": 0.011580276909687548
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0031,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6976,
+              "prior": 0.7291,
+              "diff": 0.03149999999999997
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.948441566489707,
+              "prior": 1.9344948750613276,
+              "diff": 0.013946691428379454
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5592184979055288,
+              "prior": 0.5614054977955992,
+              "diff": 0.002186999890070429
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.076394262559997,
+              "prior": 24.397848459559498,
+              "diff": 0.3214541969995004
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 17.6728756507967,
+              "prior": 18.030656547636248,
+              "diff": 0.3577808968395466
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.904979611623464,
+              "prior": 20.239325378358387,
+              "diff": 0.33434576673492344
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -5.982301006509554,
+              "prior": -5.990443525954109,
+              "diff": 0.008142519444554353
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0035,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.6943,
+              "prior": 0.7291,
+              "diff": 0.03479999999999994
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": 1.5383056576105423,
+              "prior": 1.5293185747193763,
+              "diff": 0.00898708289116601
+            },
+            {
+              "frame": "blueneg:19941217B-08-tokyo",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5733792040567269,
+              "prior": 0.5752720978509265,
+              "diff": 0.001892893794199546
+            }
+          ]
+        },
+        "t4x": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.5499999999999998,
+          "max_abs_diff_metrics": 6.606231825344814,
+          "param_diffs_by_key": {
+            "ev": 0.5499999999999998,
+            "blacks": 0.12369999999999999
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 1.105581065759398,
+            "chroma_ratio": 0.10234578417254991,
+            "de2000_p90": 6.606231825344814,
+            "mean_dL": 6.55567265990652,
+            "de2000_median": 5.032349817950449,
+            "mean_da": 0.7360167557912201
+          },
+          "diff_count": 416,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0171,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 1.7346,
+              "prior": 1.9056,
+              "diff": 0.17100000000000004
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -5.303663458983626,
+              "prior": -5.331948792783145,
+              "diff": 0.02828533379951903
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.3082043472290248,
+              "prior": 0.30709965946215556,
+              "diff": 0.0011046877668692279
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 36.25242883472319,
+              "prior": 37.93596472644587,
+              "diff": 1.683535891722677
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 23.105865369551765,
+              "prior": 24.424643423434308,
+              "diff": 1.3187780538825429
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.185236472907864,
+              "prior": 19.933127859498114,
+              "diff": 0.7478913865902506
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -1.1072171590639495,
+              "prior": -0.9593955027212117,
+              "diff": 0.1478216563427378
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0306,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 1.7547,
+              "prior": 2.0609,
+              "diff": 0.30620000000000025
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -5.860027722570817,
+              "prior": -5.876287407935921,
+              "diff": 0.016259685365104026
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.324489860485181,
+              "prior": 0.3207829759026342,
+              "diff": 0.00370688458254681
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 37.94637984042271,
+              "prior": 40.7815813953937,
+              "diff": 2.8352015549709932
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 25.280415903612575,
+              "prior": 27.574944745945228,
+              "diff": 2.294528842332653
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 20.483897539007103,
+              "prior": 21.820096977589053,
+              "diff": 1.33619943858195
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -0.66253475223502,
+              "prior": -0.38981847381829204,
+              "diff": 0.27271627841672796
+            },
+            {
+              "frame": "blueneg:19960811B-28-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.012,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960811B-28-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.3625,
+              "prior": 0.4825,
+              "diff": 0.12
+            },
+            {
+              "frame": "blueneg:19960811B-28-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -0.021999421957421418,
+              "prior": -0.008883402623140106,
+              "diff": 0.013116019334281312
+            },
+            {
+              "frame": "blueneg:19960811B-28-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.5983977687111162,
+              "prior": 0.594973435057842,
+              "diff": 0.003424333653274214
+            }
+          ]
+        },
+        "t4y": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.5499999999999998,
+          "max_abs_diff_metrics": 6.606231825344814,
+          "param_diffs_by_key": {
+            "ev": 0.5499999999999998,
+            "blacks": 0.12369999999999999
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 1.105581065759398,
+            "chroma_ratio": 0.07149726033024706,
+            "de2000_p90": 6.606231825344814,
+            "mean_dL": 6.55567265990652,
+            "de2000_median": 5.032349817950449,
+            "mean_da": 0.7360167557912201
+          },
+          "diff_count": 176,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0171,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 1.7346,
+              "prior": 1.9056,
+              "diff": 0.17100000000000004
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -5.303663458983626,
+              "prior": -5.331948792783145,
+              "diff": 0.02828533379951903
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.3082043472290248,
+              "prior": 0.30709965946215556,
+              "diff": 0.0011046877668692279
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 36.25242883472319,
+              "prior": 37.93596472644587,
+              "diff": 1.683535891722677
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 23.105865369551765,
+              "prior": 24.424643423434308,
+              "diff": 1.3187780538825429
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.185236472907864,
+              "prior": 19.933127859498114,
+              "diff": 0.7478913865902506
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -1.1072171590639495,
+              "prior": -0.9593955027212117,
+              "diff": 0.1478216563427378
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0306,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 1.7547,
+              "prior": 2.0609,
+              "diff": 0.30620000000000025
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -5.860027722570817,
+              "prior": -5.876287407935921,
+              "diff": 0.016259685365104026
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.324489860485181,
+              "prior": 0.3207829759026342,
+              "diff": 0.00370688458254681
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 37.94637984042271,
+              "prior": 40.7815813953937,
+              "diff": 2.8352015549709932
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 25.280415903612575,
+              "prior": 27.574944745945228,
+              "diff": 2.294528842332653
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 20.483897539007103,
+              "prior": 21.820096977589053,
+              "diff": 1.33619943858195
+            },
+            {
+              "frame": "blueneg:19960808B-03-new-orleans-siggraph96",
+              "preset": "portrait",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -0.66253475223502,
+              "prior": -0.38981847381829204,
+              "diff": 0.27271627841672796
+            },
+            {
+              "frame": "blueneg:19960812D-17-las-vegas",
+              "preset": "natural",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0159,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960812D-17-las-vegas",
+              "preset": "natural",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 1.4653,
+              "prior": 1.6244,
+              "diff": 0.15910000000000002
+            },
+            {
+              "frame": "blueneg:19960812D-17-las-vegas",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -10.008481107752813,
+              "prior": -10.1226088464615,
+              "diff": 0.11412773870868698
+            },
+            {
+              "frame": "blueneg:19960812D-17-las-vegas",
+              "preset": "natural",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8117008074895895,
+              "prior": 0.8074307973714372,
+              "diff": 0.004270010118152312
+            }
+          ]
+        }
+      },
+      "presets_vs_t4o": {
+        "standard": {
+          "better_025": 21,
+          "worse_025": 0,
+          "better_005": 21,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19941217B-08-tokyo": -0.3311447145832105,
+            "blueneg:19941222D-32-kyoto": -0.5801566266330109,
+            "blueneg:19941223E-17-osaka": -0.8453283059967518,
+            "blueneg:19960809B-14-new-orleans-siggraph96": -0.44051546763321525,
+            "blueneg:19960811B-28-arizona-london-bridge": -1.0122973029971494,
+            "blueneg:19970619B-09-notre-dame": -0.5433612833251491,
+            "blueneg:199807A-06-hk": -0.6633103371615654,
+            "blueneg:199807A-09-orlando-siggraph": -1.1931011026032117,
+            "blueneg:199910-01-korea": -2.647063070369704,
+            "ext:A075": -1.5182028118187745,
+            "ext:A105": -1.1628190768024051,
+            "ext:A124": -0.7162653742117451,
+            "ext:A198": -0.9741928136544509,
+            "ext:A205": -1.4137208019619676,
+            "ext:A211": -2.5586957680142284,
+            "ext:A212": -4.472321498822774,
+            "ext:A215": -1.0050813618908023,
+            "ext:A218": -3.1263171494124826,
+            "ext:A220": -1.306526443601042,
+            "shop:DSC_3825": -0.6379006590984506,
+            "shop:DSC_3847": -0.9098234448951441
+          },
+          "stats_before": "9.03 / 9.45 / 14.14",
+          "stats_after": "8.86 / 9.30 / 13.88",
+          "metrics_before": {
+            "median": 9.027891734866627,
+            "mean": 9.450289020194285,
+            "p90": 14.142964735916426
+          },
+          "metrics_after": {
+            "median": 8.864970141558894,
+            "mean": 9.29862336929976,
+            "p90": 13.876488550184977
+          }
+        },
+        "natural": {
+          "better_025": 26,
+          "worse_025": 0,
+          "better_005": 28,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19941217B-08-tokyo": -0.33434576673492344,
+            "blueneg:19941218B-23-tokyo": -0.5376608132979861,
+            "blueneg:19941222D-32-kyoto": -0.687847844914387,
+            "blueneg:19941223E-17-osaka": -0.8649112421799874,
+            "blueneg:19960808B-03-new-orleans-siggraph96": -0.7478913865902506,
+            "blueneg:19960809B-14-new-orleans-siggraph96": -0.4493125964759521,
+            "blueneg:19960811B-28-arizona-london-bridge": -0.7931592860471053,
+            "blueneg:19960812D-17-las-vegas": -0.6401706582429618,
+            "blueneg:19970619B-09-notre-dame": -1.377393504011902,
+            "blueneg:199807A-06-hk": -0.4265477766570154,
+            "blueneg:199807A-09-orlando-siggraph": -1.4557420431356132,
+            "blueneg:199910-01-korea": -0.3558659819647634,
+            "ext:A075": -0.3770689415419284,
+            "ext:A087": -0.15773383629419868,
+            "ext:A091": -1.0944397692086376,
+            "ext:A105": -1.4329479584998221,
+            "ext:A124": -0.7562786681620057,
+            "ext:A141": -0.9949580557179605,
+            "ext:A198": -1.3933617215296517,
+            "ext:A205": -0.7422838365935069,
+            "ext:A211": -3.567667291444634,
+            "ext:A212": -4.7843054526271445,
+            "ext:A215": -0.4567095894884847,
+            "ext:A218": -3.155125846129997,
+            "ext:A220": -1.071857213192013,
+            "shop:DSC_3825": -0.5103657387793312,
+            "shop:DSC_3839": -0.08410439871089093,
+            "shop:DSC_3847": -1.187346957117084
+          },
+          "stats_before": "9.38 / 10.04 / 14.77",
+          "stats_after": "9.18 / 9.87 / 14.55",
+          "metrics_before": {
+            "median": 9.377637434376517,
+            "mean": 10.038470163894832,
+            "p90": 14.77481408756699
+          },
+          "metrics_after": {
+            "median": 9.182607022501088,
+            "mean": 9.87394365483921,
+            "p90": 14.549217920901558
+          }
+        },
+        "portrait": {
+          "better_025": 35,
+          "worse_025": 0,
+          "better_005": 38,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19941217B-08-tokyo": -0.357312955250805,
+            "blueneg:19941218B-23-tokyo": -1.4459063968743369,
+            "blueneg:19941218C-05-tokyo": -0.11631120902903902,
+            "blueneg:19941222D-32-kyoto": -1.5839691451878544,
+            "blueneg:19941223E-17-osaka": -0.9633866308560801,
+            "blueneg:19960808B-03-new-orleans-siggraph96": -1.33619943858195,
+            "blueneg:19960809B-14-new-orleans-siggraph96": -0.4588303990205631,
+            "blueneg:19960811B-28-arizona-london-bridge": -0.711338093294108,
+            "blueneg:19960812D-17-las-vegas": -0.8665344280371592,
+            "blueneg:19970619B-09-notre-dame": -1.618029010821541,
+            "blueneg:199807A-06-hk": -0.3627127334888396,
+            "blueneg:199807A-09-orlando-siggraph": -1.0212287052454059,
+            "blueneg:199910-01-korea": -0.8410957838263364,
+            "ext:A075": -0.8714388169581166,
+            "ext:A081": -1.1788839980017087,
+            "ext:A087": -1.3345151101757633,
+            "ext:A091": -0.41234591063730086,
+            "ext:A102": -0.09306182299791743,
+            "ext:A105": -2.537584048405984,
+            "ext:A124": -0.8112410327351594,
+            "ext:A126": -0.19585717090778587,
+            "ext:A141": -1.652929866050199,
+            "ext:A143": -1.2105598188234694,
+            "ext:A147": -0.6619504699232106,
+            "ext:A198": -1.6568887614437697,
+            "ext:A205": -1.2396059214715347,
+            "ext:A211": -3.786489919145639,
+            "ext:A212": -5.323298320580813,
+            "ext:A215": -0.8915342482881021,
+            "ext:A218": -3.1188696101294777,
+            "ext:A220": -0.9395772028441893,
+            "nlp:_DSF9237": -0.2961802181527098,
+            "shop:DSC_3823": -1.3891280577686427,
+            "shop:DSC_3825": -0.49297843667107344,
+            "shop:DSC_3846": -1.2813764994111025,
+            "shop:DSC_3847": -1.088548882594349,
+            "shop:DSC_3849": -0.3926895875729919,
+            "shop:DSC_3853": -0.8458349953058129
+          },
+          "stats_before": "9.56 / 10.65 / 16.57",
+          "stats_after": "9.38 / 10.40 / 15.91",
+          "metrics_before": {
+            "median": 9.564051907064535,
+            "mean": 10.645696977861668,
+            "p90": 16.566380077154907
+          },
+          "metrics_after": {
+            "median": 9.378248667529425,
+            "mean": 10.400303098781178,
+            "p90": 15.906681173830917
+          }
+        },
+        "vivid": {
+          "better_025": 17,
+          "worse_025": 0,
+          "better_005": 17,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19941222D-32-kyoto": -1.0576893157424543,
+            "blueneg:19941223E-17-osaka": -0.7821944601260142,
+            "blueneg:19960811B-28-arizona-london-bridge": -1.0058727265698248,
+            "blueneg:19960812D-17-las-vegas": -0.30420366811277155,
+            "blueneg:199807A-06-hk": -0.5902106102908071,
+            "blueneg:199807A-09-orlando-siggraph": -0.9887901822625338,
+            "blueneg:199910-01-korea": -2.982008199604408,
+            "ext:A075": -1.50618854996657,
+            "ext:A198": -0.8828213685598154,
+            "ext:A205": -1.4226460139630008,
+            "ext:A211": -2.4083174769960642,
+            "ext:A212": -4.496213580608902,
+            "ext:A215": -1.466480731547879,
+            "ext:A218": -3.128619039831362,
+            "ext:A220": -0.9791824050619855,
+            "shop:DSC_3825": -0.6831934890871576,
+            "shop:DSC_3847": -1.0004532861896696
+          },
+          "stats_before": "9.22 / 9.92 / 14.94",
+          "stats_after": "9.04 / 9.78 / 14.75",
+          "metrics_before": {
+            "median": 9.218296479192857,
+            "mean": 9.918791074434942,
+            "p90": 14.93561955979582
+          },
+          "metrics_after": {
+            "median": 9.040975012226884,
+            "mean": 9.779724634017867,
+            "p90": 14.754127644484225
+          }
+        },
+        "print_classic": {
+          "better_025": 15,
+          "worse_025": 0,
+          "better_005": 15,
+          "worse_005": 0,
+          "max_regression": 0.009255350837861442,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19941223E-17-osaka": -0.4846396718325323,
+            "blueneg:19960811B-28-arizona-london-bridge": -0.8979558997009249,
+            "blueneg:199807A-06-hk": -0.5846247117203962,
+            "blueneg:199807A-09-orlando-siggraph": -1.7866747076872098,
+            "blueneg:199910-01-korea": -1.8785162068624999,
+            "ext:A075": -0.6670672605784862,
+            "ext:A105": -5.032349817950449,
+            "ext:A198": -0.2754446405642952,
+            "ext:A205": -1.640489625568347,
+            "ext:A211": -1.5805935848457224,
+            "ext:A212": -3.4351660290507393,
+            "ext:A215": -1.0388326779208539,
+            "ext:A218": -2.3400440673803313,
+            "ext:A220": -0.5373824788986266,
+            "shop:DSC_3825": -0.3989537202248954
+          },
+          "stats_before": "8.46 / 9.07 / 13.61",
+          "stats_after": "8.27 / 8.95 / 13.47",
+          "metrics_before": {
+            "median": 8.45756432447313,
+            "mean": 9.074750131973234,
+            "p90": 13.608089597098555
+          },
+          "metrics_after": {
+            "median": 8.265833531199544,
+            "mean": 8.952752944135675,
+            "p90": 13.470574491258064
+          }
+        }
+      },
+      "presets_vs_t4y": {
+        "standard": {
+          "better_025": 3,
+          "worse_025": 0,
+          "better_005": 3,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:199910-01-korea": -2.647063070369704,
+            "ext:A075": -1.5182028118187745,
+            "ext:A198": -0.9741928136544509
+          },
+          "stats_before": "9.01 / 9.33 / 13.94",
+          "stats_after": "8.86 / 9.30 / 13.88",
+          "metrics_before": {
+            "median": 9.007480799616108,
+            "mean": 9.326404227115129,
+            "p90": 13.941021429500763
+          },
+          "metrics_after": {
+            "median": 8.864970141558894,
+            "mean": 9.29862336929976,
+            "p90": 13.876488550184977
+          }
+        },
+        "natural": {
+          "better_025": 5,
+          "worse_025": 0,
+          "better_005": 5,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19960808B-03-new-orleans-siggraph96": -0.7478913865902506,
+            "blueneg:19960812D-17-las-vegas": -0.6401706582429618,
+            "ext:A091": -1.0944397692086376,
+            "ext:A141": -0.9949580557179605,
+            "ext:A198": -1.3933617215296517
+          },
+          "stats_before": "9.18 / 9.90 / 14.55",
+          "stats_after": "9.18 / 9.87 / 14.55",
+          "metrics_before": {
+            "median": 9.182607022501088,
+            "mean": 9.900272420197531,
+            "p90": 14.549217920901558
+          },
+          "metrics_after": {
+            "median": 9.182607022501088,
+            "mean": 9.87394365483921,
+            "p90": 14.549217920901558
+          }
+        },
+        "portrait": {
+          "better_025": 5,
+          "worse_025": 0,
+          "better_005": 5,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19960808B-03-new-orleans-siggraph96": -1.33619943858195,
+            "blueneg:19960812D-17-las-vegas": -0.8665344280371592,
+            "ext:A141": -1.652929866050199,
+            "ext:A147": -0.6619504699232106,
+            "ext:A198": -1.5860263600113926
+          },
+          "stats_before": "9.45 / 10.43 / 15.96",
+          "stats_after": "9.38 / 10.40 / 15.91",
+          "metrics_before": {
+            "median": 9.44848069871162,
+            "mean": 10.433295750470931,
+            "p90": 15.958693450679146
+          },
+          "metrics_after": {
+            "median": 9.378248667529425,
+            "mean": 10.400303098781178,
+            "p90": 15.906681173830917
+          }
+        },
+        "vivid": {
+          "better_025": 4,
+          "worse_025": 0,
+          "better_005": 4,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19960812D-17-las-vegas": -0.30420366811277155,
+            "blueneg:199910-01-korea": -2.982008199604408,
+            "ext:A075": -1.50618854996657,
+            "ext:A198": -0.8828213685598154
+          },
+          "stats_before": "9.04 / 9.81 / 14.80",
+          "stats_after": "9.04 / 9.78 / 14.75",
+          "metrics_before": {
+            "median": 9.040975012226884,
+            "mean": 9.810629651092901,
+            "p90": 14.79941692052232
+          },
+          "metrics_after": {
+            "median": 9.040975012226884,
+            "mean": 9.779724634017867,
+            "p90": 14.754127644484225
+          }
+        },
+        "print_classic": {
+          "better_025": 4,
+          "worse_025": 0,
+          "better_005": 4,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:199910-01-korea": -1.8785162068624999,
+            "ext:A075": -0.6670672605784862,
+            "ext:A105": -5.032349817950449,
+            "ext:A198": -0.2754446405642952
+          },
+          "stats_before": "8.38 / 9.00 / 13.47",
+          "stats_after": "8.27 / 8.95 / 13.47",
+          "metrics_before": {
+            "median": 8.379523748073659,
+            "mean": 8.995203635627329,
+            "p90": 13.470574491258064
+          },
+          "metrics_after": {
+            "median": 8.265833531199544,
+            "mean": 8.952752944135675,
+            "p90": 13.470574491258064
+          }
+        }
+      },
+      "inversion_identity_vs_t4y": {
+        "count": 185,
+        "differences": []
+      },
+      "inversion_identity_vs_t4x": {
+        "count": 185,
+        "differences": []
+      },
+      "inversion_identity_vs_t4w": {
+        "count": 185,
+        "differences": []
+      },
+      "inversion_identity_vs_t4v": {
+        "count": 185,
+        "differences": []
+      },
+      "inversion_identity_vs_t4u": {
+        "count": 185,
+        "differences": []
+      },
+      "inversion_identity_vs_t4t": {
+        "count": 185,
+        "differences": []
+      },
+      "inversion_identity_vs_t4s": {
+        "count": 185,
+        "differences": []
+      },
+      "inversion_identity_vs_t4r": {
+        "count": 185,
+        "differences": []
+      }
+    },
+    "cross": {
+      "n": 123,
+      "identity": {
+        "t4r": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.4274,
+          "max_abs_diff_metrics": 6.5338294247808975,
+          "param_diffs_by_key": {
+            "ev": 0.4274
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 0.5824154581980086,
+            "chroma_ratio": 0.02406054999464069,
+            "de2000_p90": 6.5338294247808975,
+            "mean_dL": 6.068554610641996,
+            "de2000_median": 6.072586389078829,
+            "mean_da": 0.2669461939322588
+          },
+          "diff_count": 217,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0142,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 2.3583,
+              "prior": 2.5,
+              "diff": 0.14170000000000016
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -4.958378608001022,
+              "prior": -5.019610299263978,
+              "diff": 0.06123169126295647
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8269553573734271,
+              "prior": 0.8350963069827533,
+              "diff": 0.008140949609326209
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 27.691172055886007,
+              "prior": 29.073079990785324,
+              "diff": 1.381907934899317
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 18.36800886963949,
+              "prior": 19.73371481317762,
+              "diff": 1.3657059435381314
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.24243504227601,
+              "prior": 20.260848762128404,
+              "diff": 1.0184137198523935
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": 4.858785513381168,
+              "prior": 5.097033818384361,
+              "diff": 0.23824830500319294
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0188,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": -0.2919,
+              "prior": -0.25,
+              "diff": 0.04189999999999999
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "highlights",
+              "cand": null,
+              "prior": -0.017
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -20.08432440770931,
+              "prior": -20.08625077768177,
+              "diff": 0.0019263699724589856
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.1908041775907152,
+              "prior": 0.18992934955843124,
+              "diff": 0.0008748280322839475
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.012089334308232,
+              "prior": 24.297189138837663,
+              "diff": 0.2850998045294304
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 12.67832651055112,
+              "prior": 13.135315523458608,
+              "diff": 0.4569890129074885
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.780341385674177,
+              "prior": 19.938697400021862,
+              "diff": 0.1583560143476852
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.72836383347411,
+              "prior": -6.721304838464861,
+              "diff": 0.007058995009249003
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0064,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.8,
+              "prior": 0.8638,
+              "diff": 0.06379999999999997
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -3.584442588350404,
+              "prior": -3.611241692205872,
+              "diff": 0.0267991038554678
+            }
+          ]
+        },
+        "t4s": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.4274,
+          "max_abs_diff_metrics": 6.5338294247808975,
+          "param_diffs_by_key": {
+            "ev": 0.4274
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 0.5824154581980086,
+            "chroma_ratio": 0.02406054999464069,
+            "de2000_p90": 6.5338294247808975,
+            "mean_dL": 6.068554610641996,
+            "de2000_median": 6.072586389078829,
+            "mean_da": 0.2669461939322588
+          },
+          "diff_count": 217,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0142,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 2.3583,
+              "prior": 2.5,
+              "diff": 0.14170000000000016
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -4.958378608001022,
+              "prior": -5.019610299263978,
+              "diff": 0.06123169126295647
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8269553573734271,
+              "prior": 0.8350963069827533,
+              "diff": 0.008140949609326209
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 27.691172055886007,
+              "prior": 29.073079990785324,
+              "diff": 1.381907934899317
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 18.36800886963949,
+              "prior": 19.73371481317762,
+              "diff": 1.3657059435381314
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.24243504227601,
+              "prior": 20.260848762128404,
+              "diff": 1.0184137198523935
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": 4.858785513381168,
+              "prior": 5.097033818384361,
+              "diff": 0.23824830500319294
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0188,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": -0.2919,
+              "prior": -0.25,
+              "diff": 0.04189999999999999
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "highlights",
+              "cand": null,
+              "prior": -0.017
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -20.08432440770931,
+              "prior": -20.08625077768177,
+              "diff": 0.0019263699724589856
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.1908041775907152,
+              "prior": 0.18992934955843124,
+              "diff": 0.0008748280322839475
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.012089334308232,
+              "prior": 24.297189138837663,
+              "diff": 0.2850998045294304
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 12.67832651055112,
+              "prior": 13.135315523458608,
+              "diff": 0.4569890129074885
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.780341385674177,
+              "prior": 19.938697400021862,
+              "diff": 0.1583560143476852
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.72836383347411,
+              "prior": -6.721304838464861,
+              "diff": 0.007058995009249003
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0064,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.8,
+              "prior": 0.8638,
+              "diff": 0.06379999999999997
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -3.584442588350404,
+              "prior": -3.611241692205872,
+              "diff": 0.0267991038554678
+            }
+          ]
+        },
+        "t4t": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.4274,
+          "max_abs_diff_metrics": 6.5338294247808975,
+          "param_diffs_by_key": {
+            "ev": 0.4274
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 0.5824154581980086,
+            "chroma_ratio": 0.02406054999464069,
+            "de2000_p90": 6.5338294247808975,
+            "mean_dL": 6.068554610641996,
+            "de2000_median": 6.072586389078829,
+            "mean_da": 0.2669461939322588
+          },
+          "diff_count": 217,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0142,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 2.3583,
+              "prior": 2.5,
+              "diff": 0.14170000000000016
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -4.958378608001022,
+              "prior": -5.019610299263978,
+              "diff": 0.06123169126295647
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8269553573734271,
+              "prior": 0.8350963069827533,
+              "diff": 0.008140949609326209
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 27.691172055886007,
+              "prior": 29.073079990785324,
+              "diff": 1.381907934899317
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 18.36800886963949,
+              "prior": 19.73371481317762,
+              "diff": 1.3657059435381314
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.24243504227601,
+              "prior": 20.260848762128404,
+              "diff": 1.0184137198523935
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": 4.858785513381168,
+              "prior": 5.097033818384361,
+              "diff": 0.23824830500319294
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0188,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": -0.2919,
+              "prior": -0.25,
+              "diff": 0.04189999999999999
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "highlights",
+              "cand": null,
+              "prior": -0.017
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -20.08432440770931,
+              "prior": -20.08625077768177,
+              "diff": 0.0019263699724589856
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.1908041775907152,
+              "prior": 0.18992934955843124,
+              "diff": 0.0008748280322839475
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.012089334308232,
+              "prior": 24.297189138837663,
+              "diff": 0.2850998045294304
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 12.67832651055112,
+              "prior": 13.135315523458608,
+              "diff": 0.4569890129074885
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.780341385674177,
+              "prior": 19.938697400021862,
+              "diff": 0.1583560143476852
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.72836383347411,
+              "prior": -6.721304838464861,
+              "diff": 0.007058995009249003
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0064,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.8,
+              "prior": 0.8638,
+              "diff": 0.06379999999999997
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -3.584442588350404,
+              "prior": -3.611241692205872,
+              "diff": 0.0267991038554678
+            }
+          ]
+        },
+        "t4u": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.4274,
+          "max_abs_diff_metrics": 6.5338294247808975,
+          "param_diffs_by_key": {
+            "ev": 0.4274
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 0.5824154581980086,
+            "chroma_ratio": 0.02406054999464069,
+            "de2000_p90": 6.5338294247808975,
+            "mean_dL": 6.068554610641996,
+            "de2000_median": 6.072586389078829,
+            "mean_da": 0.2669461939322588
+          },
+          "diff_count": 217,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0142,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 2.3583,
+              "prior": 2.5,
+              "diff": 0.14170000000000016
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -4.958378608001022,
+              "prior": -5.019610299263978,
+              "diff": 0.06123169126295647
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8269553573734271,
+              "prior": 0.8350963069827533,
+              "diff": 0.008140949609326209
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 27.691172055886007,
+              "prior": 29.073079990785324,
+              "diff": 1.381907934899317
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 18.36800886963949,
+              "prior": 19.73371481317762,
+              "diff": 1.3657059435381314
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.24243504227601,
+              "prior": 20.260848762128404,
+              "diff": 1.0184137198523935
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": 4.858785513381168,
+              "prior": 5.097033818384361,
+              "diff": 0.23824830500319294
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0188,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": -0.2919,
+              "prior": -0.25,
+              "diff": 0.04189999999999999
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "highlights",
+              "cand": null,
+              "prior": -0.017
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -20.08432440770931,
+              "prior": -20.08625077768177,
+              "diff": 0.0019263699724589856
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.1908041775907152,
+              "prior": 0.18992934955843124,
+              "diff": 0.0008748280322839475
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.012089334308232,
+              "prior": 24.297189138837663,
+              "diff": 0.2850998045294304
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 12.67832651055112,
+              "prior": 13.135315523458608,
+              "diff": 0.4569890129074885
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.780341385674177,
+              "prior": 19.938697400021862,
+              "diff": 0.1583560143476852
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.72836383347411,
+              "prior": -6.721304838464861,
+              "diff": 0.007058995009249003
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0064,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.8,
+              "prior": 0.8638,
+              "diff": 0.06379999999999997
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -3.584442588350404,
+              "prior": -3.611241692205872,
+              "diff": 0.0267991038554678
+            }
+          ]
+        },
+        "t4v": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.4274,
+          "max_abs_diff_metrics": 6.5338294247808975,
+          "param_diffs_by_key": {
+            "ev": 0.4274
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 0.5824154581980086,
+            "chroma_ratio": 0.02406054999464069,
+            "de2000_p90": 6.5338294247808975,
+            "mean_dL": 6.068554610641996,
+            "de2000_median": 6.072586389078829,
+            "mean_da": 0.2669461939322588
+          },
+          "diff_count": 217,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0142,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 2.3583,
+              "prior": 2.5,
+              "diff": 0.14170000000000016
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -4.958378608001022,
+              "prior": -5.019610299263978,
+              "diff": 0.06123169126295647
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8269553573734271,
+              "prior": 0.8350963069827533,
+              "diff": 0.008140949609326209
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 27.691172055886007,
+              "prior": 29.073079990785324,
+              "diff": 1.381907934899317
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 18.36800886963949,
+              "prior": 19.73371481317762,
+              "diff": 1.3657059435381314
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.24243504227601,
+              "prior": 20.260848762128404,
+              "diff": 1.0184137198523935
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": 4.858785513381168,
+              "prior": 5.097033818384361,
+              "diff": 0.23824830500319294
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0188,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": -0.2919,
+              "prior": -0.25,
+              "diff": 0.04189999999999999
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "highlights",
+              "cand": null,
+              "prior": -0.017
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -20.08432440770931,
+              "prior": -20.08625077768177,
+              "diff": 0.0019263699724589856
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.1908041775907152,
+              "prior": 0.18992934955843124,
+              "diff": 0.0008748280322839475
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.012089334308232,
+              "prior": 24.297189138837663,
+              "diff": 0.2850998045294304
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 12.67832651055112,
+              "prior": 13.135315523458608,
+              "diff": 0.4569890129074885
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.780341385674177,
+              "prior": 19.938697400021862,
+              "diff": 0.1583560143476852
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.72836383347411,
+              "prior": -6.721304838464861,
+              "diff": 0.007058995009249003
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0064,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.8,
+              "prior": 0.8638,
+              "diff": 0.06379999999999997
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -3.584442588350404,
+              "prior": -3.611241692205872,
+              "diff": 0.0267991038554678
+            }
+          ]
+        },
+        "t4w": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.4274,
+          "max_abs_diff_metrics": 6.5338294247808975,
+          "param_diffs_by_key": {
+            "ev": 0.4274,
+            "blacks": 0.0028000000000000004
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 0.5824154581980086,
+            "chroma_ratio": 0.02406054999464069,
+            "de2000_p90": 6.5338294247808975,
+            "mean_dL": 6.068554610641996,
+            "de2000_median": 6.072586389078829,
+            "mean_da": 0.2669461939322588
+          },
+          "diff_count": 193,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0142,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 2.3583,
+              "prior": 2.5,
+              "diff": 0.14170000000000016
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -4.958378608001022,
+              "prior": -5.019610299263978,
+              "diff": 0.06123169126295647
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8269553573734271,
+              "prior": 0.8350963069827533,
+              "diff": 0.008140949609326209
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 27.691172055886007,
+              "prior": 29.073079990785324,
+              "diff": 1.381907934899317
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 18.36800886963949,
+              "prior": 19.73371481317762,
+              "diff": 1.3657059435381314
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.24243504227601,
+              "prior": 20.260848762128404,
+              "diff": 1.0184137198523935
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": 4.858785513381168,
+              "prior": 5.097033818384361,
+              "diff": 0.23824830500319294
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0188,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": -0.2919,
+              "prior": -0.25,
+              "diff": 0.04189999999999999
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "highlights",
+              "cand": null,
+              "prior": -0.017
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -20.08432440770931,
+              "prior": -20.08625077768177,
+              "diff": 0.0019263699724589856
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.1908041775907152,
+              "prior": 0.18992934955843124,
+              "diff": 0.0008748280322839475
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.012089334308232,
+              "prior": 24.297189138837663,
+              "diff": 0.2850998045294304
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 12.67832651055112,
+              "prior": 13.135315523458608,
+              "diff": 0.4569890129074885
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.780341385674177,
+              "prior": 19.938697400021862,
+              "diff": 0.1583560143476852
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.72836383347411,
+              "prior": -6.721304838464861,
+              "diff": 0.007058995009249003
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "blacks",
+              "cand": -0.0064,
+              "prior": -0.0045,
+              "diff": 0.0019000000000000006
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.8,
+              "prior": 0.8188,
+              "diff": 0.018799999999999928
+            },
+            {
+              "frame": "blueneg:19960811B-21-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -3.584442588350404,
+              "prior": -3.5924484669939725,
+              "diff": 0.008005878643568387
+            }
+          ]
+        },
+        "t4x": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.41999999999999993,
+          "max_abs_diff_metrics": 5.108459739105921,
+          "param_diffs_by_key": {
+            "ev": 0.41999999999999993,
+            "blacks": 0.1238
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 0.3459086639347362,
+            "chroma_ratio": 0.02406054999464069,
+            "de2000_p90": 4.856891340496951,
+            "mean_dL": 5.108459739105921,
+            "de2000_median": 2.870590001452838,
+            "mean_da": 0.2669461939322588
+          },
+          "diff_count": 153,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0142,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 2.3583,
+              "prior": 2.5,
+              "diff": 0.14170000000000016
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -4.958378608001022,
+              "prior": -5.019610299263978,
+              "diff": 0.06123169126295647
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8269553573734271,
+              "prior": 0.8350963069827533,
+              "diff": 0.008140949609326209
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 27.691172055886007,
+              "prior": 29.073079990785324,
+              "diff": 1.381907934899317
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 18.36800886963949,
+              "prior": 19.73371481317762,
+              "diff": 1.3657059435381314
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.24243504227601,
+              "prior": 20.260848762128404,
+              "diff": 1.0184137198523935
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": 4.858785513381168,
+              "prior": 5.097033818384361,
+              "diff": 0.23824830500319294
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0188,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": -0.2919,
+              "prior": -0.25,
+              "diff": 0.04189999999999999
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "highlights",
+              "cand": null,
+              "prior": -0.017
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -20.08432440770931,
+              "prior": -20.08625077768177,
+              "diff": 0.0019263699724589856
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.1908041775907152,
+              "prior": 0.18992934955843124,
+              "diff": 0.0008748280322839475
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.012089334308232,
+              "prior": 24.297189138837663,
+              "diff": 0.2850998045294304
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 12.67832651055112,
+              "prior": 13.135315523458608,
+              "diff": 0.4569890129074885
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.780341385674177,
+              "prior": 19.938697400021862,
+              "diff": 0.1583560143476852
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.72836383347411,
+              "prior": -6.721304838464861,
+              "diff": 0.007058995009249003
+            },
+            {
+              "frame": "blueneg:19960811B-25-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0344,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960811B-25-arizona-london-bridge",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 0.3227,
+              "prior": 0.667,
+              "diff": 0.34430000000000005
+            },
+            {
+              "frame": "blueneg:19960811B-25-arizona-london-bridge",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -0.7099127170737725,
+              "prior": -0.6871018766247203,
+              "diff": 0.022810840449052128
+            }
+          ]
+        },
+        "t4y": {
+          "identically_equal": false,
+          "max_abs_diff_params": 0.275,
+          "max_abs_diff_metrics": 4.08134159446665,
+          "param_diffs_by_key": {
+            "ev": 0.275,
+            "blacks": 0.1238
+          },
+          "metric_diffs_by_key": {
+            "mean_db": 0.3459086639347362,
+            "chroma_ratio": 0.02406054999464069,
+            "de2000_p90": 2.7040229934150375,
+            "mean_dL": 4.08134159446665,
+            "de2000_median": 2.0276064619197705,
+            "mean_da": 0.2669461939322588
+          },
+          "diff_count": 105,
+          "diff_summary": [
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0142,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 2.3583,
+              "prior": 2.5,
+              "diff": 0.14170000000000016
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -4.958378608001022,
+              "prior": -5.019610299263978,
+              "diff": 0.06123169126295647
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.8269553573734271,
+              "prior": 0.8350963069827533,
+              "diff": 0.008140949609326209
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 27.691172055886007,
+              "prior": 29.073079990785324,
+              "diff": 1.381907934899317
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 18.36800886963949,
+              "prior": 19.73371481317762,
+              "diff": 1.3657059435381314
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.24243504227601,
+              "prior": 20.260848762128404,
+              "diff": 1.0184137198523935
+            },
+            {
+              "frame": "blueneg:19960808B-09-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": 4.858785513381168,
+              "prior": 5.097033818384361,
+              "diff": 0.23824830500319294
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.0188,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": -0.2919,
+              "prior": -0.25,
+              "diff": 0.04189999999999999
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "highlights",
+              "cand": null,
+              "prior": -0.017
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -20.08432440770931,
+              "prior": -20.08625077768177,
+              "diff": 0.0019263699724589856
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "chroma_ratio",
+              "cand": 0.1908041775907152,
+              "prior": 0.18992934955843124,
+              "diff": 0.0008748280322839475
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_p90",
+              "cand": 24.012089334308232,
+              "prior": 24.297189138837663,
+              "diff": 0.2850998045294304
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_dL",
+              "cand": 12.67832651055112,
+              "prior": 13.135315523458608,
+              "diff": 0.4569890129074885
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "de2000_median",
+              "cand": 19.780341385674177,
+              "prior": 19.938697400021862,
+              "diff": 0.1583560143476852
+            },
+            {
+              "frame": "blueneg:19960809B-15-new-orleans-siggraph96",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_da",
+              "cand": -6.72836383347411,
+              "prior": -6.721304838464861,
+              "diff": 0.007058995009249003
+            },
+            {
+              "frame": "blueneg:19960811B-34-laughlin",
+              "preset": "standard",
+              "type": "param_discrete",
+              "key": "blacks",
+              "cand": -0.005,
+              "prior": null
+            },
+            {
+              "frame": "blueneg:19960811B-34-laughlin",
+              "preset": "standard",
+              "type": "param_numeric",
+              "key": "ev",
+              "cand": 1.5148,
+              "prior": 1.5647,
+              "diff": 0.049900000000000055
+            },
+            {
+              "frame": "blueneg:19960811B-34-laughlin",
+              "preset": "standard",
+              "type": "metric_numeric",
+              "key": "mean_db",
+              "cand": -6.035732486176204,
+              "prior": -6.089894933114905,
+              "diff": 0.05416244693870098
+            }
+          ]
+        }
+      },
+      "presets_vs_t4o": {
+        "standard": {
+          "better_025": 34,
+          "worse_025": 0,
+          "better_005": 37,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19941220D-22-kamakura": -0.44988664029215286,
+            "blueneg:19960808B-07-new-orleans-siggraph96": -1.347302490300855,
+            "blueneg:19960808B-09-new-orleans-siggraph96": -1.0184137198523935,
+            "blueneg:19960808B-10-new-orleans-siggraph96": -1.0278745442915564,
+            "blueneg:19960809B-15-new-orleans-siggraph96": -0.1583560143476852,
+            "blueneg:19960811B-21-arizona-london-bridge": -0.5013151586129538,
+            "blueneg:19960811B-25-arizona-london-bridge": -2.5605654972162313,
+            "blueneg:19960811B-34-laughlin": -0.15038972094135872,
+            "blueneg:19960812D-02-hoover-dam": -0.5412633692009177,
+            "blueneg:19960812D-06-hoover-dam": -0.825603849420629,
+            "blueneg:19960812D-22-las-vegas": -6.072586389078829,
+            "blueneg:19960812D-25-las-vegas": -4.279913779689739,
+            "blueneg:19960812D-27-las-vegas": -2.255425218338278,
+            "blueneg:19960812D-29-las-vegas": -1.6696181731749071,
+            "blueneg:19960812D-30-las-vegas": -1.073882876068371,
+            "blueneg:19960812D-33-las-vegas": -1.757310680789347,
+            "blueneg:19970619A-15-white-chapel": -2.5803009672749866,
+            "blueneg:199807A-11-orlando-siggraph": -0.6351446837349926,
+            "blueneg:199807A-12-orlando-universal-studio": -0.4985753098662862,
+            "blueneg:199807A-13-orlando-universal-studio": -1.5246774606893005,
+            "blueneg:199807A-17-orlando-universal-studio": -1.1052384641369404,
+            "blueneg:199807A-19-orlando-disney": -1.3364101748613706,
+            "blueneg:199807A-29-orlando-disney": -0.5371313836947813,
+            "blueneg:199807A-33-orlando-disney": -2.180259147374432,
+            "blueneg:199807A-34-orlando-disney": -0.3750212841124707,
+            "blueneg:199807A-36-orlando-disney": -1.247485291430646,
+            "blueneg:199807A-37-orlando-disney": -0.2309173666155342,
+            "blueneg:199807B-01-orlando-seaworld": -3.670282074339532,
+            "blueneg:199807B-03-orlando-seaworld": -0.4377047948670736,
+            "blueneg:199807B-07-orlando-seaworld": -0.6883644132249014,
+            "blueneg:199807B-19-seattle": -1.4707617330160652,
+            "blueneg:199807B-20-seattle": -2.870590001452838,
+            "blueneg:199910-02-korea": -1.5527458511072432,
+            "blueneg:199910-04-korea": -1.028522386874073,
+            "blueneg:199910-09-hk": -1.9045036310664436,
+            "blueneg:199910-10-hk": -2.5224308992097786,
+            "blueneg:199910-23-hk-maipo": -0.7118622661799812
+          },
+          "stats_before": "13.84 / 14.43 / 20.73",
+          "stats_after": "13.52 / 13.98 / 19.95",
+          "metrics_before": {
+            "median": 13.843007443861598,
+            "mean": 14.429734270167891,
+            "p90": 20.73019069016116
+          },
+          "metrics_after": {
+            "median": 13.52006097839702,
+            "mean": 13.984216420855399,
+            "p90": 19.951112830175923
+          }
+        }
+      },
+      "presets_vs_t4y": {
+        "standard": {
+          "better_025": 11,
+          "worse_025": 0,
+          "better_005": 13,
+          "worse_005": 0,
+          "max_regression": 0.0,
+          "regressions_over_005": {},
+          "improvements_over_005": {
+            "blueneg:19960808B-09-new-orleans-siggraph96": -1.0184137198523935,
+            "blueneg:19960809B-15-new-orleans-siggraph96": -0.1583560143476852,
+            "blueneg:19960811B-34-laughlin": -0.15038972094135872,
+            "blueneg:19960812D-22-las-vegas": -1.2916440059799257,
+            "blueneg:19960812D-30-las-vegas": -1.073882876068371,
+            "blueneg:19960812D-33-las-vegas": -1.757310680789347,
+            "blueneg:19970619A-15-white-chapel": -2.0276064619197705,
+            "blueneg:199807A-29-orlando-disney": -0.5371313836947813,
+            "blueneg:199807A-34-orlando-disney": -0.3750212841124707,
+            "blueneg:199807B-19-seattle": -1.4707617330160652,
+            "blueneg:199910-04-korea": -1.028522386874073,
+            "blueneg:199910-09-hk": -0.9298210346385005,
+            "blueneg:199910-10-hk": -1.6823562836153965
+          },
+          "stats_before": "13.52 / 14.09 / 20.63",
+          "stats_after": "13.52 / 13.98 / 19.95",
+          "metrics_before": {
+            "median": 13.52046205393129,
+            "mean": 14.093982417488325,
+            "p90": 20.634656586087218
+          },
+          "metrics_after": {
+            "median": 13.52006097839702,
+            "mean": 13.984216420855399,
+            "p90": 19.951112830175923
+          }
+        }
+      },
+      "inversion_identity_vs_t4y": {
+        "count": 124,
+        "differences": []
+      },
+      "inversion_identity_vs_t4x": {
+        "count": 124,
+        "differences": []
+      },
+      "inversion_identity_vs_t4w": {
+        "count": 124,
+        "differences": []
+      },
+      "inversion_identity_vs_t4v": {
+        "count": 124,
+        "differences": []
+      },
+      "inversion_identity_vs_t4u": {
+        "count": 124,
+        "differences": []
+      },
+      "inversion_identity_vs_t4t": {
+        "count": 124,
+        "differences": []
+      },
+      "inversion_identity_vs_t4s": {
+        "count": 124,
+        "differences": []
+      },
+      "inversion_identity_vs_t4r": {
+        "count": 124,
+        "differences": []
+      }
+    }
+  },
+  "input_protocol_sha256": "02440c3b634b69810c12f971a62bd91f94eea79c5946e017de76d838e28c4ad8",
+  "protected_frames": {
+    "ext:A008": true,
+    "ext:A012": true,
+    "ext:A013": true,
+    "shop:DSC_3833": true,
+    "nlp:_DSF8948": true
+  },
+  "devices": {
+    "all_passed": true,
+    "gates": {
+      "A1296:input_sha": true,
+      "A1296:ok_finite_preserved": true,
+      "A1296:1600px": true,
+      "A1296:center_p99_lt_1_35": true,
+      "A1296:band_blue_p99_le_1_15": true,
+      "A1296:band_blue_max_lt_2": true,
+      "A1296:full_band_any_gt_10_zero": true,
+      "A1296:status_exact_vs_t4y": true,
+      "A1296:inversion_exact_vs_t4y": true,
+      "A1296:bare_backlight_excluded": true,
+      "targets:membership": true,
+      "A305.tif:input_sha": true,
+      "A305.tif:ok_finite_preserved": true,
+      "A305.tif:no_white_point_invalid": true,
+      "A1040.TIF:input_sha": true,
+      "A1040.TIF:ok_finite_preserved": true,
+      "A1040.TIF:reconstruction_present": true,
+      "A1040.TIF:no_white_point_unrep": true,
+      "A1040.TIF:srgb_q50_R_gt_0_10": true,
+      "A1040.TIF:srgb_q50_G_gt_0_10": true,
+      "A1040.TIF:srgb_q50_B_minus_G_lt_0_08": true,
+      "A1041.TIF:input_sha": true,
+      "A1041.TIF:ok_finite_preserved": true,
+      "A1041.TIF:reconstruction_present": true,
+      "A1041.TIF:no_white_point_unrep": true,
+      "A1041.TIF:srgb_q50_R_gt_0_15": true,
+      "A1041.TIF:srgb_q50_G_gt_0_15": true,
+      "A1041.TIF:no_near_sat_excluded": true,
+      "A232.NEF:input_sha": true,
+      "A232.NEF:ok_finite_preserved": true,
+      "A232.NEF:holder_excluded": true,
+      "A232.NEF:white_points_lt_1_15": true,
+      "A232.NEF:holder_share_gt_0_50": true,
+      "A232.NEF:ev_lt_0_50": true,
+      "A1069.NEF:input_sha": true,
+      "A1069.NEF:ok_finite_preserved": true,
+      "A1069.NEF:holder_excluded": true,
+      "A1069.NEF:white_points_lt_1_15": true,
+      "A1069.NEF:holder_share_gt_0_50": true,
+      "A1069.NEF:ev_lt_0_50": true,
+      "A239.ORF:input_sha": true,
+      "A239.ORF:ok_finite_preserved": true,
+      "A239.ORF:no_cyan_conf_boost": true,
+      "A239.ORF:no_narrow_tint_capped": true,
+      "A239.ORF:tint_lt_0_22": true,
+      "A281.RAF:input_sha": true,
+      "A281.RAF:ok_finite_preserved": true,
+      "A281.RAF:tint_conflict_damped": true,
+      "A281.RAF:tint_lt_0_18": true,
+      "A1006.CR2:input_sha": true,
+      "A1006.CR2:ok_finite_preserved": true,
+      "acros:membership": true,
+      "tiff:membership": true,
+      "B002.NEF:input_sha": true,
+      "B002.NEF:ok_finite_preserved": true,
+      "B003.NEF:input_sha": true,
+      "B003.NEF:ok_finite_preserved": true,
+      "B004.NEF:input_sha": true,
+      "B004.NEF:ok_finite_preserved": true,
+      "B005.NEF:input_sha": true,
+      "B005.NEF:ok_finite_preserved": true,
+      "B006.NEF:input_sha": true,
+      "B006.NEF:ok_finite_preserved": true,
+      "B007.NEF:input_sha": true,
+      "B007.NEF:ok_finite_preserved": true,
+      "B008.NEF:input_sha": true,
+      "B008.NEF:ok_finite_preserved": true,
+      "B009.NEF:input_sha": true,
+      "B009.NEF:ok_finite_preserved": true,
+      "B010.NEF:input_sha": true,
+      "B010.NEF:ok_finite_preserved": true,
+      "B011.NEF:input_sha": true,
+      "B011.NEF:ok_finite_preserved": true,
+      "B012.NEF:input_sha": true,
+      "B012.NEF:ok_finite_preserved": true,
+      "B013.NEF:input_sha": true,
+      "B013.NEF:ok_finite_preserved": true,
+      "B014.NEF:input_sha": true,
+      "B014.NEF:ok_finite_preserved": true,
+      "B015.NEF:input_sha": true,
+      "B015.NEF:ok_finite_preserved": true,
+      "B016.NEF:input_sha": true,
+      "B016.NEF:ok_finite_preserved": true,
+      "B017.NEF:input_sha": true,
+      "B017.NEF:ok_finite_preserved": true,
+      "B018.NEF:input_sha": true,
+      "B018.NEF:ok_finite_preserved": true,
+      "B019.NEF:input_sha": true,
+      "B019.NEF:ok_finite_preserved": true,
+      "B020.NEF:input_sha": true,
+      "B020.NEF:ok_finite_preserved": true,
+      "B021.NEF:input_sha": true,
+      "B021.NEF:ok_finite_preserved": true,
+      "B022.NEF:input_sha": true,
+      "B022.NEF:ok_finite_preserved": true,
+      "B023.NEF:input_sha": true,
+      "B023.NEF:ok_finite_preserved": true,
+      "B024.NEF:input_sha": true,
+      "B024.NEF:ok_finite_preserved": true,
+      "B025.NEF:input_sha": true,
+      "B025.NEF:ok_finite_preserved": true,
+      "B026.NEF:input_sha": true,
+      "B026.NEF:ok_finite_preserved": true,
+      "B027.NEF:input_sha": true,
+      "B027.NEF:ok_finite_preserved": true,
+      "B028.NEF:input_sha": true,
+      "B028.NEF:ok_finite_preserved": true,
+      "B029.NEF:input_sha": true,
+      "B029.NEF:ok_finite_preserved": true,
+      "A1310.TIF:input_sha": true,
+      "A1310.TIF:ok_finite_preserved": true,
+      "A304.tif:input_sha": true,
+      "A304.tif:ok_finite_preserved": true,
+      "A1301.TIF:input_sha": true,
+      "A1301.TIF:ok_finite_preserved": true,
+      "A255.tif:input_sha": true,
+      "A255.tif:ok_finite_preserved": true,
+      "A1027.TIF:input_sha": true,
+      "A1027.TIF:ok_finite_preserved": true,
+      "A1027.TIF:no_near_sat_excluded": true,
+      "A1028.TIF:input_sha": true,
+      "A1028.TIF:ok_finite_preserved": true,
+      "B032.tif:input_sha": true,
+      "B032.tif:ok_finite_preserved": true,
+      "B034.tiff:input_sha": true,
+      "B034.tiff:ok_finite_preserved": true,
+      "new_tiff:membership": true,
+      "A655.tif:input_sha": true,
+      "A655.tif:candidate_ok": true,
+      "A655.tif:full_positive_finite": true,
+      "A655.tif:render_preserves_positive": true,
+      "A655.tif:bits8": true,
+      "B036.tif:input_sha": true,
+      "B036.tif:candidate_ok": true,
+      "B036.tif:full_positive_finite": true,
+      "B036.tif:render_preserves_positive": true,
+      "B036.tif:bits8": true,
+      "A1228.tif:input_sha": true,
+      "A1228.tif:candidate_ok": true,
+      "A1228.tif:full_positive_finite": true,
+      "A1228.tif:render_preserves_positive": true,
+      "A1228.tif:flags_empty": true,
+      "A1228.tif:green_white_point_gt_0_30": true,
+      "A1093.tif:input_sha": true,
+      "A1093.tif:candidate_ok": true,
+      "A1093.tif:full_positive_finite": true,
+      "A1093.tif:render_preserves_positive": true,
+      "A1093.tif:bits8": true,
+      "A849.tif:input_sha": true,
+      "A849.tif:candidate_ok": true,
+      "A849.tif:full_positive_finite": true,
+      "A849.tif:render_preserves_positive": true,
+      "A849.tif:bits8": true,
+      "A850.tif:input_sha": true,
+      "A850.tif:candidate_ok": true,
+      "A850.tif:full_positive_finite": true,
+      "A850.tif:render_preserves_positive": true,
+      "A850.tif:bits8": true,
+      "A229.TIF:input_sha": true,
+      "A229.TIF:candidate_ok": true,
+      "A229.TIF:full_positive_finite": true,
+      "A229.TIF:render_preserves_positive": true,
+      "A229.TIF:bits8": true,
+      "new_targets:membership": true,
+      "A1004.DNG:input_sha": true,
+      "A1004.DNG:candidate_ok": true,
+      "A1004.DNG:full_positive_finite": true,
+      "A1004.DNG:render_preserves_positive": true,
+      "A1005.CR2:input_sha": true,
+      "A1005.CR2:candidate_ok": true,
+      "A1005.CR2:full_positive_finite": true,
+      "A1005.CR2:render_preserves_positive": true,
+      "A1007.CR2:input_sha": true,
+      "A1007.CR2:candidate_ok": true,
+      "A1007.CR2:full_positive_finite": true,
+      "A1007.CR2:render_preserves_positive": true,
+      "A1033.CR2:input_sha": true,
+      "A1033.CR2:candidate_ok": true,
+      "A1033.CR2:full_positive_finite": true,
+      "A1033.CR2:render_preserves_positive": true,
+      "A262.arw:input_sha": true,
+      "A262.arw:candidate_ok": true,
+      "A262.arw:full_positive_finite": true,
+      "A262.arw:render_preserves_positive": true,
+      "A262.arw:max_inversion_base_lt_0_95": true,
+      "A262.arw:near_sat_blocks_excluded_cand_gt_1000": true,
+      "A263.arw:input_sha": true,
+      "A263.arw:candidate_ok": true,
+      "A263.arw:full_positive_finite": true,
+      "A263.arw:render_preserves_positive": true,
+      "A263.arw:max_inversion_base_lt_0_95": true,
+      "A263.arw:near_sat_blocks_excluded_cand_gt_1000": true,
+      "A1061.CR2:input_sha": true,
+      "A1061.CR2:candidate_ok": true,
+      "A1061.CR2:full_positive_finite": true,
+      "A1061.CR2:render_preserves_positive": true,
+      "A237.cr2:input_sha": true,
+      "A237.cr2:candidate_ok": true,
+      "A237.cr2:full_positive_finite": true,
+      "A237.cr2:render_preserves_positive": true,
+      "A1004.DNG:candidate_present": true,
+      "A1004.DNG:candidate_status_ok": true,
+      "A1004.DNG:matrix_present": true,
+      "A1004.DNG:matrix_00_gt_1_25": true,
+      "A1004.DNG:matrix_not_identity": true,
+      "A1005.CR2:candidate_present": true,
+      "A1005.CR2:candidate_status_ok": true,
+      "A1005.CR2:matrix_present": true,
+      "A1005.CR2:matrix_00_gt_1_25": true,
+      "A1005.CR2:matrix_not_identity": true,
+      "A1006.CR2:candidate_present": true,
+      "A1006.CR2:candidate_status_ok": true,
+      "A1006.CR2:matrix_present": true,
+      "A1006.CR2:matrix_00_gt_1_25": true,
+      "A1006.CR2:matrix_not_identity": true,
+      "A1007.CR2:candidate_present": true,
+      "A1007.CR2:candidate_status_ok": true,
+      "A1007.CR2:matrix_present": true,
+      "A1007.CR2:matrix_00_gt_1_25": true,
+      "A1007.CR2:matrix_not_identity": true,
+      "A1033.CR2:candidate_present": true,
+      "A1033.CR2:candidate_status_ok": true,
+      "A1033.CR2:matrix_present": true,
+      "A1033.CR2:matrix_00_gt_1_25": true,
+      "A1033.CR2:matrix_not_identity": true,
+      "A1296.CR2:candidate_present": true,
+      "A1296.CR2:candidate_status_ok": true,
+      "A1296.CR2:matrix_present": true,
+      "A1296.CR2:matrix_00_gt_1_25": true,
+      "A1296.CR2:matrix_not_identity": true,
+      "A1061.CR2:candidate_present": true,
+      "A1061.CR2:candidate_status_ok": true,
+      "A1061.CR2:matrix_present": true,
+      "A1061.CR2:matrix_00_gt_1_25": true,
+      "A1061.CR2:matrix_not_identity": true,
+      "A237.cr2:candidate_present": true,
+      "A237.cr2:candidate_status_ok": true,
+      "A237.cr2:matrix_present": true,
+      "A237.cr2:matrix_00_gt_1_25": true,
+      "A237.cr2:matrix_not_identity": true,
+      "A305.tif:scanner_meta_present": true,
+      "A1040.TIF:scanner_meta_present": true,
+      "A1041.TIF:scanner_meta_present": true,
+      "A1310.TIF:scanner_meta_present": true,
+      "A304.tif:scanner_meta_present": true,
+      "A1301.TIF:scanner_meta_present": true,
+      "A255.tif:scanner_meta_present": true,
+      "A1027.TIF:scanner_meta_present": true,
+      "A1028.TIF:scanner_meta_present": true,
+      "B032.tif:scanner_meta_present": true,
+      "B034.tiff:scanner_meta_present": true,
+      "A1228.tif:scanner_meta_present": true,
+      "A229.TIF:scanner_meta_present": true,
+      "A655.tif:scanner_meta_present": true,
+      "A849.tif:scanner_meta_present": true,
+      "A850.tif:scanner_meta_present": true,
+      "A1093.tif:scanner_meta_present": true,
+      "B036.tif:scanner_meta_present": true,
+      "special:membership": true,
+      "B096.tif:input_sha": true,
+      "B096.tif:baseline_status_manual_review": true,
+      "B096.tif:baseline_white_point_invalid": true,
+      "B096.tif:baseline_d_hi_gt_4": true,
+      "B096.tif:candidate_status_ok": true,
+      "B096.tif:full_positive_finite": true,
+      "B096.tif:render_preserves_positive": true,
+      "B096.tif:d_hi_range": true,
+      "A232.NEF:guard_c_present": true,
+      "A232.NEF:status_exact_vs_t4y": true,
+      "A232.NEF:inversion_exact_vs_t4y": true,
+      "A232.NEF:params_exact_vs_t4y": true,
+      "A232.NEF:report_white_point_exact_vs_t4y": true,
+      "A232.NEF:spike_clamp_exact_vs_t4y": true,
+      "A1069.NEF:guard_c_present": true,
+      "A1069.NEF:status_exact_vs_t4y": true,
+      "A1069.NEF:inversion_exact_vs_t4y": true,
+      "A1069.NEF:params_exact_vs_t4y": true,
+      "A1069.NEF:report_white_point_exact_vs_t4y": true,
+      "A1069.NEF:spike_clamp_exact_vs_t4y": true,
+      "A1004.DNG:guard_c_present": true,
+      "A1004.DNG:status_exact_vs_t4y": true,
+      "A1004.DNG:inversion_exact_vs_t4y": true,
+      "A1004.DNG:params_exact_vs_t4y": true,
+      "A1004.DNG:report_white_point_exact_vs_t4y": true,
+      "A1004.DNG:spike_clamp_exact_vs_t4y": true,
+      "A1004.DNG:hard_guard_params_exact": true,
+      "A1005.CR2:guard_c_present": true,
+      "A1005.CR2:status_exact_vs_t4y": true,
+      "A1005.CR2:inversion_exact_vs_t4y": true,
+      "A1005.CR2:params_exact_vs_t4y": true,
+      "A1005.CR2:report_white_point_exact_vs_t4y": true,
+      "A1005.CR2:spike_clamp_exact_vs_t4y": true,
+      "A1006.CR2:guard_c_present": true,
+      "A1006.CR2:status_exact_vs_t4y": true,
+      "A1006.CR2:inversion_exact_vs_t4y": true,
+      "A1006.CR2:params_exact_vs_t4y": true,
+      "A1006.CR2:report_white_point_exact_vs_t4y": true,
+      "A1006.CR2:spike_clamp_exact_vs_t4y": true,
+      "A1007.CR2:guard_c_present": true,
+      "A1007.CR2:status_exact_vs_t4y": true,
+      "A1007.CR2:inversion_exact_vs_t4y": true,
+      "A1007.CR2:params_exact_vs_t4y": true,
+      "A1007.CR2:report_white_point_exact_vs_t4y": true,
+      "A1007.CR2:spike_clamp_exact_vs_t4y": true,
+      "A1033.CR2:guard_c_present": true,
+      "A1033.CR2:status_exact_vs_t4y": true,
+      "A1033.CR2:inversion_exact_vs_t4y": true,
+      "A1033.CR2:params_exact_vs_t4y": true,
+      "A1033.CR2:report_white_point_exact_vs_t4y": true,
+      "A1033.CR2:spike_clamp_exact_vs_t4y": true,
+      "A1033.CR2:hard_guard_params_exact": true,
+      "A1061.CR2:guard_c_present": true,
+      "A1061.CR2:status_exact_vs_t4y": true,
+      "A1061.CR2:inversion_exact_vs_t4y": true,
+      "A1061.CR2:params_exact_vs_t4y": true,
+      "A1061.CR2:report_white_point_exact_vs_t4y": true,
+      "A1061.CR2:spike_clamp_exact_vs_t4y": true,
+      "A237.cr2:guard_c_present": true,
+      "A237.cr2:status_exact_vs_t4y": true,
+      "A237.cr2:inversion_exact_vs_t4y": true,
+      "A237.cr2:params_exact_vs_t4y": true,
+      "A237.cr2:report_white_point_exact_vs_t4y": true,
+      "A237.cr2:spike_clamp_exact_vs_t4y": true,
+      "A281.RAF:guard_c_present": true,
+      "A281.RAF:status_exact_vs_t4y": true,
+      "A281.RAF:inversion_exact_vs_t4y": true,
+      "A281.RAF:params_exact_vs_t4y": true,
+      "A281.RAF:report_white_point_exact_vs_t4y": true,
+      "A281.RAF:spike_clamp_exact_vs_t4y": true,
+      "A655.tif:guard_c_present": true,
+      "A655.tif:status_exact_vs_t4y": true,
+      "A655.tif:inversion_exact_vs_t4y": true,
+      "A655.tif:params_exact_vs_t4y": true,
+      "A655.tif:report_white_point_exact_vs_t4y": true,
+      "A655.tif:spike_clamp_exact_vs_t4y": true,
+      "A1027.TIF:guard_c_present": true,
+      "A1027.TIF:status_exact_vs_t4y": true,
+      "A1027.TIF:inversion_exact_vs_t4y": true,
+      "A1027.TIF:params_exact_vs_t4y": true,
+      "A1027.TIF:report_white_point_exact_vs_t4y": true,
+      "A1027.TIF:spike_clamp_exact_vs_t4y": true,
+      "B027.NEF:guard_c_present": true,
+      "B027.NEF:status_exact_vs_t4y": true,
+      "B027.NEF:inversion_exact_vs_t4y": true,
+      "B027.NEF:params_exact_vs_t4y": true,
+      "B027.NEF:report_white_point_exact_vs_t4y": true,
+      "B027.NEF:spike_clamp_exact_vs_t4y": true,
+      "B028.NEF:guard_c_present": true,
+      "B028.NEF:status_exact_vs_t4y": true,
+      "B028.NEF:inversion_exact_vs_t4y": true,
+      "B028.NEF:params_exact_vs_t4y": true,
+      "B028.NEF:report_white_point_exact_vs_t4y": true,
+      "B028.NEF:spike_clamp_exact_vs_t4y": true,
+      "B029.NEF:guard_c_present": true,
+      "B029.NEF:status_exact_vs_t4y": true,
+      "B029.NEF:inversion_exact_vs_t4y": true,
+      "B029.NEF:params_exact_vs_t4y": true,
+      "B029.NEF:report_white_point_exact_vs_t4y": true,
+      "B029.NEF:spike_clamp_exact_vs_t4y": true,
+      "A1296:scope_raw_sha_exact_vs_t4y": true,
+      "A1296:scope_full_shape_exact_vs_t4y": true,
+      "A1296:scope_all_regions_exact_vs_t4y": true,
+      "A1296:scope_upper_band_any_gt_10_zero": true,
+      "A1296:scope_center_any_gt_10_lt_1e_4": true
+    },
+    "failures": [],
+    "param_changes": [
+      {
+        "frame": "B010.NEF",
+        "params_before": {
+          "ev": -0.3616,
+          "temp": 0.0,
+          "tint": 0.0,
+          "sat": 1.0,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "blacks": -0.0502,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "params_after": {
+          "ev": -0.6366,
+          "temp": 0.0,
+          "tint": 0.0,
+          "sat": 1.0,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "blacks": -0.174,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "ev_before": -0.3616,
+        "ev_after": -0.6366,
+        "blacks_before": -0.0502,
+        "blacks_after": -0.174,
+        "contrast_before": 1.3,
+        "contrast_after": 1.3,
+        "matrix_before": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_after": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "reason": "unexplained"
+      },
+      {
+        "frame": "A1301.TIF",
+        "params_before": {
+          "ev": 1.9692,
+          "temp": -0.0636,
+          "tint": 0.0762,
+          "sat": 1.011,
+          "contrast": 1.4,
+          "midtone": 0.2869,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "params_after": {
+          "ev": 1.4922,
+          "temp": -0.0636,
+          "tint": 0.0762,
+          "sat": 1.011,
+          "contrast": 1.4,
+          "midtone": 0.2869,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0477,
+          "chroma_preserve": 0.4
+        },
+        "ev_before": 1.9692,
+        "ev_after": 1.4922,
+        "blacks_before": null,
+        "blacks_after": -0.0477,
+        "contrast_before": 1.4,
+        "contrast_after": 1.4,
+        "matrix_before": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_after": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "reason": "night_backlit_double"
+      }
+    ]
+  },
+  "a1296_scope": {
+    "raw_sha256": "dbe4de488370f3b32acc2f683e3400e61ae06dd021998740567e9974c2998997",
+    "full_shape": [
+      3870,
+      5796,
+      3
+    ],
+    "regions": {
+      "whole_image": {
+        "n_pixels": 22430520,
+        "any_channel_gt_10_count": 876718,
+        "any_channel_gt_10_share": 0.039085941832824204,
+        "max_rgb": [
+          1210480896.0,
+          929199296.0,
+          169336624.0
+        ]
+      },
+      "center": {
+        "n_pixels": 8073594,
+        "any_channel_gt_10_count": 419,
+        "any_channel_gt_10_share": 5.189758117636334e-05,
+        "max_rgb": [
+          59.713584899902344,
+          929199296.0,
+          169336624.0
+        ]
+      },
+      "upper_band": {
+        "n_pixels": 1345599,
+        "any_channel_gt_10_count": 0,
+        "any_channel_gt_10_share": 0.0,
+        "max_rgb": [
+          4.827593803405762,
+          6.059083938598633,
+          9.050447463989258
+        ]
+      }
+    },
+    "source_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756"
+  },
+  "tests": {
+    "command": "/usr/bin/time -l .venv/bin/python -I -m pytest -q",
+    "passed": 435,
+    "seconds": 728.34,
+    "peak_memory_footprint_bytes": 3271593056,
+    "log_sha256": "8cf52250c50dd6c3546677adfa6534bafc7e0861e2bfd1034b49d9a8f5f82e50",
+    "source_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+    "test_sha256": {
+      "tests/synth.py": "9362c6d9ed87d6eefa5475567daa58bb8e163e957badd9832d52419789a2a5cc",
+      "tests/test_app.py": "95da667f4ce4f0aeabe79f260b8aa31c2575f598139a9ed5bf9874e797137432",
+      "tests/test_base.py": "aec68d76f9c79d0db8ea98cffd09d74d75f72d8a2e5f4cb51124fc0613e24848",
+      "tests/test_bw.py": "de11ce517dd399c5cb542cc28df213259b8e464f4965d37651b95e37f1525f70",
+      "tests/test_chunked.py": "307217bd0de5a87c5b6a500f9eb20bae9d66320c4e132e57d413ffbe46a1c986",
+      "tests/test_compare.py": "ed7ecf8b8fccbce0b8d7f7e55e1e2609b3a4445ba6d9b0043f987d9c40473e2a",
+      "tests/test_export.py": "cec3ef26a491d038bbd4707fdf743536f7b3f517d3f9604f1c28cf59ed2fe314",
+      "tests/test_fit.py": "edd9ae318f1ecb92966dbba9d99faf2ae27e15966ccf53f5930f361faf0b1bab",
+      "tests/test_frozen.py": "092d449199394a3e632a959a1a63fa635cd430cccb9fefcb423ae66262432b6d",
+      "tests/test_import_check.py": "1d193a1d7347b68e5d1f91fcf6f042a8da838cb164740bfaad146bf3ed3ec5ed",
+      "tests/test_invert.py": "76853a612b15e8a94327992233e957253ce5883727854ab106640a8792bb78d2",
+      "tests/test_learn.py": "4434680875f76642a6cde126e975badd883c4770f058561bfc34d52229d32f1b",
+      "tests/test_noref.py": "15fbcccabe7551bf293ed01cc403fe806acf9c92bdedf4e98650748153e32699",
+      "tests/test_own_roll.py": "dc16e7202ed3028bab9ed1706212b8b94139e21d63d6735ec1c14c451a5ea735",
+      "tests/test_paths.py": "79c6c2bf8ba900a6909fb937d9ed133e36c37d16f461a1681edc6af1383f5d97",
+      "tests/test_pins_and_cli.py": "57b96b981fdec97c370664347d492c595a14ab3585fd7350c5e76f695b3db76c",
+      "tests/test_positive.py": "1696c12b26abb0a073a4f712c6aaba745df37f11005552fc30c35c0fb6fd11da",
+      "tests/test_preview.py": "09480c295df85bc3bd1b2f556cfd2472b4e513b41437497b0e654ad66ac5484a",
+      "tests/test_raw.py": "aba347152eb5ccb9ee8dfa8ef7622b00e176fdd14d249a2196777034a5fdaf41",
+      "tests/test_real.py": "d2f40b325f2ecb183f3fac6374f1d0ef8a9cda1226fd182b707da6eb3d44f5d7",
+      "tests/test_render.py": "d4c493f03dc4a03f934dd8068e6e0373b811d8a232ce16d3cabfe9e29bd555ef",
+      "tests/test_robustness.py": "081760e0621bf18ea7ce7330939cb51b97e52a36b1347df71bbb1dca40bcb3e5",
+      "tests/test_roll_base.py": "c6fdba7a1a0bb5916cfd04101cfb158bdef9a94285e3f22bba000315001b0048",
+      "tests/test_scanner.py": "1b4c328458ede402bb150b1eecaa7a80dde0c0554525abb0ace8d487db2bd57d"
+    }
+  },
+  "baseline_test_failures": {
+    "command": [
+      "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python",
+      "-I",
+      "-c",
+      "import sys; sys.path.insert(0,sys.argv[1]); import filmcolor.noref as n; n.NOREF_V3.update(overlift_night_bl_check=True, overlift_night_bl_min_weight=0.65, overlift_night_bl_max_bright_share=0.090, overlift_night_bl_ev_min=1.50, overlift_night_bl_q25_min=0.175); print('baseline_noref=' + n.__file__,flush=True); import pytest; raise SystemExit(pytest.main(sys.argv[2:]+['-k','t4z','-q']))",
+      "/private/tmp/fc_t4z_baseline_20261105/src",
+      "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_invert.py",
+      "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_noref.py",
+      "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_app.py"
+    ],
+    "baseline_source_sha256": "db2d825798bc3edf7fe99e128d57ae56df27c466db876b633b067cca91fbc629",
+    "config_overlay": "New night gate keys supplied in memory so failures test missing behavior rather than KeyError; old source and thin thresholds unchanged",
+    "failed": 5,
+    "passed": 0,
+    "deselected": 129,
+    "log_sha256": "f798b7a5c953e6a14b67ea4e706ef7a86e6d1eb953c44e8a18a64dd2393149ab",
+    "test_sha256": {
+      "tests/test_invert.py": "76853a612b15e8a94327992233e957253ce5883727854ab106640a8792bb78d2",
+      "tests/test_noref.py": "15fbcccabe7551bf293ed01cc403fe806acf9c92bdedf4e98650748153e32699",
+      "tests/test_app.py": "95da667f4ce4f0aeabe79f260b8aa31c2575f598139a9ed5bf9874e797137432"
+    }
+  },
+  "service": {
+    "url": "http://127.0.0.1:62872",
+    "source_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+    "open_method": "POST",
+    "sub_rolls": 6,
+    "flagged": 0,
+    "sample": "_DSF9239.RAF",
+    "status": "ok",
+    "ev": 0.5492,
+    "http_config_rev": "t4z-2026-11-05",
+    "render_png_bytes": 3362409,
+    "render_sha256": "b3f4c6c3616115ab02f3b7119dac75e8d1768242ee4c2b3e347133111dca75ff",
+    "source_thumb_rev": "t4z",
+    "source_config_rev": "t4z-2026-11-05"
+  },
+  "configs": {
+    "standard": {
+      "sha256": "e2753ea7a767e95f4475e319f2a6e880ec376570d5a805df5f84f85c94632323",
+      "matches": true
+    },
+    "natural": {
+      "sha256": "91887244f3b0dbed645b0382051938bbff03ec339d9ac2ec949e94f2601d2ca3",
+      "matches": true
+    },
+    "portrait": {
+      "sha256": "6a1e8a34f1a2f86b0d06f3cad5343cccb96f04e3413d705af91aa62caeee0792",
+      "matches": true
+    },
+    "vivid": {
+      "sha256": "7b88ede8bd7e819fa907dbf9d3c53aecf2749eb5be7f599a793239a2e9982123",
+      "matches": true
+    },
+    "print_classic": {
+      "sha256": "c6a44485d27b668cef70040090899ec6e4b8dbbb22f0770d69bde7acf232f186",
+      "matches": true
+    }
+  },
+  "diagnostics_p2": {
+    "file": "experiments/t4_auto_ui/t4z/diagnostics_p2.json",
+    "sha256": "d9f3cb499f5ca78e5bcd8bbeac8d64f59fe22716dbdb8f6f0518bcebf1526525",
+    "source_content_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+    "complete": true
+  },
+  "blue_diagnostic": {
+    "diagnostic_sha256": "d9b199a12fd99ffa1c6ea938c78a31a47b2b8f8a14a93e3baa0fcca6afc3f7c2",
+    "eval_sha256": "07d5695ef57a5567c6da563b883d404fdfae3939566dd332448291f3f68f2cd8",
+    "baseline_exact": true,
+    "strict_count": 25,
+    "evaluated_count": 46
+  },
+  "blind_rolls": {
+    "file": "experiments/t4_auto_ui/t4z/blind_rolls_eval.json",
+    "sha256": "6012350b136215032aadcf768715b432cf3fa655600692bd680e1dbead7d4bad",
+    "provenance_file": "experiments/t4_auto_ui/t4z/blind_provenance.json",
+    "provenance_sha256": "12f8abb582a1af872f57796c0c2af0aa99edf8b410d123668774eb46e3fa456d",
+    "source_content_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+    "blind_script_sha256": "91086636d162417c67b9afb8e37fdaa031f0e07c8e368325118b1179791ffb89",
+    "total_physical_raw_files_audited": 143,
+    "rolls": [
+      "A7R5_RAW",
+      "Eastman5294",
+      "fomapan100"
+    ],
+    "sheet_sha256": {
+      "A7R5_RAW:contact_sheet_single": "0b3dc2dfa7c63f3d19834052f49342b41fa43162504fdc30b6591a68f2b0acf7",
+      "A7R5_RAW:contact_sheet_whole": "60ff7eafb3f925abd19720e9e8888005049b57ea18a094266f2525c8cbdcfcfd",
+      "Eastman5294:contact_sheet_single": "da8bd1f95a7c61d7b5fac6bd414bc3c382b3bb43cb3b2a68cd321d8767177aad",
+      "Eastman5294:contact_sheet_whole": "a22f7aa661c228bc1e4aa87c7d3682428dfd2b6d83d07c55a03b2b40390c0686",
+      "fomapan100:contact_sheet_single": "9575fa266c7090df6402fa8a397ccee60cb559e7f8db4828db8fb086c186cc40",
+      "fomapan100:contact_sheet_whole": "79676ee5e2a48b01f3b03928024ab2553063f144cd8cbf0056041b84aba5d842"
+    },
+    "all_passed": true
+  },
+  "gates": {
+    "all_preset_worse0_vs_t4y": true,
+    "all_preset_net_positive_vs_t4y": true,
+    "all_preset_worse0_vs_t4o": true,
+    "inversion_diagnostics_exact": true,
+    "protected_frames_exact": true,
+    "devices_all_passed": true,
+    "tests_passed_ge_435": true,
+    "configs_all_match": true,
+    "service_ok": true,
+    "resources_complete": true,
+    "diagnostics_p2_present": true,
+    "blind_rolls_passed": true
+  },
+  "all_passed": true,
+  "artifact_sha256": {
+    "experiments/t4_auto_ui/t4z/candidate_a.json": "e83170b1e4826ae62b94db0ee51c8725d609de33a1dc99c73c28d17530fb4ea6",
+    "experiments/t4_auto_ui/t4z/candidate_b.json": "75ee732d3332599b60eeeebc5d5b5dd2616706707a648fa3b7cbc2f7f4bb6d82",
+    "experiments/t4_auto_ui/t4z/candidate_cross.json": "222b178376c4c5c5312884003a5780407fdc53379e3caf74cd9cc1e4f8f0e719",
+    "experiments/t4_auto_ui/t4z/devices_baseline.json": "6741526ec6c04c4a426529b86820be10dc8b857901f0f268933d05892cfb22d0",
+    "experiments/t4_auto_ui/t4z/devices_candidate.json": "455b7f598a6739ba29cd1101e6c141a3b4801ef1ee5062945e6a0d84723c2e28"
+  }
+}

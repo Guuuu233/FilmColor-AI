@@ -1,0 +1,4391 @@
+{
+  "task": "T4z Section 5.4 Blue Cast Relaxation Diagnostic",
+  "provenance": {
+    "source_dir": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+    "source_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+    "production_frozen_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+    "source_frozen_verified": true,
+    "protocol": "valid308_benchmark",
+    "timestamp": "2026-11-04T18:33:31Z"
+  },
+  "selection": {
+    "valid308_count": 308,
+    "low_ratio_count": 114,
+    "low_ratio_threshold": "d_hi_B / d_hi_G < 0.44",
+    "criteria_relaxed": "wb zones log2(B/G) > 0.05 (z0) / 0.10 (z1) / 0.25 (gw), R relaxed to +inf, cool_cast toggled False -> True",
+    "criteria_strict_3way": "wb zones log2(B/G) > 0.20 (z0) AND > 0.25 (z1) AND > 0.40 (gw), R not low, cool_cast toggled False -> True",
+    "all_toggled_subset_count": 46,
+    "all_toggled_candidate_ids": [
+      "blueneg:19941217A-08-tokyo",
+      "blueneg:19941217B-08-tokyo",
+      "blueneg:19941220D-20-kamakura",
+      "blueneg:19941220D-22-kamakura",
+      "blueneg:19941220D-23-kamakura",
+      "blueneg:19960808B-04-new-orleans-siggraph96",
+      "blueneg:19960808B-05-new-orleans-siggraph96",
+      "blueneg:19960808B-06-new-orleans-siggraph96",
+      "blueneg:19960808B-07-new-orleans-siggraph96",
+      "blueneg:19960808B-08-new-orleans-siggraph96",
+      "blueneg:19960808B-09-new-orleans-siggraph96",
+      "blueneg:19960808B-11-new-orleans-siggraph96",
+      "blueneg:19960809B-14-new-orleans-siggraph96",
+      "blueneg:19960811B-17-arizona-london-bridge",
+      "blueneg:19960811B-21-arizona-london-bridge",
+      "blueneg:19960811B-29-arizona-london-bridge",
+      "blueneg:19960811B-34-laughlin",
+      "blueneg:19960811B-35-laughlin",
+      "blueneg:19960811B-36-laughlin",
+      "blueneg:19960812D-06-hoover-dam",
+      "blueneg:19960812D-07-hoover-dam",
+      "blueneg:19960812D-10-las-vegas",
+      "blueneg:19960812D-11-las-vegas",
+      "blueneg:19960812D-13-las-vegas",
+      "blueneg:19960812D-15-las-vegas",
+      "blueneg:19960812D-17-las-vegas",
+      "blueneg:19960812D-20-las-vegas",
+      "blueneg:19960812D-25-las-vegas",
+      "blueneg:19960812D-26-las-vegas",
+      "blueneg:19960812D-27-las-vegas",
+      "blueneg:19960812D-28-las-vegas",
+      "blueneg:19960812D-29-las-vegas",
+      "blueneg:19960812D-31-las-vegas",
+      "blueneg:19960812D-32-las-vegas",
+      "blueneg:19960812D-34-las-vegas",
+      "blueneg:19960812D-35-las-vegas",
+      "blueneg:19970619A-14-white-chapel",
+      "blueneg:199807A-19-orlando-disney",
+      "blueneg:199807A-29-orlando-disney",
+      "blueneg:199807A-31-orlando-disney",
+      "blueneg:199807A-33-orlando-disney",
+      "blueneg:199807A-36-orlando-disney",
+      "blueneg:199807A-37-orlando-disney",
+      "blueneg:199807B-01-orlando-seaworld",
+      "blueneg:199807B-14-orlando-seaworld",
+      "blueneg:199807B-15-orlando-seaworld"
+    ],
+    "strict_3way_subset_count": 25,
+    "strict_3way_candidate_ids": [
+      "blueneg:19941220D-22-kamakura",
+      "blueneg:19960808B-06-new-orleans-siggraph96",
+      "blueneg:19960808B-08-new-orleans-siggraph96",
+      "blueneg:19960808B-09-new-orleans-siggraph96",
+      "blueneg:19960808B-11-new-orleans-siggraph96",
+      "blueneg:19960811B-35-laughlin",
+      "blueneg:19960812D-07-hoover-dam",
+      "blueneg:19960812D-11-las-vegas",
+      "blueneg:19960812D-15-las-vegas",
+      "blueneg:19960812D-17-las-vegas",
+      "blueneg:19960812D-25-las-vegas",
+      "blueneg:19960812D-26-las-vegas",
+      "blueneg:19960812D-27-las-vegas",
+      "blueneg:19960812D-28-las-vegas",
+      "blueneg:19960812D-29-las-vegas",
+      "blueneg:19960812D-31-las-vegas",
+      "blueneg:19960812D-35-las-vegas",
+      "blueneg:199807A-19-orlando-disney",
+      "blueneg:199807A-29-orlando-disney",
+      "blueneg:199807A-31-orlando-disney",
+      "blueneg:199807A-36-orlando-disney",
+      "blueneg:199807A-37-orlando-disney",
+      "blueneg:199807B-01-orlando-seaworld",
+      "blueneg:199807B-14-orlando-seaworld",
+      "blueneg:199807B-15-orlando-seaworld"
+    ]
+  },
+  "statistics_strict_3way": {
+    "n_evaluated": 25,
+    "better_delta_de_gt_0_05": 17,
+    "worse_delta_de_gt_0_05": 7,
+    "better_delta_de_gt_0_25": 15,
+    "worse_delta_de_gt_0_25": 5,
+    "mean_de2000_before": 13.447728702339226,
+    "mean_de2000_after": 12.941247668693238,
+    "mean_db_before": -7.67013230196857,
+    "mean_db_after": -5.253968451294531
+  },
+  "statistics_all_toggled": {
+    "n_evaluated": 46,
+    "better_delta_de_gt_0_05": 30,
+    "worse_delta_de_gt_0_05": 15,
+    "better_delta_de_gt_0_25": 26,
+    "worse_delta_de_gt_0_25": 8,
+    "mean_de2000_before": 13.196618772765923,
+    "mean_de2000_after": 12.799921559084982,
+    "mean_db_before": -7.087026512023258,
+    "mean_db_after": -5.087587626884051
+  },
+  "frames": {
+    "blueneg:19941217A-08-tokyo": {
+      "raw_sha256": "5fd9b072c8d54389fe4170cca7c2f76da63760da7e5674ac4320a4464445d5da",
+      "ref_sha256": "fc37ef9edf987fbebbf770cc1a233c4d0c64d73cc655ae2fb77a379f87aa83e3",
+      "d_hi": [
+        0.7066033482551575,
+        0.7104005813598633,
+        0.2367875576019287
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": -0.2,
+          "temp": 0.1486,
+          "tint": -0.0758,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 106110,
+          "de2000_median": 8.391514329021632,
+          "de2000_p90": 15.42814094039723,
+          "mean_dL": 7.6653627454696505,
+          "mean_da": -3.524493496416797,
+          "mean_db": 0.3202865528291312,
+          "chroma_ratio": 0.5659230840918643
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": -0.2,
+          "temp": 0.194,
+          "tint": -0.1027,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 106110,
+          "de2000_median": 8.449456538981103,
+          "de2000_p90": 15.790436847989085,
+          "mean_dL": 7.664381205821827,
+          "mean_da": -3.946748221677788,
+          "mean_db": 1.4858330601888634,
+          "chroma_ratio": 0.5072406806775127
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.05794220995947086,
+      "delta_mean_db": 1.1655465073597322
+    },
+    "blueneg:19941217B-08-tokyo": {
+      "raw_sha256": "92d2b4026a7513880cb80608617587b5cffebf01a3b2f13aa1792867d1517c3f",
+      "ref_sha256": "0c9bfc6dedd1f42c83560c12903fadea43718ef44706ceed294907fae388aa0c",
+      "d_hi": [
+        1.0420693159103394,
+        0.920117974281311,
+        0.31175678968429565
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 0.7,
+          "temp": 0.1011,
+          "tint": 0.0003,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.196,
+          "blacks": -0.0029,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 105300,
+          "de2000_median": 18.552949870775542,
+          "de2000_p90": 22.32710450935108,
+          "mean_dL": 16.202086200385324,
+          "mean_da": -6.129324991061199,
+          "mean_db": 1.0065994199422736,
+          "chroma_ratio": 0.6594491286451425
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.7002,
+          "temp": 0.2131,
+          "tint": -0.0176,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.196,
+          "blacks": -0.0029,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 105300,
+          "de2000_median": 18.617039328902255,
+          "de2000_p90": 22.62378773861687,
+          "mean_dL": 16.195867909520956,
+          "mean_da": -6.121944309702062,
+          "mean_db": 2.79092968035484,
+          "chroma_ratio": 0.5739996561488603
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.06408945812671263,
+      "delta_mean_db": 1.7843302604125661
+    },
+    "blueneg:19941220D-20-kamakura": {
+      "raw_sha256": "06c29286393a623723a5740257da03e7c921708f6d684d3a2f82d0a1ee0a44cd",
+      "ref_sha256": "d20359d2689d768db66681e5fc8356e98640bbae51b3655e96e92efb55bc3ead",
+      "d_hi": [
+        0.6193898916244507,
+        0.6568136215209961,
+        0.2502788305282593
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 0.995,
+          "temp": 0.1139,
+          "tint": -0.0819,
+          "sat": 1.0138,
+          "contrast": 1.3108,
+          "midtone": 0.23,
+          "shoulder": 0.2363,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 106232,
+          "de2000_median": 14.143900270982456,
+          "de2000_p90": 21.09886667717581,
+          "mean_dL": 13.876525438569578,
+          "mean_da": -3.7019554290494,
+          "mean_db": -2.7960238864821876,
+          "chroma_ratio": 0.8424019924603006
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.995,
+          "temp": 0.1802,
+          "tint": -0.15,
+          "sat": 1.0138,
+          "contrast": 1.3109,
+          "midtone": 0.23,
+          "shoulder": 0.2364,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 106232,
+          "de2000_median": 14.40943649996063,
+          "de2000_p90": 21.542704838299713,
+          "mean_dL": 13.862351129844917,
+          "mean_da": -4.845449276715755,
+          "mean_db": -0.8222566141514764,
+          "chroma_ratio": 0.6863654883745058
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.2655362289781742,
+      "delta_mean_db": 1.9737672723307111
+    },
+    "blueneg:19941220D-22-kamakura": {
+      "raw_sha256": "363ad8f3951204cad2a0207fd6440d01ce2cf5c4bf0e958eb8f6cb654656ab8d",
+      "ref_sha256": "208bbacf1976da752adfd14b1b77620e1c78e6a4a777f88d63b21d002a179597",
+      "d_hi": [
+        0.8190211057662964,
+        0.8740768432617188,
+        0.2987224757671356
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.9933,
+          "temp": 0.1478,
+          "tint": -0.0299,
+          "sat": 1.0155,
+          "contrast": 1.3402,
+          "midtone": 0.23,
+          "shoulder": 0.3617,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0095,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 105570,
+          "de2000_median": 12.151221606884004,
+          "de2000_p90": 19.851855387928712,
+          "mean_dL": 13.536732373008062,
+          "mean_da": -1.3381231084428067,
+          "mean_db": -3.962898735986551,
+          "chroma_ratio": 0.9468496674131344
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.9953,
+          "temp": 0.3747,
+          "tint": -0.1148,
+          "sat": 1.0155,
+          "contrast": 1.3408,
+          "midtone": 0.23,
+          "shoulder": 0.3625,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0093,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 105570,
+          "de2000_median": 11.993063778738179,
+          "de2000_p90": 20.28385533624451,
+          "mean_dL": 13.539203105384185,
+          "mean_da": -2.267390767398369,
+          "mean_db": 0.1893878704802896,
+          "chroma_ratio": 0.6780048576203297
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.1581578281458249,
+      "delta_mean_db": 4.1522866064668404
+    },
+    "blueneg:19941220D-23-kamakura": {
+      "raw_sha256": "d4d840bccddd65e635ba3d47bcd76c1cc98fe5ce3c05d7cc880a90c6146ed7ff",
+      "ref_sha256": "bb94493d9211095e3b8ceba6716a56c988ae6e97c0884740a8bc50fd2a405de3",
+      "d_hi": [
+        0.6351799964904785,
+        0.6919212937355042,
+        0.24436435103416443
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": -0.2,
+          "temp": 0.1295,
+          "tint": -0.0451,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 105179,
+          "de2000_median": 11.98145128608881,
+          "de2000_p90": 18.640774777472824,
+          "mean_dL": 11.734442431588073,
+          "mean_da": -1.5162517903380714,
+          "mean_db": 1.1768626781433067,
+          "chroma_ratio": 0.5429216166150851
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": -0.2,
+          "temp": 0.1688,
+          "tint": -0.0659,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 105179,
+          "de2000_median": 12.15316899586069,
+          "de2000_p90": 18.748925337442273,
+          "mean_dL": 11.734758059502207,
+          "mean_da": -1.8085873648723465,
+          "mean_db": 2.115591293177126,
+          "chroma_ratio": 0.5016771634820107
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.1717177097718814,
+      "delta_mean_db": 0.9387286150338192
+    },
+    "blueneg:19960808B-04-new-orleans-siggraph96": {
+      "raw_sha256": "479e4914ed4b389e6b498461003f66b16fc78e42125c602ad39e688c5619b05a",
+      "ref_sha256": "344e8cfd70ed87a40c0f6a2c67029493d0c7d58aa87a4fa3e5fe85c61065b460",
+      "d_hi": [
+        0.9205935001373291,
+        1.0728471279144287,
+        0.41593655943870544
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 1.1809,
+          "temp": -0.0192,
+          "tint": -0.1185,
+          "sat": 1.0104,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.478,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95232,
+          "de2000_median": 16.11050814460467,
+          "de2000_p90": 23.806761929442242,
+          "mean_dL": 7.304169454992559,
+          "mean_da": 1.5537639467676727,
+          "mean_db": -14.23503113070338,
+          "chroma_ratio": 0.6399702405112169
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.2033,
+          "temp": -0.0989,
+          "tint": -0.3327,
+          "sat": 1.0104,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95232,
+          "de2000_median": 15.426801216825426,
+          "de2000_p90": 21.773916115102235,
+          "mean_dL": 6.628662411314365,
+          "mean_da": -2.6914836148006027,
+          "mean_db": -12.94176573923242,
+          "chroma_ratio": 0.5244800713351501
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.6837069277792427,
+      "delta_mean_db": 1.2932653914709604
+    },
+    "blueneg:19960808B-05-new-orleans-siggraph96": {
+      "raw_sha256": "b858a0637f419f1dd31aa433a41706d2b1617afcfcbcc6bffac64778ffbf8092",
+      "ref_sha256": "f129cf9ce325940a5b4e3ff03c1fda3441e0e4ae84b3c64439812966aecd75aa",
+      "d_hi": [
+        1.0911328792572021,
+        1.0797010660171509,
+        0.4405257999897003
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 2.5,
+          "temp": -0.1032,
+          "tint": -0.1689,
+          "sat": 1.0102,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.49,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95861,
+          "de2000_median": 12.014878138585605,
+          "de2000_p90": 19.850173422770723,
+          "mean_dL": 5.707000968978722,
+          "mean_da": 0.7872540851722598,
+          "mean_db": -6.556750284981205,
+          "chroma_ratio": 0.48457832393639316
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 2.5,
+          "temp": -0.2196,
+          "tint": -0.3683,
+          "sat": 1.0102,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.535,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95861,
+          "de2000_median": 11.070796338651538,
+          "de2000_p90": 19.020396689919117,
+          "mean_dL": 5.398329410057088,
+          "mean_da": -2.908167401346431,
+          "mean_db": -5.761891521047627,
+          "chroma_ratio": 0.30416434318850544
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.9440817999340663,
+      "delta_mean_db": 0.7948587639335782
+    },
+    "blueneg:19960808B-06-new-orleans-siggraph96": {
+      "raw_sha256": "774b7c56da0d759e6b2493f5ec4a4a11d3359d342913e160b9aeed36a3cbf035",
+      "ref_sha256": "ca8bf8a2f21c30935fe7392ac0bca542640248630d5c7f9c3a2fe3eed3bd5e16",
+      "d_hi": [
+        1.1046663522720337,
+        1.1882202625274658,
+        0.44151803851127625
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 2.5,
+          "temp": -0.1172,
+          "tint": -0.2636,
+          "sat": 1.0079,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.715,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.103,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94369,
+          "de2000_median": 9.371282653477378,
+          "de2000_p90": 22.506283691713104,
+          "mean_dL": -0.6517245764127442,
+          "mean_da": 0.5904381731265316,
+          "mean_db": -9.821198851896009,
+          "chroma_ratio": 0.6282052718636597
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 2.5,
+          "temp": -0.2453,
+          "tint": -0.485,
+          "sat": 1.0079,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.76,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.103,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94369,
+          "de2000_median": 8.740370670390902,
+          "de2000_p90": 21.110203690070172,
+          "mean_dL": -1.0567243214538815,
+          "mean_da": -3.1992903802722865,
+          "mean_db": -9.032885449872355,
+          "chroma_ratio": 0.4348949669818385
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.6309119830864756,
+      "delta_mean_db": 0.788313402023654
+    },
+    "blueneg:19960808B-07-new-orleans-siggraph96": {
+      "raw_sha256": "2af09e0e4f3900ce0a3c0ec9fd49dffc9788dcccb0162cea3680a9a3e040800d",
+      "ref_sha256": "4fee28fe34fcb1677e7dd50d9fdd6d6e9332cbcd5bd72a7ba13ff9797b896309",
+      "d_hi": [
+        0.974358081817627,
+        0.9553194642066956,
+        0.38329175114631653
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 2.3678,
+          "temp": -0.1156,
+          "tint": -0.1821,
+          "sat": 1.011,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.85,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.196,
+          "blacks": -0.0132,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95115,
+          "de2000_median": 17.96764269511153,
+          "de2000_p90": 24.05000732194195,
+          "mean_dL": 14.404679824980521,
+          "mean_da": 0.4501922000736237,
+          "mean_db": -9.24476886538133,
+          "chroma_ratio": 0.5358102408564921
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 2.3739,
+          "temp": -0.2179,
+          "tint": -0.355,
+          "sat": 1.011,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.85,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.196,
+          "blacks": -0.0126,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95115,
+          "de2000_median": 17.467732795232784,
+          "de2000_p90": 23.417434814798284,
+          "mean_dL": 14.165122264260603,
+          "mean_da": -3.415185085881576,
+          "mean_db": -8.389246596816818,
+          "chroma_ratio": 0.37052533306952184
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.49990989987874457,
+      "delta_mean_db": 0.8555222685645116
+    },
+    "blueneg:19960808B-08-new-orleans-siggraph96": {
+      "raw_sha256": "5f3219818a4d38fed87821c87b890da2daa5ce830ec3e946fdc614599d1350dc",
+      "ref_sha256": "030ab34b5439c8fd3ce8f525e3ee9210f1d54ccd7cc213b8545005e0b8ab7a6d",
+      "d_hi": [
+        0.7830730676651001,
+        0.9779875874519348,
+        0.38649484515190125
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.185,
+          "temp": -0.0999,
+          "tint": -0.2054,
+          "sat": 1.0055,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "shadows": 0.0721,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 97384,
+          "de2000_median": 8.543236480296544,
+          "de2000_p90": 15.275438419713266,
+          "mean_dL": 0.574384863255176,
+          "mean_da": 5.638797770543888,
+          "mean_db": 0.7930507425933262,
+          "chroma_ratio": 1.0797024264837534
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.2392,
+          "temp": -0.3334,
+          "tint": -0.485,
+          "sat": 1.0055,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "shadows": 0.0703,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 97384,
+          "de2000_median": 6.961846493752019,
+          "de2000_p90": 13.241825682654397,
+          "mean_dL": 0.12447289350376407,
+          "mean_da": 1.6642988934581076,
+          "mean_db": 0.7282383395390111,
+          "chroma_ratio": 0.8591195907460711
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -1.581389986544525,
+      "delta_mean_db": -0.06481240305431513
+    },
+    "blueneg:19960808B-09-new-orleans-siggraph96": {
+      "raw_sha256": "fd694036de2e22316e06b0de25694baa25cb4db235ae313b54f26a7dfc616bbb",
+      "ref_sha256": "03502efda0643710f23e414be7a9312ba1da2881ccecd3db46219538aec2544d",
+      "d_hi": [
+        1.0604130029678345,
+        1.0469330549240112,
+        0.42799046635627747
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 2.3583,
+          "temp": -0.0047,
+          "tint": -0.0688,
+          "sat": 1.0107,
+          "contrast": 1.3845,
+          "midtone": 0.306,
+          "shoulder": 0.6343,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0142,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96980,
+          "de2000_median": 19.24243504227601,
+          "de2000_p90": 27.691172055886007,
+          "mean_dL": 18.36800886963949,
+          "mean_da": 4.858785513381168,
+          "mean_db": -4.958378608001022,
+          "chroma_ratio": 0.8269553573734271
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 2.3621,
+          "temp": -0.0483,
+          "tint": -0.2774,
+          "sat": 1.0107,
+          "contrast": 1.3837,
+          "midtone": 0.3054,
+          "shoulder": 0.5978,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0138,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96980,
+          "de2000_median": 18.05883633366664,
+          "de2000_p90": 26.51791606783421,
+          "mean_dL": 18.113052824085386,
+          "mean_da": 0.983031681210998,
+          "mean_db": -3.030627151068453,
+          "chroma_ratio": 0.6664481040385375
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -1.1835987086093702,
+      "delta_mean_db": 1.9277514569325689
+    },
+    "blueneg:19960808B-11-new-orleans-siggraph96": {
+      "raw_sha256": "1d833ddbc83f5d378ed60ee0d5ee6c0eb16fbb84a0d5efc5162f968986278ef5",
+      "ref_sha256": "1da869a0893e8e6d7d84ccc3a5d53ac0e82ce78d5d346fea3a7e4f6905439c13",
+      "d_hi": [
+        0.9802232980728149,
+        1.0756422281265259,
+        0.4219018816947937
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 2.5,
+          "temp": -0.1417,
+          "tint": -0.2486,
+          "sat": 1.0094,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.76,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95861,
+          "de2000_median": 10.186264893060583,
+          "de2000_p90": 16.20132639382862,
+          "mean_dL": 2.8411789593133148,
+          "mean_da": 3.59599201245412,
+          "mean_db": 1.1801888868110184,
+          "chroma_ratio": 0.7552739649521176
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 2.5,
+          "temp": -0.2856,
+          "tint": -0.485,
+          "sat": 1.0094,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.805,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95861,
+          "de2000_median": 9.400870239349103,
+          "de2000_p90": 14.475239476988362,
+          "mean_dL": 2.4041237727045073,
+          "mean_da": -0.6267615837733479,
+          "mean_db": 1.9588531904535496,
+          "chroma_ratio": 0.5197486321206487
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.7853946537114798,
+      "delta_mean_db": 0.7786643036425311
+    },
+    "blueneg:19960809B-14-new-orleans-siggraph96": {
+      "raw_sha256": "65f10dc706a85a935401f0164b7f917d95defdd009db57807ebd54bbf882b251",
+      "ref_sha256": "6e09baf919bbef7657897a7c1cccac9890f654c696fbacd97f7448e9f44d72f0",
+      "d_hi": [
+        0.7734261751174927,
+        0.8336639404296875,
+        0.326392263174057
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 0.8067,
+          "temp": -0.0873,
+          "tint": -0.1511,
+          "sat": 1.0093,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0054,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 98020,
+          "de2000_median": 19.265745796315255,
+          "de2000_p90": 24.072004073772916,
+          "mean_dL": 16.47108499041203,
+          "mean_da": -3.951183337439416,
+          "mean_db": -15.703501461047157,
+          "chroma_ratio": 0.4019208675153557
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.8123,
+          "temp": -0.2178,
+          "tint": -0.3715,
+          "sat": 1.0093,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0048,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 98020,
+          "de2000_median": 21.22647379766495,
+          "de2000_p90": 24.59959811998234,
+          "mean_dL": 16.152411308053857,
+          "mean_da": -9.509498476287817,
+          "mean_db": -14.325401098485367,
+          "chroma_ratio": 0.419092290984118
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 1.9607280013496968,
+      "delta_mean_db": 1.3781003625617902
+    },
+    "blueneg:19960811B-17-arizona-london-bridge": {
+      "raw_sha256": "2186268d3d61b5600ec1c0591dc96eed4239c1a9391441eeacfef80094468326",
+      "ref_sha256": "bfa43fcb1f6e1271f2ffdeda30f7eaf3ddb8042af323ff272d2e03a706596f5a",
+      "d_hi": [
+        0.7792415022850037,
+        0.8670105338096619,
+        0.369807630777359
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 1.4637,
+          "temp": 0.0737,
+          "tint": -0.0394,
+          "sat": 1.02,
+          "contrast": 1.3014,
+          "midtone": 0.23,
+          "shoulder": 0.2221,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.508,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96118,
+          "de2000_median": 17.127238570018356,
+          "de2000_p90": 25.657462738054807,
+          "mean_dL": 19.23465417204721,
+          "mean_da": 4.572146487155436,
+          "mean_db": 0.2408699292933133,
+          "chroma_ratio": 0.6655908884800233
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.4637,
+          "temp": 0.1481,
+          "tint": -0.0864,
+          "sat": 1.02,
+          "contrast": 1.3015,
+          "midtone": 0.23,
+          "shoulder": 0.2222,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.508,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96118,
+          "de2000_median": 16.890826836528092,
+          "de2000_p90": 25.83177470500819,
+          "mean_dL": 19.2394617626353,
+          "mean_da": 3.8650692735224115,
+          "mean_db": 2.0523239449983848,
+          "chroma_ratio": 0.5864975965634701
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.23641173349026445,
+      "delta_mean_db": 1.8114540157050714
+    },
+    "blueneg:19960811B-21-arizona-london-bridge": {
+      "raw_sha256": "a5c98725d19a55ff108faafc88c1c98abee4167efa0c29b356cd67ce537a40e5",
+      "ref_sha256": "611b25d8204fd9217b9d71375a1425ad237df6ed92b97def4987aa1eea904ef3",
+      "d_hi": [
+        0.8102068901062012,
+        0.8878071308135986,
+        0.37706857919692993
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 0.8,
+          "temp": 0.0527,
+          "tint": -0.0566,
+          "sat": 1.0089,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.437,
+          "blacks": -0.0064,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95488,
+          "de2000_median": 14.61913375796157,
+          "de2000_p90": 21.979753655654207,
+          "mean_dL": 14.526270452271316,
+          "mean_da": 0.621283709677221,
+          "mean_db": -3.584442588350404,
+          "chroma_ratio": 0.6496532777883521
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.8007,
+          "temp": 0.0955,
+          "tint": -0.132,
+          "sat": 1.0089,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.437,
+          "blacks": -0.0063,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95488,
+          "de2000_median": 14.786079557156878,
+          "de2000_p90": 21.681898389564935,
+          "mean_dL": 14.509635840450326,
+          "mean_da": -0.7219518519100588,
+          "mean_db": -1.8566186510732896,
+          "chroma_ratio": 0.5769214912941386
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.1669457991953074,
+      "delta_mean_db": 1.7278239372771145
+    },
+    "blueneg:19960811B-29-arizona-london-bridge": {
+      "raw_sha256": "4230112b0beee9064610ada78c570ba9c032b8f3be2e002c51cfb017b0629432",
+      "ref_sha256": "bad7f7d54462876845cdc8e1967bd227da0c48955f15de9b0905105c375f99a9",
+      "d_hi": [
+        0.7735162973403931,
+        0.8495506644248962,
+        0.36948874592781067
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 1.1847,
+          "temp": 0.0984,
+          "tint": 0.0086,
+          "sat": 1.0173,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94234,
+          "de2000_median": 13.817345479686558,
+          "de2000_p90": 18.302441818886685,
+          "mean_dL": 9.462382581750365,
+          "mean_da": -0.15353166047241126,
+          "mean_db": -8.827206720260573,
+          "chroma_ratio": 0.5756046532675393
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.1881,
+          "temp": 0.2599,
+          "tint": -0.0065,
+          "sat": 1.0173,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.496,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94234,
+          "de2000_median": 12.519571846852756,
+          "de2000_p90": 17.651789690929945,
+          "mean_dL": 9.977279028734882,
+          "mean_da": 0.2333502931350092,
+          "mean_db": -6.764189003128264,
+          "chroma_ratio": 0.42986157954797916
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -1.2977736328338025,
+      "delta_mean_db": 2.0630177171323094
+    },
+    "blueneg:19960811B-34-laughlin": {
+      "raw_sha256": "3e35e04981f54fcc6c270fde85f39e9792fcbfda4c3ed863ef5843f8a058e675",
+      "ref_sha256": "ec3463a56de287f2ef88bab0b4a53a0a241252a5a8e9a453fe014bf3e29f7c9e",
+      "d_hi": [
+        1.0648373365402222,
+        0.9804856181144714,
+        0.4010232090950012
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 1.5148,
+          "temp": 0.0816,
+          "tint": -0.0626,
+          "sat": 1.0091,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.005,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95718,
+          "de2000_median": 5.887335449909148,
+          "de2000_p90": 25.388779804045104,
+          "mean_dL": 6.275606846748349,
+          "mean_da": -0.9742862295712087,
+          "mean_db": -6.035732486176204,
+          "chroma_ratio": 0.6462701005398015
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.5164,
+          "temp": 0.1662,
+          "tint": -0.1579,
+          "sat": 1.0091,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.005,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95718,
+          "de2000_median": 5.709918672140242,
+          "de2000_p90": 25.047069939410683,
+          "mean_dL": 6.263943058739048,
+          "mean_da": -1.8361871792703053,
+          "mean_db": -4.615669674200231,
+          "chroma_ratio": 0.560867500927736
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.1774167777689062,
+      "delta_mean_db": 1.4200628119759724
+    },
+    "blueneg:19960811B-35-laughlin": {
+      "raw_sha256": "43518b805b88c88ddc12ba7607737904125c11e0fb00b380830ba4dc82aa1367",
+      "ref_sha256": "18a42f6d0f2eb65aa3a9a5ab13c0392edbc8f172e6f90db3f14aca4e01dc19ce",
+      "d_hi": [
+        0.9362241625785828,
+        0.9865214228630066,
+        0.40551212430000305
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.8295,
+          "temp": 0.079,
+          "tint": -0.1201,
+          "sat": 1.0113,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94350,
+          "de2000_median": 11.364353723464923,
+          "de2000_p90": 25.08602615359919,
+          "mean_dL": 10.36300322874572,
+          "mean_da": 0.6126787267549149,
+          "mean_db": -5.794926061899736,
+          "chroma_ratio": 0.47786505282973585
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.8312,
+          "temp": 0.076,
+          "tint": -0.1734,
+          "sat": 1.0113,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94350,
+          "de2000_median": 11.154914708514506,
+          "de2000_p90": 24.782503886379935,
+          "mean_dL": 10.346376364131906,
+          "mean_da": -0.13560765600518324,
+          "mean_db": -5.303341715767913,
+          "chroma_ratio": 0.42081500068084127
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.2094390149504175,
+      "delta_mean_db": 0.4915843461318232
+    },
+    "blueneg:19960811B-36-laughlin": {
+      "raw_sha256": "33870857f6e4d133a1ff9c733a37e8d8592cc477bc71cff7c7461a3c7614b993",
+      "ref_sha256": "7554a9676966d77966ac526142d0f5cbdd630c18d3fc615fd1904f7be4ffaec0",
+      "d_hi": [
+        0.973384439945221,
+        1.0271986722946167,
+        0.40499165654182434
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 1.4749,
+          "temp": 0.1253,
+          "tint": -0.0921,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0192,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 104641,
+          "de2000_median": 5.9558848307306125,
+          "de2000_p90": 16.483992939476448,
+          "mean_dL": -0.5154966472268613,
+          "mean_da": -2.150906152109739,
+          "mean_db": -3.481852880407225,
+          "chroma_ratio": 0.3920453290020536
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.4752,
+          "temp": 0.1595,
+          "tint": -0.1218,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0192,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 104641,
+          "de2000_median": 6.053725988303569,
+          "de2000_p90": 16.056435027380918,
+          "mean_dL": -0.5179816591549504,
+          "mean_da": -2.4103179814635083,
+          "mean_db": -2.9588189496004746,
+          "chroma_ratio": 0.3427021131767399
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.0978411575729563,
+      "delta_mean_db": 0.5230339308067502
+    },
+    "blueneg:19960812D-06-hoover-dam": {
+      "raw_sha256": "d0354e52274f69e0124ec45b8bf98570efd33021d61e407bd839e9d7b3f51833",
+      "ref_sha256": "9e734adcadbf12268f15dccaf7bd32071e638837609487f812ea3e30a2bf15db",
+      "d_hi": [
+        0.6531900763511658,
+        0.7491886615753174,
+        0.280876100063324
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 0.7851,
+          "temp": 0.1476,
+          "tint": -0.0099,
+          "sat": 1.0196,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.195,
+          "blacks": -0.0127,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96375,
+          "de2000_median": 11.124951547243787,
+          "de2000_p90": 15.69193370062226,
+          "mean_dL": 6.3198048395320665,
+          "mean_da": 0.9681329470325823,
+          "mean_db": -9.447703271683922,
+          "chroma_ratio": 0.566145125600646
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.7854,
+          "temp": 0.2485,
+          "tint": -0.0438,
+          "sat": 1.0196,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.195,
+          "blacks": -0.0127,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96375,
+          "de2000_median": 10.369052875504359,
+          "de2000_p90": 14.67258308053728,
+          "mean_dL": 6.329139898488881,
+          "mean_da": 0.6544901038625688,
+          "mean_db": -7.408563662815643,
+          "chroma_ratio": 0.461065891028525
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.7558986717394287,
+      "delta_mean_db": 2.039139608868279
+    },
+    "blueneg:19960812D-07-hoover-dam": {
+      "raw_sha256": "03b32ca73e0085a6c53a8d4553d38f222989db63bd37c3f80712b0ce83c61df2",
+      "ref_sha256": "9668d3deb636acf7a6a97c1fdcc8a3ee249ffafd322f865c1307364c40820006",
+      "d_hi": [
+        0.7621410489082336,
+        0.8910554051399231,
+        0.37011057138442993
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 0.2555,
+          "temp": 0.0423,
+          "tint": -0.1427,
+          "sat": 1.0173,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95861,
+          "de2000_median": 9.899638181415543,
+          "de2000_p90": 13.073826661652825,
+          "mean_dL": -2.8554320835389895,
+          "mean_da": 0.6912965126279422,
+          "mean_db": -8.239609388755008,
+          "chroma_ratio": 0.7906178282769691
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.2555,
+          "temp": 0.0366,
+          "tint": -0.1851,
+          "sat": 1.0173,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95861,
+          "de2000_median": 9.42039808955916,
+          "de2000_p90": 12.774923403036036,
+          "mean_dL": -2.8926599612152932,
+          "mean_da": -0.2819160988450352,
+          "mean_db": -7.642010526635197,
+          "chroma_ratio": 0.707872748984725
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.47924009185638283,
+      "delta_mean_db": 0.5975988621198116
+    },
+    "blueneg:19960812D-10-las-vegas": {
+      "raw_sha256": "7608a0f58a2c5d4ac776096ebe326d1b135b151e3ec843ee8107a5a24a6124ba",
+      "ref_sha256": "2befb183b1c52e10b9fd934731cc58f9c25613de40a2945085cd30b4530d7abb",
+      "d_hi": [
+        0.9855836629867554,
+        0.8948178887367249,
+        0.3760370910167694
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 1.7354,
+          "temp": -0.0584,
+          "tint": -0.1058,
+          "sat": 1.0097,
+          "contrast": 1.3072,
+          "midtone": 0.2365,
+          "shoulder": 0.2308,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95488,
+          "de2000_median": 11.364395521143638,
+          "de2000_p90": 25.87925165283932,
+          "mean_dL": 10.37226012225064,
+          "mean_da": 0.5329564110806927,
+          "mean_db": -6.975257428952117,
+          "chroma_ratio": 0.47693851477356924
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.7445,
+          "temp": -0.1942,
+          "tint": -0.3832,
+          "sat": 1.0097,
+          "contrast": 1.308,
+          "midtone": 0.2372,
+          "shoulder": 0.232,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95488,
+          "de2000_median": 9.728975611292174,
+          "de2000_p90": 25.28057694377197,
+          "mean_dL": 10.175030182066475,
+          "mean_da": -3.777294127907959,
+          "mean_db": -5.656152611300945,
+          "chroma_ratio": 0.3024103854396629
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -1.6354199098514641,
+      "delta_mean_db": 1.3191048176511728
+    },
+    "blueneg:19960812D-11-las-vegas": {
+      "raw_sha256": "388acb4d019235a0547faf05cafc1cb48f52f34b2aa71e1c43fcc2bff6f7d756",
+      "ref_sha256": "32541961e92de0a76ba590e97b605415672788076f912e55896fa6b95dee44bc",
+      "d_hi": [
+        1.1722615957260132,
+        1.2361780405044556,
+        0.46595966815948486
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.3689,
+          "temp": 0.0543,
+          "tint": -0.1322,
+          "sat": 1.0083,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95488,
+          "de2000_median": 19.013078357655328,
+          "de2000_p90": 24.810768555258164,
+          "mean_dL": 14.094367209360982,
+          "mean_da": 5.530054010736533,
+          "mean_db": -10.856708468569419,
+          "chroma_ratio": 1.130697147323581
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.3968,
+          "temp": 0.1013,
+          "tint": -0.4667,
+          "sat": 1.0083,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95488,
+          "de2000_median": 17.541283159132007,
+          "de2000_p90": 23.134378495437762,
+          "mean_dL": 13.911014790167387,
+          "mean_da": 0.04129133782648769,
+          "mean_db": -6.617394836761357,
+          "chroma_ratio": 0.7249211634816941
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -1.4717951985233206,
+      "delta_mean_db": 4.239313631808062
+    },
+    "blueneg:19960812D-13-las-vegas": {
+      "raw_sha256": "a1af5e7bcba148f8edc3856a95f9d242436543ca7ba7ba5554b468f86e7cfb4f",
+      "ref_sha256": "fd5e46a1263427b273eb0a1a9cc5619b7c0d8f6fb718dafee70f3642eb780783",
+      "d_hi": [
+        1.1738661527633667,
+        1.1733105182647705,
+        0.4327540993690491
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 0.8629,
+          "temp": -0.0726,
+          "tint": -0.1576,
+          "sat": 1.0091,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.138,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 105690,
+          "de2000_median": 20.027759200873533,
+          "de2000_p90": 26.765895780600854,
+          "mean_dL": 16.979661381518593,
+          "mean_da": 3.4330767755128586,
+          "mean_db": -7.984970979622653,
+          "chroma_ratio": 0.4643240650859919
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.8629,
+          "temp": -0.1446,
+          "tint": -0.3195,
+          "sat": 1.0091,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.138,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 105690,
+          "de2000_median": 19.10936947868653,
+          "de2000_p90": 26.350502864525872,
+          "mean_dL": 16.591949474129294,
+          "mean_da": -0.005138153877819666,
+          "mean_db": -7.14022601013308,
+          "chroma_ratio": 0.393591246208519
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.9183897221870012,
+      "delta_mean_db": 0.8447449694895726
+    },
+    "blueneg:19960812D-15-las-vegas": {
+      "raw_sha256": "0a94b0323a454db9426823e0de7107d4d6c9b98755e0237ca8c08b945d23e610",
+      "ref_sha256": "86de3fc2b0783fe11567cf95061b2aa3196d146beb86f8802e59ac720e1d4c28",
+      "d_hi": [
+        1.3028732538223267,
+        1.2962722778320312,
+        0.490175724029541
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.5603,
+          "temp": -0.0324,
+          "tint": -0.1761,
+          "sat": 1.0078,
+          "contrast": 1.3253,
+          "midtone": 0.2528,
+          "shoulder": 0.258,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "shadows": 0.0168,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94605,
+          "de2000_median": 6.214571367966243,
+          "de2000_p90": 18.736091496656982,
+          "mean_dL": -0.6244737485363292,
+          "mean_da": 1.1807453499272982,
+          "mean_db": -5.202521076061988,
+          "chroma_ratio": 0.6608439277128295
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.58,
+          "temp": -0.1323,
+          "tint": -0.485,
+          "sat": 1.0078,
+          "contrast": 1.3273,
+          "midtone": 0.2546,
+          "shoulder": 0.261,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.256,
+          "shadows": 0.016,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94605,
+          "de2000_median": 5.6774616974601475,
+          "de2000_p90": 18.3375264214819,
+          "mean_dL": -0.6430454715829287,
+          "mean_da": -1.5994796634195698,
+          "mean_db": -4.163311921380743,
+          "chroma_ratio": 0.4888129521285173
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.5371096705060951,
+      "delta_mean_db": 1.0392091546812452
+    },
+    "blueneg:19960812D-17-las-vegas": {
+      "raw_sha256": "37acde40e10cb6cc3d5b704afd4a0501bbf0721532f1ecb1b81d11d095a07579",
+      "ref_sha256": "f34781bb73a7a517423fb99fdbd6a0f54b7fd4c3a27eb34b65795011b0ff041a",
+      "d_hi": [
+        1.0522233247756958,
+        1.1016700267791748,
+        0.41847264766693115
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.4767,
+          "temp": 0.1768,
+          "tint": -0.0703,
+          "sat": 1.0113,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.519,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94488,
+          "de2000_median": 13.622839926036246,
+          "de2000_p90": 25.96370581278994,
+          "mean_dL": 9.800406674906801,
+          "mean_da": 1.1985021060389545,
+          "mean_db": -10.419915810628876,
+          "chroma_ratio": 0.9308621172853057
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.4759,
+          "temp": 0.3911,
+          "tint": -0.1879,
+          "sat": 1.0113,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94488,
+          "de2000_median": 12.75890914975092,
+          "de2000_p90": 24.06694575667791,
+          "mean_dL": 9.489534840810366,
+          "mean_da": 0.1576159848267713,
+          "mean_db": -7.241743228589764,
+          "chroma_ratio": 0.7392500861546502
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.8639307762853257,
+      "delta_mean_db": 3.178172582039112
+    },
+    "blueneg:19960812D-20-las-vegas": {
+      "raw_sha256": "b6e2396a7c59c5910a976a3142bdedde410ddb5d4637fa7722ea3db895f6e5d7",
+      "ref_sha256": "e27c19dca3947b3e35068b8a36aafe470d232b367f440c6c86664d5707855ee4",
+      "d_hi": [
+        1.209728479385376,
+        1.179776906967163,
+        0.45993703603744507
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 1.6926,
+          "temp": -0.0616,
+          "tint": -0.1209,
+          "sat": 1.0081,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96607,
+          "de2000_median": 6.74349094784302,
+          "de2000_p90": 26.02768876072339,
+          "mean_dL": 8.684087873055516,
+          "mean_da": 1.5066711196173403,
+          "mean_db": -4.88128039402527,
+          "chroma_ratio": 0.5374588813040544
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.6958,
+          "temp": -0.2062,
+          "tint": -0.437,
+          "sat": 1.0081,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96607,
+          "de2000_median": 6.341160348726903,
+          "de2000_p90": 25.752515997337888,
+          "mean_dL": 8.445664854291831,
+          "mean_da": -2.3078282386315396,
+          "mean_db": -3.532178845364688,
+          "chroma_ratio": 0.34086186708047844
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.4023305991161168,
+      "delta_mean_db": 1.3491015486605815
+    },
+    "blueneg:19960812D-25-las-vegas": {
+      "raw_sha256": "ff763aa8da0e5124b22bd46d0d1dbcb1128df1e27865bf1e470d30631d0c8c18",
+      "ref_sha256": "8fa5be9b64e9d8dedc25cd8efd9dad57dde404632e55eb2f3787636361025786",
+      "d_hi": [
+        0.75445157289505,
+        0.7626457810401917,
+        0.31382840871810913
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 0.8143,
+          "temp": 0.0195,
+          "tint": -0.0865,
+          "sat": 1.0127,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.256,
+          "blacks": -0.0415,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 89040,
+          "de2000_median": 21.521030720150986,
+          "de2000_p90": 27.15301992665004,
+          "mean_dL": 19.03408821897833,
+          "mean_da": -2.9436269135264927,
+          "mean_db": -17.347872295866242,
+          "chroma_ratio": 0.6331569546628442
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.8175,
+          "temp": -0.0021,
+          "tint": -0.2649,
+          "sat": 1.0127,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.256,
+          "blacks": -0.0411,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 89040,
+          "de2000_median": 20.953838686276555,
+          "de2000_p90": 26.181533771575136,
+          "mean_dL": 18.877709424639463,
+          "mean_da": -7.089792841226989,
+          "mean_db": -14.872294419712265,
+          "chroma_ratio": 0.4727990922186917
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.5671920338744307,
+      "delta_mean_db": 2.4755778761539773
+    },
+    "blueneg:19960812D-26-las-vegas": {
+      "raw_sha256": "42184fda0d18ad9abddbda4f6e3a428e23d0e0c2f9538c080e4561361db018e9",
+      "ref_sha256": "604d6226301025703c381bf0665d66187405e36e4869122eabba03f774b6ba15",
+      "d_hi": [
+        0.916872501373291,
+        1.0133754014968872,
+        0.3947499692440033
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 0.0158,
+          "temp": 0.1761,
+          "tint": -0.0188,
+          "sat": 1.0195,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96118,
+          "de2000_median": 11.758833434641051,
+          "de2000_p90": 17.92172714235791,
+          "mean_dL": 7.004685861300039,
+          "mean_da": 1.2742204287716652,
+          "mean_db": -7.7296002666377195,
+          "chroma_ratio": 0.85566083172123
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.0158,
+          "temp": 0.4243,
+          "tint": -0.0923,
+          "sat": 1.0195,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96118,
+          "de2000_median": 10.645054308456507,
+          "de2000_p90": 16.317013088065348,
+          "mean_dL": 6.978296161168637,
+          "mean_da": 0.5797004886472713,
+          "mean_db": -2.665718713890291,
+          "chroma_ratio": 0.5925695842518701
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -1.1137791261845447,
+      "delta_mean_db": 5.063881552747429
+    },
+    "blueneg:19960812D-27-las-vegas": {
+      "raw_sha256": "3c227a1af8b0058c132d79bbde0aa6fed144dc39dbf2b4c9e4471e0fd45e5dae",
+      "ref_sha256": "aca419836b1947a46414905e822c11b210c62f510d4814f986dc6066b8f6d62f",
+      "d_hi": [
+        0.8239174485206604,
+        0.6908141374588013,
+        0.28659218549728394
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.989,
+          "temp": -0.0974,
+          "tint": -0.1964,
+          "sat": 1.0074,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.49,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0235,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96375,
+          "de2000_median": 13.52046205393129,
+          "de2000_p90": 23.536877411152705,
+          "mean_dL": 12.133825239523148,
+          "mean_da": 6.416013767442849,
+          "mean_db": -7.578979794095252,
+          "chroma_ratio": 1.3025321039055016
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.9719,
+          "temp": -0.2968,
+          "tint": -0.485,
+          "sat": 1.0074,
+          "contrast": 1.3073,
+          "midtone": 0.23,
+          "shoulder": 0.4962,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0201,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96375,
+          "de2000_median": 10.911875901715288,
+          "de2000_p90": 22.593852403942932,
+          "mean_dL": 11.081668884208124,
+          "mean_da": -0.17620611891981647,
+          "mean_db": -6.997381268361638,
+          "chroma_ratio": 0.9466452504105161
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -2.6085861522160023,
+      "delta_mean_db": 0.5815985257336145
+    },
+    "blueneg:19960812D-28-las-vegas": {
+      "raw_sha256": "42406ab62bb822085942c19aea988c4bdf0cb913f2783d98f262edf3af44ee39",
+      "ref_sha256": "4d97342ad064746d8da163a774814867143219df5d1b47b42b3deda5b33ffdab",
+      "d_hi": [
+        1.1211227178573608,
+        1.094868779182434,
+        0.4465031921863556
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.7913,
+          "temp": -0.0586,
+          "tint": -0.1852,
+          "sat": 1.0094,
+          "contrast": 1.3599,
+          "midtone": 0.2557,
+          "shoulder": 0.3099,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.534,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94976,
+          "de2000_median": 18.846846100696425,
+          "de2000_p90": 26.145778741854258,
+          "mean_dL": 9.176640885632354,
+          "mean_da": -5.2657889099926125,
+          "mean_db": -15.028719284100976,
+          "chroma_ratio": 0.41344679999406475
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.804,
+          "temp": -0.1392,
+          "tint": -0.4029,
+          "sat": 1.0094,
+          "contrast": 1.3609,
+          "midtone": 0.2569,
+          "shoulder": 0.3113,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.541,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94976,
+          "de2000_median": 19.049859625198607,
+          "de2000_p90": 25.461409133990067,
+          "mean_dL": 9.087230830915445,
+          "mean_da": -9.189891603964252,
+          "mean_db": -13.502279284317511,
+          "chroma_ratio": 0.26394811369942733
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.20301352450218246,
+      "delta_mean_db": 1.5264399997834648
+    },
+    "blueneg:19960812D-29-las-vegas": {
+      "raw_sha256": "84a68f505a7e4092c5ab7ebdf0bad0d349731a08c27d9b10be678120268dcf98",
+      "ref_sha256": "6a98f3584cb6026e94c1382c5c2853c8439a5e16038a2e914a62daa882347cbf",
+      "d_hi": [
+        1.1186474561691284,
+        1.1482930183410645,
+        0.41855016350746155
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 0.7909,
+          "temp": 0.0364,
+          "tint": -0.1277,
+          "sat": 1.0108,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "blacks": -0.016,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95115,
+          "de2000_median": 25.024615605339502,
+          "de2000_p90": 30.209208936618523,
+          "mean_dL": 22.98303563598492,
+          "mean_da": -4.029590827331641,
+          "mean_db": -20.629983116927985,
+          "chroma_ratio": 0.792736083177362
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.7967,
+          "temp": 0.0807,
+          "tint": -0.4101,
+          "sat": 1.0108,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "blacks": -0.0154,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95115,
+          "de2000_median": 24.07691185235684,
+          "de2000_p90": 29.137956373051065,
+          "mean_dL": 22.740792096200174,
+          "mean_da": -10.270320557153518,
+          "mean_db": -15.344236517777501,
+          "chroma_ratio": 0.49701977356104365
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.9477037529826617,
+      "delta_mean_db": 5.2857465991504835
+    },
+    "blueneg:19960812D-31-las-vegas": {
+      "raw_sha256": "97622e005555960cc23aa87ccea64c31d81aaf14073481d9b6ec2aa64e968f6e",
+      "ref_sha256": "ffa2bc78d50901b7777ad2f50b691751d53a4f4a948f50cb36cb3da832f4b19c",
+      "d_hi": [
+        1.2131284475326538,
+        1.231852412223816,
+        0.47374510765075684
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 0.2605,
+          "temp": -0.0135,
+          "tint": -0.1754,
+          "sat": 1.0104,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95347,
+          "de2000_median": 21.55669305191901,
+          "de2000_p90": 27.55544762141322,
+          "mean_dL": 15.028488332302825,
+          "mean_da": -8.477414898749114,
+          "mean_db": -17.35705034260231,
+          "chroma_ratio": 0.44936817616447056
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.2605,
+          "temp": -0.0435,
+          "tint": -0.4433,
+          "sat": 1.0104,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95347,
+          "de2000_median": 22.130071551940038,
+          "de2000_p90": 27.899076211032696,
+          "mean_dL": 14.690426003745973,
+          "mean_da": -13.913624084364466,
+          "mean_db": -14.116582385497635,
+          "chroma_ratio": 0.29617985040418726
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.573378500021029,
+      "delta_mean_db": 3.2404679571046753
+    },
+    "blueneg:19960812D-32-las-vegas": {
+      "raw_sha256": "5a14122cdb9fbba7e4f1b663f8e048364f06d55e9106ab549db20287a851f1b8",
+      "ref_sha256": "bdd028c81d5de426b72da0bd85de242bd40e54bfabf71a968a7980ed755b8c40",
+      "d_hi": [
+        1.0466257333755493,
+        1.1086292266845703,
+        0.4223664104938507
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 2.5,
+          "temp": -0.0054,
+          "tint": -0.0666,
+          "sat": 1.0114,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.715,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "shadows": 0.0185,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96118,
+          "de2000_median": 6.922633590479666,
+          "de2000_p90": 22.65069251428726,
+          "mean_dL": 7.497109953623037,
+          "mean_da": 2.690165586222502,
+          "mean_db": -4.4485963551836925,
+          "chroma_ratio": 0.7893559074200702
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 2.5,
+          "temp": -0.0344,
+          "tint": -0.2619,
+          "sat": 1.0114,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.67,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "shadows": 0.0196,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96118,
+          "de2000_median": 6.093243578763744,
+          "de2000_p90": 21.807632880264446,
+          "mean_dL": 7.38956318485282,
+          "mean_da": 0.4344959524857653,
+          "mean_db": -3.0035054411028743,
+          "chroma_ratio": 0.6658425345708172
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.8293900117159225,
+      "delta_mean_db": 1.4450909140808181
+    },
+    "blueneg:19960812D-34-las-vegas": {
+      "raw_sha256": "5d2877e5a1034d4a85ab9ca27fd7264ab442bdd8bffbff31cee0046afe788f08",
+      "ref_sha256": "f15cba316cbbfc9c904d9210e2557efd3fe1008b5d08113383489d2a54ec6058",
+      "d_hi": [
+        1.0847444534301758,
+        1.1110628843307495,
+        0.4316313564777374
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 1.254,
+          "temp": -0.0142,
+          "tint": -0.0993,
+          "sat": 1.0107,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "shadows": 0.0838,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96234,
+          "de2000_median": 5.358314759919088,
+          "de2000_p90": 22.814023241798655,
+          "mean_dL": 1.6690827155312975,
+          "mean_da": 1.176657718077385,
+          "mean_db": -4.616768873409704,
+          "chroma_ratio": 0.9489090976072245
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.2926,
+          "temp": -0.043,
+          "tint": -0.3109,
+          "sat": 1.0107,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "shadows": 0.0816,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 96234,
+          "de2000_median": 4.899189080285504,
+          "de2000_p90": 22.59346907588333,
+          "mean_dL": 1.7394822286266614,
+          "mean_da": -0.9458972827516509,
+          "mean_db": -3.328094086288688,
+          "chroma_ratio": 0.8440092251283525
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.4591256796335834,
+      "delta_mean_db": 1.2886747871210162
+    },
+    "blueneg:19960812D-35-las-vegas": {
+      "raw_sha256": "6b90592e16957f33b7f34630699880201fed31fc2865ac9090b5c84a2ae57d8d",
+      "ref_sha256": "2dd36e1e8abc740451f18a9322b9eaf47e3538ca916fa414b19f2ea26359d33d",
+      "d_hi": [
+        1.139949083328247,
+        1.1684902906417847,
+        0.4515569508075714
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.6425,
+          "temp": 0.0562,
+          "tint": -0.1135,
+          "sat": 1.0058,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 91758,
+          "de2000_median": 12.042437516370942,
+          "de2000_p90": 28.51766847838783,
+          "mean_dL": 11.376982512377786,
+          "mean_da": 1.0242281635802835,
+          "mean_db": -6.781198797360374,
+          "chroma_ratio": 1.004527290867069
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.6658,
+          "temp": 0.1148,
+          "tint": -0.386,
+          "sat": 1.0058,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.37,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.508,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 91758,
+          "de2000_median": 10.829007263963621,
+          "de2000_p90": 28.432484680960947,
+          "mean_dL": 11.647324018044591,
+          "mean_da": -2.1806616496600264,
+          "mean_db": -3.691367747937539,
+          "chroma_ratio": 0.9118762768579074
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -1.2134302524073206,
+      "delta_mean_db": 3.089831049422835
+    },
+    "blueneg:19970619A-14-white-chapel": {
+      "raw_sha256": "8e63c3d0d68fabbc4948d55c89edc26877bf204878576416b691a496ea06c385",
+      "ref_sha256": "36071aa399ded1b5f0ae378606265523b984913195cb8e70d75cedcf81cf89d7",
+      "d_hi": [
+        0.5738855600357056,
+        0.5933054089546204,
+        0.16694456338882446
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": 0.4999,
+          "temp": 0.1008,
+          "tint": -0.0052,
+          "sat": 1.0095,
+          "contrast": 1.3723,
+          "midtone": 0.2525,
+          "shoulder": 0.3285,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94869,
+          "de2000_median": 14.79236421922036,
+          "de2000_p90": 21.018745013018897,
+          "mean_dL": 13.514700250554109,
+          "mean_da": -2.5909931825293326,
+          "mean_db": -8.696359577403756,
+          "chroma_ratio": 0.7930221961450931
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.4999,
+          "temp": 0.2308,
+          "tint": -0.0561,
+          "sat": 1.0095,
+          "contrast": 1.3723,
+          "midtone": 0.2525,
+          "shoulder": 0.3284,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94869,
+          "de2000_median": 14.158161085877905,
+          "de2000_p90": 20.294412618326536,
+          "mean_dL": 13.513457275461784,
+          "mean_da": -3.1255829160973496,
+          "mean_db": -6.089810419831267,
+          "chroma_ratio": 0.7835223788926873
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.6342031333424547,
+      "delta_mean_db": 2.6065491575724895
+    },
+    "blueneg:199807A-19-orlando-disney": {
+      "raw_sha256": "24f0c12fa789ec914b39ad486ddcb4891bd4130a8f310b84c786f30be918f111",
+      "ref_sha256": "d4650fb1000e12ae78099d5e4fdfea67a52f7c81cb07734bddbfe6feffd56497",
+      "d_hi": [
+        1.149492859840393,
+        1.152295470237732,
+        0.45711493492126465
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 2.3727,
+          "temp": -0.0444,
+          "tint": -0.1628,
+          "sat": 1.006,
+          "contrast": 1.3,
+          "midtone": 0.262,
+          "shoulder": 0.448,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "shadows": 0.064,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 101495,
+          "de2000_median": 13.909697576218454,
+          "de2000_p90": 21.385004946038542,
+          "mean_dL": -14.120474201010744,
+          "mean_da": -1.0227468810830542,
+          "mean_db": -9.742012521922513,
+          "chroma_ratio": 0.7173405087606124
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 2.3639,
+          "temp": -0.1605,
+          "tint": -0.485,
+          "sat": 1.006,
+          "contrast": 1.3,
+          "midtone": 0.262,
+          "shoulder": 0.493,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "shadows": 0.064,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 101495,
+          "de2000_median": 14.046074194238683,
+          "de2000_p90": 21.643310000477573,
+          "mean_dL": -14.606270979620353,
+          "mean_da": -5.029186990430579,
+          "mean_db": -8.330975211202306,
+          "chroma_ratio": 0.5112935208363012
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.13637661802022905,
+      "delta_mean_db": 1.4110373107202072
+    },
+    "blueneg:199807A-29-orlando-disney": {
+      "raw_sha256": "94421cfc03f9c6b4d974657b459c3954cc39dd2a08c9038ede34c16f7ed5269f",
+      "ref_sha256": "422f4f0ff4e72106cc254dcb771bebe7a3d1efda20b0cf2eb0b528e359d89088",
+      "d_hi": [
+        1.0354363918304443,
+        1.0667740106582642,
+        0.44243812561035156
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 2.3868,
+          "temp": 0.0856,
+          "tint": -0.0964,
+          "sat": 1.0101,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.61,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0113,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94736,
+          "de2000_median": 16.71125062090927,
+          "de2000_p90": 30.756317587310107,
+          "mean_dL": 17.03388711950022,
+          "mean_da": -2.2353465464596294,
+          "mean_db": -5.8980040845162245,
+          "chroma_ratio": 0.8624579450442469
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 2.3877,
+          "temp": 0.1747,
+          "tint": -0.2554,
+          "sat": 1.0101,
+          "contrast": 1.4,
+          "midtone": 0.32,
+          "shoulder": 0.61,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0112,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 94736,
+          "de2000_median": 17.095219947601045,
+          "de2000_p90": 30.25126548636406,
+          "mean_dL": 16.999295548015198,
+          "mean_da": -4.530358873770219,
+          "mean_db": -2.9827185826930505,
+          "chroma_ratio": 0.6690019496456172
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.3839693266917763,
+      "delta_mean_db": 2.915285501823174
+    },
+    "blueneg:199807A-31-orlando-disney": {
+      "raw_sha256": "9367d79b536317976f0eb2aa4ffb5795a5395c63bb7795fffc65ebdb05ddef91",
+      "ref_sha256": "5052bf4de2ce557558ab8d380b4184a12673f15579923791b7c115c9d23d25ec",
+      "d_hi": [
+        0.9328027367591858,
+        0.955884575843811,
+        0.3920091986656189
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.2499,
+          "temp": 0.1795,
+          "tint": -0.0864,
+          "sat": 1.0178,
+          "contrast": 1.3153,
+          "midtone": 0.23,
+          "shoulder": 0.243,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.394,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95367,
+          "de2000_median": 12.638495722319009,
+          "de2000_p90": 18.478967374287922,
+          "mean_dL": 6.842704604814983,
+          "mean_da": -3.9170129844510893,
+          "mean_db": -7.024116331067771,
+          "chroma_ratio": 0.7537893730881096
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.2499,
+          "temp": 0.3082,
+          "tint": -0.1699,
+          "sat": 1.0178,
+          "contrast": 1.3156,
+          "midtone": 0.23,
+          "shoulder": 0.2434,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.394,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 95367,
+          "de2000_median": 12.118812960346839,
+          "de2000_p90": 18.282763843035273,
+          "mean_dL": 6.823654860063034,
+          "mean_da": -5.013550717940086,
+          "mean_db": -4.250465463411367,
+          "chroma_ratio": 0.5581881762573518
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.5196827619721702,
+      "delta_mean_db": 2.7736508676564036
+    },
+    "blueneg:199807A-33-orlando-disney": {
+      "raw_sha256": "13012e0a20931981a081f5eacb25fb3cad702fa18c7c1fe0b4e978756b3c52b9",
+      "ref_sha256": "199324d0f25882cfd945955de8de33e1962bf8fcbb8914c54a88c0b7f98dd231",
+      "d_hi": [
+        1.2195123434066772,
+        1.2178288698196411,
+        0.4589640200138092
+      ],
+      "is_strict_3way": false,
+      "standard": {
+        "params": {
+          "ev": -0.0503,
+          "temp": -0.0032,
+          "tint": -0.1973,
+          "sat": 1.008,
+          "contrast": 1.3,
+          "midtone": 0.298,
+          "shoulder": 0.322,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "shadows": 0.136,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 102528,
+          "de2000_median": 18.681807582236896,
+          "de2000_p90": 24.050652449665545,
+          "mean_dL": -5.5135772977366715,
+          "mean_da": -10.151311471962567,
+          "mean_db": -19.47828339999289,
+          "chroma_ratio": 0.4872314708552874
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": -0.0503,
+          "temp": -0.0119,
+          "tint": -0.4721,
+          "sat": 1.008,
+          "contrast": 1.3,
+          "midtone": 0.298,
+          "shoulder": 0.322,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "shadows": 0.136,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 102528,
+          "de2000_median": 19.7850195283803,
+          "de2000_p90": 23.996185762705387,
+          "mean_dL": -5.8881007127122515,
+          "mean_da": -14.656663307914707,
+          "mean_db": -16.530108608449083,
+          "chroma_ratio": 0.33096446844894634
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 1.1032119461434036,
+      "delta_mean_db": 2.9481747915438064
+    },
+    "blueneg:199807A-36-orlando-disney": {
+      "raw_sha256": "e6252285542827c4689b59acb8095af85dbf0828dd132c0af9f995ebcac1a764",
+      "ref_sha256": "f764fa7be2945359889f78889db5cb5e373ec2f0096c7f0ea9b2aafc50240c34",
+      "d_hi": [
+        0.9553974270820618,
+        0.9757773876190186,
+        0.4046905040740967
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.655,
+          "temp": 0.1066,
+          "tint": -0.1055,
+          "sat": 1.0148,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.31,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0293,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 98280,
+          "de2000_median": 10.850509526634664,
+          "de2000_p90": 16.319284912155826,
+          "mean_dL": 2.7866317711782287,
+          "mean_da": -4.480001865106578,
+          "mean_db": -6.153650355382044,
+          "chroma_ratio": 0.9264158680458399
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.6578,
+          "temp": 0.2728,
+          "tint": -0.3034,
+          "sat": 1.0148,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.31,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.029,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 98280,
+          "de2000_median": 11.415616591323861,
+          "de2000_p90": 16.022441096452432,
+          "mean_dL": 2.7516578062522252,
+          "mean_da": -7.198511904272072,
+          "mean_db": -1.9117496172627262,
+          "chroma_ratio": 0.5761697683130255
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.5651070646891974,
+      "delta_mean_db": 4.241900738119318
+    },
+    "blueneg:199807A-37-orlando-disney": {
+      "raw_sha256": "effacf15cc47dae6d109cbaa037688926649c71f47d8971b100f2262d149f223",
+      "ref_sha256": "b6ba1136fc02a402918ba9ca491228269de5566da1bb41914995550439a67272",
+      "d_hi": [
+        1.016445517539978,
+        1.0312254428863525,
+        0.42042821645736694
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.8675,
+          "temp": 0.1817,
+          "tint": -0.1519,
+          "sat": 1.0131,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.355,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0231,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 83304,
+          "de2000_median": 11.861909513191849,
+          "de2000_p90": 24.440929265592324,
+          "mean_dL": -1.612543634382807,
+          "mean_da": -3.4229512319751803,
+          "mean_db": -4.410793621716633,
+          "chroma_ratio": 0.8946718793048511
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.8708,
+          "temp": 0.3905,
+          "tint": -0.3524,
+          "sat": 1.0131,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.4,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.4,
+          "blacks": -0.0227,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 83304,
+          "de2000_median": 12.263707553256967,
+          "de2000_p90": 23.941639890880822,
+          "mean_dL": -1.6393820609748935,
+          "mean_da": -5.760378846066515,
+          "mean_db": -0.22661717746805776,
+          "chroma_ratio": 0.5649143824705939
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.40179804006511866,
+      "delta_mean_db": 4.184176444248575
+    },
+    "blueneg:199807B-01-orlando-seaworld": {
+      "raw_sha256": "b85da589a76896697704837761712dfe94746f4427bc456646eb2e71733bbd9d",
+      "ref_sha256": "69b083c05034b09b6cdb2bbb71c334c26c9a7286bd16c7499a6d0d24e523e8fe",
+      "d_hi": [
+        0.7574622631072998,
+        0.8563442230224609,
+        0.35866138339042664
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 1.3123,
+          "temp": 0.1336,
+          "tint": -0.0082,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0432,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 101495,
+          "de2000_median": 12.199065889086105,
+          "de2000_p90": 16.077409058210936,
+          "mean_dL": 11.840605333286016,
+          "mean_da": 0.1769565915829061,
+          "mean_db": -3.89353982305716,
+          "chroma_ratio": 1.012057474351561
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 1.3129,
+          "temp": 0.3054,
+          "tint": -0.061,
+          "sat": 1.02,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.65,
+          "blacks": -0.0432,
+          "vibrance": 0.08,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 101495,
+          "de2000_median": 11.755050109437699,
+          "de2000_p90": 15.833838789219172,
+          "mean_dL": 11.849060829482273,
+          "mean_da": -0.2629968377719625,
+          "mean_db": -0.5880717631938951,
+          "chroma_ratio": 0.8612344799055492
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": -0.44401577964840655,
+      "delta_mean_db": 3.305468059863265
+    },
+    "blueneg:199807B-14-orlando-seaworld": {
+      "raw_sha256": "7ab255a203a5e7934c63d97e7497fdc5e9454d267afbd9346e7a0a4e566f9cd3",
+      "ref_sha256": "b451921c49ecc570d435c60698eb733db0c0dc2773167a74e0daa6df7ef40d8d",
+      "d_hi": [
+        0.6553542017936707,
+        0.7995874285697937,
+        0.34850528836250305
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 0.6021,
+          "temp": 0.161,
+          "tint": -0.0754,
+          "sat": 1.0141,
+          "contrast": 1.3256,
+          "midtone": 0.23,
+          "shoulder": 0.2583,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 101376,
+          "de2000_median": 6.628626737244144,
+          "de2000_p90": 16.268937810013956,
+          "mean_dL": -2.908079133208438,
+          "mean_da": 0.48330587220624277,
+          "mean_db": -1.5378343140855018,
+          "chroma_ratio": 0.9736858837909859
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.6021,
+          "temp": 0.2947,
+          "tint": -0.1608,
+          "sat": 1.0141,
+          "contrast": 1.3256,
+          "midtone": 0.23,
+          "shoulder": 0.2584,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 101376,
+          "de2000_median": 7.018315593609646,
+          "de2000_p90": 16.295694961853464,
+          "mean_dL": -2.927724435933032,
+          "mean_da": -0.7475679057700648,
+          "mean_db": 1.6431175274467016,
+          "chroma_ratio": 0.7803505477423657
+        },
+        "wb_cool_cast": true
+      },
+      "delta_de2000_median": 0.38968885636550255,
+      "delta_mean_db": 3.1809518415322033
+    },
+    "blueneg:199807B-15-orlando-seaworld": {
+      "raw_sha256": "06a1d1a81233c746b0664f0f68988fab1350ce9eeaef155b2ff84fb2f6d46e6a",
+      "ref_sha256": "a3569a619b14b7b0b189f678140bf85832161cb9cd7b652064b4caf9c72eda12",
+      "d_hi": [
+        0.7367157340049744,
+        0.8804714679718018,
+        0.3643474280834198
+      ],
+      "is_strict_3way": true,
+      "standard": {
+        "params": {
+          "ev": 0.0485,
+          "temp": 0.1483,
+          "tint": -0.023,
+          "sat": 1.0153,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 101255,
+          "de2000_median": 7.513821257295185,
+          "de2000_p90": 12.21892540806104,
+          "mean_dL": -3.9196017153769884,
+          "mean_da": 0.9421743248385397,
+          "mean_db": -3.3570352274812763,
+          "chroma_ratio": 1.0644529758499932
+        },
+        "wb_cool_cast": false
+      },
+      "relaxed_r": {
+        "params": {
+          "ev": 0.0485,
+          "temp": 0.1483,
+          "tint": -0.023,
+          "sat": 1.0153,
+          "contrast": 1.3,
+          "midtone": 0.23,
+          "shoulder": 0.22,
+          "matrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "highlights": -0.2,
+          "chroma_preserve": 0.4
+        },
+        "metrics": {
+          "n": 101255,
+          "de2000_median": 7.513821257295185,
+          "de2000_p90": 12.21892540806104,
+          "mean_dL": -3.9196017153769884,
+          "mean_da": 0.9421743248385397,
+          "mean_db": -3.3570352274812763,
+          "chroma_ratio": 1.0644529758499932
+        },
+        "wb_cool_cast": false
+      },
+      "delta_de2000_median": 0.0,
+      "delta_mean_db": 0.0
+    }
+  }
+}

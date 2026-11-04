@@ -788,3 +788,35 @@ def test_t4t_invert_negative_dm_zero_escape_at_sub_percent_rate():
     # Neither chunk has > 1% locally, and globally <= 0.1% -> no clamping
     assert res_sub.report["spike_clamp"]["pixels"] == 0
     assert res_sub.positive[..., 2].max() > 10.0
+
+
+def test_t4z_white_point_bridges_one_block_mullion():
+    """T4z: block_white_point bridges a 1-block window mullion when edge holder blocks exist,
+    excluding internal hot blocks separated by thin mullions; baseline with internal hot island alone remains unchanged."""
+    from filmcolor.invert import block_white_point
+    block = 16
+    h, w = 512, 512
+    mask = np.ones((h, w), bool)
+
+    D_scene = np.array([0.85, 0.90, 1.00], np.float32)
+    D_hot = np.array([2.2, 2.2, 2.2], np.float32)
+
+    # 1. Edge-connected hot blocks with internal hot block separated by 1-block window mullion
+    # Top hot touches only top edge (rows 0:32, cols 128:384); gap 32:48; internal hot (rows 48:144, cols 128:384)
+    # Internal hot is well beyond dilation(iterations=2) from rows 0:32 and detached from left/right edges.
+    rgb = np.zeros((h, w, 3), np.float32)
+    rgb[:] = BASE * (10.0 ** -D_scene)
+    rgb[:32, 128:384] = BASE * (10.0 ** -D_hot)
+    rgb[48:144, 128:384] = BASE * (10.0 ** -D_hot)
+
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+    assert info.get("holder_blocks_excluded", 0) > 0
+    np.testing.assert_allclose(d_hi, D_scene, atol=0.01)
+
+    # 2. Baseline without edge hot blocks: isolated internal hot island alone does not trigger holder peeling
+    rgb_island = np.zeros((h, w, 3), np.float32)
+    rgb_island[:] = BASE * (10.0 ** -D_scene)
+    rgb_island[100:200, 100:200] = BASE * (10.0 ** -D_hot)
+    d_hi_isl, info_isl = block_white_point(rgb_island, BASE, mask, block=block, pct=99.8)
+    assert "holder_blocks_excluded" not in info_isl
+    np.testing.assert_allclose(d_hi_isl, [2.2, 2.2, 2.2], atol=0.01)

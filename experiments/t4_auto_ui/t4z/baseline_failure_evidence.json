@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python",
+    "-I",
+    "-c",
+    "import sys; sys.path.insert(0,sys.argv[1]); import filmcolor.noref as n; n.NOREF_V3.update(overlift_night_bl_check=True, overlift_night_bl_min_weight=0.65, overlift_night_bl_max_bright_share=0.090, overlift_night_bl_ev_min=1.50, overlift_night_bl_q25_min=0.175); print('baseline_noref=' + n.__file__,flush=True); import pytest; raise SystemExit(pytest.main(sys.argv[2:]+['-k','t4z','-q']))",
+    "/private/tmp/fc_t4z_baseline_20261105/src",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_invert.py",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_noref.py",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_app.py"
+  ],
+  "baseline_source_sha256": "db2d825798bc3edf7fe99e128d57ae56df27c466db876b633b067cca91fbc629",
+  "config_overlay": "New night gate keys supplied in memory so failures test missing behavior rather than KeyError; old source and thin thresholds unchanged",
+  "failed": 5,
+  "passed": 0,
+  "deselected": 129,
+  "log_sha256": "f798b7a5c953e6a14b67ea4e706ef7a86e6d1eb953c44e8a18a64dd2393149ab",
+  "test_sha256": {
+    "tests/test_invert.py": "76853a612b15e8a94327992233e957253ce5883727854ab106640a8792bb78d2",
+    "tests/test_noref.py": "15fbcccabe7551bf293ed01cc403fe806acf9c92bdedf4e98650748153e32699",
+    "tests/test_app.py": "95da667f4ce4f0aeabe79f260b8aa31c2575f598139a9ed5bf9874e797137432"
+  }
+}
