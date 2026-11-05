@@ -1,0 +1,75 @@
+{
+ "id": "material_polarity_20261105",
+ "created": "2026-11-05",
+ "purpose": "误归为负片的正片；挑选负片盲测和诊断素材时排除。素材只读，未移动。",
+ "root": "/Volumes/waizhiyingpan/胶片负片素材",
+ "kinds": {
+  "positive_image": "已反相的正像（edited / 转换后的图像）",
+  "reversal_film": "反转片或反转冲洗的胶片，原片即正像"
+ },
+ "entries": [
+  {
+   "rel": "01_彩色负片_未反相/A850.tif",
+   "kind": "positive_image",
+   "sha256": "dd92a590e4c632f246d46289e61bad67a07e79f34a533e17a4d6f9f48bc71f23",
+   "evidence": "不反相时颜色正常；T5a d_hi_G 3.05 D（input_density_implausible）",
+   "checked_by": "research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  },
+  {
+   "rel": "01_彩色负片_未反相/A851.tif",
+   "kind": "positive_image",
+   "sha256": "34a2c9a358b948c045d79e4adba3f2d1444d231ddc423c80aed32fefe1ccce46",
+   "evidence": "不反相时颜色正常；T5a d_hi_G 3.05 D（input_density_implausible）",
+   "checked_by": "research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  },
+  {
+   "rel": "01_彩色负片_未反相/A852.tif",
+   "kind": "positive_image",
+   "sha256": "79e0fbf61282d7699e60795b6638a2de138588487e3070fa588505a60f2c1595",
+   "evidence": "不反相时颜色正常；T5a d_hi_G 3.20 D（input_density_implausible）",
+   "checked_by": "research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  },
+  {
+   "rel": "02_黑白负片_未反相/B094.tif",
+   "kind": "positive_image",
+   "sha256": "4045d5a39ef07313e9a1e5701d13f2cc9d0b6d53d0611e2ee4e71427f8da88bb",
+   "evidence": "不反相时天空亮、水面暗；T5a d_hi_G 3.38 D，manual_review_required；来自 pixls 帖子 52582，标题写 “B&W Negative”，文件内容是正像",
+   "checked_by": "research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  },
+  {
+   "rel": "02_黑白负片_未反相/B040.tif",
+   "kind": "positive_image",
+   "sha256": "7635e489cd9a86ffd5a137e41fcceee9accc7a3ece63031d0cfb8d72ce7e0ad0",
+   "evidence": "与 B094 像素统计相同（SHA256 不同）；不反相时天空亮、水面暗；来自 pixls 帖子 52582，标题写 “B&W Negative”，文件内容是正像",
+   "checked_by": "research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  },
+  {
+   "rel": "Eastman 5294(尼康数字化)-",
+   "kind": "reversal_film",
+   "n_nef": 21,
+   "evidence": "Kodak 5294 为 EKTACHROME 100D 彩色反转片；机内 JPG 为正像",
+   "checked_by": "user (2026-11-05) + research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  },
+  {
+   "rel": "Eastman 5294(尼康数字化)-1",
+   "kind": "reversal_film",
+   "n_nef": 39,
+   "evidence": "Kodak 5294 为 EKTACHROME 100D 彩色反转片；机内 JPG 为正像",
+   "checked_by": "user (2026-11-05) + research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  },
+  {
+   "rel": "Eastman 5294(尼康数字化)-2",
+   "kind": "reversal_film",
+   "n_nef": 39,
+   "evidence": "Kodak 5294 为 EKTACHROME 100D 彩色反转片；机内 JPG 为正像",
+   "checked_by": "user (2026-11-05) + research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  },
+  {
+   "rel": "foma pan100(d67 尼康数字化)-",
+   "kind": "reversal_film",
+   "n_nef": 38,
+   "evidence": "黑白负片反转冲洗：`逐张调整灰阶` 26/26 张成片（DSC_7400–7425）与反相输出明暗相反，NCC 0.84–0.98，比第二候选高 ≥ 0.15；同卷另一目录名为“负片正冲”（foma pan100(d67 负片正冲 尼康数字化)-，只有 12 张成片，没有原片）",
+   "checked_by": "research (FilmColor_AI_T5a_审计_2026-11-05 第 3 版)"
+  }
+ ]
+}

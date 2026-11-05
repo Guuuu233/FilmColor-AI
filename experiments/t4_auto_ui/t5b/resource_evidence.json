@@ -1,0 +1,38 @@
+{
+  "blind_raw_scan": {
+    "log_sha256": "e2e99980b0c90f9931bf263498f77e2fba68abe1c68c60f5fa5e512624f2abc0",
+    "peak_memory_footprint_bytes": 4128411272
+  },
+  "candidate_a": {
+    "log_sha256": "b5686ceaa9af40238fc47f83cff7b514f26f33a1c3ac44ad0cfd5419e68b8222",
+    "peak_memory_footprint_bytes": 6609901160
+  },
+  "candidate_b": {
+    "log_sha256": "fe9e29ed8eb2a16b44f0a0e50572c3d8e88b5408296eb55f772295f73cf42665",
+    "peak_memory_footprint_bytes": 5122085304
+  },
+  "candidate_cross": {
+    "log_sha256": "9798cd10df6c5b135d4191ba15bf94acd19ad61acc31be22eef5f6ee33eea47e",
+    "peak_memory_footprint_bytes": 8783453432
+  },
+  "devices_baseline": {
+    "log_sha256": "de4080ca729b74018cba3a9a4a0cff809a069a5df25b1579f6ed0f5a68732af5",
+    "peak_memory_footprint_bytes": 4171714472
+  },
+  "devices_candidate": {
+    "log_sha256": "6070864ac8aaf60a56367fd241389b792ce1fcd2fe2cc3eb8241b442c9357426",
+    "peak_memory_footprint_bytes": 4619260032
+  },
+  "sony_baseline": {
+    "log_sha256": "c4353466242b5d7d21a6ba24fa3502ebc3dc6ac36af53a117cb529af2486b46b",
+    "peak_memory_footprint_bytes": 4353330920
+  },
+  "sony_candidate": {
+    "log_sha256": "b727d327dea9cd48556658bdac0c4028836389a66a38add35e5154e74b85cee1",
+    "peak_memory_footprint_bytes": 4357410536
+  },
+  "tests": {
+    "log_sha256": "93d696cf8846c70d0cde4ee4c422f44e14de64f76117f3cf3b7b72a7d2105c06",
+    "peak_memory_footprint_bytes": 4737699968
+  }
+}

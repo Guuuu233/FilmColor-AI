@@ -1,0 +1,16 @@
+{
+  "scripts/t5b_baseline_test_evidence.py": "881927442db3a9c2333e9c4c7a81daf5b26f5643786aff28bdfd90f1488ebf3a",
+  "scripts/t5b_blind_raw_scan.py": "c3e96830a94193a9e5b9bfddabbd9a1fd60266ab09a0cfcf747b66330a738fbb",
+  "scripts/t5b_commit_manifest.py": "d76b11322891cc1fbb7dd0e0a8413081f2ec40a40c5f43ba0cfd544deaf02df1",
+  "scripts/t5b_final_audit.py": "d1ad5b5390d1680ce0bfa4493ef948c753238d00b965393f3b48a039c307530e",
+  "scripts/t5b_material_polarity.py": "4ab0ed12d850415d6adf491487f9700abd8fffc69ae6cc4e63394938daaff8d8",
+  "scripts/t5b_prepare_baseline.py": "c907ca8e86ba0812d87fa4cdb46c51aac39d3077746e45596aad29ee6ba7b2e0",
+  "scripts/t5b_probe_devices.py": "c31a4bf8b38cff33e6bc9de8a282e731623629883cd0d26ce193162d74a5fa60",
+  "scripts/t5b_report_tables.py": "58f62d100e5997b6af9b246ab25d64b89811c91fd8c8f8ab2299ae0597f6d38e",
+  "scripts/t5b_run_eval.py": "345d66dc5e1c9da3002bebb5dd51dd49f7ed8f464ea204037de1ccf4cbbc89eb",
+  "scripts/t5b_service_check.py": "c644b0fb01e81c8edfa4570317641f43b4b09de4070bdaac0b701c67ead55580",
+  "scripts/t5b_sony_a7r4.py": "505ffb5896415c9dbaa2a5f95511227c2ab9217e857a6118b6ec9c04a664b213",
+  "scripts/t5b_test_evidence.py": "b04f09c155f0d18b8007721d08bd9cc4f432cf4a23560bcc97f309e08d69abb2",
+  "scripts/t4d_source_eval.py": "8dd1d9cc35f5fcf443741fe4eef3f9607c84e37879c566bf1c2444a86a283eb6",
+  "scripts/t4s_report_tables.py": "30d72854607a245b1c322155f3412fb5a8bedbab2f3e058908f9d98faee1c411"
+}

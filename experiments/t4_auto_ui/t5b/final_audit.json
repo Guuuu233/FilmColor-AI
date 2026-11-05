@@ -1,0 +1,10 @@
+{
+  "all_passed": true,
+  "manifest_files": 40,
+  "historical_json_verified": 150,
+  "t5a_json_verified": 19,
+  "frozen_manifests_verified": 5,
+  "paths_sha256": "fced78f38a0787e473d882024d289878b99a224c604242f6561c7fb05e8be913",
+  "source_sha256": "0c3e44c044f44326ffb25ec14c48c762252d63e7edfcda53e04c6a94cb9982eb",
+  "staged": 0
+}

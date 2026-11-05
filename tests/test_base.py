@@ -358,3 +358,56 @@ def test_t4x_near_saturated_sony_craw_blocks_excluded_but_unit_white_preserved()
 
     est3 = estimate_base_blocks(sp3, sp_sat3, block=block, top_frac=0.20, max_rel_std=0.03, chroma_tol=0.20)
     assert "near_saturated_blocks_excluded" not in est3.diagnostics
+
+
+def _t5b_clipped_light_blocks(near_sat=True):
+    """T5b (A1298 / A1299 / A1300, Sony ILCE-7RM4): 50 x 50 blocks of a textured dense image, an orange film border
+    (6 columns, [0.171, 0.212, 0.085]) and clipped backlight. With ``near_sat`` its top 8 rows sit at the 14-bit
+    ceiling (max channel 0.9988, inside T4x's near-saturated band) and two rows just below it (0.9979) survive."""
+    rng = np.random.default_rng(5)
+    film_base = np.array([0.171, 0.212, 0.085], dtype=np.float32)
+    sp = (film_base * rng.uniform(0.15, 0.6, (50, 50, 1))).astype(np.float32)
+    sp[10:, :6] = film_base
+    sp[:10, :20] = [0.456, 0.9979, 0.775]
+    if near_sat:
+        sp[:8] = [0.4575, 0.9988, 0.7765]
+    return sp, np.zeros((50, 50), dtype=bool), film_base
+
+
+def test_t5b_clipped_base_excluded():
+    """T5b: near-saturated exclusion leaves clipped light (max channel 0.9979) as the brightest uniform blocks; a camera
+    RAW base with a channel >= CLIPPED_BASE_MAX (0.99) is re-estimated from the blocks below 2.5x the 90th percentile.
+    T5a returned the clipped base here (G 0.9979)."""
+    from filmcolor.base import CLIPPED_BASE_MAX
+    sp, sp_sat, film_base = _t5b_clipped_light_blocks()
+    est = estimate_base_blocks(sp, sp_sat, block=24)
+    assert CLIPPED_BASE_MAX == 0.99
+    assert est.diagnostics.get("near_saturated_blocks_excluded") == 400
+    assert est.diagnostics.get("clipped_base_excluded") is True
+    assert "bare_backlight_excluded" not in est.diagnostics
+    assert any("clipped light" in w for w in est.warnings)
+    assert rel_err(est.rgb, film_base) < 1e-5 and max(est.rgb) < CLIPPED_BASE_MAX
+
+
+def test_t5b_clipped_base_not_triggered_without_near_sat():
+    """T5b: without near-saturated blocks the rule does not fire, even though the base is close to 1; the base is
+    bit-identical to T5a's (the float32 clipped-light blocks themselves)."""
+    sp, sp_sat, _ = _t5b_clipped_light_blocks(near_sat=False)
+    est = estimate_base_blocks(sp, sp_sat, block=24)
+    assert "near_saturated_blocks_excluded" not in est.diagnostics
+    assert "clipped_base_excluded" not in est.diagnostics and "bare_backlight_excluded" not in est.diagnostics
+    assert est.rgb == tuple(float(v) for v in np.float32([0.456, 0.9979, 0.775]))
+    assert not any("clipped light" in w for w in est.warnings)
+
+
+def test_t5b_scanner_path_unchanged():
+    """T5b: the scanner path (exclude_near_saturated=False) never counts near-saturated blocks, so the rule cannot
+    fire; the 0.9988 blocks stay the base bit-identically as in T5a, through estimate_base_scanner too."""
+    from filmcolor.scanner import ScannerFrame, estimate_base_scanner
+    sp, sp_sat, _ = _t5b_clipped_light_blocks()
+    est = estimate_base_blocks(sp, sp_sat, block=24, exclude_near_saturated=False)
+    assert "near_saturated_blocks_excluded" not in est.diagnostics and "clipped_base_excluded" not in est.diagnostics
+    assert est.rgb == tuple(float(v) for v in np.float32([0.4575, 0.9988, 0.7765]))
+    rgb = np.repeat(np.repeat(sp, 24, 0), 24, 1)
+    fr = ScannerFrame(rgb=rgb, sat=np.zeros(rgb.shape[:2], dtype=bool), black=0.0, white=65535.0, meta={})
+    assert estimate_base_scanner(fr, block=24).to_dict() == est.to_dict()

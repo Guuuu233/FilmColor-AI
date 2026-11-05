@@ -269,6 +269,9 @@ def natural_roll_base(
                        paper_black_d=float(paper_black_d), b1_weight=w, max_black_pull_d=max_black_pull_d)
 
 
+CLIPPED_BASE_MAX = 0.99  # T5b: a camera-RAW base with a channel this close to white is clipped light, not film
+
+
 def estimate_base_blocks(
     sp, sp_sat, *, block: int, top_frac: float = 0.01, max_rel_std: float = 0.03,
     chroma_tol: float = 0.05, crop: tuple[int, int, int, int] | None = None,
@@ -301,17 +304,22 @@ def estimate_base_blocks(
     )
 
     bare_backlight_excluded = False
+    clipped_base_excluded = False
     vals_valid = sp[valid]
     if len(vals_valid) >= 100:
         Y_valid = Y[valid]
+        # T5b: near_sat removed the clipped backlight but the brightest uniform blocks are still clipped light (one
+        # channel at the sensor ceiling); the film is in the blocks below 2.5x the 90th percentile, as for bare backlight
+        clipped_base = bool(near_sat_blocks and max(rgb) >= CLIPPED_BASE_MAX)
         p90_Y = float(np.percentile(Y_valid, 90))
         p98_Y = float(np.percentile(Y_valid, 98))
-        if (p98_Y > 5.0 * max(p90_Y, 1e-9) and float(np.mean(Y_valid <= 0.25 * thr)) > 0.88
-                and not (rgb[0] > rgb[1] and rgb[2] < 0.43 * rgb[1])):
+        if clipped_base or (p98_Y > 5.0 * max(p90_Y, 1e-9) and float(np.mean(Y_valid <= 0.25 * thr)) > 0.88
+                            and not (rgb[0] > rgb[1] and rgb[2] < 0.43 * rgb[1])):
             valid_film = valid & (Y <= 2.5 * p90_Y)
             n_uniform_film = int((valid_film & (rel_std_map <= max_rel_std)).sum())
             if n_uniform_film >= 10:
-                bare_backlight_excluded = True
+                bare_backlight_excluded = not clipped_base
+                clipped_base_excluded = clipped_base
                 valid = valid_film
                 (
                     n_uniform, thr, idx, vals, keep, kept, rgb, centre, outlier_frac, mode_seed_bare
@@ -334,6 +342,9 @@ def estimate_base_blocks(
     warnings: list[str] = []
     if bare_backlight_excluded:
         warnings.append("bare backlight area excluded (>5x brighter than 90th percentile of valid blocks)")
+    if clipped_base_excluded:
+        warnings.append("brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from "
+                        "blocks below 2.5x the 90th percentile")
     if relaxed_uniformity:
         warnings.append(
             f"initial base estimate suspiciously dense (>25% valid blocks brighter); "
@@ -369,6 +380,8 @@ def estimate_base_blocks(
         diagnostics["near_saturated_blocks_excluded"] = near_sat_blocks
     if bare_backlight_excluded:
         diagnostics["bare_backlight_excluded"] = True
+    if clipped_base_excluded:
+        diagnostics["clipped_base_excluded"] = True
     if relaxed_uniformity:
         diagnostics["relaxed_uniformity"] = True
     return BaseEstimate(rgb=rgb, method="auto", regions=regions, stats=stats, params=params,

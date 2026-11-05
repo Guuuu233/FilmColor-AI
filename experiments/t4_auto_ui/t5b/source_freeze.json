@@ -1,0 +1,6 @@
+{
+  "src_content_sha256": "0c3e44c044f44326ffb25ec14c48c762252d63e7edfcda53e04c6a94cb9982eb",
+  "paths_sha256": "fced78f38a0787e473d882024d289878b99a224c604242f6561c7fb05e8be913",
+  "eval_script_sha256": "8dd1d9cc35f5fcf443741fe4eef3f9607c84e37879c566bf1c2444a86a283eb6",
+  "note": "T5b candidate source frozen before the full regression, device probes and blind RAW base scan"
+}

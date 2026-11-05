@@ -1,0 +1,1213 @@
+{
+  "source_sha256": "0c3e44c044f44326ffb25ec14c48c762252d63e7edfcda53e04c6a94cb9982eb",
+  "baseline": {
+    "commit": "1c4c9aa10e843b742513dbbb5d84cd312494572f",
+    "source_dir": "/private/tmp/fc_t5b_baseline_20261106/src",
+    "src_content_sha256": "2377cf08f109683554309330b0450a03ab3c50c78c5f3cf69059bc62e258a720",
+    "paths_runtime_sha256": "fced78f38a0787e473d882024d289878b99a224c604242f6561c7fb05e8be913",
+    "paths_committed_sha256": "a3db2697c0e2a4a5e6ae7ceec13456951ae81042482c177a877713fcd797c353",
+    "n_files": 39
+  },
+  "gates": {
+    "benchmark_identical_vs_t5a": true,
+    "inversion_and_base_identical": true,
+    "benchmark_no_clipped_base_excluded": true,
+    "protected_frames_identical": true,
+    "devices_identical_61": true,
+    "sony_a7r4_orange_base": true,
+    "blind_raw_only_a7r4_changed": true,
+    "material_polarity_list": true,
+    "tests_passed_ge_444": true,
+    "configs_unchanged": true,
+    "service_ok": true,
+    "paths_unchanged": true,
+    "resources_complete": true
+  },
+  "evaluations": {
+    "a": {
+      "records": 96,
+      "non_timing_diffs": [],
+      "inversion_diffs": [],
+      "clipped_base_excluded": [],
+      "sha256": "0b3a02892e256ef4efc8244dee81b4b9ec7ced835998249fe8c911cae31043ee"
+    },
+    "b": {
+      "records": 95,
+      "non_timing_diffs": [],
+      "inversion_diffs": [],
+      "clipped_base_excluded": [],
+      "sha256": "6b13f7bed96663ee5665559e7d84d0252c42da6d44d900c549bd31efe01cbe5f"
+    },
+    "cross": {
+      "records": 124,
+      "non_timing_diffs": [],
+      "inversion_diffs": [],
+      "clipped_base_excluded": [],
+      "sha256": "511f4881f07692422ada302533abc9a4f96a08849cb9fecab24a7652dccea6cd"
+    },
+    "dev_standard": {
+      "vs_t5a": {
+        "better_005": 0,
+        "worse_005": 0,
+        "better_025": 0,
+        "worse_025": 0,
+        "max_abs_delta": 0.0,
+        "stats": "8.86 / 9.30 / 13.88"
+      }
+    },
+    "dev_natural": {
+      "vs_t5a": {
+        "better_005": 0,
+        "worse_005": 0,
+        "better_025": 0,
+        "worse_025": 0,
+        "max_abs_delta": 0.0,
+        "stats": "9.18 / 9.87 / 14.55"
+      }
+    },
+    "dev_portrait": {
+      "vs_t5a": {
+        "better_005": 0,
+        "worse_005": 0,
+        "better_025": 0,
+        "worse_025": 0,
+        "max_abs_delta": 0.0,
+        "stats": "9.38 / 10.40 / 15.91"
+      }
+    },
+    "dev_vivid": {
+      "vs_t5a": {
+        "better_005": 0,
+        "worse_005": 0,
+        "better_025": 0,
+        "worse_025": 0,
+        "max_abs_delta": 0.0,
+        "stats": "9.04 / 9.78 / 14.75"
+      }
+    },
+    "dev_print_classic": {
+      "vs_t5a": {
+        "better_005": 0,
+        "worse_005": 0,
+        "better_025": 0,
+        "worse_025": 0,
+        "max_abs_delta": 0.0,
+        "stats": "8.27 / 8.95 / 13.47"
+      }
+    },
+    "cross_standard": {
+      "vs_t5a": {
+        "better_005": 0,
+        "worse_005": 0,
+        "better_025": 0,
+        "worse_025": 0,
+        "max_abs_delta": 0.0,
+        "stats": "13.52 / 13.98 / 19.95"
+      }
+    }
+  },
+  "inputs": {
+    "task_sha256": "5186aed1536c2ae5573776dfc73fb6cdc166334352c38aabed69ccd379bddfff",
+    "audit_sha256": "9c9efc40d91a5afe130567a2562a28885f3507b049869028952c835e070f041a",
+    "research_blind_sha256": "43b7eab26b8bcf3a25975b7790b31cc6f42da21a956c0b631965aa0fc6829697"
+  },
+  "benchmark_base_max_channel": {
+    "own_estimate": {
+      "frame": "nlp:_DSF8948",
+      "value": 0.8772886991500854
+    },
+    "render_base": {
+      "frame": "ext:A135",
+      "value": 0.977904666566291,
+      "method": "roll_nat"
+    }
+  },
+  "protected_frames": {
+    "ext:A008": true,
+    "ext:A012": true,
+    "ext:A013": true,
+    "shop:DSC_3833": true,
+    "nlp:_DSF8948": true
+  },
+  "devices": {
+    "records": 61,
+    "rows": {
+      "A1004.DNG": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.10208285599946976,
+        "own_base_max_channel": 0.10202369093894958,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1005.CR2": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.23362325131893158,
+        "own_base_max_channel": 0.23326356709003448,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1006.CR2": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.22511635720729828,
+        "own_base_max_channel": 0.2244633585214615,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1007.CR2": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.268970787525177,
+        "own_base_max_channel": 0.2683434784412384,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1027.TIF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.7193560600280762,
+        "own_base_max_channel": 0.71338951587677,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "A1028.TIF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.4267795979976654,
+        "own_base_max_channel": 0.42642658948898315,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "A1033.CR2": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.16218814253807068,
+        "own_base_max_channel": 0.16214561462402344,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1040.TIF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.9851490259170532,
+        "own_base_max_channel": 0.9843795895576477,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1041.TIF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.9857962727546692,
+        "own_base_max_channel": 0.9835345149040222,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1061.CR2": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.29359883069992065,
+        "own_base_max_channel": 0.29339873790740967,
+        "near_sat": 302,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1069.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.29358357191085815,
+        "own_base_max_channel": 0.2927051782608032,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1093.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.6038274168968201,
+        "own_base_max_channel": 0.6140667796134949,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1228.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.4292907118797302,
+        "own_base_max_channel": 0.4287104606628418,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1296.CR2": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.01414511352777481,
+        "own_base_max_channel": 0.014196043834090233,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A1301.TIF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.34830242395401,
+        "own_base_max_channel": 0.3482753038406372,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "A1310.TIF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.6208896040916443,
+        "own_base_max_channel": 0.6207627058029175,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "A229.TIF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.9911013245582581,
+        "own_base_max_channel": 0.9911013245582581,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A232.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.29358357191085815,
+        "own_base_max_channel": 0.2927051782608032,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A237.cr2": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.5464560985565186,
+        "own_base_max_channel": 0.5467638969421387,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A239.ORF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.4597085416316986,
+        "own_base_max_channel": 0.460077166557312,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A255.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.9927366971969604,
+        "own_base_max_channel": 0.9921428561210632,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "A262.arw": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.27678340673446655,
+        "own_base_max_channel": 0.27587002515792847,
+        "near_sat": 1977,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A263.arw": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.9146105051040649,
+        "own_base_max_channel": 0.9137910604476929,
+        "near_sat": 2246,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A281.RAF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.23205921053886414,
+        "own_base_max_channel": 0.23499375581741333,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A304.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.6582589745521545,
+        "own_base_max_channel": 0.6608736515045166,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "A305.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.40415045619010925,
+        "own_base_max_channel": 0.40230369567871094,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A655.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.973445475101471,
+        "own_base_max_channel": 0.9693981409072876,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A849.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.49102088809013367,
+        "own_base_max_channel": 0.4912984073162079,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "A850.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.8468732833862305,
+        "own_base_max_channel": 0.8444857597351074,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "B002.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2366826832294464,
+        "own_base_max_channel": 0.23650451004505157,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B003.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2684456706047058,
+        "own_base_max_channel": 0.21418483555316925,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B004.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.24655526876449585,
+        "own_base_max_channel": 0.24621441960334778,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B005.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2578164339065552,
+        "own_base_max_channel": 0.2576393485069275,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B006.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2394750863313675,
+        "own_base_max_channel": 0.23895156383514404,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B007.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.24531929194927216,
+        "own_base_max_channel": 0.2451171875,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B008.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.3352102041244507,
+        "own_base_max_channel": 0.3349207043647766,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B009.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.2768712639808655,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B010.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.2789926528930664,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B011.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2684456706047058,
+        "own_base_max_channel": 0.2328096181154251,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B012.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.26772448420524597,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B013.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.24311530590057373,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B014.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.28006407618522644,
+        "own_base_max_channel": 0.27988624572753906,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B015.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.269398033618927,
+        "own_base_max_channel": 0.2684456706047058,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B016.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2684456706047058,
+        "own_base_max_channel": 0.2158960998058319,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B017.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2684456706047058,
+        "own_base_max_channel": 0.22184324264526367,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B018.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2370641678571701,
+        "own_base_max_channel": 0.2365974485874176,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B019.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.2684456706047058,
+        "own_base_max_channel": 0.23249873518943787,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B020.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.25579357147216797,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B021.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.2595745325088501,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B022.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.28480228781700134,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B023.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.3333943784236908,
+        "own_base_max_channel": 0.3328717350959778,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B024.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.3987334966659546,
+        "own_base_max_channel": 0.3979988694190979,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B025.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.2890573740005493,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B026.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.5368913412094116,
+        "own_base_max_channel": 0.4268683195114136,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B027.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.8900129795074463,
+        "own_base_max_channel": 0.8891832828521729,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B028.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.30716410279273987,
+        "own_base_max_channel": 0.30616533756256104,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B029.NEF": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.33555708825588226,
+        "own_base_max_channel": 0.2907215356826782,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "B032.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.6432288289070129,
+        "own_base_max_channel": 0.6407343149185181,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B034.tiff": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.3543373644351959,
+        "own_base_max_channel": 0.362090528011322,
+        "near_sat": null,
+        "has_preview_image": false,
+        "ok": true
+      },
+      "B036.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.973445475101471,
+        "own_base_max_channel": 0.9766285419464111,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      },
+      "B096.tif": {
+        "identical": true,
+        "baseline_reproduces_t5a": true,
+        "clipped_base_excluded": false,
+        "status": "ok",
+        "base_max_channel": 0.5775805115699768,
+        "own_base_max_channel": 0.5784406065940857,
+        "near_sat": null,
+        "has_preview_image": true,
+        "ok": true
+      }
+    },
+    "failures": [],
+    "near_sat_frames": {
+      "A1061.CR2": {
+        "blocks": 302,
+        "own_base_max_channel": 0.29339873790740967
+      },
+      "A262.arw": {
+        "blocks": 1977,
+        "own_base_max_channel": 0.27587002515792847
+      },
+      "A263.arw": {
+        "blocks": 2246,
+        "own_base_max_channel": 0.9137910604476929
+      }
+    },
+    "preview_image_records": 26,
+    "baseline_sha256": "c11e45be907415eb768d66fb10e001e53f4274e1c88aa2bc13f570788ed3fe6c",
+    "candidate_sha256": "270de7349bc8b0de551775c984b06faff9a1e9e836516b05cf7e79304a3f8a13"
+  },
+  "blind_raw_scan": {
+    "summary": {
+      "files": 666,
+      "compared": 547,
+      "frozen_not_decoded": 119,
+      "decode_errors": [],
+      "changed": [
+        "01_彩色负片_未反相/A1298.ARW",
+        "01_彩色负片_未反相/A1299.ARW",
+        "01_彩色负片_未反相/A1300.ARW"
+      ],
+      "unexpected_changes": [],
+      "missing_expected": [],
+      "required_compared": 38,
+      "required_changed": [
+        "01_彩色负片_未反相/A1298.ARW",
+        "01_彩色负片_未反相/A1299.ARW",
+        "01_彩色负片_未反相/A1300.ARW"
+      ],
+      "clipped_hits": [
+        "01_彩色负片_未反相/A1298.ARW",
+        "01_彩色负片_未反相/A1299.ARW",
+        "01_彩色负片_未反相/A1300.ARW"
+      ],
+      "t5a_base_max_ge_099": [
+        "01_彩色负片_未反相/A1298.ARW",
+        "01_彩色负片_未反相/A1299.ARW",
+        "01_彩色负片_未反相/A1300.ARW"
+      ]
+    },
+    "counts": {
+      "compared_scanner": 36,
+      "compared_camera": 511,
+      "required_scanner": 4,
+      "by_folder": {
+        "01_彩色负片_未反相": {
+          "compared": 455,
+          "scanner": 31
+        },
+        "02_黑白负片_未反相": {
+          "compared": 86,
+          "scanner": 5
+        },
+        "A7R5_RAW": {
+          "compared": 6,
+          "scanner": 0
+        }
+      }
+    },
+    "research_t5a_agree": 219,
+    "research_t5a_with_rgb": 219,
+    "research_t5a_disagree": [],
+    "sha256": "70327e09e1aef1ec661dcfbe221412f5e01f68f8d05e0c4ffd1cca0a37a74c43"
+  },
+  "sony": {
+    "baseline_src_content_sha256": "2377cf08f109683554309330b0450a03ab3c50c78c5f3cf69059bc62e258a720",
+    "candidate_src_content_sha256": "0c3e44c044f44326ffb25ec14c48c762252d63e7edfcda53e04c6a94cb9982eb",
+    "baseline_sha256": "6dad1f9cce3e5ddb3b9407e3c47e36d67b6ccace20959957f755ee634b973ba7",
+    "candidate_sha256": "b15972d38aab9d5634c54dc2c179ba04fbb6f0b4974cc7a031a35599bc332a9f",
+    "before_after": {
+      "file": "before_after.jpg",
+      "sha256": "6ae79c7f94cab3524c1a8b246296ff77fedd4ce5d1cfa1c52432f20df56a602d"
+    },
+    "frames": {
+      "A1298.ARW": {
+        "raw_sha256": "2794a3e76d24e6c1284c6ff63406546d5c9e6179975c1057327925b73d66f882",
+        "t5a": {
+          "base_rgb": [
+            0.45592430233955383,
+            0.999298095703125,
+            0.7754940390586853
+          ],
+          "base_RG_BG": [
+            0.456,
+            0.776
+          ],
+          "d_hi": [
+            1.2096933126449585,
+            1.6742331981658936,
+            2.124476194381714
+          ],
+          "d_hi_g": 1.6742331981658936,
+          "core_srgb_q50": [
+            0.3666049540042877,
+            0.39317572116851807,
+            0.3880443572998047
+          ],
+          "status": "ok",
+          "base_diagnostics": {
+            "near_saturated_blocks_excluded": 801,
+            "n_kept": 135
+          },
+          "ev": 0.5554
+        },
+        "t5b": {
+          "base_rgb": [
+            0.17074845731258392,
+            0.21181048452854156,
+            0.08467230945825577
+          ],
+          "base_RG_BG": [
+            0.806,
+            0.4
+          ],
+          "d_hi": [
+            0.7831572890281677,
+            1.0004856586456299,
+            1.1626391410827637
+          ],
+          "d_hi_g": 1.0004856586456299,
+          "core_srgb_q50": [
+            0.4430234432220459,
+            0.4238849878311157,
+            0.33758893609046936
+          ],
+          "status": "ok",
+          "base_diagnostics": {
+            "near_saturated_blocks_excluded": 801,
+            "clipped_base_excluded": true,
+            "n_kept": 121
+          },
+          "ev": 1.227,
+          "base_warnings": [
+            "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+            "626 blocks contain saturated samples (excluded)"
+          ]
+        },
+        "edge_band_blue_px": {
+          "t5a": 174,
+          "t5b": 521,
+          "band_xyxy": [
+            128,
+            260,
+            152,
+            472
+          ],
+          "rule": "B > R + 60 and B > 120",
+          "preview_side": 900
+        }
+      },
+      "A1299.ARW": {
+        "raw_sha256": "f71bc356c815cb0664f55e926b55e7e40c1824d7ee2bbe553571ec0c645e1eef",
+        "t5a": {
+          "base_rgb": [
+            0.583947479724884,
+            0.999298095703125,
+            0.9791256785392761
+          ],
+          "base_RG_BG": [
+            0.584,
+            0.98
+          ],
+          "d_hi": [
+            1.2577098608016968,
+            1.580974817276001,
+            2.1667604446411133
+          ],
+          "d_hi_g": 1.580974817276001,
+          "core_srgb_q50": [
+            0.472150057554245,
+            0.4190292954444885,
+            0.4380027651786804
+          ],
+          "status": "ok",
+          "base_diagnostics": {
+            "near_saturated_blocks_excluded": 1590,
+            "n_kept": 75
+          },
+          "ev": -0.1351
+        },
+        "t5b": {
+          "base_rgb": [
+            0.22644388675689697,
+            0.3002212643623352,
+            0.11381704360246658
+          ],
+          "base_RG_BG": [
+            0.754,
+            0.379
+          ],
+          "d_hi": [
+            0.8462966680526733,
+            1.0587211847305298,
+            1.2321293354034424
+          ],
+          "d_hi_g": 1.0587211847305298,
+          "core_srgb_q50": [
+            0.4901677966117859,
+            0.43551239371299744,
+            0.3634987473487854
+          ],
+          "status": "ok",
+          "base_diagnostics": {
+            "near_saturated_blocks_excluded": 1590,
+            "clipped_base_excluded": true,
+            "n_kept": 69
+          },
+          "ev": 0.0855,
+          "base_warnings": [
+            "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+            "750 blocks contain saturated samples (excluded)"
+          ]
+        }
+      },
+      "A1300.ARW": {
+        "raw_sha256": "7abb4e4477fb63fa1701d2a207490cffc5d078d39db21510ad1b7805cb0b8e89",
+        "t5a": {
+          "base_rgb": [
+            0.46549171209335327,
+            0.999298095703125,
+            0.7916228175163269
+          ],
+          "base_RG_BG": [
+            0.466,
+            0.792
+          ],
+          "d_hi": [
+            1.0657633543014526,
+            1.539457082748413,
+            2.106428384780884
+          ],
+          "d_hi_g": 1.539457082748413,
+          "core_srgb_q50": [
+            0.4379590153694153,
+            0.4548725485801697,
+            0.4782072603702545
+          ],
+          "status": "ok",
+          "base_diagnostics": {
+            "near_saturated_blocks_excluded": 914,
+            "n_kept": 86
+          },
+          "ev": -0.2
+        },
+        "t5b": {
+          "base_rgb": [
+            0.1763637810945511,
+            0.21422140300273895,
+            0.09085221588611603
+          ],
+          "base_RG_BG": [
+            0.823,
+            0.424
+          ],
+          "d_hi": [
+            0.6442607641220093,
+            0.8706248998641968,
+            1.1662455797195435
+          ],
+          "d_hi_g": 0.8706248998641968,
+          "core_srgb_q50": [
+            0.4700092673301697,
+            0.4675697982311249,
+            0.485762357711792
+          ],
+          "status": "ok",
+          "base_diagnostics": {
+            "near_saturated_blocks_excluded": 914,
+            "clipped_base_excluded": true,
+            "n_kept": 73
+          },
+          "ev": 0.1681,
+          "base_warnings": [
+            "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+            "719 blocks contain saturated samples (excluded)"
+          ]
+        }
+      }
+    }
+  },
+  "polarity": {
+    "entries": 9,
+    "sha256": "6ad9ea97591835098ae3cfb42724aa00ec289e8380c28424762c0f2d2edb384d"
+  },
+  "tests": {
+    "command": "/usr/bin/time -l .venv/bin/python -I -m pytest -q",
+    "passed": 444,
+    "seconds": 309.01,
+    "returncode": 0,
+    "peak_memory_footprint_bytes": 4737699968,
+    "log_sha256": "93d696cf8846c70d0cde4ee4c422f44e14de64f76117f3cf3b7b72a7d2105c06",
+    "source_sha256": "0c3e44c044f44326ffb25ec14c48c762252d63e7edfcda53e04c6a94cb9982eb",
+    "test_sha256": {
+      "tests/synth.py": "9362c6d9ed87d6eefa5475567daa58bb8e163e957badd9832d52419789a2a5cc",
+      "tests/test_app.py": "57a075a1330b7cef0f8197b2de041f8ee92967e3e1b235782c9d5ae1347068de",
+      "tests/test_base.py": "7019124f4b51e73a5265aeee4f5d190e982eeb9d3530602d7b7ef8c3242f94da",
+      "tests/test_bw.py": "de11ce517dd399c5cb542cc28df213259b8e464f4965d37651b95e37f1525f70",
+      "tests/test_chunked.py": "307217bd0de5a87c5b6a500f9eb20bae9d66320c4e132e57d413ffbe46a1c986",
+      "tests/test_compare.py": "ed7ecf8b8fccbce0b8d7f7e55e1e2609b3a4445ba6d9b0043f987d9c40473e2a",
+      "tests/test_export.py": "cec3ef26a491d038bbd4707fdf743536f7b3f517d3f9604f1c28cf59ed2fe314",
+      "tests/test_fit.py": "edd9ae318f1ecb92966dbba9d99faf2ae27e15966ccf53f5930f361faf0b1bab",
+      "tests/test_frozen.py": "092d449199394a3e632a959a1a63fa635cd430cccb9fefcb423ae66262432b6d",
+      "tests/test_import_check.py": "1d193a1d7347b68e5d1f91fcf6f042a8da838cb164740bfaad146bf3ed3ec5ed",
+      "tests/test_invert.py": "76853a612b15e8a94327992233e957253ce5883727854ab106640a8792bb78d2",
+      "tests/test_learn.py": "4434680875f76642a6cde126e975badd883c4770f058561bfc34d52229d32f1b",
+      "tests/test_noref.py": "15fbcccabe7551bf293ed01cc403fe806acf9c92bdedf4e98650748153e32699",
+      "tests/test_own_roll.py": "dc16e7202ed3028bab9ed1706212b8b94139e21d63d6735ec1c14c451a5ea735",
+      "tests/test_paths.py": "79c6c2bf8ba900a6909fb937d9ed133e36c37d16f461a1681edc6af1383f5d97",
+      "tests/test_pins_and_cli.py": "57b96b981fdec97c370664347d492c595a14ab3585fd7350c5e76f695b3db76c",
+      "tests/test_positive.py": "1696c12b26abb0a073a4f712c6aaba745df37f11005552fc30c35c0fb6fd11da",
+      "tests/test_preview.py": "5481b98284ebfc443e191eb1fcfc3dccc6a99176b371c3f0119a913764a43a51",
+      "tests/test_raw.py": "aba347152eb5ccb9ee8dfa8ef7622b00e176fdd14d249a2196777034a5fdaf41",
+      "tests/test_real.py": "d2f40b325f2ecb183f3fac6374f1d0ef8a9cda1226fd182b707da6eb3d44f5d7",
+      "tests/test_render.py": "d4c493f03dc4a03f934dd8068e6e0373b811d8a232ce16d3cabfe9e29bd555ef",
+      "tests/test_robustness.py": "081760e0621bf18ea7ce7330939cb51b97e52a36b1347df71bbb1dca40bcb3e5",
+      "tests/test_roll_base.py": "c6fdba7a1a0bb5916cfd04101cfb158bdef9a94285e3f22bba000315001b0048",
+      "tests/test_scanner.py": "1b4c328458ede402bb150b1eecaa7a80dde0c0554525abb0ace8d487db2bd57d"
+    }
+  },
+  "baseline_test_failures": {
+    "command": [
+      "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python",
+      "-I",
+      "-c",
+      "import sys; sys.path.insert(0,sys.argv[1]); import filmcolor.base as b, filmcolor.app as a; print('baseline_base=' + b.__file__, 'baseline_app=' + a.__file__, flush=True); import pytest; raise SystemExit(pytest.main(sys.argv[2:]+['-k','t5b or t4y_app_scan','-q','-rf']))",
+      "/private/tmp/fc_t5b_baseline_20261106/src",
+      "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_base.py",
+      "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_app.py"
+    ],
+    "baseline_source_sha256": "2377cf08f109683554309330b0450a03ab3c50c78c5f3cf69059bc62e258a720",
+    "failed": 2,
+    "passed": 2,
+    "deselected": 51,
+    "failed_tests": [
+      "tests/test_base.py::test_t5b_clipped_base_excluded",
+      "tests/test_app.py::test_t4y_app_scan_isolates_near_sat_between_camera_and_scanner"
+    ],
+    "t5a_behaviour": {
+      "rgb": [
+        0.4560000002384186,
+        0.9979000091552734,
+        0.7749999761581421
+      ],
+      "near_sat": 400,
+      "clipped": null,
+      "has_clipped_base_max": false
+    },
+    "log_sha256": "8f1ff8875df12dcbe555870638592e3b028b1b799a309069854e5cfd10dabd5e",
+    "test_sha256": {
+      "tests/test_base.py": "7019124f4b51e73a5265aeee4f5d190e982eeb9d3530602d7b7ef8c3242f94da",
+      "tests/test_app.py": "57a075a1330b7cef0f8197b2de041f8ee92967e3e1b235782c9d5ae1347068de"
+    }
+  },
+  "configs": {
+    "standard": {
+      "sha256": "e2753ea7a767e95f4475e319f2a6e880ec376570d5a805df5f84f85c94632323",
+      "unchanged_since_t5a": true,
+      "matches": true
+    },
+    "natural": {
+      "sha256": "91887244f3b0dbed645b0382051938bbff03ec339d9ac2ec949e94f2601d2ca3",
+      "unchanged_since_t5a": true,
+      "matches": true
+    },
+    "portrait": {
+      "sha256": "6a1e8a34f1a2f86b0d06f3cad5343cccb96f04e3413d705af91aa62caeee0792",
+      "unchanged_since_t5a": true,
+      "matches": true
+    },
+    "vivid": {
+      "sha256": "7b88ede8bd7e819fa907dbf9d3c53aecf2749eb5be7f599a793239a2e9982123",
+      "unchanged_since_t5a": true,
+      "matches": true
+    },
+    "print_classic": {
+      "sha256": "c6a44485d27b668cef70040090899ec6e4b8dbbb22f0770d69bde7acf232f186",
+      "unchanged_since_t5a": true,
+      "matches": true
+    }
+  },
+  "service": {
+    "url": "http://127.0.0.1:62873",
+    "source_sha256": "0c3e44c044f44326ffb25ec14c48c762252d63e7edfcda53e04c6a94cb9982eb",
+    "open_method": "POST",
+    "sub_rolls": 6,
+    "flagged": 0,
+    "sample": "_DSF9239.RAF",
+    "status": "ok",
+    "ev": 0.5492,
+    "http_config_rev": "t4z-2026-11-05",
+    "render_png_bytes": 3362409,
+    "render_sha256": "b3f4c6c3616115ab02f3b7119dac75e8d1768242ee4c2b3e347133111dca75ff",
+    "source_thumb_rev": "t5b",
+    "source_config_rev": "t4z-2026-11-05",
+    "input_warnings": []
+  },
+  "all_passed": true
+}

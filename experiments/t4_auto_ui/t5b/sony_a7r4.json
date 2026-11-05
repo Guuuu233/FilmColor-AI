@@ -1,0 +1,216 @@
+{
+  "baseline_src_content_sha256": "2377cf08f109683554309330b0450a03ab3c50c78c5f3cf69059bc62e258a720",
+  "candidate_src_content_sha256": "0c3e44c044f44326ffb25ec14c48c762252d63e7edfcda53e04c6a94cb9982eb",
+  "baseline_sha256": "6dad1f9cce3e5ddb3b9407e3c47e36d67b6ccace20959957f755ee634b973ba7",
+  "candidate_sha256": "b15972d38aab9d5634c54dc2c179ba04fbb6f0b4974cc7a031a35599bc332a9f",
+  "before_after": {
+    "file": "before_after.jpg",
+    "sha256": "6ae79c7f94cab3524c1a8b246296ff77fedd4ce5d1cfa1c52432f20df56a602d"
+  },
+  "frames": {
+    "A1298.ARW": {
+      "raw_sha256": "2794a3e76d24e6c1284c6ff63406546d5c9e6179975c1057327925b73d66f882",
+      "t5a": {
+        "base_rgb": [
+          0.45592430233955383,
+          0.999298095703125,
+          0.7754940390586853
+        ],
+        "base_RG_BG": [
+          0.456,
+          0.776
+        ],
+        "d_hi": [
+          1.2096933126449585,
+          1.6742331981658936,
+          2.124476194381714
+        ],
+        "d_hi_g": 1.6742331981658936,
+        "core_srgb_q50": [
+          0.3666049540042877,
+          0.39317572116851807,
+          0.3880443572998047
+        ],
+        "status": "ok",
+        "base_diagnostics": {
+          "near_saturated_blocks_excluded": 801,
+          "n_kept": 135
+        },
+        "ev": 0.5554
+      },
+      "t5b": {
+        "base_rgb": [
+          0.17074845731258392,
+          0.21181048452854156,
+          0.08467230945825577
+        ],
+        "base_RG_BG": [
+          0.806,
+          0.4
+        ],
+        "d_hi": [
+          0.7831572890281677,
+          1.0004856586456299,
+          1.1626391410827637
+        ],
+        "d_hi_g": 1.0004856586456299,
+        "core_srgb_q50": [
+          0.4430234432220459,
+          0.4238849878311157,
+          0.33758893609046936
+        ],
+        "status": "ok",
+        "base_diagnostics": {
+          "near_saturated_blocks_excluded": 801,
+          "clipped_base_excluded": true,
+          "n_kept": 121
+        },
+        "ev": 1.227,
+        "base_warnings": [
+          "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+          "626 blocks contain saturated samples (excluded)"
+        ]
+      },
+      "edge_band_blue_px": {
+        "t5a": 174,
+        "t5b": 521,
+        "band_xyxy": [
+          128,
+          260,
+          152,
+          472
+        ],
+        "rule": "B > R + 60 and B > 120",
+        "preview_side": 900
+      }
+    },
+    "A1299.ARW": {
+      "raw_sha256": "f71bc356c815cb0664f55e926b55e7e40c1824d7ee2bbe553571ec0c645e1eef",
+      "t5a": {
+        "base_rgb": [
+          0.583947479724884,
+          0.999298095703125,
+          0.9791256785392761
+        ],
+        "base_RG_BG": [
+          0.584,
+          0.98
+        ],
+        "d_hi": [
+          1.2577098608016968,
+          1.580974817276001,
+          2.1667604446411133
+        ],
+        "d_hi_g": 1.580974817276001,
+        "core_srgb_q50": [
+          0.472150057554245,
+          0.4190292954444885,
+          0.4380027651786804
+        ],
+        "status": "ok",
+        "base_diagnostics": {
+          "near_saturated_blocks_excluded": 1590,
+          "n_kept": 75
+        },
+        "ev": -0.1351
+      },
+      "t5b": {
+        "base_rgb": [
+          0.22644388675689697,
+          0.3002212643623352,
+          0.11381704360246658
+        ],
+        "base_RG_BG": [
+          0.754,
+          0.379
+        ],
+        "d_hi": [
+          0.8462966680526733,
+          1.0587211847305298,
+          1.2321293354034424
+        ],
+        "d_hi_g": 1.0587211847305298,
+        "core_srgb_q50": [
+          0.4901677966117859,
+          0.43551239371299744,
+          0.3634987473487854
+        ],
+        "status": "ok",
+        "base_diagnostics": {
+          "near_saturated_blocks_excluded": 1590,
+          "clipped_base_excluded": true,
+          "n_kept": 69
+        },
+        "ev": 0.0855,
+        "base_warnings": [
+          "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+          "750 blocks contain saturated samples (excluded)"
+        ]
+      }
+    },
+    "A1300.ARW": {
+      "raw_sha256": "7abb4e4477fb63fa1701d2a207490cffc5d078d39db21510ad1b7805cb0b8e89",
+      "t5a": {
+        "base_rgb": [
+          0.46549171209335327,
+          0.999298095703125,
+          0.7916228175163269
+        ],
+        "base_RG_BG": [
+          0.466,
+          0.792
+        ],
+        "d_hi": [
+          1.0657633543014526,
+          1.539457082748413,
+          2.106428384780884
+        ],
+        "d_hi_g": 1.539457082748413,
+        "core_srgb_q50": [
+          0.4379590153694153,
+          0.4548725485801697,
+          0.4782072603702545
+        ],
+        "status": "ok",
+        "base_diagnostics": {
+          "near_saturated_blocks_excluded": 914,
+          "n_kept": 86
+        },
+        "ev": -0.2
+      },
+      "t5b": {
+        "base_rgb": [
+          0.1763637810945511,
+          0.21422140300273895,
+          0.09085221588611603
+        ],
+        "base_RG_BG": [
+          0.823,
+          0.424
+        ],
+        "d_hi": [
+          0.6442607641220093,
+          0.8706248998641968,
+          1.1662455797195435
+        ],
+        "d_hi_g": 0.8706248998641968,
+        "core_srgb_q50": [
+          0.4700092673301697,
+          0.4675697982311249,
+          0.485762357711792
+        ],
+        "status": "ok",
+        "base_diagnostics": {
+          "near_saturated_blocks_excluded": 914,
+          "clipped_base_excluded": true,
+          "n_kept": 73
+        },
+        "ev": 0.1681,
+        "base_warnings": [
+          "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+          "719 blocks contain saturated samples (excluded)"
+        ]
+      }
+    }
+  }
+}

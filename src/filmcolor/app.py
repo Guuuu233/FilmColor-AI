@@ -91,7 +91,7 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t5a"  # T5a: clipped scene highlights at the frame edge are not painted as holder
+THUMB_REV = "t5b"  # T5b: camera-RAW bases on clipped light are re-estimated from the film blocks
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
 WHITE_SELF_RATIO = None  # T4l: colour film's invert.self_ratio_white_point (collapse, target), e.g. (0.78, 0.85);
@@ -105,8 +105,9 @@ ROLL_NAT_LEVEL_DIFF = None  # T4k: ... and also when the own base is this much d
                             # mean), e.g. 0.22; None = chroma_part / B0 failure only (T4j; 0.22 measured 9 better /
                             # 14 worse, DSC_3833 4.37 -> 6.23)
 ROLL_NAT_BW_LEVEL_DIFF = 0.06  # T4s: B&W film has no orange mask (chroma_part ~ 0); route when own base is >= 0.06 D denser than roll base
-ROLL_BASE_MAX = 1.25  # T5a: an exposure-scaled roll base above sensor white for a frame is not that frame's film base
-                      # (Program AE copy rolls vary the aperture; benchmark roll bases reach at most 1.072)
+ROLL_BASE_MAX = 1.25  # T5a: an exposure-scaled roll base above sensor white is not a film base; seen on positives
+                      # (reversal-processed foma pan100, Eastman 5294 reversal) mistaken for negatives.
+                      # Benchmark roll bases reach at most 1.072.
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)
 RATIO_D_G = (0.25, 0.75)  # density band (G, above the roll base) of the per-frame neutral-ratio statistic
@@ -317,7 +318,7 @@ class State:
     def _disk_key(self, p: Path) -> str:
         rp = p.resolve()
         st = rp.stat()
-        raw = f"t4z|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()  # T4z: invalidate previous scan diagnostics
+        raw = f"t5b|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()  # T5b: invalidate previous scan diagnostics
         return hashlib.sha256(raw).hexdigest()[:24]
 
     def _scan_one(self, rel: str) -> dict:

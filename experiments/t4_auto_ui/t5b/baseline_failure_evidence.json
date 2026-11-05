@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python",
+    "-I",
+    "-c",
+    "import sys; sys.path.insert(0,sys.argv[1]); import filmcolor.base as b, filmcolor.app as a; print('baseline_base=' + b.__file__, 'baseline_app=' + a.__file__, flush=True); import pytest; raise SystemExit(pytest.main(sys.argv[2:]+['-k','t5b or t4y_app_scan','-q','-rf']))",
+    "/private/tmp/fc_t5b_baseline_20261106/src",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_base.py",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_app.py"
+  ],
+  "baseline_source_sha256": "2377cf08f109683554309330b0450a03ab3c50c78c5f3cf69059bc62e258a720",
+  "failed": 2,
+  "passed": 2,
+  "deselected": 51,
+  "failed_tests": [
+    "tests/test_base.py::test_t5b_clipped_base_excluded",
+    "tests/test_app.py::test_t4y_app_scan_isolates_near_sat_between_camera_and_scanner"
+  ],
+  "t5a_behaviour": {
+    "rgb": [
+      0.4560000002384186,
+      0.9979000091552734,
+      0.7749999761581421
+    ],
+    "near_sat": 400,
+    "clipped": null,
+    "has_clipped_base_max": false
+  },
+  "log_sha256": "8f1ff8875df12dcbe555870638592e3b028b1b799a309069854e5cfd10dabd5e",
+  "test_sha256": {
+    "tests/test_base.py": "7019124f4b51e73a5265aeee4f5d190e982eeb9d3530602d7b7ef8c3242f94da",
+    "tests/test_app.py": "57a075a1330b7cef0f8197b2de041f8ee92967e3e1b235782c9d5ae1347068de"
+  }
+}

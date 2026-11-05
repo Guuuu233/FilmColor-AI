@@ -1,0 +1,232 @@
+{
+  "label": "candidate",
+  "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+  "src_content_sha256": "0c3e44c044f44326ffb25ec14c48c762252d63e7edfcda53e04c6a94cb9982eb",
+  "script_sha256": "505ffb5896415c9dbaa2a5f95511227c2ab9217e857a6118b6ec9c04a664b213",
+  "max_side": 1600,
+  "frames": {
+    "A1298.ARW": {
+      "raw_sha256": "2794a3e76d24e6c1284c6ff63406546d5c9e6179975c1057327925b73d66f882",
+      "status": "ok",
+      "flags": [
+        "backlit_midtone"
+      ],
+      "params": {
+        "ev": 1.227,
+        "temp": -0.016,
+        "tint": 0.1209,
+        "sat": 1.0146,
+        "contrast": 1.3166,
+        "midtone": 0.23,
+        "shoulder": 0.245,
+        "matrix": [
+          [
+            1.2166914395278088,
+            -0.14317994254107644,
+            -0.07351149698673243
+          ],
+          [
+            -0.05224290872459534,
+            1.2195929042882452,
+            -0.1673499955636498
+          ],
+          [
+            0.001894099528199751,
+            -0.15987378907108513,
+            1.1579796895428853
+          ]
+        ],
+        "highlights": -0.461,
+        "chroma_preserve": 0.4
+      },
+      "base_method": "auto",
+      "base_rgb": [
+        0.17074845731258392,
+        0.21181048452854156,
+        0.08467230945825577
+      ],
+      "base_warnings": [
+        "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+        "626 blocks contain saturated samples (excluded)"
+      ],
+      "own_rgb": [
+        0.17067290842533112,
+        0.21181541681289673,
+        0.08459087461233139
+      ],
+      "base_diagnostics": {
+        "near_saturated_blocks_excluded": 801,
+        "clipped_base_excluded": true,
+        "n_kept": 121
+      },
+      "d_hi": [
+        0.7831572890281677,
+        1.0004856586456299,
+        1.1626391410827637
+      ],
+      "input_warnings": [],
+      "holder_share": 0.38608175195589867,
+      "film_box": [
+        6,
+        222,
+        858,
+        1203
+      ],
+      "core_srgb_q50": [
+        0.4430234432220459,
+        0.4238849878311157,
+        0.33758893609046936
+      ],
+      "display_sha256": "f609f8452c4b06f7bfb82d14c4d53ff0db4562637cb396d7dd843104f1d66f5a",
+      "preview_image": "sony_A1298_candidate.jpg",
+      "preview_image_sha256": "95f460ead9dfac01a508ee46b7745f98ee2b4cc660ee559981a9573794f85a52"
+    },
+    "A1299.ARW": {
+      "raw_sha256": "f71bc356c815cb0664f55e926b55e7e40c1824d7ee2bbe553571ec0c645e1eef",
+      "status": "ok",
+      "flags": [],
+      "params": {
+        "ev": 0.0855,
+        "temp": -0.052,
+        "tint": 0.0014,
+        "sat": 1.0174,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.2166914395278088,
+            -0.14317994254107644,
+            -0.07351149698673243
+          ],
+          [
+            -0.05224290872459534,
+            1.2195929042882452,
+            -0.1673499955636498
+          ],
+          [
+            0.001894099528199751,
+            -0.15987378907108513,
+            1.1579796895428853
+          ]
+        ],
+        "chroma_preserve": 0.4
+      },
+      "base_method": "auto",
+      "base_rgb": [
+        0.22644388675689697,
+        0.3002212643623352,
+        0.11381704360246658
+      ],
+      "base_warnings": [
+        "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+        "750 blocks contain saturated samples (excluded)"
+      ],
+      "own_rgb": [
+        0.22634921967983246,
+        0.2997535765171051,
+        0.11370669305324554
+      ],
+      "base_diagnostics": {
+        "near_saturated_blocks_excluded": 1590,
+        "clipped_base_excluded": true,
+        "n_kept": 69
+      },
+      "d_hi": [
+        0.8462966680526733,
+        1.0587211847305298,
+        1.2321293354034424
+      ],
+      "input_warnings": [],
+      "holder_share": 0.4126024616795091,
+      "film_box": [
+        0,
+        314,
+        891,
+        1144
+      ],
+      "core_srgb_q50": [
+        0.4901677966117859,
+        0.43551239371299744,
+        0.3634987473487854
+      ],
+      "display_sha256": "8a23f77d8663b4ac46fca621300cbdd6e8b5e2695a0f8f6a8ffea8a7bfbba083",
+      "preview_image": "sony_A1299_candidate.jpg",
+      "preview_image_sha256": "d05a1e4e803a3c7a99e1a9ab64c86ca415178a34fed8e0bdd24f602976f4b45e"
+    },
+    "A1300.ARW": {
+      "raw_sha256": "7abb4e4477fb63fa1701d2a207490cffc5d078d39db21510ad1b7805cb0b8e89",
+      "status": "ok",
+      "flags": [],
+      "params": {
+        "ev": 0.1681,
+        "temp": -0.0123,
+        "tint": 0.0254,
+        "sat": 1.02,
+        "contrast": 1.3,
+        "midtone": 0.23,
+        "shoulder": 0.22,
+        "matrix": [
+          [
+            1.2166914395278088,
+            -0.14317994254107644,
+            -0.07351149698673243
+          ],
+          [
+            -0.05224290872459534,
+            1.2195929042882452,
+            -0.1673499955636498
+          ],
+          [
+            0.001894099528199751,
+            -0.15987378907108513,
+            1.1579796895428853
+          ]
+        ],
+        "vibrance": 0.08,
+        "chroma_preserve": 0.4
+      },
+      "base_method": "auto",
+      "base_rgb": [
+        0.1763637810945511,
+        0.21422140300273895,
+        0.09085221588611603
+      ],
+      "base_warnings": [
+        "brightest uniform blocks are clipped light (a channel at the sensor ceiling); base taken from blocks below 2.5x the 90th percentile",
+        "719 blocks contain saturated samples (excluded)"
+      ],
+      "own_rgb": [
+        0.17615988850593567,
+        0.21378615498542786,
+        0.0905810073018074
+      ],
+      "base_diagnostics": {
+        "near_saturated_blocks_excluded": 914,
+        "clipped_base_excluded": true,
+        "n_kept": 73
+      },
+      "d_hi": [
+        0.6442607641220093,
+        0.8706248998641968,
+        1.1662455797195435
+      ],
+      "input_warnings": [],
+      "holder_share": 0.43684591700987935,
+      "film_box": [
+        25,
+        286,
+        822,
+        1102
+      ],
+      "core_srgb_q50": [
+        0.4700092673301697,
+        0.4675697982311249,
+        0.485762357711792
+      ],
+      "display_sha256": "3bc65b9292761db878eff052f85c41ecb077a4a2aa578ebbedb090cd5dec064d",
+      "preview_image": "sony_A1300_candidate.jpg",
+      "preview_image_sha256": "70e2928b0f2d7cc2e4b495cc7ae78916af4c6fe84c4518fbb6efbc8d5002974f"
+    }
+  }
+}

@@ -690,10 +690,10 @@ def test_t4s_app_opens_and_exports_scanner_tiff(server):
 
 
 def test_t4y_app_scan_isolates_near_sat_between_camera_and_scanner(server, monkeypatch, tmp_path):
-    """T4y/T4z: State._scan_one routes exclude_near_saturated=not is_scan; THUMB_REV is 't5a' (T5a thumbnails do not
-    paint clipped scene highlights as holder; the scan itself is unchanged)."""
+    """T4y/T4z: State._scan_one routes exclude_near_saturated=not is_scan; THUMB_REV is 't5b' (T5b re-estimates
+    camera-RAW bases on clipped light, so scans and thumbnails get new keys)."""
     from filmcolor import app
-    assert app.THUMB_REV == "t5a"
+    assert app.THUMB_REV == "t5b"
 
     _, root, _ = server
 
