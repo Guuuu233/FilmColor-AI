@@ -79,6 +79,7 @@ from .invert import central_region, invert_negative, neutral_transmission, regio
 from .noref import NOREF_V3, STYLE_PRESETS, estimate_params_v3, preset_config, wb_from_chroma
 from .pipeline import FILM_MODES, free_stem
 from .preview import HOLDER_GREY, Preview, SourceChangedError, film_box, holder_mask, load_preview
+from .holder import scene_highlight_components
 from .raw import linearize, saturation_mask, superpixel
 from .rawpy_io import load_raw
 from .render import (BOUNDS, CURVE_PRESETS, EXTENDED_BOUNDS, EXTENDED_SCALARS, RenderParams, camera_color_matrix,
@@ -90,7 +91,7 @@ EXTENSIONS = {".nef", ".nrw", ".raf", ".cr2", ".cr3", ".arw", ".rw2", ".orf", ".
 SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 THUMB_SIDE = 240
-THUMB_REV = "t4z"  # T4z night damping, flat-negative extension and bridged holder metering
+THUMB_REV = "t5a"  # T5a: clipped scene highlights at the frame edge are not painted as holder
 WHITE_BLOCK, WHITE_PCT = 16, 99.8
 SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
 WHITE_SELF_RATIO = None  # T4l: colour film's invert.self_ratio_white_point (collapse, target), e.g. (0.78, 0.85);
@@ -104,6 +105,8 @@ ROLL_NAT_LEVEL_DIFF = None  # T4k: ... and also when the own base is this much d
                             # mean), e.g. 0.22; None = chroma_part / B0 failure only (T4j; 0.22 measured 9 better /
                             # 14 worse, DSC_3833 4.37 -> 6.23)
 ROLL_NAT_BW_LEVEL_DIFF = 0.06  # T4s: B&W film has no orange mask (chroma_part ~ 0); route when own base is >= 0.06 D denser than roll base
+ROLL_BASE_MAX = 1.25  # T5a: an exposure-scaled roll base above sensor white for a frame is not that frame's film base
+                      # (Program AE copy rolls vary the aperture; benchmark roll bases reach at most 1.072)
 FLIP_TO_ROT90 = {3: 2, 5: 1, 6: 3}  # LibRaw sizes.flip -> numpy.rot90 quarter turns (counter-clockwise) to view
 CAMERA_MATRIX_MIX = NOREF_V3["camera_matrix_mix"]  # standard preset's share of the camera matrix (UI slider 0..100)
 RATIO_D_G = (0.25, 0.75)  # density band (G, above the roll base) of the per-frame neutral-ratio statistic
@@ -436,6 +439,7 @@ class State:
                                  density_ratio=self._density_ratio(sc, own))
                 elif rb_f is not None:
                     b_roll = list(rb_f.for_exposure(t))
+                    entry["roll_implausible"] = bool(max(b_roll) > ROLL_BASE_MAX)
                     entry["density_ratio"] = self._density_ratio(sc, b_roll)
                     b_dq, d_lo_dq = decoupled_quantile_base(b_roll, sc["block48_L_p01"])
                     b_nat, nat_diag = natural_roll_base(b_roll, sc["block48_L_p01"], own_rgb=sc["own_rgb"], softness=0.5)
@@ -565,7 +569,8 @@ class State:
             est = estimate_params_v3(pos, mask, ck["auto"], span_d_g=inv.params.d_hi[1] - inv.params.d_lo[1])
             rp = RenderParams.from_dict(est["params"])
             disp, _ = render_image(pos, rp)
-            disp[holder_mask(pos)] = HOLDER_GREY
+            hm = holder_mask(pos)
+            disp[hm & ~scene_highlight_components(hm)] = HOLDER_GREY  # T5a: not the clipped scene highlights
         except Exception:  # noqa: BLE001
             disp = np.clip(sp / max(float(np.percentile(sp, 99.5)), 1e-6), 0, 1) ** (1 / 2.2)
         data = png_bytes(to8(disp))
@@ -597,6 +602,9 @@ class State:
             base_inside_image=fe["inside_image"],
             sub_roll=fe["sub_roll"],
         )
+        if fe.get("roll_implausible"):  # T5a: chosen by hand (or the B0-failure fallback); the base is used, with a warning
+            common["warnings"] = [f"整卷片基换算到本帧后高于传感器白点（{max(fe['roll_rgb']):.2f}），本卷的曝光归一化不成立"
+                                  "（可能光圈或光源有变化），建议使用单帧片基。"]
         if fe.get("sub_roll_single"):
             return dict(base_regions=None, base_rgb=list(fe["own_rgb"]),
                         base_source=dict(common, effective_rgb=list(fe["own_rgb"]), single_frame_sub_roll=True))
@@ -659,10 +667,11 @@ class State:
                              d_hi=list(pv.inversion["d_hi"])),
             preview_shape=list(pv.positive.shape[:2]), full_shape=list(pv.full_shape),
             film_box=film_box(pv.holder) if pv.holder is not None else None,
+            input_warnings=pv.report.get("input_warnings", []),  # T5a: hints only; status and parameters unchanged
             base=dict(
                 method=method,
                 rgb=pv.base_info.get("rgb_render"),
-                warnings=est.get("warnings", []) or src.get("roll_warnings", []),
+                warnings=est.get("warnings", []) or src.get("roll_warnings", []) + src.get("warnings", []),
                 inside_image=pv.base_inside_image,
                 regions_preview=[pv.to_preview(r) for r in (pv.load_kwargs.get("base_regions") or [])],
                 chroma_part=src.get("chroma_part", f_roll.get("chroma_part")),
@@ -725,6 +734,8 @@ class State:
         if not fe or not sub or sub["roll"] is None or fe.get("roll_rgb") is None:
             return False
         if sub["n_base"] < ROLL_NAT_MIN_FRAMES or sub["roll"]["warnings"]:
+            return False
+        if fe.get("roll_implausible"):  # T5a
             return False
         diag = ((fe.get("estimate") or {}).get("diagnostics")) or {}
         fallback = bool(diag.get("mode_seed") or diag.get("relaxed_uniformity") or diag.get("bare_backlight_excluded"))

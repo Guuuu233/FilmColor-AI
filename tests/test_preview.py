@@ -184,3 +184,110 @@ def test_t4m_holder_dual_threshold_explicit_threshold_and_film_box():
     assert np.all(painted[:, 85:] == np.float32(HOLDER_GREY))
     # Inside film box stays 0.5
     assert np.all(painted[:, 15:85] == 0.5)
+
+
+def _t5a_frame_holder():
+    """Holder (bool, 1000 x 400) of a film box [300, 0, 300, 200]: dense mask above, below and right of the frame."""
+    holder = np.zeros((1000, 400), bool)
+    holder[:300, 200:] = True
+    holder[600:, 200:] = True
+    return holder
+
+
+def _t5a_preview(holder):
+    from pathlib import Path
+    from filmcolor.preview import Preview
+    h, w = holder.shape
+    return Preview(path=Path("dummy"), sha256="abc", factor=1, positive=np.full((h, w, 3), 0.5, np.float32),
+                   mask=np.ones((h, w), bool), image_region=(0, 0, h, w), region_source="test", film="color",
+                   base_info={}, inversion={}, white_pct=99.9, report={}, base_inside_image=None, full_shape=(h, w),
+                   holder=holder)
+
+
+def test_t5a_holder_paint_keeps_deep_short_contact_component():
+    """T5a (B096): a holder component inside the film box that reaches 0.30 of its short side into it and covers 0.30
+    of the edge it touches is a clipped scene highlight (an over-exposed window), not a holder band: it is not painted
+    HOLDER_GREY. The holder mask itself (white point, metering) is unchanged."""
+    from filmcolor.holder import film_box, scene_highlight_components
+    holder = _t5a_frame_holder()
+    holder[300:360, 70:130] = True               # window: touches the box top over 60 / 200, 60 px deep
+    assert holder.mean() >= 0.15 and film_box(holder) == [300, 0, 300, 200]
+    scene = scene_highlight_components(holder)
+    assert scene[300:360, 70:130].all() and scene.sum() == 3600
+    pv = _t5a_preview(holder)
+    painted = pv._paint_holder(np.full((1000, 400, 3), 0.5, np.float32))
+    assert np.all(painted[300:360, 70:130] == 0.5)                   # the window keeps its render
+    assert np.all(painted[:300] == np.float32(HOLDER_GREY)) and np.all(painted[600:] == np.float32(HOLDER_GREY))
+    assert pv.holder[300:360, 70:130].all()                          # holder mask not changed
+
+
+def test_t5a_holder_paint_keeps_full_edge_band():
+    """T5a (B029's left holder strip): a band 0.125 of the short side deep covering the whole edge it touches is a
+    holder and stays painted; a depth-only rule would have released it."""
+    from filmcolor.holder import scene_highlight_components
+    holder = _t5a_frame_holder()
+    holder[300:600, 0:25] = True                 # 25 / 200 = 0.125 deep, along the full 300 px left edge
+    assert not scene_highlight_components(holder).any()
+    assert scene_highlight_components(holder, max_edge_span=1.01)[300:600, 0:25].all()
+    painted = _t5a_preview(holder)._paint_holder(np.full((1000, 400, 3), 0.5, np.float32))
+    assert np.all(painted[holder] == np.float32(HOLDER_GREY))
+    assert np.all(painted[300:600, 25:200] == 0.5)
+
+
+def test_t5a_holder_paint_small_share_unchanged():
+    """T5a: with holder_share < 0.15 (no film-box band mode) nothing is released; the paint equals T4z's
+    ``e[holder] = HOLDER_GREY`` exactly, also for a deep short-contact component."""
+    from filmcolor.holder import scene_highlight_components
+    holder = np.zeros((300, 300), bool)
+    holder[0:60, 100:160] = True                 # deep, short contact; share 0.04
+    holder[:, :8] = True
+    assert holder.mean() < 0.15 and not scene_highlight_components(holder).any()
+    e = np.random.default_rng(1).random((300, 300, 3)).astype(np.float32)
+    t4z = e.copy()
+    t4z[holder] = np.float32(HOLDER_GREY)
+    assert np.array_equal(_t5a_preview(holder)._paint_holder(e.copy()), t4z)
+
+
+def test_t5a_input_density_warning_params_unchanged(tmp_path, monkeypatch):
+    """T5a: a white point d_hi_G = 2.5 D (> INPUT_DHI_G_MAX 2.40) on a colour negative adds the
+    ``input_density_implausible`` hint to report["input_warnings"]; status, parameters and inversion are exactly those
+    of the same load without the hint."""
+    import filmcolor.preview as prv
+    from filmcolor.noref import NOREF_V3
+    rgb, irl = scan()
+    p = tmp_path / "s.dng"
+    write_dng(p, rgb, irl)
+    kw = dict(max_side=100, image_region=SCAN_REGION, d_hi=(2.5, 2.5, 2.5), auto=NOREF_V3)
+    pv = load_preview(p, **kw)
+    codes = [w["code"] for w in pv.report["input_warnings"]]
+    assert codes == ["input_density_implausible"] and pv.report["input_warnings"][0]["value"] == 2.5
+    monkeypatch.setattr(prv, "INPUT_DHI_G_MAX", 10.0)
+    quiet = load_preview(p, **kw)
+    assert quiet.report["input_warnings"] == []
+    assert pv.auto["status"] == quiet.auto["status"] and pv.auto["params"] == quiet.auto["params"]
+    assert pv.inversion == quiet.inversion and np.array_equal(pv.positive, quiet.positive)
+    assert {k: v for k, v in pv.report.items() if k != "input_warnings"} == \
+           {k: v for k, v in quiet.report.items() if k != "input_warnings"}
+    assert load_preview(p, max_side=100, image_region=SCAN_REGION).report["input_warnings"] == []
+
+
+def test_t5a_input_empty_channel_warning(tmp_path):
+    """T5a (A229: centre p99 [0.831, 0.738, 0.002]): a channel whose centre linear input p99 is below 0.02 while
+    another reaches 0.30 gives ``input_channel_empty``. INPUT_EMPTY_CHANNEL = (0.02, 0.30): p99 0.03 (above the
+    threshold) or a dim frame (no channel >= 0.30) gives none."""
+    from filmcolor.preview import input_warnings
+    hit = input_warnings([0.8, 1.0, 0.9], [0.83, 1.0, 0.015])
+    assert [(w["code"], w["channel"]) for w in hit] == [("input_channel_empty", "B")]
+    assert input_warnings([0.8, 1.0, 0.9], [0.83, 1.0, 0.03]) == []
+    assert input_warnings([0.8, 1.0, 0.9], [0.25, 0.28, 0.01]) == []
+    rgb, irl = scan()
+    rgb = rgb.astype(np.float64)
+    rgb[..., :2] *= 2.0                          # base R 0.90, G 0.40 of white
+    rgb[..., 2] = np.minimum(rgb[..., 2], 650)   # blue ~ 0.01 of white everywhere
+    rgb = np.clip(np.round(rgb), 0, 65535).astype(np.uint16)
+    p = tmp_path / "empty_b.dng"
+    write_dng(p, rgb, irl)
+    pv = load_preview(p, max_side=100, image_region=SCAN_REGION)
+    c = pv.report["input_center_p99"]
+    assert c[2] < 0.02 and c[1] >= 0.30
+    assert [w["channel"] for w in pv.report["input_warnings"] if w["code"] == "input_channel_empty"] == ["B"]

@@ -1,0 +1,42 @@
+{
+  "batches_baseline": {
+    "log_sha256": "7910a6ec880980d55b1681c379930f1806ba8944616d1922a593ef6074e67b68",
+    "peak_memory_footprint_bytes": 2969259008
+  },
+  "batches_candidate": {
+    "log_sha256": "fbffffc3e7327fdf0434f8b4eeac7c31d6c01ed0716c12f1c7e95e88ed15a933",
+    "peak_memory_footprint_bytes": 3069709192
+  },
+  "candidate_a": {
+    "log_sha256": "66d4f4356cd1fc371dcce1e3d4b65f01a2c8795fa5dde7c5d55b6d05f68f4691",
+    "peak_memory_footprint_bytes": 5350347456
+  },
+  "candidate_b": {
+    "log_sha256": "d516fc4567f0abfc0735b20970d85d0da58e473214c0cebc226a390a07d3d951",
+    "peak_memory_footprint_bytes": 4951150888
+  },
+  "candidate_cross": {
+    "log_sha256": "3de3868692d2223d50c61b4aa12a5fe1e659a731ee1e94a6d883f68c41c3838f",
+    "peak_memory_footprint_bytes": 6435198352
+  },
+  "devices_baseline": {
+    "log_sha256": "686df638cfe6b65eb4946167b411baf34430f790c615330ab5216c9d848b9a82",
+    "peak_memory_footprint_bytes": 3507539544
+  },
+  "devices_candidate": {
+    "log_sha256": "a7e52e63e7aeeff94dc9bd225b67e95769dc924f04adfb72cb28272bdf98db29",
+    "peak_memory_footprint_bytes": 3611331944
+  },
+  "rolls_baseline": {
+    "log_sha256": "72a32e9ef89d51bfacf44074a25d4a8648904b6bfbd9b0794bf03fe6a726a3b5",
+    "peak_memory_footprint_bytes": 3310095432
+  },
+  "rolls_candidate": {
+    "log_sha256": "184300aef9fd9af80c6c5f295ad3d45f5cd586eef5565d79094650dd0b81926a",
+    "peak_memory_footprint_bytes": 3267447760
+  },
+  "tests": {
+    "log_sha256": "c0cc1d6a4d8c68f46338f6c4f6be7b95345cd2e26b85fce47e105b5949e6d712",
+    "peak_memory_footprint_bytes": 4643508400
+  }
+}

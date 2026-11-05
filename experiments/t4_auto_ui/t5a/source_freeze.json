@@ -1,0 +1,6 @@
+{
+  "src_content_sha256": "2377cf08f109683554309330b0450a03ab3c50c78c5f3cf69059bc62e258a720",
+  "paths_sha256": "fced78f38a0787e473d882024d289878b99a224c604242f6561c7fb05e8be913",
+  "eval_script_sha256": "8dd1d9cc35f5fcf443741fe4eef3f9607c84e37879c566bf1c2444a86a283eb6",
+  "note": "T5a candidate source frozen before the full regression, device probes and roll / batch runs"
+}

@@ -10,6 +10,10 @@ import numpy as np
 HOLDER_OVER = 2.0    # positive above this in two channels (one stop past the white point) ...
 HOLDER_PEAK = 16.0   # ... and above this in the brightest one (four stops; _DSF8948's holder: R ~300, G ~36, B ~3.6)
 HOLDER_GREY = 0.02   # sRGB-encoded value the holder is displayed with
+# T5a: a clipped scene highlight at the frame edge (B096's windows, dense past the scan range) passes holder_mask too;
+# a holder band covers its whole box edge, the window only part of it but reaches deep into the frame (display only)
+SCENE_HOLDER_MIN_DEPTH = 0.08      # share of the film box's short side
+SCENE_HOLDER_MAX_EDGE_SPAN = 0.60  # share of each film box edge it touches
 
 
 def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.ndarray:
@@ -48,3 +52,39 @@ def film_box(holder: np.ndarray) -> list[int] | None:
     if not len(rows) or not len(cols):
         return None
     return [int(rows[0]), int(cols[0]), int(rows[-1] - rows[0] + 1), int(cols[-1] - cols[0] + 1)]
+
+
+def scene_highlight_components(holder: np.ndarray, min_depth: float = SCENE_HOLDER_MIN_DEPTH,
+                               max_edge_span: float = SCENE_HOLDER_MAX_EDGE_SPAN) -> np.ndarray:
+    """T5a: holder components inside film_box(holder) that reach >= min_depth * short side into the box and cover
+    < max_edge_span of every box edge they touch: a clipped scene highlight touching the frame edge (B096 windows),
+    not a holder band. Only when holder.mean() >= 0.15 (film_box band mode); otherwise all False."""
+    from scipy import ndimage
+
+    keep = np.zeros_like(holder)
+    if float(holder.mean()) < 0.15:
+        return keep
+    fb = film_box(holder)
+    if fb is None:
+        return keep
+    t, l, h, w = fb
+    sub = holder[t:t + h, l:l + w]
+    lab, n = ndimage.label(sub)
+    if not n:
+        return keep
+    dist = ndimage.distance_transform_edt(np.pad(np.ones((h, w), bool), 1, constant_values=False))[1:-1, 1:-1]
+    depth = ndimage.maximum(dist, lab, np.arange(1, n + 1))
+    for i in range(n):
+        if depth[i] < min_depth * min(h, w):
+            continue
+        m = lab == i + 1
+        rows, cols = np.where(m.any(1))[0], np.where(m.any(0))[0]
+        spans = []
+        if m[0].any() or m[-1].any():
+            spans.append((cols[-1] - cols[0] + 1) / w)
+        if m[:, 0].any() or m[:, -1].any():
+            spans.append((rows[-1] - rows[0] + 1) / h)
+        if spans and max(spans) >= max_edge_span:
+            continue
+        keep[t:t + h, l:l + w] |= m
+    return keep

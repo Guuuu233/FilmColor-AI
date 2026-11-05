@@ -141,7 +141,9 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
     white point on block means of that size (``invert.block_white_point``); None = single pixels. ``white_ratio``: roll
     neutral density ratios for ``invert.neutral_ratio_white_point`` (None = not checked). ``white_b_guard``: colour
     film only, ``invert.blue_white_guard`` on the automatic white point (None = not checked). ``white_self_ratio``:
-    colour film only, ``invert.self_ratio_white_point`` (T4l). ``spike_clamp``: ``invert.clamp_spikes`` (T4l)."""
+    colour film only, ``invert.self_ratio_white_point`` (T4l). ``spike_clamp``: ``invert.clamp_spikes`` (T4l).
+    ``input_center_p99`` (T5a): per-channel p99 of the linear input (before base and inversion) in the central region,
+    for ``preview.input_warnings``."""
     if film not in FILM_MODES:
         raise ValueError(f"film must be one of {FILM_MODES}, got {film!r}")
     if not 0 < white_pct <= 100 or gamma <= 0 or exposure <= 0:
@@ -156,6 +158,8 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
     region_source = "manual" if image_region else "central_default"
     image_region = tuple(int(x) for x in (image_region or central_region(sat.shape)))
     mask = ~sat & region_mask(sat.shape, image_region)
+    ct, cl, ch, cw = central_region(sat.shape)  # T5a: linear input of the central region, for preview.input_warnings
+    input_p99 = [float(x) for x in np.percentile(rgb[ct:ct + ch, cl:cl + cw].reshape(-1, 3), 99, axis=0)]
     inv_base = base_rgb
     if film == "bw":
         rgb, inv_base = neutral_transmission(rgb, base_rgb), (1.0, 1.0, 1.0)
@@ -173,7 +177,8 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
     pos = res.positive if res.params.exposure == 1 else res.positive * np.float32(res.params.exposure)
     res.positive = None
     return dict(positive=pos, mask=mask, image_region=image_region, region_source=region_source, inversion=res,
-                base_info=base_info, input_info=input_info, decode_info=decode_info, base_inside_image=inside)
+                base_info=base_info, input_info=input_info, decode_info=decode_info, base_inside_image=inside,
+                input_center_p99=input_p99)
 
 
 def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,

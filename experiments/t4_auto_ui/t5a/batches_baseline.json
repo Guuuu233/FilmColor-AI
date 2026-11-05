@@ -1,0 +1,2979 @@
+{
+ "label": "baseline",
+ "src": "/private/tmp/fc_t5a_baseline_20261105/src",
+ "src_content_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+ "script_sha256": "a84a2046e8aa38f6580858a02bc8ae64fb49dcf2602f18708e58f3d1286125e5",
+ "research_sha256": "dd536e4a105e052a3dbd33cfecd2877c9b659e4a280304d56035e8cc3c4ff444",
+ "max_side": 1600,
+ "frames": {
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1034.TIF": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1034.TIF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1034.TIF",
+   "film": "color",
+   "raw_sha256": "b6c4c15f01bda3c5b80f18ca8e70b7dc50a6cfd601168cd6437fe500e44fd53d",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.0807,
+    "temp": 0.0591,
+    "tint": 0.0494,
+    "sat": 1.014,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "blacks": -0.1215,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.9656214118003845,
+     0.5785763263702393,
+     0.3362783193588257
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.25551170110702515,
+     0.4384933114051819,
+     1.012761116027832
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 0.7308221856753032
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0,
+   "core_srgb_q50": [
+    0.339628666639328,
+    0.33538320660591125,
+    0.36731284856796265
+   ],
+   "display_sha256": "95ed964b7606aed99a76487cf709e765ccfb0833d69c0b9649526263e4322b93"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A309.tif": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A309.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A309.tif",
+   "film": "color",
+   "raw_sha256": "1a74f05b098a93c8b8def368b01ff21a090bda449a42cfdd7f6dd1b4cfb1f7e7",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.9476,
+    "temp": 0.026,
+    "tint": 0.0934,
+    "sat": 1.0011,
+    "contrast": 1.4,
+    "midtone": 0.32,
+    "shoulder": 0.37,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.311,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.5341420769691467,
+     0.5539788007736206,
+     0.580407440662384
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.7710520625114441,
+     1.11014723777771,
+     1.2584501504898071
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.8502453962961833
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0,
+   "core_srgb_q50": [
+    0.6508018970489502,
+    0.5702979564666748,
+    0.5361951589584351
+   ],
+   "display_sha256": "648fcecb90df817a8a356de1aac05a788ec7489beafd2757696da928d7fc59e4"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A310.tif": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A310.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A310.tif",
+   "film": "color",
+   "raw_sha256": "0b7941a1a401b6efd5e105f6896539d012423cd3119a1d21070fb1c045886e0d",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.5322,
+    "temp": 0.0239,
+    "tint": 0.0899,
+    "sat": 1.0083,
+    "contrast": 1.3549,
+    "midtone": 0.23,
+    "shoulder": 0.3023,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.253,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.8443121910095215,
+     0.7438620328903198,
+     0.65120929479599
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     1.0061038732528687,
+     1.0272057056427002,
+     0.9488694667816162
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.7120095094045005
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0005781758957654723,
+   "core_srgb_q50": [
+    0.4667109251022339,
+    0.43258896470069885,
+    0.3084869384765625
+   ],
+   "display_sha256": "63454d1c1329a313499a04a2b55b7b6187583719664da982a147e00a17004bd4"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A311.tif": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A311.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A311.tif",
+   "film": "color",
+   "raw_sha256": "bf7bcd64e6a615a373ef236ec3c6ff3dd4b092c8d9b6b7a47661316223a89139",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 1.1583,
+    "temp": 0.0843,
+    "tint": 0.0469,
+    "sat": 1.0139,
+    "contrast": 1.4,
+    "midtone": 0.32,
+    "shoulder": 0.37,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.65,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.6717174053192139,
+     0.5628900527954102,
+     0.4566109776496887
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.8996884226799011,
+     1.1762820482254028,
+     1.3288620710372925
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.9604700803756714
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.023936482084690555,
+   "core_srgb_q50": [
+    0.3014032244682312,
+    0.32423391938209534,
+    0.37476563453674316
+   ],
+   "display_sha256": "d347efcc2cf1ce240b294e2e30a70128cf3aa54e7700d0db7315e455dffd0436"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A634.tif": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A634.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A634.tif",
+   "film": "color",
+   "raw_sha256": "c9de0c4f34cc9c1ab7d573203679a919b0df32551ed80afb5f98f0bda7829707",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 1.4358,
+    "temp": -0.1894,
+    "tint": 0.2142,
+    "sat": 1.006,
+    "contrast": 1.3646,
+    "midtone": 0.2872,
+    "shoulder": 0.4692,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.542,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.3277781307697296,
+     0.11953843384981155,
+     0.026241222396492958
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.9612922072410583,
+     1.1574336290359497,
+     2.182758331298828
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.9290560483932495
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0,
+   "core_srgb_q50": [
+    0.6819738149642944,
+    0.6441233158111572,
+    0.4086962044239044
+   ],
+   "display_sha256": "57c11783fc7cae023887e0bcb5c96087789061728c657636b973b06a1f7943e3"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A851.tif": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A851.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A851.tif",
+   "film": "color",
+   "raw_sha256": "34a2c9a358b948c045d79e4adba3f2d1444d231ddc423c80aed32fefe1ccce46",
+   "status": "ok",
+   "flags": [
+    "ev_lowered_for_highlights:0.6"
+   ],
+   "params": {
+    "ev": 1.2016,
+    "temp": 0.2018,
+    "tint": 0.111,
+    "sat": 1.0034,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.85,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.65,
+    "shadows": 0.2943,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.7230552434921265,
+     0.7605246305465698,
+     0.854992687702179
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     2.9532015323638916,
+     3.0541701316833496,
+     3.10048508644104
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 5.090283552805583
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0,
+   "core_srgb_q50": [
+    0.007373108994215727,
+    0.006761488970369101,
+    0.01033485122025013
+   ],
+   "display_sha256": "1243f191a448aca6eec5951af10c61f29942fd75306e86bc34bac7aa5c12c2b1"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A852.tif": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A852.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A852.tif",
+   "film": "color",
+   "raw_sha256": "79e0fbf61282d7699e60795b6638a2de138588487e3070fa588505a60f2c1595",
+   "status": "ok",
+   "flags": [
+    "ev_lowered_for_highlights:0.6"
+   ],
+   "params": {
+    "ev": 1.6123,
+    "temp": 0.1441,
+    "tint": 0.1017,
+    "sat": 1.0032,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.85,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.65,
+    "shadows": 0.295,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.6938719153404236,
+     0.7230552434921265,
+     0.8148466944694519
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     2.86382794380188,
+     3.195373773574829,
+     3.5220272541046143
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 5.325622955958049
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.08954963459966116,
+   "core_srgb_q50": [
+    0.007938195019960403,
+    0.0058644553646445274,
+    0.00717290909960866
+   ],
+   "display_sha256": "2f025d084d210391d3cc68369385deb2ec236fb5279d3cd5c45f9899655c51fc"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1108.DNG": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1108.DNG",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1108.DNG",
+   "film": "color",
+   "raw_sha256": "cfff70aaf5aee3a470d9986e40ad27b1242853df756931e2c3d5bf73c9f170ca",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.1869,
+    "temp": -0.1193,
+    "tint": 0.0249,
+    "sat": 1.0172,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.42461279034614563,
+     0.21235980093479156,
+     0.10824750363826752
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.8553287386894226,
+     1.03480863571167,
+     1.2496713399887085
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.72468105951945
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0,
+   "core_srgb_q50": [
+    0.635226845741272,
+    0.6710048317909241,
+    0.7232335805892944
+   ],
+   "display_sha256": "3f988d91b5aa90fff4f8bf8835270d4046b51445ad9e65d61d9337a333a49024"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1130.DNG": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1130.DNG",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1130.DNG",
+   "film": "color",
+   "raw_sha256": "bc71a7af1418c3cd8753e789cd9a01f3a2f82c49564907293b00e844172c0011",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": 0.1833,
+    "temp": -0.0194,
+    "tint": 0.0364,
+    "sat": 1.0125,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.5532006025314331,
+     0.26291295886039734,
+     0.1441062092781067
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.5615231394767761,
+     0.7035663723945618,
+     0.7479292750358582
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.172610620657603
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.001529138053960749,
+   "core_srgb_q50": [
+    0.4895014762878418,
+    0.47281670570373535,
+    0.504533052444458
+   ],
+   "display_sha256": "1adb7441270f53d63f73a1269524a4c46e4f0642ab963537d102a9a21ef20a11"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1232.DNG": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1232.DNG",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1232.DNG",
+   "film": "color",
+   "raw_sha256": "f91b85af9c20cf28917ae22197db0c03310af08e2552b2d1302a53267f6c320f",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": 0.2513,
+    "temp": 0.0226,
+    "tint": 0.1095,
+    "sat": 1.0008,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "blacks": -0.033,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.8390478491783142,
+     0.3304798901081085,
+     0.10763713717460632
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.5876685976982117,
+     0.5270246267318726,
+     0.6104683876037598
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 0.8783743778864543
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0006944444444444445,
+   "core_srgb_q50": [
+    0.5896182060241699,
+    0.669821560382843,
+    0.5739938020706177
+   ],
+   "display_sha256": "4a796328a26fedc067870ddc3f3d185f055fdcc534cbdb88d287d613e122dc85"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1233.DNG": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1233.DNG",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1233.DNG",
+   "film": "color",
+   "raw_sha256": "2074221e5f1bc8b79d01a27ab16b46c2a6170d5c985a54f7b5bfd6e45cdd7316",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 1.4228,
+    "temp": -0.0192,
+    "tint": 0.1056,
+    "sat": 1.0072,
+    "contrast": 1.3204,
+    "midtone": 0.2479,
+    "shoulder": 0.2506,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.2,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.9785763621330261,
+     0.4918440580368042,
+     0.13632410764694214
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.561797022819519,
+     0.7326588034629822,
+     0.8289672136306763
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.221098005771637
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0006944444444444445,
+   "core_srgb_q50": [
+    0.4087311923503876,
+    0.442173033952713,
+    0.4371938407421112
+   ],
+   "display_sha256": "76848ef871ae3f0c57d9d8cd87bbc21d5de45c505fb28ceadc1ab3dd7516fa5a"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1236.TIF": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1236.TIF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1236.TIF",
+   "film": "color",
+   "raw_sha256": "473908e8b087df9491a5665f8b72623a220d585638efae79559405bbe258d097",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 1.2579,
+    "temp": -0.0313,
+    "tint": -0.0461,
+    "sat": 1.0084,
+    "contrast": 1.4,
+    "midtone": 0.32,
+    "shoulder": 0.37,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.65,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.4252079129219055,
+     0.23581291735172272,
+     0.1582665741443634
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.49701178073883057,
+     0.6502418518066406,
+     0.8520204424858093
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.0837364196777344
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0001044415127528584,
+   "core_srgb_q50": [
+    0.7088107466697693,
+    0.5074023008346558,
+    0.5221271514892578
+   ],
+   "display_sha256": "eccf07ed0994c06724462c95720418ca8b081a107fd4a2261efd5652bce129e7"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1304.TIF": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1304.TIF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1304.TIF",
+   "film": "color",
+   "raw_sha256": "a446463155d6e784a7ada9de8fb5861e6ec0cf3039e1bb85cc9b98a87b055f57",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 1.2592,
+    "temp": -0.0629,
+    "tint": 0.1439,
+    "sat": 1.0093,
+    "contrast": 1.4,
+    "midtone": 0.3167,
+    "shoulder": 0.37,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.65,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.3332417905330658,
+     0.16391241550445557,
+     0.0950942263007164
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.8876591920852661,
+     1.1605620384216309,
+     1.0332229137420654
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.9342700640360515
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0,
+   "core_srgb_q50": [
+    0.6569370627403259,
+    0.6747440099716187,
+    0.5833974480628967
+   ],
+   "display_sha256": "99ad56b7eb043aa2ad37d238e3d70c83f38612301e9498f3f5afa34070b8a113"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1305.TIF": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1305.TIF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1305.TIF",
+   "film": "color",
+   "raw_sha256": "238d0ae49ae8df81315dfbe515b342c35965701b6edf2aa53e2946b93984c228",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.8608,
+    "temp": -0.0231,
+    "tint": 0.0914,
+    "sat": 1.02,
+    "contrast": 1.3846,
+    "midtone": 0.2543,
+    "shoulder": 0.3469,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.65,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.9239185452461243,
+     0.7980010509490967,
+     0.6768749356269836
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.8680427074432373,
+     1.0120258331298828,
+     1.1329108476638794
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.6867097218831382
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0,
+   "core_srgb_q50": [
+    0.6020107269287109,
+    0.6489484310150146,
+    0.6417404413223267
+   ],
+   "display_sha256": "7431a69460f3af3cdcc3a0372ebbde8db59682a269368cfae977a277e6dfc955"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1307.TIF": {
+   "batch": "batch19_rare_scanners_tiffs",
+   "name": "A1307.TIF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1307.TIF",
+   "film": "color",
+   "raw_sha256": "b449980d5d4bffdb191b9a9b36c8b1a51cb7475399ace2334e1ad14fdbaa1b9b",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.5363,
+    "temp": -0.0703,
+    "tint": 0.1332,
+    "sat": 1.0012,
+    "contrast": 1.3129,
+    "midtone": 0.2416,
+    "shoulder": 0.2393,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.062,
+    "shadows": 0.2757,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.5448538661003113,
+     0.2832074463367462,
+     0.18593117594718933
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.5709058046340942,
+     0.6030070185661316,
+     0.6291376948356628
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.0050116976102195
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0,
+   "core_srgb_q50": [
+    0.4616050720214844,
+    0.4608408808708191,
+    0.30438363552093506
+   ],
+   "display_sha256": "8e7dc47fe8b6db274db4cc171cc70235eae3cdd9aedeee9d6f42810e1b032684"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A096.NEF": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A096.NEF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A096.NEF",
+   "film": "color",
+   "raw_sha256": "be94ee843cfecace43305c96eb6ee622e6f2bc899118b571a57e8cf3cc70ac89",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.9103,
+    "temp": -0.0087,
+    "tint": 0.1143,
+    "sat": 1.0183,
+    "contrast": 1.3079,
+    "midtone": 0.23,
+    "shoulder": 0.2319,
+    "matrix": [
+     [
+      1.1097265765068025,
+      -0.034523549444346345,
+      -0.07520302706245617
+     ],
+     [
+      -0.0433450999741582,
+      1.1686619027925926,
+      -0.1253168028184345
+     ],
+     [
+      0.0021249076998353872,
+      -0.14109266742039034,
+      1.138967759720555
+     ]
+    ],
+    "highlights": -0.2,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.15088121592998505,
+     0.15338368713855743,
+     0.09387350082397461
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.7748501896858215,
+     1.0759379863739014,
+     1.1569448709487915
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.7932299772898357
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0003305733085665712,
+   "core_srgb_q50": [
+    0.5402031540870667,
+    0.5763649344444275,
+    0.48198479413986206
+   ],
+   "display_sha256": "fcc2bad071a4318a261828ef00eb2445d06e788458ed4ecc05dccb9aeba07480"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A099.NEF": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A099.NEF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A099.NEF",
+   "film": "color",
+   "raw_sha256": "b396097c1a6e63d047dba91f45587bc29d24b4eb98d91c2582e1133fb149f89b",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 1.2694,
+    "temp": -0.0554,
+    "tint": 0.0666,
+    "sat": 1.0093,
+    "contrast": 1.3,
+    "midtone": 0.298,
+    "shoulder": 0.367,
+    "matrix": [
+     [
+      1.1097265765068025,
+      -0.034523549444346345,
+      -0.07520302706245617
+     ],
+     [
+      -0.0433450999741582,
+      1.1686619027925926,
+      -0.1253168028184345
+     ],
+     [
+      0.0021249076998353872,
+      -0.14109266742039034,
+      1.138967759720555
+     ]
+    ],
+    "highlights": -0.299,
+    "shadows": 0.136,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.12336919456720352,
+     0.1251239776611328,
+     0.07975127547979355
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.9224151968955994,
+     1.25288724899292,
+     1.4048882722854614
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 2.0881454149882
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 8.18562478355319e-05,
+   "core_srgb_q50": [
+    0.3453136384487152,
+    0.3302558660507202,
+    0.2332340031862259
+   ],
+   "display_sha256": "66d28f4a5302a80f7c76f1ecd1356829905230afa8a610af3ae74c7da9ca6035"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1008.NEF": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A1008.NEF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1008.NEF",
+   "film": "color",
+   "raw_sha256": "8c696fdfaa6c7bcfcaeec5a5c522d8f4ba0400798e4484d38694773bd9eeeba0",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.2,
+    "temp": -0.0637,
+    "tint": 0.1085,
+    "sat": 1.0146,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.2587036824224418,
+      -0.17989983879928811,
+      -0.07880384362315376
+     ],
+     [
+      -0.0729599103424509,
+      1.2389119476913595,
+      -0.16595203734890845
+     ],
+     [
+      0.004783850211532051,
+      -0.17518524667655253,
+      1.1704013964650204
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.6422064304351807,
+     0.9251850247383118,
+     0.5876706838607788
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.7080374360084534,
+     0.886074423789978,
+     0.9811801910400391
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.4767907063166301
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.1526231790240411,
+   "core_srgb_q50": [
+    0.5384695529937744,
+    0.5243293046951294,
+    0.4268961250782013
+   ],
+   "display_sha256": "7cb54d89c4774c652626ff01dc6fb517eae722cd01c3210f3aa09653ef48441a"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1019.RAF": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A1019.RAF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1019.RAF",
+   "film": "color",
+   "raw_sha256": "1aa2cad3bbbb315de5ff03c9ff8e284af4657d4ccd89b21a14b47314d132fdc0",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.2247,
+    "temp": 0.0348,
+    "tint": 0.0402,
+    "sat": 1.02,
+    "contrast": 1.3574,
+    "midtone": 0.2309,
+    "shoulder": 0.3061,
+    "matrix": [
+     [
+      1.1128614482232428,
+      -0.04147453839580518,
+      -0.07138690982743759
+     ],
+     [
+      -0.0738360993246589,
+      1.2162728422632245,
+      -0.14243674293856573
+     ],
+     [
+      0.006902150579605176,
+      -0.17814288214287544,
+      1.1712407315632702
+     ]
+    ],
+    "highlights": -0.2,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.6792401075363159,
+     0.5862821340560913,
+     0.19353017210960388
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.6925452947616577,
+     0.7915807366371155,
+     1.0271363258361816
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.3193012277285259
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.026446254894530757,
+   "core_srgb_q50": [
+    0.44817858934402466,
+    0.4545109272003174,
+    0.42453259229660034
+   ],
+   "display_sha256": "245ef7809809a0628c71fd65be1b133f0a7b12c5d7073a4595ef215fee111fa4"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1044.RAF": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A1044.RAF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1044.RAF",
+   "film": "color",
+   "raw_sha256": "df3afd035eae6fb91047d543b8c316ab81dcb4575ef755fa11b7c8f653452113",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.4997,
+    "temp": 0.1053,
+    "tint": 0.0464,
+    "sat": 1.0157,
+    "contrast": 1.3098,
+    "midtone": 0.23,
+    "shoulder": 0.2348,
+    "matrix": [
+     [
+      1.1128614482232428,
+      -0.04147453839580518,
+      -0.07138690982743759
+     ],
+     [
+      -0.0738360993246589,
+      1.2162728422632245,
+      -0.14243674293856573
+     ],
+     [
+      0.006902150579605176,
+      -0.17814288214287544,
+      1.1712407315632702
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.16459907591342926,
+     0.14766155183315277,
+     0.1419088989496231
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.7515170574188232,
+     0.8387327790260315,
+     0.8857152462005615
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.397887965043386
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 3.2235484821691717e-05,
+   "core_srgb_q50": [
+    0.5251055955886841,
+    0.5976495146751404,
+    0.6543112993240356
+   ],
+   "display_sha256": "0ee35fea95a791fd6807a65adf9f279bbdcef369be3fc68b7c10c23675ea77af"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1045.RAF": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A1045.RAF",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A1045.RAF",
+   "film": "color",
+   "raw_sha256": "49715e86c33c3273895ad2a4c66072bdff478093f9c0415b192534c36f9085a1",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.2359,
+    "temp": 0.0277,
+    "tint": 0.0231,
+    "sat": 1.0198,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.1128614482232428,
+      -0.04147453839580518,
+      -0.07138690982743759
+     ],
+     [
+      -0.0738360993246589,
+      1.2162728422632245,
+      -0.14243674293856573
+     ],
+     [
+      0.006902150579605176,
+      -0.17814288214287544,
+      1.1712407315632702
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.4416418671607971,
+     0.2880445420742035,
+     0.27502861618995667
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     1.067720651626587,
+     1.0500677824020386,
+     1.1264708042144775
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.7501129706700644
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0008591743505536608,
+   "core_srgb_q50": [
+    0.7087039947509766,
+    0.6739316582679749,
+    0.6448840498924255
+   ],
+   "display_sha256": "34ec8c41247172efde4e1a358001b0c57c2f95309ae8400c9d95c74fa78db0d5"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A251.cr2": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A251.cr2",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A251.cr2",
+   "film": "color",
+   "raw_sha256": "6d9df7e89f7ffb9598ee7de7bac927d36d1a8c45588bf29295c7fb5efb07d66b",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.0908,
+    "temp": 0.3056,
+    "tint": 0.0278,
+    "sat": 1.02,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.3233244350340998,
+      -0.37095642070049173,
+      0.047631985666391936
+     ],
+     [
+      -0.006904890092326115,
+      1.1259153448323322,
+      -0.11901045474000618
+     ],
+     [
+      0.023249687876626138,
+      -0.13994807975826426,
+      1.1166983918816382
+     ]
+    ],
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.30948346853256226,
+     0.43546196818351746,
+     0.21676966547966003
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.768206000328064,
+     0.9341157078742981,
+     0.77000892162323
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.5568595131238303
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.22317412827603855,
+   "core_srgb_q50": [
+    0.6369467973709106,
+    0.6462351679801941,
+    0.6907333135604858
+   ],
+   "display_sha256": "df43daa6405e4c969e388e4b56eaed858b0b07d18ec609a0b37cb51d03659bc1"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A252.cr2": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A252.cr2",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A252.cr2",
+   "film": "color",
+   "raw_sha256": "65fb38bc106fc028754c087bfe4c5efa35fe245cd3aa0d97fb5d0d68c89a1b15",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.1851,
+    "temp": -0.076,
+    "tint": 0.103,
+    "sat": 1.02,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.3233244350340998,
+      -0.37095642070049173,
+      0.047631985666391936
+     ],
+     [
+      -0.006904890092326115,
+      1.1259153448323322,
+      -0.11901045474000618
+     ],
+     [
+      0.023249687876626138,
+      -0.13994807975826426,
+      1.1166983918816382
+     ]
+    ],
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.5072861909866333,
+     0.766826868057251,
+     0.3849546015262604
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.7730968594551086,
+     0.7965856194496155,
+     0.42540881037712097
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.3276426990826926
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.007817783295349259,
+   "core_srgb_q50": [
+    0.8550649881362915,
+    0.7291909456253052,
+    0.8365840911865234
+   ],
+   "display_sha256": "62ac073dbdefc75db6de96a35f2315a1724a4929d5f90cf9899c2c4f9ddf056e"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A253.cr2": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A253.cr2",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A253.cr2",
+   "film": "color",
+   "raw_sha256": "47b779c1c86f7c5489287e85b25fb5249abbb842bc3e8e7ca5735d62443bc0c8",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.2489,
+    "temp": -0.0494,
+    "tint": 0.117,
+    "sat": 1.0123,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.3233244350340998,
+      -0.37095642070049173,
+      0.047631985666391936
+     ],
+     [
+      -0.006904890092326115,
+      1.1259153448323322,
+      -0.11901045474000618
+     ],
+     [
+      0.023249687876626138,
+      -0.13994807975826426,
+      1.1166983918816382
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.3956206738948822,
+     0.539559006690979,
+     0.24824902415275574
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.643385648727417,
+     0.7374107837677002,
+     0.3978002369403839
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.229017972946167
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.03806679104634994,
+   "core_srgb_q50": [
+    0.6860188245773315,
+    0.6950430870056152,
+    0.6076662540435791
+   ],
+   "display_sha256": "0974769de79528b7a14c1d8aae147425e12d556482c754db3b41973acbdd2795"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A328.CR3": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A328.CR3",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A328.CR3",
+   "film": "color",
+   "raw_sha256": "029669066e1b5b1888485267200715812667a4b650d6fedcae0b68e346a2e175",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 1.6103,
+    "temp": 0.0021,
+    "tint": 0.0777,
+    "sat": 1.02,
+    "contrast": 1.3,
+    "midtone": 0.277,
+    "shoulder": 0.3355,
+    "matrix": [
+     [
+      1.282355033835909,
+      -0.3100044931762949,
+      0.02764945934038594
+     ],
+     [
+      -0.06372677157419657,
+      1.2534101160738915,
+      -0.1896833444996949
+     ],
+     [
+      5.277778205597106e-05,
+      -0.24598461933545399,
+      1.245931841553398
+     ]
+    ],
+    "highlights": -0.4,
+    "shadows": 0.0939,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.15274280309677124,
+     0.16455329954624176,
+     0.07862211018800735
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     1.0847257375717163,
+     1.3156110048294067,
+     1.5378764867782593
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 2.1926850080490112
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.015350884431432222,
+   "core_srgb_q50": [
+    0.19564881920814514,
+    0.2348700761795044,
+    0.23094049096107483
+   ],
+   "display_sha256": "af20922cf9f7a4efd92123b18c06a6d6bc8353450466b9e5959310b28b9def09"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A341.tif": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A341.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A341.tif",
+   "film": "color",
+   "raw_sha256": "345d421e79a063afd89e7c8751028bdf6a649cb8be7d800faf83e60cec93a716",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.2099,
+    "temp": 0.0505,
+    "tint": 0.0133,
+    "sat": 1.02,
+    "contrast": 1.3174,
+    "midtone": 0.2315,
+    "shoulder": 0.2461,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.6164873838424683,
+     0.2893110513687134,
+     0.1758449673652649
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.9300298094749451,
+     0.8409138321876526,
+     0.295206218957901
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.4015230536460876
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0007877804640469694,
+   "core_srgb_q50": [
+    0.5296740531921387,
+    0.521670937538147,
+    0.5507838129997253
+   ],
+   "display_sha256": "b169067f943dc10b8765214769455bae3494de0dc5b144ebd0a98fdb1065cdf4"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A347.tif": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A347.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A347.tif",
+   "film": "color",
+   "raw_sha256": "08c10e3060138a8e33f147c1834255484c9e4ad9b54495d9485a5a480b8060f1",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": 0.2088,
+    "temp": 0.0985,
+    "tint": 0.0104,
+    "sat": 1.02,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.2,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.572884738445282,
+     0.2586251497268677,
+     0.16493476927280426
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     1.0087617635726929,
+     0.869005024433136,
+     0.29748594760894775
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.44834170738856
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0013249414803589538,
+   "core_srgb_q50": [
+    0.3930653929710388,
+    0.42500999569892883,
+    0.46393489837646484
+   ],
+   "display_sha256": "43f649d5f8e7ba12a8430d685cbcad08871f180bae25a1ac8bcb2e2fc5157c31"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A348.tif": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A348.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A348.tif",
+   "film": "color",
+   "raw_sha256": "8e548e18f65522dfc7c4d6aa10d207d75dcf3b58e1848b695e7bd11798abea88",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.0726,
+    "temp": -0.026,
+    "tint": 0.0555,
+    "sat": 1.02,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "blacks": -0.0925,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.4874342083930969,
+     0.1920805722475052,
+     0.1579003632068634
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.5220404863357544,
+     0.4675184488296509,
+     0.17241692543029785
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 0.7791974147160848
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0001745402793651433,
+   "core_srgb_q50": [
+    0.6215769052505493,
+    0.6418673396110535,
+    0.6649452447891235
+   ],
+   "display_sha256": "8263c6d9ee94b670d787728dbd95023b98096b42397ba4187b900c6c95312d4b"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A617.tif": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A617.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A617.tif",
+   "film": "color",
+   "raw_sha256": "963c708d7d3268d255cba3c15db8679f06f949534b4939c96806d53a143ce9e4",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": 0.0094,
+    "temp": 0.1529,
+    "tint": 0.195,
+    "sat": 1.0093,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.9473065733909607,
+     0.5332764983177185,
+     0.304987370967865
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.2523748576641083,
+     0.605732262134552,
+     1.1615046262741089
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.0095537702242534
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.35879324560869946,
+   "core_srgb_q50": [
+    0.48012807965278625,
+    0.5706669688224792,
+    0.5027263164520264
+   ],
+   "display_sha256": "c252c31500c100f81c6baea749467e0f9fc1adff40514ca80f42193326bf8412"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A618.tif": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A618.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A618.tif",
+   "film": "color",
+   "raw_sha256": "d3f9a45d3060d0d73df3050c75fdfc2f3254f55a3ae592af6061f604b90710b2",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 1.1619,
+    "temp": 0.0207,
+    "tint": 0.1654,
+    "sat": 1.0063,
+    "contrast": 1.4,
+    "midtone": 0.3109,
+    "shoulder": 0.37,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.494,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.9646862745285034,
+     0.5457245707511902,
+     0.29177069664001465
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.39261457324028015,
+     0.9049740433692932,
+     1.8028134107589722
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.5082900722821555
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.35984502882477376,
+   "core_srgb_q50": [
+    0.3691008687019348,
+    0.4256499409675598,
+    0.26225003600120544
+   ],
+   "display_sha256": "ae0fd9bf8ce447bb5aa15461dd742617d3e7853e19028e3f1c9f95ce103aaea7"
+  },
+  "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A619.tif": {
+   "batch": "batch20_unseen_cameras",
+   "name": "A619.tif",
+   "rel": "01_\u5f69\u8272\u8d1f\u7247_\u672a\u53cd\u76f8/A619.tif",
+   "film": "color",
+   "raw_sha256": "2014811a75e3e42feab4afd3e44c3d302f301fdaa897c232a05f017e5a4c0a61",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.1373,
+    "temp": -0.081,
+    "tint": 0.168,
+    "sat": 1.005,
+    "contrast": 1.332,
+    "midtone": 0.2327,
+    "shoulder": 0.2681,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     0.9473065733909607,
+     0.5271152257919312,
+     0.28314879536628723
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.2134888470172882,
+     0.6313315033912659,
+     1.3372722864151
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.0522191723187766
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.3580033521893987,
+   "core_srgb_q50": [
+    0.42134058475494385,
+    0.42706364393234253,
+    0.25265467166900635
+   ],
+   "display_sha256": "a4971d56b277b86bfbbf6d6ab55f578819d2ede15b950fb8fd783b4136b27dca"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B081.NEF": {
+   "batch": "batch21_unseen_bw",
+   "name": "B081.NEF",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B081.NEF",
+   "film": "bw",
+   "raw_sha256": "aca796b3da17cab1cfea7e4b9507af31f63b806529fb09d33c9be48f9887c0fb",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 2.277,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.3989,
+    "midtone": 0.319,
+    "shoulder": 0.4028,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.518,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.6717402338981628,
+     0.6717402338981628,
+     0.6717402338981628
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.1195670564969382
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0012349274312879765,
+   "core_srgb_q50": [
+    0.5979897975921631,
+    0.5979897975921631,
+    0.5979897975921631
+   ],
+   "display_sha256": "0bf8dbd7d86a89297e52b849be4a5a4468d1fde358793f580bf6db1093cebc94"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B082.NEF": {
+   "batch": "batch21_unseen_bw",
+   "name": "B082.NEF",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B082.NEF",
+   "film": "bw",
+   "raw_sha256": "04da11addb6c03a4bc00233de3f52adfb70822db1422c6a1b687a7293761158d",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone",
+    "ev_lowered_for_highlights:0.2"
+   ],
+   "params": {
+    "ev": 2.3,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.4,
+    "midtone": 0.32,
+    "shoulder": 0.85,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.65,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.7844666242599487,
+     0.7844666242599487,
+     0.7844666242599487
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.3074443737665813
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0009444951673330604,
+   "core_srgb_q50": [
+    0.5821582078933716,
+    0.5821582078933716,
+    0.5821582078933716
+   ],
+   "display_sha256": "8ca81a12e9f44922a5ffb78901cfccb52d4d7f89c4ca28ff74191c832fbfd0ef"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B083.NEF": {
+   "batch": "batch21_unseen_bw",
+   "name": "B083.NEF",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B083.NEF",
+   "film": "bw",
+   "raw_sha256": "6a0b3b5bfdbf1128e03cee555856e071312f619ac67a6d1964007aa1f993179d",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.2635,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "blacks": -0.0869,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.36618345975875854,
+     0.36618345975875854,
+     0.36618345975875854
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 0.6103057662645976
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0015521203916506628,
+   "core_srgb_q50": [
+    0.6033576726913452,
+    0.6033576726913452,
+    0.6033576726913452
+   ],
+   "display_sha256": "9f6203d6150644d35e6150d41de31c3a01bd89b5cae901032c361dd5fdc39c65"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B084.NEF": {
+   "batch": "batch21_unseen_bw",
+   "name": "B084.NEF",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B084.NEF",
+   "film": "bw",
+   "raw_sha256": "e12456da7097af2bc3009603260e21ffb2a835651f8cef03000cc3ec756266f6",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.5433,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.4,
+    "midtone": 0.32,
+    "shoulder": 0.37,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.604874312877655,
+     0.604874312877655,
+     0.604874312877655
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.0081238547960918
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0012152504486352045,
+   "core_srgb_q50": [
+    0.6416659355163574,
+    0.6416659355163574,
+    0.6416659355163574
+   ],
+   "display_sha256": "0abd74829f83da53b76b7ef1311e53e2cbc7fe1200120ae7730fe7a337707161"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B085.NEF": {
+   "batch": "batch21_unseen_bw",
+   "name": "B085.NEF",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B085.NEF",
+   "film": "bw",
+   "raw_sha256": "16c32d7e4be7e7f19fe938474a789bd7f26269088641a39040b1966d2e639d6d",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.2338,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "blacks": -0.1624,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.3976486325263977,
+     0.3976486325263977,
+     0.3976486325263977
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 0.6627477208773296
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0015733715329156565,
+   "core_srgb_q50": [
+    0.5452179908752441,
+    0.5452179908752441,
+    0.5452179908752441
+   ],
+   "display_sha256": "d5ac95f4fd6645ee622bd8a75511dbe73f4ae5300fc0d63c95cb1942bea39dc1"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B092.nef": {
+   "batch": "batch21_unseen_bw",
+   "name": "B092.nef",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B092.nef",
+   "film": "bw",
+   "raw_sha256": "f1f8087db461a6c9c1ff151a0cebf70e91e89d3b30c8ac5b8bb23efac980640f",
+   "status": "ok",
+   "flags": [
+    "backlit_midtone"
+   ],
+   "params": {
+    "ev": 0.2422,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.3104,
+    "midtone": 0.23,
+    "shoulder": 0.2355,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.13,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     1.0534250736236572,
+     1.0534250736236572,
+     1.0534250736236572
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.7557084560394287
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.1105179413537567,
+   "core_srgb_q50": [
+    0.3908817768096924,
+    0.3908817768096924,
+    0.3908817768096924
+   ],
+   "display_sha256": "0e5ed4632e5a912489ec7b34e955c1e33ca45d1b89d02a8bdde1f2d7321ae621"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B094.tif": {
+   "batch": "batch21_unseen_bw",
+   "name": "B094.tif",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B094.tif",
+   "film": "bw",
+   "raw_sha256": "4045d5a39ef07313e9a1e5701d13f2cc9d0b6d53d0611e2ee4e71427f8da88bb",
+   "status": "manual_review_required",
+   "flags": [
+    "white_point_invalid: p99 3.67 stops past the inversion white point"
+   ],
+   "params": {
+    "ev": 0.0,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     3.3824257850646973,
+     3.3824257850646973,
+     3.3824257850646973
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 5.637376308441162
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.0005805569768814877,
+   "core_srgb_q50": [
+    8.59243082231842e-05,
+    8.59243082231842e-05,
+    8.59243082231842e-05
+   ],
+   "display_sha256": "e386b9502bc5dfde9231224e7566e8dd2d77d6ffcbffec1e0e778e03536f5b2f"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B095.raf": {
+   "batch": "batch21_unseen_bw",
+   "name": "B095.raf",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B095.raf",
+   "film": "bw",
+   "raw_sha256": "c10ca52552e3c7cb4e9c69eb757485041e94448b1706b69db70926e0aa9d6e0d",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.45,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "shadows": 0.0276,
+    "blacks": -0.2,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.25510579347610474,
+     0.25510579347610474,
+     0.25510579347610474
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 0.42517632246017456
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.06256632086572783,
+   "core_srgb_q50": [
+    0.2888150215148926,
+    0.2888150215148926,
+    0.2888150215148926
+   ],
+   "display_sha256": "2d8efcf733ea56000f472e251004a87dded40f65dba3f07cd56eee4421b025cf"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B096.tif": {
+   "batch": "batch21_unseen_bw",
+   "name": "B096.tif",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B096.tif",
+   "film": "bw",
+   "raw_sha256": "3d5a40894a582690415d4f55010fe396b6a768c58ab7de5b8cd2e714a8ebcc36",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": 0.5828,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.715,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "highlights": -0.65,
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     1.0347838401794434,
+     1.0347838401794434,
+     1.0347838401794434
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.7246397336324057
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.1670107162325889,
+   "core_srgb_q50": [
+    0.28658339381217957,
+    0.28658339381217957,
+    0.28658339381217957
+   ],
+   "display_sha256": "94a028d2f8150e7aa9bc4b69ca0b34b31ff7dfad42b438a759b55a4d6af6fe8f"
+  },
+  "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B2116.RAF": {
+   "batch": "batch21_unseen_bw",
+   "name": "B2116.RAF",
+   "rel": "02_\u9ed1\u767d\u8d1f\u7247_\u672a\u53cd\u76f8/B2116.RAF",
+   "film": "bw",
+   "raw_sha256": "25df7ef0253b8aeef573c7066dfb30b32b4dbc324997d94a8d824a8a2641490f",
+   "status": "ok",
+   "flags": [],
+   "params": {
+    "ev": -0.029,
+    "temp": 0.0,
+    "tint": 0.0,
+    "sat": 1.0,
+    "contrast": 1.3,
+    "midtone": 0.23,
+    "shoulder": 0.22,
+    "matrix": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "vibrance": 0.08,
+    "chroma_preserve": 0.4
+   },
+   "inversion": {
+    "base": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "d_lo": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "d_hi": [
+     0.7494721412658691,
+     0.7494721412658691,
+     0.7494721412658691
+    ],
+    "gamma": 0.6,
+    "exposure": 1.0,
+    "spike_clamp": [
+     1.15,
+     0.12
+    ],
+    "log_range": 1.2491202354431152
+   },
+   "base_method": "auto",
+   "input_warnings": null,
+   "input_center_p99": null,
+   "holder_share": 0.21986574249505283,
+   "core_srgb_q50": [
+    0.49066007137298584,
+    0.49066007137298584,
+    0.49066007137298584
+   ],
+   "display_sha256": "b2f5f091b00f56c307f6988cee64e09e4caec92fd5f1ac4cfb95209a712abd8c"
+  }
+ }
+}

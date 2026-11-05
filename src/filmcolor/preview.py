@@ -26,6 +26,7 @@ import numpy as np
 
 from .compare import block_mean
 from .holder import HOLDER_GREY, HOLDER_OVER, HOLDER_PEAK, film_box, holder_mask  # noqa: F401 (T4i names, moved in T4l)
+from .holder import scene_highlight_components
 from .noref import CONFIG_DIR, estimate_params_v2, estimation_input
 from .pipeline import BW_NEUTRAL, positive, sha256, write
 from .render import RenderParams, render, render_full
@@ -55,10 +56,13 @@ class Preview:
     # style preset is re-estimated without averaging the full-resolution positive again (T4e)
     est_input: tuple | None = field(default=None, repr=False)
     holder: np.ndarray | None = field(default=None, repr=False)  # holder_mask of ``positive`` (T4i), display only
+    _scene: np.ndarray | None = field(default=None, repr=False)  # T5a: scene_highlight_components(holder), cached
 
     def _paint_holder(self, e: np.ndarray) -> np.ndarray:
         if self.holder is not None and self.holder.any():
-            e[self.holder] = np.float32(HOLDER_GREY)
+            if self._scene is None:
+                self._scene = scene_highlight_components(self.holder)
+            e[self.holder & ~self._scene] = np.float32(HOLDER_GREY)
             if float(self.holder.mean()) >= 0.15:
                 fb = film_box(self.holder)
                 if fb is not None:
@@ -87,7 +91,8 @@ class Preview:
 
     def render(self, params=None) -> np.ndarray:
         """sRGB-encoded display image (h, w, 3) float32 for render parameters (RenderParams or dict); the film holder
-        (``holder``) is shown as ``HOLDER_GREY``."""
+        (``holder``) is shown as ``HOLDER_GREY``, except clipped scene highlights at the frame edge
+        (``holder.scene_highlight_components``, T5a)."""
         rp = params if isinstance(params, RenderParams) else RenderParams.from_dict(params or {})
         return self._paint_holder(render(self.positive, rp, self.mask)[0])
 
@@ -159,6 +164,30 @@ def green_span(inversion: dict) -> float:
     return float(inversion["d_hi"][1] - inversion["d_lo"][1])
 
 
+# T5a input plausibility hints (report["input_warnings"]; status, parameters and inversion are not changed). Benchmark
+# white points reach at most 1.59 D (G); A850-A852 (already positive images) 3.05-3.20. A229's blue channel is empty
+# (centre p99 [0.831, 0.738, 0.002]); the next lowest channel p99 of the measured scanner TIFFs is 0.070.
+INPUT_DHI_G_MAX = 2.40              # G white point density (D) above which the input is unlikely to be a negative
+INPUT_EMPTY_CHANNEL = (0.02, 0.30)  # centre linear input: a channel p99 below [0] while another reaches [1]
+
+
+def input_warnings(d_hi, center_p99) -> list[dict]:
+    """T5a: hints that the input may not be a usable negative scan, from the inversion white point ``d_hi`` and the
+    per-channel p99 of the linear input in the central region (``pipeline.positive``'s ``input_center_p99``)."""
+    out = []
+    if float(d_hi[1]) > INPUT_DHI_G_MAX:
+        out.append(dict(code="input_density_implausible", value=float(d_hi[1]),
+                        message=f"密度范围 {float(d_hi[1]):.2f} D 超出负片常见范围：可能是已反相的正片、已编辑的图片或扫描裁切。"))
+    if center_p99 is not None:
+        p = [float(x) for x in center_p99]
+        lo, hi = INPUT_EMPTY_CHANNEL
+        for i, name in enumerate("RGB"):
+            if p[i] < lo and max(p[j] for j in range(3) if j != i) >= hi:
+                out.append(dict(code="input_channel_empty", channel=name, value=p[i],
+                                message=f"{name} 通道几乎没有信号（中心 p99 = {p[i]:.3f}），扫描或导出可能丢失了该通道。"))
+    return out
+
+
 def auto_estimate(est_input, auto, film: str = "color", span_d_g: float | None = None) -> dict:
     """noref estimate (``Preview.auto``) for config ``auto`` on ``est_input`` = ``noref.estimation_input`` of the
     full-resolution positive, as ``convert``; ``span_d_g``: the inversion's G density range (``green_span``)."""
@@ -200,9 +229,12 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
     inside = p["base_inside_image"]
     if inside is None and base_source is not None:
         inside = base_source.get("base_inside_image")
+    inv = res.params.to_dict()
+    report = dict(res.report, input_center_p99=p["input_center_p99"],
+                  input_warnings=input_warnings(inv["d_hi"], p["input_center_p99"]))
     return Preview(path=path, sha256=sha256(path), factor=f, positive=small, mask=msk,
                    image_region=p["image_region"], region_source=p["region_source"], film=film,
-                   base_info=p["base_info"], inversion=res.params.to_dict(), white_pct=white_pct, report=res.report,
+                   base_info=p["base_info"], inversion=inv, white_pct=white_pct, report=report,
                    base_inside_image=inside, full_shape=tuple(full_shape), auto=auto_info,
                    load_kwargs=dict(max_side=max_side, auto=auto, base_regions=base_regions, base_rgb=base_rgb,
                                     image_region=image_region, d_hi=d_hi, white_pct=white_pct, gamma=gamma,

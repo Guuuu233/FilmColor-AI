@@ -682,10 +682,12 @@ function showInfo() {
       `Δℓ = ${dl >= 0 ? "+" : ""}${dl.toFixed(3)} D`;
   }
   const dloLine = b.d_lo_shared != null ? `<br>锚定黑点 d_lo：${b.d_lo_shared.toFixed(3)} D` : "";
+  const iw = (meta.input_warnings || []).map(x => x.message);  // T5a: hints only, nothing was changed
   $("info").innerHTML = `<b>${meta.path}</b><br>预览 ${meta.preview_shape[1]}×${meta.preview_shape[0]}（1/${meta.factor}） · ` +
     `片基：<b>${BASE_LABELS[b.method] || b.method}</b>` +
     rollLine + dloLine +
-    (w.length ? `<br><span class="warn">片基提示：${w.join("；")}</span>` : "");
+    (w.length ? `<br><span class="warn">片基提示：${w.join("；")}</span>` : "") +
+    (iw.length ? `<br><span class="warn">输入提示：${iw.join("；")}</span>` : "");
 }
 
 // Display rotation: k quarter turns counter-clockwise (numpy.rot90), done here; the server keeps sensor orientation.

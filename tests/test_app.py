@@ -690,9 +690,10 @@ def test_t4s_app_opens_and_exports_scanner_tiff(server):
 
 
 def test_t4y_app_scan_isolates_near_sat_between_camera_and_scanner(server, monkeypatch, tmp_path):
-    """T4y/T4z: State._scan_one routes exclude_near_saturated=not is_scan, and THUMB_REV is 't4z'."""
+    """T4y/T4z: State._scan_one routes exclude_near_saturated=not is_scan; THUMB_REV is 't5a' (T5a thumbnails do not
+    paint clipped scene highlights as holder; the scan itself is unchanged)."""
     from filmcolor import app
-    assert app.THUMB_REV == "t4z"
+    assert app.THUMB_REV == "t5a"
 
     _, root, _ = server
 
@@ -741,3 +742,42 @@ def test_t4y_app_scan_isolates_near_sat_between_camera_and_scanner(server, monke
     assert res_cam is not None
     assert len(recorded_calls) == 2
     assert recorded_calls[1].get("exclude_near_saturated") is True
+
+
+def test_t5a_roll_base_above_white_not_routed(server, monkeypatch):
+    """T5a (Program AE copy rolls, DSC_3724): the roll base scaled to a frame by exposure time alone can exceed sensor
+    white when the aperture changed. With max(b_roll) > ROLL_BASE_MAX (1.25; benchmark max 1.072) the frame is not
+    routed to roll_nat automatically; chosen by hand it is used, with a base warning. At 1.07 routing is unchanged."""
+    _, root, tmp = server
+    rgb, irl = scan()
+    for name in ("u.dng", "v.dng", "x.dng"):
+        write_dng(root / name, rgb, irl)
+    exposure = {"s.dng": 1.0, "u.dng": 1.0, "v.dng": 1.0, "x.dng": 1.30 / 0.45}  # base R 0.45 -> roll R 1.30 for x
+
+    def fake_exif(paths):
+        return {p: dict(exposure=exposure[p.name], model="Z 7_2", date="2026:01:01") for p in paths}
+
+    monkeypatch.setattr(app, "_exif_info", fake_exif)
+    st = app.State(root, tmp / "out", allow_frozen=False)
+    info = st.roll_info()
+    x = info["frames"]["x.dng"]
+    assert info["mixed_rolls"] is None and not info["roll"]["warnings"] and info["sub_rolls"][""]["n_base"] >= 3
+    assert max(x["roll_rgb"]) == pytest.approx(1.30, rel=0.01) and x["roll_implausible"] is True
+    assert x["level_diff"] >= app.ROLL_NAT_BW_LEVEL_DIFF  # would be routed in B&W without the guard
+    assert not any(info["frames"][r]["roll_implausible"] for r in ("s.dng", "u.dng", "v.dng"))
+    assert not st._route_roll_nat(".", "x.dng", film="bw")
+    m = st.open("x.dng", "bw")
+    assert m["base"]["method"] == "auto" and not any("传感器白点" in w for w in m["base"]["warnings"])
+    manual = st.open("x.dng", "bw", base_mode="roll_nat")
+    assert manual["base"]["method"] == "roll_nat"
+    assert any("整卷片基换算到本帧后高于传感器白点（1.30）" in w for w in manual["base"]["warnings"])
+    for mode in ("roll_dq", "roll_b1"):
+        assert any("传感器白点" in w for w in st.open("x.dng", "bw", base_mode=mode)["base"]["warnings"])
+    assert not any("传感器白点" in w for w in st.open("u.dng", "bw", base_mode="roll_nat")["base"]["warnings"])
+
+    exposure["x.dng"] = 1.07 / 0.45  # roll R 1.07: plausible, the T4s B&W level_diff route applies as before
+    st2 = app.State(root, tmp / "out", allow_frozen=False)
+    x2 = st2.roll_info()["frames"]["x.dng"]
+    assert max(x2["roll_rgb"]) == pytest.approx(1.07, rel=0.01) and x2["roll_implausible"] is False
+    assert st2._route_roll_nat(".", "x.dng", film="bw")
+    assert st2.open("x.dng", "bw")["base"]["method"] == "roll_nat"

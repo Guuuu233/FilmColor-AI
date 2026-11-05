@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python",
+    "-I",
+    "-c",
+    "import sys; sys.path.insert(0,sys.argv[1]); import filmcolor.preview as pv, filmcolor.app as a; print('baseline_preview=' + pv.__file__, 'baseline_app=' + a.__file__, flush=True); import pytest; raise SystemExit(pytest.main(sys.argv[2:]+['-k','t5a or t4y_app_scan','-q','-rf']))",
+    "/private/tmp/fc_t5a_baseline_20261105/src",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_preview.py",
+    "/Volumes/waizhiyingpan/FilmColor-AI/tests/test_app.py"
+  ],
+  "baseline_source_sha256": "136a7dbb951ed4c59497adfd2aa789ee0f180246f4e525c6822a78c9253a4756",
+  "failed": 7,
+  "passed": 0,
+  "deselected": 33,
+  "failed_tests": [
+    "tests/test_preview.py::test_t5a_holder_paint_keeps_deep_short_contact_component",
+    "tests/test_preview.py::test_t5a_holder_paint_keeps_full_edge_band",
+    "tests/test_preview.py::test_t5a_holder_paint_small_share_unchanged",
+    "tests/test_preview.py::test_t5a_input_density_warning_params_unchanged",
+    "tests/test_preview.py::test_t5a_input_empty_channel_warning",
+    "tests/test_app.py::test_t4y_app_scan_isolates_near_sat_between_camera_and_scanner",
+    "tests/test_app.py::test_t5a_roll_base_above_white_not_routed"
+  ],
+  "t4z_behaviour": {
+    "window_painted_grey": true,
+    "routed_bw": true,
+    "has_roll_base_max": false
+  },
+  "log_sha256": "837a04a0260621449fe647703e85b58cbffc6752605e73f95693fef77772600d",
+  "test_sha256": {
+    "tests/test_preview.py": "5481b98284ebfc443e191eb1fcfc3dccc6a99176b371c3f0119a913764a43a51",
+    "tests/test_app.py": "183b337b0a8155ab3d426519afb35e339beb56d0b612f83a689edb57cb02c261"
+  }
+}

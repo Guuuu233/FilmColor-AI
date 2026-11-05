@@ -193,6 +193,8 @@ def main(out_json: str, opts: list[str]):
                    holder_share=float(pv.holder.mean()) if getattr(pv, "holder", None) is not None else None,
                    d_hi=list(pv.inversion["d_hi"]), white_point=pv.report.get("white_point"),
                    spike_clamp=pv.report.get("spike_clamp"),
+                   input_warnings=pv.report.get("input_warnings"),  # T5a hints (None for older sources)
+                   input_center_p99=pv.report.get("input_center_p99"),
                    base_diagnostics=((st.frame_scans.get(raw.name) or {}).get("estimate") or {}).get("diagnostics"),
                    raw_sha256=hashlib.file_digest(raw.open("rb"), "sha256").hexdigest(),
                    ref_sha256=hashlib.file_digest(ref.open("rb"), "sha256").hexdigest(), variants={})

@@ -1,0 +1,7660 @@
+{
+ "label": "candidate",
+ "src": "/Volumes/waizhiyingpan/FilmColor-AI/src",
+ "src_content_sha256": "2377cf08f109683554309330b0450a03ab3c50c78c5f3cf69059bc62e258a720",
+ "script_sha256": "9d17eaf1cb6b469c5ea101b33f3acf3d6d7c8711fac95d73156b2d09d60416ef",
+ "max_side": 1600,
+ "film": "bw",
+ "roll_base_limit": 1.25,
+ "rolls": {
+  "foma_pan100": {
+   "folder": "foma pan100(d67 \u5c3c\u5eb7\u6570\u5b57\u5316)-",
+   "n": 38,
+   "mixed_rolls": null,
+   "n_base": 38,
+   "roll_warnings": [],
+   "roll_error": null,
+   "thumb_rev": "t5a",
+   "frames": {
+    "DSC_7400.NEF": {
+     "raw_sha256": "dbc91c5708d877411c289b3600d1685672c66a6892ee9c23156ef6a56ddc6610",
+     "exposure": 0.625,
+     "own_rgb": [
+      0.3667229413986206,
+      0.77750164270401,
+      0.6346704959869385
+     ],
+     "roll_rgb": [
+      4.528800491243601,
+      9.509985335171223,
+      7.9560186713933945
+     ],
+     "level_diff": 1.092423708531869,
+     "chroma_part": 0.005723775458435831,
+     "own_error": null,
+     "roll_max": 9.509985335171223,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.3670405149459839,
+      0.7777523398399353,
+      0.6357061266899109
+     ],
+     "base_warnings": [
+      "R base blocks spread 11.8% (p05-p95)",
+      "G base blocks spread 11.7% (p05-p95)",
+      "B base blocks spread 11.9% (p05-p95)",
+      "6936 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": -0.0295,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.127,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.0097341537475586,
+       1.0097341537475586,
+       1.0097341537475586
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.6828902562459311
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.8303290009498596,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.6807191371917725,
+      0.6807191371917725,
+      0.6807191371917725
+     ],
+     "display_sha256": "a97226fae1415f989152aaa9413a4f35d253e97ce40e4887955461fc0707984e",
+     "thumb": "foma_pan100_DSC_7400_candidate.jpg",
+     "thumb_sha256": "898b24f8f1138efa892e72f5c3a88818ab175c903f04d956e1f0c7835f06fb51"
+    },
+    "DSC_7401.NEF": {
+     "raw_sha256": "ea01bf0ea67d3313ed8ef46b935520e0e772ff08f27018320094bf58c7c3ca10",
+     "exposure": 0.5,
+     "own_rgb": [
+      0.23477596044540405,
+      0.5010828971862793,
+      0.41407179832458496
+     ],
+     "roll_rgb": [
+      3.6230403929948807,
+      7.607988268136978,
+      6.364814937114716
+     ],
+     "level_diff": 1.1854966442323405,
+     "chroma_part": 0.004136389788479411,
+     "own_error": null,
+     "roll_max": 7.607988268136978,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.23881895840168,
+      0.5073319673538208,
+      0.42018768191337585
+     ],
+     "base_warnings": [
+      "R base blocks spread 34.4% (p05-p95)",
+      "G base blocks spread 33.8% (p05-p95)",
+      "B base blocks spread 33.0% (p05-p95)",
+      "7186 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.2,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       0.8847400546073914,
+       0.8847400546073914,
+       0.8847400546073914
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.4745667576789856
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.48354315757751465,
+      0.9964751601219177,
+      0.8385841250419617
+     ],
+     "core_srgb_q50": [
+      0.631340742111206,
+      0.631340742111206,
+      0.631340742111206
+     ],
+     "display_sha256": "3a25961bde2553e62a5a46e121bbebe3b09d88feb0fe3420c991bf238499eab5",
+     "thumb": "foma_pan100_DSC_7401_candidate.jpg",
+     "thumb_sha256": "c5ccafb2c20114b06e2084d15191bb7e6b843407a4959467c832edef0be663b4"
+    },
+    "DSC_7402.NEF": {
+     "raw_sha256": "5a432372c7ab84217e94d79ccdfe27610af0b926c81408eea0fa60b363039da7",
+     "exposure": 0.5,
+     "own_rgb": [
+      0.4074263572692871,
+      0.8662699460983276,
+      0.7164096832275391
+     ],
+     "roll_rgb": [
+      3.6230403929948807,
+      7.607988268136978,
+      6.364814937114716
+     ],
+     "level_diff": 0.9470883250337595,
+     "chroma_part": 0.0034717382878323155,
+     "own_error": null,
+     "roll_max": 7.607988268136978,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.40842297673225403,
+      0.8691920638084412,
+      0.7178912162780762
+     ],
+     "base_warnings": [
+      "6065 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.2,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.1113661527633667,
+       1.1113661527633667,
+       1.1113661527633667
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.8522769212722778
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.5067216157913208,
+      1.0,
+      0.8830090761184692
+     ],
+     "core_srgb_q50": [
+      0.7014355659484863,
+      0.7014355659484863,
+      0.7014355659484863
+     ],
+     "display_sha256": "36eac763d14d53370ba80511f620ed9d66e5efe56dc70bb3e8ced1434bef8ea7",
+     "thumb": "foma_pan100_DSC_7402_candidate.jpg",
+     "thumb_sha256": "3c45397bb66fdd113528c66c5b6b7283db16b885ba3710820c6fc784897b07ae"
+    },
+    "DSC_7403.NEF": {
+     "raw_sha256": "4da3184ebcd5d01203870198ee437e650861fd777201d78dc92e9149981374cc",
+     "exposure": 0.25,
+     "own_rgb": [
+      0.1638091802597046,
+      0.3481587767601013,
+      0.28775453567504883
+     ],
+     "roll_rgb": [
+      1.8115201964974403,
+      3.803994134068489,
+      3.182407468557358
+     ],
+     "level_diff": 1.0419670137370458,
+     "chroma_part": 0.0035045229839429926,
+     "own_error": null,
+     "roll_max": 3.803994134068489,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.16493476927280426,
+      0.3504844605922699,
+      0.2896772623062134
+     ],
+     "base_warnings": [
+      "R base blocks spread 56.1% (p05-p95)",
+      "G base blocks spread 55.7% (p05-p95)",
+      "B base blocks spread 55.6% (p05-p95)",
+      "9228 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.1532,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.072,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.0450389385223389,
+       1.0450389385223389,
+       1.0450389385223389
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.7417315642038982
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.5518337488174438,
+      0.5518337488174438,
+      0.5518337488174438
+     ],
+     "display_sha256": "ed8059701b172b8a5d56400d4f3849ac6825d91e85c0893b2f9e30a5eda59edb",
+     "thumb": "foma_pan100_DSC_7403_candidate.jpg",
+     "thumb_sha256": "477d26733662ffc623d1a03dedba224ad571b8ba05fb0f0a012a77665f2a98c7"
+    },
+    "DSC_7404.NEF": {
+     "raw_sha256": "0bfe91edcb671b64d7306a8b631f0bebed29a7b514b24bc31d8cfdf6f7b66590",
+     "exposure": 0.5,
+     "own_rgb": [
+      0.14145821332931519,
+      0.3006829023361206,
+      0.24529945850372314
+     ],
+     "roll_rgb": [
+      3.6230403929948807,
+      7.607988268136978,
+      6.364814937114716
+     ],
+     "level_diff": 1.4085650997554626,
+     "chroma_part": 0.005524091397353548,
+     "own_error": null,
+     "roll_max": 7.607988268136978,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.15494011342525482,
+      0.32526132464408875,
+      0.2680399715900421
+     ],
+     "base_warnings": [
+      "R base blocks spread 54.5% (p05-p95)",
+      "G base blocks spread 54.3% (p05-p95)",
+      "B base blocks spread 55.1% (p05-p95)",
+      "9209 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.178,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3959,
+      "midtone": 0.3164,
+      "shoulder": 0.3639,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.2,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       0.7249801158905029,
+       0.7249801158905029,
+       0.7249801158905029
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.2083001931508384
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.5690698623657227,
+      0.5690698623657227,
+      0.5690698623657227
+     ],
+     "display_sha256": "0aeeb0d86e1dd6c192fce63ec543f38d9aa05fa950ca849a00536bc994fe2b81",
+     "thumb": "foma_pan100_DSC_7404_candidate.jpg",
+     "thumb_sha256": "4ee706c433908cfe7edd92a05c7ee0585292286bc98afa844d116b46547abe40"
+    },
+    "DSC_7405.NEF": {
+     "raw_sha256": "d51a57ab81475515992016072e4c12714c58fb9b75ceff241a3b080e3a47e231",
+     "exposure": 1.3,
+     "own_rgb": [
+      0.1331779658794403,
+      0.28341156244277954,
+      0.2301625907421112
+     ],
+     "roll_rgb": [
+      9.41990502178669,
+      19.780769497156143,
+      16.54851883649826
+     ],
+     "level_diff": 1.850054718575014,
+     "chroma_part": 0.0066696726661954475,
+     "own_error": null,
+     "roll_max": 19.780769497156143,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.13690394163131714,
+      0.2889753580093384,
+      0.23572136461734772
+     ],
+     "base_warnings": [
+      "R base blocks spread 189.1% (p05-p95)",
+      "G base blocks spread 188.6% (p05-p95)",
+      "B base blocks spread 192.7% (p05-p95)",
+      "4879 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "white_point_unrepresentative"
+     ],
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       0.3144499957561493,
+       0.3144499957561493,
+       0.3144499957561493
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 0.5240833262602489
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.329945832490921,
+      0.6933852434158325,
+      0.5669489502906799
+     ],
+     "core_srgb_q50": [
+      0.7456587553024292,
+      0.7456587553024292,
+      0.7456587553024292
+     ],
+     "display_sha256": "748b802d591864c8f82db57be60a00299d6bd728b24098efa81ab2033f5c8f28",
+     "thumb": "foma_pan100_DSC_7405_candidate.jpg",
+     "thumb_sha256": "91bd11e667776bed16002b6a5bf684582fb08956408469f6ca09c7f08ac68854"
+    },
+    "DSC_7406.NEF": {
+     "raw_sha256": "814f6d66c3bce3704b8a3a7ce8bae23614da0eac9e8b5ce4656de72d4a82e629",
+     "exposure": 0.625,
+     "own_rgb": [
+      0.10570687055587769,
+      0.22372913360595703,
+      0.1826714128255844
+     ],
+     "roll_rgb": [
+      4.528800491243601,
+      9.509985335171223,
+      7.9560186713933945
+     ],
+     "level_diff": 1.6331208285245051,
+     "chroma_part": 0.0059043774153830775,
+     "own_error": null,
+     "roll_max": 9.509985335171223,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.11264210194349289,
+      0.2364995777606964,
+      0.19389639794826508
+     ],
+     "base_warnings": [
+      "R base blocks spread 243.4% (p05-p95)",
+      "G base blocks spread 246.3% (p05-p95)",
+      "B base blocks spread 249.5% (p05-p95)",
+      "3774 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.008,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       0.5129827857017517,
+       0.5129827857017517,
+       0.5129827857017517
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 0.8549713095029196
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.3365529775619507,
+      0.7046463489532471,
+      0.580346405506134
+     ],
+     "core_srgb_q50": [
+      0.7042163610458374,
+      0.7042163610458374,
+      0.7042163610458374
+     ],
+     "display_sha256": "87c7842c9b522092e5236e0077e1f32694bdb5edaa3fbaa2461f13c964d9360e",
+     "thumb": "foma_pan100_DSC_7406_candidate.jpg",
+     "thumb_sha256": "ab3856437f2de803811de840004fa5675773dc7dfc277abc7db1c5caede56521"
+    },
+    "DSC_7407.NEF": {
+     "raw_sha256": "f801ad903f625e7f9680c4147d54a023b95ab7fb8ded770b7a7f4dc9eefc4b8e",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.36579450964927673,
+      0.7820450067520142,
+      0.6507097482681274
+     ],
+     "roll_rgb": [
+      1.4492161571979523,
+      3.0431953072547913,
+      2.5459259748458862
+     ],
+     "level_diff": 0.5934841739175286,
+     "chroma_part": 0.004411810691162588,
+     "own_error": null,
+     "roll_max": 3.0431953072547913,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.3684901297092438,
+      0.7864041924476624,
+      0.6537269949913025
+     ],
+     "base_warnings": [
+      "R base blocks spread 13.7% (p05-p95)",
+      "G base blocks spread 12.5% (p05-p95)",
+      "B base blocks spread 11.7% (p05-p95)",
+      "7937 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.7946,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.5619674921035767,
+       1.5619674921035767,
+       1.5619674921035767
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.6032791535059614
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.7086899876594543,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.38977450132369995,
+      0.38977450132369995,
+      0.38977450132369995
+     ],
+     "display_sha256": "2049ce8a9b8a1afe97f72dd3816c77650de5e4023f9ace91b4883fb3bbbd26ec",
+     "thumb": "foma_pan100_DSC_7407_candidate.jpg",
+     "thumb_sha256": "b05fae2a4553c9bff038ee88245afbebadca131f359699f764d817cda0b27602"
+    },
+    "DSC_7408.NEF": {
+     "raw_sha256": "e52a2f7d1b448c0b8bd5838864ad9d36d7916183c0b5333c6bef050a14cc1417",
+     "exposure": 0.07692307692307693,
+     "own_rgb": [
+      0.41576194763183594,
+      0.8751732707023621,
+      0.7289589047431946
+     ],
+     "roll_rgb": [
+      0.5573908296915201,
+      1.170459733559535,
+      0.9792022980176485
+     ],
+     "level_diff": 0.12724896401308694,
+     "chroma_part": 0.0009865315189780954,
+     "own_error": null,
+     "roll_max": 1.170459733559535,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.5573908296915201,
+      1.170459733559535,
+      0.9792022980176485
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.9278,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.0805723667144775,
+       2.0805723667144775,
+       2.0805723667144775
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.467620611190796
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.46875715255737305,
+      0.9824979305267334,
+      0.8189669847488403
+     ],
+     "core_srgb_q50": [
+      0.34138816595077515,
+      0.34138816595077515,
+      0.34138816595077515
+     ],
+     "display_sha256": "bfce2e14b9988bef59949b200ec2ae013e11542d890a5ff87d6c65025980a075",
+     "thumb": "foma_pan100_DSC_7408_candidate.jpg",
+     "thumb_sha256": "46cdf3f72a5e4034fc7afdaab8045a58ab746551e9761a57e7b9b63d21eabb8e"
+    },
+    "DSC_7409.NEF": {
+     "raw_sha256": "450415ee5e234e0f1a10f83f0dc50e650826882fafd8ed42e6e60e6ef6e70f8c",
+     "exposure": 0.05,
+     "own_rgb": [
+      0.2652849853038788,
+      0.5563271641731262,
+      0.4647054672241211
+     ],
+     "roll_rgb": [
+      0.36230403929948807,
+      0.7607988268136978,
+      0.6364814937114716
+     ],
+     "level_diff": 0.1359693575120424,
+     "chroma_part": 0.0006386411970418227,
+     "own_error": null,
+     "roll_max": 0.7607988268136978,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.36230403929948807,
+      0.7607988268136978,
+      0.6364814937114716
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 2.5,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.49,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.8643884658813477,
+       1.8643884658813477,
+       1.8643884658813477
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.107314109802246
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.2678568661212921,
+      0.5594720244407654,
+      0.46771952509880066
+     ],
+     "core_srgb_q50": [
+      0.2545520067214966,
+      0.2545520067214966,
+      0.2545520067214966
+     ],
+     "display_sha256": "338abec5cc0b0aeb9ecf85e9304599703afbbe21c5a439ac245c5d3af68242ca",
+     "thumb": "foma_pan100_DSC_7409_candidate.jpg",
+     "thumb_sha256": "a9f99246d8b4242cf1b435525387414d64cd464a507ced865a2168e0df04847f"
+    },
+    "DSC_7410.NEF": {
+     "raw_sha256": "860f45ab7c5bad46584063985718bddd7e9a6b05d9f6a33442056f4bd063f76e",
+     "exposure": 0.25,
+     "own_rgb": [
+      0.3628191351890564,
+      0.7651048302650452,
+      0.6272526979446411
+     ],
+     "roll_rgb": [
+      1.8115201964974403,
+      3.803994134068489,
+      3.182407468557358
+     ],
+     "level_diff": 0.7000617127715815,
+     "chroma_part": 0.005251534241875411,
+     "own_error": null,
+     "roll_max": 3.803994134068489,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.3634546399116516,
+      0.765911340713501,
+      0.6278324723243713
+     ],
+     "base_warnings": [
+      "R base blocks spread 10.7% (p05-p95)",
+      "G base blocks spread 10.7% (p05-p95)",
+      "B base blocks spread 10.8% (p05-p95)",
+      "9593 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.2,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.2,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.4436708688735962,
+       1.4436708688735962,
+       1.4436708688735962
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.406118114789327
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.6705272197723389,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.42449039220809937,
+      0.42449039220809937,
+      0.42449039220809937
+     ],
+     "display_sha256": "905ad1a7b325647e9c31f2e3d4c7dd9f64ecc0b85c46d5aa093634c6b3b35b90",
+     "thumb": "foma_pan100_DSC_7410_candidate.jpg",
+     "thumb_sha256": "7434857b56e8244d6532a6a31790fca1c49691b66a1e5cf18a1733b619525fea"
+    },
+    "DSC_7411.NEF": {
+     "raw_sha256": "d210933d5ac146c06739b0716ef5c854b5c47572ad392de0557f3981b206178d",
+     "exposure": 1.3,
+     "own_rgb": [
+      0.13350993394851685,
+      0.2819620668888092,
+      0.2276463508605957
+     ],
+     "roll_rgb": [
+      9.41990502178669,
+      19.780769497156143,
+      16.54851883649826
+     ],
+     "level_diff": 1.8520279584203083,
+     "chroma_part": 0.009470477189988058,
+     "own_error": null,
+     "roll_max": 19.780769497156143,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.13708704710006714,
+      0.2890363931655884,
+      0.23398184776306152
+     ],
+     "base_warnings": [
+      "R base blocks spread 35.3% (p05-p95)",
+      "G base blocks spread 36.2% (p05-p95)",
+      "B base blocks spread 37.7% (p05-p95)",
+      "2742 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       0.2657456696033478,
+       0.2657456696033478,
+       0.2657456696033478
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 0.44290944933891296
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.2364843189716339,
+      0.4947432577610016,
+      0.40546274185180664
+     ],
+     "core_srgb_q50": [
+      0.7910406589508057,
+      0.7910406589508057,
+      0.7910406589508057
+     ],
+     "display_sha256": "ba7449ba168bde53219124266201b50deed12942bd370b0ee76d551e43c9bd1b",
+     "thumb": "foma_pan100_DSC_7411_candidate.jpg",
+     "thumb_sha256": "0172f762bcc407e6257c454752f25108175dcd1625db469c092db2bb2900f2b3"
+    },
+    "DSC_7412.NEF": {
+     "raw_sha256": "aeba137164e62d5ed4ebc566c46929b9fd0553fd91464f09c890dfcf56aacfad",
+     "exposure": 0.5,
+     "own_rgb": [
+      0.27102258801460266,
+      0.5735471248626709,
+      0.4710284471511841
+     ],
+     "roll_rgb": [
+      3.6230403929948807,
+      7.607988268136978,
+      6.364814937114716
+     ],
+     "level_diff": 1.1265023530633975,
+     "chroma_part": 0.004236291023804295,
+     "own_error": null,
+     "roll_max": 7.607988268136978,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.269398033618927,
+      0.5713740587234497,
+      0.47080186009407043
+     ],
+     "base_warnings": [
+      "R base blocks spread 52.3% (p05-p95)",
+      "G base blocks spread 52.9% (p05-p95)",
+      "B base blocks spread 53.3% (p05-p95)",
+      "8781 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.2,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3637,
+      "midtone": 0.2873,
+      "shoulder": 0.3155,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       0.9783461689949036,
+       0.9783461689949036,
+       0.9783461689949036
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.6305769483248393
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.6634262800216675,
+      0.6634262800216675,
+      0.6634262800216675
+     ],
+     "display_sha256": "1eeb6d950d3058f92fe87f316ae5da6b51f5bb69739501b6cafa5fea89aff6c1",
+     "thumb": "foma_pan100_DSC_7412_candidate.jpg",
+     "thumb_sha256": "126af4280e79ef9d04250889a2e0381feaac8132d0bd5525f8c423f42f460af5"
+    },
+    "DSC_7413.NEF": {
+     "raw_sha256": "48689cfba7488e5b1969e8ce2aaa38e41c9ee26d9cdf0c76f15aa3f291f0e171",
+     "exposure": 0.06666666666666667,
+     "own_rgb": [
+      0.37487173080444336,
+      0.7860610485076904,
+      0.6548430919647217
+     ],
+     "roll_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "level_diff": 0.1111562608527321,
+     "chroma_part": 0.0014310059761678262,
+     "own_error": null,
+     "roll_max": 1.0143984357515972,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.0651,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3744,
+      "midtone": 0.2969,
+      "shoulder": 0.3316,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.575,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.9547525644302368,
+       1.9547525644302368,
+       1.9547525644302368
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.2579209407170615
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.38628214597702026,
+      0.8042877912521362,
+      0.6717936992645264
+     ],
+     "core_srgb_q50": [
+      0.32213687896728516,
+      0.32213687896728516,
+      0.32213687896728516
+     ],
+     "display_sha256": "13bd7f5c8385949af063a62c695335497d9e384f9cabc7e76aee54bd0f6f9901",
+     "thumb": "foma_pan100_DSC_7413_candidate.jpg",
+     "thumb_sha256": "0894d1da6dae5797d9e0c24571835af4fc8aca07fdca418280a1a4d805106f7d"
+    },
+    "DSC_7414.NEF": {
+     "raw_sha256": "b024608fe234908d841fbd9c4f872334d52b7105a0f45095c164b338cf2d198a",
+     "exposure": 0.1,
+     "own_rgb": [
+      0.4508870840072632,
+      0.9496840238571167,
+      0.789679765701294
+     ],
+     "roll_rgb": [
+      0.7246080785989761,
+      1.5215976536273956,
+      1.2729629874229431
+     ],
+     "level_diff": 0.206040280301376,
+     "chroma_part": 0.0013244859774340922,
+     "own_error": null,
+     "roll_max": 1.5215976536273956,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.45163652300834656,
+      0.9511405825614929,
+      0.7903715372085571
+     ],
+     "base_warnings": [
+      "12435 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.8054,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.611,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.8676583766937256,
+       1.8676583766937256,
+       1.8676583766937256
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.1127639611562095
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.5431448817253113,
+      1.0,
+      0.9510185122489929
+     ],
+     "core_srgb_q50": [
+      0.3156138062477112,
+      0.3156138062477112,
+      0.3156138062477112
+     ],
+     "display_sha256": "a17bc1ac13ccca02230a0dc167efd662fd5a1e74d47d2b5f1d9493edc2f63f7d",
+     "thumb": "foma_pan100_DSC_7414_candidate.jpg",
+     "thumb_sha256": "fc9ccff40d0914c790165b2a54c7e079769f11cbc97f0224b0869a4d2b948de3"
+    },
+    "DSC_7415.NEF": {
+     "raw_sha256": "801b12a16272f5a2532ac4394193398eadd7dd76194bab497bf84bc4b21be7ed",
+     "exposure": 0.06666666666666667,
+     "own_rgb": [
+      0.4001519978046417,
+      0.8374455571174622,
+      0.6975277662277222
+     ],
+     "roll_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "level_diff": 0.08340064274726615,
+     "chroma_part": 0.001762374432011507,
+     "own_error": null,
+     "roll_max": 1.0143984357515972,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.1454,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3911,
+      "midtone": 0.312,
+      "shoulder": 0.3567,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.055194616317749,
+       2.055194616317749,
+       2.055194616317749
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.425324360529582
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.400015264749527,
+      0.8381018042564392,
+      0.6990157961845398
+     ],
+     "core_srgb_q50": [
+      0.33072346448898315,
+      0.33072346448898315,
+      0.33072346448898315
+     ],
+     "display_sha256": "a7b20df0ffc9954e651253ae64b8066c26609718dfdd7be1ceb3eedf28401dc4",
+     "thumb": "foma_pan100_DSC_7415_candidate.jpg",
+     "thumb_sha256": "305583960e80b123d9e53c03f00d55f525ffd4ae00d695d72704d6792103f0a5"
+    },
+    "DSC_7416.NEF": {
+     "raw_sha256": "8247badf692ae6c5f262280d744d0cecd269384d80b5e47d1f5562626f318be1",
+     "exposure": 0.1,
+     "own_rgb": [
+      0.37902843952178955,
+      0.7943748831748962,
+      0.6572434306144714
+     ],
+     "roll_rgb": [
+      0.7246080785989761,
+      1.5215976536273956,
+      1.2729629874229431
+     ],
+     "level_diff": 0.2835984074952807,
+     "chroma_part": 0.0034911149580721945,
+     "own_error": null,
+     "roll_max": 1.5215976536273956,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.3799038827419281,
+      0.7966201305389404,
+      0.6594491600990295
+     ],
+     "base_warnings": [
+      "R base blocks spread 20.5% (p05-p95)",
+      "G base blocks spread 20.2% (p05-p95)",
+      "B base blocks spread 20.6% (p05-p95)",
+      "2583 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.1165,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.631,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.8022524118423462,
+       1.8022524118423462,
+       1.8022524118423462
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.0037540197372437
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.503852903842926,
+      1.0,
+      0.8790112137794495
+     ],
+     "core_srgb_q50": [
+      0.4246547222137451,
+      0.4246547222137451,
+      0.4246547222137451
+     ],
+     "display_sha256": "7220ddcf4688e788e0aaa51071573803e86473d1f8755f71dc88da8ae7925a2a",
+     "thumb": "foma_pan100_DSC_7416_candidate.jpg",
+     "thumb_sha256": "29e4f7547843167241b8ca1489c260ce50368b4764df21e6bb3d10c5b81caaa9"
+    },
+    "DSC_7417.NEF": {
+     "raw_sha256": "8443964566af854c018846939d016fba988091aeb1056072280bfa57e56c51ee",
+     "exposure": 0.05,
+     "own_rgb": [
+      0.23666870594024658,
+      0.4955616593360901,
+      0.41204833984375
+     ],
+     "roll_rgb": [
+      0.36230403929948807,
+      0.7607988268136978,
+      0.6364814937114716
+     ],
+     "level_diff": 0.18664736251991568,
+     "chroma_part": 0.0021902494462248956,
+     "own_error": null,
+     "roll_max": 0.7607988268136978,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.36230403929948807,
+      0.7607988268136978,
+      0.6364814937114716
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.6294,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.298,
+      "shoulder": 0.322,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.136,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.716970443725586,
+       1.716970443725586,
+       1.716970443725586
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.86161740620931
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.2541237473487854,
+      0.530724048614502,
+      0.4411688446998596
+     ],
+     "core_srgb_q50": [
+      0.3099721074104309,
+      0.3099721074104309,
+      0.3099721074104309
+     ],
+     "display_sha256": "2f27174c8fc6bd789cf6db7ac647f6b7d067c0f42f522efe3d42550ba11f811f",
+     "thumb": "foma_pan100_DSC_7417_candidate.jpg",
+     "thumb_sha256": "76a1b358f72c5267a02a912ba4b6f1d55da36b9ab7778d390976d73bf3853202"
+    },
+    "DSC_7418.NEF": {
+     "raw_sha256": "89cb5fae6b7b8d34646569bcdc49d3e6b807def703a38967158723c47192229a",
+     "exposure": 0.06666666666666667,
+     "own_rgb": [
+      0.32394444942474365,
+      0.679104745388031,
+      0.5663757920265198
+     ],
+     "roll_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "level_diff": 0.17447766999415792,
+     "chroma_part": 0.0011421647632255394,
+     "own_error": null,
+     "roll_max": 1.0143984357515972,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 2.0161,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3885,
+      "midtone": 0.3097,
+      "shoulder": 0.3528,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.025165319442749,
+       2.025165319442749,
+       2.025165319442749
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.375275532404582
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.27852293848991394,
+      0.582360565662384,
+      0.48328372836112976
+     ],
+     "core_srgb_q50": [
+      0.2647464871406555,
+      0.2647464871406555,
+      0.2647464871406555
+     ],
+     "display_sha256": "621be5f739eda77806280436311db7052c00a3fad13863c25fce4f4db8efce06",
+     "thumb": "foma_pan100_DSC_7418_candidate.jpg",
+     "thumb_sha256": "3f1cb700ee9e8d04fd94ab7b53e4eb4929c3c487f5809fc49fe12f51e5204e6c"
+    },
+    "DSC_7419.NEF": {
+     "raw_sha256": "a201c9f7c24737388484e3cb1b19cbd3994f384f78aa4881dce8b66cc6d142eb",
+     "exposure": 0.06666666666666667,
+     "own_rgb": [
+      0.2679399251937866,
+      0.56422358751297,
+      0.4703105092048645
+     ],
+     "roll_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "level_diff": 0.25569054921340734,
+     "chroma_part": 0.0009332163690004003,
+     "own_error": null,
+     "roll_max": 1.0143984357515972,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.8193,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3444,
+      "midtone": 0.2687,
+      "shoulder": 0.2866,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.6129041910171509,
+       1.6129041910171509,
+       1.6129041910171509
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.6881736516952515
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.2237277776002884,
+      0.46900129318237305,
+      0.38872358202934265
+     ],
+     "core_srgb_q50": [
+      0.39168253540992737,
+      0.39168253540992737,
+      0.39168253540992737
+     ],
+     "display_sha256": "2d6e69dd08ae53158340e6ea868bbc32ee6dbe32bbeb0886f5e083c57f10c155",
+     "thumb": "foma_pan100_DSC_7419_candidate.jpg",
+     "thumb_sha256": "09142e6f9887430f81adccb49e56576804c044deb6bbe42dc339f2daeec3041b"
+    },
+    "DSC_7420.NEF": {
+     "raw_sha256": "4de890f6f6cb8b91f48062d682dfb24bcbc50e2698a93ca466a1dfdf954d7425",
+     "exposure": 0.4,
+     "own_rgb": [
+      0.41260024905204773,
+      0.8722388744354248,
+      0.716972827911377
+     ],
+     "roll_rgb": [
+      2.8984323143959045,
+      6.0863906145095825,
+      5.0918519496917725
+     ],
+     "level_diff": 0.8472437101567993,
+     "chroma_part": 0.0041293605598475835,
+     "own_error": null,
+     "roll_max": 6.0863906145095825,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.4129701554775238,
+      0.8732738494873047,
+      0.7174639701843262
+     ],
+     "base_warnings": [
+      "3234 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.2,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.2636284828186035,
+       1.2636284828186035,
+       1.2636284828186035
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.1060474713643393
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.34093233942985535,
+      0.7185015678405762,
+      0.5868619680404663
+     ],
+     "core_srgb_q50": [
+      0.7585143446922302,
+      0.7585143446922302,
+      0.7585143446922302
+     ],
+     "display_sha256": "b2d845b999c74442a3387dac3d39f94877d9c442678ce83ff854cba9b302ccaa",
+     "thumb": "foma_pan100_DSC_7420_candidate.jpg",
+     "thumb_sha256": "a2e41e99fa568ef84d5fe900bdb521b8368d9264c9abb1041f8e9a3b9d64bf19"
+    },
+    "DSC_7421.NEF": {
+     "raw_sha256": "a6b7631ecd8a91d0f6d3794013bcc0fd890a24357497018ec4334b176dce062a",
+     "exposure": 0.3333333333333333,
+     "own_rgb": [
+      0.3170957565307617,
+      0.6733770966529846,
+      0.5548975467681885
+     ],
+     "roll_rgb": [
+      2.415360261996587,
+      5.071992178757985,
+      4.243209958076477
+     ],
+     "level_diff": 0.8807311459723189,
+     "chroma_part": 0.003810911592138422,
+     "own_error": null,
+     "roll_max": 5.071992178757985,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.3216067850589752,
+      0.6825055480003357,
+      0.5599755644798279
+     ],
+     "base_warnings": [
+      "R base blocks spread 28.3% (p05-p95)",
+      "G base blocks spread 27.8% (p05-p95)",
+      "B base blocks spread 27.6% (p05-p95)",
+      "8925 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.1527,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.2525800466537476,
+       1.2525800466537476,
+       1.2525800466537476
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.0876334110895796
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.6213473677635193,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.43535059690475464,
+      0.43535059690475464,
+      0.43535059690475464
+     ],
+     "display_sha256": "072a6b435244b8d6453ee5e8c7313a898915c45e98eead97b80e68ad9f8fc86a",
+     "thumb": "foma_pan100_DSC_7421_candidate.jpg",
+     "thumb_sha256": "08107c52320303fb981bb72ef7bbf57aa739321c7bf4b7777b60600113df6285"
+    },
+    "DSC_7422.NEF": {
+     "raw_sha256": "291218b24e635d909ac949abe77d5053836311d613fc1a2319c872d1b2d97463",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.4474991261959076,
+      0.9475222826004028,
+      0.7860658764839172
+     ],
+     "roll_rgb": [
+      1.4492161571979523,
+      3.0431953072547913,
+      2.5459259748458862
+     ],
+     "level_diff": 0.5091560658461137,
+     "chroma_part": 0.0024156722247524742,
+     "own_error": null,
+     "roll_max": 3.0431953072547913,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.4475165903568268,
+      0.9492027163505554,
+      0.7870526909828186
+     ],
+     "base_warnings": [
+      "11532 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.2,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3357,
+      "midtone": 0.2305,
+      "shoulder": 0.2735,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.591949462890625,
+       1.591949462890625,
+       1.591949462890625
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.6532491048177085
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.8442206382751465,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.2550041079521179,
+      0.2550041079521179,
+      0.2550041079521179
+     ],
+     "display_sha256": "e2201039661bcec7db1264ba3fcf5a7113cbe43fd73d404fe6ed9ba3917a21fd",
+     "thumb": "foma_pan100_DSC_7422_candidate.jpg",
+     "thumb_sha256": "5d10b644dcf3b338f1b10f87118e6cd9405cc6bafc0d28789cbb1cacc161e48d"
+    },
+    "DSC_7423.NEF": {
+     "raw_sha256": "c4f5293e2d381d2b6dcb923d6c6d14ea07f4b72641015715fdcf832c04eeea33",
+     "exposure": 0.4,
+     "own_rgb": [
+      0.38147538900375366,
+      0.8033439517021179,
+      0.6605980396270752
+     ],
+     "roll_rgb": [
+      2.8984323143959045,
+      6.0863906145095825,
+      5.0918519496917725
+     ],
+     "level_diff": 0.8823644728172141,
+     "chroma_part": 0.004574014277236693,
+     "own_error": null,
+     "roll_max": 6.0863906145095825,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.3833523988723755,
+      0.808712899684906,
+      0.6643778085708618
+     ],
+     "base_warnings": [
+      "R base blocks spread 13.3% (p05-p95)",
+      "G base blocks spread 13.3% (p05-p95)",
+      "B base blocks spread 13.7% (p05-p95)",
+      "15161 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.0293,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.156,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.2482409477233887,
+       1.2482409477233887,
+       1.2482409477233887
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.0804015795389814
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.5434065461158752,
+      0.5434065461158752,
+      0.5434065461158752
+     ],
+     "display_sha256": "4d0f068a5f129a01583bf4e2ddabb068db21d9aa91274dad4a659b466c0fc399",
+     "thumb": "foma_pan100_DSC_7423_candidate.jpg",
+     "thumb_sha256": "699bcbc70cc152b1297ad7943d82a217849648396a31c1ff075bbe7b98dfeeae"
+    },
+    "DSC_7424.NEF": {
+     "raw_sha256": "b2121a1c20ae93343dbf65e226a31e33fce21a899b9fc964bc730b8d94a27269",
+     "exposure": 0.04,
+     "own_rgb": [
+      0.29836517572402954,
+      0.6244091391563416,
+      0.5264620780944824
+     ],
+     "roll_rgb": [
+      0.28984323143959045,
+      0.6086390614509583,
+      0.5091851949691772
+     ],
+     "level_diff": -0.012728575030614067,
+     "chroma_part": 0.0017627510401995745,
+     "own_error": null,
+     "roll_max": 0.6086390614509583,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.2984969913959503,
+      0.6248416900634766,
+      0.5267872214317322
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.6953,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.612,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.9375114440917969,
+       1.9375114440917969,
+       1.9375114440917969
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.229185740152995
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.29604029655456543,
+      0.6196383833885193,
+      0.5220416784286499
+     ],
+     "core_srgb_q50": [
+      0.3011641204357147,
+      0.3011641204357147,
+      0.3011641204357147
+     ],
+     "display_sha256": "00cb76e957cadf9b960e406c7202ec4175dd5b2a7bf2a652b66494fdb0faf6ef",
+     "thumb": "foma_pan100_DSC_7424_candidate.jpg",
+     "thumb_sha256": "36b701ed3639421896679e48be74b46f4baad7a68b24d8807cc450dc93cc22dd"
+    },
+    "DSC_7425.NEF": {
+     "raw_sha256": "c7bec7285273c98f42c0a3553d0abf31220755c22e58aded39d708a1cd296b75",
+     "exposure": 0.04,
+     "own_rgb": [
+      0.28984323143959045,
+      0.6086390614509583,
+      0.5091851949691772
+     ],
+     "roll_rgb": [
+      0.28984323143959045,
+      0.6086390614509583,
+      0.5091851949691772
+     ],
+     "level_diff": 0.0,
+     "chroma_part": 0.0,
+     "own_error": null,
+     "roll_max": 0.6086390614509583,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.2899214029312134,
+      0.60837721824646,
+      0.5094376802444458
+     ],
+     "base_warnings": [
+      "R base blocks spread 11.6% (p05-p95)",
+      "G base blocks spread 11.6% (p05-p95)",
+      "B base blocks spread 12.4% (p05-p95)"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 1.8633,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.118,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.8253475427627563,
+       1.8253475427627563,
+       1.8253475427627563
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.042245904604594
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.29446861147880554,
+      0.617090106010437,
+      0.5181811451911926
+     ],
+     "core_srgb_q50": [
+      0.25150927901268005,
+      0.25150927901268005,
+      0.25150927901268005
+     ],
+     "display_sha256": "70de1fde333bb98c5928acbb88463ff5fceeb4d3cf6c7eee72d0b547eb22a636",
+     "thumb": "foma_pan100_DSC_7425_candidate.jpg",
+     "thumb_sha256": "c2487eda2953f0a82bbc4fef1262ca9211bf1868754240d48bcc6b422f5ddf7b"
+    },
+    "DSC_7426.NEF": {
+     "raw_sha256": "4361c1ce85e10651a023e848bb40eef83ac727ce8284c5365092b0f9d5f50f4b",
+     "exposure": 0.125,
+     "own_rgb": [
+      0.4474891424179077,
+      0.9371201395988464,
+      0.7733789682388306
+     ],
+     "roll_rgb": [
+      0.9057600982487202,
+      1.9019970670342445,
+      1.591203734278679
+     ],
+     "level_diff": 0.3089928952469197,
+     "chroma_part": 0.0043405366679794,
+     "own_error": null,
+     "roll_max": 1.9019970670342445,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.4469520151615143,
+      0.9371023178100586,
+      0.7728999853134155
+     ],
+     "base_warnings": [
+      "749 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.6628,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3582,
+      "midtone": 0.2824,
+      "shoulder": 0.3073,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.6472634077072144,
+       1.6472634077072144,
+       1.6472634077072144
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.7454390128453574
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.4923628568649292,
+      1.0,
+      0.859687328338623
+     ],
+     "core_srgb_q50": [
+      0.653723955154419,
+      0.653723955154419,
+      0.653723955154419
+     ],
+     "display_sha256": "bd9b4974ce0244e36474269c4d4369f308dbd7f37a6b98c64cb9639fd59077a1",
+     "thumb": "foma_pan100_DSC_7426_candidate.jpg",
+     "thumb_sha256": "294bdaedb09dbfc0ec52a0574c9841d3f62b43972e46ff4f4b31be75e7537ef6"
+    },
+    "DSC_7427.NEF": {
+     "raw_sha256": "7bbe3b5c4a881199a338571762614abd3083e589f6b2d4d289318ca5741f736a",
+     "exposure": 0.06666666666666667,
+     "own_rgb": [
+      0.4057457447052002,
+      0.8530548214912415,
+      0.7129385471343994
+     ],
+     "roll_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "level_diff": 0.0755539960478613,
+     "chroma_part": 0.00032236717160269435,
+     "own_error": null,
+     "roll_max": 1.0143984357515972,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.9809,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.0109140872955322,
+       2.0109140872955322,
+       2.0109140872955322
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.351523478825887
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.42021819949150085,
+      0.8828564882278442,
+      0.738185703754425
+     ],
+     "core_srgb_q50": [
+      0.21937933564186096,
+      0.21937933564186096,
+      0.21937933564186096
+     ],
+     "display_sha256": "7e805a981aa4aad2d73d4d6854a29269301a0460442bc05b21105f12cabf48a6",
+     "thumb": "foma_pan100_DSC_7427_candidate.jpg",
+     "thumb_sha256": "e080284a139852670125498428db307f897e9ae897acc04762f0a4950220426f"
+    },
+    "DSC_7428.NEF": {
+     "raw_sha256": "2fbaccfe9d07e6bd08ff83c044afa2633a0686033246f8cccd65cea89b878638",
+     "exposure": 0.07692307692307693,
+     "own_rgb": [
+      0.30008649826049805,
+      0.6296973824501038,
+      0.5220641493797302
+     ],
+     "roll_rgb": [
+      0.5573908296915201,
+      1.170459733559535,
+      0.9792022980176485
+     ],
+     "level_diff": 0.27042883545188284,
+     "chroma_part": 0.0027197177271418016,
+     "own_error": null,
+     "roll_max": 1.170459733559535,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.5573908296915201,
+      1.170459733559535,
+      0.9792022980176485
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.355,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3249,
+      "midtone": 0.2445,
+      "shoulder": 0.2574,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.436,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.6500756740570068,
+       1.6500756740570068,
+       1.6500756740570068
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.7501261234283447
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.4168154299259186,
+      0.8765392303466797,
+      0.7291523814201355
+     ],
+     "core_srgb_q50": [
+      0.47227561473846436,
+      0.47227561473846436,
+      0.47227561473846436
+     ],
+     "display_sha256": "39e579b32a7131631e59ebd033854e34af02b10ea16bc5f23d368ad6bc2836cb",
+     "thumb": "foma_pan100_DSC_7428_candidate.jpg",
+     "thumb_sha256": "4c0ce00bb55974bd9f15ef82f60d39c03521e22efd1b0dabd1abcc0318a6f813"
+    },
+    "DSC_7429.NEF": {
+     "raw_sha256": "0166fa3bfcc1563073a03c687e11b86ae6a76cded03d6c44889e0a5b0151a7f9",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.14006729423999786,
+      0.29531097412109375,
+      0.24624569714069366
+     ],
+     "roll_rgb": [
+      0.18115201964974403,
+      0.3803994134068489,
+      0.3182407468557358
+     ],
+     "level_diff": 0.11101794267639642,
+     "chroma_part": 0.0010576902974157726,
+     "own_error": null,
+     "roll_max": 0.3803994134068489,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.18115201964974403,
+      0.3803994134068489,
+      0.3182407468557358
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 0.7038,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "blacks": -0.0124,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       0.6984343528747559,
+       0.6984343528747559,
+       0.6984343528747559
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.1640572547912598
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.1441672444343567,
+      0.3000229001045227,
+      0.2508430480957031
+     ],
+     "core_srgb_q50": [
+      0.5208093523979187,
+      0.5208093523979187,
+      0.5208093523979187
+     ],
+     "display_sha256": "77a8215e38d8749ef00e9fea3629592761ba13c50291811e2745b942bbf338c6",
+     "thumb": "foma_pan100_DSC_7429_candidate.jpg",
+     "thumb_sha256": "464545aaa1c3e7139a9390a575e8e30a2991d871066138a5a6f928f5946ebc7e"
+    },
+    "DSC_7430.NEF": {
+     "raw_sha256": "8ee12a3e146d44be66c841e35454e414a4e48109cb4dedb252c5398eef77861d",
+     "exposure": 0.1,
+     "own_rgb": [
+      0.44009798765182495,
+      0.9291548132896423,
+      0.770313024520874
+     ],
+     "roll_rgb": [
+      0.7246080785989761,
+      1.5215976536273956,
+      1.2729629874229431
+     ],
+     "level_diff": 0.21630469102662706,
+     "chroma_part": 0.002092942142074755,
+     "own_error": null,
+     "roll_max": 1.5215976536273956,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.4409704804420471,
+      0.931120753288269,
+      0.771755576133728
+     ],
+     "base_warnings": [
+      "5928 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": -0.0003,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.1473263502120972,
+       1.1473263502120972,
+       1.1473263502120972
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.9122105836868286
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.3205615282058716,
+      0.6707103252410889,
+      0.5549706220626831
+     ],
+     "core_srgb_q50": [
+      0.530881941318512,
+      0.530881941318512,
+      0.530881941318512
+     ],
+     "display_sha256": "da72dc9f792f07233bae4931dd9bd098b27acc4a1381746173bf08cf8fc49900",
+     "thumb": "foma_pan100_DSC_7430_candidate.jpg",
+     "thumb_sha256": "7a989615562da5856d5e1c60a7659add11411ade82565e9b56c86017ea9c2cf6"
+    },
+    "DSC_7431.NEF": {
+     "raw_sha256": "90b9eae5bfe7e781b97313e04a39557162b1cf9827d22a679943a2d290312077",
+     "exposure": 0.125,
+     "own_rgb": [
+      0.45096635818481445,
+      0.9484834671020508,
+      0.7835467457771301
+     ],
+     "roll_rgb": [
+      0.9057600982487202,
+      1.9019970670342445,
+      1.591203734278679
+     ],
+     "level_diff": 0.3042366651661088,
+     "chroma_part": 0.0034242129234486884,
+     "own_error": null,
+     "roll_max": 1.9019970670342445,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.45123979449272156,
+      0.9496452212333679,
+      0.7839322686195374
+     ],
+     "base_warnings": [
+      "14173 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.4473,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.373,
+      "shadows": 0.0436,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.7262749671936035,
+       1.7262749671936035,
+       1.7262749671936035
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.877124945322673
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.7780727744102478,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.6309309601783752,
+      0.6309309601783752,
+      0.6309309601783752
+     ],
+     "display_sha256": "a4c7539c483408968592a96120c81dff58c5a700011f1d22e36f374de170b87c",
+     "thumb": "foma_pan100_DSC_7431_candidate.jpg",
+     "thumb_sha256": "d88797ef1db9b81f9106f7613ab58f2b0f422eb124ade50ec3ca925475cd8e8b"
+    },
+    "DSC_7432.NEF": {
+     "raw_sha256": "e6f514458aa788d410ca63b31dcd50a9da19c66112de97d5a7e36dce7d12f776",
+     "exposure": 0.3333333333333333,
+     "own_rgb": [
+      0.30370599031448364,
+      0.6403723955154419,
+      0.5296147465705872
+     ],
+     "roll_rgb": [
+      2.415360261996587,
+      5.071992178757985,
+      4.243209958076477
+     ],
+     "level_diff": 0.901002994672163,
+     "chroma_part": 0.0027314578542096957,
+     "own_error": null,
+     "roll_max": 5.071992178757985,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.30614176392555237,
+      0.6466315984725952,
+      0.5336690545082092
+     ],
+     "base_warnings": [
+      "R base blocks spread 33.8% (p05-p95)",
+      "G base blocks spread 33.3% (p05-p95)",
+      "B base blocks spread 32.7% (p05-p95)",
+      "17175 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.0865,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.185,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.2134239673614502,
+       1.2134239673614502,
+       1.2134239673614502
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.0223732789357505
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.5185383558273315,
+      0.5185383558273315,
+      0.5185383558273315
+     ],
+     "display_sha256": "60e45e9a6d651c40dacf2b489057755367492f4e6c9d03fbf02071193e2ecb8d",
+     "thumb": "foma_pan100_DSC_7432_candidate.jpg",
+     "thumb_sha256": "8a0672a77ddef76e5dd8e0d59977d5485f3e54203de8e851cfa578dc2b5fecc6"
+    },
+    "DSC_7433.NEF": {
+     "raw_sha256": "2159d46946f82766833f0be5058a5478ff6e9ebc28df2aa9ffaa23ea6964911a",
+     "exposure": 0.06666666666666667,
+     "own_rgb": [
+      0.46063053607940674,
+      0.9701670408248901,
+      0.8181499242782593
+     ],
+     "roll_rgb": [
+      0.4830720523993174,
+      1.0143984357515972,
+      0.8486419916152954
+     ],
+     "level_diff": 0.018637621657930478,
+     "chroma_part": 0.002745998918248633,
+     "own_error": null,
+     "roll_max": 1.0143984357515972,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.460624098777771,
+      0.9702754020690918,
+      0.8183413147926331
+     ],
+     "base_warnings": [
+      "13573 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.9423,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.612,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.8431230783462524,
+       1.8431230783462524,
+       1.8431230783462524
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.0718717972437544
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.5002822875976562,
+      1.0,
+      0.8866865038871765
+     ],
+     "core_srgb_q50": [
+      0.4454115927219391,
+      0.4454115927219391,
+      0.4454115927219391
+     ],
+     "display_sha256": "ace5f44f28a1589595d111eed4ee9d99984fc18f5f0182b0b4957105dd1f2967",
+     "thumb": "foma_pan100_DSC_7433_candidate.jpg",
+     "thumb_sha256": "1df9dd00c171d12faa0c361e63ec14c27e6ff9aa185cc29ec5ead929c3d57647"
+    },
+    "DSC_7434.NEF": {
+     "raw_sha256": "918be4890efd964761aae7285f15050baefba8815040c9651892f586b0fa208d",
+     "exposure": 0.03333333333333333,
+     "own_rgb": [
+      0.21346431970596313,
+      0.44891059398651123,
+      0.3745763301849365
+     ],
+     "roll_rgb": [
+      0.2415360261996587,
+      0.5071992178757986,
+      0.4243209958076477
+     ],
+     "level_diff": 0.053609845007705194,
+     "chroma_part": 0.0005911244140421323,
+     "own_error": null,
+     "roll_max": 0.5071992178757986,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.21371786296367645,
+      0.44942396879196167,
+      0.37534141540527344
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 1.5448,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.2767,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.9202253818511963,
+       1.9202253818511963,
+       1.9202253818511963
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.2003756364186606
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.21425192058086395,
+      0.4471503794193268,
+      0.37393757700920105
+     ],
+     "core_srgb_q50": [
+      0.11254756152629852,
+      0.11254756152629852,
+      0.11254756152629852
+     ],
+     "display_sha256": "6eac90890469e6e17dc1ed6cebf2d45f09b3a6ee9e238baec02c8b7f9bdb5c9f",
+     "thumb": "foma_pan100_DSC_7434_candidate.jpg",
+     "thumb_sha256": "c4516c55224e8cb429b3ec4cee9f5557afacefd674ea3c72dc6a249922d18b04"
+    },
+    "DSC_7435.NEF": {
+     "raw_sha256": "dd771958a1a0f93a88542f9167946e35195bb9b21492781a1ac6272d43c3b42d",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.2702479958534241,
+      0.5688161849975586,
+      0.4689449071884155
+     ],
+     "roll_rgb": [
+      1.4492161571979523,
+      3.0431953072547913,
+      2.5459259748458862
+     ],
+     "level_diff": 0.7308175046541221,
+     "chroma_part": 0.003906443614742683,
+     "own_error": null,
+     "roll_max": 3.0431953072547913,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.2733653783798218,
+      0.5765163898468018,
+      0.4741893708705902
+     ],
+     "base_warnings": [
+      "R base blocks spread 45.7% (p05-p95)",
+      "G base blocks spread 45.8% (p05-p95)",
+      "B base blocks spread 45.8% (p05-p95)",
+      "5744 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.0333,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.2,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.3632410764694214,
+       1.3632410764694214,
+       1.3632410764694214
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.272068460782369
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.404620885848999,
+      0.404620885848999,
+      0.404620885848999
+     ],
+     "display_sha256": "b912d856c3ee8b6d55c21e4abea213760e18e480d903451e54cd98f68461f21b",
+     "thumb": "foma_pan100_DSC_7435_candidate.jpg",
+     "thumb_sha256": "4d1f0adea5953995fa446db56a67467b02424844df7b5f6f36d8c2ccb8bfaf75"
+    },
+    "DSC_7436.NEF": {
+     "raw_sha256": "fefb0d0d45f78a8ac70c53fe3c8946f3e0d36c7dc8c19b04f209376a7664aeaa",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.42587417364120483,
+      0.8974395990371704,
+      0.7378459572792053
+     ],
+     "roll_rgb": [
+      1.4492161571979523,
+      3.0431953072547913,
+      2.5459259748458862
+     ],
+     "level_diff": 0.5333521767515034,
+     "chroma_part": 0.004527893150578888,
+     "own_error": null,
+     "roll_max": 3.0431953072547913,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.42625313997268677,
+      0.8987563848495483,
+      0.7395437359809875
+     ],
+     "base_warnings": [
+      "5257 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.2271,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.231,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.5897274017333984,
+       1.5897274017333984,
+       1.5897274017333984
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.649545669555664
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.6914625763893127,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.48822128772735596,
+      0.48822128772735596,
+      0.48822128772735596
+     ],
+     "display_sha256": "ac7152faea25168842d7a02c34676aeffae0d764dae7e66ad248518e38b5f153",
+     "thumb": "foma_pan100_DSC_7436_candidate.jpg",
+     "thumb_sha256": "a2ba58eb247bd31de20af9a7855919a51c5f7cf6802afcf7afe241a6a2361573"
+    },
+    "DSC_7437.NEF": {
+     "raw_sha256": "c8f64e0f5d50a66c4a2236332f23e029bcd2591862a64497e10f446bc9c2b01a",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.21984031796455383,
+      0.4646543264389038,
+      0.37904584407806396
+     ],
+     "roll_rgb": [
+      1.4492161571979523,
+      3.0431953072547913,
+      2.5459259748458862
+     ],
+     "level_diff": 0.8207932322481158,
+     "chroma_part": 0.006360800414598744,
+     "own_error": null,
+     "roll_max": 3.0431953072547913,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.221255823969841,
+      0.46471351385116577,
+      0.3804226815700531
+     ],
+     "base_warnings": [
+      "R base blocks spread 99.0% (p05-p95)",
+      "G base blocks spread 98.4% (p05-p95)",
+      "B base blocks spread 98.3% (p05-p95)",
+      "27319 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "white_point_unrepresentative",
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.304,
+      "midtone": 0.23,
+      "shoulder": 0.226,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.047,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.1847827434539795,
+       1.1847827434539795,
+       1.1847827434539795
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 1.9746379057566326
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "core_srgb_q50": [
+      0.29948216676712036,
+      0.29948216676712036,
+      0.29948216676712036
+     ],
+     "display_sha256": "4906f93c42e3268028df37de1de26a74a977d973ed78aa95a7a9122094fffc7c",
+     "thumb": "foma_pan100_DSC_7437_candidate.jpg",
+     "thumb_sha256": "9be5051ecb1cb1ca86327860fe8d3f12dfa4a2398f370a5e934eae74aaf4adbf"
+    }
+   },
+   "opened": true,
+   "complete": true
+  },
+  "eastman_5294": {
+   "folder": "Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-",
+   "n": 21,
+   "mixed_rolls": null,
+   "n_base": 21,
+   "roll_warnings": [],
+   "roll_error": null,
+   "thumb_rev": "t5a",
+   "frames": {
+    "DSC_8046.NEF": {
+     "raw_sha256": "fe090d26cb47797be14178e31682801076ea64767cf0e1bae9edaa2a25edce72",
+     "exposure": 0.06666666666666667,
+     "own_rgb": [
+      0.12775948643684387,
+      0.28552937507629395,
+      0.2777152359485626
+     ],
+     "roll_rgb": [
+      0.7103245258331298,
+      1.3949480056762693,
+      1.0253165562947588
+     ],
+     "level_diff": 0.667076380621058,
+     "chroma_part": 0.09981811698872745,
+     "own_error": null,
+     "roll_max": 1.3949480056762693,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.1277943104505539,
+      0.2863050401210785,
+      0.27823299169540405
+     ],
+     "base_warnings": [
+      "38% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+     ],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 1.5146,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.85,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.2,
+      "blacks": -0.0207,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.4697999954223633,
+       1.4697999954223633,
+       1.4697999954223633
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.4496666590372724
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.09643702208995819,
+      0.22943465411663055,
+      0.24402227997779846
+     ],
+     "core_srgb_q50": [
+      0.45057567954063416,
+      0.45057567954063416,
+      0.45057567954063416
+     ],
+     "display_sha256": "423135f51da1041f1fa0ea8787160d772ae2668cea539ec402406d2524133680",
+     "thumb": "eastman_5294_DSC_8046_candidate.jpg",
+     "thumb_sha256": "bf98d8d0e3c2024b23da1a55874cd43aaa03c8934bf438786255bf43042b37b7"
+    },
+    "DSC_8047.NEF": {
+     "raw_sha256": "dc8fbf98b6537975e12e59c9f300a02b38eb33e62465cc0deb38e0b140d8005f",
+     "exposure": 0.05,
+     "own_rgb": [
+      0.1550237238407135,
+      0.3492288589477539,
+      0.34416890144348145
+     ],
+     "roll_rgb": [
+      0.5327433943748474,
+      1.0462110042572021,
+      0.7689874172210692
+     ],
+     "level_diff": 0.45392555843758914,
+     "chroma_part": 0.10477795045025601,
+     "own_error": null,
+     "roll_max": 1.0462110042572021,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.485867750265121,
+      0.9541557761360002,
+      0.7013248598339205
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 0.0758,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.0494446754455566,
+       2.0494446754455566,
+       2.0494446754455566
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.4157411257425947
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.11404593288898468,
+      0.2857099175453186,
+      0.30679789185523987
+     ],
+     "core_srgb_q50": [
+      0.2130327820777893,
+      0.2130327820777893,
+      0.2130327820777893
+     ],
+     "display_sha256": "3ffbc3bff7fe5599b19a4cbdb4608e373396c3da088b5a45dd544bb984fe826b",
+     "thumb": "eastman_5294_DSC_8047_candidate.jpg",
+     "thumb_sha256": "885679d202043fb3f7d0def36ce1efc5b6297b8c6125e268638ea1f755727824"
+    },
+    "DSC_8048.NEF": {
+     "raw_sha256": "c314b342ad9359233abaf22abc15b75190c8292be739b98a95a0182ef871e6f2",
+     "exposure": 0.125,
+     "own_rgb": [
+      0.2096935510635376,
+      0.47584018111228943,
+      0.4340835213661194
+     ],
+     "roll_rgb": [
+      1.3318584859371185,
+      2.615527510643005,
+      1.9224685430526731
+     ],
+     "level_diff": 0.7297523769405657,
+     "chroma_part": 0.08346643418725574,
+     "own_error": null,
+     "roll_max": 2.615527510643005,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.20978866517543793,
+      0.47770658135414124,
+      0.4322728216648102
+     ],
+     "base_warnings": [
+      "27% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+      "R base blocks spread 23.0% (p05-p95)",
+      "G base blocks spread 20.8% (p05-p95)",
+      "B base blocks spread 19.1% (p05-p95)",
+      "4741 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.4087,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.0466835498809814,
+       2.0466835498809814,
+       2.0466835498809814
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.4111392498016357
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.4293888807296753,
+      0.8498817682266235,
+      0.6746471524238586
+     ],
+     "core_srgb_q50": [
+      0.42914915084838867,
+      0.42914915084838867,
+      0.42914915084838867
+     ],
+     "display_sha256": "24334ef2d80d62492c270d02eba632610b55e6fc63cefadbd402f84be30949c4",
+     "thumb": "eastman_5294_DSC_8048_candidate.jpg",
+     "thumb_sha256": "15ba74c216a0ae0b5b1f00e6064a462cc7214ee2ff644152d5aa9278b1ef8379"
+    },
+    "DSC_8049.NEF": {
+     "raw_sha256": "3246cec1cf8a6ace644494df6e638bddb67ec09ae0e9c4f634929033d50b1ec5",
+     "exposure": 0.05,
+     "own_rgb": [
+      0.0932818353176117,
+      0.22478024661540985,
+      0.22927461564540863
+     ],
+     "roll_rgb": [
+      0.5327433943748474,
+      1.0462110042572021,
+      0.7689874172210692
+     ],
+     "level_diff": 0.6500484637095493,
+     "chroma_part": 0.12448520418872844,
+     "own_error": null,
+     "roll_max": 1.0462110042572021,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.485867750265121,
+      0.9541557761360002,
+      0.7013248598339205
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 2.5,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.715,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.477558135986328,
+       2.477558135986328,
+       2.477558135986328
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 4.129263559977214
+     },
+     "input_warnings": [
+      {
+       "code": "input_density_implausible",
+       "value": 2.477558135986328,
+       "message": "\u5bc6\u5ea6\u8303\u56f4 2.48 D \u8d85\u51fa\u8d1f\u7247\u5e38\u89c1\u8303\u56f4\uff1a\u53ef\u80fd\u662f\u5df2\u53cd\u76f8\u7684\u6b63\u7247\u3001\u5df2\u7f16\u8f91\u7684\u56fe\u7247\u6216\u626b\u63cf\u88c1\u5207\u3002"
+      }
+     ],
+     "input_center_p99": [
+      0.15283437073230743,
+      0.2897840738296509,
+      0.252231627702713
+     ],
+     "core_srgb_q50": [
+      0.22597470879554749,
+      0.22597470879554749,
+      0.22597470879554749
+     ],
+     "display_sha256": "5c26d8c0f73a06d692a7ba2803b81f904a2cf900fff17b3fb14763f252e51490",
+     "thumb": "eastman_5294_DSC_8049_candidate.jpg",
+     "thumb_sha256": "f42beacfb288bee7b2051cf2b609ccd8a47084afcfe65c4c9a75744751b14964"
+    },
+    "DSC_8050.NEF": {
+     "raw_sha256": "5686ebe55d9ed5e950f6e08f9df0033316cd3a0e5c78282d7c84139b4b449ef4",
+     "exposure": 0.1,
+     "own_rgb": [
+      0.2884819209575653,
+      0.6633359789848328,
+      0.6626311540603638
+     ],
+     "roll_rgb": [
+      1.0654867887496948,
+      2.0924220085144043,
+      1.5379748344421384
+     ],
+     "level_diff": 0.477340857326004,
+     "chroma_part": 0.11166347875178684,
+     "own_error": null,
+     "roll_max": 2.0924220085144043,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.2892957925796509,
+      0.6671091914176941,
+      0.6658121347427368
+     ],
+     "base_warnings": [
+      "32% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region",
+      "R base blocks spread 12.4% (p05-p95)",
+      "479 blocks contain saturated samples (excluded)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.2,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.298,
+      "shoulder": 0.322,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "shadows": 0.136,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.8181450366973877,
+       1.8181450366973877,
+       1.8181450366973877
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.0302417278289795
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.27956053614616394,
+      0.6345311403274536,
+      0.618493914604187
+     ],
+     "core_srgb_q50": [
+      0.31845128536224365,
+      0.31845128536224365,
+      0.31845128536224365
+     ],
+     "display_sha256": "584918e355a12f80c1f669b91e673e3123027d69bc8cc4905398da467591c82f",
+     "thumb": "eastman_5294_DSC_8050_candidate.jpg",
+     "thumb_sha256": "de1416a2b07ded7408005218b7011124a881f8640d830b2c54e2dee78237be15"
+    },
+    "DSC_8051.NEF": {
+     "raw_sha256": "dd20dc3b91bcdf8cbb64b64c3df293a354a1c406a2278962af4098ade85df9c2",
+     "exposure": 0.04,
+     "own_rgb": [
+      0.07939702272415161,
+      0.23142999410629272,
+      0.29365018010139465
+     ],
+     "roll_rgb": [
+      0.42619471549987786,
+      0.8369688034057616,
+      0.6151899337768554
+     ],
+     "level_diff": 0.5364241395437652,
+     "chroma_part": 0.21524519050161928,
+     "own_error": null,
+     "roll_max": 0.8369688034057616,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.38869420021209683,
+      0.7633246209088002,
+      0.5610598878671365
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.2611,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.424241781234741,
+       2.424241781234741,
+       2.424241781234741
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 4.040402968724569
+     },
+     "input_warnings": [
+      {
+       "code": "input_density_implausible",
+       "value": 2.424241781234741,
+       "message": "\u5bc6\u5ea6\u8303\u56f4 2.42 D \u8d85\u51fa\u8d1f\u7247\u5e38\u89c1\u8303\u56f4\uff1a\u53ef\u80fd\u662f\u5df2\u53cd\u76f8\u7684\u6b63\u7247\u3001\u5df2\u7f16\u8f91\u7684\u56fe\u7247\u6216\u626b\u63cf\u88c1\u5207\u3002"
+      }
+     ],
+     "input_center_p99": [
+      0.08265811949968338,
+      0.23576714098453522,
+      0.3052719831466675
+     ],
+     "core_srgb_q50": [
+      0.2284644991159439,
+      0.2284644991159439,
+      0.2284644991159439
+     ],
+     "display_sha256": "a5ea6a7482566045975b27ba343b61201524cab5a1897a533390860fe624765a",
+     "thumb": "eastman_5294_DSC_8051_candidate.jpg",
+     "thumb_sha256": "0201064f9bcb3ca007f0e33e63c81ed0b14c111398aed42e642adef9bca544d0"
+    },
+    "DSC_8052.NEF": {
+     "raw_sha256": "9ec3f2be438df0ff33dfb84a7a5d85e1d55b55272a345190e1ff52eb9b4a8979",
+     "exposure": 0.05,
+     "own_rgb": [
+      0.07052212953567505,
+      0.2225157916545868,
+      0.3112238049507141
+     ],
+     "roll_rgb": [
+      0.5327433943748474,
+      1.0462110042572021,
+      0.7689874172210692
+     ],
+     "level_diff": 0.6477658423296049,
+     "chroma_part": 0.2549194167332635,
+     "own_error": null,
+     "roll_max": 1.0462110042572021,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.485867750265121,
+      0.9541557761360002,
+      0.7013248598339205
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "white_point_unrepresentative",
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.25,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.152,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.2295804023742676,
+       2.2295804023742676,
+       2.2295804023742676
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.7159673372904463
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.07084763795137405,
+      0.2208133041858673,
+      0.32648202776908875
+     ],
+     "core_srgb_q50": [
+      0.1388358771800995,
+      0.1388358771800995,
+      0.1388358771800995
+     ],
+     "display_sha256": "c740dcc8c2dc43f5e0cb6b1fdef8c39c0694e34e57adbb47e1304318ad84aaaf",
+     "thumb": "eastman_5294_DSC_8052_candidate.jpg",
+     "thumb_sha256": "063c7b162b4bb8c123e336da7555a0aeb724ffbb60e5b55520537107c3ff964a"
+    },
+    "DSC_8053.NEF": {
+     "raw_sha256": "a94d9834731c3df8ef3e55072878f176a8bdbdf9be28a2a2d929a2b5cb9831da",
+     "exposure": 0.04,
+     "own_rgb": [
+      0.11373984068632126,
+      0.30268537998199463,
+      0.35488325357437134
+     ],
+     "roll_rgb": [
+      0.42619471549987786,
+      0.8369688034057616,
+      0.6151899337768554
+     ],
+     "level_diff": 0.41811232848866936,
+     "chroma_part": 0.17918861401105496,
+     "own_error": null,
+     "roll_max": 0.8369688034057616,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.38869420021209683,
+      0.7633246209088002,
+      0.5610598878671365
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.0299,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3358,
+      "midtone": 0.2314,
+      "shoulder": 0.2737,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.317,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.1256308555603027,
+       2.1256308555603027,
+       2.1256308555603027
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.542718092600505
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.12324711680412292,
+      0.31271839141845703,
+      0.37390705943107605
+     ],
+     "core_srgb_q50": [
+      0.39515215158462524,
+      0.39515215158462524,
+      0.39515215158462524
+     ],
+     "display_sha256": "2df0b90d27e852b74ee2fa718d061d7b72dd555271cc1941ea408f3dc1a2b0d2",
+     "thumb": "eastman_5294_DSC_8053_candidate.jpg",
+     "thumb_sha256": "06662a35a0f4d327a2618e18a380a7ab34044fcfd9d52e18546b21531ed650bb"
+    },
+    "DSC_8054.NEF": {
+     "raw_sha256": "59e58caf8ab6b57bf7b5bf5cfe8cdd0cbd85bd3387a6e858a155b938b70a90a3",
+     "exposure": 0.05,
+     "own_rgb": [
+      0.14375519752502441,
+      0.326813668012619,
+      0.3352709710597992
+     ],
+     "roll_rgb": [
+      0.5327433943748474,
+      1.0462110042572021,
+      0.7689874172210692
+     ],
+     "level_diff": 0.4782456238093122,
+     "chroma_part": 0.11772234253122643,
+     "own_error": null,
+     "roll_max": 1.0462110042572021,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.485867750265121,
+      0.9541557761360002,
+      0.7013248598339205
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.9731,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3293,
+      "midtone": 0.2385,
+      "shoulder": 0.2639,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.189,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.173171281814575,
+       2.173171281814575,
+       2.173171281814575
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.6219521363576255
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.1426718533039093,
+      0.32486456632614136,
+      0.3466697037220001
+     ],
+     "core_srgb_q50": [
+      0.3069108724594116,
+      0.3069108724594116,
+      0.3069108724594116
+     ],
+     "display_sha256": "2a4cb93323c91bd64d06039a60d13815c64909a22080c054022f38bd7f85beeb",
+     "thumb": "eastman_5294_DSC_8054_candidate.jpg",
+     "thumb_sha256": "8eec69c186da02392c991b3a8101181198ce6e14e0ff61d8729b8229c9573d70"
+    },
+    "DSC_8055.NEF": {
+     "raw_sha256": "2377c0828812e94988d643d872449bfbd06da519fbdbedfaa7319022bfcdf2f2",
+     "exposure": 0.03333333333333333,
+     "own_rgb": [
+      0.23747335374355316,
+      0.4730062484741211,
+      0.40702757239341736
+     ],
+     "roll_rgb": [
+      0.3551622629165649,
+      0.6974740028381347,
+      0.5126582781473794
+     ],
+     "level_diff": 0.14789240680076768,
+     "chroma_part": 0.04768826196463423,
+     "own_error": null,
+     "roll_max": 0.6974740028381347,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.35126218764466655,
+      0.689814965279012,
+      0.5070287220759725
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.3265,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.2755,
+      "shoulder": 0.2882,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.0909,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.4121413230895996,
+       2.4121413230895996,
+       2.4121413230895996
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 4.020235538482666
+     },
+     "input_warnings": [
+      {
+       "code": "input_density_implausible",
+       "value": 2.4121413230895996,
+       "message": "\u5bc6\u5ea6\u8303\u56f4 2.41 D \u8d85\u51fa\u8d1f\u7247\u5e38\u89c1\u8303\u56f4\uff1a\u53ef\u80fd\u662f\u5df2\u53cd\u76f8\u7684\u6b63\u7247\u3001\u5df2\u7f16\u8f91\u7684\u56fe\u7247\u6216\u626b\u63cf\u88c1\u5207\u3002"
+      }
+     ],
+     "input_center_p99": [
+      0.13508811593055725,
+      0.31134507060050964,
+      0.32267656922340393
+     ],
+     "core_srgb_q50": [
+      0.268352746963501,
+      0.268352746963501,
+      0.268352746963501
+     ],
+     "display_sha256": "7d98430533e70d8a65a72ec1c26193c321e2022a9f0aab508933b7d70ac9d32d",
+     "thumb": "eastman_5294_DSC_8055_candidate.jpg",
+     "thumb_sha256": "c87347189abdd0cf01d8ba2a8127b6baf2830f6b283e0b6546fac4b2281469d4"
+    },
+    "DSC_8056.NEF": {
+     "raw_sha256": "641a648cfb92091bf23eef48947cd12fb6b217d0871b8e4d774b75a0fedbe945",
+     "exposure": 0.04,
+     "own_rgb": [
+      0.4807406961917877,
+      0.9586446285247803,
+      0.6985645294189453
+     ],
+     "roll_rgb": [
+      0.42619471549987786,
+      0.8369688034057616,
+      0.6151899337768554
+     ],
+     "level_diff": -0.055482836474997216,
+     "chroma_part": 0.003465535994426519,
+     "own_error": null,
+     "roll_max": 0.8369688034057616,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.4804913401603699,
+      0.9594110250473022,
+      0.6987869143486023
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.056,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3033,
+      "midtone": 0.23,
+      "shoulder": 0.225,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.009,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.1631712913513184,
+       2.1631712913513184,
+       2.1631712913513184
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.6052854855855307
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.24243533611297607,
+      0.4462958872318268,
+      0.3526360094547272
+     ],
+     "core_srgb_q50": [
+      0.35836470127105713,
+      0.35836470127105713,
+      0.35836470127105713
+     ],
+     "display_sha256": "a457349cf613b3f22fb6b334c305d5d071a359ddca5e25918c25d3fc412cf94c",
+     "thumb": "eastman_5294_DSC_8056_candidate.jpg",
+     "thumb_sha256": "90557f003c4d928656327800697a3640c75a3c0c14e727afa000ab4ab7d3cf99"
+    },
+    "DSC_8057.NEF": {
+     "raw_sha256": "b90e5e8ae8aa948c84c930b91bf9244186af90566529f10de2bed29ddbb3ffe7",
+     "exposure": 0.07692307692307693,
+     "own_rgb": [
+      0.1060347780585289,
+      0.299372136592865,
+      0.3676382303237915
+     ],
+     "roll_rgb": [
+      0.8196052221151499,
+      1.609555391164926,
+      1.183057564955491
+     ],
+     "level_diff": 0.7087453817954242,
+     "chroma_part": 0.20116017174939016,
+     "own_error": null,
+     "roll_max": 1.609555391164926,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.10615701228380203,
+      0.2997024357318878,
+      0.3680170774459839
+     ],
+     "base_warnings": [
+      "25% of the brightest candidates rejected by chromaticity check; possible light bypassing the film - verify base region"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.125,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3986,
+      "midtone": 0.2727,
+      "shoulder": 0.3679,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.6796050071716309,
+       1.6796050071716309,
+       1.6796050071716309
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.7993416786193848
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.17918668687343597,
+      0.3960936963558197,
+      0.40282291173934937
+     ],
+     "core_srgb_q50": [
+      0.20409131050109863,
+      0.20409131050109863,
+      0.20409131050109863
+     ],
+     "display_sha256": "e5bf470e38fcf52703141b82c040fae315f61c8d9d8131c63acb1badc2d2cd00",
+     "thumb": "eastman_5294_DSC_8057_candidate.jpg",
+     "thumb_sha256": "e33c43cc10d0ddb2e13e561ee42442d99e1f00e979b45392f59f6c3a133b93db"
+    },
+    "DSC_8058.NEF": {
+     "raw_sha256": "d8c8b61b7b1de2a430adb46cf3f78c305406e6651547bd90ec94f0900bf32f7d",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.25138482451438904,
+      0.4956554174423218,
+      0.36990201473236084
+     ],
+     "roll_rgb": [
+      0.2663716971874237,
+      0.5231055021286011,
+      0.3844937086105346
+     ],
+     "level_diff": 0.02178699761869489,
+     "chroma_part": 0.00498445647051711,
+     "own_error": null,
+     "roll_max": 0.5231055021286011,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.2513313591480255,
+      0.4956740736961365,
+      0.37050431966781616
+     ],
+     "base_warnings": [
+      "G base blocks spread 10.4% (p05-p95)"
+     ],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.729,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.481,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.3139805793762207,
+       2.3139805793762207,
+       2.3139805793762207
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.856634298960368
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.13095292448997498,
+      0.2559243142604828,
+      0.2312903106212616
+     ],
+     "core_srgb_q50": [
+      0.14293864369392395,
+      0.14293864369392395,
+      0.14293864369392395
+     ],
+     "display_sha256": "eb56a51251e869d7f3854a7ae256da4a28bf45cafaaccd13432dfcb22a28a4f5",
+     "thumb": "eastman_5294_DSC_8058_candidate.jpg",
+     "thumb_sha256": "28c326e0c048176c18f9e5ad04aa46a2869eccb98c0ff7b7504a6dc893e9d02e"
+    },
+    "DSC_8059.NEF": {
+     "raw_sha256": "08291dbdb4bd06a883c044665d021991bfb429745e636ba14c23d252da359cf5",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.2663716971874237,
+      0.5231055021286011,
+      0.38449370861053467
+     ],
+     "roll_rgb": [
+      0.2663716971874237,
+      0.5231055021286011,
+      0.3844937086105346
+     ],
+     "level_diff": -1.6072124442554786e-17,
+     "chroma_part": 3.214424888510958e-17,
+     "own_error": null,
+     "roll_max": 0.5231055021286011,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.2661783695220947,
+      0.5248035192489624,
+      0.38640421628952026
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "white_point_unrepresentative",
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": -0.1238,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.432,
+      "shadows": 0.0153,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.3465187549591064,
+       2.3465187549591064,
+       2.3465187549591064
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.9108645915985107
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.2663919925689697,
+      0.5184252858161926,
+      0.3847104609012604
+     ],
+     "core_srgb_q50": [
+      0.1010732501745224,
+      0.1010732501745224,
+      0.1010732501745224
+     ],
+     "display_sha256": "abb4b7779414493cd6fe79820f6189129d4b4d73eedd629aa904832d337db08b",
+     "thumb": "eastman_5294_DSC_8059_candidate.jpg",
+     "thumb_sha256": "edf67f608c87ff5640af378574585c2219af2a222436025ccc21fdd011f03330"
+    },
+    "DSC_8060.NEF": {
+     "raw_sha256": "bbb48293cf7ebd7f66dad1f82697ad451d281ddc0037df7d70cd1c29fd1e902e",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.1372344046831131,
+      0.2604619264602661,
+      0.21032746136188507
+     ],
+     "roll_rgb": [
+      0.21309735774993893,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "level_diff": 0.18737777789877255,
+     "chroma_part": 0.022294532938663764,
+     "own_error": null,
+     "roll_max": 0.4184844017028808,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.2130973577499389,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": -0.1103,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.2416874170303345,
+       1.2416874170303345,
+       1.2416874170303345
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 2.069479028383891
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.13931487500667572,
+      0.26451513171195984,
+      0.21345846354961395
+     ],
+     "core_srgb_q50": [
+      0.6067190170288086,
+      0.6067190170288086,
+      0.6067190170288086
+     ],
+     "display_sha256": "07cbd214ebd322666161c1e71ed850ea5676494b712bd5598e535fa3d0ccbb61",
+     "thumb": "eastman_5294_DSC_8060_candidate.jpg",
+     "thumb_sha256": "37b457de14588975d4842168a560c8eff4184159c48d5b7a641d7c5aabd9fb47"
+    },
+    "DSC_8061.NEF": {
+     "raw_sha256": "53cbd7ff15a839a2a7f571fb2eb977a61be1de63350bc0ec3946930045148f13",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.056769419461488724,
+      0.15977495908737183,
+      0.19690673053264618
+     ],
+     "roll_rgb": [
+      0.2663716971874237,
+      0.5231055021286011,
+      0.3844937086105346
+     ],
+     "level_diff": 0.4923609581970485,
+     "chroma_part": 0.20173228142246613,
+     "own_error": null,
+     "roll_max": 0.5231055021286011,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.24293387513256054,
+      0.4770778880680001,
+      0.3506624299169602
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.8519,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "shadows": 0.0548,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.477696418762207,
+       2.477696418762207,
+       2.477696418762207
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 4.129494031270346
+     },
+     "input_warnings": [
+      {
+       "code": "input_density_implausible",
+       "value": 2.477696418762207,
+       "message": "\u5bc6\u5ea6\u8303\u56f4 2.48 D \u8d85\u51fa\u8d1f\u7247\u5e38\u89c1\u8303\u56f4\uff1a\u53ef\u80fd\u662f\u5df2\u53cd\u76f8\u7684\u6b63\u7247\u3001\u5df2\u7f16\u8f91\u7684\u56fe\u7247\u6216\u626b\u63cf\u88c1\u5207\u3002"
+      }
+     ],
+     "input_center_p99": [
+      0.11891356110572815,
+      0.2370641678571701,
+      0.2057221382856369
+     ],
+     "core_srgb_q50": [
+      0.16194385290145874,
+      0.16194385290145874,
+      0.16194385290145874
+     ],
+     "display_sha256": "4d4493d1d9779ac6b8ad3f6b40b011836f200648d5848e930c61e5da8b1ffc77",
+     "thumb": "eastman_5294_DSC_8061_candidate.jpg",
+     "thumb_sha256": "df2b6664c158e35b1ae5237ada80bbf617ead77edeb579e8343a9f97fb0f87eb"
+    },
+    "DSC_8062.NEF": {
+     "raw_sha256": "7574d007da9800fe7e866c4c5b52ed89e2954a07a2691f8dbc300b827b86a5a4",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.19162511825561523,
+      0.3818344473838806,
+      0.28064319491386414
+     ],
+     "roll_rgb": [
+      0.21309735774993893,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "level_diff": 0.04191816905004426,
+     "chroma_part": 0.004207459892141913,
+     "own_error": null,
+     "roll_max": 0.4184844017028808,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false,
+     "base_method": "auto",
+     "base_rgb": [
+      0.1916380524635315,
+      0.3819791078567505,
+      0.28072023391723633
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 2.1985,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.4,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.1160402297973633,
+       2.1160402297973633,
+       2.1160402297973633
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.526733716328939
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.10521095246076584,
+      0.239215686917305,
+      0.2223086953163147
+     ],
+     "core_srgb_q50": [
+      0.21252670884132385,
+      0.21252670884132385,
+      0.21252670884132385
+     ],
+     "display_sha256": "5aa37d366a33ec51b7a6d1ec4101321349126b09950f23f45b83a1875d996e98",
+     "thumb": "eastman_5294_DSC_8062_candidate.jpg",
+     "thumb_sha256": "b343ab827c86a37cf709dc451e0b131d4f4d8738ff9a3e0abaac60aa0003c24c"
+    },
+    "DSC_8063.NEF": {
+     "raw_sha256": "0db981bcd22a45abd70944f87b7ca2ab3acd946276544ffc243168ad8549e764",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.17440132796764374,
+      0.34183716773986816,
+      0.2499534785747528
+     ],
+     "roll_rgb": [
+      0.21309735774993893,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "level_diff": 0.08833610352741562,
+     "chroma_part": 0.0017839362324467006,
+     "own_error": null,
+     "roll_max": 0.4184844017028808,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.2130973577499389,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.1973,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3431,
+      "midtone": 0.2688,
+      "shoulder": 0.2846,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.4,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.987021803855896,
+       1.987021803855896,
+       1.987021803855896
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.3117030064264936
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.1449912190437317,
+      0.2742046117782593,
+      0.20424200594425201
+     ],
+     "core_srgb_q50": [
+      0.1393653154373169,
+      0.1393653154373169,
+      0.1393653154373169
+     ],
+     "display_sha256": "32053d90c604931e9268f790a1cdfacb3139d975b48a2192787609d60b81471b",
+     "thumb": "eastman_5294_DSC_8063_candidate.jpg",
+     "thumb_sha256": "f0866e76f93132c405b887e132ea3fa420c3ed2a39908870019d132175ead97e"
+    },
+    "DSC_8064.NEF": {
+     "raw_sha256": "ee5a2c1c5b0571ca509746b433797a0aebc8156853754758dac995a29023cd92",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.12264002859592438,
+      0.24222111701965332,
+      0.198902428150177
+     ],
+     "roll_rgb": [
+      0.21309735774993893,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "level_diff": 0.22225074472430686,
+     "chroma_part": 0.032911604718996346,
+     "own_error": null,
+     "roll_max": 0.4184844017028808,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.2130973577499389,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 1.722,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4,
+      "midtone": 0.32,
+      "shoulder": 0.37,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.55,
+      "blacks": -0.0064,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       1.9048153162002563,
+       1.9048153162002563,
+       1.9048153162002563
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.174692193667094
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.12283512949943542,
+      0.24168764054775238,
+      0.19957274198532104
+     ],
+     "core_srgb_q50": [
+      0.36190539598464966,
+      0.36190539598464966,
+      0.36190539598464966
+     ],
+     "display_sha256": "acf110d880f955c8dd212bac66252d2d39866561657b6c372953bfdd253f49bb",
+     "thumb": "eastman_5294_DSC_8064_candidate.jpg",
+     "thumb_sha256": "80f2a01da7a33674225dbfd66af68b307ff7078fa89d7c2c90bc1f8798009ae6"
+    },
+    "DSC_8065.NEF": {
+     "raw_sha256": "73efd64272c6e5f4fac7267f393ac49c4e238b44b9ef4d31cda69c68c708d1d2",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.16842705011367798,
+      0.3167150020599365,
+      0.2264726758003235
+     ],
+     "roll_rgb": [
+      0.21309735774993893,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "level_diff": 0.11871342522890142,
+     "chroma_part": 0.01654720275249015,
+     "own_error": null,
+     "roll_max": 0.4184844017028808,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.2130973577499389,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [
+      "backlit_midtone"
+     ],
+     "params": {
+      "ev": 0.5307,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3223,
+      "midtone": 0.2501,
+      "shoulder": 0.2535,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.137,
+      "shadows": 0.0623,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.1271376609802246,
+       2.1271376609802246,
+       2.1271376609802246
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.545229434967041
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.13444724678993225,
+      0.23108263313770294,
+      0.1886778026819229
+     ],
+     "core_srgb_q50": [
+      0.09089260548353195,
+      0.09089260548353195,
+      0.09089260548353195
+     ],
+     "display_sha256": "eb9290ca2a9e4ac0da5a98b6c9cd5bad453081eb6bd0e6c525bb51ca0a72b947",
+     "thumb": "eastman_5294_DSC_8065_candidate.jpg",
+     "thumb_sha256": "9b5f39c82723ca330d0ab6dccf04229ebc23aaa36553e708d0b539dbcf2772f2"
+    },
+    "DSC_8066.NEF": {
+     "raw_sha256": "0ce3c6c48bf79e600078651f254fbdc3e51ae80c6e8149874dd8a75b1bf1a9fd",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.0320320725440979,
+      0.08592298626899719,
+      0.10776987671852112
+     ],
+     "roll_rgb": [
+      0.21309735774993893,
+      0.4184844017028808,
+      0.3075949668884277
+     ],
+     "level_diff": 0.6553482589193667,
+     "chroma_part": 0.1998664200546147,
+     "own_error": null,
+     "roll_max": 0.4184844017028808,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": true,
+     "base_method": "roll_nat",
+     "base_rgb": [
+      0.19434710010604836,
+      0.3816623104544,
+      0.2805299439335682
+     ],
+     "base_warnings": [],
+     "status": "ok",
+     "flags": [],
+     "params": {
+      "ev": 2.5,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.58,
+      "matrix": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "highlights": -0.65,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+     },
+     "inversion": {
+      "base": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "d_lo": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "d_hi": [
+       2.1287801265716553,
+       2.1287801265716553,
+       2.1287801265716553
+      ],
+      "gamma": 0.6,
+      "exposure": 1.0,
+      "spike_clamp": [
+       1.15,
+       0.12
+      ],
+      "log_range": 3.5479668776194258
+     },
+     "input_warnings": [],
+     "input_center_p99": [
+      0.09825284034013748,
+      0.18548867106437683,
+      0.16128785908222198
+     ],
+     "core_srgb_q50": [
+      0.2197304666042328,
+      0.2197304666042328,
+      0.2197304666042328
+     ],
+     "display_sha256": "23a2c0bbfeaa2dacbfadc82dfa453df1579b7e81c28691cae3eba5d4eca7ad46",
+     "thumb": "eastman_5294_DSC_8066_candidate.jpg",
+     "thumb_sha256": "ca5f8ea9da3e847e8e880df09cd104a89475c2b02d14c7994347e2c664117709"
+    }
+   },
+   "opened": true,
+   "complete": true
+  },
+  "eastman_5294-1": {
+   "folder": "Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-1",
+   "n": 39,
+   "mixed_rolls": null,
+   "n_base": 39,
+   "roll_warnings": [
+    "only 2 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+   ],
+   "roll_error": null,
+   "thumb_rev": "t5a",
+   "frames": {
+    "DSC_3701.NEF": {
+     "raw_sha256": "0418b7a6e4490e3721f3800f24fe8632d1916797608a3009ca946427dd5408b1",
+     "exposure": 0.06666666666666667,
+     "own_rgb": [
+      0.11453522741794586,
+      0.030734870582818985,
+      0.01449593435972929
+     ],
+     "roll_rgb": [
+      0.32671252886454266,
+      0.6749467055002848,
+      0.6483390132586161
+     ],
+     "level_diff": 1.149140247256206,
+     "chroma_part": 0.6939135404994565,
+     "own_error": null,
+     "roll_max": 0.6749467055002848,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3702.NEF": {
+     "raw_sha256": "877e5057c76f4658f68ad240b46d43b9742fa53cdce44163448c9c88ce8c94e4",
+     "exposure": 0.4,
+     "own_rgb": [
+      0.19066870212554932,
+      0.4379996061325073,
+      0.4880221486091614
+     ],
+     "roll_rgb": [
+      1.960275173187256,
+      4.049680233001709,
+      3.8900340795516968
+     ],
+     "level_diff": 0.9598328383157383,
+     "chroma_part": 0.05831896489455979,
+     "own_error": null,
+     "roll_max": 4.049680233001709,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3703.NEF": {
+     "raw_sha256": "5eebd29dd96b505b92c79ec8f7cf0793acee8801400eaeb146bba450f0386d50",
+     "exposure": 0.25,
+     "own_rgb": [
+      0.09570956975221634,
+      0.23966562747955322,
+      0.2867027819156647
+     ],
+     "roll_rgb": [
+      1.225171983242035,
+      2.531050145626068,
+      2.4312712997198105
+     ],
+     "level_diff": 1.0197794021578834,
+     "chroma_part": 0.09137788571795313,
+     "own_error": null,
+     "roll_max": 2.531050145626068,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3704.NEF": {
+     "raw_sha256": "2de40528999a00bb790a3c77e9f70950eb3bbd314db62efbe1a9f99354b102a4",
+     "exposure": 0.25,
+     "own_rgb": [
+      0.23183152079582214,
+      0.5758735537528992,
+      0.6431856155395508
+     ],
+     "roll_rgb": [
+      1.225171983242035,
+      2.531050145626068,
+      2.4312712997198105
+     ],
+     "level_diff": 0.6478317627033164,
+     "chroma_part": 0.07519281010689394,
+     "own_error": null,
+     "roll_max": 2.531050145626068,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3705.NEF": {
+     "raw_sha256": "ebb73011c1b26d6814c4bd8c01488867b2b31e3135d9bbfcc16459a5ffff9967",
+     "exposure": 1.0,
+     "own_rgb": [
+      0.03764927759766579,
+      0.14301209151744843,
+      0.2087976336479187
+     ],
+     "roll_rgb": [
+      4.90068793296814,
+      10.124200582504272,
+      9.725085198879242
+     ],
+     "level_diff": 1.8775520752958512,
+     "chroma_part": 0.23694832548972333,
+     "own_error": null,
+     "roll_max": 10.124200582504272,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3706.NEF": {
+     "raw_sha256": "7aaf81136fe5ef83ae41c9bafd20b7b3675d347ce2e5fb4adddf915c3ae5ea40",
+     "exposure": 0.3333333333333333,
+     "own_rgb": [
+      0.1810271143913269,
+      0.47065606713294983,
+      0.5484218597412109
+     ],
+     "roll_rgb": [
+      1.6335626443227131,
+      3.374733527501424,
+      3.2416950662930804
+     ],
+     "level_diff": 0.8608617974774649,
+     "chroma_part": 0.09453036737217146,
+     "own_error": null,
+     "roll_max": 3.374733527501424,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3707.NEF": {
+     "raw_sha256": "ced38d340adb123e1a0bd23c9bad58e12d8f749c5dcc90003f19d8b4879b45c5",
+     "exposure": 0.16666666666666666,
+     "own_rgb": [
+      0.1116526648402214,
+      0.2685002386569977,
+      0.28994691371917725
+     ],
+     "roll_rgb": [
+      0.8167813221613566,
+      1.687366763750712,
+      1.6208475331465402
+     ],
+     "level_diff": 0.8033083978148735,
+     "chroma_part": 0.0609283071607184,
+     "own_error": null,
+     "roll_max": 1.687366763750712,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3708.NEF": {
+     "raw_sha256": "7d712d1b2f337889c3045031441afa6759b5125318d36b874feb81ed64c0015e",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.09177552908658981,
+      0.2701853811740875,
+      0.37540245056152344
+     ],
+     "roll_rgb": [
+      0.980137586593628,
+      2.0248401165008545,
+      1.9450170397758484
+     ],
+     "level_diff": 0.8725717812154586,
+     "chroma_part": 0.15814547409185153,
+     "own_error": null,
+     "roll_max": 2.0248401165008545,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3709.NEF": {
+     "raw_sha256": "3b8aac2a157756488765fc92b3a92bdf52aa69a6760d3b43f5e7e8288ba9822d",
+     "exposure": 0.3333333333333333,
+     "own_rgb": [
+      0.08702213317155838,
+      0.21121929585933685,
+      0.23858581483364105
+     ],
+     "roll_rgb": [
+      1.6335626443227131,
+      3.374733527501424,
+      3.2416950662930804
+     ],
+     "level_diff": 1.2033798351083729,
+     "chroma_part": 0.07025229411382017,
+     "own_error": null,
+     "roll_max": 3.374733527501424,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3710.NEF": {
+     "raw_sha256": "c33ef60a3968409a3ae128bc545743cf329ea6055f4671e714f092244c4b6224",
+     "exposure": 0.16666666666666666,
+     "own_rgb": [
+      0.3321337103843689,
+      0.761602520942688,
+      0.8424724340438843
+     ],
+     "roll_rgb": [
+      0.8167813221613566,
+      1.687366763750712,
+      1.6208475331465402
+     ],
+     "level_diff": 0.34015347439229404,
+     "chroma_part": 0.05596700955069789,
+     "own_error": null,
+     "roll_max": 1.687366763750712,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3711.NEF": {
+     "raw_sha256": "7a88d544f4ac1588047b0135a08723d3ba80a0f0222fc1cf486816fd1899e695",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.0688297227025032,
+      0.17491847276687622,
+      0.20545752346515656
+     ],
+     "roll_rgb": [
+      0.980137586593628,
+      2.0248401165008545,
+      1.9450170397758484
+     ],
+     "level_diff": 1.0644224817652799,
+     "chroma_part": 0.08908854230196295,
+     "own_error": null,
+     "roll_max": 2.0248401165008545,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3712.NEF": {
+     "raw_sha256": "9a5207d999f6d91084c8a1dee74e251c92548a13559008265ecffd034f7370fa",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.1219656765460968,
+      0.2916024923324585,
+      0.31046023964881897
+     ],
+     "roll_rgb": [
+      0.980137586593628,
+      2.0248401165008545,
+      1.9450170397758484
+     ],
+     "level_diff": 0.8478554472650072,
+     "chroma_part": 0.057193967529938106,
+     "own_error": null,
+     "roll_max": 2.0248401165008545,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3713.NEF": {
+     "raw_sha256": "1cc5d1ec3a9017e0550b3a286ed74748700ba4a3dddb93efc3091ec4ea783d38",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.16601085662841797,
+      0.4063533842563629,
+      0.44413819909095764
+     ],
+     "roll_rgb": [
+      0.980137586593628,
+      2.0248401165008545,
+      1.9450170397758484
+     ],
+     "level_diff": 0.7033475640211643,
+     "chroma_part": 0.06780298937301676,
+     "own_error": null,
+     "roll_max": 2.0248401165008545,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3714.NEF": {
+     "raw_sha256": "57b845a4d44f50a64220dcf28950834b51bcb73eb1a89416797643e4ddf47efd",
+     "exposure": 0.25,
+     "own_rgb": [
+      0.14239069819450378,
+      0.3289209306240082,
+      0.35212603211402893
+     ],
+     "roll_rgb": [
+      1.225171983242035,
+      2.531050145626068,
+      2.4312712997198105
+     ],
+     "level_diff": 0.8866866557078041,
+     "chroma_part": 0.04802878172805869,
+     "own_error": null,
+     "roll_max": 2.531050145626068,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3715.NEF": {
+     "raw_sha256": "7ca504bbbf43b1ea5d2cb5daf6de2e8fd38c029ae02c265b46e88a9f1d04bfb3",
+     "exposure": 0.125,
+     "own_rgb": [
+      0.11145685613155365,
+      0.2540099620819092,
+      0.24615174531936646
+     ],
+     "roll_rgb": [
+      0.6125859916210175,
+      1.265525072813034,
+      1.2156356498599052
+     ],
+     "level_diff": 0.7103602617091528,
+     "chroma_part": 0.0297000108677139,
+     "own_error": null,
+     "roll_max": 1.265525072813034,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3716.NEF": {
+     "raw_sha256": "5d57ec2d092279b0abe7b1ea7fdaa1eee82accd0e56ce89dce046c82e11e6753",
+     "exposure": 0.125,
+     "own_rgb": [
+      0.07960252463817596,
+      0.1803581714630127,
+      0.17623214423656464
+     ],
+     "roll_rgb": [
+      0.6125859916210175,
+      1.265525072813034,
+      1.2156356498599052
+     ],
+     "level_diff": 0.8570311507114446,
+     "chroma_part": 0.029209068748576095,
+     "own_error": null,
+     "roll_max": 1.265525072813034,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3717.NEF": {
+     "raw_sha256": "08ec6544a59b646e096aee984f6d451e2282012a27882366e92878b542e12920",
+     "exposure": 0.16666666666666666,
+     "own_rgb": [
+      0.15358038246631622,
+      0.3504403829574585,
+      0.3380410969257355
+     ],
+     "roll_rgb": [
+      0.8167813221613566,
+      1.687366763750712,
+      1.6208475331465402
+     ],
+     "level_diff": 0.6963793531490046,
+     "chroma_part": 0.029390699973308343,
+     "own_error": null,
+     "roll_max": 1.687366763750712,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3718.NEF": {
+     "raw_sha256": "2500e0b09015b775ae15aaa6c8500c7ce7cf9681fc4599ae93ddce529bb4fb60",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.12004517018795013,
+      0.2867465615272522,
+      0.29846906661987305
+     ],
+     "roll_rgb": [
+      0.980137586593628,
+      2.0248401165008545,
+      1.9450170397758484
+     ],
+     "level_diff": 0.8582863176666651,
+     "chroma_part": 0.053656034646463624,
+     "own_error": null,
+     "roll_max": 2.0248401165008545,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3719.NEF": {
+     "raw_sha256": "92f44f9b90a2ad1d2c868d77acca169a07165bdad9a96c7916f112ab16deb2ea",
+     "exposure": 0.16666666666666666,
+     "own_rgb": [
+      0.08153116703033447,
+      0.19695675373077393,
+      0.21139949560165405
+     ],
+     "roll_rgb": [
+      0.8167813221613566,
+      1.687366763750712,
+      1.6208475331465402
+     ],
+     "level_diff": 0.9394196565594971,
+     "chroma_part": 0.06136248253148768,
+     "own_error": null,
+     "roll_max": 1.687366763750712,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3720.NEF": {
+     "raw_sha256": "d25f7bc96c020f1ef98613bea953957d75593792615d8c90279736bb41ce5393",
+     "exposure": 0.2,
+     "own_rgb": [
+      0.2652199864387512,
+      0.6688344478607178,
+      0.7745080590248108
+     ],
+     "roll_rgb": [
+      0.980137586593628,
+      2.0248401165008545,
+      1.9450170397758484
+     ],
+     "level_diff": 0.4828834560900488,
+     "chroma_part": 0.08479733935733635,
+     "own_error": null,
+     "roll_max": 2.0248401165008545,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3721.NEF": {
+     "raw_sha256": "181ab649bbe43ac1b4d3cd7da68bfa85dd8c6ad792659faaa00c6773b818df9a",
+     "exposure": 0.25,
+     "own_rgb": [
+      0.10058604180812836,
+      0.25181108713150024,
+      0.29052168130874634
+     ],
+     "roll_rgb": [
+      1.225171983242035,
+      2.531050145626068,
+      2.4312712997198105
+     ],
+     "level_diff": 1.003513371564271,
+     "chroma_part": 0.08214596697524867,
+     "own_error": null,
+     "roll_max": 2.531050145626068,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3722.NEF": {
+     "raw_sha256": "8fd3c0abe4934af0e8b5f663eb498821bb902bd147a5aba28697bd577b694cde",
+     "exposure": 0.125,
+     "own_rgb": [
+      0.13294534385204315,
+      0.3729722201824188,
+      0.4588758051395416
+     ],
+     "roll_rgb": [
+      0.6125859916210175,
+      1.265525072813034,
+      1.2156356498599052
+     ],
+     "level_diff": 0.5390654886810999,
+     "chroma_part": 0.12442844099723993,
+     "own_error": null,
+     "roll_max": 1.265525072813034,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3723.NEF": {
+     "raw_sha256": "ddfd3fafd8f59fb82d88cc88c227dfc91d5dbdc079e050d30799b11f823219fe",
+     "exposure": 0.3333333333333333,
+     "own_rgb": [
+      0.1405293494462967,
+      0.48890718817710876,
+      0.7854936122894287
+     ],
+     "roll_rgb": [
+      1.6335626443227131,
+      3.374733527501424,
+      3.2416950662930804
+     ],
+     "level_diff": 0.8400037745983777,
+     "chroma_part": 0.22536498319846276,
+     "own_error": null,
+     "roll_max": 3.374733527501424,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3724.NEF": {
+     "raw_sha256": "bdd280ae5a1e02ba388594b173f70020dfe27a1cabdf4890ad8aebaf44c714b7",
+     "exposure": 0.25,
+     "own_rgb": [
+      0.19043678045272827,
+      0.4696211814880371,
+      0.5057111382484436
+     ],
+     "roll_rgb": [
+      1.225171983242035,
+      2.531050145626068,
+      2.4312712997198105
+     ],
+     "level_diff": 0.740643401157771,
+     "chroma_part": 0.0678028251830265,
+     "own_error": null,
+     "roll_max": 2.531050145626068,
+     "roll_gt_limit": true,
+     "roll_implausible": true,
+     "route_roll_nat": false
+    },
+    "DSC_3725.NEF": {
+     "raw_sha256": "b905cbea9fb53809363bcb9bb7e100515b588abe39a3b18579f1d1e35b76d062",
+     "exposure": 0.03333333333333333,
+     "own_rgb": [
+      0.16578209400177002,
+      0.34880489110946655,
+      0.34148508310317993
+     ],
+     "roll_rgb": [
+      0.16335626443227133,
+      0.3374733527501424,
+      0.32416950662930805
+     ],
+     "level_diff": -0.01444816157642636,
+     "chroma_part": 0.008151415786016957,
+     "own_error": null,
+     "roll_max": 0.3374733527501424,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3726.NEF": {
+     "raw_sha256": "722eab83dc7a1e182373a35e586e4dbf1d0dfad47fb2d4c19850bcf9b24e07f5",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.12069782614707947,
+      0.2446063607931137,
+      0.23014044761657715
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.015057027321429342,
+     "chroma_part": 0.008783442654256242,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3727.NEF": {
+     "raw_sha256": "5269eea7bb69c269d2908130980fe5fba297fd93b8c76d0c9edb2c42c315801f",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.029250677675008774,
+      0.08389724791049957,
+      0.1070474237203598
+     ],
+     "roll_rgb": [
+      0.09801375865936279,
+      0.20248401165008542,
+      0.19450170397758484
+     ],
+     "level_diff": 0.38904710805389575,
+     "chroma_part": 0.13610400370862552,
+     "own_error": null,
+     "roll_max": 0.20248401165008542,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3728.NEF": {
+     "raw_sha256": "d3019353c4d54bd10e4fb6dd7c5e0185e1291443a1a8846d017f6660a8719bb7",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.04403116554021835,
+      0.11935072392225266,
+      0.14762240648269653
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.32919790330403137,
+     "chroma_part": 0.11523897193173405,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3729.NEF": {
+     "raw_sha256": "c6893b63011143c46788df89b7ffe0ed297848032a0df79dcb0e4c1aab649b42",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.042065490037202835,
+      0.11330351233482361,
+      0.1369006335735321
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.35425214881712536,
+     "chroma_part": 0.1100189556072057,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3730.NEF": {
+     "raw_sha256": "c6fa9e664a96b6d958aac8bf29d8f3156ec4e162382661d9d8379fe79264b70d",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.04200068116188049,
+      0.10528002679347992,
+      0.12227800488471985
+     ],
+     "roll_rgb": [
+      0.09801375865936279,
+      0.20248401165008542,
+      0.19450170397758484
+     ],
+     "level_diff": 0.284550175427801,
+     "chroma_part": 0.08348053474487477,
+     "own_error": null,
+     "roll_max": 0.20248401165008542,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3731.NEF": {
+     "raw_sha256": "003d98d6a15408b7544ac6e84cb773ac488673a6b01547a5bc7ff416f12c81dc",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.042525745928287506,
+      0.1145516037940979,
+      0.14274750649929047
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.34503652836036736,
+     "chroma_part": 0.11450858846051942,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3732.NEF": {
+     "raw_sha256": "695678c03f52b058649b3cc6853e3b21ee738137ffd2dfda83b62c3c4ed4ad72",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.04967818409204483,
+      0.12897877395153046,
+      0.1565711498260498
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.29197851073344294,
+     "chroma_part": 0.10085682826422909,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3733.NEF": {
+     "raw_sha256": "96e75ada1adb1f8e7c60ad5baea160d90d96b645b614567ce6270d8636f64cc1",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.040693316608667374,
+      0.11331707239151001,
+      0.14092208445072174
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.3548445794578603,
+     "chroma_part": 0.12382939011315874,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3734.NEF": {
+     "raw_sha256": "097e7ec66c3447c7862847a7f55631e15e74c986f7fa52a1796d56c852e7318e",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.07988888770341873,
+      0.19596634805202484,
+      0.20723307132720947
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.12206809750896874,
+     "chroma_part": 0.06364258496219483,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3735.NEF": {
+     "raw_sha256": "b33cb457eac2c4706b156be73d14b00505f5d86391887d621630b59e85dcec3c",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.099514901638031,
+      0.2308759093284607,
+      0.22554245591163635
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.05427872926642008,
+     "chroma_part": 0.03603020962543363,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3736.NEF": {
+     "raw_sha256": "6cad42fd4d51b214e322e64cf701a44c288464304bf4f2e3d1a6b0c0d58dc59d",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.0648929625749588,
+      0.1621079444885254,
+      0.17949503660202026
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.20042562847092094,
+     "chroma_part": 0.07557382693129516,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3737.NEF": {
+     "raw_sha256": "c68115adbb8d895fb7a851cc638a67aba0177a15b78e54abbe3f82a56ab2f3b2",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.07263460010290146,
+      0.17599661648273468,
+      0.18883469700813293
+     ],
+     "roll_rgb": [
+      0.1225171983242035,
+      0.2531050145626068,
+      0.24312712997198105
+     ],
+     "level_diff": 0.164867188583993,
+     "chroma_part": 0.06218631856543877,
+     "own_error": null,
+     "roll_max": 0.2531050145626068,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3738.NEF": {
+     "raw_sha256": "b18ba1e9edbb921ea11da1b8af30a9b09b9d6f190fe71cc123e878c6063be557",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.05937375873327255,
+      0.14350834488868713,
+      0.1474476158618927
+     ],
+     "roll_rgb": [
+      0.09801375865936279,
+      0.20248401165008542,
+      0.19450170397758484
+     ],
+     "level_diff": 0.16249724574410732,
+     "chroma_part": 0.055195254842832275,
+     "own_error": null,
+     "roll_max": 0.20248401165008542,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3739.NEF": {
+     "raw_sha256": "deb9b4dfa51ce5172441dbdbe9f56e372d26cc50bb28b740beca9767041d45e4",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.09393518418073654,
+      0.19498679041862488,
+      0.15567117929458618
+     ],
+     "roll_rgb": [
+      0.09801375865936279,
+      0.20248401165008542,
+      0.19450170397758484
+     ],
+     "level_diff": 0.043853164539950196,
+     "chroma_part": 0.05286203043062794,
+     "own_error": null,
+     "roll_max": 0.20248401165008542,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    }
+   },
+   "opened": false,
+   "complete": true
+  },
+  "eastman_5294-2": {
+   "folder": "Eastman 5294(\u5c3c\u5eb7\u6570\u5b57\u5316)-2",
+   "n": 39,
+   "mixed_rolls": null,
+   "n_base": 39,
+   "roll_warnings": [
+    "only 1 frame(s) reach the minimum-density cluster; the roll may never reach the film base, so the estimate may be a scene shadow"
+   ],
+   "roll_error": null,
+   "thumb_rev": "t5a",
+   "frames": {
+    "DSC_3741.NEF": {
+     "raw_sha256": "3382b1c2533178474fd169e54514a74890d7deb97499f275e4d74dd506e9bbbb",
+     "exposure": 0.04,
+     "own_rgb": [
+      0.14414972066879272,
+      0.10679719597101212,
+      0.09980149567127228
+     ],
+     "roll_rgb": [
+      0.27195335626602174,
+      0.5442113757133484,
+      0.3922124862670898
+     ],
+     "level_diff": 0.5257575829766818,
+     "chroma_part": 0.2500769651766342,
+     "own_error": null,
+     "roll_max": 0.5442113757133484,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3742.NEF": {
+     "raw_sha256": "d2d22315eca7c97c60842595e664e76151782e29b77c47907dd37eddf3bf6e11",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.053201671689748764,
+      0.11610354483127594,
+      0.1264306604862213
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.4196001136488114,
+     "chroma_part": 0.13205108752707118,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3743.NEF": {
+     "raw_sha256": "d42bc2dd73510f2ced03d9fa9814c31060ee0ee1e6ce8f41538ae7c0cd0d3870",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.06850948184728622,
+      0.16324466466903687,
+      0.18614408373832703
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.27766152989405074,
+     "chroma_part": 0.15810933452009823,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3744.NEF": {
+     "raw_sha256": "ecc09740640d104b0c372ce78ac6c3a75eb8d83ee33fdd723ec328171ed7547f",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.10290876030921936,
+      0.2095666229724884,
+      0.21360749006271362
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.1626775225270116,
+     "chroma_part": 0.1028925666529657,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3745.NEF": {
+     "raw_sha256": "ab7bfb5a45b18eaeeb837082c2f37ed8167dc5f45d7eec64a8586a5d00f0524d",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.040071818977594376,
+      0.1161840483546257,
+      0.16400089859962463
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.4228639055376093,
+     "chroma_part": 0.24830870033084343,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3746.NEF": {
+     "raw_sha256": "0163b0ac3c132e520abaa1fe4e098257835a8484d6fcad2c6bc24774e16ccde8",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.06949413567781448,
+      0.15707723796367645,
+      0.1750948429107666
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.29002957910849486,
+     "chroma_part": 0.14390150119034578,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3747.NEF": {
+     "raw_sha256": "9aa9cf4d9a705e23ed80df74480730a9453efa6f4ef97b9187ab9ee3710ceabf",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.05939047038555145,
+      0.13117164373397827,
+      0.1497463881969452
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.36150347470781846,
+     "chroma_part": 0.14745839808117084,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3748.NEF": {
+     "raw_sha256": "755feec1d24d54a295f9ae5b125b23c3274407876bd17bebe89d54af8194ccba",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.07667750865221024,
+      0.15677575767040253,
+      0.15900316834449768
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.2900236086251493,
+     "chroma_part": 0.10202795405010481,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3749.NEF": {
+     "raw_sha256": "523a393821259d1ec7825b31f3a000f6d89b685f882ffc0a152cf183b5b5100a",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.0669180154800415,
+      0.13695280253887177,
+      0.14331141114234924
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.34434291894557717,
+     "chroma_part": 0.11122225846775455,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3750.NEF": {
+     "raw_sha256": "ec88799009221dda3d9560c57c12a50e3707dd73c7055974308ba1aef4bf41cd",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.06579223275184631,
+      0.1486937701702118,
+      0.16511426866054535
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.31439050086840553,
+     "chroma_part": 0.1427736732657034,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3751.NEF": {
+     "raw_sha256": "6a584f34e6ec4aaa45e1c0b04865b887efc0bb3b4f0589b8b00e6aeaf378e0fd",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.06286495178937912,
+      0.12470030784606934,
+      0.11985591053962708
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.39282931271110294,
+     "chroma_part": 0.08208733541810792,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3752.NEF": {
+     "raw_sha256": "342ece1458c6ffa9c8e8b7295f21413337303a10aee22d8ca852ef0a0c462e94",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.06004426255822182,
+      0.11995504796504974,
+      0.11974390596151352
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.4052266805524975,
+     "chroma_part": 0.09407866810909077,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3753.NEF": {
+     "raw_sha256": "47ad095d298d8d3ca222b118bae308601dfd01f862838440a11f25f1ddc91910",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.07631029188632965,
+      0.14921025931835175,
+      0.14579808712005615
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.3104299600749573,
+     "chroma_part": 0.08478035326082403,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3754.NEF": {
+     "raw_sha256": "8bf4a73ee0f615da69108183ead91d41bc085a77aa1b23039a212dc923bc3c7b",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.05762804299592972,
+      0.12395346909761429,
+      0.13572561740875244
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.38828970759933296,
+     "chroma_part": 0.13155010065154887,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3755.NEF": {
+     "raw_sha256": "822934261523750f771c6199280ba4901abcdeaed89d56cfc5985e34bf65aad1",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.045621052384376526,
+      0.11996161937713623,
+      0.1507362276315689
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.4116660815985249,
+     "chroma_part": 0.20048229102804355,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3756.NEF": {
+     "raw_sha256": "87f159f88d386709847d146818de07b29fb008b4f228e7c8e1910d07ad281962",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.03744828701019287,
+      0.09172786772251129,
+      0.09726852178573608
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.5425059785063912,
+     "chroma_part": 0.14107686148628662,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3757.NEF": {
+     "raw_sha256": "33cc9c31a5019b694b6bdc45a3b81c5c145a3e5f3fc1cbafe75ac02069ee1669",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.05479764938354492,
+      0.11590470373630524,
+      0.12196295708417892
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.42077752335781815,
+     "chroma_part": 0.11760403611420672,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3758.NEF": {
+     "raw_sha256": "5f18354a85abd0807ad9b12064dea5392f023e6961564c115f12492bebcf2721",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.11007791757583618,
+      0.22679628431797028,
+      0.22804200649261475
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.1320241707846829,
+     "chroma_part": 0.10063759153448121,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3759.NEF": {
+     "raw_sha256": "bc0cf146f01b0ae6d5bad8350260ea6ed8ed5dfb56cf4074ed0fe2a0c8c7f390",
+     "exposure": 0.03333333333333333,
+     "own_rgb": [
+      0.05490107834339142,
+      0.1373150497674942,
+      0.17041915655136108
+     ],
+     "roll_rgb": [
+      0.2266277968883514,
+      0.45350947976112366,
+      0.3268437385559082
+     ],
+     "level_diff": 0.4724740970127383,
+     "chroma_part": 0.18965233908095913,
+     "own_error": null,
+     "roll_max": 0.45350947976112366,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3760.NEF": {
+     "raw_sha256": "ec5be114ff032b90dd774dee5fa200f118a42cb953d490ddcca5a7596ae34901",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.11131029576063156,
+      0.21106210350990295,
+      0.190815269947052
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.16662159374478552,
+     "chroma_part": 0.05783328695426815,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3761.NEF": {
+     "raw_sha256": "6089008cab989a6d80bd51a9d0a9c6ba49a49bbcc1f6388758285f38915478c8",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.10062217712402344,
+      0.19446846842765808,
+      0.1781725287437439
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.20301328623701664,
+     "chroma_part": 0.064452597212382,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3762.NEF": {
+     "raw_sha256": "38a9964cb2259bbacca6bb9b65bfaea7e87047dc245f0f1d1d677201cf754069",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.058046527206897736,
+      0.12492096424102783,
+      0.12738074362277985
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.39530271882539725,
+     "chroma_part": 0.11100506584204078,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3763.NEF": {
+     "raw_sha256": "a3aa01364b14287b7551465f95009ab95a70d431b77ed73c7c44fed418cbb478",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.06285004317760468,
+      0.153799906373024,
+      0.17971205711364746
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.3038615464083278,
+     "chroma_part": 0.169037329008649,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3764.NEF": {
+     "raw_sha256": "0a947f3fdfa963c381f82cd0d2864bf97b103e6ba4d8c278c77cd1d0d8ea1a0c",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.06448419392108917,
+      0.14986878633499146,
+      0.16354742646217346
+     ],
+     "roll_rgb": [
+      0.13597667813301087,
+      0.2721056878566742,
+      0.1961062431335449
+     ],
+     "level_diff": 0.2206284289601823,
+     "chroma_part": 0.14178072368021027,
+     "own_error": null,
+     "roll_max": 0.2721056878566742,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3765.NEF": {
+     "raw_sha256": "86ed5b909a4d12d655f5ea3ce942e2b916f878992383afcb78db141eae652409",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.04598012566566467,
+      0.11281606554985046,
+      0.13018405437469482
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.4406415365916601,
+     "chroma_part": 0.16579789655402966,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3766.NEF": {
+     "raw_sha256": "5aef6dee3805493c763dcc3e129bb4a538e853a62bee15f5e590de37b278ceca",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.05466034263372421,
+      0.12642444670200348,
+      0.1401318907737732
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.38846103764444484,
+     "chroma_part": 0.14559658668388395,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3767.NEF": {
+     "raw_sha256": "954985b129c3f08199be2a47af0eb1edf633665caeca320d4af659fb8ac0f1e2",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.07238121330738068,
+      0.1725984662771225,
+      0.17745527625083923
+     ],
+     "roll_rgb": [
+      0.13597667813301087,
+      0.2721056878566742,
+      0.1961062431335449
+     ],
+     "level_diff": 0.1716472531400207,
+     "chroma_part": 0.12824474997274748,
+     "own_error": null,
+     "roll_max": 0.2721056878566742,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3768.NEF": {
+     "raw_sha256": "d578b5c495058b258a49b54a1f2f1694d0ddae7b95a68a23f7f6f40a53e59da7",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.05934824049472809,
+      0.14798635244369507,
+      0.16295912861824036
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.33190509956036773,
+     "chroma_part": 0.15458236041842108,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3769.NEF": {
+     "raw_sha256": "9d08ddc8ec72d85163cce2230a08b9623cba8a4c752da983af4e691581665707",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.04869738221168518,
+      0.11101309955120087,
+      0.12017028778791428
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.44624885351107485,
+     "chroma_part": 0.13664452188502085,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3770.NEF": {
+     "raw_sha256": "75dbd271efba9105006d09972b8a7027017b3868bb6674f6dd317ec0f6a56023",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.06588437408208847,
+      0.14614161849021912,
+      0.16642366349697113
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.3155506970216922,
+     "chroma_part": 0.1473643420959935,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3771.NEF": {
+     "raw_sha256": "dbaabd9802f83d1d8a13a3e39e3a9ff2f24a406aff07ac18810f0a19065bb40c",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.058531615883111954,
+      0.12843045592308044,
+      0.1361178755760193
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.38048326855836473,
+     "chroma_part": 0.1249969980350713,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3772.NEF": {
+     "raw_sha256": "755e435a764aa46cc2a28b828f1a673ffbf5979c8321ee7112725fc40fda7042",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.05488979071378708,
+      0.12852756679058075,
+      0.14360161125659943
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.38192544419979263,
+     "chroma_part": 0.1496833241952583,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3773.NEF": {
+     "raw_sha256": "13edb3cef156a6888a5555b636e76de5dc1e5bc32a860070d4b324e7e9b170cc",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.0440392941236496,
+      0.11030758917331696,
+      0.12101128697395325
+     ],
+     "roll_rgb": [
+      0.13597667813301087,
+      0.2721056878566742,
+      0.1961062431335449
+     ],
+     "level_diff": 0.3638072816875959,
+     "chroma_part": 0.15414174158631103,
+     "own_error": null,
+     "roll_max": 0.2721056878566742,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3774.NEF": {
+     "raw_sha256": "a997e7dbe3e9e895c5203d67d9305481c0597d3f394c38fcf1db24c36ad091da",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.058888211846351624,
+      0.12798216938972473,
+      0.12218744307756424
+     ],
+     "roll_rgb": [
+      0.13597667813301087,
+      0.2721056878566742,
+      0.1961062431335449
+     ],
+     "level_diff": 0.2988296852679158,
+     "chroma_part": 0.09336484216793015,
+     "own_error": null,
+     "roll_max": 0.2721056878566742,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3775.NEF": {
+     "raw_sha256": "838616c85fc80f0befbe5897f6523e10032851e9f0070dcf62ddb19e947031df",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.05773870646953583,
+      0.1447918862104416,
+      0.15808376669883728
+     ],
+     "roll_rgb": [
+      0.13597667813301087,
+      0.2721056878566742,
+      0.1961062431335449
+     ],
+     "level_diff": 0.24653163864176167,
+     "chroma_part": 0.15292749418979154,
+     "own_error": null,
+     "roll_max": 0.2721056878566742,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3776.NEF": {
+     "raw_sha256": "f2173d3b3c7b41dad535b243609ca3afc6ea4c0358f66aee94fdf6353eb2cfcb",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.050605013966560364,
+      0.12005532532930374,
+      0.12845461070537567
+     ],
+     "roll_rgb": [
+      0.13597667813301087,
+      0.2721056878566742,
+      0.1961062431335449
+     ],
+     "level_diff": 0.32278959727565204,
+     "chroma_part": 0.13904787471885766,
+     "own_error": null,
+     "roll_max": 0.2721056878566742,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3777.NEF": {
+     "raw_sha256": "39d2721222e139ad72fb3de68511d414fb374620e6e274ff7b476cd9b59ad1ab",
+     "exposure": 0.025,
+     "own_rgb": [
+      0.028340108692646027,
+      0.09451038390398026,
+      0.13387714326381683
+     ],
+     "roll_rgb": [
+      0.16997084766626358,
+      0.34013210982084274,
+      0.24513280391693115
+     ],
+     "level_diff": 0.532278676903062,
+     "chroma_part": 0.26958368063595434,
+     "own_error": null,
+     "roll_max": 0.34013210982084274,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3778.NEF": {
+     "raw_sha256": "02cb33ac8ecead9eded2622a347156c61a33f52c1835481293dda491ab0e8a3a",
+     "exposure": 0.02,
+     "own_rgb": [
+      0.049869243055582047,
+      0.11518732458353043,
+      0.11321228742599487
+     ],
+     "roll_rgb": [
+      0.13597667813301087,
+      0.2721056878566742,
+      0.1961062431335449
+     ],
+     "level_diff": 0.3491874781183371,
+     "chroma_part": 0.11058962355834864,
+     "own_error": null,
+     "roll_max": 0.2721056878566742,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    },
+    "DSC_3779.NEF": {
+     "raw_sha256": "9372513d4c0858421bf3cb4942582c1aaec53678713ce2d491789ba5e384731d",
+     "exposure": 0.016666666666666666,
+     "own_rgb": [
+      0.11331389844417572,
+      0.22675473988056183,
+      0.1634218692779541
+     ],
+     "roll_rgb": [
+      0.1133138984441757,
+      0.22675473988056183,
+      0.1634218692779541
+     ],
+     "level_diff": -1.6072124442554786e-17,
+     "chroma_part": 3.214424888510958e-17,
+     "own_error": null,
+     "roll_max": 0.22675473988056183,
+     "roll_gt_limit": false,
+     "roll_implausible": false,
+     "route_roll_nat": false
+    }
+   },
+   "opened": false,
+   "complete": true
+  }
+ }
+}
