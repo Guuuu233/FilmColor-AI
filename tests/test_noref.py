@@ -2078,3 +2078,49 @@ def test_t4z_metering_mask_drops_holder_pixels():
     assert diag_p["used"] is False
     assert diag_p["reason"] == "too little left"
     assert m_p is None
+
+
+def test_t5d_lifted_floor_recovers_fogged_pedestal_frame():
+    """T5d (A1125.TIF): when span_d_g < 0.84, range_stops >= 1.20, ev <= -0.22, and p98_dark_d <= 0.56,
+    and neither thin_flat nor ultra_flat applies (e.g. q25 < 0.62 and iqr_25_90 > 0.20), lifted_floor_check
+    lowers ev and blacks and boosts contrast; when span_d_g >= 0.84 or p98_dark_d > 0.56 it does not trigger."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(42)
+    P = np.zeros((200, 500, 3), dtype=np.float32)
+    # Smooth shadow/midtone region (low local variance -> not in textured cells): sets q25 < 0.62 and range_stops >= 1.20
+    P[:120, :] = rng.uniform(0.18, 0.22, (120, 500, 1)) + rng.normal(0, 0.002, (120, 500, 3))
+    # Smooth bright sky region: sets q90 high so iqr_25_90 > 0.20
+    P[120:160, :] = rng.uniform(0.65, 0.75, (40, 500, 1)) + rng.normal(0, 0.002, (40, 500, 3))
+    # Textured branch/lightbulb region with fogged pedestal (cell luminance ~0.32..0.60 -> p98_dark_d <= 0.52)
+    base_tex = rng.uniform(0.32, 0.58, (40, 500, 1))
+    P[160:, :] = np.clip(base_tex + rng.normal(0, 0.08, (40, 500, 3)), 0.30, 0.95)
+
+    res = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.79)
+    assert res["status"] == "ok"
+    assert res["stats"]["range_stops"] >= 1.20
+    assert res["diagnostics"]["textured_cells"]["p98_dark_d"] <= 0.52
+    bc = res["diagnostics"]["backlit_check"]
+    assert bc["p25"] < 0.62 and (bc["p90"] - bc["p25"]) > 0.20
+    assert not res["diagnostics"].get("thin_negative", {}).get("applied")
+    assert "ultra_flat_bright" not in res["diagnostics"]
+
+    lf = res["diagnostics"].get("lifted_floor")
+    assert lf is not None and lf["applied"] is True
+    assert lf["ev_before"] <= -0.22
+    assert lf["ev_after"] < lf["ev_before"]
+    assert lf["blacks_lowered"] > 0.0 and res["params"]["blacks"] < 0.0
+    assert lf["contrast_after"] > NOREF_V3["base_contrast"]
+    assert res["params"]["contrast"] == pytest.approx(lf["contrast_after"], abs=5e-5)
+
+    # Non-trigger 1: span_d_g >= 0.84
+    res_wide = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.84)
+    assert "lifted_floor" not in res_wide["diagnostics"]
+
+    # Non-trigger 2: p98_dark_d > 0.56 (darker textured cells present while anchor remains high)
+    P_deep = P.copy()
+    P_deep[160:, :100] = np.clip(0.20 + rng.normal(0, 0.05, (40, 100, 3)), 0.12, 0.40)
+    res_deep = estimate_params_v3(P_deep, None, NOREF_V3, span_d_g=0.79)
+    assert res_deep["diagnostics"]["textured_cells"]["p98_dark_d"] > 0.56
+    assert "lifted_floor" not in res_deep["diagnostics"]
+

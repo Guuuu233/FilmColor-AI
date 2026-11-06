@@ -459,6 +459,11 @@ NOREF_V3 = dict(
     ultra_flat_iqr_max=0.068, ultra_flat_iqr_pivot=0.068, ultra_flat_ev_gain=18.0,
     ultra_flat_max_pull=0.55, ultra_flat_blacks_gain=0.55, ultra_flat_blacks_max=0.30,
     ultra_flat_contrast_gain=0.85, ultra_flat_contrast_cap=1.75,
+    # T5d: flare / fog pedestal lifting the darkest textured cells above mid-grey (A1125.TIF: p98_dark_d = 0.514 D)
+    lifted_floor_check=True, lifted_floor_span_max=0.84, lifted_floor_ev_max=-0.22, lifted_floor_p98_dark_d_max=0.56,
+    lifted_floor_p98_dark_d_pivot=0.58, lifted_floor_ev_gain=11.0, lifted_floor_max_pull=0.70,
+    lifted_floor_blacks_gain=0.45, lifted_floor_blacks_max=0.30,
+    lifted_floor_contrast_gain=0.65, lifted_floor_contrast_cap=1.75,
     # T4l metering frame (_metering_mask): with an opaque holder covering >= meter_holder_min_share of the frame, the
     # mask is cut to the film box (holder.film_box) inset by meter_box_inset of its height / width on each side;
     # then rows / columns at the mask's edges with >= meter_strip_share of their mask pixels at max channel <=
@@ -1157,6 +1162,23 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
             out["diagnostics"]["ultra_flat_bright"] = dict(
                 applied=True, ev_before=ev_b4, ev_after=base_p["ev"], pull=pull_uf,
                 blacks_lowered=blk_uf, contrast_after=c_uf, q25=float(q25), iqr_25_90=iqr_25_90)
+    elif (cfg.get("lifted_floor_check") and span_d_g is not None and not thin.get("applied")
+          and span_d_g < cfg["lifted_floor_span_max"] and st["range_stops"] >= cfg["ultra_flat_min_range_stops"]
+          and base_p["ev"] <= cfg["lifted_floor_ev_max"]
+          and tc["p98_dark_d"] <= cfg["lifted_floor_p98_dark_d_max"]):
+        pull_lf = float(np.clip((cfg["lifted_floor_p98_dark_d_pivot"] - tc["p98_dark_d"]) * cfg["lifted_floor_ev_gain"],
+                                0.0, cfg["lifted_floor_max_pull"]))
+        if pull_lf > 0.0:
+            ev_b4 = float(base_p["ev"])
+            blk_lf = float(min(cfg["lifted_floor_blacks_max"], pull_lf * cfg["lifted_floor_blacks_gain"]))
+            c_lf = float(min(cfg["lifted_floor_contrast_cap"],
+                             base_p["contrast"] + pull_lf * cfg["lifted_floor_contrast_gain"]))
+            base_p["ev"] = float(max(cfg["ev_limits"][0], ev_b4 - pull_lf))
+            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_lf, *EXTENDED_BOUNDS["blacks"]))
+            base_p["contrast"] = c_lf
+            out["diagnostics"]["lifted_floor"] = dict(
+                applied=True, ev_before=ev_b4, ev_after=base_p["ev"], pull=pull_lf,
+                blacks_lowered=blk_lf, contrast_after=c_lf, p98_dark_d=float(tc["p98_dark_d"]))
     if cfg.get("backlit_sky_check") and w_bl > 0:
         # T4k: a dark foreground needs a bright background to be backlit (_DSF9239: black frame gaps alone gave p25)
         w_bl *= _ramp(bright_share, cfg["backlit_sky_share_lo"], cfg["backlit_min_sky_share"])

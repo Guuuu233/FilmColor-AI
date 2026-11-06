@@ -172,6 +172,7 @@ def green_span(inversion: dict) -> float:
 # (centre p99 [0.831, 0.738, 0.002]); the next lowest channel p99 of the measured scanner TIFFs is 0.070.
 INPUT_DHI_G_MAX = 2.40              # G white point density (D) above which the input is unlikely to be a negative
 INPUT_EMPTY_CHANNEL = (0.02, 0.30)  # centre linear input: a channel p99 below [0] while another reaches [1]
+INPUT_FLAT_CHANNEL_DHI = (0.04, 0.30)  # T5d: a channel white point below [0] D while another reaches [1] D
 
 
 def input_warnings(d_hi, center_p99) -> list[dict]:
@@ -181,13 +182,21 @@ def input_warnings(d_hi, center_p99) -> list[dict]:
     if float(d_hi[1]) > INPUT_DHI_G_MAX:
         out.append(dict(code="input_density_implausible", value=float(d_hi[1]),
                         message=f"密度范围 {float(d_hi[1]):.2f} D 超出负片常见范围：可能是已反相的正片、已编辑的图片或扫描裁切。"))
+    empty_ch = set()
     if center_p99 is not None:
         p = [float(x) for x in center_p99]
         lo, hi = INPUT_EMPTY_CHANNEL
         for i, name in enumerate("RGB"):
             if p[i] < lo and max(p[j] for j in range(3) if j != i) >= hi:
+                empty_ch.add(name)
                 out.append(dict(code="input_channel_empty", channel=name, value=p[i],
                                 message=f"{name} 通道几乎没有信号（中心 p99 = {p[i]:.3f}），扫描或导出可能丢失了该通道。"))
+    d = [float(x) for x in d_hi]
+    d_lo_thr, d_hi_thr = INPUT_FLAT_CHANNEL_DHI
+    for i, name in enumerate("RGB"):
+        if name not in empty_ch and d[i] < d_lo_thr and max(d[j] for j in range(3) if j != i) >= d_hi_thr:
+            out.append(dict(code="input_channel_flat", channel=name, value=d[i],
+                            message=f"{name} 通道密度跨度极小（{d[i]:.2f} D），可能存在通道底座抬升、漏光雾化或转码失真。"))
     return out
 
 

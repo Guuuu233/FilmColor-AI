@@ -322,3 +322,23 @@ def test_t5c_rebate_strip_components_and_paint():
     assert np.all(painted[305:365, 188:199] == 0.5)
     assert not pv.holder[350:470, 1:13].any()
 
+
+def test_t5d_input_flat_channel_warning():
+    """T5d (A824/A828/A1187): a channel whose white point d_hi[c] < 0.04 D while another reaches 0.30 D and the channel
+    did not trigger input_channel_empty emits input_channel_flat; when input_channel_empty already triggered (e.g.
+    center_p99[2] = 0.002), input_channel_flat is not appended, and d_hi_B = 0.095 (19970619A-15) does not trigger."""
+    from filmcolor.preview import input_warnings
+
+    hit = input_warnings((0.58, 0.50, 0.03), (0.16, 0.05, 0.07))
+    assert [(w["code"], w["channel"]) for w in hit] == [("input_channel_flat", "B")]
+    assert hit[0]["value"] == pytest.approx(0.03)
+
+    # Already empty channel (e.g. A229.TIF where center_p99[2] = 0.002) does not duplicate input_channel_flat
+    empty = input_warnings((0.58, 0.50, 0.03), (0.83, 0.74, 0.002))
+    assert [(w["code"], w["channel"]) for w in empty] == [("input_channel_empty", "B")]
+
+    # Benchmark minimum d_hi_B = 0.095 (19970619A-15) or dim frame (< 0.30 D everywhere) does not trigger
+    assert input_warnings((0.58, 0.50, 0.095), (0.16, 0.05, 0.07)) == []
+    assert input_warnings((0.25, 0.28, 0.03), (0.16, 0.05, 0.07)) == []
+
+
