@@ -291,3 +291,34 @@ def test_t5a_input_empty_channel_warning(tmp_path):
     c = pv.report["input_center_p99"]
     assert c[2] < 0.02 and c[1] >= 0.30
     assert [w["channel"] for w in pv.report["input_warnings"] if w["code"] == "input_channel_empty"] == ["B"]
+
+
+def test_t5c_rebate_strip_components_and_paint():
+    """T5c (A1298): a hot component inside film_box that starts within 0.01 * short of a box edge, stays within
+    0.08 * short of that edge, and spans >= 0.35 of that edge is painted HOLDER_GREY in Preview._paint_holder without
+    changing pv.holder, whereas components reaching > 0.08 * short deep or spanning < 0.35 of the edge are untouched."""
+    from filmcolor.holder import film_box, rebate_strip_components
+
+    holder = _t5a_frame_holder()  # film_box is [300, 0, 300, 200], short = 200, gap = 2.0, dep = 16.0
+    assert holder.mean() >= 0.15 and film_box(holder) == [300, 0, 300, 200]
+    pv = _t5a_preview(holder)
+    # 1. Valid detached rebate strip along left edge of film_box: c in [1..12] (c0=1 <= 2, c1+1=13 <= 16), r in [350..470] (height 120 >= 0.35*300=105)
+    pv.positive[350:470, 1:13] = [18.0, 24.0, 50000.0]
+    # 2. Deep highlight component reaching c1+1 = 30 > 16 (0.08 * 200): must NOT be selected
+    pv.positive[480:590, 1:30] = [18.0, 24.0, 50000.0]
+    # 3. Short edge component with height 60 < 105 (0.35 * 300): must NOT be selected
+    pv.positive[305:365, 188:199] = [18.0, 24.0, 50000.0]
+
+    rebate = rebate_strip_components(pv.positive, holder)
+    assert rebate[350:470, 1:13].all()
+    assert not rebate[480:590, 1:30].any()
+    assert not rebate[305:365, 188:199].any()
+    assert int(rebate.sum()) == 120 * 12
+
+    e = np.full(pv.positive.shape, 0.5, np.float32)
+    painted = pv._paint_holder(e)
+    assert np.all(painted[350:470, 1:13] == np.float32(HOLDER_GREY))
+    assert np.all(painted[480:590, 1:30] == 0.5)
+    assert np.all(painted[305:365, 188:199] == 0.5)
+    assert not pv.holder[350:470, 1:13].any()
+

@@ -1187,3 +1187,31 @@ def test_t4y_scanner_base_exempt_from_craw_near_saturated_exclusion():
     est_cam = estimate_base_blocks(sp, sp_sat, block=24)
     assert est_cam.diagnostics.get("near_saturated_blocks_excluded") == 104
     assert est_cam.rgb[0] < 0.35
+
+
+def test_t5c_scanner_tiff8_moderate_single_channel_r_clip_exempt(tmp_path):
+    """T5c (A635.tif): an 8-bit negative TIFF with 18% R == 255 and 0% G/B == 255 triggers
+    single_channel_prestretched == 'R' so R-clipped pixels are not masked out as full saturation,
+    whereas when G or B also clips >= 0.2% (and R <= 30%) it stays normal saturation."""
+    h, w = 100, 100
+    rgb8 = np.full((h, w, 3), [210, 160, 110], dtype=np.uint8)
+    rgb8.reshape(-1, 3)[:1800, 0] = 255  # 18% R == 255, 0% G/B == 255
+    rgb8[99, 99, 1] = 255                # 1 pixel (0.01% < 0.2%) G == 255
+
+    p_a635 = tmp_path / "a635_like.tif"
+    tifffile.imwrite(p_a635, rgb8, photometric="rgb")
+    fr = load_scanner(p_a635)
+    assert fr.meta.get("single_channel_prestretched") == "R"
+    expected_sat = (rgb8[:, :, 1] == 255) | (rgb8[:, :, 2] == 255)
+    np.testing.assert_array_equal(fr.sat, expected_sat)
+    assert int(fr.sat.sum()) == 1
+
+    # When G saturation >= 0.2% (e.g. 0.5% = 50 pixels) and R is 18% (< 30%), rule does not fire
+    rgb8_gb = rgb8.copy()
+    rgb8_gb.reshape(-1, 3)[:50, 1] = 255
+    p_gb = tmp_path / "gb_sat.tif"
+    tifffile.imwrite(p_gb, rgb8_gb, photometric="rgb")
+    fr_gb = load_scanner(p_gb)
+    assert "single_channel_prestretched" not in fr_gb.meta
+    np.testing.assert_array_equal(fr_gb.sat, np.any(rgb8_gb == 255, -1))
+

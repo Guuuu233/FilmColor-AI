@@ -79,7 +79,7 @@ from .invert import central_region, invert_negative, neutral_transmission, regio
 from .noref import NOREF_V3, STYLE_PRESETS, estimate_params_v3, preset_config, wb_from_chroma
 from .pipeline import FILM_MODES, free_stem
 from .preview import HOLDER_GREY, Preview, SourceChangedError, film_box, holder_mask, load_preview
-from .holder import scene_highlight_components
+from .holder import rebate_strip_components, scene_highlight_components
 from .raw import linearize, saturation_mask, superpixel
 from .rawpy_io import load_raw
 from .render import (BOUNDS, CURVE_PRESETS, EXTENDED_BOUNDS, EXTENDED_SCALARS, RenderParams, camera_color_matrix,
@@ -571,7 +571,7 @@ class State:
             rp = RenderParams.from_dict(est["params"])
             disp, _ = render_image(pos, rp)
             hm = holder_mask(pos)
-            disp[hm & ~scene_highlight_components(hm)] = HOLDER_GREY  # T5a: not the clipped scene highlights
+            disp[(hm & ~scene_highlight_components(hm)) | rebate_strip_components(pos, hm)] = HOLDER_GREY  # T5a/T5c
         except Exception:  # noqa: BLE001
             disp = np.clip(sp / max(float(np.percentile(sp, 99.5)), 1e-6), 0, 1) ** (1 / 2.2)
         data = png_bytes(to8(disp))

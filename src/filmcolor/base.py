@@ -310,12 +310,15 @@ def estimate_base_blocks(
         Y_valid = Y[valid]
         # T5b: near_sat removed the clipped backlight but the brightest uniform blocks are still clipped light (one
         # channel at the sensor ceiling); the film is in the blocks below 2.5x the 90th percentile, as for bare backlight
-        clipped_base = bool(near_sat_blocks and max(rgb) >= CLIPPED_BASE_MAX)
+        # T5c: on scanner images (exclude_near_saturated=False), bare light one code below white in all three channels
+        # (A1086.TIF: 65534/65535 = 0.99998 alongside 2580 saturated blocks) is also clipped light, not an orange mask
+        white_ceiling = bool(sp_sat.any() and min(rgb) >= 0.995)
+        clipped_base = bool((near_sat_blocks and max(rgb) >= CLIPPED_BASE_MAX) or white_ceiling)
         p90_Y = float(np.percentile(Y_valid, 90))
         p98_Y = float(np.percentile(Y_valid, 98))
         if clipped_base or (p98_Y > 5.0 * max(p90_Y, 1e-9) and float(np.mean(Y_valid <= 0.25 * thr)) > 0.88
                             and not (rgb[0] > rgb[1] and rgb[2] < 0.43 * rgb[1])):
-            valid_film = valid & (Y <= 2.5 * p90_Y)
+            valid_film = valid & ((sp.min(-1) < CLIPPED_BASE_MAX) if white_ceiling else (Y <= 2.5 * p90_Y))
             n_uniform_film = int((valid_film & (rel_std_map <= max_rel_std)).sum())
             if n_uniform_film >= 10:
                 bare_backlight_excluded = not clipped_base

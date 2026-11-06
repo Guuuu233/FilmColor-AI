@@ -14,6 +14,11 @@ HOLDER_GREY = 0.02   # sRGB-encoded value the holder is displayed with
 # a holder band covers its whole box edge, the window only part of it but reaches deep into the frame (display only)
 SCENE_HOLDER_MIN_DEPTH = 0.08      # share of the film box's short side
 SCENE_HOLDER_MAX_EDGE_SPAN = 0.60  # share of each film box edge it touches
+# T5c: a dense rebate strip inside film_box detached from the outer holder by a 1-3 px seam (A1298 after T5b):
+# starts within REBATE_STRIP_MAX_GAP * short side of a box edge, stays within SCENE_HOLDER_MIN_DEPTH * short side of
+# that edge, and spans >= REBATE_STRIP_MIN_SPAN of that edge (display only)
+REBATE_STRIP_MAX_GAP = 0.01
+REBATE_STRIP_MIN_SPAN = 0.35
 
 
 def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.ndarray:
@@ -87,4 +92,40 @@ def scene_highlight_components(holder: np.ndarray, min_depth: float = SCENE_HOLD
         if spans and max(spans) >= max_edge_span:
             continue
         keep[t:t + h, l:l + w] |= m
+    return keep
+
+
+def rebate_strip_components(P, holder: np.ndarray, max_gap: float = REBATE_STRIP_MAX_GAP,
+                            max_depth: float = SCENE_HOLDER_MIN_DEPTH,
+                            min_span: float = REBATE_STRIP_MIN_SPAN) -> np.ndarray:
+    """T5c: hot components inside film_box(holder) that run along a box edge (within max_gap * short side of the edge,
+    at most max_depth * short side deep, spanning >= min_span of that edge): a dense rebate strip separated from the
+    outer holder by a narrow seam (A1298), painted HOLDER_GREY in display. Only when holder.mean() >= 0.15."""
+    from scipy import ndimage
+
+    keep = np.zeros_like(holder)
+    if float(holder.mean()) < 0.15:
+        return keep
+    fb = film_box(holder)
+    if fb is None:
+        return keep
+    t, l, h, w = fb
+    short = min(h, w)
+    gap, dep = max_gap * short, max_depth * short
+    s = np.sort(np.asarray(P), axis=-1)
+    s1, s2 = s[..., 1], s[..., 2]
+    hot = (((s1 > 2.0) & (s2 > 16.0)) | ((s1 > 1.25) & (s2 > 8.0))) & ~holder
+    sub = hot[t:t + h, l:l + w]
+    if not sub.any():
+        return keep
+    lab, n = ndimage.label(sub)
+    for i in range(n):
+        m = lab == i + 1
+        rs, cs = np.where(m)
+        r0, r1, c0, c1 = int(rs.min()), int(rs.max()), int(cs.min()), int(cs.max())
+        if ((c0 <= gap and c1 + 1 <= dep and (r1 - r0 + 1) >= min_span * h)
+                or (w - 1 - c1 <= gap and w - c0 <= dep and (r1 - r0 + 1) >= min_span * h)
+                or (r0 <= gap and r1 + 1 <= dep and (c1 - c0 + 1) >= min_span * w)
+                or (h - 1 - r1 <= gap and h - r0 <= dep and (c1 - c0 + 1) >= min_span * w)):
+            keep[t:t + h, l:l + w] |= m
     return keep

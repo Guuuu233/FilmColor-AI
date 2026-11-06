@@ -26,7 +26,7 @@ import numpy as np
 
 from .compare import block_mean
 from .holder import HOLDER_GREY, HOLDER_OVER, HOLDER_PEAK, film_box, holder_mask  # noqa: F401 (T4i names, moved in T4l)
-from .holder import scene_highlight_components
+from .holder import rebate_strip_components, scene_highlight_components
 from .noref import CONFIG_DIR, estimate_params_v2, estimation_input
 from .pipeline import BW_NEUTRAL, positive, sha256, write
 from .render import RenderParams, render, render_full
@@ -56,13 +56,16 @@ class Preview:
     # style preset is re-estimated without averaging the full-resolution positive again (T4e)
     est_input: tuple | None = field(default=None, repr=False)
     holder: np.ndarray | None = field(default=None, repr=False)  # holder_mask of ``positive`` (T4i), display only
-    _scene: np.ndarray | None = field(default=None, repr=False)  # T5a: scene_highlight_components(holder), cached
+    _scene: np.ndarray | None = field(default=None, repr=False)   # T5a: scene_highlight_components(holder), cached
+    _rebate: np.ndarray | None = field(default=None, repr=False)  # T5c: rebate_strip_components(positive, holder)
 
     def _paint_holder(self, e: np.ndarray) -> np.ndarray:
         if self.holder is not None and self.holder.any():
             if self._scene is None:
                 self._scene = scene_highlight_components(self.holder)
-            e[self.holder & ~self._scene] = np.float32(HOLDER_GREY)
+            if self._rebate is None:
+                self._rebate = rebate_strip_components(self.positive, self.holder)
+            e[(self.holder & ~self._scene) | self._rebate] = np.float32(HOLDER_GREY)
             if float(self.holder.mean()) >= 0.15:
                 fb = film_box(self.holder)
                 if fb is not None:

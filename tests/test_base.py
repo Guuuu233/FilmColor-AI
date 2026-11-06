@@ -411,3 +411,31 @@ def test_t5b_scanner_path_unchanged():
     rgb = np.repeat(np.repeat(sp, 24, 0), 24, 1)
     fr = ScannerFrame(rgb=rgb, sat=np.zeros(rgb.shape[:2], dtype=bool), black=0.0, white=65535.0, meta={})
     assert estimate_base_scanner(fr, block=24).to_dict() == est.to_dict()
+
+
+def test_t5c_scanner_white_ceiling_excluded():
+    """T5c (A1086.TIF): under exclude_near_saturated=False (scanner path), when sp_sat.any() is True and the brightest
+    uniform consensus blocks sit at >= 0.995 in all three channels (e.g. 65534/65535 = 0.999985 bare light in sprocket
+    holes), clipped_base_excluded triggers and recovers the orange mask below, while an orange mask with R = 0.999 and
+    B = 0.43 is untouched."""
+    rng = np.random.default_rng(7)
+    orange_base = np.array([0.936, 0.519, 0.318], dtype=np.float32)
+    sp = (orange_base * rng.uniform(0.15, 0.65, (50, 50, 1))).astype(np.float32)
+    sp[10:22, :12] = orange_base  # 144 uniform orange-mask blocks
+    sp[:5, :20] = 65534.0 / 65535.0  # 100 uniform bare-white blocks one code below white in all 3 channels
+    sp_sat = np.zeros((50, 50), dtype=bool)
+    sp_sat[:2, 20:30] = True  # saturated sprocket-hole blocks
+
+    est = estimate_base_blocks(sp, sp_sat, block=24, exclude_near_saturated=False)
+    assert est.diagnostics.get("clipped_base_excluded") is True
+    assert "bare_backlight_excluded" not in est.diagnostics
+    assert rel_err(est.rgb, orange_base) < 1e-5
+
+    # Single-channel near-saturated orange mask (R = 0.999, G = 0.53, B = 0.43) alongside sp_sat must NOT trigger
+    sp_orange_hi = (orange_base * rng.uniform(0.15, 0.65, (50, 50, 1))).astype(np.float32)
+    hi_mask = np.array([0.999, 0.53, 0.43], dtype=np.float32)
+    sp_orange_hi[:6, :20] = hi_mask
+    est_hi = estimate_base_blocks(sp_orange_hi, sp_sat, block=24, exclude_near_saturated=False)
+    assert "clipped_base_excluded" not in est_hi.diagnostics
+    assert rel_err(est_hi.rgb, hi_mask) < 1e-5
+
