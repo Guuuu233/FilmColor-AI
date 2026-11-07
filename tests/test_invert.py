@@ -858,3 +858,111 @@ def test_t5e_block_white_point_caps_inflated_blue_ratio():
     d_hi_lg, info_lg = block_white_point(rgb_low_g, BASE, mask, block=block, pct=99.8)
     assert "channel_cap" not in info_lg
 
+
+def test_t5f_fine_highlight_rescue_recovers_subblock_canopy_gaps():
+    """T5f (A623.tif): when small bright canopy sky gaps (< 16x16 px) are diluted in 16x16 block means
+    so d4_990_G - d_hi_G >= 0.10 and d4_990_G / d_hi_G >= 1.15 (with d_hi_G >= 0.45 and no holder_blocks_excluded),
+    block_white_point updates d_hi to the 99.5th percentile of 4x4 sub-blocks and logs fine_highlight_rescue.
+    Contiguous 16x16 highlights or thin negatives (d_hi_G < 0.45) do not trigger."""
+    from filmcolor.invert import block_white_point
+
+    block = 16
+    h, w = 256, 256
+    mask = np.ones((h, w), bool)
+
+    # 1. Sub-block canopy gaps in ~20% of 16x16 blocks (52 / 256 blocks -> 52 / 4096 = 1.27% of 4x4 sub-blocks)
+    rgb = np.zeros((h, w, 3), np.float32)
+    D_bg = np.array([0.25, 0.55, 0.70], np.float32)
+    D_gap = np.array([0.55, 1.15, 1.45], np.float32)
+    rgb[:] = BASE * (10.0 ** -D_bg)
+    count = 0
+    for br in range(h // block):
+        for bc in range(w // block):
+            if count < 52:
+                r0, c0 = br * block, bc * block
+                rgb[r0 : r0 + 4, c0 : c0 + 4] = BASE * (10.0 ** -D_gap)
+                count += 1
+
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+    assert "fine_highlight_rescue" in info
+    fhr = info["fine_highlight_rescue"]
+    assert fhr["sub_block"] == 4 and fhr["pct"] == 99.5
+    assert fhr["d_hi_own"][1] == pytest.approx(0.5708, abs=0.02)
+    np.testing.assert_allclose(d_hi, D_gap, atol=1e-4)
+
+    # 2. Contiguous 16x16 uniform highlight blocks: 16x16 white point already captures D_gap -> does not trigger
+    rgb_contig = np.zeros((h, w, 3), np.float32)
+    rgb_contig[:] = BASE * (10.0 ** -D_bg)
+    rgb_contig[:block, : block * 2] = BASE * (10.0 ** -D_gap)
+    d_hi_c, info_c = block_white_point(rgb_contig, BASE, mask, block=block, pct=99.8)
+    assert "fine_highlight_rescue" not in info_c
+    np.testing.assert_allclose(d_hi_c, D_gap, atol=1e-4)
+
+    # 3. Thin negative (d_hi_G < 0.45): does not trigger
+    rgb_thin = np.zeros((h, w, 3), np.float32)
+    rgb_thin[:] = BASE * (10.0 ** -np.array([0.15, 0.30, 0.35], np.float32))
+    count = 0
+    for br in range(h // block):
+        for bc in range(w // block):
+            if count < 52:
+                r0, c0 = br * block, bc * block
+                rgb_thin[r0 : r0 + 4, c0 : c0 + 4] = BASE * (10.0 ** -np.array([0.35, 0.70, 0.80], np.float32))
+                count += 1
+    d_hi_t, info_t = block_white_point(rgb_thin, BASE, mask, block=block, pct=99.8)
+    assert d_hi_t[1] < 0.45
+    assert "fine_highlight_rescue" not in info_t
+
+
+def test_t5f_zero_escape_clamps_moderate_8bit_floor_spikes():
+    """T5f (A621/A623): when holder_blocks_excluded is absent, invert_negative's zero_escape precheck uses
+    max_thr = 2.0 (instead of 5.0), clamping 0.3% pixels with s = [1.25, 1.30, 2.50] to s_B = 1.25 + 0.12 = 1.37;
+    when holder_blocks_excluded is present, max_thr remains 5.0 so s_max = 2.50 does not trigger zero_escape."""
+    h, w = 256, 256
+    mask = np.ones((h, w), bool)
+    D = np.full((h, w, 3), 0.50, dtype=np.float32)
+    # 4 uniform 16x16 highlight blocks establish d_hi = [1.0, 1.0, 1.0]
+    D[0:16, 0:64] = [1.0, 1.0, 1.0]
+    # 197 scattered single pixels (~0.30% > 0.1%, <= 1.0% per chunk) at s = [1.25, 1.30, 2.50]
+    placed = 0
+    for br in range(1, h // 16):
+        for bc in range(w // 16):
+            if placed < 197:
+                D[br * 16 + (placed % 4), bc * 16] = [1.25, 1.30, 2.50]
+                placed += 1
+    rgb = BASE * (10.0 ** -D)
+
+    res = invert_negative(rgb, BASE, mask=mask, white_block=16, spike_clamp=(1.15, 0.12))
+    assert "holder_blocks_excluded" not in res.report["white_point"]
+    np.testing.assert_allclose(res.params.d_hi, [1.0, 1.0, 1.0], atol=1e-2)
+    assert res.report["spike_clamp"]["pixels"] == 197
+    # Clamped s_B = 1.25 + 0.12 = 1.37 -> matches unclamped invert at D_B = 1.37 * d_hi_B
+    from filmcolor.invert import InversionParams, invert
+
+    p_no_clamp = InversionParams(base=res.params.base, d_lo=res.params.d_lo, d_hi=res.params.d_hi,
+                                 gamma=res.params.gamma, spike_clamp=None)
+    expected_b = invert(np.array([[1.25, 1.30, 1.37 * res.params.d_hi[2]]], np.float32), p_no_clamp)[0, 2]
+    assert res.positive[16, 0, 2] == pytest.approx(float(expected_b), rel=1e-3)
+
+    # With holder_blocks_excluded present (512x512 image, top 2 block rows are hot holder [2.2, 2.2, 2.2]),
+    # max_thr stays 5.0 so 0.3% interior pixels at s = [1.25, 1.30, 2.50] (< 5.0) do not trigger zero_escape
+    h2, w2 = 512, 512
+    mask2 = np.ones((h2, w2), bool)
+    D2 = np.full((h2, w2, 3), 0.50, dtype=np.float32)
+    D2[:32, :] = [2.2, 2.2, 2.2]
+    D2[64:80, 0:128] = [1.0, 1.0, 1.0]  # 8 blocks -> > 0.2% of ~960 clean blocks so d_hi = [1.0, 1.0, 1.0]
+    # Place 400 pixels in chunk 0 (rows 96:256) and 400 in chunk 1 (rows 256:512): 800 / 262144 = 0.305%, each chunk < 1%
+    D2[96:100, :100] = [1.25, 1.30, 2.50]
+    D2[256:260, :100] = [1.25, 1.30, 2.50]
+    rgb2 = BASE * (10.0 ** -D2)
+
+    res2 = invert_negative(rgb2, BASE, mask=mask2, white_block=16, spike_clamp=(1.15, 0.12))
+    assert res2.report["white_point"].get("holder_blocks_excluded", 0) > 0
+    np.testing.assert_allclose(res2.params.d_hi, [1.0, 1.0, 1.0], atol=1e-2)
+    assert res2.report["spike_clamp"]["pixels"] == 0
+    p2_no_clamp = InversionParams(base=res2.params.base, d_lo=res2.params.d_lo, d_hi=res2.params.d_hi,
+                                  gamma=res2.params.gamma, spike_clamp=None)
+    unclamped_b = invert(np.array([[1.25, 1.30, 2.50]], np.float32), p2_no_clamp)[0, 2]
+    assert res2.positive[96, 0, 2] == pytest.approx(float(unclamped_b), rel=1e-3)
+    assert res2.positive[96, 0, 2] > 200.0
+
+

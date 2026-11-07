@@ -202,6 +202,19 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
                             info["n_blocks"] = n_clean
                             info["holder_blocks_excluded"] = n_excluded
 
+    # T5f: fine sub-block highlights (small bright canopy sky gaps < 16x16 px, A623.tif) smoothed away by 16x16 means
+    if block >= 16 and not info.get("holder_blocks_excluded"):
+        b4 = block // 4
+        m4 = (rgb[:h, :w].reshape(h // block, 4, b4, w // block, 4, b4, 3).mean(axis=(2, 5))
+              .transpose(0, 2, 1, 3, 4)[ok].reshape(-1, 3).astype(np.float32))
+        D4 = density(m4, base)
+        d4_990 = estimate_white_point(D4, None, 99.0)
+        if d_hi[1] >= 0.45 and d4_990[1] - d_hi[1] >= 0.10 and d4_990[1] / d_hi[1] >= 1.15:
+            d_hi_own = list(d_hi)
+            d_hi = estimate_white_point(D4, None, 99.5)
+            info["fine_highlight_rescue"] = dict(sub_block=b4, pct=99.5, d4_p990_g=float(d4_990[1]),
+                                                 d_hi_own=d_hi_own)
+
     # T4t/T5e: a non-green white point far above G (or B > 1.95 * G when G >= 0.55 on 8-bit highlights, A831/A832)
     if d_hi[1] >= 0.20 and (any(d_hi[c] > max(2.5, 2.2 * d_hi[1]) for c in (0, 2))
                             or (d_hi[1] >= 0.55 and d_hi[2] > 1.95 * d_hi[1])):
@@ -425,7 +438,8 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
     if spike_clamp is not None and Dm.ndim >= 1 and Dm.shape[-1] == 3 and len(Dm) > 0:
         mid_max = np.float32(spike_clamp[0])
         sm = np.sort((Dm - lo) / (hi - lo), axis=-1)
-        zero_escape = float(np.mean((sm[..., 1] > mid_max) & (sm[..., 0] <= 1.6) & (sm[..., 2] > 5.0))) > 0.001
+        max_thr = np.float32(5.0 if (white_info or {}).get("holder_blocks_excluded") else 2.0)
+        zero_escape = float(np.mean((sm[..., 1] > mid_max) & (sm[..., 0] <= 1.6) & (sm[..., 2] > max_thr))) > 0.001
         del sm
     # share of the whole image denser than the white point: large values flag opaque areas
     # (holder mask) or highlights outside the region used for the white point
