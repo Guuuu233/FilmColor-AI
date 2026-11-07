@@ -342,3 +342,36 @@ def test_t5d_input_flat_channel_warning():
     assert input_warnings((0.25, 0.28, 0.03), (0.16, 0.05, 0.07)) == []
 
 
+def test_t5e_borderless_sky_highlight_not_painted_holder_grey():
+    """T5e (A342/A502/A495): on a borderless scan (holder.mean() < 0.15, film_box == [0, 0, H, W]) without any
+    full-edge holder band >= max_edge_span, single-edge sky components reaching (d_ratio >= 0.10, sp >= 0.18) or
+    (d_ratio >= 0.04, sp >= 0.30) and smaller fragments on the same sky edge are exempted from HOLDER_GREY paint;
+    tiny specks on non-sky edges remain painted, and if a full-edge band >= 0.60 exists nothing is released."""
+    from filmcolor.holder import film_box, scene_highlight_components
+
+    holder = np.zeros((300, 400), bool)
+    holder[0:40, 80:200] = True     # main top-edge sky gap: depth 40/300 = 0.133 >= 0.10, span 120/400 = 0.30 >= 0.18
+    holder[0:8, 220:235] = True     # small foliage gap on the same top sky edge
+    holder[298:300, 10:15] = True   # tiny bottom-edge speck
+
+    assert holder.mean() < 0.15 and film_box(holder) == [0, 0, 300, 400]
+    sh = scene_highlight_components(holder)
+    assert sh[0:40, 80:200].all()
+    assert sh[0:8, 220:235].all()
+    assert not sh[298:300, 10:15].any()
+
+    pv = _t5a_preview(holder)
+    e = np.full((300, 400, 3), 0.85, np.float32)
+    painted = pv._paint_holder(e.copy())
+    assert np.all(painted[0:40, 80:200] == 0.85)
+    assert np.all(painted[0:8, 220:235] == 0.85)
+    assert np.all(painted[298:300, 10:15] == np.float32(HOLDER_GREY))
+
+    # If a full-edge band >= 0.60 is present, low-share mode releases nothing
+    holder_with_band = holder.copy()
+    holder_with_band[:, :4] = True
+    assert holder_with_band.mean() < 0.15
+    assert not scene_highlight_components(holder_with_band).any()
+
+
+

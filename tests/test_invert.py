@@ -820,3 +820,41 @@ def test_t4z_white_point_bridges_one_block_mullion():
     d_hi_isl, info_isl = block_white_point(rgb_island, BASE, mask, block=block, pct=99.8)
     assert "holder_blocks_excluded" not in info_isl
     np.testing.assert_allclose(d_hi_isl, [2.2, 2.2, 2.2], atol=0.01)
+
+
+def test_t5e_block_white_point_caps_inflated_blue_ratio():
+    """T5e (A831/A832): when d_hi_G >= 0.55 and d_hi_B > 1.95 * d_hi_G (even if <= 2.2 * d_hi_G and <= 2.5 D),
+    block_white_point caps d_hi_B to 1.45 * d_hi_G and logs info['channel_cap']['B']; when d_hi_B / d_hi_G = 1.85
+    or d_hi_G < 0.55 it does not trigger."""
+    from filmcolor.invert import block_white_point
+
+    block = 16
+    h, w = 256, 256
+    mask = np.ones((h, w), bool)
+
+    # 1. Trigger: d_hi_G = 0.80 (>= 0.55), d_hi_B = 1.62 (~2.025 * 0.80 > 1.95 * 0.80, but < 2.2 * 0.80 = 1.76 and < 2.5)
+    rgb = np.zeros((h, w, 3), np.float32)
+    D_scene = np.array([0.35, 0.80, 1.05], np.float32)
+    rgb[:] = BASE * (10.0 ** -D_scene)
+    D_sky = np.array([0.35, 0.80, 1.62], np.float32)
+    rgb[0:block, 0:block * 2] = BASE * (10.0 ** -D_sky)
+
+    d_hi, info = block_white_point(rgb, BASE, mask, block=block, pct=99.8)
+    assert "channel_cap" in info and "B" in info["channel_cap"]
+    assert info["channel_cap"]["B"] == pytest.approx(1.62, abs=1e-3)
+    assert d_hi[1] == pytest.approx(0.80, abs=1e-4)
+    assert d_hi[2] == pytest.approx(1.45 * d_hi[1], abs=1e-4)
+
+    # 2. Non-trigger: d_hi_B / d_hi_G = 1.85 (<= 1.95)
+    rgb_ok = np.zeros((h, w, 3), np.float32)
+    rgb_ok[:] = BASE * (10.0 ** -np.array([0.35, 0.80, 1.48], np.float32))
+    d_hi_ok, info_ok = block_white_point(rgb_ok, BASE, mask, block=block, pct=99.8)
+    assert "channel_cap" not in info_ok
+    assert d_hi_ok[2] == pytest.approx(1.48, abs=1e-4)
+
+    # 3. Non-trigger: d_hi_G = 0.50 (< 0.55) with d_hi_B = 1.00 (2.0 * d_hi_G, < 2.5)
+    rgb_low_g = np.zeros((h, w, 3), np.float32)
+    rgb_low_g[:] = BASE * (10.0 ** -np.array([0.25, 0.50, 1.00], np.float32))
+    d_hi_lg, info_lg = block_white_point(rgb_low_g, BASE, mask, block=block, pct=99.8)
+    assert "channel_cap" not in info_lg
+

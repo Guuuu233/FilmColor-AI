@@ -202,12 +202,13 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
                             info["n_blocks"] = n_clean
                             info["holder_blocks_excluded"] = n_excluded
 
-    # T4t: a non-green white point far above G can be dominated by digitally zeroed samples
-    if d_hi[1] >= 0.20 and any(d_hi[c] > max(2.5, 2.2 * d_hi[1]) for c in (0, 2)):
+    # T4t/T5e: a non-green white point far above G (or B > 1.95 * G when G >= 0.55 on 8-bit highlights, A831/A832)
+    if d_hi[1] >= 0.20 and (any(d_hi[c] > max(2.5, 2.2 * d_hi[1]) for c in (0, 2))
+                            or (d_hi[1] >= 0.55 and d_hi[2] > 1.95 * d_hi[1])):
         d_list = list(d_hi)
         capped = {}
         for c, name in ((0, "R"), (2, "B")):
-            if d_list[c] > max(2.5, 2.2 * d_list[1]):
+            if d_list[c] > max(2.5, 2.2 * d_list[1]) or (c == 2 and d_list[1] >= 0.55 and d_list[2] > 1.95 * d_list[1]):
                 capped[name] = float(d_list[c])
                 d_list[c] = float(1.45 * d_list[1])
         d_hi = tuple(d_list)

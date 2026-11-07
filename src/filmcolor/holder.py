@@ -61,14 +61,15 @@ def film_box(holder: np.ndarray) -> list[int] | None:
 
 def scene_highlight_components(holder: np.ndarray, min_depth: float = SCENE_HOLDER_MIN_DEPTH,
                                max_edge_span: float = SCENE_HOLDER_MAX_EDGE_SPAN) -> np.ndarray:
-    """T5a: holder components inside film_box(holder) that reach >= min_depth * short side into the box and cover
-    < max_edge_span of every box edge they touch: a clipped scene highlight touching the frame edge (B096 windows),
-    not a holder band. Only when holder.mean() >= 0.15 (film_box band mode); otherwise all False."""
+    """T5a/T5e: holder components inside film_box(holder) that are clipped scene highlights touching the frame edge
+    (B096 windows; T5e: borderless sky gaps in A342/A502/A495 when holder.mean() < 0.15 and no component is a full-edge
+    holder band >= max_edge_span), not a holder band."""
     from scipy import ndimage
 
     keep = np.zeros_like(holder)
-    if float(holder.mean()) < 0.15:
+    if not holder.any():
         return keep
+    low_share = float(holder.mean()) < 0.15
     fb = film_box(holder)
     if fb is None:
         return keep
@@ -79,9 +80,9 @@ def scene_highlight_components(holder: np.ndarray, min_depth: float = SCENE_HOLD
         return keep
     dist = ndimage.distance_transform_edt(np.pad(np.ones((h, w), bool), 1, constant_values=False))[1:-1, 1:-1]
     depth = ndimage.maximum(dist, lab, np.arange(1, n + 1))
+    short = min(h, w)
+    comp_info = []
     for i in range(n):
-        if depth[i] < min_depth * min(h, w):
-            continue
         m = lab == i + 1
         rows, cols = np.where(m.any(1))[0], np.where(m.any(0))[0]
         spans = []
@@ -89,9 +90,26 @@ def scene_highlight_components(holder: np.ndarray, min_depth: float = SCENE_HOLD
             spans.append((cols[-1] - cols[0] + 1) / w)
         if m[:, 0].any() or m[:, -1].any():
             spans.append((rows[-1] - rows[0] + 1) / h)
-        if spans and max(spans) >= max_edge_span:
+        touch = (bool(m[0].any()), bool(m[-1].any()), bool(m[:, 0].any()), bool(m[:, -1].any()))
+        comp_info.append((m, float(depth[i]) / short, max(spans) if spans else 0.0, touch))
+    if low_share and ((t, l, h, w) != (0, 0, *holder.shape) or any(sp >= max_edge_span for _, _, sp, _ in comp_info)):
+        return keep
+    sky_edges = [False, False, False, False]
+    for m, d_ratio, sp, touch in comp_info:
+        if sp >= max_edge_span:
             continue
-        keep[t:t + h, l:l + w] |= m
+        if not low_share:
+            if d_ratio >= min_depth:
+                keep[t:t + h, l:l + w] |= m
+        elif sum(touch) == 1 and ((d_ratio >= 0.10 and sp >= 0.18) or (d_ratio >= 0.04 and sp >= 0.30)):
+            keep[t:t + h, l:l + w] |= m
+            for ei, tv in enumerate(touch):
+                if tv:
+                    sky_edges[ei] = True
+    if low_share and any(sky_edges):
+        for m, _, sp, touch in comp_info:
+            if sp < max_edge_span and sum(touch) == 1 and any(t_i and s_i for t_i, s_i in zip(touch, sky_edges)):
+                keep[t:t + h, l:l + w] |= m
     return keep
 
 
