@@ -1,0 +1,1141 @@
+{
+  "A1328.NEF": {
+    "name": "A1328.NEF",
+    "film": "color",
+    "raw_sha256": "58669c4972faf2bb815fc63ed9b7c76f9b88c30309905a5316c3278ab34b0bf6",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "auto",
+    "base_rgb": [
+      0.09984,
+      0.169924,
+      0.035889
+    ],
+    "d_lo_shared": null,
+    "d_hi": [
+      0.294006,
+      0.525446,
+      0.431402
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 23375,
+      "blue_guard": {
+        "guard": [
+          1.06,
+          1.18,
+          0.65,
+          0.48
+        ],
+        "ratio_bg": 0.8210193583457187,
+        "applied": false,
+        "base_bg": 0.21120689655172414
+      }
+    },
+    "base_diagnostics": {
+      "n_blocks": 41917,
+      "n_saturated_blocks": 0,
+      "n_uniform": 3997,
+      "n_candidates": 40,
+      "n_kept": 40,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -0.7664008140563965,
+        -2.2402048110961914
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        1512,
+        2016,
+        2232,
+        3984
+      ],
+      "brightness_threshold": 0.10046879202127457
+    },
+    "bw_lifted_floor": null,
+    "params": {
+      "ev": -0.1175,
+      "temp": -0.0625,
+      "tint": 0.1032,
+      "sat": 1.0126,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.3016277123141022,
+          -0.24129460794459182,
+          -0.06033310436951034
+        ],
+        [
+          -0.06822743597585426,
+          1.2671502111024942,
+          -0.19892277512663992
+        ],
+        [
+          0.010296813059922133,
+          -0.18444691347091413,
+          1.174150100410992
+        ]
+      ],
+      "blacks": -0.0346,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.6684,
+      0.5473,
+      0.5531
+    ],
+    "core_srgb_q05": [
+      0.2138,
+      0.1751,
+      0.1771
+    ],
+    "display_sha256": "c92271cc65d9292f5fe5abc21f6acf91a45f7f97a7eac43c51c4bb10077f1750"
+  },
+  "A1604.dng": {
+    "name": "A1604.dng",
+    "film": "color",
+    "raw_sha256": "1174acebf64cacc58aae764c7c17b9189c88427c9dbfe099fdbffb1035f99f67",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "auto",
+    "base_rgb": [
+      0.354101,
+      0.127092,
+      0.138979
+    ],
+    "d_lo_shared": null,
+    "d_hi": [
+      0.453518,
+      0.431812,
+      0.056107
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 66043,
+      "blue_guard": {
+        "guard": [
+          1.06,
+          1.18,
+          0.65,
+          0.48
+        ],
+        "ratio_bg": 0.12993339866935372,
+        "applied": false,
+        "base_bg": 1.0935286162804523
+      }
+    },
+    "base_diagnostics": {
+      "n_blocks": 118577,
+      "n_saturated_blocks": 0,
+      "n_uniform": 117150,
+      "n_candidates": 1172,
+      "n_kept": 723,
+      "chroma_outlier_frac": 0.38310580204778155,
+      "chroma_centre_log2_RG_BG": [
+        1.4776129722595215,
+        0.12189865112304688
+      ],
+      "rejected_mean_rgb": [
+        0.37570369243621826,
+        0.13500376045703888,
+        0.14126475155353546
+      ],
+      "kept_bbox": [
+        4824,
+        24,
+        6768,
+        10032
+      ],
+      "brightness_threshold": 0.19881047308444977,
+      "relaxed_uniformity": true
+    },
+    "bw_lifted_floor": null,
+    "params": {
+      "ev": -0.65,
+      "temp": -0.0818,
+      "tint": 0.124,
+      "sat": 1.009,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.18,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.6878,
+      0.6911,
+      0.5487
+    ],
+    "core_srgb_q05": [
+      0.3522,
+      0.3453,
+      0.3169
+    ],
+    "display_sha256": "c3413238722a1f53cba2a0ef49634cb2dd5a0734a98b4eda1220ccd195fce6ca"
+  },
+  "A1606.dng": {
+    "name": "A1606.dng",
+    "film": "color",
+    "raw_sha256": "414b9b63412b5c71938155541cad9d8e3bc27aa5727bbbd7b117878ab7ba1399",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "auto",
+    "base_rgb": [
+      0.288731,
+      0.116045,
+      0.118029
+    ],
+    "d_lo_shared": null,
+    "d_hi": [
+      0.486859,
+      0.508585,
+      0.129058
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 65832,
+      "blue_guard": {
+        "guard": [
+          1.06,
+          1.18,
+          0.65,
+          0.48
+        ],
+        "ratio_bg": 0.2537592685221603,
+        "applied": false,
+        "base_bg": 1.0170940127039787
+      }
+    },
+    "base_diagnostics": {
+      "n_blocks": 118011,
+      "n_saturated_blocks": 0,
+      "n_uniform": 116124,
+      "n_candidates": 1161,
+      "n_kept": 520,
+      "chroma_outlier_frac": 0.5521102497846684,
+      "chroma_centre_log2_RG_BG": [
+        1.3054808378219604,
+        0.00840194895863533
+      ],
+      "rejected_mean_rgb": [
+        0.3079189956188202,
+        0.12469843029975891,
+        0.12003051489591599
+      ],
+      "kept_bbox": [
+        24,
+        2928,
+        6336,
+        9768
+      ],
+      "brightness_threshold": 0.16661307215690613,
+      "relaxed_uniformity": true
+    },
+    "bw_lifted_floor": null,
+    "params": {
+      "ev": -0.0495,
+      "temp": -0.0609,
+      "tint": 0.0045,
+      "sat": 1.02,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.0514,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.6589,
+      0.6582,
+      0.6477
+    ],
+    "core_srgb_q05": [
+      0.3667,
+      0.3286,
+      0.3644
+    ],
+    "display_sha256": "f367faad837ed277b09f1d540a76637cf7003823706f41f88f489f18c4745259"
+  },
+  "A1609.dng": {
+    "name": "A1609.dng",
+    "film": "color",
+    "raw_sha256": "68c2b8eb4f16353c92e2d97b5274472bc274b6bb6c17da59544326651e2e1c0f",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "auto",
+    "base_rgb": [
+      0.420645,
+      0.162203,
+      0.15729
+    ],
+    "d_lo_shared": null,
+    "d_hi": [
+      0.987154,
+      0.835614,
+      0.235807
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 66254,
+      "blue_guard": {
+        "guard": [
+          1.06,
+          1.18,
+          0.65,
+          0.48
+        ],
+        "ratio_bg": 0.2821960657737294,
+        "applied": false,
+        "base_bg": 0.9697083751405338
+      }
+    },
+    "base_diagnostics": {
+      "n_blocks": 118860,
+      "n_saturated_blocks": 0,
+      "n_uniform": 107227,
+      "n_candidates": 1072,
+      "n_kept": 246,
+      "chroma_outlier_frac": 0.7705223880597015,
+      "chroma_centre_log2_RG_BG": [
+        1.3643423318862915,
+        -0.04673318192362785
+      ],
+      "rejected_mean_rgb": [
+        0.41876330971717834,
+        0.1631530076265335,
+        0.15582676231861115
+      ],
+      "kept_bbox": [
+        264,
+        504,
+        6744,
+        3912
+      ],
+      "brightness_threshold": 0.22967876493930817,
+      "relaxed_uniformity": true
+    },
+    "bw_lifted_floor": null,
+    "params": {
+      "ev": 0.3227,
+      "temp": -0.0372,
+      "tint": 0.1156,
+      "sat": 1.0152,
+      "contrast": 1.3,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.5877,
+      0.6735,
+      0.6505
+    ],
+    "core_srgb_q05": [
+      0.2664,
+      0.2582,
+      0.2509
+    ],
+    "display_sha256": "7ee1f5d6236c35e1b3eb6fce6650e4e2602987d6fc64f3f95134360ecf16f931"
+  },
+  "B052.NEF": {
+    "name": "B052.NEF",
+    "film": "bw",
+    "raw_sha256": "bcc59a699464c30ddc885f7d1e020b9873c9219ec029876ad8f06fce0f479644",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "roll_nat",
+    "base_rgb": [
+      0.155737,
+      0.326503,
+      0.28348
+    ],
+    "d_lo_shared": 0.613733,
+    "d_hi": [
+      0.440215,
+      0.440215,
+      0.440215
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 44118
+    },
+    "base_diagnostics": {
+      "n_blocks": 79350,
+      "n_saturated_blocks": 0,
+      "n_uniform": 53168,
+      "n_candidates": 532,
+      "n_kept": 532,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -1.0688517093658447,
+        -0.20414811372756958
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        576,
+        2136,
+        4872,
+        7872
+      ],
+      "brightness_threshold": 0.20316480100154877
+    },
+    "bw_lifted_floor": {
+      "p2_before": 0.38454947113990784,
+      "ev_drop": 0.23036925959587096,
+      "blacks_lowered": 0.16454947113990784,
+      "contrast_boost": 0.13163957691192626
+    },
+    "params": {
+      "ev": -0.399,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4316,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.2843,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.5297,
+      0.5297,
+      0.5297
+    ],
+    "core_srgb_q05": [
+      0.3552,
+      0.3552,
+      0.3552
+    ],
+    "display_sha256": "ea483acfc9aa984f2876f15fe7b3877b0cfb4e77becc080a4ef4bd7bc7d597b3"
+  },
+  "B058.NEF": {
+    "name": "B058.NEF",
+    "film": "bw",
+    "raw_sha256": "5225cfe17172c5ceeb7170b47d97c078d397bfd774789c5dc15c69407f7846a6",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "roll_nat",
+    "base_rgb": [
+      0.155737,
+      0.326503,
+      0.28348
+    ],
+    "d_lo_shared": 0.613733,
+    "d_hi": [
+      0.449887,
+      0.449887,
+      0.449887
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 44118
+    },
+    "base_diagnostics": {
+      "n_blocks": 79350,
+      "n_saturated_blocks": 0,
+      "n_uniform": 49955,
+      "n_candidates": 500,
+      "n_kept": 500,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -1.0708822011947632,
+        -0.20305927097797394
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        360,
+        2472,
+        5208,
+        8136
+      ],
+      "brightness_threshold": 0.21287977695465088
+    },
+    "bw_lifted_floor": {
+      "p2_before": 0.3562143301963806,
+      "ev_drop": 0.19070006227493283,
+      "blacks_lowered": 0.1362143301963806,
+      "contrast_boost": 0.10897146415710449
+    },
+    "params": {
+      "ev": -0.2286,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.409,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.2463,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.5197,
+      0.5197,
+      0.5197
+    ],
+    "core_srgb_q05": [
+      0.3425,
+      0.3425,
+      0.3425
+    ],
+    "display_sha256": "31567f09ac5681470d126534bdfba7fd21d1ee5526a2b0e168e1c32741b562cb"
+  },
+  "B060.NEF": {
+    "name": "B060.NEF",
+    "film": "bw",
+    "raw_sha256": "20b85243a792869a58c63919dd4a51c892678452e6732eb32da52663e49febd4",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "roll_nat",
+    "base_rgb": [
+      0.155737,
+      0.326503,
+      0.28348
+    ],
+    "d_lo_shared": 0.613733,
+    "d_hi": [
+      0.480457,
+      0.480457,
+      0.480457
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 44118
+    },
+    "base_diagnostics": {
+      "n_blocks": 79350,
+      "n_saturated_blocks": 0,
+      "n_uniform": 60535,
+      "n_candidates": 605,
+      "n_kept": 605,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -1.0647801160812378,
+        -0.20880073308944702
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        3120,
+        1392,
+        5064,
+        7848
+      ],
+      "brightness_threshold": 0.19315822422504425
+    },
+    "bw_lifted_floor": {
+      "p2_before": 0.4022765952348709,
+      "ev_drop": 0.25518723332881926,
+      "blacks_lowered": 0.18227659523487091,
+      "contrast_boost": 0.14582127618789673
+    },
+    "params": {
+      "ev": -0.4059,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4458,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.2618,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.4393,
+      0.4393,
+      0.4393
+    ],
+    "core_srgb_q05": [
+      0.3597,
+      0.3597,
+      0.3597
+    ],
+    "display_sha256": "ea4fc022d37b0c999260d7e819f475f7efc19d1c5f380c8ffa04f81c06156903"
+  },
+  "B068.NEF": {
+    "name": "B068.NEF",
+    "film": "bw",
+    "raw_sha256": "aa4ceeb3e6da9c89a8c12c811ccbe934711673c700c352487b6635e194f9a0a5",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "roll_nat",
+    "base_rgb": [
+      0.155737,
+      0.326503,
+      0.28348
+    ],
+    "d_lo_shared": 0.613733,
+    "d_hi": [
+      0.534889,
+      0.534889,
+      0.534889
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 44118
+    },
+    "base_diagnostics": {
+      "n_blocks": 79350,
+      "n_saturated_blocks": 0,
+      "n_uniform": 67164,
+      "n_candidates": 672,
+      "n_kept": 672,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -1.0692555904388428,
+        -0.20153793692588806
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        192,
+        5376,
+        1608,
+        7752
+      ],
+      "brightness_threshold": 0.21101512014865875
+    },
+    "bw_lifted_floor": {
+      "p2_before": 0.34385065734386444,
+      "ev_drop": 0.1733909202814102,
+      "blacks_lowered": 0.12385065734386444,
+      "contrast_boost": 0.09908052587509156
+    },
+    "params": {
+      "ev": 0.1074,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.3991,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.149,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.5058,
+      0.5058,
+      0.5058
+    ],
+    "core_srgb_q05": [
+      0.31,
+      0.31,
+      0.31
+    ],
+    "display_sha256": "50cd45f001da4e837cda6fdcdeb1049a29230d9e4a8ccf5542b91846d49ee04c"
+  },
+  "B085.NEF": {
+    "name": "B085.NEF",
+    "film": "bw",
+    "raw_sha256": "16c32d7e4be7e7f19fe938474a789bd7f26269088641a39040b1966d2e639d6d",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "roll_nat",
+    "base_rgb": [
+      0.155737,
+      0.326503,
+      0.28348
+    ],
+    "d_lo_shared": 0.613733,
+    "d_hi": [
+      0.455558,
+      0.455558,
+      0.455558
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 44118
+    },
+    "base_diagnostics": {
+      "n_blocks": 79350,
+      "n_saturated_blocks": 0,
+      "n_uniform": 53026,
+      "n_candidates": 530,
+      "n_kept": 530,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -1.0724440813064575,
+        -0.20458939671516418
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        1608,
+        4680,
+        4752,
+        7464
+      ],
+      "brightness_threshold": 0.2223275899887085
+    },
+    "bw_lifted_floor": {
+      "p2_before": 0.2862376070022583,
+      "ev_drop": 0.09273264980316162,
+      "blacks_lowered": 0.06623760700225831,
+      "contrast_boost": 0.05299008560180665
+    },
+    "params": {
+      "ev": -0.1094,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.353,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.1707,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.5999,
+      0.5999,
+      0.5999
+    ],
+    "core_srgb_q05": [
+      0.3032,
+      0.3032,
+      0.3032
+    ],
+    "display_sha256": "1e850d9e6c3daa99d8746093135e93220f0e1c4909d06b71443fa9d22801c10a"
+  },
+  "B003.NEF": {
+    "name": "B003.NEF",
+    "film": "bw",
+    "raw_sha256": "78b9b421ddda9158d5119c6b40c259bfb2f6f9b5189b4479ce16b506c1100d1d",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "roll_nat",
+    "base_rgb": [
+      0.114638,
+      0.244825,
+      0.213552
+    ],
+    "d_lo_shared": 0.74077,
+    "d_hi": [
+      0.246936,
+      0.246936,
+      0.246936
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 44118
+    },
+    "base_diagnostics": {
+      "n_blocks": 79350,
+      "n_saturated_blocks": 0,
+      "n_uniform": 70222,
+      "n_candidates": 702,
+      "n_kept": 702,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -1.0751562118530273,
+        -0.21953247487545013
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        3720,
+        3168,
+        5256,
+        5016
+      ],
+      "brightness_threshold": 0.16623704135417938
+    },
+    "bw_lifted_floor": {
+      "p2_before": 0.4298824262619019,
+      "ev_drop": 0.2938353967666626,
+      "blacks_lowered": 0.20988242626190187,
+      "contrast_boost": 0.1679059410095215
+    },
+    "params": {
+      "ev": -0.7438,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4679,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.4099,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.5097,
+      0.5097,
+      0.5097
+    ],
+    "core_srgb_q05": [
+      0.3878,
+      0.3878,
+      0.3878
+    ],
+    "display_sha256": "ff518148e3da468575b54253402582948511ef840b7b59c9167f1a1dbbd7184b"
+  },
+  "B013.NEF": {
+    "name": "B013.NEF",
+    "film": "bw",
+    "raw_sha256": "8c4da1828ea3ce14aa00a71f35bc037adee0e901cd284907aa17188ea2b6d00e",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "roll_nat",
+    "base_rgb": [
+      0.143298,
+      0.306032,
+      0.26694
+    ],
+    "d_lo_shared": 0.64386,
+    "d_hi": [
+      0.431832,
+      0.431832,
+      0.431832
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 44118
+    },
+    "base_diagnostics": {
+      "n_blocks": 79350,
+      "n_saturated_blocks": 0,
+      "n_uniform": 63246,
+      "n_candidates": 632,
+      "n_kept": 632,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -1.093794822692871,
+        -0.19798040390014648
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        168,
+        7200,
+        2784,
+        8256
+      ],
+      "brightness_threshold": 0.18786568939685822
+    },
+    "bw_lifted_floor": {
+      "p2_before": 0.43717545866966245,
+      "ev_drop": 0.30404564213752744,
+      "blacks_lowered": 0.21717545866966245,
+      "contrast_boost": 0.17374036693572997
+    },
+    "params": {
+      "ev": -0.4097,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4737,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.3453,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.5018,
+      0.5018,
+      0.5018
+    ],
+    "core_srgb_q05": [
+      0.3719,
+      0.3719,
+      0.3719
+    ],
+    "display_sha256": "4db753335f654c16ef5c84a753d88d4f441cdf20b788c94994402423e67aa795"
+  },
+  "B029.NEF": {
+    "name": "B029.NEF",
+    "film": "bw",
+    "raw_sha256": "76b5083e70a97fc7feb355e896f1f81eb4b2501c57ca9a11d04cadf5e2bf1d3e",
+    "status": "ok",
+    "flags": [],
+    "input_warnings": [],
+    "base_method": "roll_nat",
+    "base_rgb": [
+      0.153522,
+      0.327868,
+      0.285986
+    ],
+    "d_lo_shared": 0.613928,
+    "d_hi": [
+      0.349061,
+      0.349061,
+      0.349061
+    ],
+    "white_point": {
+      "method": "block_mean",
+      "block": 16,
+      "pct": 99.8,
+      "n_blocks": 44118
+    },
+    "base_diagnostics": {
+      "n_blocks": 79350,
+      "n_saturated_blocks": 0,
+      "n_uniform": 53935,
+      "n_candidates": 539,
+      "n_kept": 539,
+      "chroma_outlier_frac": 0.0,
+      "chroma_centre_log2_RG_BG": [
+        -1.0820568799972534,
+        -0.2082078456878662
+      ],
+      "rejected_mean_rgb": null,
+      "kept_bbox": [
+        24,
+        888,
+        5448,
+        3240
+      ],
+      "brightness_threshold": 0.22443433105945587
+    },
+    "bw_lifted_floor": {
+      "p2_before": 0.4336577254533768,
+      "ev_drop": 0.2991208156347275,
+      "blacks_lowered": 0.21365772545337677,
+      "contrast_boost": 0.17092618036270144
+    },
+    "params": {
+      "ev": -0.1352,
+      "temp": 0.0,
+      "tint": 0.0,
+      "sat": 1.0,
+      "contrast": 1.4709,
+      "midtone": 0.23,
+      "shoulder": 0.22,
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "blacks": -0.2137,
+      "vibrance": 0.08,
+      "chroma_preserve": 0.4
+    },
+    "core_srgb_q50": [
+      0.6653,
+      0.6653,
+      0.6653
+    ],
+    "core_srgb_q05": [
+      0.02,
+      0.02,
+      0.02
+    ],
+    "display_sha256": "7d719b1079c679ab29a0e814cf14cf4ef9a3171cd8f15a44700f6584937bc7e1"
+  }
+}

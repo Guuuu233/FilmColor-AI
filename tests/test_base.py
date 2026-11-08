@@ -439,3 +439,43 @@ def test_t5c_scanner_white_ceiling_excluded():
     assert "clipped_base_excluded" not in est_hi.diagnostics
     assert rel_err(est_hi.rgb, hi_mask) < 1e-5
 
+
+def test_t5g_natural_roll_base_level_diff_and_cyan_shadow_relaxation():
+    """T5g:
+    1) On monochromatic / B&W rolls (chroma_part < 0.02), natural_roll_base blends toward d_lo_dq according to
+       level_diff in [ramp_lo, ramp_hi], capped at d_lo_b1 + max_black_pull_d (B003/B013/B052/B060).
+    2) On C-41 colour negatives where the initial uniform candidates are cyan scene shadows (rgb_R >= 1.8 * rgb_G,
+       rgb_B >= 1.10 * rgb_G) and p98 exceeds the initial estimate in R and G, estimate_base_blocks relaxes max_rel_std
+       to 0.25 to recover the brighter orange-masked border (A1604.dng, A1606.dng, A1609.dng).
+    """
+    from filmcolor.base import estimate_base_blocks, natural_roll_base
+
+    # 1. Monochromatic roll_nat level_diff ramp (chroma_part == 0.0, level_diff == 0.12 >= ramp_hi):
+    roll_rgb = (0.16, 0.34, 0.30)
+    own_rgb = tuple(x * (10.0 ** -0.12) for x in roll_rgb)
+    p01 = [float(-np.log10(x)) for x in own_rgb]
+    b_eff, info = natural_roll_base(roll_rgb, p01, own_rgb=own_rgb, softness=0.5)
+    assert info["b1_weight"] == pytest.approx(0.175)
+    assert info["d_lo_used"] == pytest.approx(info["d_lo_b1"] + 0.04)
+    assert b_eff[1] < roll_rgb[1]
+
+    # When level_diff < ramp_lo (0.02 < 0.04), b1_weight remains 1.0:
+    own_near = tuple(x * (10.0 ** -0.02) for x in roll_rgb)
+    _, info_near = natural_roll_base(roll_rgb, p01, own_rgb=own_near, softness=0.5)
+    assert info_near["b1_weight"] == pytest.approx(1.0)
+    assert info_near["d_lo_used"] == pytest.approx(info_near["d_lo_b1"])
+
+    # 2. Cyan scene shadow relaxation in estimate_base_blocks:
+    rng = np.random.default_rng(7)
+    sp = np.empty((20, 20, 3), dtype=np.float32)
+    # 95% uniform interior cyan shadow: R=0.28, G=0.10, B=0.133 (B/G = 1.33 >= 1.10, R/G = 2.80 >= 1.80)
+    sp[:, :] = np.array([0.28, 0.10, 0.133], dtype=np.float32) * (1.0 + 0.005 * rng.standard_normal((20, 20, 1)).astype(np.float32))
+    # 5% textured orange-masked border on row 1: R=0.38, G=0.14, B=0.14 (rel_std ~ 0.08 > 0.03, <= 0.25)
+    checker = np.where((np.arange(20) % 2) == 0, 1.08, 0.92).astype(np.float32)[:, None]
+    sp[1, :] = np.array([0.38, 0.14, 0.14], dtype=np.float32) * checker
+    sp_sat = np.zeros((20, 20), dtype=bool)
+    est = estimate_base_blocks(sp, sp_sat, block=24, exclude_near_saturated=False)
+    assert est.diagnostics.get("relaxed_uniformity") is True
+    assert est.rgb[0] > 0.34 and est.rgb[1] > 0.125
+
+

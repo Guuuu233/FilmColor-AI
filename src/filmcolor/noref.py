@@ -1401,6 +1401,18 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
             bound = float(cfg["auto_blacks_bound"])
             base_p["blacks"] = float(np.clip(base_p["blacks"] + ab, -bound, bound))
             auto_lv["blacks"] = dict(p2=p2_b, blacks=ab)
+    elif (p90 <= 1e-4 and span_d_g is not None and span_d_g < 0.80 and base_p["ev"] <= 0.35
+          and tc["p98_dark_d"] <= 1.32 and p2 > 0.25):
+        # T5g: monochrome (B&W) positive whose darkest 2 % remains lifted above 0.25 after exposure / thin-negative caps
+        ex_p2 = float(p2 - 0.22)
+        ev_drop = float(np.clip(ex_p2 * 1.40, 0.0, 0.45))
+        blk_drop = float(np.clip(ex_p2 * 1.00, 0.0, 0.28))
+        con_boost = float(np.clip(ex_p2 * 0.80, 0.0, 0.25))
+        base_p["ev"] = float(max(cfg["ev_limits"][0], base_p["ev"] - ev_drop))
+        base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
+        base_p["contrast"] = float(min(1.65, base_p["contrast"] + con_boost))
+        out["diagnostics"]["bw_lifted_floor"] = dict(p2_before=float(p2), ev_drop=ev_drop, blacks_lowered=blk_drop,
+                                                     contrast_boost=con_boost)
 
     # Round slider-visible values cleanly
     for k in ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder", "highlights", "shadows", "whites", "blacks",

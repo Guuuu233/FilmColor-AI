@@ -2124,3 +2124,27 @@ def test_t5d_lifted_floor_recovers_fogged_pedestal_frame():
     assert res_deep["diagnostics"]["textured_cells"]["p98_dark_d"] > 0.56
     assert "lifted_floor" not in res_deep["diagnostics"]
 
+
+def test_t5g_bw_lifted_floor_pulls_milky_monochrome_shadows():
+    """T5g: a monochrome (B&W) positive with short density span (< 0.80 D), p98_dark_d <= 1.32 D, and encoded p2 > 0.25
+    after exposure / thin-negative caps triggers bw_lifted_floor (lowering ev and blacks, raising contrast), whereas a
+    chromatic positive with the same luminance distribution is untouched."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(19)
+    y = rng.uniform(0.14, 0.92, (160, 240)).astype(np.float32)
+    P_bw = np.stack([y, y, y], axis=-1)
+    res_bw = estimate_params_v3(P_bw, None, NOREF_V3, span_d_g=0.45)
+    assert "bw_lifted_floor" in res_bw["diagnostics"]
+    bwlf = res_bw["diagnostics"]["bw_lifted_floor"]
+    assert bwlf["p2_before"] > 0.25
+    assert bwlf["ev_drop"] > 0.0 and bwlf["blacks_lowered"] > 0.0 and bwlf["contrast_boost"] > 0.0
+    assert res_bw["params"]["contrast"] > 1.30
+    assert res_bw["params"]["blacks"] < -0.10
+
+    # Chromatic positive (chroma_p90 > 1e-4) with identical luminance is untouched by bw_lifted_floor:
+    P_col = np.stack([y * 1.12, y, y * 0.88], axis=-1).astype(np.float32)
+    res_col = estimate_params_v3(P_col, None, NOREF_V3, span_d_g=0.45)
+    assert "bw_lifted_floor" not in res_col["diagnostics"]
+
+

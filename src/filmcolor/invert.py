@@ -272,7 +272,7 @@ def blue_white_guard(d_hi, guard, base=None) -> tuple[tuple[float, float, float]
             return (d[0], d[1], d_b), dict(info, applied=True, narrow_blue_rescue=True,
                                           d_hi_b_own=d[2], ratio_bg_used=d_b / d[1])
         return tuple(d), dict(info, reason="below_valid_ratio")
-    if ratio >= lo:
+    if ratio >= lo or (len(values) == 4 and base is not None and base[0] <= 0.70 * base[1] and d[0] <= 0.70 * d[1]):
         return tuple(d), info
     d_b = d[2] + weight * (max(d[2], target * d[1]) - d[2])
     return (d[0], d[1], d_b), dict(info, applied=True, d_hi_b_own=d[2], ratio_bg_used=d_b / d[1])

@@ -966,3 +966,26 @@ def test_t5f_zero_escape_clamps_moderate_8bit_floor_spikes():
     assert res2.positive[96, 0, 2] > 200.0
 
 
+def test_t5g_blue_white_guard_skips_green_dominant_base_and_highlights():
+    """T5g: when both the 4-value orange-mask guard's base and the frame's white point are strongly green-dominant
+    (base_R <= 0.70 * base_G and d_hi_R <= 0.70 * d_hi_G, e.g. A1328.NEF with green backlight and corner falloff),
+    blue_white_guard leaves d_hi_B untouched while still applying on normal C-41 and warm-highlight scans."""
+    from filmcolor.invert import blue_white_guard
+
+    guard = (1.06, 1.18, 0.65, 0.48)
+    # A1328.NEF signature: base_R / base_G = 0.588 <= 0.70, d_hi_R / d_hi_G = 0.560 <= 0.70, d_hi_B / d_hi_G = 0.821
+    base_green = (0.0998, 0.1699, 0.0359)
+    d_a1328 = (0.2940, 0.5254, 0.4314)
+    out, info = blue_white_guard(d_a1328, guard, base=base_green)
+    assert out == d_a1328
+    assert info["applied"] is False
+
+    # A239.ORF signature: base_R / base_G = 0.557 <= 0.70, but d_hi_R / d_hi_G = 0.911 > 0.70 -> still guarded
+    base_a239 = (0.2560, 0.4597, 0.2186)
+    d_a239 = (1.5350, 1.6826, 1.6553)
+    out_239, info_239 = blue_white_guard(d_a239, guard, base=base_a239)
+    assert info_239["applied"] is True
+    assert out_239[2] > d_a239[2]
+
+
+

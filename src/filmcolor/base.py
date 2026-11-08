@@ -254,8 +254,10 @@ def natural_roll_base(
         d_lo = d_lo_dq
     else:
         if own_rgb is not None:
-            dc = base_deviation(own_rgb, roll_rgb)["chroma_part"]
-            alpha = float(np.clip((dc - ramp_lo) / max(ramp_hi - ramp_lo, 1e-6), 0.0, 1.0))
+            dev = base_deviation(own_rgb, roll_rgb)
+            dc, lv = dev["chroma_part"], dev["level_diff"]
+            eff = max(dc, lv if dc < 0.02 else 0.0)
+            alpha = float(np.clip((eff - ramp_lo) / max(ramp_hi - ramp_lo, 1e-6), 0.0, 1.0))
         else:
             dc = None
             alpha = 1.0
@@ -334,7 +336,9 @@ def estimate_base_blocks(
     if len(vals_all) > 0:
         rgb_arr = np.asarray(rgb, dtype=np.float64)
         p98 = np.percentile(vals_all, 98, axis=0)
-        if np.all(p98 > 2.2 * rgb_arr) and float(np.mean(np.all(vals_all > rgb_arr, axis=-1))) > 0.25:
+        cyan_shadow = (rgb_arr[0] >= 1.8 * rgb_arr[1] and rgb_arr[2] >= 1.10 * rgb_arr[1]
+                       and p98[0] >= 1.01 * rgb_arr[0] and p98[1] >= 1.00 * rgb_arr[1])
+        if (np.all(p98 > 2.2 * rgb_arr) and float(np.mean(np.all(vals_all > rgb_arr, axis=-1))) > 0.25) or cyan_shadow:
             relaxed_uniformity = True
             relaxed_rel_std = max(max_rel_std, 0.25)
             n_uniform, thr, idx, vals, keep, kept, rgb, centre, outlier_frac, mode_seed_relaxed = (
