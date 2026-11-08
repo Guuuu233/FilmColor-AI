@@ -2148,3 +2148,34 @@ def test_t5g_bw_lifted_floor_pulls_milky_monochrome_shadows():
     assert "bw_lifted_floor" not in res_col["diagnostics"]
 
 
+
+
+def test_t5h_deep_silhouette_backlit_rescue_c3():
+    """T5h: a wide-span frame (span_d_g >= 1.50 D) with a large deep silhouette (dark_share >= 0.30, encoded q25 < 0.08,
+    0.15 <= q90 < 0.45) and textured cells skewed into the bright window (med_after >= 0.50) triggers rescue_c3,
+    lifting exposure (+0.65 EV under p98 ceiling), midtone, shoulder, and shadows, whereas a frame with dark_share < 0.30
+    is untouched."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    rng = np.random.default_rng(71)
+    cfg = dict(NOREF_V3, meter_trim_strips=False, meter_holder_box=False)
+    P = np.empty((200, 300, 3), dtype=np.float32)
+    P[:80] = 0.0008        # 40% below min_luma=0.002 -> dark_share = 0.40 >= 0.30
+    P[80:160] = 0.0035     # 40% smooth shadow -> q25 < 0.08
+    P[160:182] = 0.032     # 11% smooth transition -> q90 in [0.15, 0.45)
+    win = 0.36 * (10.0 ** rng.normal(0.0, 0.14, (18, 300, 1))).astype(np.float32)
+    win[:, :10] = 0.96
+    P[182:] = np.clip(win, 0.05, 1.05)  # 9% textured bright window -> med_after >= 0.50
+
+    res = estimate_params_v3(P, None, cfg, span_d_g=1.85)
+    bc = res["diagnostics"]["backlit_check"]
+    assert bc.get("rescue_c3") is True
+    assert "backlit_midtone" in res["flags"]
+    assert res["params"]["midtone"] > 0.30
+    assert res["params"]["shadows"] == 0.35
+
+    # When dark_share < 0.30 (e.g. top rows lifted to 0.0035 so dark_share == 0.0), rescue_c3 does not fire
+    P_lit = P.copy()
+    P_lit[:80] = 0.0035
+    res_lit = estimate_params_v3(P_lit, None, cfg, span_d_g=1.85)
+    assert not res_lit["diagnostics"]["backlit_check"].get("rescue_c3")

@@ -1215,3 +1215,46 @@ def test_t5c_scanner_tiff8_moderate_single_channel_r_clip_exempt(tmp_path):
     assert "single_channel_prestretched" not in fr_gb.meta
     np.testing.assert_array_equal(fr_gb.sat, np.any(rgb8_gb == 255, -1))
 
+
+
+def test_t5h_rational_levels_and_tiled_float_deflate(tmp_path):
+    """T5h: RATIONAL/SRATIONAL BlackLevel/WhiteLevel tags (dtype 5/10, 2*count pairs) are divided into per-channel
+    levels, and tiled Deflate Predictor=3 floating-point LinearRaw DNG pages decode without imagecodecs."""
+    from types import SimpleNamespace
+    from filmcolor.scanner import _level, _read_page_array, load_scanner
+
+    # 1. RATIONAL (dtype=5) and SRATIONAL (dtype=10) level decoding
+    assert _level((0, 256, 0, 256, 0, 256), 3, "BlackLevel", dtype=5, count=3) == 0.0
+    assert _level((512, 2, 768, 3, 1024, 4), 3, "BlackLevel", dtype=10, count=3) == 256.0
+    with pytest.raises(ValueError, match="per-sample"):
+        _level((0, 256, 256, 256, 0, 256), 3, "BlackLevel", dtype=5, count=3)
+
+    # 2. End-to-end DNG with RATIONAL BlackLevel tag (50714, "2I", 3, (256, 2, 256, 2, 256, 2))
+    rgb, _ = scan()
+    p_rat = tmp_path / "rat_levels.dng"
+    write_dng(p_rat, rgb, extratags=[(50714, "2I", 3, (256, 2, 256, 2, 256, 2), True),
+                                     (50717, "2I", 3, (120000, 2, 120000, 2, 120000, 2), True)])
+    fr_rat = load_scanner(p_rat)
+    assert (fr_rat.black, fr_rat.white) == (128.0, 60000.0)
+
+    # 3. Tiled Deflate Predictor=3 float16 page decoding
+    th, tw, spp = 16, 16, 3
+    f16 = np.linspace(0.05, 0.85, th * tw * spp, dtype=np.float16).reshape(th, tw, spp)
+    be = np.transpose(f16.astype(">f2").view(np.uint8).reshape(th, tw * spp, 2), (0, 2, 1))
+    r = be.reshape(th, -1, spp).copy()
+    r[:, 1:, :] = (r[:, 1:, :].astype(np.int16) - r[:, :-1, :].astype(np.int16)) & 0xFF
+    comp_tile = zlib.compress(r.tobytes())
+    tile_file = tmp_path / "tile.bin"
+    tile_file.write_bytes(comp_tile)
+    with open(tile_file, "rb") as fh:
+        fake_page = SimpleNamespace(
+            asarray=lambda: (_ for _ in ()).throw(ValueError("requires 'imagecodecs'")),
+            is_tiled=True, compression=8, dtype=np.dtype("f2"),
+            imagelength=12, imagewidth=14, samplesperpixel=3, tilewidth=tw, tilelength=th,
+            dataoffsets=[0], databytecounts=[len(comp_tile)],
+            tags={"Predictor": SimpleNamespace(value=3)},
+            parent=SimpleNamespace(filehandle=fh, filename="tile.dng"),
+        )
+        dec = _read_page_array(fake_page)
+    assert dec.shape == (12, 14, 3) and dec.dtype == np.float16
+    np.testing.assert_array_equal(dec, f16[:12, :14])

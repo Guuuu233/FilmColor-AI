@@ -157,9 +157,41 @@ def _read_page_array(page) -> np.ndarray:
         if planarconfig == 2 and arr.ndim == 3 and arr.shape[0] in (3, 4):
             arr = np.transpose(arr, (1, 2, 0))
         return arr
-    except ValueError as exc:
+    except (ValueError, NotImplementedError) as exc:
         if "imagecodecs" not in str(exc):
             raise
+
+    compression = page.compression
+    predictor = int(_tag(page, "Predictor", 1) or 1)
+    itemsize = page.dtype.itemsize
+    if (getattr(page, "is_tiled", False) and compression in (8, 32946)
+            and predictor == 3 and np.dtype(page.dtype).kind == "f" and itemsize in (2, 4)):
+        h, w, spp = page.imagelength, page.imagewidth, page.samplesperpixel
+        tw, tl = page.tilewidth, page.tilelength
+        nt_y, nt_x = (h + tl - 1) // tl, (w + tw - 1) // tw
+        out = np.empty((nt_y * tl, nt_x * tw, spp) if spp > 1 else (nt_y * tl, nt_x * tw), dtype=page.dtype)
+        fh = page.parent.filehandle
+        fdt = ">f2" if itemsize == 2 else ">f4"
+        for idx, (off, bc) in enumerate(zip(page.dataoffsets, page.databytecounts)):
+            ty, tx = divmod(idx, nt_x)
+            fh.seek(off)
+            dec = zlib.decompress(fh.read(bc))
+            r = np.cumsum(np.frombuffer(dec, dtype=np.uint8).reshape(tl, -1, spp), axis=1, dtype=np.uint8)
+            be = np.transpose(r.reshape(tl, itemsize, tw * spp), (0, 2, 1)).copy()
+            tile = be.view(fdt).reshape((tl, tw, spp) if spp > 1 else (tl, tw)).astype(page.dtype, copy=False)
+            out[ty * tl:(ty + 1) * tl, tx * tw:(tx + 1) * tw] = tile
+        return out[:h, :w]
+    if getattr(page, "photometric", None) == LINEAR_RAW:
+        fpath = getattr(getattr(page.parent, "filehandle", None), "path", None)
+        if fpath:
+            import rawpy
+            with rawpy.imread(str(fpath)) as rp:
+                raw_arr = rp.raw_image.copy()
+            h, w, spp = page.imagelength, page.imagewidth, page.samplesperpixel
+            if spp == 1 and raw_arr.ndim == 2 and raw_arr.shape == (h, w):
+                return raw_arr
+            if spp in (3, 4) and raw_arr.ndim == 3 and raw_arr.shape[:2] == (h, w) and raw_arr.shape[2] >= spp:
+                return raw_arr[:, :, :spp]
 
     # Strictly reject unsupported layouts to prevent silent corruption
     if getattr(page, "is_tiled", False):
@@ -319,10 +351,12 @@ def is_scanner_dng(path, *, allow_frozen: bool = False) -> bool:
         return False
 
 
-def _level(value, n, what):
+def _level(value, n, what, dtype=None, count=None):
     if value is None:
         return None
     v = np.atleast_1d(np.asarray(value, np.float64)).ravel()
+    if dtype in (5, 10) and count is not None and v.size == 2 * int(count) and np.all(v[1::2] != 0):
+        v = v[0::2] / v[1::2]
     if v.size not in (1, n) or not np.all(v == v[0]):
         raise ValueError(f"per-sample or per-pixel {what} not supported: {value}")
     return float(v[0])
@@ -447,8 +481,11 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
         bits = _tag(main, "BitsPerSample")
         bits = int(np.atleast_1d(bits)[0])
         n_samples = main.samplesperpixel
-        black = _level(_tag(main, "BlackLevel"), n_samples, "BlackLevel")
-        white = _level(_tag(main, "WhiteLevel"), n_samples, "WhiteLevel")
+        bl_tag, wl_tag = main.tags.get("BlackLevel"), main.tags.get("WhiteLevel")
+        black = _level(bl_tag.value if bl_tag else None, n_samples, "BlackLevel",
+                       getattr(bl_tag, "dtype", None), getattr(bl_tag, "count", None))
+        white = _level(wl_tag.value if wl_tag else None, n_samples, "WhiteLevel",
+                       getattr(wl_tag, "dtype", None), getattr(wl_tag, "count", None))
         black = 0.0 if black is None else black
         white = float(2 ** bits - 1) if white is None else white
         if white <= black:

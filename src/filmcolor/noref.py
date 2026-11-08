@@ -168,74 +168,6 @@ def _encoded_spread(px, p: RenderParams):
     return float(hi - lo)
 
 
-def estimate_params(P, mask=None, cfg=NOREF_V1, roll=None) -> dict:
-    """Seven render parameters for one frame, with per-group confidence, flags and diagnostics.
-    ``P``: (H, W, 3) positive; ``mask``: (H, W) bool image pixels (None = all); ``roll``: list of
-    ``frame_stats`` of the other frames of the same roll (optional)."""
-    P = np.asarray(P, np.float32)
-    if mask is not None and mask.shape != P.shape[:2]:
-        raise ValueError(f"mask shape {mask.shape} != image shape {P.shape[:2]}")
-    st = frame_stats(P, mask, cfg)
-    flags, conf = [], {}
-    if st["range_stops"] < cfg["low_info_range_stops"]:
-        flags.append("low_information: needs review")
-        return dict(config=cfg["id"], params=RenderParams().to_dict(), flags=flags,
-                    confidence=dict(overall=0.0), stats=st, diagnostics={})
-    if st["above_white"] > 0.05:
-        flags.append("white_point_unrepresentative")  # highlights largely outside the white-point region
-
-    wb = estimate_wb(P, mask, cfg, roll)
-    conf["wb"] = wb["confidence"]
-    px = _sample(P, mask, cfg["n_sample"] // 4, seed=1)
-
-    # exposure: median into the band, highlights capped at `headroom` stops past white
-    lo, hi = cfg["median_band"]
-    m = st["median"]
-    ev_mid = float(np.log2(np.clip(m, lo, hi) / m))
-    ev_hl = float(np.log2(2 ** cfg["headroom"] / st["p995"]))
-    ev = float(np.clip(min(ev_mid, ev_hl), *cfg["ev_limits"]))
-    conf["exposure"] = 1.0 - _ramp(st["above_white"], 0.05, 0.25)
-    base = dict(temp=wb["temp"], tint=wb["tint"])
-    shoulder, ev_reduced = None, 0.0
-    for _ in range(60):  # lower ev by 0.1 stop until some shoulder keeps clipping within budget
-        for s in np.linspace(0, 1, cfg["shoulder_steps"]):
-            if _clip_share(px, RenderParams(ev=ev, shoulder=float(s), **base)) <= cfg["clip_budget"]:
-                shoulder = float(s)
-                break
-        if shoulder is not None or ev <= cfg["ev_limits"][0]:
-            break
-        ev, ev_reduced = max(ev - 0.1, cfg["ev_limits"][0]), ev_reduced + 0.1
-    if shoulder is None:
-        shoulder = 1.0
-        flags.append("highlight_budget_not_met")
-    if ev_reduced:
-        flags.append(f"ev_lowered_for_highlights:{ev_reduced:.1f}")
-
-    # contrast: encoded spread into the band
-    p0 = dict(ev=ev, shoulder=shoulder, **base)
-    spread = _encoded_spread(px, RenderParams(**p0))
-    s_lo, s_hi = cfg["spread_band"]
-    c_lo, c_hi = cfg["contrast_limits"]
-    contrast = 1.0
-    if spread < s_lo:
-        contrast = _solve_contrast(px, p0, s_lo, 1.0, c_hi)
-    elif spread > s_hi:
-        contrast = _solve_contrast(px, p0, s_hi, c_lo, 1.0)
-
-    # saturation
-    c = _chroma(px[(px @ LUMA.astype(np.float32)) > cfg["min_luma"]])
-    p90 = float(np.percentile(np.linalg.norm(c, axis=1), 90))
-    sat = cfg["sat"] if p90 <= cfg["sat_colourful"] else 1 + (cfg["sat"] - 1) * cfg["sat_colourful"] / p90
-
-    params = RenderParams(ev=ev, temp=wb["temp"], tint=wb["tint"], sat=float(sat), contrast=float(contrast),
-                          shoulder=shoulder)
-    _check_bounds(params)
-    conf["overall"] = min(conf["exposure"], 1.0)
-    return dict(config=cfg["id"], params=params.to_dict(), flags=flags, confidence=conf, stats=st,
-                diagnostics=dict(wb=wb, ev_mid=ev_mid, ev_highlights=ev_hl, spread_before=spread,
-                                 chroma_p90=p90, clip_share=_clip_share(px, params)))
-
-
 def _solve_contrast(px, p0, target, lo, hi, iters=20):
     """Bisection on contrast for the encoded spread (monotonic increasing in contrast)."""
     f = lambda c: _encoded_spread(px, RenderParams(contrast=c, **p0)) - target  # noqa: E731
@@ -376,40 +308,12 @@ def estimation_input(P, image_region, f: int = 4):
     return P4, mask
 
 
-def encoded_spread(P, mask, params: dict, cfg=NOREF_V2) -> float:
-    """Encoded p2..p98 luminance spread of a frame under ``params`` (input statistic, no reference)."""
-    return _encoded_spread(_sample(P, mask, cfg["n_sample"] // 4, seed=1), RenderParams(**params))
-
-
 # --- noref_v3: NegPy (marcinz606/NegPy) + Darktable negadoctor inspired textured-cell auto estimator (T4 v2) ---
 
 NOREF_V3 = dict(
     NOREF_V1,
     id="noref_v3",
-    rev="t4z-2026-11-05",          # T4z: night backlit damping, extended flat negatives and holder metering;
-                                   # T4y: bright short-span lifted-shadow damping and camera matrix support;
-                                   # T4x: flat-negative recovery, lower moderate-EV band and bounded blue rescue;
-                                   # T4w: moderate-EV lifted-shadow damping and orange-mask / narrow-blue guards;
-                                   # T4v: TIFF transfer curves, 8-bit input and pre-stretched signal reconstruction;
-                                   # T4u: pre-stretched TIFFs, unsupported positive tint and narrow-blue rescue;
-                                   # T4t: zero-clipped white points, slide mounts and conflicting tint evidence;
-                                   # T4s: scanner TIFF, global zero-escape evidence and B&W roll routing;
-                                   # T4r: wide-bright over-lift exemption and sparse / conflicting WB gates;
-                                   # T4q: fixed spatial radius and bounded darkening of lifted shadows;
-                                   # T4p: bounded highlight EV drop, pre-hold rescue evidence and bright-sky split;
-                                   # T4m: thin-negative darkening without backlit lift, strong cyan confidence floor;
-                                   # T4l: metering inside the film box and off full black strips, wider ev lowering
-                                   # on frames bright all over, too short a density range for manual review;
-                                   # T4k: thin-negative ev cap, warm-scene cooling damped, green tint countered,
-                                   # cool mid greys keep the grey world undamped (the task list's rebate filter,
-                                   # backlit bright share and cool-cast temp cap measured and off by default); T4j: no sky damping on a uniform cool cast (bright, mid-grey and grey
-                                   # world all cool), auto levels off by default; T4i (not adopted): sky split, auto levels;
-                                   # T4h: sky damping on the grey-world blue axis only, milder portrait;
-                                   # T4g: adaptive WB and softer portrait / natural presets; T4f: trimean anchor,
-                                   # textured EV refinement (at most -0.20 EV down), wider backlit, sky WB damping;
-                                   # T4e: standard back to the T4c band, backlit weight narrowed and relative to the
-                                   # preset; T4d: neutral wb fallback, style presets, continuous backlit weight;
-                                   # T4c: camera matrix, chroma_preserve, backlit midtone; T4b: encoded-output decisions
+    rev="t4z-2026-11-05",
     look="global_look_v1",         # recorded only: wb_prior_weight 0 (T4d) applies none of it
     preset="standard",             # STYLE_PRESETS name this config is (NOREF_V3 itself is the standard preset)
     low_info_range_stops=0.6,      # allow open-sky / desert / snow frames with paper-black floor (p99/p1 >= 1.5x)
@@ -752,18 +656,7 @@ def _huber_location(c, k: float, iters: int = 10) -> np.ndarray:
 
 
 def estimate_wb_v3(px, cfg=None) -> dict:
-    """T4b white balance on sample pixels ``px`` (n, 3) of the positive: in each zone of ``cfg["wb_v3_zones"]``
-    (luminance percentile range, chroma radius, weight) the near-neutral pixels give a robust (Huber) residual cast;
-    zones with at least ``wb_v3_min_px`` pixels are combined by weight. Confidence comes from the candidate share and
-    spread and is lowered, never zeroed, when image quadrants disagree (a frame with sky above and grass below is not
-    evidence against a cast). T4g expands sparse zones to their lowest-chroma 15% and blends a midtone Huber estimate;
-    a clear-sky bright zone gets less weight, and a clear-sky grey-world estimate keeps its red axis (x
-    ``wb_v3_gw_sky_red``) with only its blue axis damped (T4h). T4j: when the bright zone, the mid-grey zone and the
-    grey world all point to a strong cool cast (``wb_v3_cool_*``: red low, blue high), the frame is cool all over, not
-    a sky: no damping, grey-world weight ``wb_v3_cast_gw_weight``, confidence at least ``wb_v3_cast_conf`` and strength
-    ``wb_v3_cast_strength`` (T4k: temp at most ``wb_v3_cast_max_temp``). T4k: a strongly cool mid-grey zone and grey
-    world without a top-bottom split keep the grey world undamped; a negative temp is multiplied by ``wb_v3_cool_damp``
-    and a positive tint by ``wb_v3_tint_boost``. temp / tint remove ``wb_v3_strength`` x confidence of the cast."""
+    """Multi-zone Huber white balance with grey-world blend and sky/cast guards."""
     cfg = cfg or NOREF_V3
     px = np.asarray(px, np.float32)
     y = px @ LUMA.astype(np.float32)
@@ -906,47 +799,7 @@ def _encoded_quantiles(px, p: RenderParams, qs=(2, 50, 98)):
 
 
 def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span_d_g: float | None = None) -> dict:
-    """Textured-cell adaptive print estimator (NOREF_V3, T4 v2, inspired by marcinz606/NegPy & negadoctor):
-
-    1. **Textured Cells**: filters grid cells by local density activity ``std(-log10 Y) >= 0.05 D`` so large
-       uniform skies, water or borders do not bias metering.
-    2. **Auto Density (ev)**: pulls the textured anchor density (T4f: trimean) towards ``anchor_target_density =
-       0.75 D`` (18 % mid-grey) with a comfort band, then refines so the encoded median luminance of the textured cells
-       (T4f; the full frame before) lands in the target band: brightening under a full-frame p98 ceiling, lowering
-       by at most 0.20 EV.
-    3. **Contrast** (T4b): starts at the print centre ``base_contrast`` (standard 1.30); lowered (to >= 1.05)
-       only when the encoded luminance p90 - p10 exceeds ``contrast_spread_max`` and both ends clip.
-    4. **Highlight Hold (highlights & shoulder)**: when bright textured cells ``P2`` approach the white point or
-       full-frame clipping exceeds ``clip_budget`` (0.2 %), writes an explicit negative ``highlights`` burn and/or a
-       raised ``shoulder``.
-    5. **Shadow Hold** (T4b): positive ``shadows`` only when the encoded luminance p25 is below ``shadow_p25_floor``;
-       ``blacks`` starts at the preset's constant ``base_blacks`` (0 for standard).
-    5b. **Auto levels** (T4i, on the existing sliders; off by default since T4j): ``slope_r`` / ``slope_b`` follow G between the shadow and
-       highlight percentiles of each channel; a narrow frame (encoded p90 - p10 < ``auto_contrast_spread``) gets more
-       contrast; lifted shadows (encoded p2 > ``auto_blacks_p2``) a negative ``blacks`` on top of the preset's.
-    6. **White balance** (T4b, ``estimate_wb_v3``): robust residual cast of bright near-neutral and low-saturation
-       mid-grey pixels; the share the evidence does not cover gets ``wb_prior_weight`` x the look (0 since T4d:
-       neutral), then the preset's ``temp_offset`` / ``tint_offset``.
-    7. **Colour and backlit frames** (T4c-T4e): renders with ``cfg["matrix"]`` (the app passes the RAW's camera
-       matrix) and ``chroma_preserve``; a backlit frame (bright background with a dark foreground on the encoded
-       output; continuous weight since T4d) gets, in proportion to the weight, a higher midtone, shoulder and contrast,
-       each a step above the preset's own value (T4e), instead of more exposure.
-    8. **Style presets** (T4d): ``preset_config(name)`` overrides the base values (band, midtone, contrast, shoulder,
-       saturation, vibrance, blacks, colour offsets, camera matrix share, chroma_preserve); steps 1-7 are the same.
-    9. **Borders and thin negatives** (T4k): cells and pixels on black rebate / gaps between frames are not metered;
-       the backlit weight needs a bright share; with ``span_d_g`` (the inversion's G density range, white point minus
-       black point) below ``thin_span_max`` the ev is capped and blacks lowered (thin / night negatives,
-       whose highlights the inversion already stretched to white). T4m permits a negative cap and suppresses the
-       backlit lift below ``thin_suppress_backlit_span``.
-    10. **Metering frame and wider lowering** (T4l): the mask is cut to the film box inside an opaque holder (inset) and
-       off full black strips at its edges (``_metering_mask``); a frame whose textured cells are bright down to their
-       p25 may be lowered by more than ``ev_refine_down_max``; a G density range below ``min_span_d_g`` is left for
-       manual review.
-
-    T4b (2026-10-24) replaced the T4 v2 contrast / shadow / paper-black rules, which compared ``-log10`` of the
-    scene-linear positive (``_textured_cells``) with print-density thresholds and so lowered contrast to its floor
-    and lifted shadows and blacks on almost every frame.
-    """
+    """Textured-cell adaptive print estimator (NOREF_V3)."""
     P = np.asarray(P, np.float32)
     if mask is not None and mask.shape != P.shape[:2]:
         raise ValueError(f"mask shape {mask.shape} != image shape {P.shape[:2]}")
@@ -1263,12 +1116,16 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
               and q25_lo <= q25_res <= q25_hi and q90_res >= cfg["backlit_capped_q90_min"])
         c2 = (span_d_g >= cfg["backlit_near_min_span"] and near_lo <= q90_res < near_hi
               and near_q25_lo <= q25_res <= near_q25_hi)
-        if c1 or c2:
+        c3 = (span_d_g >= 1.50 and st["dark_share"] >= 0.30 and q25_res < q25_lo
+              and 0.15 <= q90_res < cfg["backlit_capped_q90_min"] and med_after >= 0.50)
+        if c1 or c2 or c3:
             before_rescue = dict(base_p)
-            w_res = min(0.85, max((q90_res - 0.44) / 0.16, 0.40)) * min(1.0, (0.26 - q25_res) / 0.08)
-            base_p["midtone"] = float(min(cfg["backlit_midtone_cap"], base_p["midtone"] + w_res * 0.08))
+            w_res = (0.85 if c3 else min(0.85, max((q90_res - 0.44) / 0.16, 0.40)) * min(1.0, (0.26 - q25_res) / 0.08))
+            if c3 and p98_ok(base_p["ev"] + 0.65):
+                base_p["ev"] = float(min(cfg["ev_limits"][1], base_p["ev"] + 0.65))
+            base_p["midtone"] = float(min(cfg["backlit_midtone_cap"], base_p["midtone"] + w_res * (0.12 if c3 else 0.08)))
             base_p["shoulder"] = float(min(cfg["backlit_shoulder_cap"], base_p["shoulder"] + w_res * 0.12))
-            base_p["shadows"] = float(max(base_p["shadows"], w_res * float(cfg["backlit_rescue_shadows_step"])))
+            base_p["shadows"] = float(max(base_p["shadows"], 0.35 if c3 else w_res * float(cfg["backlit_rescue_shadows_step"])))
             # Recheck Highlight Hold after lifting; stronger shoulder first, otherwise retain the pre-rescue result.
             if _clip_share(px, RenderParams(**base_p)) > cfg["clip_budget"]:
                 for shoulder in np.linspace(base_p["shoulder"], 0.85, 15):
@@ -1280,82 +1137,59 @@ def estimate_params_v3(P, mask=None, cfg=NOREF_V3, roll=None, look=None, *, span
                     w_res = 0.0
             out["diagnostics"]["backlit_check"].update(rescue_weight=float(w_res), rescue_c1=bool(c1), rescue_c2=bool(c2),
                                                        rescue_med_before=med_after, rescue_q25=q25_res, rescue_q90=q90_res)
+            if c3:
+                out["diagnostics"]["backlit_check"]["rescue_c3"] = True
             if w_res > 0:
                 flags.append("backlit_midtone")
 
     # T4q: use Step 4b's shadow evidence after the backlit / highlight decisions, so their inputs stay unchanged
+    def _apply_overlift(ev_piv, ev_rmp, q25_piv, gain, max_pull, mode=None, **extra):
+        ev0_ol = float(base_p["ev"])
+        ramp_ev = float(np.clip((ev0_ol - ev_piv) / ev_rmp, 0.0, 1.0))
+        pull = float(np.clip(gain * (q25 - q25_piv) * ramp_ev, 0.0, max_pull))
+        if pull > 0.0:
+            blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
+            base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
+            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
+            d = dict(applied=True, **({"mode": mode} if mode else {}), ev_before=ev0_ol, ev_after=base_p["ev"],
+                     pull=pull, q25_before=float(q25), **extra, blacks_lowered=blk_drop)
+            out["diagnostics"]["overlift_damp"] = d
+
+    sh_comp = float(cfg.get("overlift_mod_shadow_comp", 0.35)) * max(0.0, float(cfg.get("base_shadows", 0.0)))
     ol_wide_bright = (span_d_g is not None and span_d_g >= cfg.get("overlift_max_span", 1.15)
                       and bright_share >= cfg.get("overlift_max_bright_share", 0.05))
     if (cfg.get("overlift_damp_check") and not ol_wide_bright and base_p["ev"] >= cfg["overlift_ev_min"]
             and q25 >= cfg["overlift_q25_min"]):
-        ev0_ol = float(base_p["ev"])
-        ramp_ev = float(np.clip((ev0_ol - cfg["overlift_ev_pivot"]) / cfg["overlift_ev_ramp"], 0.0, 1.0))
-        pull = float(np.clip(cfg["overlift_gain"] * (q25 - cfg["overlift_q25_pivot"]) * ramp_ev,
-                             0.0, cfg["overlift_max_pull"]))
-        if pull > 0.0:
-            blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
-            base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
-            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
-            out["diagnostics"]["overlift_damp"] = dict(
-                applied=True, ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
-                q25_before=float(q25), blacks_lowered=blk_drop)
+        _apply_overlift(cfg["overlift_ev_pivot"], cfg["overlift_ev_ramp"], cfg["overlift_q25_pivot"],
+                        cfg["overlift_gain"], cfg["overlift_max_pull"])
     elif (cfg.get("overlift_mod_check") and span_d_g is not None
           and span_d_g < cfg.get("overlift_max_span", 1.15)
           and bright_share < cfg.get("overlift_mod_max_bright_share", 0.20)
           and base_p["ev"] >= cfg["overlift_mod_ev_min"]
-          and q25 >= cfg["overlift_mod_q25_min"] + cfg.get("overlift_mod_shadow_comp", 0.35)
-          * max(0.0, float(cfg.get("base_shadows", 0.0)))):
-        ev0_ol = float(base_p["ev"])
-        sh_comp = float(cfg.get("overlift_mod_shadow_comp", 0.35)) * max(0.0, float(cfg.get("base_shadows", 0.0)))
-        q25_piv = float(cfg["overlift_mod_q25_pivot"]) + sh_comp
-        ramp_ev = float(np.clip((ev0_ol - cfg["overlift_mod_ev_pivot"]) / cfg["overlift_mod_ev_ramp"], 0.0, 1.0))
-        pull = float(np.clip(cfg["overlift_mod_gain"] * (q25 - q25_piv) * ramp_ev,
-                             0.0, cfg["overlift_mod_max_pull"]))
-        if pull > 0.0:
-            blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
-            base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
-            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
-            out["diagnostics"]["overlift_damp"] = dict(
-                applied=True, mode="moderate", ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
-                q25_before=float(q25), blacks_lowered=blk_drop)
+          and q25 >= cfg["overlift_mod_q25_min"] + sh_comp):
+        _apply_overlift(cfg["overlift_mod_ev_pivot"], cfg["overlift_mod_ev_ramp"],
+                        float(cfg["overlift_mod_q25_pivot"]) + sh_comp, cfg["overlift_mod_gain"],
+                        cfg["overlift_mod_max_pull"], mode="moderate")
     elif (cfg.get("overlift_bright_check") and span_d_g is not None
           and span_d_g < cfg["overlift_bright_span_max"]
           and bright_share >= cfg["overlift_bright_min_share"]
           and base_p["ev"] >= cfg["overlift_bright_ev_min"]
           and float(refine["ev_anchor_raw"]) <= cfg["overlift_bright_anc_max"]
           and float(refine["med_tex_before"]) >= cfg["overlift_bright_med0_min"]):
-        sh_comp = float(cfg.get("overlift_mod_shadow_comp", 0.35)) * max(0.0, float(cfg.get("base_shadows", 0.0)))
         q25_lo, q25_hi = cfg["overlift_bright_q25_band"]
         if (q25_lo + sh_comp) <= q25 <= (q25_hi + sh_comp):
-            ev0_ol = float(base_p["ev"])
-            q25_piv = float(cfg["overlift_bright_q25_pivot"]) + sh_comp
-            ramp_ev = float(np.clip((ev0_ol - cfg["overlift_bright_ev_pivot"]) / cfg["overlift_bright_ev_ramp"], 0.0, 1.0))
-            pull = float(np.clip(cfg["overlift_bright_gain"] * (q25 - q25_piv) * ramp_ev,
-                                 0.0, min(cfg["overlift_bright_max_pull"], ev0_ol)))
-            if pull > 0.0:
-                blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
-                base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
-                base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
-                out["diagnostics"]["overlift_damp"] = dict(
-                    applied=True, mode="bright_short_span", ev_before=ev0_ol, ev_after=base_p["ev"], pull=pull,
-                    q25_before=float(q25), blacks_lowered=blk_drop)
+            _apply_overlift(cfg["overlift_bright_ev_pivot"], cfg["overlift_bright_ev_ramp"],
+                            float(cfg["overlift_bright_q25_pivot"]) + sh_comp, cfg["overlift_bright_gain"],
+                            min(cfg["overlift_bright_max_pull"], float(base_p["ev"])), mode="bright_short_span")
     elif (cfg.get("overlift_night_bl_check")
           and w_bl >= cfg["overlift_night_bl_min_weight"]
           and bright_share < cfg["overlift_night_bl_max_bright_share"]
           and base_p["ev"] >= cfg["overlift_night_bl_ev_min"]
           and ev_lowered == 0.0
           and q25 >= cfg["overlift_night_bl_q25_min"]):
-        ev0_ol = float(base_p["ev"])
-        ramp_ev = float(np.clip((ev0_ol - cfg["overlift_night_bl_ev_pivot"]) / cfg["overlift_night_bl_ev_ramp"], 0.0, 1.0))
-        pull = float(np.clip(cfg["overlift_night_bl_gain"] * (q25 - cfg["overlift_night_bl_q25_pivot"]) * ramp_ev,
-                             0.0, cfg["overlift_night_bl_max_pull"]))
-        if pull > 0.0:
-            blk_drop = float(min(cfg["overlift_blacks_max"], pull * cfg["overlift_blacks_gain"]))
-            base_p["ev"] = float(max(cfg["ev_limits"][0], ev0_ol - pull))
-            base_p["blacks"] = float(np.clip(base_p["blacks"] - blk_drop, *EXTENDED_BOUNDS["blacks"]))
-            out["diagnostics"]["overlift_damp"] = dict(
-                applied=True, mode="night_backlit_double", ev_before=ev0_ol, ev_after=base_p["ev"],
-                pull=pull, q25_before=float(q25), w_bl=float(w_bl), blacks_lowered=blk_drop)
+        _apply_overlift(cfg["overlift_night_bl_ev_pivot"], cfg["overlift_night_bl_ev_ramp"],
+                        cfg["overlift_night_bl_q25_pivot"], cfg["overlift_night_bl_gain"],
+                        cfg["overlift_night_bl_max_pull"], mode="night_backlit_double", w_bl=float(w_bl))
 
     # 6. Contrast relief (T4b, encoded output): only a very wide frame (encoded luminance p90 - p10 above
     #    contrast_spread_max) with both ends clipped gets a lower contrast, down to the lower bound

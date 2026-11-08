@@ -1,54 +1,4 @@
-"""Minimal local darkroom interface (docs/SOFTWARE_PLAN_v1.md SW-M2 + T4 upgrade): a small HTTP server on
-127.0.0.1 and one HTML page, Python standard library only (http.server; previews are PNG written with zlib).
-
-  python -m filmcolor.app --root FOLDER [--out EXPORT_FOLDER] [--port 8765] [--allow-frozen]
-
-Only files under ROOT with a supported extension can be opened (camera RAW read by LibRaw, scanner LinearRaw DNG);
-paths outside ROOT are refused. Files of the sealed test sets (filmcolor.frozen) are refused unless --allow-frozen.
-One photo is open at a time: its full-resolution positive is kept for the 1:1 view (about 0.5 GB for 45 MP).
-Every open and base change issues a new token; requests about the open photo must carry it (query ``token`` or body
-field ``token``) and are refused with 409 when another window has opened something else since. Exports go to
-OUT/<sub-folder of the source>/<stem>.tif + .json and never replace an existing pair (<stem>-2, -3, ...); the export
-is refused (409) when the source file changed since it was opened.
-
-Base modes (POST /api/base):
-  auto      per-frame automatic base (B0, the default on normal frames)
-  manual    user-drawn rectangle on the preview (region: [top, left, height, width])
-  roll_nat  natural roll base fusion (negadoctor paper-black + DQ anti-truncation, softness in [0, 1])
-  roll_dq   roll base chromaticity c_roll + decoupled 0.1 % quantile black point on full-frame 48x48 blocks (DQ(c_roll))
-  roll_b1   full roll base vector (B1)
-
-When the roll base is ready for a folder and the user opens a frame whose own B0 failed or whose base chromaticity
-deviates from the roll by >= 0.10 D (and no explicit base_mode was requested), the server automatically opens it
-in ``roll_nat`` mode so the user starts from a clean, well-balanced positive.
-
-Disk cache: per-frame analysis-path scan statistics and 240 px positive thumbnails are cached under
-``$FILMCOLOR_DATA_ROOT/app_cache`` (or ``/tmp/filmcolor_app_cache`` when unset) keyed by path, size and mtime_ns,
-so restarting the app reopens rolls in < 1 second. Thumbnail names carry ``THUMB_REV``: changing the automatic
-estimate or the white point needs a new revision so stale thumbnails are not shown.
-
-White point (T4b): photos are opened with the automatic white point on ``WHITE_BLOCK`` x ``WHITE_BLOCK`` block means
-at ``WHITE_PCT`` % (``invert.block_white_point``), not on single pixels, whose high-density tail in the blue channel is
-read / shot noise (experiments/t4_auto_ui/t4b_whitepoint.json). The export replays the previewed white point.
-
-Colour (T4c): camera RAW opens with the camera's colour matrix (``render.camera_color_matrix`` of the file's
-``rgb_xyz_matrix``) mixed with the identity at the style preset's ``camera_matrix_mix`` (standard:
-``CAMERA_MATRIX_MIX``), and the preset's ``chroma_preserve``. Scanner DNGs keep
-the identity. ``/api/roll`` also reports each frame's and the roll's 0.25 <= D_G <= 0.75 density ratios (roll base B1,
-cached thumbnail-resolution blocks), the statistic T4c proposed for ``invert.neutral_ratio_white_point``. It is not
-applied: on dsc6161 the roll median is pulled to blue sky (0.678 : 1 : 1.214) and on dsc6233 to foliage
-(0.748 : 1 : 0.904, which would move every frame's white point towards blue); experiments/t4_auto_ui/T4C_REPORT.md.
-
-Style presets (T4d): the automatic starting point is estimated for the selected ``noref.STYLE_PRESETS`` entry
-(default ``standard`` = NOREF_V3; POST /api/open with ``preset``, or POST /api/preset to re-estimate the open photo on
-its kept estimator input, without decoding, inverting or averaging the positive again). The camera matrix share is the preset's
-``camera_matrix_mix``. The selection stays for the next photos; thumbnails always use ``standard``. The export
-records the preset in the sidecar's ``render.source``.
-
-Orientation (T4b): each photo opens turned by the orientation last set for it here (POST /api/orient, kept in
-``orientation.json`` of the cache folder), else by the RAW file's orientation flag. Display rotation is done by the
-page; the export writes the turned image and records ``output.rot90`` in the sidecar.
-"""
+"""Local darkroom HTTP interface (python -m filmcolor.app --root FOLDER [--out EXPORT_FOLDER] [--port 8765])."""
 from __future__ import annotations
 
 import argparse
@@ -96,7 +46,7 @@ WHITE_BLOCK, WHITE_PCT = 16, 99.8
 SPIKE_CLAMP = (1.15, 0.12)  # T4l: invert.clamp_spikes (mid_max, margin); None = off
 WHITE_SELF_RATIO = None  # T4l: colour film's invert.self_ratio_white_point (collapse, target), e.g. (0.78, 0.85);
                          # off: under per-frame B0 bases it missed DSC_3827 / A006 / A196 and hurt 19960809B-14 (+8.67)
-WHITE_B_GUARD = (1.06, 1.18, 0.65, 0.48)  # T4m: C-41 orange-mask gate (base B/G < 0.48, d_hi B/G < 1.06)
+WHITE_B_GUARD = (1.06, 1.18, 0.65, 0.50)  # T4m/T5h: C-41 orange-mask gate (base B/G < 0.50, d_hi B/G < 1.06)
 SUBROLL_CHROMA_TOL = 0.15  # T4k: own-base log2 R/G, B/G tolerance of one sub-roll inside a (body, date) group of a
                            # collection; a single-roll folder is never split by chromaticity (its frames' own bases
                            # range over 0.3-0.6 between the real base and scene shadows)
@@ -321,6 +271,14 @@ class State:
         raw = f"t5b|{rp}|{st.st_size}|{st.st_mtime_ns}".encode()  # T5b: invalidate previous scan diagnostics
         return hashlib.sha256(raw).hexdigest()[:24]
 
+    def _load_sp(self, p: Path):
+        is_scan = is_scanner_dng(p, allow_frozen=self.allow_frozen)
+        if is_scan:
+            fr = load_scanner(p, allow_frozen=self.allow_frozen)
+            return (*block_means(fr.rgb, fr.sat, 24), None, fr.sat.shape, True)
+        f = load_raw(p)
+        return (*superpixel(linearize(f), f.colors, saturation_mask(f), f.pattern.shape[0], 24), f.crop, f.cfa.shape, False)
+
     def _scan_one(self, rel: str) -> dict:
         p = self.resolve(rel)
         st = p.resolve().stat()
@@ -339,17 +297,7 @@ class State:
                 return res
             except Exception:  # noqa: BLE001
                 pass
-        is_scan = is_scanner_dng(p, allow_frozen=self.allow_frozen)
-        if is_scan:
-            fr = load_scanner(p, allow_frozen=self.allow_frozen)
-            sp, sp_sat = block_means(fr.rgb, fr.sat, 24)
-            crop, shape = None, fr.sat.shape
-            del fr
-        else:
-            f = load_raw(p)
-            sp, sp_sat = superpixel(linearize(f), f.colors, saturation_mask(f), f.pattern.shape[0], 24)
-            crop, shape = f.crop, f.cfa.shape
-            del f
+        sp, sp_sat, crop, shape, is_scan = self._load_sp(p)
         # Save a tiny thumbnail-resolution copy of sp (max side <= THUMB_SIDE) for instant positive thumbnails
         tf = max(1, -(-max(sp.shape[:2]) // THUMB_SIDE))
         sp_thumb = block_mean(sp, tf).astype(np.float32) if tf > 1 else sp.astype(np.float32)
@@ -540,12 +488,7 @@ class State:
         if sp_file.exists():
             sp = np.load(sp_file).astype(np.float32)
         else:
-            if is_scanner_dng(p, allow_frozen=self.allow_frozen):
-                fr = load_scanner(p, allow_frozen=self.allow_frozen)
-                sp, _ = block_means(fr.rgb, fr.sat, 24)
-            else:
-                f = load_raw(p)
-                sp, _ = superpixel(linearize(f), f.colors, saturation_mask(f), f.pattern.shape[0], 24)
+            sp = self._load_sp(p)[0]
             tf = max(1, -(-max(sp.shape[:2]) // THUMB_SIDE))
             sp = block_mean(sp, tf).astype(np.float32) if tf > 1 else sp.astype(np.float32)
         folder = str(Path(rel).parent)
