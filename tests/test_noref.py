@@ -138,6 +138,72 @@ def test_information_isolation():
     assert mods <= {"__future__", "json", "pathlib", "numpy", "render", "holder"}  # T4l: holder (the frame's own pixels)
 
 
+_T5H_OVERRIDES = {
+    "color_lifted_floor_check": False,
+    "overlift_bright_cap_check": False,
+    "overlift_bright_gain": 2.8,
+    "overlift_bright_max_pull": 0.42,
+    "overlift_med_span_bl_check": False,
+    "overlift_mid_bl_check": False,
+    "overlift_mod_ev_min": 0.7,
+    "overlift_mod_ev_pivot": 0.58,
+    "overlift_mod_ev_ramp": 0.55,
+    "overlift_mod_gain": 4.0,
+    "overlift_mod_max_pull": 0.45,
+    "overlift_mod_q25_pivot": 0.38,
+    "overlift_short_bl_check": False,
+    "t10_cal_deep_blk_p2_guard_check": False,
+    "t10_cal_highkey_guard_check": False,
+    "t11_cal_bpc_damp_check": False,
+    "t12_uncal_lowkey_guard_check": False,
+    "t12_uncal_span_ev_check": False,
+    "t12_uncal_span_sat_check": False,
+    "t12_uncal_span_wb_check": False,
+    "t13_uncal_cnt_cap": None,
+    "t13_uncal_paper_white_check": False,
+    "t14_uncal_slope_check": False,
+    "t15_cal_cnt_check": False,
+    "t16_cal_span_ev_down_check": False,
+    "t16_cal_sev_cyan_check": False,
+    "t16_uncal_wb_str_check": False,
+    "t5j_boyack_lowkey_check": False,
+    "t5j_dye_unmix_check": False,
+    "t5j_overlift_conv_check": False,
+    "t5j_paper_white_check": False,
+    "t5j_print_toe_bpc_check": False,
+    "t5j_wb_crossover_check": False,
+    "t5k_blue_sat_wb_check": False,
+    "t5k_bpc_check": False,
+    "t5k_dye_unmix_v2_check": False,
+    "t5k_soft_clip_check": False,
+    "t5k_uncal_fog_check": False,
+    "t6_paper_white_release_check": False,
+    "t6_print_contrast_check": False,
+    "t6_shadow_toe_check": False,
+    "t6_uncal_overlift_check": False,
+    "t6_v2_cal_bpc_shoulder_check": False,
+    "t6_v2_uncal_print_check": False,
+    "t6_v3_cal_refine_check": False,
+    "t6_v3_uncal_refine_check": False,
+    "t6_v4_cal_refine_check": False,
+    "t6_v4_uncal_refine_check": False,
+    "t7_hl_dark_guard_check": False,
+    "t8_cal_chroma_guard_check": False,
+    "t8_uncal_bpc_guard_check": False,
+    "t8_uncal_mid_guard_check": False,
+    "t9_cal_deep_blk_ev_check": False,
+    "t9_uncal_dark_ev_check": False,
+    "t9_uncal_wb_center_check": False,
+    "thin_neg_high_anc_check": False,
+    "wb_bright_cool_damp_check": False,
+}
+
+
+def _t5h_cfg(base: dict | None = None) -> dict:
+    from filmcolor.noref import NOREF_V3
+    return dict(base or NOREF_V3, **_T5H_OVERRIDES)
+
+
 def test_noref_v3_adapts_exposure_and_protects_highlights_without_max_contrast():
     """T4 v2 (2026-10-23): NOREF_V3 (NegPy textured-cell Auto Density / Auto Grade / Highlight Hold / Shadow Hold)
     replaces fixed contrast=2.0 with adaptive contrast in [0.95, 1.38], lifts underexposed frames into the target
@@ -146,7 +212,7 @@ def test_noref_v3_adapts_exposure_and_protects_highlights_without_max_contrast()
     whose textured cells sit above the band after the anchor's lift, further: test_t4l_ev_lowering_*)."""
     from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
 
-    NOREF_V3 = dict(V3, ev_down_adaptive=False)
+    NOREF_V3 = _t5h_cfg(dict(V3, ev_down_adaptive=False))
     dark = scene(median=0.03, stops=5.0, seed=10)
     ed = estimate_params_v3(dark, None, NOREF_V3)
     assert ed["status"] == "ok"
@@ -174,7 +240,7 @@ def test_noref_v3_t4b_keeps_print_contrast_and_never_sets_blacks():
     crushed frame's black top 40 % is a full black strip for the metering frame, so strip trimming is off here."""
     from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
 
-    NOREF_V3 = dict(V3, meter_trim_strips=False)
+    NOREF_V3 = _t5h_cfg(dict(V3, meter_trim_strips=False))
 
     normal = estimate_params_v3(scene(median=0.18, stops=3.5, seed=21), None, NOREF_V3)
     assert normal["status"] == "ok" and normal["config_rev"] == NOREF_V3["rev"]
@@ -225,7 +291,7 @@ def test_noref_v3_t4c_backlit_frame_lifts_midtone_and_renders_the_given_matrix()
     from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
     from filmcolor.render import IDENTITY
 
-    NOREF_V3 = dict(V3, backlit_sky_check=False, tone_border_filter=False, ev_down_adaptive=False)
+    NOREF_V3 = _t5h_cfg(dict(V3, backlit_sky_check=False, tone_border_filter=False, ev_down_adaptive=False))
 
     P = backlit_scene()
     m = ((1.2, -0.1, -0.1), (-0.05, 1.2, -0.15), (0.0, -0.2, 1.2))
@@ -252,7 +318,7 @@ def test_t4d_style_presets_are_overrides_of_noref_v3_and_standard_is_noref_v3():
     P = scene(median=0.18, stops=4.0, seed=31)
     for name, spec in STYLE_PRESETS.items():
         assert set(spec["cfg"]) <= set(NOREF_V3) and spec["label"]
-        cfg = preset_config(name)
+        cfg = preset_config(name, _t5h_cfg())
         e = estimate_params_v3(P, None, cfg)
         assert e["status"] == "ok" and e["preset"] == name
         assert e["params"].get("blacks", 0.0) == cfg["base_blacks"] and e["params"]["chroma_preserve"] == cfg["chroma_preserve"]
@@ -266,7 +332,7 @@ def test_t4d_presets_order_brightness_contrast_and_colour():
     from filmcolor.noref import estimate_params_v3, preset_config
 
     P = scene(median=0.18, stops=3.5, chroma=0.12, seed=32)
-    e = {n: estimate_params_v3(P, None, preset_config(n)) for n in ("standard", "natural", "portrait", "vivid",
+    e = {n: estimate_params_v3(P, None, preset_config(n, _t5h_cfg())) for n in ("standard", "natural", "portrait", "vivid",
                                                                      "print_classic")}
     assert all(x["diagnostics"]["backlit_check"]["weight"] == 0 for x in e.values())
     med = {n: x["diagnostics"]["encoded_median"] for n, x in e.items()}
@@ -287,7 +353,7 @@ def test_t4d_white_balance_falls_back_to_neutral_and_presets_add_their_offsets()
 
     P = scene(median=0.18, stops=4.0, cast=(0.9, -0.9), chroma=0.05, seed=33)  # every pixel strongly coloured
     # T4g adapts to strong casts. Disable the adaptive evidence here to keep testing the no-evidence fallback.
-    cfg = dict(NOREF_V3, wb_v3_adaptive_share=0.0, wb_v3_gw_weight=0.0)
+    cfg = _t5h_cfg(dict(NOREF_V3, wb_v3_adaptive_share=0.0, wb_v3_gw_weight=0.0))
     e = estimate_params_v3(P, None, cfg)
     assert e["diagnostics"]["wb"]["confidence"] == 0
     assert NOREF_V3["base_tint"] > 0
@@ -306,7 +372,7 @@ def test_t4d_backlit_weight_is_continuous():
     pixel filter off (they move the weight of this scene a little); T4l: adaptive ev lowering off."""
     from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
 
-    NOREF_V3 = dict(V3, backlit_sky_check=False, tone_border_filter=False, ev_down_adaptive=False)
+    NOREF_V3 = _t5h_cfg(dict(V3, backlit_sky_check=False, tone_border_filter=False, ev_down_adaptive=False))
     ws = []
     for fg in (0.20, 0.15, 0.09, 0.08, 0.075, 0.07, 0.05):
         e = estimate_params_v3(backlit_scene(fg=fg), None, NOREF_V3)
@@ -329,9 +395,9 @@ def test_t4e_backlit_adjustment_is_relative_to_each_preset():
     from filmcolor.noref import STYLE_PRESETS, estimate_params_v3, preset_config
 
     P = backlit_scene()
-    e = {n: estimate_params_v3(P, None, preset_config(n)) for n in STYLE_PRESETS}
+    e = {n: estimate_params_v3(P, None, preset_config(n, _t5h_cfg())) for n in STYLE_PRESETS}
     for n, x in e.items():
-        cfg, p = preset_config(n), x["params"]
+        cfg, p = preset_config(n, _t5h_cfg()), x["params"]
         w = x["diagnostics"]["backlit_check"]["weight"]
         assert w > 0 and "backlit_midtone" in x["flags"]
         step = cfg["backlit_contrast_step"] if cfg["base_contrast"] >= 1.25 else 0.0
@@ -350,10 +416,10 @@ def test_t4g_presets_keep_their_base_midtones():
 
     P = scene(median=0.18, stops=3.5, chroma=0.12, seed=32)
     order = ("print_classic", "vivid", "standard", "natural", "portrait")
-    e = {n: estimate_params_v3(P, None, preset_config(n)) for n in order}
+    e = {n: estimate_params_v3(P, None, preset_config(n, _t5h_cfg())) for n in order}
     assert all(x["diagnostics"]["backlit_check"]["weight"] == 0 for x in e.values())
     mids = [e[n]["params"]["midtone"] for n in order]
-    assert mids == [preset_config(n)["base_midtone"] for n in order] == sorted(mids)
+    assert mids == [preset_config(n, _t5h_cfg())["base_midtone"] for n in order] == sorted(mids)
     assert mids == [0.21, 0.23, 0.23, 0.24, 0.26]
 
 
@@ -399,7 +465,7 @@ def test_t4g_soft_presets_keep_shadow_highlight_and_slope_defaults():
     from filmcolor.noref import estimate_params_v3, preset_config
 
     for name in ("natural", "portrait"):
-        cfg = preset_config(name)
+        cfg = preset_config(name, _t5h_cfg())
         for P in (scene(median=0.18, stops=3.5, seed=32), backlit_scene()):
             e = estimate_params_v3(P, None, cfg)
             p = e["params"]
@@ -435,7 +501,7 @@ def test_t4f_textured_trimean_anchor_and_ev_refinement_ignore_a_large_sky():
     it lowers 0.04 EV more here)."""
     from filmcolor.noref import NOREF_V3 as V3, _encoded_quantiles, _sample, _textured_cells, estimate_params_v3
 
-    NOREF_V3 = dict(V3, ev_down_adaptive=False)
+    NOREF_V3 = _t5h_cfg(dict(V3, ev_down_adaptive=False))
 
     P = sky_over_grass()
     tc = _textured_cells(P, None, NOREF_V3)
@@ -459,7 +525,7 @@ def test_t4f_ev_refinement_brightens_under_the_p98_ceiling():
     P = scene(median=0.03, stops=5.0, seed=10).reshape(-1, 3)
     P[: len(P) // 40] = 0.9
     P = P.reshape(400, -1, 3)
-    cfg = dict(NOREF_V3, anchor_target_density=1.4, backlit_p90=2.0)  # backlit rule off: only the refinement moves ev
+    cfg = _t5h_cfg(dict(NOREF_V3, anchor_target_density=1.4, backlit_p90=2.0))  # backlit rule off: only the refinement moves ev
     e = estimate_params_v3(P, None, cfg)
     r = e["diagnostics"]["ev_refine"]
     assert r["med_tex_before"] < cfg["target_encoded_band"][0] and r.get("capped_by_p98")
@@ -493,7 +559,7 @@ def test_t4f_anchor_lift_is_held_to_the_p98_ceiling():
     P[: len(P) // 40] = 0.9
     P = P.reshape(400, -1, 3)
     px = _sample(P, None, NOREF_V3["n_sample"] // 4, seed=1)
-    cfg = dict(NOREF_V3, backlit_p90=2.0)  # backlit rule off
+    cfg = _t5h_cfg(dict(NOREF_V3, backlit_p90=2.0))  # backlit rule off
 
     def p98(e, ev):
         return _encoded_quantiles(px, RenderParams(**dict(e["params"], ev=ev, shoulder=cfg["base_shoulder"],
@@ -567,7 +633,7 @@ def test_t4i_auto_contrast_and_blacks_on_a_narrow_lifted_frame():
     after the contrast step; both off with their switches. T4j: off by default, switched on here."""
     from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
 
-    NOREF_V3 = dict(V3, auto_contrast=True, auto_blacks=True)
+    NOREF_V3 = _t5h_cfg(dict(V3, auto_contrast=True, auto_blacks=True))
     assert V3["auto_contrast"] is False and V3["auto_blacks"] is False and V3["auto_slope"] is False
 
     P = scene(median=0.18, stops=2.0, chroma=0.05, seed=63)
@@ -597,7 +663,7 @@ def test_t4i_auto_slope_follows_green_between_shadows_and_highlights():
     rng = np.random.default_rng(65)
     g = 0.18 * 2.0 ** rng.uniform(-3, 3, 200_000)
     P = np.stack([g, g, 0.18 * (g / 0.18) ** 0.85], -1).reshape(400, -1, 3).astype(np.float32)
-    cfg = dict(NOREF_V3, auto_slope=True, wb_v3_strength=0.0)  # white balance off: only the slope is under test
+    cfg = _t5h_cfg(dict(NOREF_V3, auto_slope=True, wb_v3_strength=0.0))  # white balance off: only the slope is under test
     e = estimate_params_v3(P, None, cfg)
     s = e["diagnostics"]["auto_levels"]["slope"]
     assert "slope_r" not in s and -NOREF_V3["auto_slope_max"] <= s["slope_b"] < 0
@@ -723,7 +789,9 @@ def test_t4k_backlit_lift_needs_a_bright_background():
 def test_t4k_thin_negative_caps_positive_ev_and_lowers_blacks():
     """Thin-negative cap and black lowering use the configured span thresholds; a normal range or no span given
     leaves the estimate unchanged. T4m permits negative EV and deeper blacks on very thin negatives."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+
+    NOREF_V3 = _t5h_cfg(V3)
 
     P = scene(median=0.05, stops=4.0, seed=82)
     free = estimate_params_v3(P, None, NOREF_V3)
@@ -767,7 +835,9 @@ def test_t4l_ev_lowering_widens_on_frames_bright_all_over():
     ev_down_adaptive is enabled, the ev refinement may lower by ev_refine_down_max + ev_down_extra x ramp(p25;
     ev_down_q25), instead of 0.20; off by default (False: 4 better / 10 worse on the 185 dev frames); with p25 below the
     ramp (a sky over dark ground, A013) the limit stays 0.20 and the result is the T4k one."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+
+    NOREF_V3 = _t5h_cfg(V3)
 
     assert not NOREF_V3["ev_down_adaptive"]
     P = scene(median=0.75, stops=2.0, seed=93)
@@ -783,7 +853,9 @@ def test_t4l_ev_lowering_widens_on_frames_bright_all_over():
 
 
 def test_t4m_very_thin_negative_darkens_without_a_backlit_lift():
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+
+    NOREF_V3 = _t5h_cfg(V3)
 
     P = backlit_scene(fg=0.02, sky=0.30, seed=91)
     off = estimate_params_v3(P, None, dict(NOREF_V3, thin_neg_check=False), span_d_g=0.30)
@@ -888,7 +960,9 @@ def test_t4o_capped_backlit_rescue_c1_and_c2():
     """T4o: Step 5 backlit capped rescue lifts midtone/shoulder/shadows for c1 (sparse highlights capping EV)
     or c2 (near backlit), without triggering on night frames (med < 0.24), low-span negatives, or stacking on
     normal backlit frames; output clip share remains within clip_budget."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3, _clip_share, RenderParams
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3, _clip_share, RenderParams
+
+    NOREF_V3 = _t5h_cfg(V3)
 
     # Synthetic scene for c1: dark foreground with sparse highlights capping EV
     rng = np.random.default_rng(42)
@@ -987,7 +1061,9 @@ def test_t4p_highlight_hold_ev_max_drop_and_bounds():
     """T4p: Step 5 highlight hold EV drop is bounded by ev_highlight_max_drop (default 0.60 EV),
     supports fractional maxdrop (e.g. 0.25), respects ev_limits lower floor, and setting 3.0 restores
     the uncapped drop path."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+
+    NOREF_V3 = _t5h_cfg(V3)
 
     # Scene with positive anchor EV and sparse bright highlights requiring large EV drop to clear clip budget
     P = scene(median=0.03, stops=5.0, seed=12)
@@ -2084,7 +2160,9 @@ def test_t5d_lifted_floor_recovers_fogged_pedestal_frame():
     """T5d (A1125.TIF): when span_d_g < 0.84, range_stops >= 1.20, ev <= -0.22, and p98_dark_d <= 0.56,
     and neither thin_flat nor ultra_flat applies (e.g. q25 < 0.62 and iqr_25_90 > 0.20), lifted_floor_check
     lowers ev and blacks and boosts contrast; when span_d_g >= 0.84 or p98_dark_d > 0.56 it does not trigger."""
-    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    from filmcolor.noref import NOREF_V3 as V3, estimate_params_v3
+
+    NOREF_V3 = _t5h_cfg(V3)
 
     rng = np.random.default_rng(42)
     P = np.zeros((200, 500, 3), dtype=np.float32)
@@ -2179,3 +2257,188 @@ def test_t5h_deep_silhouette_backlit_rescue_c3():
     P_lit[:80] = 0.0035
     res_lit = estimate_params_v3(P_lit, None, cfg, span_d_g=1.85)
     assert not res_lit["diagnostics"]["backlit_check"].get("rescue_c3")
+
+
+def test_t14_uncal_slope_and_paper_white_defaults():
+    """T14: NOREF_V3 enables adaptive UNCAL slope_b/slope_r and paper-white highlight recovery."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    assert NOREF_V3["t14_uncal_slope_check"] is True
+    assert NOREF_V3["t13_uncal_paper_white_check"] is True
+    assert NOREF_V3["t13_uncal_paper_white_thr"] == pytest.approx(0.90)
+    assert NOREF_V3["t13_uncal_paper_white_max"] == pytest.approx(0.18)
+
+    P = scene(median=0.18, stops=4.0, seed=1401)
+    off = estimate_params_v3(P, None, dict(NOREF_V3, t14_uncal_slope_check=False), span_d_g=0.80)
+    for sp, exp_sb in [(0.30, 0.04), (0.80, 0.142), (1.50, 0.26)]:
+        on = estimate_params_v3(P, None, NOREF_V3, span_d_g=sp)
+        pg = on["diagnostics"]["print_grade_v3"]
+        assert pg["t14_uncal_slope_b_add"] == pytest.approx(exp_sb, abs=1e-4)
+        assert pg["t14_uncal_slope_r_add"] == pytest.approx(-0.09, abs=1e-4)
+        if sp == 0.80:
+            assert on["params"]["slope_b"] == pytest.approx(off["params"].get("slope_b", 0.0) + exp_sb, abs=1e-4)
+            assert on["params"]["slope_r"] == pytest.approx(off["params"].get("slope_r", 0.0) - 0.09, abs=1e-4)
+
+
+def test_t14_cal_branch_unaffected_by_uncal_slope_and_paper_white():
+    """T14: calibrated frames (with camera matrix) are untouched by T14 UNCAL slope and paper-white rules."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+    from filmcolor.render import IDENTITY
+
+    P = scene(median=0.14, stops=4.0, seed=1402)
+    m = ((1.2, -0.1, -0.1), (-0.05, 1.2, -0.15), (0.0, -0.2, 1.2))
+    on = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m), span_d_g=0.95)
+    off = estimate_params_v3(
+        P,
+        None,
+        dict(NOREF_V3, matrix=m, t14_uncal_slope_check=False, t13_uncal_paper_white_check=False),
+        span_d_g=0.95,
+    )
+    assert on["params"] == off["params"]
+    pg = on["diagnostics"].get("print_grade_v3", {})
+    assert "t14_uncal_slope_b_add" not in pg
+    assert "t13_uncal_whites" not in pg
+
+
+def test_t14_uncal_paper_white_lifts_dim_highlights_within_cap():
+    """T14: uncalibrated frames with enc_p98 < 0.90 receive bounded whites recovery up to 0.18."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    P = scene(median=0.10, stops=3.0, seed=1403)
+    on = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.80)
+    off = estimate_params_v3(P, None, dict(NOREF_V3, t13_uncal_paper_white_check=False), span_d_g=0.80)
+    pg = on["diagnostics"]["print_grade_v3"]
+    assert "t13_uncal_whites" in pg
+    assert 0.0 < pg["t13_uncal_whites"] <= NOREF_V3["t13_uncal_paper_white_max"] + 1e-6
+    assert on["params"]["whites"] > off["params"].get("whites", 0.0)
+
+
+def test_t15_cal_contrast_refinement_defaults_and_bounds():
+    """T15: NOREF_V3 enables calibrated global contrast refinement (+0.08, capped at 1.75)."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    assert NOREF_V3["t15_cal_cnt_check"] is True
+    assert NOREF_V3["t15_cal_cnt_add"] == pytest.approx(0.08)
+    assert NOREF_V3["t15_cal_cnt_cap"] == pytest.approx(1.75)
+
+    P = scene(median=0.14, stops=4.0, seed=1501)
+    m = ((1.2, -0.1, -0.1), (-0.05, 1.2, -0.15), (0.0, -0.2, 1.2))
+    on = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m), span_d_g=0.90)
+    off = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m, t15_cal_cnt_check=False), span_d_g=0.90)
+    pg = on["diagnostics"]["print_grade_v3"]
+    exp = min(1.75, off["params"]["contrast"] + 0.08)
+    assert on["params"]["contrast"] == pytest.approx(exp, abs=1e-4)
+    assert pg["t15_cal_cnt_add"] == pytest.approx(exp - off["params"]["contrast"], abs=1e-4)
+    for k in ("ev", "temp", "tint", "sat", "midtone", "shoulder", "shadows", "whites", "blacks", "slope_r", "slope_b"):
+        assert on["params"].get(k) == off["params"].get(k)
+
+
+def test_t15_uncal_branch_unaffected_by_cal_contrast():
+    """T15: uncalibrated frames (no camera matrix) are untouched by t15_cal_cnt_check."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    P = scene(median=0.14, stops=4.0, seed=1502)
+    on = estimate_params_v3(P, None, NOREF_V3, span_d_g=0.90)
+    off = estimate_params_v3(P, None, dict(NOREF_V3, t15_cal_cnt_check=False), span_d_g=0.90)
+    assert on["params"] == off["params"]
+    assert "t15_cal_cnt_add" not in on["diagnostics"].get("print_grade_v3", {})
+
+
+def test_t15_cal_contrast_cap_respected():
+    """T15: calibrated contrast lift respects t15_cal_cnt_cap and never lowers higher contrast."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    P = scene(median=0.14, stops=4.0, seed=1503)
+    m = ((1.2, -0.1, -0.1), (-0.05, 1.2, -0.15), (0.0, -0.2, 1.2))
+    uncapped_t14 = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m, t15_cal_cnt_check=False), span_d_g=0.90)
+    cap_mid = round(uncapped_t14["params"]["contrast"] + 0.03, 4)
+    capped = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m, t15_cal_cnt_cap=cap_mid), span_d_g=0.90)
+    assert capped["params"]["contrast"] == pytest.approx(cap_mid, abs=1e-4)
+    assert capped["diagnostics"]["print_grade_v3"]["t15_cal_cnt_add"] == pytest.approx(0.03, abs=1e-4)
+
+    already_high = estimate_params_v3(
+        P, None, dict(NOREF_V3, matrix=m, t15_cal_cnt_cap=1.60), span_d_g=0.90
+    )
+    assert already_high["params"]["contrast"] == pytest.approx(uncapped_t14["params"]["contrast"], abs=1e-4)
+    assert "t15_cal_cnt_add" not in already_high["diagnostics"].get("print_grade_v3", {})
+
+
+def test_noref_v3_accepts_numpy_array_matrix_and_uniform_frame():
+    """Robustness: estimate_params_v3 accepts ndarray cfg['matrix'] and _textured_cells handles flat frames."""
+    from filmcolor.noref import NOREF_V3, _textured_cells, estimate_params_v3
+
+    P = scene(median=0.18, stops=3.5, seed=1601)
+    m_arr = np.array([[1.1, -0.05, -0.05], [-0.05, 1.1, -0.05], [0.0, -0.05, 1.05]], dtype=np.float64)
+    res_arr = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m_arr), span_d_g=0.90)
+    res_tup = estimate_params_v3(P, None, dict(NOREF_V3, matrix=tuple(map(tuple, m_arr))), span_d_g=0.90)
+    assert res_arr["params"] == res_tup["params"]
+
+    flat = np.full((32, 32, 3), 0.25, dtype=np.float32)
+    tc = _textured_cells(flat, None, NOREF_V3)
+    assert np.isfinite(tc["anchor_d"]) and tc["n_textured"] >= 1
+
+
+def test_t16_defaults_and_uncal_wb_strength():
+    """T16/T17: defaults present; uncalibrated frames use t16_uncal_wb_strength (0.69), calibrated stay at 0.65."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    assert NOREF_V3["t16_cal_span_ev_down_check"] is True
+    assert NOREF_V3["t16_cal_sev_cyan_check"] is True
+    assert NOREF_V3["t16_uncal_wb_str_check"] is True
+    assert NOREF_V3["t16_uncal_wb_strength"] == pytest.approx(0.69)
+
+    rng = np.random.default_rng(1610)
+    px = np.clip(rng.uniform(0.15, 0.55, (4000, 3)) * np.array([0.85, 1.0, 1.08]), 1e-4, 1.0).astype(np.float32)
+
+    wb_uncal = estimate_wb_v3(px, NOREF_V3)
+    wb_uncal_off = estimate_wb_v3(px, dict(NOREF_V3, t16_uncal_wb_str_check=False))
+    assert abs(wb_uncal["temp"]) > abs(wb_uncal_off["temp"])
+    assert wb_uncal["temp"] / wb_uncal_off["temp"] == pytest.approx(0.69 / 0.65, rel=1e-4)
+
+    m = ((1.1, -0.05, -0.05), (-0.05, 1.1, -0.05), (0.0, -0.05, 1.05))
+    wb_cal = estimate_wb_v3(px, dict(NOREF_V3, matrix=m))
+    wb_cal_off = estimate_wb_v3(px, dict(NOREF_V3, matrix=m, t16_uncal_wb_str_check=False))
+    assert wb_cal["temp"] == pytest.approx(wb_cal_off["temp"], abs=1e-6)
+    assert wb_cal["tint"] == pytest.approx(wb_cal_off["tint"], abs=1e-6)
+
+
+def test_t16_cal_span_ev_down_cap():
+    """T16: calibrated EV down-refinement cap tightens smoothly from 0.20 (span<=0.82) to 0.08 (span>=1.10)."""
+    from filmcolor.noref import NOREF_V3, estimate_params_v3
+
+    P = scene(median=0.72, stops=2.2, seed=1611)
+    m = ((1.2, -0.1, -0.1), (-0.05, 1.2, -0.15), (0.0, -0.2, 1.2))
+    r_lo = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m), span_d_g=0.80)
+    r_mid = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m), span_d_g=0.96)
+    r_hi = estimate_params_v3(P, None, dict(NOREF_V3, matrix=m), span_d_g=1.20)
+    assert r_lo["diagnostics"]["ev_refine"]["t16_cal_ev_down_max"] == pytest.approx(0.20, abs=1e-4)
+    assert r_mid["diagnostics"]["ev_refine"]["t16_cal_ev_down_max"] == pytest.approx(0.14, abs=1e-4)
+    assert r_hi["diagnostics"]["ev_refine"]["t16_cal_ev_down_max"] == pytest.approx(0.08, abs=1e-4)
+
+    # Uncalibrated frames are unaffected by t16_cal_span_ev_down_check
+    r_uncal = estimate_params_v3(P, None, NOREF_V3, span_d_g=1.20)
+    assert "t16_cal_ev_down_max" not in r_uncal["diagnostics"]["ev_refine"]
+
+
+def test_t16_cal_sev_cyan_sky_gw_undamp():
+    """T16: calibrated clear-sky frame with severe cyan GW (R/G < -1.20) undamps sky GW and bright zone."""
+    from filmcolor.noref import NOREF_V3, estimate_wb_v3
+
+    rng = np.random.default_rng(1612)
+    # Top half: bright severe-cyan sky; bottom half: warmer mid-grey ground (so cool_cast=False, gw_undamp=False)
+    n = 2000
+    g_top = rng.uniform(0.45, 0.75, n)
+    top = np.stack([g_top * (2.0 ** -2.0), g_top, g_top * (2.0 ** 0.4)], axis=1)
+    g_bot = rng.uniform(0.18, 0.35, n)
+    bot = np.stack([g_bot * (2.0 ** -0.6), g_bot, g_bot * (2.0 ** -0.1)], axis=1)
+    px = np.concatenate([top, bot], axis=0).astype(np.float32)
+    m = ((1.1, -0.05, -0.05), (-0.05, 1.1, -0.05), (0.0, -0.05, 1.05))
+
+    on = estimate_wb_v3(px, dict(NOREF_V3, matrix=m))
+    off = estimate_wb_v3(px, dict(NOREF_V3, matrix=m, t16_cal_sev_cyan_check=False))
+    assert on["diagnostics"].get("t16_cal_sev_cyan") is True
+    assert on["temp"] > off["temp"]
+
+    # Uncalibrated frames do not trigger t16_cal_sev_cyan
+    uncal = estimate_wb_v3(px, NOREF_V3)
+    assert "t16_cal_sev_cyan" not in uncal["diagnostics"]

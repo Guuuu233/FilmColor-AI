@@ -28,6 +28,8 @@ import tifffile
 
 from .base import estimate_base_blocks
 from .frozen import check_source
+from .invert import _all_finite
+from .render import srgb_eotf as _srgb_eotf
 
 LINEAR_RAW = 34892
 PHOTOMETRIC_MINISBLACK = 1
@@ -151,6 +153,9 @@ def _decode_tiff_lzw(data: bytes, expected_len: int | None = None) -> bytes:
 
 def _read_page_array(page) -> np.ndarray:
     """Read a TIFF page array; fallback to pure Python/NumPy for LZW/PackBits strips if imagecodecs is absent."""
+    predictor = int(_tag(page, "Predictor", 1) or 1)
+    if predictor not in (1, 2) and not (predictor == 3 and np.dtype(page.dtype).kind == "f"):
+        raise ValueError(f"unsupported TIFF Predictor={predictor} for dtype {page.dtype}")
     try:
         arr = page.asarray()
         planarconfig = getattr(page, "planarconfig", 1) or 1
@@ -160,6 +165,10 @@ def _read_page_array(page) -> np.ndarray:
     except (ValueError, NotImplementedError) as exc:
         if "imagecodecs" not in str(exc):
             raise
+    except Exception as exc:
+        if type(exc).__module__.startswith("imagecodecs"):
+            raise ValueError(f"corrupt compressed TIFF segment: {exc}") from exc
+        raise
 
     compression = page.compression
     predictor = int(_tag(page, "Predictor", 1) or 1)
@@ -375,11 +384,6 @@ def silverfast_settings(xmp) -> dict:
     return out
 
 
-def _srgb_eotf(e):
-    e = np.clip(e, 0.0, 1.0)
-    return np.where(e <= 0.04045, e / 12.92, ((e + 0.055) / 1.055) ** 2.4)
-
-
 def _parse_tiff_eotf(icc_bytes, bits: int) -> tuple[str, float | None, np.ndarray | None]:
     """Read a single ICC TRC under the TIFF input policy; this is not an ICC colour transform."""
     try:
@@ -569,7 +573,7 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
                 meta["tiff_eotf"] = f"gamma:{gamma:.4f}"
             elif mode == "lut":
                 meta["tiff_eotf"] = f"icc_lut:{len(curve)}"
-    if not np.all(np.isfinite(rgb)):
+    if not _all_finite(rgb):
         raise ValueError(f"{path.name}: non-finite samples")
     return ScannerFrame(rgb=rgb, sat=sat, black=black, white=white, meta=meta)
 

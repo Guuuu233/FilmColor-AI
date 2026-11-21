@@ -55,8 +55,24 @@ def tile(pattern: np.ndarray, shape: tuple[int, int]) -> np.ndarray:
 
 
 def linearize(frame: RawFrame) -> np.ndarray:
-    black = tile(frame.black, frame.cfa.shape).astype(np.float32)
-    return (frame.cfa.astype(np.float32) - black) / (np.float32(frame.white) - black)
+    h, w = frame.cfa.shape
+    n = frame.black.shape[0]
+    b32 = frame.black.astype(np.float32)
+    d32 = np.float32(frame.white) - b32
+    out = frame.cfa.astype(np.float32)
+    hb, wb = h // n, w // n
+    if hb and wb:
+        core = out[: hb * n, : wb * n].reshape(hb, n, wb, n)
+        core -= b32[None, :, None, :]
+        core /= d32[None, :, None, :]
+    if h % n or w % n:
+        bt = tile(b32, (h, w))
+        dt = np.float32(frame.white) - bt
+        if h % n:
+            out[hb * n :, :] = (out[hb * n :, :] - bt[hb * n :, :]) / dt[hb * n :, :]
+        if w % n:
+            out[: hb * n, wb * n :] = (out[: hb * n, wb * n :] - bt[: hb * n, wb * n :]) / dt[: hb * n, wb * n :]
+    return out
 
 
 def saturation_mask(frame: RawFrame, threshold: float | None = None) -> np.ndarray:
@@ -124,11 +140,21 @@ def superpixel(linear, colors, sat, pattern_size: int, block: int):
     lin = linear[:h, :w].reshape(hb, block, wb, block)
     col = colors[:h, :w].reshape(hb, block, wb, block)
     rgb = np.empty((hb, wb, 3), np.float32)
-    for c in range(3):
-        m = col == c
-        cnt = m.sum(axis=(1, 3))
-        if np.any(cnt == 0):
-            raise ValueError(f"channel {CHANNELS[c]} missing from some blocks")
-        rgb[..., c] = (lin * m).sum(axis=(1, 3)) / cnt
+    col0 = col[0, :, 0, :]
+    if bool((col == col0[None, :, None, :]).all()):
+        lin_flat = np.swapaxes(lin, 1, 2).reshape(hb, wb, block * block)
+        col0_flat = col0.ravel()
+        for c in range(3):
+            idx = np.flatnonzero(col0_flat == c)
+            if len(idx) == 0:
+                raise ValueError(f"channel {CHANNELS[c]} missing from some blocks")
+            rgb[..., c] = lin_flat[..., idx].sum(axis=-1) / np.float32(len(idx))
+    else:
+        for c in range(3):
+            m = col == c
+            cnt = m.sum(axis=(1, 3))
+            if np.any(cnt == 0):
+                raise ValueError(f"channel {CHANNELS[c]} missing from some blocks")
+            rgb[..., c] = (lin * m).sum(axis=(1, 3)) / cnt
     sat_any = sat[:h, :w].reshape(hb, block, wb, block).any(axis=(1, 3))
     return rgb, sat_any

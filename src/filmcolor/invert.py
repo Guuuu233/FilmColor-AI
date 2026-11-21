@@ -15,6 +15,9 @@ P and O are in uncalibrated camera RGB (scan camera + film dyes); no colour matr
 """
 from __future__ import annotations
 
+import math
+import os
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 
 import numpy as np
@@ -22,7 +25,29 @@ import numpy as np
 from .raw import CHANNELS, check_region
 
 EPS = 1e-6  # floor for transmittance before log10 (render path clips below-black to 0)
+_EPS_F32 = np.float32(EPS)
 CHUNK_ROWS = 256  # rows per block when inverting a full image; density and inversion are per pixel
+PIXEL_THREADS = max(1, min(4, os.cpu_count() or 1))  # row blocks processed concurrently (numpy releases the GIL)
+
+
+def map_row_blocks(n_rows: int, fn, chunk_rows: int) -> list:
+    """``[fn(r0) for r0 in range(0, n_rows, chunk_rows)]`` on up to ``PIXEL_THREADS`` threads, results in block order.
+    Only for per-pixel work whose blocks do not interact (each ``fn`` writes its own rows and returns its own
+    statistics), so the values are those of the serial loop. ``chunk_rows`` is required and must be the stride
+    ``fn`` slices with: read ``CHUNK_ROWS`` once at the call site (a default would freeze it at import time)."""
+    starts = range(0, n_rows, chunk_rows)
+    if PIXEL_THREADS > 1 and len(starts) > 1:
+        with ThreadPoolExecutor(max_workers=min(PIXEL_THREADS, len(starts))) as ex:
+            return list(ex.map(fn, starts))
+    return [fn(r0) for r0 in starts]
+
+
+def _all_finite(arr: np.ndarray) -> bool:
+    if arr.size == 0:
+        return True
+    if np.isfinite(arr.sum(dtype=np.float64)):
+        return True
+    return bool(np.all(np.isfinite(arr)))
 
 
 @dataclass
@@ -78,10 +103,13 @@ def base_from_regions(rgb, regions) -> dict:
         t, l, h, w = r
         mask[t : t + h, l : l + w] = True
     px = rgb[mask]
+    if len(px) == 0:
+        raise ValueError("base regions contain no pixels")
     med = np.median(px, 0)
-    p05, p95 = np.percentile(px, [5, 95], 0)
+    p05, p95 = np.quantile(px, [0.05, 0.95], axis=0)
+    denom = np.where(np.abs(med) > EPS, med, EPS)
     return dict(rgb=tuple(float(x) for x in med), n=int(len(px)),
-                rel_spread=[float(x) for x in (p95 - p05) / med])
+                rel_spread=[float(x) for x in (p95 - p05) / denom])
 
 
 def central_region(shape, frac: float = 0.5) -> tuple[int, int, int, int]:
@@ -103,8 +131,14 @@ def region_mask(shape, region) -> np.ndarray:
 
 
 def density(rgb, base) -> np.ndarray:
-    t = rgb / np.asarray(base, np.float32)
-    return -np.log10(np.maximum(t, EPS))
+    b = np.asarray(base, np.float32)
+    out = np.divide(rgb, b, dtype=np.float32) if np.asarray(rgb).dtype == np.float32 else (rgb / b)
+    if out.dtype == np.float32:
+        np.maximum(out, _EPS_F32, out=out)
+        np.log10(out, out=out)
+        np.negative(out, out=out)
+        return out
+    return -np.log10(np.maximum(out, EPS))
 
 
 def neutral_transmission(rgb, base) -> np.ndarray:
@@ -205,8 +239,15 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
     # T5f: fine sub-block highlights (small bright canopy sky gaps < 16x16 px, A623.tif) smoothed away by 16x16 means
     if block >= 16 and not info.get("holder_blocks_excluded"):
         b4 = block // 4
-        m4 = (rgb[:h, :w].reshape(h // block, 4, b4, w // block, 4, b4, 3).mean(axis=(2, 5))
-              .transpose(0, 2, 1, 3, 4)[ok].reshape(-1, 3).astype(np.float32))
+        m4_parts = []
+        for r0 in range(0, h, step):
+            r1, b0, b1 = min(h, r0 + step), r0 // block, min(h, r0 + step) // block
+            sub = (rgb[r0:r1, :w].reshape(b1 - b0, 4, b4, w // block, 4, b4, 3)
+                   .mean(axis=(2, 5), dtype=np.float64)
+                   .transpose(0, 2, 1, 3, 4)[ok[b0:b1]].reshape(-1, 3).astype(np.float32))
+            if len(sub):
+                m4_parts.append(sub)
+        m4 = np.concatenate(m4_parts, axis=0) if m4_parts else np.empty((0, 3), np.float32)
         D4 = density(m4, base)
         d4_990 = estimate_white_point(D4, None, 99.0)
         if d_hi[1] >= 0.45 and d4_990[1] - d_hi[1] >= 0.10 and d4_990[1] / d_hi[1] >= 1.15:
@@ -238,7 +279,8 @@ def neutral_ratio_white_point(d_hi, ratio, *, anchor: float = 0.7, scale: float 
     channel ratios are moved ``anchor`` of the way to ``ratio`` and the level set from the frame's own white point:
     d_hi_G = ``scale`` * max_c(d_hi_c / r_c). Otherwise ``d_hi`` is returned unchanged."""
     d = np.asarray(d_hi, np.float64)
-    own = np.array([d[0] / d[1], 1.0, d[2] / d[1]])
+    dg = max(float(d[1]), EPS)
+    own = np.array([d[0] / dg, 1.0, d[2] / dg])
     roll = np.array([float(ratio[0]), 1.0, float(ratio[1])])
     info = dict(ratio_roll=[float(roll[0]), float(roll[2])], ratio_own=[float(own[0]), float(own[2])], anchor=anchor,
                 scale=scale, margin=list(margin), applied=False)
@@ -259,7 +301,7 @@ def blue_white_guard(d_hi, guard, base=None) -> tuple[tuple[float, float, float]
         raise ValueError("blue white guard needs 3 or 4 values")
     lo, target, weight = values[:3]
     d = [float(x) for x in d_hi]
-    ratio = d[2] / d[1]
+    ratio = d[2] / max(d[1], EPS)
     info = dict(guard=values, ratio_bg=ratio, applied=False)
     if len(values) == 4 and base is not None:
         bg = float(base[2] / max(base[1], EPS))
@@ -291,14 +333,15 @@ def self_ratio_white_point(d_hi, Dm, guard) -> tuple[tuple[float, float, float],
     blue sky lacks red) is set to target x r_mid x d_hi_G. Fewer than SELF_RATIO_MIN_PX midtone pixels: unchanged."""
     collapse, target = (float(x) for x in guard)
     d = np.asarray(d_hi, np.float64)
-    lo, hi = SELF_RATIO_BAND[0] * d[1], SELF_RATIO_BAND[1] * d[1]
+    dg = max(float(d[1]), EPS)
+    lo, hi = SELF_RATIO_BAND[0] * dg, SELF_RATIO_BAND[1] * dg
     sel = (Dm[:, 1] >= lo) & (Dm[:, 1] <= hi) & (Dm[:, 0] > 0) & (Dm[:, 2] > 0)
     info = dict(guard=[collapse, target], band=list(SELF_RATIO_BAND), n_mid=int(sel.sum()), applied=False)
     if int(sel.sum()) < SELF_RATIO_MIN_PX:
         return tuple(float(x) for x in d), info
     m = Dm[sel].astype(np.float64)
     r_mid = np.median(m / m[:, 1:2], axis=0)
-    r_hi = d / d[1]
+    r_hi = d / dg
     low = r_hi < collapse * r_mid
     low[1] = False
     info.update(ratio_mid=[float(r_mid[0]), float(r_mid[2])], ratio_hi=[float(r_hi[0]), float(r_hi[2])])
@@ -355,7 +398,15 @@ def invert(D, p: InversionParams, stats: dict | None = None, *, zero_escape: boo
 
 
 def srgb_oetf(x):
-    x = np.clip(x, 0, 1)
+    arr = np.asarray(x)
+    if arr.ndim > 0 and arr.dtype == np.float32:
+        xc = np.clip(arr, np.float32(0.0), np.float32(1.0))
+        out = xc * np.float32(12.92)
+        hi = xc > np.float32(0.0031308)
+        if hi.any():
+            out[hi] = np.float32(1.055) * np.power(xc[hi], np.float32(1.0 / 2.4)) - np.float32(0.055)
+        return out
+    x = np.clip(arr, 0, 1)
     return np.where(x <= 0.0031308, 12.92 * x, 1.055 * np.power(x, 1 / 2.4) - 0.055)
 
 
@@ -367,14 +418,21 @@ def range_report(D, P, p: InversionParams, mask=None) -> dict:
     """Effective dynamic range diagnostics per channel over ``mask``."""
     Dm = D[mask] if mask is not None else D.reshape(-1, 3)
     Pm = P[mask] if mask is not None else P.reshape(-1, 3)
+    if len(Dm) == 0:
+        raise ValueError("no pixels for range report")
+    q01, q999 = np.quantile(Dm, [0.001, 0.999], axis=0)
+    clip_thr = np.float32(1.0 / p.exposure)
+    clip_high = np.mean(Pm > clip_thr, axis=0)
+    below_black = np.mean(Pm < np.float32(0.0), axis=0)
+    brighter_base = np.mean(Dm < np.float32(0.0), axis=0)
     out = {}
     for c, name in enumerate(CHANNELS):
         out[name] = dict(
-            clip_high=float(np.mean(Pm[:, c] * p.exposure > 1)),   # brighter than output white
-            below_black=float(np.mean(Pm[:, c] < 0)),              # less dense than the black point
-            brighter_than_base=float(np.mean(Dm[:, c] < 0)),
-            density_p01=float(np.percentile(Dm[:, c], 0.1)),
-            density_p999=float(np.percentile(Dm[:, c], 99.9)),
+            clip_high=float(clip_high[c]),          # brighter than output white
+            below_black=float(below_black[c]),      # less dense than the black point
+            brighter_than_base=float(brighter_base[c]),
+            density_p01=float(q01[c]),
+            density_p999=float(q999[c]),
         )
     return out
 
@@ -403,7 +461,7 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
     ``white_b_guard``: (min_ratio, target_ratio, weight[, max_base_bg]) for ``blue_white_guard`` on the automatic white point.
     ``white_self_ratio``: (collapse, target) for ``self_ratio_white_point`` on the automatic white point (T4l).
     ``spike_clamp``: (mid_max, margin) for ``clamp_spikes`` (T4l), kept in the parameters (replayed on export)."""
-    if not np.all(np.isfinite(rgb)):
+    if not _all_finite(np.asarray(rgb)):
         raise ValueError("input image contains NaN or infinite values")
     if not np.all(np.isfinite(base)) or np.any(np.asarray(base) <= 0):
         raise ValueError(f"film base must be positive and finite, got {tuple(base)}")
@@ -446,17 +504,25 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
     clamp_stats = {}
     if rgb.ndim == 3:
         P = np.empty(rgb.shape, np.float32)
-        n_above = np.zeros(3, np.int64)
-        for r0 in range(0, rgb.shape[0], CHUNK_ROWS):
-            D = density(rgb[r0 : r0 + CHUNK_ROWS], base)
-            P[r0 : r0 + CHUNK_ROWS] = invert(D, p, clamp_stats, zero_escape=zero_escape)
-            n_above += np.count_nonzero(D > hi, axis=(0, 1))
+        step = CHUNK_ROWS
+
+        def _block(r0: int):
+            D = density(rgb[r0 : r0 + step], base)
+            st: dict = {}
+            P[r0 : r0 + step] = invert(D, p, st, zero_escape=zero_escape)
+            return np.count_nonzero(D > hi, axis=(0, 1)), st.get("spike_px", 0)
+
+        blocks = map_row_blocks(rgb.shape[0], _block, step)
+        n_above = np.sum([b[0] for b in blocks], axis=0, dtype=np.int64)
+        if spike_clamp is not None:
+            clamp_stats["spike_px"] = int(sum(b[1] for b in blocks))
         above_white = [float(k / (rgb.shape[0] * rgb.shape[1])) for k in n_above]
     else:
         D = density(rgb, base)
         P = invert(D, p, clamp_stats, zero_escape=zero_escape)
         above_white = [float(np.mean(D[..., c] > p.d_hi[c])) for c in range(3)]
-    report = dict(white_pct=white_pct, range=range_report(Dm, invert(Dm, p, zero_escape=zero_escape), p),
+    Pm = P[mask] if mask is not None else P.reshape(-1, 3)
+    report = dict(white_pct=white_pct, range=range_report(Dm, Pm, p),
                   full_image_above_white=above_white)
     if white_info is not None:  # reports of the default single-pixel white point keep their previous field set
         report["white_point"] = white_info
@@ -465,3 +531,175 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
         report["spike_clamp"] = dict(clamp=list(p.spike_clamp), pixels=int(clamp_stats.get("spike_px", 0)),
                                      share=float(clamp_stats.get("spike_px", 0) / max(n_px, 1)))
     return InversionResult(positive=P, params=p, report=report)
+
+
+def _t18_smoothstep(x: float, lo: float, hi: float) -> float:
+    t = float(np.clip((x - lo) / max(hi - lo, 1e-8), 0.0, 1.0))
+    return t * t * (3.0 - 2.0 * t)
+
+
+def is_orange_mask_ratios(d_hi, d_lo=(0.0, 0.0, 0.0), *, has_cam_matrix: bool = True) -> bool:
+    """Physical negative regime detection: camera-matrix RAWs or orange-masked scans (d_hi_b / d_hi_g > 0.80)."""
+    if has_cam_matrix:
+        return True
+    dh = np.asarray(d_hi, np.float64) - np.asarray(d_lo, np.float64)
+    dg = max(float(dh[1]), 1e-4)
+    return float(dh[2]) / dg > 0.80
+
+
+def t18_channel_ratios(d_hi, d_lo=(0.0, 0.0, 0.0), *, has_cam_matrix: bool = True,
+                       version: str = "t18") -> tuple[float, float, float, float]:
+    """T18/T23 decoupled channel slope ratios (rho_r, 1.0, rho_b) and midtone pivot_s."""
+    dh = np.asarray(d_hi, np.float64) - np.asarray(d_lo, np.float64)
+    dg = max(float(dh[1]), 1e-4)
+    r_u = float(dh[0]) / dg
+    b_u = float(dh[2]) / dg
+    if has_cam_matrix or b_u > 0.80:
+        w_r = _t18_smoothstep(0.60 - r_u, 0.0, 0.14)
+        w_b = _t18_smoothstep(b_u - 1.35, 0.0, 0.18)
+        rr = (1.0 - 0.85 * w_r) * r_u + (0.85 * w_r) * 0.725
+        rb = (1.0 - 0.75 * w_b) * b_u + (0.75 * w_b) * 1.18
+        pivot_s = 0.50
+    else:
+        rr = float(np.clip(0.96 * r_u, 0.72, 1.18))
+        rb = float(np.clip(1.13 * b_u, 0.28, 0.75))
+        pivot_s = 0.62
+    return rr, 1.0, rb, pivot_s
+
+
+UNCAL_T18_EPS = (0.012, -0.008, -0.008)
+UNCAL_T23_EPS = (0.012, -0.008, -0.008)
+
+
+_INV_LOG10_2 = 1.0 / math.log10(2.0)
+
+
+def _t18_affine_params(d_lo, d_hi, gamma: float, *, has_cam_matrix: bool = True,
+                       eps_rgb: tuple[float, float, float] | None = None,
+                       version: str = "t18"):
+    lo = np.asarray(d_lo, np.float64)
+    hi = np.asarray(d_hi, np.float64)
+    if float(gamma) <= 0 or not np.all(np.isfinite(lo)) or not np.all(np.isfinite(hi)):
+        raise ValueError(f"invalid T18 parameters: d_lo={d_lo}, d_hi={d_hi}, gamma={gamma}")
+    if np.any(hi <= lo):
+        raise ValueError(f"white point density must exceed black point: d_lo={d_lo} d_hi={d_hi}")
+    rr, rg, rb, pivot_s = t18_channel_ratios(hi, lo, has_cam_matrix=has_cam_matrix, version=version)
+    rho = np.array([rr, rg, rb], dtype=np.float64)
+    dg = max(float(hi[1] - lo[1]), 1e-4)
+    d_anchor = lo + pivot_s * (hi - lo) + (1.0 - pivot_s) * rho * dg
+    if eps_rgb is None:
+        if is_orange_mask_ratios(hi, lo, has_cam_matrix=has_cam_matrix):
+            eps_arr = np.zeros(3, dtype=np.float64)
+        else:
+            eps_arr = np.asarray(UNCAL_T23_EPS if version == "t23" else UNCAL_T18_EPS, dtype=np.float64)
+    else:
+        eps_arr = np.asarray(eps_rgb, dtype=np.float64)
+    R = dg / float(gamma)
+    flr = 10.0 ** (-R)
+    return lo, hi, rho, dg, d_anchor, eps_arr, R, flr
+
+
+def _t18_chunk_from_s(s: np.ndarray, R: float, flr: float) -> np.ndarray:
+    max_e2 = np.float32(12.0 * _INV_LOG10_2)
+    r_log2 = np.float32(R * _INV_LOG10_2)
+    flr32 = np.float32(flr)
+    inv_omf = np.float32(1.0 / (1.0 - flr))
+    out = np.asarray(s, np.float32) - np.float32(1.0)
+    out *= r_log2
+    np.minimum(out, max_e2, out=out)
+    np.exp2(out, out=out)
+    out -= flr32
+    out *= inv_omf
+    return out
+
+
+def invert_t18(D, p: InversionParams, *, has_cam_matrix: bool = True,
+               stats: dict | None = None, zero_escape: bool = False,
+               eps_rgb: tuple[float, float, float] | None = None,
+               version: str = "t18") -> np.ndarray:
+    """T18/T23 decoupled-slope inversion from density ``D`` (midtone-pivoted slope ratio rho)."""
+    D_arr = np.asarray(D, np.float32)
+    if not _all_finite(D_arr):
+        raise ValueError("density input contains NaN or infinite values")
+    _, _, rho, dg, d_anchor, eps_arr, R, flr = _t18_affine_params(
+        p.d_lo, p.d_hi, p.gamma, has_cam_matrix=has_cam_matrix, eps_rgb=eps_rgb, version=version,
+    )
+    inv_rd = (1.0 / (rho * dg)).astype(np.float32)
+    anchor32 = d_anchor.astype(np.float32)
+    shift32 = (np.float32(1.0) + eps_arr.astype(np.float32))
+
+    def _run(chunk: np.ndarray) -> np.ndarray:
+        s = (chunk - anchor32) * inv_rd
+        s += shift32
+        if p.spike_clamp is not None and s.ndim >= 1 and s.shape[-1] == 3:
+            s, n = clamp_spikes(s, p.spike_clamp, zero_escape=zero_escape)
+            if stats is not None:
+                stats["spike_px"] = stats.get("spike_px", 0) + n
+        return _t18_chunk_from_s(s, R, flr)
+
+    if D_arr.ndim == 3 and D_arr.shape[0] > CHUNK_ROWS:
+        out = np.empty(D_arr.shape, np.float32)
+        for r0 in range(0, D_arr.shape[0], CHUNK_ROWS):
+            out[r0 : r0 + CHUNK_ROWS] = _run(D_arr[r0 : r0 + CHUNK_ROWS])
+        return out
+    return _run(D_arr)
+
+
+def invert_t18_from_positive(P, d_lo, d_hi, gamma: float = 0.6, *, has_cam_matrix: bool = True,
+                             eps_rgb: tuple[float, float, float] | None = None,
+                             version: str = "t18") -> np.ndarray:
+    """Reconstruct density from legacy inverted positive ``P`` and re-invert with T18/T23 decoupled slope ratios."""
+    P_arr = np.asarray(P, np.float32)
+    if not _all_finite(P_arr):
+        raise ValueError("positive input contains NaN or infinite values")
+    lo, hi, rho, dg, d_anchor, eps_arr, R, flr = _t18_affine_params(
+        d_lo, d_hi, gamma, has_cam_matrix=has_cam_matrix, eps_rgb=eps_rgb, version=version,
+    )
+    # Algebraically fuse log10 -> D_orig -> s -> 10^(R*(s-1)) into exp2(alpha * log2(inner) + beta_log2)
+    alpha = ((hi - lo) / (rho * dg)).astype(np.float32)
+    beta_log2 = ((R * ((hi - d_anchor) / (rho * dg) + eps_arr)) * _INV_LOG10_2).astype(np.float32)
+    one_m_f = np.float32(1.0 - flr)
+    flr32 = np.float32(flr)
+    inv_omf = np.float32(1.0 / (1.0 - flr))
+    max_e2 = np.float32(12.0 * _INV_LOG10_2)
+    min_in = np.float32(1e-12)
+
+    def _run(chunk: np.ndarray) -> np.ndarray:
+        xc = chunk * one_m_f
+        xc += flr32
+        np.maximum(xc, min_in, out=xc)
+        np.log2(xc, out=xc)
+        xc *= alpha
+        xc += beta_log2
+        np.minimum(xc, max_e2, out=xc)
+        np.exp2(xc, out=xc)
+        xc -= flr32
+        xc *= inv_omf
+        return xc
+
+    step = CHUNK_ROWS
+    if P_arr.ndim == 3 and P_arr.shape[0] > step:
+        out = np.empty(P_arr.shape, np.float32)
+
+        def _block(r0: int) -> None:
+            out[r0 : r0 + step] = _run(P_arr[r0 : r0 + step])
+
+        map_row_blocks(P_arr.shape[0], _block, step)
+        return out
+    return _run(P_arr)
+
+invert_t22 = invert_t18
+invert_t22_from_positive = invert_t18_from_positive
+
+
+def invert_t23(D, p: InversionParams, *, has_cam_matrix: bool = True,
+               stats: dict | None = None, zero_escape: bool = False,
+               eps_rgb: tuple[float, float, float] | None = None) -> np.ndarray:
+    return invert_t18(D, p, has_cam_matrix=has_cam_matrix, stats=stats,
+                      zero_escape=zero_escape, eps_rgb=eps_rgb, version="t23")
+
+
+def invert_t23_from_positive(P, d_lo, d_hi, gamma: float = 0.6, *, has_cam_matrix: bool = True,
+                             eps_rgb: tuple[float, float, float] | None = None) -> np.ndarray:
+    return invert_t18_from_positive(P, d_lo, d_hi, gamma, has_cam_matrix=has_cam_matrix,
+                                    eps_rgb=eps_rgb, version="t23")

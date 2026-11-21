@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>FilmColor T24</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="panel">
+    <!-- Connection Header -->
+    <div class="row between header">
+      <div class="row gap6">
+        <span class="dot" id="connDot"></span>
+        <sp-body size="S" id="connText">正在连接 FilmColor 引擎…</sp-body>
+      </div>
+      <sp-action-button quiet size="s" id="bRefreshConn">刷新</sp-action-button>
+    </div>
+
+    <!-- Source Selection -->
+    <div class="row gap6">
+      <sp-button variant="secondary" size="s" id="bPickFile" class="flex1">选择负片 RAW/TIFF…</sp-button>
+      <sp-button variant="secondary" size="s" id="bUseActive" class="flex1">读取当前文档</sp-button>
+    </div>
+    <sp-body size="XS" class="muted truncate" id="srcPathText">尚未选择负片文件</sp-body>
+
+    <!-- Live Preview Box -->
+    <div class="preview-box">
+      <img id="previewImg" alt="">
+      <div id="previewEmpty" class="preview-empty">选择负片后自动显示 T24 实时预览</div>
+    </div>
+    <div class="row between">
+      <div class="row gap4">
+        <sp-action-button size="s" id="vAfter" selected>当前效果</sp-action-button>
+        <sp-action-button size="s" id="vAuto">T24 基准</sp-action-button>
+        <sp-action-button size="s" id="vNeg">原负片</sp-action-button>
+      </div>
+      <div class="row gap4">
+        <sp-action-button quiet size="s" id="bRotL" title="逆时针旋转 90°">↺</sp-action-button>
+        <sp-action-button quiet size="s" id="bRotR" title="顺时针旋转 90°">↻</sp-action-button>
+        <sp-action-button quiet size="s" id="bResetAdj">重置微调</sp-action-button>
+      </div>
+    </div>
+
+    <sp-divider size="s"></sp-divider>
+
+    <!-- Film / Preset / Engine -->
+    <div class="grid2">
+      <div>
+        <sp-label size="S">胶片类型</sp-label>
+        <sp-picker id="pFilm" size="s" class="full">
+          <sp-menu slot="options">
+            <sp-menu-item value="color" selected>彩色负片</sp-menu-item>
+            <sp-menu-item value="bw">黑白负片</sp-menu-item>
+          </sp-menu>
+        </sp-picker>
+      </div>
+      <div>
+        <sp-label size="S">算法引擎</sp-label>
+        <sp-picker id="pEngine" size="s" class="full">
+          <sp-menu slot="options">
+            <sp-menu-item value="t24" selected>T24 AI (推荐)</sp-menu-item>
+            <sp-menu-item value="t23">T23 物理基准</sp-menu-item>
+            <sp-menu-item value="v3">V3 经典</sp-menu-item>
+          </sp-menu>
+        </sp-picker>
+      </div>
+    </div>
+
+    <div>
+      <sp-label size="S">风格预设</sp-label>
+      <sp-picker id="pPreset" size="s" class="full">
+        <sp-menu slot="options">
+          <sp-menu-item value="frontier" selected>富士 Frontier 鲜润（推荐）</sp-menu-item>
+          <sp-menu-item value="leica">德味徕卡 Leica Look</sp-menu-item>
+          <sp-menu-item value="noritsu">诺日士 Noritsu 通透</sp-menu-item>
+          <sp-menu-item value="standard">标准 Standard（T24 保守色度基准）</sp-menu-item>
+          <sp-menu-item value="linear">线性 Linear（高宽容后期自调底稿）</sp-menu-item>
+          <sp-menu-item value="natural">自然 Natural</sp-menu-item>
+          <sp-menu-item value="portrait">人像 Portrait</sp-menu-item>
+          <sp-menu-item value="vivid">鲜明 Vivid</sp-menu-item>
+          <sp-menu-item value="print_classic">经典印相 Print</sp-menu-item>
+          <sp-menu-item value="cinema">电影质感 Cinema</sp-menu-item>
+        </sp-menu>
+      </sp-picker>
+    </div>
+
+    <sp-divider size="s"></sp-divider>
+
+    <!-- Fine-Tune Sliders (0 = Pure T24 + Preset) -->
+    <div id="slidersBox" class="sliders">
+      <sp-slider id="sl_ev" min="-2" max="2" step="0.05" value="0"><sp-label slot="label">曝光 EV</sp-label></sp-slider>
+      <sp-slider id="sl_temp" min="-100" max="100" step="1" value="0"><sp-label slot="label">色温</sp-label></sp-slider>
+      <sp-slider id="sl_tint" min="-100" max="100" step="1" value="0"><sp-label slot="label">色调</sp-label></sp-slider>
+      <sp-slider id="sl_contrast" min="-100" max="100" step="1" value="0"><sp-label slot="label">对比度</sp-label></sp-slider>
+      <sp-slider id="sl_highlights" min="-100" max="100" step="1" value="0"><sp-label slot="label">高光</sp-label></sp-slider>
+      <sp-slider id="sl_shadows" min="-100" max="100" step="1" value="0"><sp-label slot="label">阴影</sp-label></sp-slider>
+      <sp-slider id="sl_whites" min="-100" max="100" step="1" value="0"><sp-label slot="label">白色色阶</sp-label></sp-slider>
+      <sp-slider id="sl_blacks" min="-100" max="100" step="1" value="0"><sp-label slot="label">黑色色阶</sp-label></sp-slider>
+      <sp-slider id="sl_vibrance" min="-100" max="100" step="1" value="0"><sp-label slot="label">自然饱和度</sp-label></sp-slider>
+      <sp-slider id="sl_sat" min="-100" max="100" step="1" value="0"><sp-label slot="label">饱和度</sp-label></sp-slider>
+      <sp-slider id="sl_skin_protect" min="0" max="100" step="1" value="0"><sp-label slot="label">肤色保护</sp-label></sp-slider>
+    </div>
+
+    <sp-checkbox id="chkAutoCrop" size="s">自动裁去片夹黑边</sp-checkbox>
+
+    <!-- Primary Actions -->
+    <div class="row gap6 footer">
+      <sp-button variant="cta" size="m" id="bApplyLayer" class="flex1">生成 16 位正片图层</sp-button>
+      <sp-button variant="secondary" size="m" id="bOpenDoc">新建文档</sp-button>
+    </div>
+    <sp-body size="XS" class="muted" id="statusMsg">请确保已启动 FilmColor 本地桥接服务（端口 18765）</sp-body>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

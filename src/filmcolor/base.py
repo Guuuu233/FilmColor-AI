@@ -316,8 +316,7 @@ def estimate_base_blocks(
         # (A1086.TIF: 65534/65535 = 0.99998 alongside 2580 saturated blocks) is also clipped light, not an orange mask
         white_ceiling = bool(sp_sat.any() and min(rgb) >= 0.995)
         clipped_base = bool((near_sat_blocks and max(rgb) >= CLIPPED_BASE_MAX) or white_ceiling)
-        p90_Y = float(np.percentile(Y_valid, 90))
-        p98_Y = float(np.percentile(Y_valid, 98))
+        p90_Y, p98_Y = (float(x) for x in np.quantile(Y_valid, [0.90, 0.98]))
         if clipped_base or (p98_Y > 5.0 * max(p90_Y, 1e-9) and float(np.mean(Y_valid <= 0.25 * thr)) > 0.88
                             and not (rgb[0] > rgb[1] and rgb[2] < 0.43 * rgb[1])):
             valid_film = valid & ((sp.min(-1) < CLIPPED_BASE_MAX) if white_ceiling else (Y <= 2.5 * p90_Y))
@@ -338,7 +337,17 @@ def estimate_base_blocks(
         p98 = np.percentile(vals_all, 98, axis=0)
         cyan_shadow = (rgb_arr[0] >= 1.8 * rgb_arr[1] and rgb_arr[2] >= 1.10 * rgb_arr[1]
                        and p98[0] >= 1.01 * rgb_arr[0] and p98[1] >= 1.00 * rgb_arr[1])
-        if (np.all(p98 > 2.2 * rgb_arr) and float(np.mean(np.all(vals_all > rgb_arr, axis=-1))) > 0.25) or cyan_shadow:
+        ratio_98 = p98 / np.maximum(rgb_arr, 1e-12)
+        channel_underest = (
+            float(ratio_98.max()) >= 1.55
+            and float(ratio_98.min()) >= 1.05
+            and float(np.mean(np.any(vals_all > 1.25 * rgb_arr, axis=-1))) >= 0.05
+        )
+        if (
+            (np.all(p98 > 2.2 * rgb_arr) and float(np.mean(np.all(vals_all > rgb_arr, axis=-1))) > 0.25)
+            or cyan_shadow
+            or channel_underest
+        ):
             relaxed_uniformity = True
             relaxed_rel_std = max(max_rel_std, 0.25)
             n_uniform, thr, idx, vals, keep, kept, rgb, centre, outlier_frac, mode_seed_relaxed = (
@@ -366,7 +375,7 @@ def estimate_base_blocks(
     for i, name in enumerate(CHANNELS):
         p05, p95 = np.percentile(kept[:, i], [5, 95])
         stats[name] = dict(n_blocks=int(len(kept)), median=rgb[i], p05=float(p05), p95=float(p95),
-                           rel_spread=float((p95 - p05) / rgb[i]))
+                           rel_spread=float((p95 - p05) / max(abs(rgb[i]), 1e-12)))
         if stats[name]["rel_spread"] > 0.1:
             warnings.append(f"{name} base blocks spread {stats[name]['rel_spread']:.1%} (p05-p95)")
     sat_blocks = int(sp_sat.sum())

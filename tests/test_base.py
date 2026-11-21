@@ -479,3 +479,21 @@ def test_t5g_natural_roll_base_level_diff_and_cyan_shadow_relaxation():
     assert est.rgb[0] > 0.34 and est.rgb[1] > 0.125
 
 
+
+
+def test_auto_relaxed_uniformity_on_single_channel_underestimation():
+    """Borderless negatives where smooth sky/clouds mask textured thin foreground (e.g. B channel >=1.55x brighter)
+    must trigger relaxed_uniformity so the underestimated channel is not truncated to zero."""
+    rng = np.random.default_rng(42)
+    hb, wb = 20, 20
+    sp = np.zeros((hb, wb, 3), dtype=np.float64)
+    # Top half: smooth cloud-like region (low rel_std) with underestimated B channel
+    sp[:10, :, :] = [0.10, 0.06, 0.022]
+    # Bottom half: textured thin foreground (higher rel_std) with much brighter G/B
+    fg = np.array([0.13, 0.11, 0.065])[None, None, :]
+    noise = rng.uniform(0.88, 1.12, size=(10, wb, 3))
+    sp[10:, :, :] = fg * noise
+    sp_sat = np.zeros((hb, wb), dtype=bool)
+    est = estimate_base_blocks(sp, sp_sat, block=24, top_frac=0.05, max_rel_std=0.03, chroma_tol=0.05)
+    assert est.diagnostics.get("relaxed_uniformity") is True
+    assert est.rgb[2] > 0.05  # blue channel recovered from textured thin foreground

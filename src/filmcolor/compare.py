@@ -167,11 +167,19 @@ def aligned_pair(img_lab, ref_lab, al: Alignment):
     return a[y : y + shape[0], x : x + shape[1]], r
 
 
-def metrics(lab, ref, margin: float = 0.03) -> dict:
-    """Differences ``lab`` - ``ref`` on aligned grids, ignoring a border ``margin`` (crop edges)."""
+def _crop_margin(lab, margin: float) -> np.ndarray:
+    if not 0.0 <= float(margin) < 0.5:
+        raise ValueError(f"margin must be in [0, 0.5), got {margin}")
     h, w = lab.shape[:2]
     my, mx = int(h * margin), int(w * margin)
-    a, r = lab[my : h - my, mx : w - mx].reshape(-1, 3), ref[my : h - my, mx : w - mx].reshape(-1, 3)
+    if h - 2 * my <= 0 or w - 2 * mx <= 0:
+        raise ValueError(f"margin {margin} leaves an empty interior on shape {(h, w)}")
+    return lab[my : h - my, mx : w - mx].reshape(-1, 3)
+
+
+def metrics(lab, ref, margin: float = 0.03) -> dict:
+    """Differences ``lab`` - ``ref`` on aligned grids, ignoring a border ``margin`` (crop edges)."""
+    a, r = _crop_margin(lab, margin), _crop_margin(ref, margin)
     de = delta_e2000(a, r)
     ca, cr = np.hypot(a[:, 1], a[:, 2]), np.hypot(r[:, 1], r[:, 2])
     coloured = cr > 10
@@ -186,11 +194,8 @@ def metrics(lab, ref, margin: float = 0.03) -> dict:
     )
 
 
-
 def _core(lab, margin):
-    h, w = lab.shape[:2]
-    my, mx = int(h * margin), int(w * margin)
-    return lab[my : h - my, mx : w - mx].reshape(-1, 3).astype(np.float64)
+    return _crop_margin(lab, margin).astype(np.float64)
 
 
 def match_tone(L, ref_L):

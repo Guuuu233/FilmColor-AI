@@ -34,19 +34,22 @@ def quality_checks(display, mask, report, base_inside_image: float | None = None
     t = THRESHOLDS
     px = display[mask] if mask is not None else display.reshape(-1, 3)
     checks = []
-    finite = bool(np.all(np.isfinite(px)))
-    checks.append(_check("finite", finite, finite, True, "fail"))
-    if finite:
-        lo, hi = float(px.min()), float(px.max())
-        checks.append(_check("value_range", [lo, hi], lo >= 0 and hi <= 1, [0, 1], "fail"))
-        y = px @ LUMA
-        med = float(np.median(y))
-        checks.append(_check("median_luma", med, t["median_luma"][0] <= med <= t["median_luma"][1], t["median_luma"]))
-        p1, p99 = np.percentile(y, [1, 99])
-        checks.append(_check("tonal_range", float(p99 - p1), p99 - p1 >= t["min_tonal_range"], t["min_tonal_range"]))
-        means = px.mean(0)
-        ratio = float(means.max() / max(means.min(), 1e-6))
-        checks.append(_check("channel_mean_ratio", ratio, ratio <= t["channel_mean_ratio"], t["channel_mean_ratio"]))
+    if len(px) == 0:
+        checks.append(_check("non_empty_mask", 0, False, 1, "fail"))
+    else:
+        finite = bool(np.all(np.isfinite(px)))
+        checks.append(_check("finite", finite, finite, True, "fail"))
+        if finite:
+            lo, hi = float(px.min()), float(px.max())
+            checks.append(_check("value_range", [lo, hi], lo >= 0 and hi <= 1, [0, 1], "fail"))
+            y = px @ LUMA
+            med = float(np.median(y))
+            checks.append(_check("median_luma", med, t["median_luma"][0] <= med <= t["median_luma"][1], t["median_luma"]))
+            p1, p99 = np.percentile(y, [1, 99])
+            checks.append(_check("tonal_range", float(p99 - p1), p99 - p1 >= t["min_tonal_range"], t["min_tonal_range"]))
+            means = px.mean(0)
+            ratio = float(means.max() / max(means.min(), 1e-6))
+            checks.append(_check("channel_mean_ratio", ratio, ratio <= t["channel_mean_ratio"], t["channel_mean_ratio"]))
     r = report["range"]
     clip = max(r[c]["clip_high"] for c in CHANNELS)
     checks.append(_check("clip_high", clip, clip <= t["max_clip_high"], t["max_clip_high"]))

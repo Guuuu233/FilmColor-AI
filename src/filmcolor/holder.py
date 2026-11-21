@@ -24,16 +24,22 @@ REBATE_STRIP_MIN_SPAN = 0.35
 def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.ndarray:
     """Pixels of positive ``P`` (h, w, 3) above ``over`` in two channels and ``peak`` in one that connect to the image
     edge (a highlight inside the frame does not). T4m: default dual threshold ((s1>2)&(s2>16))|((s1>1.25)&(s2>8))."""
-    from scipy import ndimage
-
-    s = np.sort(np.asarray(P), axis=-1)
+    arr = np.asarray(P)
+    if arr.size == 0:
+        return np.zeros(arr.shape[:2], dtype=bool)
+    default_thr = (over == HOLDER_OVER and peak == HOLDER_PEAK)
+    peak_thr = 8.0 if default_thr else peak
+    if float(arr.max()) <= peak_thr:
+        return np.zeros(arr.shape[:2], dtype=bool)
+    s = np.sort(arr, axis=-1)
     s1, s2 = s[..., 1], s[..., 2]
-    if over == HOLDER_OVER and peak == HOLDER_PEAK:
+    if default_thr:
         hot = ((s1 > 2.0) & (s2 > 16.0)) | ((s1 > 1.25) & (s2 > 8.0))
     else:
         hot = (s1 > over) & (s2 > peak)
     if not hot.any():
         return hot
+    from scipy import ndimage
     lab, _ = ndimage.label(hot)
     edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
     return np.isin(lab, edge[edge > 0])
@@ -119,23 +125,25 @@ def rebate_strip_components(P, holder: np.ndarray, max_gap: float = REBATE_STRIP
     """T5c: hot components inside film_box(holder) that run along a box edge (within max_gap * short side of the edge,
     at most max_depth * short side deep, spanning >= min_span of that edge): a dense rebate strip separated from the
     outer holder by a narrow seam (A1298), painted HOLDER_GREY in display. Only when holder.mean() >= 0.15."""
-    from scipy import ndimage
-
     keep = np.zeros_like(holder)
     if float(holder.mean()) < 0.15:
         return keep
     fb = film_box(holder)
     if fb is None:
         return keep
+    arr = np.asarray(P)
     t, l, h, w = fb
+    sub_arr = arr[t:t + h, l:l + w]
+    if sub_arr.size == 0 or float(sub_arr.max()) <= 8.0:
+        return keep
     short = min(h, w)
     gap, dep = max_gap * short, max_depth * short
-    s = np.sort(np.asarray(P), axis=-1)
+    s = np.sort(sub_arr, axis=-1)
     s1, s2 = s[..., 1], s[..., 2]
-    hot = (((s1 > 2.0) & (s2 > 16.0)) | ((s1 > 1.25) & (s2 > 8.0))) & ~holder
-    sub = hot[t:t + h, l:l + w]
+    sub = (((s1 > 2.0) & (s2 > 16.0)) | ((s1 > 1.25) & (s2 > 8.0))) & ~holder[t:t + h, l:l + w]
     if not sub.any():
         return keep
+    from scipy import ndimage
     lab, n = ndimage.label(sub)
     for i in range(n):
         m = lab == i + 1

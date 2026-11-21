@@ -27,9 +27,11 @@ import numpy as np
 from .compare import block_mean
 from .holder import HOLDER_GREY, HOLDER_OVER, HOLDER_PEAK, film_box, holder_mask  # noqa: F401 (T4i names, moved in T4l)
 from .holder import rebate_strip_components, scene_highlight_components
-from .noref import CONFIG_DIR, estimate_params_v2, estimation_input
-from .pipeline import BW_NEUTRAL, positive, sha256, write
-from .render import RenderParams, render, render_full
+from .invert import invert_t18_from_positive
+from .noref import estimation_input
+from .pipeline import (T19_FAMILY, coerce_render_params, normalize_auto_cfg, positive, run_auto_estimate, sha256,
+                       t18_spec, write)
+from .render import RenderParams, RenderParamsT19, RenderParamsT24, _max3, _min3, render, render_fast_full, render_t19, render_t24
 
 
 @dataclass
@@ -76,16 +78,31 @@ class Preview:
                         e[outer] = np.float32(HOLDER_GREY)
         return e
 
+    def t18_inversion(self) -> dict:
+        """Re-inversion used for T19-family parameters here and in ``export`` (``pipeline.t18_spec`` of the config)."""
+        return t18_spec(self.load_kwargs.get("auto"))
+
+    def _t18_pos(self, src_arr: np.ndarray) -> np.ndarray:
+        spec = self.t18_inversion()
+        return invert_t18_from_positive(src_arr, self.inversion["d_lo"], self.inversion["d_hi"], self.inversion["gamma"],
+                                        has_cam_matrix=spec["has_cam_matrix"], version=spec["version"])
+
     def render_crop(self, region, params=None) -> np.ndarray:
         """1:1 render of a sensor-pixel region (top, left, height, width) of the full-resolution positive,
         exactly the export's pixels there (needs keep_full=True)."""
         if self.full_positive is None:
             raise ValueError("load_preview(..., keep_full=True) is needed for a 1:1 view")
         t, l, h, w = (int(v) for v in region)
+        if h <= 0 or w <= 0:
+            raise ValueError(f"crop dimensions must be positive, got {(h, w)}")
         H, W = self.full_positive.shape[:2]
         t, l = max(0, min(t, H - 1)), max(0, min(l, W - 1))
         crop = self.full_positive[t:t + h, l:l + w]
-        rp = params if isinstance(params, RenderParams) else RenderParams.from_dict(params or {})
+        rp = coerce_render_params(params)
+        if isinstance(rp, RenderParamsT24):
+            return render_t24(self._t18_pos(crop), rp, None)[0]
+        if isinstance(rp, RenderParamsT19):
+            return render_t19(self._t18_pos(crop), rp, None)[0]
         return render(crop, rp, None)[0]
 
     def reload(self, **changes) -> "Preview":
@@ -96,21 +113,30 @@ class Preview:
         """sRGB-encoded display image (h, w, 3) float32 for render parameters (RenderParams or dict); the film holder
         (``holder``) is shown as ``HOLDER_GREY``, except clipped scene highlights at the frame edge
         (``holder.scene_highlight_components``, T5a)."""
-        rp = params if isinstance(params, RenderParams) else RenderParams.from_dict(params or {})
-        return self._paint_holder(render(self.positive, rp, self.mask)[0])
+        rp = coerce_render_params(params)
+        if isinstance(rp, RenderParamsT24):
+            return self._paint_holder(render_t24(self._t18_pos(self.positive), rp, self.mask)[0])
+        if isinstance(rp, RenderParamsT19):
+            return self._paint_holder(render_t19(self._t18_pos(self.positive), rp, self.mask)[0])
+        return self._paint_holder(render(self.positive, rp, self.mask, fast=True)[0])
 
     def render_stats(self, params=None) -> tuple[np.ndarray, dict]:
         """``render`` plus per-pixel shares over ``mask`` (image region, unsaturated) of the preview: below_black
         (positive < 0 in at least one channel, i.e. denser than the base) and above_white (display-linear value
         before the white clip > 1 in at least one channel). Measured on the block-mean copy, so isolated clipped
         pixels averaged into a block are not counted (use render_crop to inspect)."""
-        rp = params if isinstance(params, RenderParams) else RenderParams.from_dict(params or {})
-        e, _, pre = render_full(self.positive, rp)
+        rp = coerce_render_params(params)
         m = self.mask
         n = int(m.sum())
         share = (lambda flags: float(flags[m].sum() / n)) if n else (lambda flags: float("nan"))
-        return self._paint_holder(e), dict(below_black=share((self.positive < 0).any(-1)),
-                                           above_white=share((pre > 1).any(-1)))
+        if isinstance(rp, (RenderParamsT19, RenderParamsT24)):
+            t18 = self._t18_pos(self.positive)
+            e, diag = render_t24(t18, rp, self.mask) if isinstance(rp, RenderParamsT24) else render_t19(t18, rp, self.mask)
+            return self._paint_holder(e), dict(below_black=share(_min3(t18) < 0),
+                                               above_white=float(diag["above_white"]))
+        e, _, _, pre = render_fast_full(self.positive, rp)
+        return self._paint_holder(e), dict(below_black=share(_min3(self.positive) < 0),
+                                           above_white=share(_max3(pre) > 1))
 
     def to_sensor(self, region):
         """(top, left, height, width) in preview pixels -> sensor pixels."""
@@ -139,7 +165,9 @@ class Preview:
             if self.full_positive is None:
                 raise ValueError("load_preview(..., keep_full=True) or an auto estimate is needed to re-estimate")
             ei = estimation_input(self.full_positive, self.image_region)
-        return replace(self, auto=auto_estimate(ei, auto, self.film, span_d_g=green_span(self.inversion)),
+        return replace(self, auto=auto_estimate(ei, auto, self.film, span_d_g=green_span(self.inversion),
+                                                d_lo=self.inversion["d_lo"], d_hi=self.inversion["d_hi"],
+                                                gamma=self.inversion["gamma"]),
                        est_input=ei, load_kwargs=dict(self.load_kwargs, auto=auto))
 
     def export(self, out_dir, params=None, encoding: str = "srgb", *, stem: str | None = None,
@@ -150,12 +178,13 @@ class Preview:
         if sha256(self.path) != self.sha256:
             raise SourceChangedError(f"{self.path} changed since it was opened; open it again")
         base = self.base_info["rgb_render"] if self.film == "bw" else self.inversion["base"]
-        rp = params.to_dict() if isinstance(params, RenderParams) else params
+        rp = params.to_dict() if isinstance(params, (RenderParams, RenderParamsT19, RenderParamsT24)) else params
         return write(self.path, out_dir, stem=stem, overwrite=overwrite, base_rgb=base, d_hi=self.inversion["d_hi"],
                      image_region=self.image_region, white_pct=self.white_pct, gamma=self.inversion["gamma"],
                      exposure=self.inversion["exposure"], encoding=encoding, render_params=rp, film=self.film,
                      base_source=self.base_source(), white_point_source=self.report.get("white_point"), rot90=rot90,
-                     render_source=render_source, spike_clamp=self.inversion.get("spike_clamp"))
+                     render_source=render_source, spike_clamp=self.inversion.get("spike_clamp"),
+                     t18_inversion=self.t18_inversion() if isinstance(coerce_render_params(rp), T19_FAMILY) else None)
 
 
 class SourceChangedError(RuntimeError):
@@ -200,13 +229,16 @@ def input_warnings(d_hi, center_p99) -> list[dict]:
     return out
 
 
-def auto_estimate(est_input, auto, film: str = "color", span_d_g: float | None = None) -> dict:
+def auto_estimate(est_input, auto, film: str = "color", span_d_g: float | None = None, *,
+                  d_lo=(0.0, 0.0, 0.0), d_hi=None, gamma: float = 0.6) -> dict:
     """noref estimate (``Preview.auto``) for config ``auto`` on ``est_input`` = ``noref.estimation_input`` of the
     full-resolution positive, as ``convert``; ``span_d_g``: the inversion's G density range (``green_span``)."""
-    est = estimate_params_v2(*est_input, auto, span_d_g=span_d_g)
-    if film == "bw":
-        est = dict(est, params=dict(est["params"], **BW_NEUTRAL), bw_neutralised=sorted(BW_NEUTRAL))
-    return dict(est, look_file=dict(name=f"{est['look']}.json", sha256=sha256(CONFIG_DIR / f"{est['look']}.json")))
+    cfg = normalize_auto_cfg(auto)
+    if d_hi is None:
+        sg = float(span_d_g) if span_d_g is not None else 0.85
+        d_hi = (sg, sg, sg)
+    info, _, _ = run_auto_estimate(est_input, cfg, d_lo=d_lo, d_hi=d_hi, gamma=gamma, film=film)
+    return info
 
 
 def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, base_rgb=None, image_region=None,
@@ -230,8 +262,9 @@ def load_preview(path, *, max_side: int = 1600, auto=None, base_regions=None, ba
     pos, mask = p["positive"], p["mask"]
     full_shape = pos.shape[:2]
     ei = estimation_input(pos, p["image_region"]) if auto is not None else None
-    auto_info = auto_estimate(ei, auto, film, span_d_g=green_span(p["inversion"].params.to_dict())) if auto is not None \
-        else None
+    inv_p = p["inversion"].params
+    auto_info = auto_estimate(ei, auto, film, span_d_g=green_span(inv_p.to_dict()),
+                              d_lo=inv_p.d_lo, d_hi=inv_p.d_hi, gamma=inv_p.gamma) if auto is not None else None
     f = max(1, math.ceil(max(full_shape) / max_side))
     small = block_mean(pos, f).astype(np.float32) if f > 1 else pos
     msk = block_mean(mask.astype(np.float32), f) > 0.5 if f > 1 else mask

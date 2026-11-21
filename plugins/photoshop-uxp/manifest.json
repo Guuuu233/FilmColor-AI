@@ -1,0 +1,47 @@
+{
+  "id": "com.filmcolor.photoshop.uxp",
+  "name": "FilmColor T24",
+  "version": "1.0.0",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "host": [
+    {
+      "app": "PS",
+      "minVersion": "24.0.0"
+    }
+  ],
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess",
+    "network": {
+      "domains": [
+        "http://127.0.0.1:18765",
+        "http://localhost:18765"
+      ]
+    }
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "filmcolorPanel",
+      "minimumSize": {
+        "width": 280,
+        "height": 520
+      },
+      "maximumSize": {
+        "width": 460,
+        "height": 1400
+      },
+      "preferredDockedSize": {
+        "width": 310,
+        "height": 760
+      },
+      "preferredFloatingSize": {
+        "width": 330,
+        "height": 780
+      },
+      "label": {
+        "default": "FilmColor T24"
+      }
+    }
+  ]
+}

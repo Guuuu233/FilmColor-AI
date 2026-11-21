@@ -18,3 +18,5 @@ experiments/**/*.png
 data/reference/
 # superseded first pass of the external-material audit (raw exif may hold GPS / serials); kept on disk, not in git
 experiments/s3_ext_audit/
+# per-run experiment logs under t4_auto_ui
+experiments/t4_auto_ui/**/*.log

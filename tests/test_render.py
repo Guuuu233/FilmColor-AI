@@ -313,3 +313,23 @@ def test_t4y_camera_color_matrix_accepts_canon_eos_and_sony_a7_primaries():
         RenderParams(matrix=((2.5, -1.0, -0.5), (-0.5, 2.0, -0.5), (-0.5, -0.5, 2.0)))
     with pytest.raises(ValueError, match="colour matrix off-diagonal outside"):
         RenderParams(matrix=((1.0, 0.9, -0.9), (-0.5, 2.0, -0.5), (-0.5, -0.5, 2.0)))
+
+
+def test_camera_color_matrix_rejects_singular_and_fast_render_parity():
+    """Robustness & speed: singular camera matrix raises ValueError and render(fast=True) matches exact render."""
+    from filmcolor.render import camera_color_matrix, render
+
+    singular = np.array([[1.0, 2.0, 3.0], [2.0, 4.0, 6.0], [0.0, 0.0, 0.0]], dtype=np.float64)
+    with pytest.raises(ValueError, match="singular"):
+        camera_color_matrix(singular, 0.5)
+
+    rng = np.random.default_rng(1602)
+    P = np.clip(0.02 + 0.65 * rng.beta(1.5, 2.2, size=(120, 160, 3)), 0.0, 2.5).astype(np.float32)
+    for rp in [
+        RenderParams(ev=0.25, temp=0.1, tint=-0.05, sat=0.92, contrast=1.55, midtone=0.22, shoulder=0.28, blacks=-0.1, whites=0.1, shadows=0.2),
+        RenderParams(contrast=1.40, midtone=0.20, shoulder=0.22, chroma_preserve=0.65, tone_curve={"rgb": [[0.0, 0.0], [0.25, 0.21], [0.55, 0.55], [0.82, 0.87], [1.0, 1.0]]}),
+    ]:
+        e_exact, diag_exact = render(P, rp, fast=False)
+        e_fast, diag_fast = render(P, rp, fast=True)
+        assert np.max(np.abs(e_exact - e_fast)) < 2e-6
+        assert diag_exact == diag_fast

@@ -27,8 +27,8 @@ def data_root() -> Path:
     return root
 
 
-def data_dir(*parts) -> Path:
-    """A directory below the data root, created if missing (the root itself is never created)."""
-    d = data_root().joinpath(*parts)
-    d.mkdir(parents=True, exist_ok=True)
-    return d
+def data_dir(*parts: str | os.PathLike[str]) -> Path:
+    """Return a subdirectory below the data root, creating it if missing (the root itself is never created)."""
+    target_dir = data_root().joinpath(*parts)
+    target_dir.mkdir(parents=True, exist_ok=True)
+    return target_dir

@@ -989,3 +989,14 @@ def test_t5g_blue_white_guard_skips_green_dominant_base_and_highlights():
 
 
 
+
+
+def test_base_from_regions_empty_or_zero_median_is_safe():
+    """Robustness: base_from_regions rejects 0-pixel union and avoids ZeroDivisionError on zero median."""
+    from filmcolor.invert import base_from_regions
+
+    img = np.zeros((16, 16, 3), dtype=np.float32)
+    with pytest.raises(ValueError, match="outside image"):
+        base_from_regions(img, [(0, 0, 0, 0)])
+    out = base_from_regions(img, [(0, 0, 4, 4)])
+    assert out["rgb"] == (0.0, 0.0, 0.0) and all(np.isfinite(out["rel_spread"]))
