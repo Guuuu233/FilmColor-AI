@@ -1258,10 +1258,7 @@ def apply_darkroom_grade(
         u = apply_vignette(u, g.vignette, inplace=owned)
         owned = True
 
-    if owned:
-        np.clip(u, np.float32(0.0), np.float32(1.0), out=u)
-        return u
-    return np.clip(u, np.float32(0.0), np.float32(1.0))
+    return u if owned else np.clip(u, np.float32(0.0), np.float32(1.0))
 
 
 def _inscribed_scale(h: int, w: int, angle_deg: float) -> float:
@@ -1305,7 +1302,7 @@ def apply_geometry(
             d_m, e_m = -sa, ca
             c_m = cx - a_m * cx - b_m * cy
             f_m = cy - d_m * cx - e_m * cy
-            u8 = np.round(np.clip(out, 0.0, 1.0) * 255.0).astype(np.uint8)
+            u8_f = np.clip(np.asarray(out, dtype=np.float32), np.float32(0.0), np.float32(1.0)); u8_f *= np.float32(255.0); u8_f += np.float32(0.5); u8 = u8_f.astype(np.uint8)
             im = Image.fromarray(u8, mode="RGB").transform(
                 (w, h), Image.Transform.AFFINE, (a_m, b_m, c_m, d_m, e_m, f_m), resample=Image.Resampling.BILINEAR
             )

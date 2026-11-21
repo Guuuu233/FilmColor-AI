@@ -118,7 +118,7 @@ def png_bytes(img: np.ndarray) -> bytes:
     chunk = lambda kind, data: (struct.pack(">I", len(data)) + kind + data
                                 + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF))
     return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", w, h, 8, 2, 0, 0, 0))
-            + chunk(b"IDAT", zlib.compress(raw.tobytes(), 1)) + chunk(b"IEND", b""))
+            + chunk(b"IDAT", zlib.compress(memoryview(raw), 1)) + chunk(b"IEND", b""))
 
 
 def jpeg_bytes(img: np.ndarray, quality: int = 92) -> bytes:
@@ -126,13 +126,16 @@ def jpeg_bytes(img: np.ndarray, quality: int = 92) -> bytes:
     from PIL import Image
     buf = io.BytesIO()
     Image.fromarray(np.ascontiguousarray(img[..., :3], np.uint8), mode="RGB").save(
-        buf, format="JPEG", quality=quality, subsampling=0 if quality >= 92 else 2
+        buf, format="JPEG", quality=quality, subsampling=0 if quality >= 95 else 2
     )
     return buf.getvalue()
 
 
 def to8(display: np.ndarray) -> np.ndarray:
-    return np.round(np.clip(display, 0, 1) * 255).astype(np.uint8)
+    out = np.clip(np.asarray(display, dtype=np.float32), np.float32(0.0), np.float32(1.0))
+    out *= np.float32(255.0)
+    out += np.float32(0.5)
+    return out.astype(np.uint8)
 
 
 def negative_view(path: Path, max_side: int = 1600) -> tuple[bytes, str]:
@@ -1045,11 +1048,11 @@ class State:
             t18_inversion=pv.t18_inversion() if isinstance(rp, T19_FAMILY) else None,
         )
         if not grade.is_identity():
-            disp = apply_darkroom_grade(disp, grade, film=pv.film, apply_vignette_here=False, fast=False)
+            disp = apply_darkroom_grade(disp, grade, film=pv.film, apply_vignette_here=False, fast=False, inplace=True)
         if not geom.is_identity():
             disp = apply_geometry(disp, geom, apply_rot90=True, apply_crop=True, fast_preview=False)
         if grade.vignette:
-            disp = apply_vignette(disp, grade.vignette)
+            disp = apply_vignette(disp, grade.vignette, inplace=True)
 
         out_img = disp if (fmt != "tiff16" or encoding == "srgb") else srgb_eotf(disp).astype(np.float32)
         ext = ".tif" if fmt == "tiff16" else ".jpg" if fmt == "jpeg" else ".png"
@@ -1253,11 +1256,11 @@ class Handler(BaseHTTPRequestHandler):
                     img_fmt = q.get("fmt", ["png"])[0]
                     disp, stats = pv.render_stats(rp)
                     if not gr.is_identity():
-                        disp = apply_darkroom_grade(disp, gr, film=pv.film, apply_vignette_here=False, fast=True)
+                        disp = apply_darkroom_grade(disp, gr, film=pv.film, apply_vignette_here=False, fast=True, inplace=True)
                     if gm is not None and not gm.is_identity():
                         disp = apply_geometry(disp, gm, apply_rot90=True, apply_crop=apply_crop, fast_preview=True)
                     if gr.vignette:
-                        disp = apply_vignette(disp, gr.vignette)
+                        disp = apply_vignette(disp, gr.vignette, inplace=True)
                     u8 = to8(disp)
                     if img_fmt == "jpeg":
                         payload, ctype = jpeg_bytes(u8, quality=92), "image/jpeg"

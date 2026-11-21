@@ -2362,7 +2362,7 @@ NOREF_T24 = dict(
 _T20_WEIGHTS_CACHE: dict[str, dict] = {}
 
 
-def _load_t20_weights(name: str = "t20_v1") -> dict:
+def _load_t20_weights(name: str = "t20_v3") -> dict:
     cached = _T20_WEIGHTS_CACHE.get(name)
     if cached is not None:
         return cached
