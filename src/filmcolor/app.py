@@ -140,10 +140,17 @@ def negative_view(path: Path, max_side: int = 1600) -> tuple[bytes, str]:
     DNG block-averaged and gamma-encoded for display. Not a colorimetric view."""
     if not is_scanner_dng(path):
         with rawpy.imread(str(path)) as r:
-            t = r.extract_thumb()
-        if t.format == rawpy.ThumbFormat.JPEG:
-            return bytes(t.data), "image/jpeg"
-        return png_bytes(np.asarray(t.data)), "image/png"
+            try:
+                t = r.extract_thumb()
+                if t.format == rawpy.ThumbFormat.JPEG:
+                    return bytes(t.data), "image/jpeg"
+                return png_bytes(np.asarray(t.data)), "image/png"
+            except Exception:  # noqa: BLE001 — fallback when RAW has no embedded thumbnail
+                rgb = r.postprocess(
+                    half_size=True, no_auto_bright=True, output_bps=8,
+                    use_camera_wb=False, use_auto_wb=False, user_wb=[1, 1, 1, 1],
+                )
+                return png_bytes(rgb), "image/png"
     rgb = load_scanner(path).rgb
     f = max(1, -(-max(rgb.shape[:2]) // max_side))
     small = block_mean(rgb, f) if f > 1 else rgb

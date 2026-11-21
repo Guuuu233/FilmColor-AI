@@ -1470,6 +1470,9 @@ async function renderBefore() {
   }
 }
 
+const _histOff = document.createElement("canvas");
+const _histOffCtx = _histOff.getContext("2d", { willReadFrequently: true });
+
 function updateHistogramAndClip(imgEl, bb, ch) {
   const hc = $("histCanvas"), ctx = hc.getContext("2d");
   const W = hc.width, H = hc.height;
@@ -1477,8 +1480,9 @@ function updateHistogramAndClip(imgEl, bb, ch) {
   if (!imgEl || !imgEl.naturalWidth) return;
 
   const sw = Math.min(360, imgEl.naturalWidth), sh = Math.min(260, imgEl.naturalHeight);
-  const off = document.createElement("canvas"); off.width = sw; off.height = sh;
-  const octx = off.getContext("2d", { willReadFrequently: true });
+  if (_histOff.width !== sw) _histOff.width = sw;
+  if (_histOff.height !== sh) _histOff.height = sh;
+  const octx = _histOffCtx;
   octx.drawImage(imgEl, 0, 0, sw, sh);
   const data = octx.getImageData(0, 0, sw, sh).data;
 
@@ -1493,7 +1497,7 @@ function updateHistogramAndClip(imgEl, bb, ch) {
     if (r >= 254 || g >= 254 || b >= 254) nWht++;
   }
   lastHistBins = yB;
-  drawCurveCanvas();
+  if ($("tab-color").classList.contains("on")) drawCurveCanvas();
 
   let peak = 1;
   for (let i = 2; i < 254; i++) peak = Math.max(peak, rB[i], gB[i], bB[i], yB[i]);

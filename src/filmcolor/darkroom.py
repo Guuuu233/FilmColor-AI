@@ -12,6 +12,7 @@ from pathlib import Path
 
 import numpy as np
 from concurrent.futures import ThreadPoolExecutor
+from functools import lru_cache
 from scipy.ndimage import affine_transform, gaussian_filter, map_coordinates, uniform_filter
 
 from .export import DESCRIPTION, icc_profile, write_tiff16
@@ -806,21 +807,59 @@ _rrh, _ggh, _bbh = np.meshgrid(_gh3, _gh3, _gh3, indexing="ij")
 _LUT3D_HI_GRID = np.stack([_rrh, _ggh, _bbh], axis=-1)
 
 
-def _apply_pointwise_lut3d(u: np.ndarray, g: DarkroomGrade, tc: tuple, film: str) -> np.ndarray:
-    """Fuse all point-wise color ops into one 21x21x21 C-accelerated PIL Color3DLUT (~50ms on 1600px)."""
-    from PIL import Image, ImageFilter
+def _pointwise_cache_key(g: DarkroomGrade, tc: tuple, film: str) -> tuple:
+    return (
+        g.highlights, g.shadows, g.whites, g.blacks, g.vibrance, g.skin_protect,
+        g.cg_shadows, g.cg_midtones, g.cg_highlights, g.cg_balance, g.cg_blending,
+        tuple(sorted(g.hsl.items())), tc, film,
+    )
 
+
+@lru_cache(maxsize=32)
+def _build_pil_lut3d(key: tuple):
+    from PIL import ImageFilter
+
+    (hi, sh, wh, bl, vib, sp, cgs, cgm, cgh, cgb, cgbl, hsl, tc, film) = key
+    g = DarkroomGrade(
+        highlights=hi, shadows=sh, whites=wh, blacks=bl, vibrance=vib, skin_protect=sp,
+        cg_shadows=cgs, cg_midtones=cgm, cg_highlights=cgh, cg_balance=cgb, cg_blending=cgbl, hsl=dict(hsl),
+    )
     lut = _apply_pointwise_exact(_LUT3D_GRID, g, tc, film)
-    filt = ImageFilter.Color3DLUT(_LUT3D_N, lut.reshape(-1).tolist())
-    u8 = np.round(np.clip(u, np.float32(0.0), np.float32(1.0)) * np.float32(255.0)).astype(np.uint8)
-    out_im = Image.fromarray(u8, mode="RGB").filter(filt)
-    return np.asarray(out_im, dtype=np.float32) * np.float32(1.0 / 255.0)
+    return ImageFilter.Color3DLUT(_LUT3D_N, lut.reshape(-1).tolist())
+
+
+@lru_cache(maxsize=16)
+def _build_f32_lut3d(key: tuple) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    (hi, sh, wh, bl, vib, sp, cgs, cgm, cgh, cgb, cgbl, hsl, tc, film) = key
+    g = DarkroomGrade(
+        highlights=hi, shadows=sh, whites=wh, blacks=bl, vibrance=vib, skin_protect=sp,
+        cg_shadows=cgs, cg_midtones=cgm, cg_highlights=cgh, cg_balance=cgb, cg_blending=cgbl, hsl=dict(hsl),
+    )
+    lut = _apply_pointwise_exact(_LUT3D_HI_GRID, g, tc, film)
+    return tuple(np.ascontiguousarray(lut[..., c]) for c in range(3))
+
+
+def _apply_pointwise_lut3d(u: np.ndarray, g: DarkroomGrade, tc: tuple, film: str, *, inplace: bool = False) -> np.ndarray:
+    """Chunked multi-threaded 21x21x21 C-accelerated PIL Color3DLUT (~2.7-3.3x faster on preview)."""
+    from PIL import Image
+
+    filt = _build_pil_lut3d(_pointwise_cache_key(g, tc, film))
+    h, w = u.shape[:2]
+    out = u if inplace else np.empty_like(u)
+    inv255 = np.float32(1.0 / 255.0)
+
+    def _run(rr):
+        r0, r1 = rr
+        u8 = np.round(np.clip(u[r0:r1], np.float32(0.0), np.float32(1.0)) * np.float32(255.0)).astype(np.uint8)
+        out[r0:r1] = np.asarray(Image.fromarray(u8, mode="RGB").filter(filt), dtype=np.float32) * inv255
+
+    _run_row_chunks(h, _run, step=128)
+    return out
 
 
 def _apply_pointwise_lut3d_f32(u: np.ndarray, g: DarkroomGrade, tc: tuple, film: str, *, inplace: bool = False) -> np.ndarray:
     """Chunked multi-threaded 33x33x33 float32 trilinear LUT for full-res 16-bit export (low RAM, L2-friendly)."""
-    lut = _apply_pointwise_exact(_LUT3D_HI_GRID, g, tc, film)
-    lut_c = [np.ascontiguousarray(lut[..., c]) for c in range(3)]
+    lut_c = _build_f32_lut3d(_pointwise_cache_key(g, tc, film))
     h, w = u.shape[:2]
     out = u if inplace else np.empty_like(u)
     scale = np.float32(_LUT3D_HI_N - 1)
@@ -976,55 +1015,33 @@ def _apply_hsl(e: np.ndarray, hsl: dict[str, tuple[float, float, float]]) -> np.
     return np.clip(out, np.float32(0.0), np.float32(1.0))
 
 
-def _fast_blur(y: np.ndarray, radius_px: int) -> np.ndarray:
-    """Fast O(N) 2-pass separable box blur (downsampled 4x on full-res / 2x on preview for speed & low RAM)."""
+def _fast_blur_from_rgb(e: np.ndarray, radius_px: int, mode: str) -> np.ndarray:
+    """Fast O(N) 2-pass separable box blur on luma or min-RGB (4x/2x downsampled for speed & low RAM)."""
     from PIL import Image
-    h, w = y.shape
-    if max(h, w) > 1600 and radius_px >= 20:
-        ds = 4
-        small = y[::ds, ::ds]
-        k = max(3, int(round(radius_px / ds)) | 1)
-        b = uniform_filter(small, size=k, mode="nearest")
-        b = uniform_filter(b, size=k, mode="nearest")
+
+    h, w = e.shape[:2]
+    ds = 4 if (max(h, w) > 1600 and radius_px >= 20) else (2 if (max(h, w) > 800 and radius_px >= 8) else 1)
+    es = e[::ds, ::ds] if ds > 1 else e
+    if mode == "min":
+        ch = np.minimum(np.minimum(es[..., 0], es[..., 1]), es[..., 2])
+    else:
+        ch = es[..., 0] * LUMA_F32[0] + es[..., 1] * LUMA_F32[1] + es[..., 2] * LUMA_F32[2]
+    k = max(3, int(round(radius_px / ds)) | 1)
+    b = uniform_filter(uniform_filter(ch, size=k, mode="nearest"), size=k, mode="nearest")
+    if ds > 1:
         return np.asarray(Image.fromarray(b, mode="F").resize((w, h), Image.Resampling.BILINEAR), dtype=np.float32)
-    if max(h, w) > 800 and radius_px >= 8:
-        small = y[::2, ::2]
-        k = max(3, int(round(radius_px / 2)) | 1)
-        b = uniform_filter(small, size=k, mode="nearest")
-        b = uniform_filter(b, size=k, mode="nearest")
-        return np.asarray(Image.fromarray(b, mode="F").resize((w, h), Image.Resampling.BILINEAR), dtype=np.float32)
-    k = max(3, int(radius_px) | 1)
-    b = uniform_filter(y, size=k, mode="nearest")
-    return uniform_filter(b, size=k, mode="nearest")
+    return b
 
 
-def _apply_dehaze(e: np.ndarray, strength: float, *, inplace: bool = False) -> np.ndarray:
+def _apply_dehaze(e: np.ndarray, strength: float, *, film: str = "color", inplace: bool = False) -> np.ndarray:
     """Chunked multi-threaded darkroom haze removal / atmospheric restoration (~10x faster, low RAM)."""
-    from PIL import Image
-
     s = np.float32(strength)
     h, w = e.shape[:2]
     out = e if inplace else np.empty_like(e)
+    is_color = (film != "bw")
 
     if s > 0.0:
-        rad = max(7, int(min(h, w) * 0.035))
-        if max(h, w) > 1600 and rad >= 20:
-            ds = 4
-            es = e[::ds, ::ds]
-            mns = np.minimum(np.minimum(es[..., 0], es[..., 1]), es[..., 2])
-            k = max(3, int(round(rad / ds)) | 1)
-            b = uniform_filter(uniform_filter(mns, size=k, mode="nearest"), size=k, mode="nearest")
-            veil = np.asarray(Image.fromarray(b, mode="F").resize((w, h), Image.Resampling.BILINEAR), dtype=np.float32)
-        elif max(h, w) > 800 and rad >= 8:
-            es = e[::2, ::2]
-            mns = np.minimum(np.minimum(es[..., 0], es[..., 1]), es[..., 2])
-            k = max(3, int(round(rad / 2)) | 1)
-            b = uniform_filter(uniform_filter(mns, size=k, mode="nearest"), size=k, mode="nearest")
-            veil = np.asarray(Image.fromarray(b, mode="F").resize((w, h), Image.Resampling.BILINEAR), dtype=np.float32)
-        else:
-            mn = np.minimum(np.minimum(e[..., 0], e[..., 1]), e[..., 2])
-            veil = _fast_blur(mn, rad)
-
+        veil = _fast_blur_from_rgb(e, max(7, int(min(h, w) * 0.035)), "min")
         sat_k = np.float32(1.0) + np.float32(0.18) * s
         s_75 = np.float32(0.75) * s
 
@@ -1035,11 +1052,12 @@ def _apply_dehaze(e: np.ndarray, strength: float, *, inplace: bool = False) -> n
             tc = np.maximum(np.float32(1.0) - s_75 * vc, np.float32(0.35))
             res = (ec - (np.float32(1.0) - tc)[..., None] * np.float32(0.18)) / tc[..., None]
             np.clip(res, np.float32(0.0), np.float32(1.0), out=res)
-            yc = (res[..., 0] * LUMA_F32[0] + res[..., 1] * LUMA_F32[1] + res[..., 2] * LUMA_F32[2])[..., None]
-            res -= yc
-            res *= sat_k
-            res += yc
-            np.clip(res, np.float32(0.0), np.float32(1.0), out=res)
+            if is_color:
+                yc = (res[..., 0] * LUMA_F32[0] + res[..., 1] * LUMA_F32[1] + res[..., 2] * LUMA_F32[2])[..., None]
+                res -= yc
+                res *= sat_k
+                res += yc
+                np.clip(res, np.float32(0.0), np.float32(1.0), out=res)
             out[r0:r1] = res
 
         _run_row_chunks(h, _run_pos, step=128)
@@ -1052,10 +1070,11 @@ def _apply_dehaze(e: np.ndarray, strength: float, *, inplace: bool = False) -> n
     def _run_neg(rr):
         r0, r1 = rr
         res = lift + gain * e[r0:r1]
-        yc = (res[..., 0] * LUMA_F32[0] + res[..., 1] * LUMA_F32[1] + res[..., 2] * LUMA_F32[2])[..., None]
-        res -= yc
-        res *= sat_k
-        res += yc
+        if is_color:
+            yc = (res[..., 0] * LUMA_F32[0] + res[..., 1] * LUMA_F32[1] + res[..., 2] * LUMA_F32[2])[..., None]
+            res -= yc
+            res *= sat_k
+            res += yc
         np.clip(res, np.float32(0.0), np.float32(1.0), out=res)
         out[r0:r1] = res
 
@@ -1065,28 +1084,8 @@ def _apply_dehaze(e: np.ndarray, strength: float, *, inplace: bool = False) -> n
 
 def _apply_clarity(e: np.ndarray, clarity: float, *, inplace: bool = False) -> np.ndarray:
     """Midtone-weighted local contrast on luminance (proportional radius for preview/export parity)."""
-    from PIL import Image
-
     h, w = e.shape[:2]
-    rad = max(5, int(round(min(h, w) * 0.022)))
-    if max(h, w) > 1600 and rad >= 20:
-        ds = 4
-        es = e[::ds, ::ds]
-        ys = es[..., 0] * LUMA_F32[0] + es[..., 1] * LUMA_F32[1] + es[..., 2] * LUMA_F32[2]
-        k = max(3, int(round(rad / ds)) | 1)
-        b = uniform_filter(ys, size=k, mode="nearest")
-        b = uniform_filter(b, size=k, mode="nearest")
-        low = np.asarray(Image.fromarray(b, mode="F").resize((w, h), Image.Resampling.BILINEAR), dtype=np.float32)
-    elif max(h, w) > 800 and rad >= 8:
-        es = e[::2, ::2]
-        ys = es[..., 0] * LUMA_F32[0] + es[..., 1] * LUMA_F32[1] + es[..., 2] * LUMA_F32[2]
-        k = max(3, int(round(rad / 2)) | 1)
-        b = uniform_filter(ys, size=k, mode="nearest")
-        b = uniform_filter(b, size=k, mode="nearest")
-        low = np.asarray(Image.fromarray(b, mode="F").resize((w, h), Image.Resampling.BILINEAR), dtype=np.float32)
-    else:
-        y = e[..., 0] * LUMA_F32[0] + e[..., 1] * LUMA_F32[1] + e[..., 2] * LUMA_F32[2]
-        low = _fast_blur(y, rad)
+    low = _fast_blur_from_rgb(e, max(5, int(round(min(h, w) * 0.022))), "luma")
 
     out = e if inplace else np.empty_like(e)
     coeff = np.float32(0.55 * clarity)
@@ -1112,7 +1111,7 @@ def _apply_sharpen(e: np.ndarray, sharpen: float, *, inplace: bool = False) -> n
     """Chunked multi-threaded luminance-only unsharp mask with overlap halo damping (~8-10x faster)."""
     h, w = e.shape[:2]
     sigma = max(0.8, min(h, w) * 0.0012)
-    pad = max(4, int(math.ceil(4.0 * sigma)))
+    pad = max(3, int(math.ceil(2.5 * sigma)))
     coeff = np.float32(1.25 * sharpen)
     # Note: when inplace=True, read overlapping halo strips from e before mutating -> use out buffer only if small,
     # or precompute strip deltas? Overlapping reads from e would race if another thread mutates e[r0:r1].
@@ -1125,7 +1124,7 @@ def _apply_sharpen(e: np.ndarray, sharpen: float, *, inplace: bool = False) -> n
         p1 = min(h, r1 + pad)
         ec_pad = e[p0:p1]
         yp = ec_pad[..., 0] * LUMA_F32[0] + ec_pad[..., 1] * LUMA_F32[1] + ec_pad[..., 2] * LUMA_F32[2]
-        blur_p = gaussian_filter(yp, sigma=sigma, mode="nearest")
+        blur_p = gaussian_filter(yp, sigma=sigma, mode="nearest", truncate=2.5)
         s0 = r0 - p0
         s1 = s0 + (r1 - r0)
         hp = yp[s0:s1] - blur_p[s0:s1]
@@ -1218,7 +1217,7 @@ def apply_darkroom_grade(
 
     # 1. Spatial Dehaze first (if active)
     if g.dehaze:
-        u = _apply_dehaze(u, g.dehaze, inplace=owned)
+        u = _apply_dehaze(u, g.dehaze, film=film, inplace=owned)
         owned = True
 
     # 2. Point-wise color/tone stack: zonal, vibrance, tone curve, HSL, skin protect, 3-way color grading
@@ -1229,7 +1228,7 @@ def apply_darkroom_grade(
     is_large = (u.shape[0] * u.shape[1]) > 1_000_000
     if has_3d:
         if fast:
-            u = _apply_pointwise_lut3d(u, g, tc, film)
+            u = _apply_pointwise_lut3d(u, g, tc, film, inplace=owned)
             owned = True
         elif is_large:
             u = _apply_pointwise_lut3d_f32(u, g, tc, film, inplace=owned)

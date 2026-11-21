@@ -833,14 +833,8 @@ class PluginBridgeState:
                 neg_size = (body.get("max_width"), body.get("max_height"), total_rot90)
                 if self._open_neg_path is None or not self._open_neg_path.exists() or self._open_neg_size != neg_size:
                     from PIL import Image
-                    try:
-                        raw_bytes, _ = negative_view(pv.path, max_side=self.max_preview_side)
-                        im = Image.open(_io.BytesIO(raw_bytes)).convert("RGB")
-                    except Exception:  # noqa: BLE001 — fallback when RAW has no embedded thumbnail
-                        with open_rawpy(pv.path) as r:
-                            rgb_h = _postprocess_half_linear(r)
-                        peak = max(float(np.percentile(rgb_h, 99.9)), 1e-6)
-                        im = Image.fromarray(to8(np.clip(rgb_h / peak, 0.0, 1.0) ** (1.0 / 2.2)), mode="RGB")
+                    raw_bytes, _ = negative_view(pv.path, max_side=self.max_preview_side)
+                    im = Image.open(_io.BytesIO(raw_bytes)).convert("RGB")
                     if total_rot90:
                         im = Image.fromarray(np.ascontiguousarray(np.rot90(np.asarray(im, dtype=np.uint8), total_rot90)), mode="RGB")
                     max_w, max_h = neg_size[0], neg_size[1]
