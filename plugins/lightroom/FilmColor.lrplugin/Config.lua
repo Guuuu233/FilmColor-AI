@@ -25,10 +25,11 @@ local function detectRepoRoot()
             return p3
         end
     end
+    local home = LrPathUtils.getStandardFilePath("home")
     if IS_WIN then
-        return "C:\\FilmColor-AI"
+        return (home and LrPathUtils.child(home, "FilmColor-AI")) or "C:\\FilmColor-AI"
     end
-    return "/Volumes/waizhiyingpan/FilmColor-AI"
+    return (home and LrPathUtils.child(home, "FilmColor-AI")) or "/Applications/FilmColor-AI"
 end
 
 Config.DEFAULT_REPO = detectRepoRoot()
@@ -44,8 +45,6 @@ local function defaultPythonCandidates()
         list[#list + 1] = Config.DEFAULT_REPO .. "\\.venv\\Scripts\\python.exe"
     else
         list[#list + 1] = Config.DEFAULT_REPO .. "/.venv/bin/python"
-        list[#list + 1] = "/Volumes/waizhiyingpan/FilmColor-AI/.venv/bin/python"
-        list[#list + 1] = "/Users/davidliu/ClaudeScienceProjects/FilmColor-AI/.venv/bin/python"
     end
     return list
 end

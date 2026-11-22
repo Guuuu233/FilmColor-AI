@@ -130,6 +130,7 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
             'rm -rf "$DST"\n'
             'cp -R "$DIR/FilmColor.lrplugin" "$DST"\n'
             'chmod +x "$DST/bin/mac/filmcolor-bridge/filmcolor-bridge"\n'
+            'xattr -dr com.apple.quarantine "$DST" 2>/dev/null || true\n'
             'echo ""\n'
             'echo "[OK] FilmColor v1.0 已安装到 Lightroom Classic（内置独立引擎，免装 Python）！"\n'
             'echo "重启 Adobe Lightroom Classic 即可在「图库 → 增效工具额外信息 → FilmColor 负片转换…」使用。"\n'
@@ -141,6 +142,7 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
         ps_cmd = (
             "#!/bin/bash\nset -e\n"
             'DIR="$(cd "$(dirname "$0")" && pwd)"\n'
+            'xattr -dr com.apple.quarantine "$DIR/FilmColor.lrplugin" 2>/dev/null || true\n'
             'exec "$DIR/FilmColor.lrplugin/bin/mac/filmcolor-bridge/filmcolor-bridge" --port 18765\n'
         )
         p_ps = rel_dir / "Start_Bridge_for_Photoshop.command"
