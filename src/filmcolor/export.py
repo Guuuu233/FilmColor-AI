@@ -85,10 +85,7 @@ def icc_profile(encoding: str = "srgb") -> bytes:
 
 
 def to_uint16(img) -> np.ndarray:
-    out = np.clip(np.asarray(img, dtype=np.float32), np.float32(0.0), np.float32(1.0))
-    out *= np.float32(65535.0)
-    out += np.float32(0.5)
-    return out.astype(np.uint16)
+    return np.round(np.clip(img, 0, 1) * 65535).astype(np.uint16)
 
 
 def write_tiff16(path, img, encoding: str = "srgb") -> None:
