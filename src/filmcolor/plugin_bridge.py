@@ -18,34 +18,22 @@ import io as _io
 import json
 import os
 from pathlib import Path
+from fractions import Fraction
 import secrets
+import shutil
+import struct
 import subprocess
+import tempfile
 import threading
 import time
+import zlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 
 import numpy as np
+import rawpy
 
 from . import __version__
-from .app import (
-    ENGINES,
-    SPIKE_CLAMP,
-    T24_CAM_MATRIX_MIX,
-    WHITE_B_GUARD,
-    WHITE_BLOCK,
-    WHITE_PCT,
-    WHITE_SELF_RATIO,
-    _apply_t24_preset,
-    _scene_metrics_for_preview,
-    _cache_root,
-    _exif_info,
-    _exiftool,
-    jpeg_bytes,
-    negative_view,
-    png_bytes,
-    to8,
-)
 from .base import (
     base_deviation,
     block48_L_p01,
@@ -59,6 +47,8 @@ from .darkroom import (
     DarkroomGrade,
     Geometry,
     T24_STYLE_PRESETS,
+    analyze_scene_metrics,
+    resolve_adaptive_preset,
     _get_pool,
     apply_darkroom_grade,
     apply_geometry,
@@ -114,6 +104,178 @@ from .render import (
     srgb_eotf,
 )
 from .scanner import block_means, is_scanner_dng, load_scanner
+
+ENGINES = ("t24", "t23", "v3")
+T24_CAM_MATRIX_MIX = 0.35
+WHITE_BLOCK, WHITE_PCT = 16, 99.8
+SPIKE_CLAMP = (1.15, 0.12)
+WHITE_SELF_RATIO = None
+WHITE_B_GUARD = (1.06, 1.18, 0.65, 0.50)
+EXIFTOOL_CANDIDATES = ("/opt/homebrew/bin/exiftool", "/usr/local/bin/exiftool")
+
+
+def _cache_root() -> Path:
+    env = os.environ.get("FILMCOLOR_DATA_ROOT")
+    d = (Path(env) / "app_cache") if (env and Path(env).is_dir()) else (Path(tempfile.gettempdir()) / "filmcolor_app_cache")
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def png_bytes(img: np.ndarray) -> bytes:
+    """8-bit RGB PNG (no filter, zlib level 1, zero-copy buffer)."""
+    h, w = img.shape[:2]
+    raw = np.empty((h, w * 3 + 1), np.uint8)
+    raw[:, 0] = 0
+    raw[:, 1:] = np.ascontiguousarray(img[..., :3], np.uint8).reshape(h, -1)
+    chunk = lambda kind, data: (struct.pack(">I", len(data)) + kind + data
+                                + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF))
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", w, h, 8, 2, 0, 0, 0))
+            + chunk(b"IDAT", zlib.compress(memoryview(raw), 1)) + chunk(b"IEND", b""))
+
+
+def jpeg_bytes(img: np.ndarray, quality: int = 92) -> bytes:
+    """Fast 8-bit RGB JPEG for interactive preview streaming."""
+    from PIL import Image
+
+    buf = _io.BytesIO()
+    Image.fromarray(np.ascontiguousarray(img[..., :3], np.uint8), mode="RGB").save(
+        buf, format="JPEG", quality=quality, subsampling=0 if quality >= 95 else 2
+    )
+    return buf.getvalue()
+
+
+def to8(display: np.ndarray) -> np.ndarray:
+    out = np.clip(np.asarray(display, dtype=np.float32), np.float32(0.0), np.float32(1.0))
+    out *= np.float32(255.0)
+    out += np.float32(0.5)
+    return out.astype(np.uint8)
+
+
+def negative_view(path: Path, max_side: int = 1600) -> tuple[bytes, str]:
+    """The negative as captured: camera embedded JPEG preview (or half-size fallback), or downscaled scanner DNG."""
+    if not is_scanner_dng(path):
+        with rawpy.imread(str(path)) as r:
+            try:
+                t = r.extract_thumb()
+                if t.format == rawpy.ThumbFormat.JPEG:
+                    return bytes(t.data), "image/jpeg"
+                return png_bytes(np.asarray(t.data)), "image/png"
+            except Exception:  # noqa: BLE001 — fallback when RAW has no embedded thumbnail
+                rgb = r.postprocess(
+                    half_size=True, no_auto_bright=True, output_bps=8,
+                    use_camera_wb=False, use_auto_wb=False, user_wb=[1, 1, 1, 1],
+                )
+                return png_bytes(rgb), "image/png"
+    rgb = load_scanner(path).rgb
+    f = max(1, -(-max(rgb.shape[:2]) // max_side))
+    small = block_mean(rgb, f) if f > 1 else rgb
+    return png_bytes(to8((small / max(np.percentile(small, 99.9), 1e-6)) ** (1 / 2.2))), "image/png"
+
+
+def _exiftool() -> str | None:
+    found = shutil.which("exiftool")
+    return found or next((c for c in EXIFTOOL_CANDIDATES if os.access(c, os.X_OK)), None)
+
+
+def _exif_info(paths: list[Path]) -> dict[Path, dict]:
+    """EXIF ExposureTime (1.0 when absent, e.g. scanner DNGs), camera Model and capture date per file."""
+    out: dict[Path, dict] = {}
+    need_tool: list[Path] = []
+    try:
+        import exifread
+    except ImportError:
+        exifread = None
+    for p in paths:
+        info = dict(exposure=None, model=None, date=None)
+        if exifread is not None:
+            try:
+                with open(p, "rb") as fh:
+                    tags = exifread.process_file(fh, details=False, stop_tag="DateTimeOriginal")
+                r = tags.get("EXIF ExposureTime")
+                if r and r.values:
+                    v = float(Fraction(r.values[0].num, r.values[0].den))
+                    if np.isfinite(v) and v > 0:
+                        info["exposure"] = v
+                model, date = tags.get("Image Model"), tags.get("EXIF DateTimeOriginal")
+                info["model"] = str(model).strip() or None if model else None
+                info["date"] = str(date)[:10] or None if date else None
+            except Exception:  # noqa: BLE001
+                pass
+        out[p] = info
+        if info["exposure"] is None:
+            need_tool.append(p)
+    tool = _exiftool() if need_tool else None
+    if tool:
+        try:
+            proc = subprocess.run(
+                [tool, "-j", "-n", "-q", "-q", "-ExposureTime", "-Model", "-DateTimeOriginal", "-CreateDate",
+                 *(str(p) for p in need_tool)], capture_output=True, text=True, check=False,
+            )
+            by_src = {Path(d["SourceFile"]): d for d in json.loads(proc.stdout or "[]")}
+        except Exception:  # noqa: BLE001
+            by_src = {}
+        for p in need_tool:
+            d = by_src.get(p, {})
+            v = d.get("ExposureTime")
+            if isinstance(v, (int, float)) and np.isfinite(v) and v > 0:
+                out[p]["exposure"] = float(v)
+            if d.get("Model") is not None:
+                out[p]["model"] = out[p]["model"] or str(d["Model"]).strip() or None
+            date = d.get("DateTimeOriginal") or d.get("CreateDate")
+            if date is not None:
+                out[p]["date"] = out[p]["date"] or str(date)[:10] or None
+    for info in out.values():
+        if info["exposure"] is None:
+            info["exposure"] = 1.0
+    return out
+
+
+def _scene_metrics_for_preview(pv: Preview) -> dict[str, float] | None:
+    """Compute & cache lightweight scene metrics once per Preview from its locked auto render (~4 ms)."""
+    cached = getattr(pv, "_scene_metrics", None)
+    if cached is not None:
+        return cached
+    try:
+        raw_p = (pv.auto or {}).get("params")
+        if not raw_p:
+            return None
+        rp = coerce_render_params(dict(raw_p))
+        disp, stats = pv.render_stats(rp)
+        metrics = analyze_scene_metrics(disp, pv.mask, above_white=stats.get("above_white"))
+        pv._scene_metrics = metrics
+        return metrics
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _apply_t24_preset(
+    base_params: dict, preset: str, film: str, engine: str, *, raw_matrix=None, scene_metrics: dict | None = None
+) -> tuple[dict, dict]:
+    """Apply an adaptive darkroom style preset cleanly on top of locked auto params."""
+    spec = resolve_adaptive_preset(preset, film=film, scene_metrics=scene_metrics)
+    bounds = T24_BOUNDS if engine == "t24" else T19_BOUNDS
+    p = dict(base_params)
+    mix = spec.get("camera_matrix_mix")
+    if mix is not None and film == "color" and raw_matrix is not None:
+        try:
+            m = camera_color_matrix(raw_matrix, float(mix))
+            p["matrix"] = [list(r) for r in m]
+        except ValueError:
+            pass
+    color_keys = {"temp", "tint", "sat", "slope_r", "slope_b"}
+    for k, dv in spec["offsets"].items():
+        if k not in bounds:
+            continue
+        if film == "bw" and k in color_keys:
+            continue
+        lo, hi = bounds[k]
+        p[k] = float(np.clip(float(p.get(k, 0.0)) + float(dv), lo, hi))
+    grade = dict(spec["grade"])
+    if film == "bw":
+        for ck in ("vibrance", "skin_protect", "hsl"):
+            grade.pop(ck, None)
+    return p, grade
+
 
 DEFAULT_PORT = 18765
 PREVIEW_MAX_SIDE = 960

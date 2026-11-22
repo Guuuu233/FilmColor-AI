@@ -11,7 +11,6 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-import filmcolor.app as app
 from filmcolor import colorimetry, export, frozen, invert, noref, pipeline, preview, render
 from test_scanner import scan, write_dng
 
@@ -149,48 +148,6 @@ def test_colorimetry_scalar_1d_distinct_trc_and_corrupt_icc():
         colorimetry._trc(bad_para)
 
 
-def test_app_concurrent_scan_and_atomic_cache_writes(tmp_path, monkeypatch):
-    monkeypatch.setenv("FILMCOLOR_DATA_ROOT", str(tmp_path))
-    root = tmp_path / "neg"
-    root.mkdir()
-    rgb, irl = scan()
-    names = [f"f{i}.dng" for i in range(6)]
-    for name in names:
-        write_dng(root / name, rgb, irl)
-
-    st = app.State(root, tmp_path / "out", allow_frozen=False)
-    with ThreadPoolExecutor(max_workers=6) as ex:
-        results = list(ex.map(st._scan_one, names))
-    assert [r["rel"] for r in results] == names
-    # No leftover temporary files in cache_dir
-    assert list(st.cache_dir.glob(".*.tmp*")) == []
-
-
-def _decode_rgb8_png(png_data: bytes) -> np.ndarray:
-    """Minimal pure-stdlib reader for 8-bit RGB PNG written by app.png_bytes."""
-    assert png_data[:8] == b"\x89PNG\r\n\x1a\n"
-    pos = 8
-    w = h = 0
-    idat = bytearray()
-    import zlib
-    while pos < len(png_data):
-        length = struct.unpack(">I", png_data[pos:pos + 4])[0]
-        ctype = png_data[pos + 4:pos + 8]
-        chunk = png_data[pos + 8:pos + 8 + length]
-        pos += 12 + length
-        if ctype == b"IHDR":
-            w, h = struct.unpack(">II", chunk[:8])
-        elif ctype == b"IDAT":
-            idat.extend(chunk)
-        elif ctype == b"IEND":
-            break
-    raw = zlib.decompress(bytes(idat))
-    stride = 1 + w * 3
-    rows = np.frombuffer(raw, dtype=np.uint8).reshape(h, stride)
-    assert np.all(rows[:, 0] == 0)
-    return rows[:, 1:].reshape(h, w, 3)
-
-
 def test_bw_mode_neutralises_extended_v3_colour_params_and_thumbnails(tmp_path, monkeypatch):
     monkeypatch.setenv("FILMCOLOR_DATA_ROOT", str(tmp_path / "cache"))
     root = tmp_path / "neg"
@@ -216,43 +173,6 @@ def test_bw_mode_neutralises_extended_v3_colour_params_and_thumbnails(tmp_path, 
     out, sc = pipeline.convert(p, film="bw", auto=noref.preset_config("portrait"))
     assert np.array_equal(out[..., 0], out[..., 1]) and np.array_equal(out[..., 1], out[..., 2])
     assert "slope_r" not in sc["render"]["params"] and "slope_b" not in sc["render"]["params"]
-
-    # 3. app.State.thumbnail_png(..., film='bw') produces strictly neutral R == G == B PNG and rejects bad film mode
-    st = app.State(root, tmp_path / "out", allow_frozen=False)
-    with pytest.raises(ValueError, match="film"):
-        st.thumbnail_png("bw_test.dng", film="../invalid")
-    png_bw = _decode_rgb8_png(st.thumbnail_png("bw_test.dng", film="bw"))
-    assert np.array_equal(png_bw[..., 0], png_bw[..., 1]) and np.array_equal(png_bw[..., 1], png_bw[..., 2])
-
-
-def test_wb_pick_neutralises_patch_under_active_slopes_and_log_unmix(tmp_path, monkeypatch):
-    monkeypatch.setenv("FILMCOLOR_DATA_ROOT", str(tmp_path / "cache"))
-    root = tmp_path / "neg"
-    root.mkdir()
-    rgb, irl = scan()
-    write_dng(root / "c.dng", rgb, irl)
-    st = app.State(root, tmp_path / "out", allow_frozen=False)
-    meta = st.open("c.dng", "color")
-    tok = meta["token"]
-    h, w = st.preview.positive.shape[:2]
-    # Pick a bright non-midgrey patch where slope_r/slope_b & log_unmix shift chromaticity strongly
-    st.preview.positive[h // 2 - 3:h // 2 + 4, w // 2 - 3:w // 2 + 4] = np.array([0.42, 0.36, 0.31], dtype=np.float32)
-
-    legacy = st.wb_pick({"token": tok, "x": w // 2, "y": h // 2})
-    active = dict(
-        ev=0.35, temp=0.0, tint=0.0, sat=1.10, contrast=1.35, midtone=0.22, shoulder=0.25,
-        vibrance=0.12, slope_r=-0.12, slope_b=0.22, log_unmix=0.50, bpc=0.01,
-        matrix=[[1.06, -0.04, -0.02], [-0.02, 1.04, -0.02], [-0.06, 0.12, 0.94]],
-    )
-    solved = st.wb_pick({"token": tok, "x": w // 2, "y": h // 2, "params": active})
-    assert (solved["temp"], solved["tint"]) != (legacy["temp"], legacy["tint"])
-
-    med = np.array(solved["sampled_rgb"], dtype=np.float32)
-    rp_solved = render.RenderParams.from_dict(dict(active, temp=solved["temp"], tint=solved["tint"]))
-    lin_out, _ = render.pre_shoulder_linear(med, rp_solved)
-    chroma_resid = max(abs(np.log2(lin_out[0] / lin_out[1])), abs(np.log2(lin_out[2] / lin_out[1])))
-    assert chroma_resid < 1e-4
-
 
 def test_qc_empty_mask_and_compare_margin_guards():
     from filmcolor import compare, qc
@@ -354,15 +274,3 @@ def test_t17_colour_refinements_and_bw_low_info_thumbnail(tmp_path, monkeypatch)
     P_unc = np.concatenate([base_y * 0.78, base_y * 1.00, base_y * 1.18], axis=-1).astype(np.float32)
     u17 = noref.estimate_params_v3(P_unc, None, noref.preset_config("standard"), span_d_g=0.95)
     assert "t17_uncal_wb_deov" in u17["diagnostics"].get("print_grade_v3", {})
-
-    # 3. Low-information (manual_review_required) negative in B&W thumbnail stays strictly neutral (R == G == B)
-    monkeypatch.setenv("FILMCOLOR_DATA_ROOT", str(tmp_path / "cache"))
-    root = tmp_path / "neg_low"
-    root.mkdir()
-    flat_orange = np.broadcast_to(np.array([42000, 26000, 15000], dtype=np.uint16), (120, 160, 3)).copy()
-    flat_orange[:8, :8] = [44000, 27000, 15500]
-    write_dng(root / "low_info.dng", flat_orange)
-    st = app.State(root, tmp_path / "out", allow_frozen=False)
-    png_low_bw = _decode_rgb8_png(st.thumbnail_png("low_info.dng", film="bw"))
-    assert np.array_equal(png_low_bw[..., 0], png_low_bw[..., 1]) and np.array_equal(png_low_bw[..., 1], png_low_bw[..., 2])
-
