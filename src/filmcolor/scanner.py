@@ -580,12 +580,26 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
 
 def block_means(rgb, sat, block: int):
     """(hb, wb, 3) block means and (hb, wb) any-saturated flags; partial edge blocks dropped."""
+    from .invert import CHUNK_ROWS, map_row_blocks
+
     hb, wb = rgb.shape[0] // block, rgb.shape[1] // block
     if hb == 0 or wb == 0:
         raise ValueError(f"image {rgb.shape[:2]} smaller than one {block}px block")
-    r = rgb[: hb * block, : wb * block].reshape(hb, block, wb, block, 3)
-    s = sat[: hb * block, : wb * block].reshape(hb, block, wb, block)
-    return r.mean((1, 3), dtype=np.float64).astype(np.float32), s.any((1, 3))
+    h, w = hb * block, wb * block
+    inv_area = np.float64(1.0 / (block * block))
+    means = np.empty((hb, wb, 3), dtype=np.float32)
+    any_sat = np.empty((hb, wb), dtype=bool)
+    step = max(block, (CHUNK_ROWS // block) * block)
+
+    def _run(r0: int) -> None:
+        r1 = min(h, r0 + step)
+        b0, b1 = r0 // block, r1 // block
+        blk = rgb[r0:r1, :w].reshape(b1 - b0, block, wb, block, 3)
+        means[b0:b1] = (blk.sum(axis=3, dtype=np.float32).sum(axis=1, dtype=np.float64) * inv_area).astype(np.float32)
+        any_sat[b0:b1] = sat[r0:r1, :w].reshape(b1 - b0, block, wb, block).any(axis=3).any(axis=1)
+
+    map_row_blocks(h, _run, step)
+    return means, any_sat
 
 
 def estimate_base_scanner(frame: ScannerFrame, *, block: int = 24, **kwargs):

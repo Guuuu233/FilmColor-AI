@@ -15,8 +15,10 @@ P and O are in uncalibrated camera RGB (scan camera + film dyes); no colour matr
 """
 from __future__ import annotations
 
+import atexit
 import math
 import os
+import threading
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 
@@ -27,7 +29,35 @@ from .raw import CHANNELS, check_region
 EPS = 1e-6  # floor for transmittance before log10 (render path clips below-black to 0)
 _EPS_F32 = np.float32(EPS)
 CHUNK_ROWS = 256  # rows per block when inverting a full image; density and inversion are per pixel
-PIXEL_THREADS = max(1, min(4, os.cpu_count() or 1))  # row blocks processed concurrently (numpy releases the GIL)
+PIXEL_THREADS = max(1, min(6, os.cpu_count() or 1))  # row blocks processed concurrently (numpy releases the GIL)
+_POOL: ThreadPoolExecutor | None = None
+_POOL_WORKERS = 0
+_POOL_LOCK = threading.Lock()
+_IN_POOL = threading.local()
+
+
+def get_pixel_pool(max_workers: int | None = None) -> ThreadPoolExecutor:
+    """Shared persistent thread pool for row-chunked numpy/scipy/PIL ops (avoids per-call pthread churn)."""
+    global _POOL, _POOL_WORKERS
+    want = max(1, int(max_workers or PIXEL_THREADS))
+    with _POOL_LOCK:
+        if _POOL is None or _POOL_WORKERS != want:
+            old = _POOL
+            _POOL = ThreadPoolExecutor(max_workers=want)
+            _POOL_WORKERS = want
+            if old is not None:
+                old.shutdown(wait=False)
+        return _POOL
+
+
+def _shutdown_pixel_pool() -> None:
+    global _POOL
+    if _POOL is not None:
+        _POOL.shutdown(wait=False)
+        _POOL = None
+
+
+atexit.register(_shutdown_pixel_pool)
 
 
 def map_row_blocks(n_rows: int, fn, chunk_rows: int) -> list:
@@ -36,9 +66,15 @@ def map_row_blocks(n_rows: int, fn, chunk_rows: int) -> list:
     statistics), so the values are those of the serial loop. ``chunk_rows`` is required and must be the stride
     ``fn`` slices with: read ``CHUNK_ROWS`` once at the call site (a default would freeze it at import time)."""
     starts = range(0, n_rows, chunk_rows)
-    if PIXEL_THREADS > 1 and len(starts) > 1:
-        with ThreadPoolExecutor(max_workers=min(PIXEL_THREADS, len(starts))) as ex:
-            return list(ex.map(fn, starts))
+    if PIXEL_THREADS > 1 and len(starts) > 1 and not getattr(_IN_POOL, "active", False):
+        def _wrapped(r0: int):
+            _IN_POOL.active = True
+            try:
+                return fn(r0)
+            finally:
+                _IN_POOL.active = False
+
+        return list(get_pixel_pool(PIXEL_THREADS).map(_wrapped, starts))
     return [fn(r0) for r0 in starts]
 
 
@@ -180,14 +216,19 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
     if block < 1:
         raise ValueError(f"white point block must be >= 1, got {block}")
     h, w = (rgb.shape[0] // block) * block, (rgb.shape[1] // block) * block
-    sums = np.zeros((h // block, w // block, 3), np.float64)
-    full = np.zeros((h // block, w // block), np.int64)
-    step = max(block, CHUNK_ROWS // block * block)  # whole blocks per row chunk keep the float64 copy small
-    for r0 in range(0, h, step):
-        r1, b0, b1 = min(h, r0 + step), r0 // block, min(h, r0 + step) // block
-        sums[b0:b1] = rgb[r0:r1, :w].reshape(b1 - b0, block, w // block, block, 3).sum(axis=(1, 3), dtype=np.float64)
-        full[b0:b1] = mask[r0:r1, :w].reshape(b1 - b0, block, w // block, block).sum(axis=(1, 3))
-    ok = full == block * block
+    nb_y, nb_x = h // block, w // block
+    sums = np.empty((nb_y, nb_x, 3), np.float64)
+    ok = np.empty((nb_y, nb_x), dtype=bool)
+    step = max(block, CHUNK_ROWS // block * block)  # whole blocks per row chunk keep memory small
+
+    def _accum(r0: int) -> None:
+        r1 = min(h, r0 + step)
+        b0, b1 = r0 // block, r1 // block
+        blk = rgb[r0:r1, :w].reshape(b1 - b0, block, nb_x, block, 3)
+        sums[b0:b1] = blk.sum(axis=3, dtype=np.float32).sum(axis=1, dtype=np.float64)
+        ok[b0:b1] = mask[r0:r1, :w].reshape(b1 - b0, block, nb_x, block).all(axis=3).all(axis=1)
+
+    map_row_blocks(h, _accum, step)
     n = int(ok.sum())
     if n < MIN_WHITE_BLOCKS:
         return estimate_white_point(density(rgb[mask], base), None, pct), dict(method="pixel_fallback", block=block,

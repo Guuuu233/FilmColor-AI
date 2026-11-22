@@ -7,7 +7,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 import math
-import os
 from pathlib import Path
 
 import numpy as np
@@ -40,14 +39,10 @@ _HUE_LUT_N = 720
 _HUE_LUT_DEG = np.linspace(0.0, 360.0, _HUE_LUT_N, endpoint=False, dtype=np.float32)
 
 # Shared bounded worker pool for chunked full-res ops (avoids per-call thread spawn overhead)
-_WORK_POOL: ThreadPoolExecutor | None = None
-
-
 def _get_pool() -> ThreadPoolExecutor:
-    global _WORK_POOL
-    if _WORK_POOL is None:
-        _WORK_POOL = ThreadPoolExecutor(max_workers=min(8, os.cpu_count() or 6), thread_name_prefix="fc_dr")
-    return _WORK_POOL
+    from .invert import get_pixel_pool
+
+    return get_pixel_pool()
 
 
 def _run_row_chunks(h: int, fn, *, step: int = 128) -> None:

@@ -85,7 +85,7 @@ def highlight_texture(ours_lab, ref_lab, ref_clipped=None, l_min: float = 80.0, 
 
 def block_mean(img, f: int):
     h, w = (img.shape[0] // f) * f, (img.shape[1] // f) * f
-    return img[:h, :w].reshape(h // f, f, w // f, f, *img.shape[2:]).mean(axis=(1, 3))
+    return img[:h, :w].reshape(h // f, f, w // f, f, *img.shape[2:]).mean(axis=3).mean(axis=1)
 
 
 def resize_bilinear(img, shape):
