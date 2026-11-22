@@ -11,7 +11,7 @@ return {
         local p = Config.prefs()
         propertyTable.pythonPath = p.pythonPath
         propertyTable.port = tostring(p.port)
-        propertyTable.bridgeStatus = "点击「检测/启动引擎」查看状态"
+        propertyTable.bridgeStatus = Config.bundledBridgePath() and "已检测到内置独立引擎（免 Python · 开箱即用）" or "点击「检测/启动引擎」查看状态"
     end,
 
     endDialog = function(propertyTable)

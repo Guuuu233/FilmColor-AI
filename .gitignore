@@ -20,3 +20,5 @@ data/reference/
 experiments/s3_ext_audit/
 # per-run experiment logs under t4_auto_ui
 experiments/t4_auto_ui/**/*.log
+build/
+dist/

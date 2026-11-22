@@ -1,0 +1,34 @@
+name: Build FilmColor v1.0 Standalone Plugins
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14
+            artifact: FilmColor-v1.0-macOS-arm64
+          - os: windows-latest
+            artifact: FilmColor-v1.0-Windows-x64
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+      - name: Install runtime dependencies
+        run: uv sync --no-group ml --no-dev
+      - name: Build standalone zero-dependency plugin bundle
+        run: uv run --with pyinstaller scripts/build_standalone.py --out dist
+      - name: Upload plugin bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: dist/*.zip

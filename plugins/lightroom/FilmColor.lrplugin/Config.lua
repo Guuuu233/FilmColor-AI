@@ -82,4 +82,25 @@ function Config.prefs()
     return p
 end
 
+function Config.bundledBridgePath()
+    if not (_PLUGIN and _PLUGIN.path) then return nil end
+    local cands
+    if IS_WIN then
+        cands = {
+            _PLUGIN.path .. "\\bin\\win\\filmcolor-bridge\\filmcolor-bridge.exe",
+            _PLUGIN.path .. "\\bin\\win\\filmcolor-bridge.exe",
+        }
+    else
+        cands = {
+            _PLUGIN.path .. "/bin/mac/filmcolor-bridge/filmcolor-bridge",
+            _PLUGIN.path .. "/bin/mac/filmcolor-bridge",
+        }
+    end
+    for _, c in ipairs(cands) do
+        if LrFileUtils.exists(c) then return c end
+    end
+    return nil
+end
+
 return Config
+

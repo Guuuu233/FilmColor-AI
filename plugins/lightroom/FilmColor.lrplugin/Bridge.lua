@@ -49,44 +49,59 @@ function Bridge.ensureRunning()
     if ok then return true, info end
 
     local p = Config.prefs()
-    local py = p.pythonPath or Config.DEFAULT_PYTHON
-    if not LrFileUtils.exists(py) then
-        local hint = Config.IS_WIN and ".venv\\Scripts\\pythonw.exe" or ".venv/bin/python"
-        return false, "找不到 FilmColor Python 环境：" .. tostring(py) .. "。请在「文件 → 增效工具管理器 → FilmColor v1.0」中设置 " .. hint .. " 路径。"
-    end
     local port = tostring(math.floor(tonumber(p.port) or Config.DEFAULT_PORT))
-    local repoDir = py:match("^(.-)[/\\]%.venv[/\\]") or Config.DEFAULT_REPO
+    local bundled = Config.bundledBridgePath()
     local logPath
 
-    if Config.IS_WIN then
-        -- Prefer pythonw.exe to avoid flashing a console window on Windows
-        local pyw = py:gsub("[Pp][Yy][Tt][Hh][Oo][Nn]%.exe$", "pythonw.exe")
-        if LrFileUtils.exists(pyw) then py = pyw end
-        local tmpDir = LrPathUtils.getStandardFilePath("temp") or "."
-        logPath = LrPathUtils.child(tmpDir, "filmcolor_lr_bridge.log")
-        if not LrFileUtils.exists(repoDir) then
-            repoDir = LrFileUtils.exists(Config.DEFAULT_REPO) and Config.DEFAULT_REPO or tmpDir
+    if bundled then
+        -- Out-of-the-box standalone engine bundled inside FilmColor.lrplugin (zero Python required)
+        if Config.IS_WIN then
+            local tmpDir = LrPathUtils.getStandardFilePath("temp") or "."
+            logPath = LrPathUtils.child(tmpDir, "filmcolor_lr_bridge.log")
+            local binDir = LrPathUtils.parent(bundled) or tmpDir
+            local cmd = string.format('cmd /c start "" /B /D "%s" "%s" --port %s', binDir, bundled, port)
+            LrTasks.execute(cmd)
+        else
+            logPath = "/tmp/filmcolor_lr_bridge.log"
+            local function shQuote(s) return "'" .. tostring(s):gsub("'", "'\''") .. "'" end
+            local inner = string.format("nohup %s --port %s >/tmp/filmcolor_lr_bridge.log 2>&1 </dev/null &", shQuote(bundled), port)
+            LrTasks.execute("/bin/sh -c " .. shQuote(inner))
         end
-        local cmd = string.format(
-            'cmd /c start "" /B /D "%s" "%s" -m filmcolor.plugin_bridge --port %s',
-            repoDir, py, port
-        )
-        LrTasks.execute(cmd)
     else
-        logPath = "/tmp/filmcolor_lr_bridge.log"
-        if not LrFileUtils.exists(repoDir) then
-            repoDir = LrFileUtils.exists(Config.DEFAULT_REPO) and Config.DEFAULT_REPO or "/tmp"
+        local py = p.pythonPath or Config.DEFAULT_PYTHON
+        if not LrFileUtils.exists(py) then
+            local hint = Config.IS_WIN and ".venv\\Scripts\\pythonw.exe" or ".venv/bin/python"
+            return false, "找不到 FilmColor 引擎或 Python 环境：" .. tostring(py) .. "。请运行安装脚本或在「增效工具管理器 → FilmColor v1.0」中设置 " .. hint .. " 路径。"
         end
-        local function shQuote(s) return "'" .. tostring(s):gsub("'", "'\''") .. "'" end
-        local inner = string.format(
-            "cd %s && nohup %s -m filmcolor.plugin_bridge --port %s >/tmp/filmcolor_lr_bridge.log 2>&1 </dev/null &",
-            shQuote(repoDir), shQuote(py), port
-        )
-        local cmd = "/bin/sh -c " .. shQuote(inner)
-        LrTasks.execute(cmd)
+        local repoDir = py:match("^(.-)[/\\]%.venv[/\\]") or Config.DEFAULT_REPO
+        if Config.IS_WIN then
+            local pyw = py:gsub("[Pp][Yy][Tt][Hh][Oo][Nn]%.exe$", "pythonw.exe")
+            if LrFileUtils.exists(pyw) then py = pyw end
+            local tmpDir = LrPathUtils.getStandardFilePath("temp") or "."
+            logPath = LrPathUtils.child(tmpDir, "filmcolor_lr_bridge.log")
+            if not LrFileUtils.exists(repoDir) then
+                repoDir = LrFileUtils.exists(Config.DEFAULT_REPO) and Config.DEFAULT_REPO or tmpDir
+            end
+            local cmd = string.format(
+                'cmd /c start "" /B /D "%s" "%s" -m filmcolor.plugin_bridge --port %s',
+                repoDir, py, port
+            )
+            LrTasks.execute(cmd)
+        else
+            logPath = "/tmp/filmcolor_lr_bridge.log"
+            if not LrFileUtils.exists(repoDir) then
+                repoDir = LrFileUtils.exists(Config.DEFAULT_REPO) and Config.DEFAULT_REPO or "/tmp"
+            end
+            local function shQuote(s) return "'" .. tostring(s):gsub("'", "'\''") .. "'" end
+            local inner = string.format(
+                "cd %s && nohup %s -m filmcolor.plugin_bridge --port %s >/tmp/filmcolor_lr_bridge.log 2>&1 </dev/null &",
+                shQuote(repoDir), shQuote(py), port
+            )
+            LrTasks.execute("/bin/sh -c " .. shQuote(inner))
+        end
     end
 
-    for _ = 1, 40 do
+    for _ = 1, 60 do
         LrTasks.sleep(0.25)
         local alive, hinfo = Bridge.health()
         if alive then return true, hinfo end

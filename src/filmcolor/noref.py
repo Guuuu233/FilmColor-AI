@@ -208,7 +208,13 @@ def _check_bounds(p: RenderParams):
 
 # --- noref_v2: fixed global look + per-group adjustments, enabled one group at a time (S2-7 ablation) ---
 
-CONFIG_DIR = Path(__file__).parent / "configs"
+import sys as _sys
+_MEI = getattr(_sys, "_MEIPASS", None)
+CONFIG_DIR = (
+    (Path(_MEI) / "filmcolor" / "configs")
+    if (_MEI and (Path(_MEI) / "filmcolor" / "configs").is_dir())
+    else (Path(__file__).parent / "configs")
+)
 GROUPS = ("brightness", "wb", "tone", "sat")
 
 NOREF_V2 = dict(
