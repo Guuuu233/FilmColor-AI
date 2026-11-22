@@ -3042,10 +3042,18 @@ def estimate_params_t24(
     cl = _t24_closed_loop_feats(P_crop128, p23_nomat, mat_tup)
 
     d_ev_guard = 0.0
-    narrow_span = 0.0
+    d_lo_a = np.asarray(d_lo, dtype=np.float64)
+    d_hi_a = np.asarray(d_hi, dtype=np.float64)
+    dr_g = float(d_hi_a[0] - d_lo_a[0]) / max(dg, 1e-4)
+    db_g = float(d_hi_a[2] - d_lo_a[2]) / max(dg, 1e-4)
+    # Flat-sky / uniform-exposure detector: narrow density span AND near-unity R/G/B span ratios
+    flat_sky = (
+        float(np.clip((0.48 - dg) / 0.08, 0.0, 1.0))
+        * float(np.clip((dr_g - 0.65) / 0.08, 0.0, 1.0))
+        * float(np.clip((1.22 - db_g) / 0.08, 0.0, 1.0))
+    )
     if use_ev_guard and branch_name == "cal":
         eg = bundle["ev_guard"]
-        narrow_span = float(np.clip((0.42 - dg) / 0.14, 0.0, 1.0))
         if cl["cl_luma_p50"] < eg["p50_thresh"] and p23_nomat["ev"] < 0.0:
             thin_g = float(1.0 / (1.0 + np.exp((dg - eg["span_mid"]) / eg["span_width"])))
             if thin_g > 0.05:
@@ -3064,9 +3072,9 @@ def estimate_params_t24(
                 d_ev_guard += lift_soft
                 p23_nomat["ev"] = float(np.clip(p23_nomat["ev"] + lift_soft, -2.5, 2.5))
                 cl = _t24_closed_loop_feats(P_crop128, p23_nomat, mat_tup)
-        # Ultra-narrow density-span flat/sky guard: avoid dragging open sky down to mid-grey
-        if narrow_span > 0.0 and p23_nomat["ev"] < -0.55 and cl["cl_luma_p98"] < 0.92:
-            lift_sky = min(0.85, 0.90 * narrow_span * (-0.45 - p23_nomat["ev"]))
+        # Flat-sky exposure recovery: avoid dragging open sky down to dark grey
+        if flat_sky > 0.0 and p23_nomat["ev"] < -0.35 and cl["cl_luma_p98"] < 0.92:
+            lift_sky = min(0.95, 0.85 * flat_sky * (-0.30 - p23_nomat["ev"]))
             if lift_sky > 1e-3:
                 d_ev_guard += lift_sky
                 p23_nomat["ev"] = float(np.clip(p23_nomat["ev"] + lift_sky, -2.5, 2.5))
@@ -3093,12 +3101,16 @@ def estimate_params_t24(
     raw7_out[5] += float(np.clip(preds["d_shoulder"], -1.5, 1.5))
     raw7_out[6] += float(np.clip(preds["d_toe"], -1.5, 1.5))
     p_out = _t24_raw7_to_params(raw7_out, p23["matrix"])
-    # Ultra-narrow density-span flat/sky guard: prevent contrast/toe from turning gentle sky vignetting black
-    if narrow_span > 0.0:
-        if p_out["contrast"] > 0.95:
-            blend = 0.70 * narrow_span
-            p_out["contrast"] = round(float(p_out["contrast"] * (1.0 - blend) + 0.95 * blend), 4)
-        p_out["toe"] = round(float(max(p_out["toe"], 0.0) * (1.0 - 0.5 * narrow_span) + 0.55 * narrow_span), 4)
+    # Flat-sky contrast/toe/WB guard: prevent gentle sky vignetting from crushing black or turning purple
+    if flat_sky > 0.0:
+        if p_out["contrast"] > 1.00:
+            blend = 0.65 * flat_sky
+            p_out["contrast"] = round(float(p_out["contrast"] * (1.0 - blend) + 1.00 * blend), 4)
+        if p_out["toe"] < 0.45:
+            p_out["toe"] = round(float(p_out["toe"] * (1.0 - flat_sky) + 0.45 * flat_sky), 4)
+        if p_out["tint"] > 0.0:
+            p_out["tint"] = round(float(p_out["tint"] * (1.0 - 0.90 * flat_sky) - 0.06 * flat_sky), 4)
+        p_out["temp"] = round(float(np.clip(p_out["temp"] - 0.14 * flat_sky, -1.0, 1.0)), 4)
     p_out["slope_r"] = round(float(np.clip(preds["slope_r"], -0.40, 0.40)), 5)
     p_out["slope_b"] = round(float(np.clip(preds["slope_b"], -0.40, 0.40)), 5)
     if br_pkg["use_eps"]:
@@ -3106,19 +3118,21 @@ def estimate_params_t24(
         p_out["eps_rgb"] = [round(float(esc * np.clip(preds[c], -0.04, 0.04)), 6) for c in ("eps_r", "eps_g", "eps_b")]
     else:
         p_out["eps_rgb"] = [0.0, 0.0, 0.0]
-    # Physical floor restoration for narrow density-span negatives (e.g. open sky / low-DR scenes):
-    # invert() subtracts 10^(-dg/gamma) assuming a true black exists in-frame; restore it smoothly when dg < 0.70.
+    # Physical floor restoration for narrow density-span negatives, gated against double-lifting
+    # frames whose shadows were already well-opened by T24 (toe > 0.65, cl_luma_p10 > 0.12, ev > -0.35).
     flr_phys = float(10.0 ** (-dg / max(float(gamma), 1e-4)))
-    alpha_flr = float(np.clip((0.70 - dg) / 0.38, 0.0, 1.0))
+    already_open = (
+        float(np.clip((p_out["toe"] - 0.60) / 0.25, 0.0, 1.0))
+        * float(np.clip((cl["cl_luma_p10"] - 0.10) / 0.06, 0.0, 1.0))
+        * float(np.clip((p_out["ev"] + 0.35) / 0.20, 0.0, 1.0))
+    )
+    alpha_flr = max(
+        float(np.clip((0.70 - dg) / 0.38, 0.0, 1.0)) * (1.0 - 0.92 * already_open),
+        flat_sky,
+    )
     fr_val = round(float(np.clip(alpha_flr * flr_phys, 0.0, 0.45)), 5)
     if fr_val > 1e-4:
         p_out["floor_restore"] = fr_val
-    # Cancel runaway positive tint (purple/magenta cast) on ultra-narrow-span sky-dominated frames
-    ns_wb = float(np.clip((0.45 - dg) / 0.15, 0.0, 1.0))
-    if ns_wb > 0.0:
-        if p_out["tint"] > 0.0:
-            p_out["tint"] = round(float(p_out["tint"] * (1.0 - 0.90 * ns_wb) - 0.06 * ns_wb), 4)
-        p_out["temp"] = round(float(np.clip(p_out["temp"] - 0.18 * ns_wb, -1.0, 1.0)), 4)
     if br_pkg["use_mat"]:
         v6 = [float(np.clip(preds[c], -0.20, 0.20)) for c in ("dm_01", "dm_02", "dm_10", "dm_12", "dm_20", "dm_21")]
         dm = [
