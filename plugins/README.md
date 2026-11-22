@@ -33,3 +33,8 @@
 ### 安装与使用
 1. 双击 `scripts/start_filmcolor_bridge.command`（或在终端运行 `.venv/bin/python -m filmcolor.plugin_bridge`）启动本地引擎（如果 Lightroom 已唤起引擎则无需重复启动）。
 2. 在 **Adobe UXP Developer Tool** 中点击 `Add Plugin`，选择 `plugins/photoshop-uxp/manifest.json`，点击 `Load` 即可在 Photoshop `增效工具 → FilmColor T24` 中打开面板。
+
+### Windows 安装与使用
+1. 双击运行 **`scripts\install_windows.bat`**（自动创建精简 `.venv` 运行环境并将插件安装到 `%APPDATA%\Adobe\Lightroom\Modules\FilmColor.lrplugin`）。
+2. 重启 **Adobe Lightroom Classic**，选中负片后点击 `图库 → 增效工具额外信息 → FilmColor 负片转换…`（插件将通过 `pythonw.exe` 静默自动拉起后台引擎，无黑框）。
+3. **Photoshop UXP**：双击 **`scripts\start_filmcolor_bridge.bat`** 启动本地桥接服务，再在 Adobe UXP Developer Tool 中加载 `plugins\photoshop-uxp\manifest.json`。

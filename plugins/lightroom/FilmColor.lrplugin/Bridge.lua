@@ -51,27 +51,47 @@ function Bridge.ensureRunning()
     local p = Config.prefs()
     local py = p.pythonPath or Config.DEFAULT_PYTHON
     if not LrFileUtils.exists(py) then
-        return false, "找不到 FilmColor Python 环境：" .. tostring(py) .. "。请在「文件 → 增效工具管理器 → FilmColor v1.0」中设置 .venv/bin/python 路径。"
+        local hint = Config.IS_WIN and ".venv\\Scripts\\pythonw.exe" or ".venv/bin/python"
+        return false, "找不到 FilmColor Python 环境：" .. tostring(py) .. "。请在「文件 → 增效工具管理器 → FilmColor v1.0」中设置 " .. hint .. " 路径。"
     end
     local port = tostring(math.floor(tonumber(p.port) or Config.DEFAULT_PORT))
-    local repoDir = py:match("^(.-)/%.venv/") or Config.DEFAULT_REPO
-    if not LrFileUtils.exists(repoDir) then
-        repoDir = LrFileUtils.exists(Config.DEFAULT_REPO) and Config.DEFAULT_REPO or "/tmp"
+    local repoDir = py:match("^(.-)[/\\]%.venv[/\\]") or Config.DEFAULT_REPO
+    local logPath
+
+    if Config.IS_WIN then
+        -- Prefer pythonw.exe to avoid flashing a console window on Windows
+        local pyw = py:gsub("[Pp][Yy][Tt][Hh][Oo][Nn]%.exe$", "pythonw.exe")
+        if LrFileUtils.exists(pyw) then py = pyw end
+        local tmpDir = LrPathUtils.getStandardFilePath("temp") or "."
+        logPath = LrPathUtils.child(tmpDir, "filmcolor_lr_bridge.log")
+        if not LrFileUtils.exists(repoDir) then
+            repoDir = LrFileUtils.exists(Config.DEFAULT_REPO) and Config.DEFAULT_REPO or tmpDir
+        end
+        local cmd = string.format(
+            'cmd /c start "" /B /D "%s" "%s" -m filmcolor.plugin_bridge --port %s',
+            repoDir, py, port
+        )
+        LrTasks.execute(cmd)
+    else
+        logPath = "/tmp/filmcolor_lr_bridge.log"
+        if not LrFileUtils.exists(repoDir) then
+            repoDir = LrFileUtils.exists(Config.DEFAULT_REPO) and Config.DEFAULT_REPO or "/tmp"
+        end
+        local function shQuote(s) return "'" .. tostring(s):gsub("'", "'\''") .. "'" end
+        local inner = string.format(
+            "cd %s && nohup %s -m filmcolor.plugin_bridge --port %s >/tmp/filmcolor_lr_bridge.log 2>&1 </dev/null &",
+            shQuote(repoDir), shQuote(py), port
+        )
+        local cmd = "/bin/sh -c " .. shQuote(inner)
+        LrTasks.execute(cmd)
     end
-    local function shQuote(s) return "'" .. tostring(s):gsub("'", "'\''") .. "'" end
-    local inner = string.format(
-        "cd %s && nohup %s -m filmcolor.plugin_bridge --port %s >/tmp/filmcolor_lr_bridge.log 2>&1 </dev/null &",
-        shQuote(repoDir), shQuote(py), port
-    )
-    local cmd = "/bin/sh -c " .. shQuote(inner)
-    LrTasks.execute(cmd)
 
     for _ = 1, 40 do
         LrTasks.sleep(0.25)
         local alive, hinfo = Bridge.health()
         if alive then return true, hinfo end
     end
-    return false, "FilmColor 后台引擎启动超时，请检查 /tmp/filmcolor_lr_bridge.log"
+    return false, "FilmColor 后台引擎启动超时，请检查日志：" .. tostring(logPath)
 end
 
 function Bridge.post(endpoint, payload, timeoutSec)

@@ -23,6 +23,7 @@ import secrets
 import shutil
 import struct
 import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -207,9 +208,10 @@ def _exif_info(paths: list[Path]) -> dict[Path, dict]:
     tool = _exiftool() if need_tool else None
     if tool:
         try:
+            kw_win = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)} if sys.platform == "win32" else {}
             proc = subprocess.run(
                 [tool, "-j", "-n", "-q", "-q", "-ExposureTime", "-Model", "-DateTimeOriginal", "-CreateDate",
-                 *(str(p) for p in need_tool)], capture_output=True, text=True, check=False,
+                 *(str(p) for p in need_tool)], capture_output=True, text=True, check=False, **kw_win,
             )
             by_src = {Path(d["SourceFile"]): d for d in json.loads(proc.stdout or "[]")}
         except Exception:  # noqa: BLE001
@@ -759,10 +761,11 @@ class _ExifToolDaemon:
             return self._proc
         self.close()
         try:
+            kw_win = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)} if sys.platform == "win32" else {}
             self._proc = subprocess.Popen(
                 [tool, "-stay_open", "True", "-@", "-"],
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-                text=True, encoding="utf-8", errors="replace", bufsize=1,
+                text=True, encoding="utf-8", errors="replace", bufsize=1, **kw_win,
             )
             self._tool = tool
             return self._proc
@@ -827,9 +830,10 @@ def _copy_exif_metadata(src: Path, dst: Path) -> bool:
     if _EXIFTOOL_DAEMON.copy_tags(tool, src, dst):
         return True
     try:
+        kw_win = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)} if sys.platform == "win32" else {}
         proc = subprocess.run(
             [tool, "-overwrite_original", "-q", "-q", "-TagsFromFile", str(src), *_EXIF_COPY_TAGS, str(dst)],
-            capture_output=True, text=True, check=False, timeout=15,
+            capture_output=True, text=True, check=False, timeout=15, **kw_win,
         )
         return proc.returncode == 0
     except Exception:  # noqa: BLE001

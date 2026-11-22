@@ -19,8 +19,13 @@ let bridgeOk = false;
 const COLOR_ONLY_SLIDERS = ["temp", "tint", "vibrance", "sat", "skin_protect"];
 
 function encodeFileUrl(nativePath) {
-  const parts = String(nativePath).split("/");
-  return "file://" + parts.map((seg, i) => (i === 0 && seg === "" ? "" : encodeURIComponent(seg))).join("/");
+  const norm = String(nativePath).replace(/\\/g, "/");
+  const parts = norm.split("/");
+  const encoded = parts.map((seg, i) => {
+    if (i === 0 && (seg === "" || /^[A-Za-z]:$/.test(seg))) return seg;
+    return encodeURIComponent(seg);
+  }).join("/");
+  return encoded.startsWith("/") ? "file://" + encoded : "file:///" + encoded;
 }
 
 function syncFilmSliderState() {
@@ -49,7 +54,7 @@ async function checkBridge() {
   bridgeOk = false;
   $("connDot").className = "dot err";
   $("connText").textContent = "未连接本地引擎（端口 18765）";
-  setStatus("请先运行 scripts/start_filmcolor_bridge.command 启动本地引擎");
+  setStatus("请先运行 start_filmcolor_bridge.command (macOS) 或 start_filmcolor_bridge.bat (Windows) 启动本地引擎");
   return false;
 }
 
