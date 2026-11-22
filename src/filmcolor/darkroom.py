@@ -312,7 +312,7 @@ def resolve_adaptive_preset(
             sat=round(0.03 + 0.07 * chroma_headroom - 0.04 * chroma_guard, 4),
             shoulder=round(0.06 + 0.11 * hi_pressure, 4),
             toe=round(-0.06 - 0.08 * milky_black + 0.20 * sh_lift_need, 4),
-            tint=round(0.003 + 0.028 * green_cast - 0.022 * magenta_cast, 4),
+            tint=round(0.002 + 0.028 * green_cast - 0.045 * magenta_cast, 4),
             temp=round(0.002 + 0.008 * max(cool_need, 0.0) - 0.014 * warm_excess, 4),
         )
         hsl = {
@@ -321,7 +321,7 @@ def resolve_adaptive_preset(
             "yellow": [-0.04, -0.04, 0.02],
             "green": [0.05, round(-0.08 + 0.05 * max(chroma_headroom, 0.0), 3), round(0.01 + 0.04 * max(dark_mid, 0.0), 3)],
             "aqua": [0.0, -0.06, -0.03],
-            "blue": [-0.05, round((0.07 + 0.07 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(-0.09 - 0.05 * blue_present - 0.03 * hi_pressure, 3)],
+            "blue": [-0.06, round((0.07 + 0.07 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(-0.02 - 0.02 * blue_present - 0.02 * hi_pressure, 3)],
         }
         split_s = 0.85 + 0.25 * max(chroma_headroom, -0.3)
         grade = dict(
@@ -332,7 +332,7 @@ def resolve_adaptive_preset(
             clarity=round(0.08 + 0.06 * max(flatness, 0.0) * narrow_dr_guard, 4),
             dehaze=round(0.01 + 0.07 * veil_need, 4),
             sharpen=0.10,
-            vignette=round(-0.11 * (1.0 - 0.55 * sh_lift_need), 3),
+            vignette=round(-0.10 * (1.0 - 0.55 * sh_lift_need) * narrow_dr_guard, 3),
             skin_protect=round(0.22 + 0.25 * skin_present, 4),
             tone_curve={"rgb": [[0.0, 0.0], [0.22, s_low], [0.50, 0.494], [0.78, s_hi], [1.0, 1.0]]},
             hsl=hsl,
@@ -368,14 +368,14 @@ def resolve_adaptive_preset(
             sat=round(0.05 + 0.08 * chroma_headroom - 0.05 * chroma_guard, 4),
             shoulder=round(-0.01 + 0.12 * hi_pressure, 4),
             toe=round(-0.03 - 0.07 * milky_black + 0.18 * sh_lift_need, 4),
-            tint=round(0.003 + 0.028 * green_cast - 0.022 * magenta_cast, 4),
+            tint=round(0.002 + 0.028 * green_cast - 0.045 * magenta_cast, 4),
             temp=round(0.001 + 0.009 * max(cool_need, 0.0) - 0.015 * warm_excess, 4),
         )
         hsl = {
             "yellow": [0.02, round(0.03 * hsl_c, 3), 0.04],
             "green": [0.02, round((0.08 + 0.05 * max(chroma_headroom, 0.0)) * hsl_c, 3), 0.06],
             "orange": [0.0, round((0.04 + 0.03 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(0.03 + 0.03 * skin_present, 3)],
-            "blue": [-0.03, round(0.04 * max(chroma_headroom, 0.0) * hsl_c, 3), round(-0.03 * blue_present - 0.03 * hi_pressure, 3)],
+            "blue": [-0.05, round(0.05 * max(chroma_headroom, 0.0) * hsl_c, 3), round(0.02 * blue_present - 0.02 * hi_pressure, 3)],
         }
         grade = dict(
             vibrance=round(0.09 + 0.09 * chroma_headroom - 0.06 * chroma_guard, 4),

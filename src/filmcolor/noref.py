@@ -3113,6 +3113,12 @@ def estimate_params_t24(
     fr_val = round(float(np.clip(alpha_flr * flr_phys, 0.0, 0.45)), 5)
     if fr_val > 1e-4:
         p_out["floor_restore"] = fr_val
+    # Cancel runaway positive tint (purple/magenta cast) on ultra-narrow-span sky-dominated frames
+    ns_wb = float(np.clip((0.45 - dg) / 0.15, 0.0, 1.0))
+    if ns_wb > 0.0:
+        if p_out["tint"] > 0.0:
+            p_out["tint"] = round(float(p_out["tint"] * (1.0 - 0.90 * ns_wb) - 0.06 * ns_wb), 4)
+        p_out["temp"] = round(float(np.clip(p_out["temp"] - 0.18 * ns_wb, -1.0, 1.0)), 4)
     if br_pkg["use_mat"]:
         v6 = [float(np.clip(preds[c], -0.20, 0.20)) for c in ("dm_01", "dm_02", "dm_10", "dm_12", "dm_20", "dm_21")]
         dm = [
