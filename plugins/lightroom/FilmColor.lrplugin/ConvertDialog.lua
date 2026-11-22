@@ -8,6 +8,8 @@ local LrView = import "LrView"
 
 local Bridge = require "Bridge"
 local Config = require "Config"
+local I18n = require "I18n"
+local T = I18n.t
 
 local bind = LrView.bind
 
@@ -57,18 +59,18 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local catalog = LrApplication.activeCatalog()
     local rawPhotos = catalog:getTargetPhotos()
     if not rawPhotos or #rawPhotos == 0 then
-        LrDialogs.message("FilmColor v1.0", "请先在图库或胶片窗格中选中至少一张负片。", "info")
+        LrDialogs.message(T("app_name"), T("msg_select_neg"), "info")
         return
     end
     local photos, skippedCount = Bridge.filterNegativePhotos(rawPhotos)
     if #photos == 0 then
-        LrDialogs.message("FilmColor v1.0", "当前选中的文件均为已转换的正片（*_FilmColor）或不支持格式，请选中原始负片 RAW / DNG / 负片 TIFF。", "info")
+        LrDialogs.message(T("app_name"), T("msg_all_converted"), "info")
         return
     end
 
     local ok, err = Bridge.ensureRunning()
     if not ok then
-        LrDialogs.message("FilmColor 引擎未就绪", tostring(err), "critical")
+        LrDialogs.message(T("msg_engine_err"), tostring(err), "critical")
         return
     end
 
@@ -108,7 +110,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     props.viewMode = "after"
     props.rotDelta = 0
     props.previewPath = nil
-    props.statusLine = "正在解码并运行 FilmColor v1.0 预览：" .. firstName .. " …"
+    props.statusLine = T("st_decoding", firstName)
 
     local reqSeq = 0
     local closed = false
@@ -118,7 +120,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
         if closed or suppressPreview then return end
         reqSeq = reqSeq + 1
         local mySeq = reqSeq
-        props.statusLine = "正在更新预览…"
+        props.statusLine = T("st_updating")
         LrTasks.startAsyncTask(function()
             -- Small debounce for rapid slider nudges
             LrTasks.sleep(0.08)
@@ -142,17 +144,17 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
             }, 90)
             if closed or mySeq ~= reqSeq then return end
             if not res then
-                props.statusLine = "预览失败：" .. tostring(perr)
+                props.statusLine = T("st_prev_fail", tostring(perr))
                 return
             end
             props.previewPath = res.preview_path
             local clipTxt = ""
             if res.above_white then
-                clipTxt = string.format(" · 高光溢出 %.2f%%", res.above_white * 100)
+                clipTxt = T("st_clip", res.above_white * 100)
             end
-            props.statusLine = string.format(
-                "已选 %d 张 · 预览 %s · %s%s",
-                #photos, firstName, ((props.engine == "t24" and "FilmColor v1.0") or (props.engine == "t23" and "物理直出") or "经典引擎"), clipTxt
+            props.statusLine = T(
+                "st_ready",
+                #photos, firstName, ((props.engine == "t24" and T("app_name")) or (props.engine == "t23" and T("e_t23")) or T("e_v3")), clipTxt
             )
         end)
     end
@@ -179,7 +181,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
         f:column {
             spacing = f:control_spacing(),
             f:group_box {
-                title = "实时暗房预览（转换后导入为正像 16 位 TIFF，可在 Lr 正向精修）",
+                title = T("preview_group"),
                 font = "<system/small>",
                 f:column {
                     spacing = 6,
@@ -190,24 +192,24 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
                     },
                     f:row {
                         spacing = f:control_spacing(),
-                        f:radio_button { title = "当前效果", value = bind "viewMode", checked_value = "after" },
-                        f:radio_button { title = "自动基准", value = bind "viewMode", checked_value = "auto" },
-                        f:radio_button { title = "原始负片", value = bind "viewMode", checked_value = "negative" },
+                        f:radio_button { title = T("view_after"), value = bind "viewMode", checked_value = "after" },
+                        f:radio_button { title = T("view_auto"), value = bind "viewMode", checked_value = "auto" },
+                        f:radio_button { title = T("view_neg"), value = bind "viewMode", checked_value = "negative" },
                         f:spacer { fill_horizontal = 1 },
                         f:push_button {
-                            title = "↺ 左转",
+                            title = T("rot_l"),
                             action = function()
                                 props.rotDelta = (props.rotDelta + 1) % 4
                             end,
                         },
                         f:push_button {
-                            title = "↻ 右转",
+                            title = T("rot_r"),
                             action = function()
                                 props.rotDelta = (props.rotDelta + 3) % 4
                             end,
                         },
                         f:push_button {
-                            title = "重置微调",
+                            title = T("reset_adj"),
                             action = function()
                                 suppressPreview = true
                                 props.ev = 0.0; props.temp = 0; props.tint = 0
@@ -234,116 +236,116 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
             width = 330,
 
             f:group_box {
-                title = "胶片与风格",
+                title = T("film_group"),
                 fill_horizontal = 1,
                 spacing = 5,
                 f:row {
-                    f:static_text { title = "胶片类型", width = 68, alignment = "right" },
+                    f:static_text { title = T("film_type"), width = 68, alignment = "right" },
                     f:popup_menu {
                         value = bind "film",
                         width = 215,
                         items = {
-                            { title = "彩色负片 (C-41 / ECN-2)", value = "color" },
-                            { title = "黑白负片 (B&W)", value = "bw" },
+                            { title = T("film_color"), value = "color" },
+                            { title = T("film_bw"), value = "bw" },
                         },
                     },
                 },
                 f:row {
-                    f:static_text { title = "风格预设", width = 68, alignment = "right" },
+                    f:static_text { title = T("preset_lbl"), width = 68, alignment = "right" },
                     f:popup_menu {
                         value = bind "preset",
                         width = 215,
                         items = {
-                            { title = "富士 Frontier 鲜润（推荐直出）", value = "frontier" },
-                            { title = "德味徕卡 Leica Look（立体油润）", value = "leica" },
-                            { title = "诺日士 Noritsu 通透（自然高宽容）", value = "noritsu" },
-                            { title = "标准 Standard（保守色度基准）", value = "standard" },
-                            { title = "线性 Linear（高宽容后期自调底稿）", value = "linear" },
-                            { title = "自然 Natural（柔和暗部层次）", value = "natural" },
-                            { title = "人像 Portrait（肤色保护通透）", value = "portrait" },
-                            { title = "鲜明 Vivid（通透浓郁色彩）", value = "vivid" },
-                            { title = "经典印相 Print（传统暗房相纸）", value = "print_classic" },
-                            { title = "电影质感 Cinema（青暗暖亮）", value = "cinema" },
+                            { title = T("p_frontier"), value = "frontier" },
+                            { title = T("p_leica"), value = "leica" },
+                            { title = T("p_noritsu"), value = "noritsu" },
+                            { title = T("p_standard"), value = "standard" },
+                            { title = T("p_linear"), value = "linear" },
+                            { title = T("p_natural"), value = "natural" },
+                            { title = T("p_portrait"), value = "portrait" },
+                            { title = T("p_vivid"), value = "vivid" },
+                            { title = T("p_print_classic"), value = "print_classic" },
+                            { title = T("p_cinema"), value = "cinema" },
                         },
                     },
                 },
                 f:row {
-                    f:static_text { title = "算法引擎", width = 68, alignment = "right" },
+                    f:static_text { title = T("engine_lbl"), width = 68, alignment = "right" },
                     f:popup_menu {
                         value = bind "engine",
                         width = 215,
                         items = {
-                            { title = "FilmColor v1.0（智能推荐）", value = "t24" },
-                            { title = "物理直出引擎", value = "t23" },
-                            { title = "经典引擎", value = "v3" },
+                            { title = T("e_t24"), value = "t24" },
+                            { title = T("e_t23"), value = "t23" },
+                            { title = T("e_v3"), value = "v3" },
                         },
                     },
                 },
             },
 
             f:group_box {
-                title = "可选预调（0 = 纯自动）",
+                title = T("adj_group"),
                 fill_horizontal = 1,
                 spacing = 3,
-                makeSliderRow(f, "曝光 EV", "ev", -2.0, 2.0, 2),
-                makeSliderRow(f, "色温", "temp", -100, 100, 0),
-                makeSliderRow(f, "色调", "tint", -100, 100, 0),
-                makeSliderRow(f, "对比度", "contrast", -100, 100, 0),
-                makeSliderRow(f, "高光", "highlights", -100, 100, 0),
-                makeSliderRow(f, "阴影", "shadows", -100, 100, 0),
-                makeSliderRow(f, "白色色阶", "whites", -100, 100, 0),
-                makeSliderRow(f, "黑色色阶", "blacks", -100, 100, 0),
-                makeSliderRow(f, "自然饱和", "vibrance", -100, 100, 0),
-                makeSliderRow(f, "饱和度", "sat", -100, 100, 0),
-                makeSliderRow(f, "肤色保护", "skin_protect", 0, 100, 0),
+                makeSliderRow(f, T("ev"), "ev", -2.0, 2.0, 2),
+                makeSliderRow(f, T("temp"), "temp", -100, 100, 0),
+                makeSliderRow(f, T("tint"), "tint", -100, 100, 0),
+                makeSliderRow(f, T("contrast"), "contrast", -100, 100, 0),
+                makeSliderRow(f, T("highlights"), "highlights", -100, 100, 0),
+                makeSliderRow(f, T("shadows"), "shadows", -100, 100, 0),
+                makeSliderRow(f, T("whites"), "whites", -100, 100, 0),
+                makeSliderRow(f, T("blacks"), "blacks", -100, 100, 0),
+                makeSliderRow(f, T("vibrance"), "vibrance", -100, 100, 0),
+                makeSliderRow(f, T("sat"), "sat", -100, 100, 0),
+                makeSliderRow(f, T("skin_protect"), "skin_protect", 0, 100, 0),
             },
 
             f:group_box {
-                title = "输出与目录导入",
+                title = T("out_group"),
                 fill_horizontal = 1,
                 spacing = 5,
                 f:row {
-                    f:static_text { title = "输出格式", width = 68, alignment = "right" },
+                    f:static_text { title = T("fmt_lbl"), width = 68, alignment = "right" },
                     f:popup_menu {
                         value = bind "format",
                         width = 215,
                         items = {
-                            { title = "16 位 TIFF (sRGB · 推荐)", value = "tiff16" },
-                            { title = "JPEG (高品质 95%)", value = "jpeg" },
-                            { title = "PNG (8 位无损)", value = "png" },
+                            { title = T("fmt_tiff16"), value = "tiff16" },
+                            { title = T("fmt_jpeg"), value = "jpeg" },
+                            { title = T("fmt_png"), value = "png" },
                         },
                     },
                 },
                 f:row {
-                    f:static_text { title = "保存位置", width = 68, alignment = "right" },
+                    f:static_text { title = T("dest_lbl"), width = 68, alignment = "right" },
                     f:popup_menu {
                         value = bind "destMode",
                         width = 215,
                         items = {
-                            { title = "与原负片同目录（可自动堆叠）", value = "same_folder" },
-                            { title = "子文件夹 FilmColor_Positive", value = "subfolder" },
+                            { title = T("dest_same"), value = "same_folder" },
+                            { title = T("dest_sub"), value = "subfolder" },
                         },
                     },
                 },
                 f:checkbox {
-                    title = "自动导入当前目录并堆叠在原负片上方",
+                    title = T("chk_stack"),
                     value = bind "stackWithSource",
                 },
                 f:checkbox {
-                    title = "多帧选中时启用整卷片基与色彩协同",
+                    title = T("chk_roll"),
                     value = bind "rollSync",
                     enabled = (#photos >= 2),
                 },
                 f:checkbox {
-                    title = "继承 Lr 裁切与旋转（内框精准测光 + 裁切输出）",
+                    title = T("chk_lr_crop"),
                     value = bind "useLrCrop",
                 },
                 f:checkbox {
-                    title = "无 Lr 裁切时自动裁去片夹黑边",
+                    title = T("chk_auto_crop"),
                     value = bind "autoCrop",
                 },
                 f:checkbox {
-                    title = "同时写入参数 Sidecar (.json)",
+                    title = T("chk_sidecar"),
                     value = bind "writeSidecar",
                 },
             },
@@ -351,14 +353,14 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     }
 
     local actionVerb = (#photos == 1)
-        and "转换并导入正片"
-        or string.format("批量转换并导入 (%d 张)", #photos)
+        and T("btn_convert_one")
+        or T("btn_convert_many", #photos)
 
     local result = LrDialogs.presentModalDialog {
-        title = "FilmColor v1.0 负片暗房",
+        title = T("dialog_title"),
         contents = contents,
         actionVerb = actionVerb,
-        cancelVerb = "取消",
+        cancelVerb = T("btn_cancel"),
     }
     closed = true
     if result ~= "ok" then return end
@@ -378,7 +380,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
 
     -- Run full-resolution sequential conversion with native Lightroom progress bar
     local progress = LrProgressScope {
-        title = string.format("FilmColor v1.0 正在转换 %d 张负片", #photos),
+        title = T("prog_title", #photos),
         functionContext = context,
     }
     progress:setCancelable(true)
@@ -386,7 +388,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local rollId = nil
     local effectiveBase = props.baseMode
     if #photos >= 2 and props.rollSync then
-        progress:setCaption("正在分析整卷片基与色彩一致性…")
+        progress:setCaption(T("prog_roll"))
         local paths = {}
         for i, ph in ipairs(photos) do paths[i] = ph:getRawMetadata("path") end
         local rres = Bridge.post("/plugin/roll_analyze", {
@@ -412,7 +414,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
         local pPath = ph:getRawMetadata("path")
         local pName = ph:getFormattedMetadata("fileName") or pPath
         local pGeom = Bridge.readLrGeometry(ph)
-        progress:setCaption(string.format("正在转换 (%d/%d)：%s", i, #photos, pName))
+        progress:setCaption(T("prog_item", i, #photos, pName))
         progress:setPortionComplete(i - 1, #photos)
 
         local res, cerr = Bridge.post("/plugin/convert", {
@@ -458,13 +460,13 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
 
     if #errors > 0 then
         LrDialogs.message(
-            string.format("FilmColor 转换完成（成功 %d / 失败 %d）", #imported, #errors),
+            T("done_err_title", #imported, #errors),
             table.concat(errors, "\n"),
             "warning"
         )
     elseif canceled then
-        LrDialogs.showBezel(string.format("FilmColor v1.0：已取消（已完成 %d / %d 张）", #imported, #photos), 3.0)
+        LrDialogs.showBezel(T("done_canceled", #imported, #photos), 3.0)
     else
-        LrDialogs.showBezel(string.format("FilmColor v1.0：已完成 %d 张正片转换并导入堆叠", #imported), 3.0)
+        LrDialogs.showBezel(T("done_ok", #imported), 3.0)
     end
 end)

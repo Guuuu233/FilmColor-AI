@@ -1,0 +1,3 @@
+"$$$/FilmColor/Menu/Convert=FilmColor 負片轉換…"
+"$$$/FilmColor/Menu/Quick=FilmColor 快速一鍵轉換"
+"$$$/FilmColor/Menu/Stop=FilmColor 停止背景引擎"

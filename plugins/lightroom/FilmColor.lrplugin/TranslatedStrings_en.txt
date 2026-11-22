@@ -1,0 +1,3 @@
+"$$$/FilmColor/Menu/Convert=FilmColor Negative Conversion..."
+"$$$/FilmColor/Menu/Quick=FilmColor Quick Convert"
+"$$$/FilmColor/Menu/Stop=FilmColor Stop Background Engine"

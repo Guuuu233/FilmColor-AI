@@ -1,0 +1,3 @@
+"$$$/FilmColor/Menu/Convert=FilmColor ネガ変換…"
+"$$$/FilmColor/Menu/Quick=FilmColor クイック変換"
+"$$$/FilmColor/Menu/Stop=FilmColor バックグラウンドエンジンを停止"

@@ -1,21 +1,24 @@
 local LrTasks = import "LrTasks"
 local LrView = import "LrView"
-local LrDialogs = import "LrDialogs"
 local Bridge = require "Bridge"
 local Config = require "Config"
+local I18n = require "I18n"
 
 local bind = LrView.bind
+local T = I18n.t
 
 return {
     startDialog = function(propertyTable)
         local p = Config.prefs()
+        propertyTable.language = p.language or "auto"
         propertyTable.pythonPath = p.pythonPath
         propertyTable.port = tostring(p.port)
-        propertyTable.bridgeStatus = Config.bundledBridgePath() and "已检测到内置独立引擎（免 Python · 开箱即用）" or "点击「检测/启动引擎」查看状态"
+        propertyTable.bridgeStatus = Config.bundledBridgePath() and T("pi_bundled") or T("pi_click")
     end,
 
     endDialog = function(propertyTable)
         local p = Config.prefs()
+        p.language = propertyTable.language or "auto"
         p.pythonPath = propertyTable.pythonPath
         local pn = tonumber(propertyTable.port)
         if pn and pn >= 1024 and pn <= 65535 then p.port = math.floor(pn) end
@@ -24,50 +27,58 @@ return {
     sectionsForTopOfDialog = function(f, propertyTable)
         return {
             {
-                title = "FilmColor v1.0 引擎设置",
+                title = T("pi_title"),
                 bind_to_object = propertyTable,
                 f:row {
-                    f:static_text { title = "Python 路径", width = 90, alignment = "right" },
+                    f:static_text { title = T("pi_lang"), width = 95, alignment = "right" },
+                    f:popup_menu {
+                        value = bind "language",
+                        width = 180,
+                        items = I18n.LANG_ITEMS,
+                    },
+                },
+                f:row {
+                    f:static_text { title = T("pi_py"), width = 95, alignment = "right" },
                     f:edit_field { value = bind "pythonPath", fill_horizontal = 1 },
                 },
                 f:row {
-                    f:static_text { title = "本地端口", width = 90, alignment = "right" },
+                    f:static_text { title = T("pi_port"), width = 95, alignment = "right" },
                     f:edit_field { value = bind "port", width_in_digits = 6 },
                     f:push_button {
-                        title = "检测 / 启动引擎",
+                        title = T("pi_check"),
                         action = function()
                             local p = Config.prefs()
+                            p.language = propertyTable.language or "auto"
                             p.pythonPath = propertyTable.pythonPath
                             p.port = tonumber(propertyTable.port) or Config.DEFAULT_PORT
-                            propertyTable.bridgeStatus = "正在连接本地引擎…"
+                            propertyTable.bridgeStatus = T("pi_connecting")
                             LrTasks.startAsyncTask(function()
                                 local ok, info = Bridge.ensureRunning()
                                 if ok then
-                                    propertyTable.bridgeStatus = "运行中（版本 " .. tostring(info.version) .. " · PID " .. tostring(info.pid) .. "）"
+                                    propertyTable.bridgeStatus = T("pi_running", tostring(info.version), tostring(info.pid))
                                 else
-                                    propertyTable.bridgeStatus = "失败：" .. tostring(info)
+                                    propertyTable.bridgeStatus = T("pi_failed", tostring(info))
                                 end
                             end)
                         end,
                     },
                     f:push_button {
-                        title = "停止引擎",
+                        title = T("pi_stop"),
                         action = function()
                             LrTasks.startAsyncTask(function()
                                 Bridge.shutdown()
-                                propertyTable.bridgeStatus = "已停止"
+                                propertyTable.bridgeStatus = T("pi_stopped")
                             end)
                         end,
                     },
                 },
                 f:row {
-                    f:static_text { title = "当前状态", width = 90, alignment = "right" },
+                    f:static_text { title = T("pi_status"), width = 95, alignment = "right" },
                     f:static_text { title = bind "bridgeStatus", fill_horizontal = 1 },
                 },
                 f:static_text {
-                    title = "快捷键提示：在 macOS「系统设置 → 键盘 → 键盘快捷键 → App 快捷键」中为 Adobe Lightroom Classic 添加菜单「FilmColor 负片转换…」，即可绑定如 Ctrl+Option+F 一键唤出。",
+                    title = T("pi_shortcut"),
                     fill_horizontal = 1,
-                    height_in_lines = 2,
                     font = "<system/small>",
                 },
             },

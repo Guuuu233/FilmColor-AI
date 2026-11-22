@@ -7,6 +7,21 @@ const fs = uxp.storage.localFileSystem;
 const shell = uxp.shell;
 
 const $ = id => document.getElementById(id);
+const T = (...args) => (window.FC_I18N ? window.FC_I18N.t(...args) : args[0]);
+
+function applyI18n() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const k = el.getAttribute("data-i18n");
+    if (k === "ps_no_src" && sourcePath) return;
+    el.textContent = T(k);
+  });
+  if (bridgeOk) {
+    $("connText").textContent = T("ps_connected", "1.0.0");
+  } else {
+    $("connText").textContent = T("ps_disconnected");
+  }
+}
+
 const SLIDER_KEYS = ["ev", "temp", "tint", "contrast", "highlights", "shadows", "whites", "blacks", "vibrance", "sat", "skin_protect"];
 
 let sourcePath = null;
@@ -49,16 +64,16 @@ async function checkBridge() {
     if (r.ok && j.ok) {
       bridgeOk = true;
       $("connDot").className = "dot ok";
-      $("connText").textContent = `FilmColor 引擎已连接 (v${j.version})`;
+      $("connText").textContent = T("ps_connected", j.version);
       if ($("bStartBridge")) $("bStartBridge").style.display = "none";
       return true;
     }
   } catch (_) {}
   bridgeOk = false;
   $("connDot").className = "dot err";
-  $("connText").textContent = "未连接本地引擎（端口 18765）";
+  $("connText").textContent = T("ps_disconnected");
   if ($("bStartBridge")) $("bStartBridge").style.display = "inline-flex";
-  setStatus("引擎未运行，点击「启动引擎」或运行安装包内启动脚本");
+  setStatus(T("ps_offline_hint"));
   return false;
 }
 
@@ -83,7 +98,7 @@ async function updatePreview() {
     try { previewAbort.abort(); } catch (_) {}
   }
   previewAbort = typeof AbortController !== "undefined" ? new AbortController() : null;
-  setStatus("正在渲染 FilmColor v1.0 预览…");
+  setStatus(T("ps_rendering"));
   try {
     const fetchOpts = {
       method: "POST",
@@ -135,7 +150,7 @@ async function pickNegativeFile() {
 
 async function useActiveDocument() {
   if (!app.activeDocument) {
-    return setStatus("Photoshop 当前没有打开任何文档");
+    return setStatus(T("ps_no_doc"));
   }
   try {
     // Try direct file path if active doc is a supported negative on disk
@@ -172,7 +187,7 @@ async function runConvert(asNewDocument) {
   isConverting = true;
   $("bApplyLayer").disabled = true;
   $("bOpenDoc").disabled = true;
-  setStatus("正在全分辨率运行 FilmColor v1.0 转换（16 位）…");
+  setStatus(T("ps_converting"));
   try {
     const preset = $("pPreset").value || "frontier";
     const engine = $("pEngine").value || "t24";
@@ -215,7 +230,7 @@ async function runConvert(asNewDocument) {
         }
       }
     }, { commandName: "FilmColor v1.0 生成正片" });
-    setStatus("转换完成：" + j.output_path);
+    setStatus(T("ps_done", j.output_path));
   } catch (e) {
     setStatus("转换失败：" + e.message);
   } finally {
@@ -264,7 +279,7 @@ async function launchBridgeAndWait(silent = false) {
     if (!silent) setStatus("未找到已安装的本地引擎，请先运行 FilmColor 安装脚本");
     return false;
   }
-  setStatus("正在自动启动 FilmColor v1.0 本地引擎…");
+  setStatus(T("ps_starting"));
   try {
     await shell.openPath(launcher);
   } catch (e) {
@@ -274,7 +289,7 @@ async function launchBridgeAndWait(silent = false) {
   for (let i = 0; i < 24; i++) {
     await new Promise(res => setTimeout(res, 500));
     if (await checkBridge()) {
-      setStatus("FilmColor v1.0 引擎已自动启动并就绪");
+      setStatus(T("ps_started"));
       if (sourcePath) updatePreview();
       return true;
     }
@@ -336,4 +351,12 @@ async function bootConnect() {
     }, 4000);
   }
 }
+if ($("pLang")) {
+  $("pLang").value = window.FC_I18N ? window.FC_I18N.getSavedLang() : "auto";
+  $("pLang").addEventListener("change", () => {
+    if (window.FC_I18N) window.FC_I18N.setLang($("pLang").value || "auto");
+    applyI18n();
+  });
+}
+applyI18n();
 bootConnect();

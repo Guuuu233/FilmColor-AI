@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html>
 <head>
   <meta charset="utf-8">
   <title>FilmColor v1.0</title>
@@ -11,36 +11,54 @@
     <div class="row between header">
       <div class="row gap6">
         <span class="dot" id="connDot"></span>
-        <sp-body size="S" id="connText">正在连接 FilmColor 引擎…</sp-body>
+        <sp-body size="S" id="connText">Connecting...</sp-body>
       </div>
       <div class="row gap4">
-        <sp-action-button quiet size="s" id="bStartBridge" style="display:none">启动引擎</sp-action-button>
-        <sp-action-button quiet size="s" id="bRefreshConn">刷新</sp-action-button>
+        <sp-action-button quiet size="s" id="bStartBridge" style="display:none" data-i18n="ps_start_btn">Start Engine</sp-action-button>
+        <sp-action-button quiet size="s" id="bRefreshConn" data-i18n="ps_refresh_btn">Refresh</sp-action-button>
       </div>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="row between gap6">
+      <sp-label size="S" data-i18n="pi_lang">Language</sp-label>
+      <sp-picker id="pLang" size="s" style="width:140px">
+        <sp-menu slot="options">
+          <sp-menu-item value="auto" selected>Auto / 自动</sp-menu-item>
+          <sp-menu-item value="zh-CN">简体中文</sp-menu-item>
+          <sp-menu-item value="zh-TW">繁體中文</sp-menu-item>
+          <sp-menu-item value="en">English</sp-menu-item>
+          <sp-menu-item value="ja">日本語</sp-menu-item>
+          <sp-menu-item value="ko">한국어</sp-menu-item>
+          <sp-menu-item value="es">Español</sp-menu-item>
+          <sp-menu-item value="fr">Français</sp-menu-item>
+          <sp-menu-item value="de">Deutsch</sp-menu-item>
+        </sp-menu>
+      </sp-picker>
     </div>
 
     <!-- Source Selection -->
     <div class="row gap6">
-      <sp-button variant="secondary" size="s" id="bPickFile" class="flex1">选择负片 RAW/TIFF…</sp-button>
-      <sp-button variant="secondary" size="s" id="bUseActive" class="flex1">读取当前文档</sp-button>
+      <sp-button variant="secondary" size="s" id="bPickFile" class="flex1" data-i18n="ps_pick_file">Open Negative RAW/TIFF...</sp-button>
+      <sp-button variant="secondary" size="s" id="bUseActive" class="flex1" data-i18n="ps_use_active">Use Active Document</sp-button>
     </div>
-    <sp-body size="XS" class="muted truncate" id="srcPathText">尚未选择负片文件</sp-body>
+    <sp-body size="XS" class="muted truncate" id="srcPathText" data-i18n="ps_no_src">No negative selected</sp-body>
 
     <!-- Live Preview Box -->
     <div class="preview-box">
       <img id="previewImg" alt="">
-      <div id="previewEmpty" class="preview-empty">选择负片后自动显示 FilmColor v1.0 实时预览</div>
+      <div id="previewEmpty" class="preview-empty" data-i18n="ps_empty_prev">Select a negative for live FilmColor v1.0 preview</div>
     </div>
     <div class="row between">
       <div class="row gap4">
-        <sp-action-button size="s" id="vAfter" selected>当前效果</sp-action-button>
-        <sp-action-button size="s" id="vAuto">自动基准</sp-action-button>
-        <sp-action-button size="s" id="vNeg">原负片</sp-action-button>
+        <sp-action-button size="s" id="vAfter" selected data-i18n="view_after">Current</sp-action-button>
+        <sp-action-button size="s" id="vAuto" data-i18n="view_auto">Auto Base</sp-action-button>
+        <sp-action-button size="s" id="vNeg" data-i18n="view_neg">Negative</sp-action-button>
       </div>
       <div class="row gap4">
-        <sp-action-button quiet size="s" id="bRotL" title="逆时针旋转 90°">↺</sp-action-button>
-        <sp-action-button quiet size="s" id="bRotR" title="顺时针旋转 90°">↻</sp-action-button>
-        <sp-action-button quiet size="s" id="bResetAdj">重置微调</sp-action-button>
+        <sp-action-button size="s" id="bRotL" title="Rotate Left">↺</sp-action-button>
+        <sp-action-button size="s" id="bRotR" title="Rotate Right">↻</sp-action-button>
+        <sp-action-button size="s" id="bResetAdj" data-i18n="reset_adj">Reset</sp-action-button>
       </div>
     </div>
 
@@ -49,71 +67,72 @@
     <!-- Film / Preset / Engine -->
     <div class="grid2">
       <div>
-        <sp-label size="S">胶片类型</sp-label>
+        <sp-label size="S" data-i18n="film_type">Film Type</sp-label>
         <sp-picker id="pFilm" size="s" class="full">
           <sp-menu slot="options">
-            <sp-menu-item value="color" selected>彩色负片</sp-menu-item>
-            <sp-menu-item value="bw">黑白负片</sp-menu-item>
+            <sp-menu-item value="color" selected data-i18n="film_color">Color Negative (C-41 / ECN-2)</sp-menu-item>
+            <sp-menu-item value="bw" data-i18n="film_bw">Black &amp; White (B&amp;W)</sp-menu-item>
           </sp-menu>
         </sp-picker>
       </div>
       <div>
-        <sp-label size="S">算法引擎</sp-label>
+        <sp-label size="S" data-i18n="engine_lbl">Engine</sp-label>
         <sp-picker id="pEngine" size="s" class="full">
           <sp-menu slot="options">
-            <sp-menu-item value="t24" selected>FilmColor v1.0 (推荐)</sp-menu-item>
-            <sp-menu-item value="t23">物理直出引擎</sp-menu-item>
-            <sp-menu-item value="v3">经典引擎</sp-menu-item>
+            <sp-menu-item value="t24" selected data-i18n="e_t24">FilmColor v1.0 (Recommended)</sp-menu-item>
+            <sp-menu-item value="t23" data-i18n="e_t23">Physical Direct Engine</sp-menu-item>
+            <sp-menu-item value="v3" data-i18n="e_v3">Classic Engine</sp-menu-item>
           </sp-menu>
         </sp-picker>
       </div>
     </div>
 
     <div>
-      <sp-label size="S">风格预设</sp-label>
+      <sp-label size="S" data-i18n="preset_lbl">Style Preset</sp-label>
       <sp-picker id="pPreset" size="s" class="full">
         <sp-menu slot="options">
-          <sp-menu-item value="frontier" selected>富士 Frontier 鲜润（推荐）</sp-menu-item>
-          <sp-menu-item value="leica">德味徕卡 Leica Look</sp-menu-item>
-          <sp-menu-item value="noritsu">诺日士 Noritsu 通透</sp-menu-item>
-          <sp-menu-item value="standard">标准 Standard（保守色度基准）</sp-menu-item>
-          <sp-menu-item value="linear">线性 Linear（高宽容后期自调底稿）</sp-menu-item>
-          <sp-menu-item value="natural">自然 Natural</sp-menu-item>
-          <sp-menu-item value="portrait">人像 Portrait</sp-menu-item>
-          <sp-menu-item value="vivid">鲜明 Vivid</sp-menu-item>
-          <sp-menu-item value="print_classic">经典印相 Print</sp-menu-item>
-          <sp-menu-item value="cinema">电影质感 Cinema</sp-menu-item>
+          <sp-menu-item value="frontier" selected data-i18n="p_frontier">Fuji Frontier (Recommended)</sp-menu-item>
+          <sp-menu-item value="leica" data-i18n="p_leica">Leica Look</sp-menu-item>
+          <sp-menu-item value="noritsu" data-i18n="p_noritsu">Noritsu</sp-menu-item>
+          <sp-menu-item value="standard" data-i18n="p_standard">Standard</sp-menu-item>
+          <sp-menu-item value="linear" data-i18n="p_linear">Linear</sp-menu-item>
+          <sp-menu-item value="natural" data-i18n="p_natural">Natural</sp-menu-item>
+          <sp-menu-item value="portrait" data-i18n="p_portrait">Portrait</sp-menu-item>
+          <sp-menu-item value="vivid" data-i18n="p_vivid">Vivid</sp-menu-item>
+          <sp-menu-item value="print_classic" data-i18n="p_print_classic">Classic Print</sp-menu-item>
+          <sp-menu-item value="cinema" data-i18n="p_cinema">Cinema</sp-menu-item>
         </sp-menu>
       </sp-picker>
     </div>
 
     <sp-divider size="s"></sp-divider>
 
-    <!-- Fine-Tune Sliders (0 = Pure FilmColor v1.0 + Preset) -->
+    <!-- Fine-Tune Sliders -->
     <div id="slidersBox" class="sliders">
-      <sp-slider id="sl_ev" min="-2" max="2" step="0.05" value="0"><sp-label slot="label">曝光 EV</sp-label></sp-slider>
-      <sp-slider id="sl_temp" min="-100" max="100" step="1" value="0"><sp-label slot="label">色温</sp-label></sp-slider>
-      <sp-slider id="sl_tint" min="-100" max="100" step="1" value="0"><sp-label slot="label">色调</sp-label></sp-slider>
-      <sp-slider id="sl_contrast" min="-100" max="100" step="1" value="0"><sp-label slot="label">对比度</sp-label></sp-slider>
-      <sp-slider id="sl_highlights" min="-100" max="100" step="1" value="0"><sp-label slot="label">高光</sp-label></sp-slider>
-      <sp-slider id="sl_shadows" min="-100" max="100" step="1" value="0"><sp-label slot="label">阴影</sp-label></sp-slider>
-      <sp-slider id="sl_whites" min="-100" max="100" step="1" value="0"><sp-label slot="label">白色色阶</sp-label></sp-slider>
-      <sp-slider id="sl_blacks" min="-100" max="100" step="1" value="0"><sp-label slot="label">黑色色阶</sp-label></sp-slider>
-      <sp-slider id="sl_vibrance" min="-100" max="100" step="1" value="0"><sp-label slot="label">自然饱和度</sp-label></sp-slider>
-      <sp-slider id="sl_sat" min="-100" max="100" step="1" value="0"><sp-label slot="label">饱和度</sp-label></sp-slider>
-      <sp-slider id="sl_skin_protect" min="0" max="100" step="1" value="0"><sp-label slot="label">肤色保护</sp-label></sp-slider>
+      <sp-slider id="sl_ev" min="-2" max="2" step="0.05" value="0"><sp-label slot="label" data-i18n="ev">Exposure EV</sp-label></sp-slider>
+      <sp-slider id="sl_temp" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="temp">Temp</sp-label></sp-slider>
+      <sp-slider id="sl_tint" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="tint">Tint</sp-label></sp-slider>
+      <sp-slider id="sl_contrast" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="contrast">Contrast</sp-label></sp-slider>
+      <sp-slider id="sl_highlights" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="highlights">Highlights</sp-label></sp-slider>
+      <sp-slider id="sl_shadows" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="shadows">Shadows</sp-label></sp-slider>
+      <sp-slider id="sl_whites" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="whites">Whites</sp-label></sp-slider>
+      <sp-slider id="sl_blacks" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="blacks">Blacks</sp-label></sp-slider>
+      <sp-slider id="sl_vibrance" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="vibrance">Vibrance</sp-label></sp-slider>
+      <sp-slider id="sl_sat" min="-100" max="100" step="1" value="0"><sp-label slot="label" data-i18n="sat">Saturation</sp-label></sp-slider>
+      <sp-slider id="sl_skin_protect" min="0" max="100" step="1" value="0"><sp-label slot="label" data-i18n="skin_protect">Skin Protect</sp-label></sp-slider>
     </div>
 
-    <sp-checkbox id="chkAutoCrop" size="s">自动裁去片夹黑边</sp-checkbox>
+    <sp-checkbox id="chkAutoCrop" size="s" data-i18n="ps_auto_crop">Auto-crop film holder borders</sp-checkbox>
 
     <!-- Primary Actions -->
     <div class="row gap6 footer">
-      <sp-button variant="cta" size="m" id="bApplyLayer" class="flex1">生成 16 位正片图层</sp-button>
-      <sp-button variant="secondary" size="m" id="bOpenDoc">新建文档</sp-button>
+      <sp-button variant="cta" size="m" id="bApplyLayer" class="flex1" data-i18n="ps_apply_layer">Create 16-bit Positive Layer</sp-button>
+      <sp-button variant="secondary" size="m" id="bOpenDoc" data-i18n="ps_open_doc">New Document</sp-button>
     </div>
-    <sp-body size="XS" class="muted" id="statusMsg">请确保已启动 FilmColor 本地桥接服务（端口 18765）</sp-body>
+    <sp-body size="XS" class="muted" id="statusMsg"></sp-body>
   </div>
 
+  <script src="i18n.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

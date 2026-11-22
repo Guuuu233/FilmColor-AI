@@ -5,29 +5,31 @@ local LrProgressScope = import "LrProgressScope"
 
 local Bridge = require "Bridge"
 local Config = require "Config"
+local I18n = require "I18n"
+local T = I18n.t
 
 LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(context)
     local catalog = LrApplication.activeCatalog()
     local rawPhotos = catalog:getTargetPhotos()
     if not rawPhotos or #rawPhotos == 0 then
-        LrDialogs.message("FilmColor v1.0", "请先选中至少一张负片。", "info")
+        LrDialogs.message(T("app_name"), T("msg_select_neg"), "info")
         return
     end
     local photos = Bridge.filterNegativePhotos(rawPhotos)
     if #photos == 0 then
-        LrDialogs.message("FilmColor v1.0", "当前选中的文件均为已转换的正片（*_FilmColor），请选中原始负片。", "info")
+        LrDialogs.message(T("app_name"), T("msg_all_converted"), "info")
         return
     end
 
     local ok, err = Bridge.ensureRunning()
     if not ok then
-        LrDialogs.message("FilmColor 引擎未就绪", tostring(err), "critical")
+        LrDialogs.message(T("msg_engine_err"), tostring(err), "critical")
         return
     end
 
     local prefs = Config.prefs()
     local progress = LrProgressScope {
-        title = string.format("FilmColor v1.0 快速转换 (%d 张)", #photos),
+        title = T("prog_quick_title", #photos),
         functionContext = context,
     }
     progress:setCancelable(true)
@@ -35,7 +37,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
     local rollId = nil
     local baseMode = prefs.baseMode or "auto"
     if #photos >= 2 and prefs.rollSync then
-        progress:setCaption("正在分析整卷片基与色彩一致性…")
+        progress:setCaption(T("prog_roll"))
         local paths = {}
         for i, ph in ipairs(photos) do paths[i] = ph:getRawMetadata("path") end
         local rres = Bridge.post("/plugin/roll_analyze", {
@@ -54,7 +56,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
         local pPath = ph:getRawMetadata("path")
         local pName = ph:getFormattedMetadata("fileName") or pPath
         local pGeom = Bridge.readLrGeometry(ph)
-        progress:setCaption(string.format("正在转换 (%d/%d)：%s", i, #photos, pName))
+        progress:setCaption(T("prog_item", i, #photos, pName))
         progress:setPortionComplete(i - 1, #photos)
         local res, cerr = Bridge.post("/plugin/convert", {
             path = pPath,
@@ -84,7 +86,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
             if not firstOutPath then firstOutPath = res.output_path end
             if np then imported[#imported + 1] = np end
         else
-            errors[#errors + 1] = pName .. "：" .. tostring(cerr)
+            errors[#errors + 1] = pName .. ": " .. tostring(cerr)
         end
         progress:setPortionComplete(i, #photos)
     end
@@ -94,11 +96,11 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
         Bridge.revealImportedPhotos(catalog, imported, firstOutPath)
     end
     if #errors > 0 then
-        LrDialogs.message(string.format("FilmColor 快速转换（成功 %d / 失败 %d）", #imported, #errors),
-            table.concat(errors, "\n"), "warning")
+        LrDialogs.message(T("done_err_title", #imported, #errors), table.concat(errors, "
+"), "warning")
     elseif canceled then
-        LrDialogs.showBezel(string.format("FilmColor v1.0：已取消（已完成 %d / %d 张）", #imported, #photos), 3.0)
+        LrDialogs.showBezel(T("done_canceled", #imported, #photos), 3.0)
     else
-        LrDialogs.showBezel(string.format("FilmColor v1.0：已完成 %d 张正片转换", #imported), 3.0)
+        LrDialogs.showBezel(T("done_quick_ok", #imported), 3.0)
     end
 end)

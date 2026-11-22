@@ -3,35 +3,35 @@ return {
     LrSdkMinimumVersion = 6.0,
     LrToolkitIdentifier = "com.filmcolor.lightroom",
     LrPluginName = "FilmColor v1.0",
-    LrPluginInfoUrl = "https://github.com/filmcolor-ai",
+    LrPluginInfoUrl = "https://github.com/Guuuu233/FilmColor-AI",
     LrPluginInfoProvider = "PluginInfoProvider.lua",
     LrShutdownPlugin = "Shutdown.lua",
 
     LrLibraryMenuItems = {
         {
-            title = "FilmColor 负片转换…",
+            title = LOC "$$$/FilmColor/Menu/Convert=FilmColor Negative Conversion...",
             file = "ConvertDialog.lua",
             enabledWhen = "photosSelected",
         },
         {
-            title = "FilmColor 快速一键转换",
+            title = LOC "$$$/FilmColor/Menu/Quick=FilmColor Quick Convert",
             file = "QuickConvert.lua",
             enabledWhen = "photosSelected",
         },
         {
-            title = "FilmColor 停止后台引擎",
+            title = LOC "$$$/FilmColor/Menu/Stop=FilmColor Stop Background Engine",
             file = "StopBridge.lua",
         },
     },
 
     LrExportMenuItems = {
         {
-            title = "FilmColor 负片转换…",
+            title = LOC "$$$/FilmColor/Menu/Convert=FilmColor Negative Conversion...",
             file = "ConvertDialog.lua",
             enabledWhen = "photosSelected",
         },
         {
-            title = "FilmColor 快速一键转换",
+            title = LOC "$$$/FilmColor/Menu/Quick=FilmColor Quick Convert",
             file = "QuickConvert.lua",
             enabledWhen = "photosSelected",
         },

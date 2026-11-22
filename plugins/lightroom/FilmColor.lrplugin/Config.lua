@@ -66,6 +66,7 @@ function Config.prefs()
         p.pythonPath = pickDefaultPython()
     end
     if not p.port then p.port = Config.DEFAULT_PORT end
+    if not p.language then p.language = "auto" end
     if not p.engine then p.engine = "t24" end
     if not p.film then p.film = "color" end
     if not p.preset then p.preset = "frontier" end

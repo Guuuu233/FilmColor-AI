@@ -1,0 +1,3 @@
+"$$$/FilmColor/Menu/Convert=FilmColor Conversión de Negativos..."
+"$$$/FilmColor/Menu/Quick=FilmColor Conversión Rápida"
+"$$$/FilmColor/Menu/Stop=FilmColor Detener Motor en Segundo Plano"
