@@ -922,6 +922,7 @@ class RenderParamsT24:
     eps_rgb: tuple[float, float, float] = (0.0, 0.0, 0.0)
     residual_matrix: tuple = ZERO_MATRIX
     matrix: tuple = IDENTITY
+    floor_restore: float = 0.0
 
     def __post_init__(self):
         for name, (lo, hi) in T24_BOUNDS.items():
@@ -932,12 +933,18 @@ class RenderParamsT24:
         self.eps_rgb = _validate_eps_rgb(self.eps_rgb)
         self.residual_matrix = _validate_residual_matrix(self.residual_matrix)
         self.matrix = _validate_matrix(self.matrix)
+        fr = float(self.floor_restore)
+        if not (np.isfinite(fr) and 0.0 <= fr <= 0.50):
+            raise ValueError(f"floor_restore={fr} outside [0.0, 0.50]")
+        self.floor_restore = fr
 
     def to_dict(self) -> dict:
         d = {k: getattr(self, k) for k in T24_BOUNDS}
         d["eps_rgb"] = list(self.eps_rgb)
         d["residual_matrix"] = [list(r) for r in self.residual_matrix]
         d["matrix"] = [list(r) for r in self.matrix]
+        if self.floor_restore != 0.0:
+            d["floor_restore"] = self.floor_restore
         return d
 
     @classmethod
@@ -965,6 +972,10 @@ def _render_t24_core(
     x: np.ndarray, p: RenderParamsT24, m_lin: np.ndarray | None, *, _t19_pre=None
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     owned = False
+    if p.floor_restore > 0.0:
+        fr = np.float32(p.floor_restore)
+        x = np.maximum(x, np.float32(0.0)) * (np.float32(1.0) - fr) + fr
+        owned = True
     if p.eps_rgb != (0.0, 0.0, 0.0):
         eps = np.asarray(p.eps_rgb, dtype=np.float32)
         x = x + eps

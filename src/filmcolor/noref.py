@@ -3065,8 +3065,8 @@ def estimate_params_t24(
                 p23_nomat["ev"] = float(np.clip(p23_nomat["ev"] + lift_soft, -2.5, 2.5))
                 cl = _t24_closed_loop_feats(P_crop128, p23_nomat, mat_tup)
         # Ultra-narrow density-span flat/sky guard: avoid dragging open sky down to mid-grey
-        if narrow_span > 0.0 and p23_nomat["ev"] < -0.70 and cl["cl_luma_p98"] < 0.90:
-            lift_sky = min(0.65, 0.55 * narrow_span * (-0.60 - p23_nomat["ev"]))
+        if narrow_span > 0.0 and p23_nomat["ev"] < -0.55 and cl["cl_luma_p98"] < 0.92:
+            lift_sky = min(0.85, 0.90 * narrow_span * (-0.45 - p23_nomat["ev"]))
             if lift_sky > 1e-3:
                 d_ev_guard += lift_sky
                 p23_nomat["ev"] = float(np.clip(p23_nomat["ev"] + lift_sky, -2.5, 2.5))
@@ -3106,9 +3106,13 @@ def estimate_params_t24(
         p_out["eps_rgb"] = [round(float(esc * np.clip(preds[c], -0.04, 0.04)), 6) for c in ("eps_r", "eps_g", "eps_b")]
     else:
         p_out["eps_rgb"] = [0.0, 0.0, 0.0]
-    if narrow_span > 0.0:
-        floor_lift = 0.035 * narrow_span
-        p_out["eps_rgb"] = [round(float(min(0.06, v + floor_lift)), 6) for v in p_out["eps_rgb"]]
+    # Physical floor restoration for narrow density-span negatives (e.g. open sky / low-DR scenes):
+    # invert() subtracts 10^(-dg/gamma) assuming a true black exists in-frame; restore it smoothly when dg < 0.70.
+    flr_phys = float(10.0 ** (-dg / max(float(gamma), 1e-4)))
+    alpha_flr = float(np.clip((0.70 - dg) / 0.38, 0.0, 1.0))
+    fr_val = round(float(np.clip(alpha_flr * flr_phys, 0.0, 0.45)), 5)
+    if fr_val > 1e-4:
+        p_out["floor_restore"] = fr_val
     if br_pkg["use_mat"]:
         v6 = [float(np.clip(preds[c], -0.20, 0.20)) for c in ("dm_01", "dm_02", "dm_10", "dm_12", "dm_20", "dm_21")]
         dm = [
