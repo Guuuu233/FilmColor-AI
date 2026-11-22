@@ -243,7 +243,16 @@ def _scene_metrics_for_preview(pv: Preview) -> dict[str, float] | None:
             return None
         rp = coerce_render_params(dict(raw_p))
         disp, stats = pv.render_stats(rp)
-        metrics = analyze_scene_metrics(disp, pv.mask, above_white=stats.get("above_white"))
+        # When region_source is central_default (only central 50%), measure scene metrics across
+        # the full 90% interior frame so outer foregrounds (e.g. grass below sky) are not missed.
+        if getattr(pv, "region_source", "") == "central_default":
+            h, w = disp.shape[:2]
+            my, mx = max(1, int(round(h * 0.05))), max(1, int(round(w * 0.05)))
+            sm_mask = np.zeros((h, w), dtype=bool)
+            sm_mask[my:h - my, mx:w - mx] = True
+        else:
+            sm_mask = pv.mask
+        metrics = analyze_scene_metrics(disp, sm_mask, above_white=stats.get("above_white"))
         pv._scene_metrics = metrics
         return metrics
     except Exception:  # noqa: BLE001

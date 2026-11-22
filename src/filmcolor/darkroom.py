@@ -80,8 +80,8 @@ T24_STYLE_PRESETS = {
             hsl={
                 "red": [-0.05, 0.14, -0.09],
                 "orange": [0.02, 0.01, 0.05],
-                "yellow": [-0.10, -0.08, -0.06],
-                "green": [0.08, -0.12, -0.10],
+                "yellow": [-0.04, -0.04, 0.02],
+                "green": [0.05, -0.08, -0.01],
                 "aqua": [0.0, -0.08, -0.06],
                 "blue": [-0.05, 0.10, -0.13],
             },
@@ -271,9 +271,17 @@ def resolve_adaptive_preset(
     # Smooth normalized adaptive drivers (calibrated on 294-negative / 8-camera-format benchmark)
     flatness = float(np.clip((0.72 - dr) / 0.28, -0.60, 1.0))
     hi_pressure = float(np.clip((p98 - 0.87) / 0.12, 0.0, 1.0) * 0.55 + np.clip(hi_clip / 0.12, 0.0, 1.0) * 0.45)
-    sh_lift_need = float(np.clip(max((0.10 - p05) / 0.08, sh_crush / 0.16), 0.0, 1.0))
-    milky_black = float(np.clip((p05 - 0.11) / 0.12, 0.0, 1.0) * np.clip((p50 - 0.32) / 0.16, 0.20, 1.0))
-    veil_need = float(np.clip((min(p02, p05) - 0.07) / 0.14, 0.0, 1.0))
+    sh_lift_need = float(np.clip(max((0.11 - p05) / 0.08, sh_crush / 0.14), 0.0, 1.0))
+    # Do not mistake bright high-key daylight or ultra-narrow open-sky scenes for milky haze
+    high_key_guard = float(np.clip((0.64 - p50) / 0.14, 0.0, 1.0))
+    narrow_dr_guard = float(np.clip((dr - 0.43) / 0.12, 0.0, 1.0))
+    milky_black = float(
+        np.clip((p05 - 0.11) / 0.12, 0.0, 1.0)
+        * np.clip((p50 - 0.32) / 0.16, 0.20, 1.0)
+        * high_key_guard
+        * narrow_dr_guard
+    )
+    veil_need = float(np.clip((min(p02, p05) - 0.07) / 0.14, 0.0, 1.0) * high_key_guard * narrow_dr_guard)
     chroma_headroom = float(np.clip((0.46 - c90) / 0.28, -1.0, 1.0))
     chroma_guard = float(np.clip((c90 - 0.52) / 0.32, 0.0, 1.0))
     skin_present = float(np.clip((skin_share - 0.03) / 0.15, 0.0, 1.0))
@@ -303,26 +311,26 @@ def resolve_adaptive_preset(
             contrast=round(0.07 + 0.09 * flatness - 0.03 * sh_lift_need, 4),
             sat=round(0.03 + 0.07 * chroma_headroom - 0.04 * chroma_guard, 4),
             shoulder=round(0.06 + 0.11 * hi_pressure, 4),
-            toe=round(-0.13 - 0.14 * milky_black + 0.19 * sh_lift_need, 4),
+            toe=round(-0.06 - 0.08 * milky_black + 0.20 * sh_lift_need, 4),
             tint=round(0.003 + 0.028 * green_cast - 0.022 * magenta_cast, 4),
             temp=round(0.002 + 0.008 * max(cool_need, 0.0) - 0.014 * warm_excess, 4),
         )
         hsl = {
-            "red": [-0.05, round((0.11 + 0.07 * max(chroma_headroom, 0.0)) * hsl_c, 3), -0.09],
+            "red": [-0.05, round((0.11 + 0.07 * max(chroma_headroom, 0.0)) * hsl_c, 3), -0.07],
             "orange": [0.02, round((-0.02 + 0.04 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(0.04 + 0.03 * skin_present, 3)],
-            "yellow": [-0.10, -0.08, -0.06],
-            "green": [0.08, round(-0.13 + 0.05 * max(chroma_headroom, 0.0), 3), round(-0.10 + 0.05 * max(dark_mid, 0.0), 3)],
-            "aqua": [0.0, -0.08, -0.06],
-            "blue": [-0.05, round((0.07 + 0.07 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(-0.11 - 0.06 * blue_present - 0.03 * hi_pressure, 3)],
+            "yellow": [-0.04, -0.04, 0.02],
+            "green": [0.05, round(-0.08 + 0.05 * max(chroma_headroom, 0.0), 3), round(0.01 + 0.04 * max(dark_mid, 0.0), 3)],
+            "aqua": [0.0, -0.06, -0.03],
+            "blue": [-0.05, round((0.07 + 0.07 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(-0.09 - 0.05 * blue_present - 0.03 * hi_pressure, 3)],
         }
         split_s = 0.85 + 0.25 * max(chroma_headroom, -0.3)
         grade = dict(
             vibrance=round(0.07 + 0.09 * chroma_headroom - 0.05 * chroma_guard, 4),
             highlights=round(-0.08 - 0.18 * hi_pressure, 4),
-            shadows=round(0.04 + 0.19 * sh_lift_need, 4),
-            blacks=round(-0.05 - 0.09 * milky_black + 0.11 * sh_lift_need, 4),
-            clarity=round(0.10 + 0.07 * max(flatness, 0.0), 4),
-            dehaze=round(0.02 + 0.10 * veil_need, 4),
+            shadows=round(0.06 + 0.19 * sh_lift_need, 4),
+            blacks=round(-0.02 - 0.05 * milky_black + 0.10 * sh_lift_need, 4),
+            clarity=round(0.08 + 0.06 * max(flatness, 0.0) * narrow_dr_guard, 4),
+            dehaze=round(0.01 + 0.07 * veil_need, 4),
             sharpen=0.10,
             vignette=round(-0.11 * (1.0 - 0.55 * sh_lift_need), 3),
             skin_protect=round(0.22 + 0.25 * skin_present, 4),
@@ -359,23 +367,24 @@ def resolve_adaptive_preset(
             contrast=round(0.06 + 0.09 * flatness - 0.02 * sh_lift_need, 4),
             sat=round(0.05 + 0.08 * chroma_headroom - 0.05 * chroma_guard, 4),
             shoulder=round(-0.01 + 0.12 * hi_pressure, 4),
-            toe=round(-0.09 - 0.13 * milky_black + 0.15 * sh_lift_need, 4),
+            toe=round(-0.03 - 0.07 * milky_black + 0.18 * sh_lift_need, 4),
             tint=round(0.003 + 0.028 * green_cast - 0.022 * magenta_cast, 4),
             temp=round(0.001 + 0.009 * max(cool_need, 0.0) - 0.015 * warm_excess, 4),
         )
         hsl = {
-            "green": [-0.08, round((0.08 + 0.05 * max(chroma_headroom, 0.0)) * hsl_c, 3), -0.03],
+            "yellow": [0.02, round(0.03 * hsl_c, 3), 0.04],
+            "green": [0.02, round((0.08 + 0.05 * max(chroma_headroom, 0.0)) * hsl_c, 3), 0.06],
             "orange": [0.0, round((0.04 + 0.03 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(0.03 + 0.03 * skin_present, 3)],
-            "blue": [-0.03, round(0.04 * max(chroma_headroom, 0.0) * hsl_c, 3), round(-0.04 * blue_present - 0.03 * hi_pressure, 3)],
+            "blue": [-0.03, round(0.04 * max(chroma_headroom, 0.0) * hsl_c, 3), round(-0.03 * blue_present - 0.03 * hi_pressure, 3)],
         }
         grade = dict(
             vibrance=round(0.09 + 0.09 * chroma_headroom - 0.06 * chroma_guard, 4),
             highlights=round(-0.05 - 0.19 * hi_pressure, 4),
-            shadows=round(0.14 * sh_lift_need, 4),
-            blacks=round(-0.03 - 0.08 * milky_black + 0.08 * sh_lift_need, 4),
+            shadows=round(0.05 + 0.18 * sh_lift_need, 4),
+            blacks=round(-0.01 - 0.04 * milky_black + 0.08 * sh_lift_need, 4),
             whites=round(0.04 * (1.0 - hi_pressure), 4),
-            clarity=round(0.04 + 0.05 * max(flatness, 0.0), 4),
-            dehaze=round(0.07 * veil_need, 4),
+            clarity=round(0.03 + 0.04 * max(flatness, 0.0) * narrow_dr_guard, 4),
+            dehaze=round(0.05 * veil_need, 4),
             skin_protect=round(0.18 * skin_present, 4),
             hsl=hsl,
         )
