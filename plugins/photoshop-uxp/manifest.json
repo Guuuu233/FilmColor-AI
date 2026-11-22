@@ -17,6 +17,17 @@
         "http://127.0.0.1:18765",
         "http://localhost:18765"
       ]
+    },
+    "launchProcess": {
+      "schemes": [
+        "http",
+        "https"
+      ],
+      "extensions": [
+        ".command",
+        ".bat",
+        ".exe"
+      ]
     }
   },
   "entrypoints": [
@@ -42,6 +53,34 @@
       "label": {
         "default": "FilmColor v1.0"
       }
+    }
+  ],
+  "icons": [
+    {
+      "width": 48,
+      "height": 48,
+      "path": "icons/icon_dark.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "dark",
+        "darkest"
+      ]
+    },
+    {
+      "width": 48,
+      "height": 48,
+      "path": "icons/icon_light.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "light",
+        "lightest"
+      ]
     }
   ]
 }

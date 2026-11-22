@@ -95,8 +95,15 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
     bin_dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(built_dir, bin_dst)
 
+    ps_src = REPO / "plugins" / "photoshop-uxp"
     ps_dst = rel_dir / "FilmColor-Photoshop-UXP"
-    shutil.copytree(REPO / "plugins" / "photoshop-uxp", ps_dst)
+    shutil.copytree(ps_src, ps_dst)
+    # Package double-click Creative Cloud installer (.ccx)
+    ccx_path = rel_dir / f"FilmColor-v{VERSION}-Photoshop.ccx"
+    with zipfile.ZipFile(ccx_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
+        for f in sorted(ps_src.rglob("*")):
+            if f.is_file() and not f.name.startswith("."):
+                zf.write(f, f.relative_to(ps_src))
     shutil.copy2(REPO / "plugins" / "README.md", rel_dir / "README.md")
 
     if sys.platform == "win32":
@@ -107,6 +114,8 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
             'if not exist "%APPDATA%\\Adobe\\Lightroom\\Modules" mkdir "%APPDATA%\\Adobe\\Lightroom\\Modules"\r\n'
             'if exist "%DST%" rmdir /s /q "%DST%"\r\n'
             'xcopy /E /I /Y /Q "%SRC%" "%DST%" >nul\r\n'
+            'if not exist "%APPDATA%\\FilmColor" mkdir "%APPDATA%\\FilmColor"\r\n'
+            '(\@echo off & echo start "" /B /D "%DST%\\bin\\win\\filmcolor-bridge" "%DST%\\bin\\win\\filmcolor-bridge\\filmcolor-bridge.exe" --port 18765) > "%APPDATA%\\FilmColor\\start_bridge.bat"\r\n'
             "echo.\r\n"
             "echo [OK] FilmColor v1.0 已安装到 Lightroom Classic（内置引擎，免装 Python）！\r\n"
             "echo 重启 Adobe Lightroom Classic 即可在「图库 → 增效工具额外信息 → FilmColor 负片转换…」使用。\r\n"
@@ -131,6 +140,13 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
             'cp -R "$DIR/FilmColor.lrplugin" "$DST"\n'
             'chmod +x "$DST/bin/mac/filmcolor-bridge/filmcolor-bridge"\n'
             'xattr -dr com.apple.quarantine "$DST" 2>/dev/null || true\n'
+            'FC_DIR="$HOME/Library/Application Support/FilmColor"\n'
+            'mkdir -p "$FC_DIR"\n'
+            'cat > "$FC_DIR/start_bridge.command" <<EOF\n'
+            '#!/bin/bash\n'
+            'nohup "$DST/bin/mac/filmcolor-bridge/filmcolor-bridge" --port 18765 >/tmp/filmcolor_ps_bridge.log 2>&1 </dev/null &\n'
+            'EOF\n'
+            'chmod +x "$FC_DIR/start_bridge.command"\n'
             'echo ""\n'
             'echo "[OK] FilmColor v1.0 已安装到 Lightroom Classic（内置独立引擎，免装 Python）！"\n'
             'echo "重启 Adobe Lightroom Classic 即可在「图库 → 增效工具额外信息 → FilmColor 负片转换…」使用。"\n'

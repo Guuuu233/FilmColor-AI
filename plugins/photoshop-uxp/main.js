@@ -2,7 +2,9 @@
 const BRIDGE_URL = "http://127.0.0.1:18765";
 const ps = require("photoshop");
 const { app, core, action } = ps;
-const fs = require("uxp").storage.localFileSystem;
+const uxp = require("uxp");
+const fs = uxp.storage.localFileSystem;
+const shell = uxp.shell;
 
 const $ = id => document.getElementById(id);
 const SLIDER_KEYS = ["ev", "temp", "tint", "contrast", "highlights", "shadows", "whites", "blacks", "vibrance", "sat", "skin_protect"];
@@ -48,13 +50,15 @@ async function checkBridge() {
       bridgeOk = true;
       $("connDot").className = "dot ok";
       $("connText").textContent = `FilmColor 引擎已连接 (v${j.version})`;
+      if ($("bStartBridge")) $("bStartBridge").style.display = "none";
       return true;
     }
   } catch (_) {}
   bridgeOk = false;
   $("connDot").className = "dot err";
   $("connText").textContent = "未连接本地引擎（端口 18765）";
-  setStatus("请先运行 start_filmcolor_bridge.command (macOS) 或 start_filmcolor_bridge.bat (Windows) 启动本地引擎");
+  if ($("bStartBridge")) $("bStartBridge").style.display = "inline-flex";
+  setStatus("引擎未运行，点击「启动引擎」或运行安装包内启动脚本");
   return false;
 }
 
@@ -222,7 +226,65 @@ async function runConvert(asNewDocument) {
 }
 
 // Wire up UI events
+
+let autoStartTried = false;
+
+async function findBridgeLauncher() {
+  try {
+    const df = await fs.getDataFolder();
+    const p = String(df.nativePath || "");
+    const cands = [];
+    const macMatch = p.match(/^(\/Users\/[^/]+)/);
+    const winMatch = p.match(/^([A-Za-z]:\\Users\\[^\\]+)/i);
+    if (macMatch) {
+      const home = macMatch[1];
+      cands.push(`${home}/Library/Application Support/FilmColor/start_bridge.command`);
+    } else if (winMatch) {
+      const home = winMatch[1];
+      cands.push(`${home}\\AppData\\Roaming\\FilmColor\\start_bridge.bat`);
+      cands.push(`${home}\\AppData\\Roaming\\Adobe\\Lightroom\\Modules\\FilmColor.lrplugin\\bin\\win\\filmcolor-bridge\\filmcolor-bridge.exe`);
+    }
+    for (const c of cands) {
+      try {
+        const entry = await fs.getEntryWithUrl(encodeFileUrl(c));
+        if (entry) return c;
+      } catch (_) {}
+    }
+  } catch (_) {}
+  return null;
+}
+
+async function launchBridgeAndWait(silent = false) {
+  if (!shell || typeof shell.openPath !== "function") {
+    if (!silent) setStatus("当前 Photoshop 版本不支持自动拉起，请双击运行 Start_Bridge_for_Photoshop 脚本");
+    return false;
+  }
+  const launcher = await findBridgeLauncher();
+  if (!launcher) {
+    if (!silent) setStatus("未找到已安装的本地引擎，请先运行 FilmColor 安装脚本");
+    return false;
+  }
+  setStatus("正在自动启动 FilmColor v1.0 本地引擎…");
+  try {
+    await shell.openPath(launcher);
+  } catch (e) {
+    if (!silent) setStatus("自动启动引擎失败：" + e.message);
+    return false;
+  }
+  for (let i = 0; i < 24; i++) {
+    await new Promise(res => setTimeout(res, 500));
+    if (await checkBridge()) {
+      setStatus("FilmColor v1.0 引擎已自动启动并就绪");
+      if (sourcePath) updatePreview();
+      return true;
+    }
+  }
+  if (!silent) setStatus("引擎启动超时，请手动运行 Start_Bridge_for_Photoshop 脚本");
+  return false;
+}
+
 $("bRefreshConn").addEventListener("click", checkBridge);
+if ($("bStartBridge")) $("bStartBridge").addEventListener("click", () => launchBridgeAndWait(false));
 $("bPickFile").addEventListener("click", pickNegativeFile);
 $("bUseActive").addEventListener("click", useActiveDocument);
 $("bApplyLayer").addEventListener("click", () => runConvert(false));
@@ -259,7 +321,11 @@ for (const k of SLIDER_KEYS) {
 
 let reconnectTimer = null;
 async function bootConnect() {
-  const ok = await checkBridge();
+  let ok = await checkBridge();
+  if (!ok && !autoStartTried) {
+    autoStartTried = true;
+    ok = await launchBridgeAndWait(true);
+  }
   if (!ok && !reconnectTimer) {
     reconnectTimer = setInterval(async () => {
       if (await checkBridge()) {

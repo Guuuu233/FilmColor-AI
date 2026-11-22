@@ -92,11 +92,40 @@ def install_lightroom(*, force: bool = False) -> Path:
     return lr_dst
 
 
+def install_ps_bridge_launcher() -> Path:
+    """Install a silent on-demand launcher at a fixed user-data path so Photoshop UXP can auto-start the bridge."""
+    venv_py = _venv_python()
+    if sys.platform == "win32":
+        appdata = os.environ.get("APPDATA") or str(Path.home() / "AppData" / "Roaming")
+        dst_dir = Path(appdata) / "FilmColor"
+        dst_dir.mkdir(parents=True, exist_ok=True)
+        dst = dst_dir / "start_bridge.bat"
+        bat = (
+            "@echo off\r\n"
+            f'start "" /B /D "{REPO}" "{venv_py}" -m filmcolor.plugin_bridge --port 18765\r\n'
+        )
+        dst.write_text(bat, encoding="utf-8")
+        print(f"[OK] Installed Photoshop auto-start launcher: {dst}")
+        return dst
+    dst_dir = Path.home() / "Library" / "Application Support" / "FilmColor"
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    dst = dst_dir / "start_bridge.command"
+    sh = (
+        "#!/bin/bash\n"
+        f'cd "{REPO}" && nohup "{venv_py}" -m filmcolor.plugin_bridge --port 18765 >/tmp/filmcolor_ps_bridge.log 2>&1 </dev/null &\n'
+    )
+    dst.write_text(sh, encoding="utf-8")
+    dst.chmod(dst.stat().st_mode | 0o111)
+    print(f"[OK] Installed Photoshop auto-start launcher: {dst}")
+    return dst
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Install FilmColor v1.0 plugins for Lightroom Classic & Photoshop")
     ap.add_argument("--force", action="store_true", help="replace existing FilmColor.lrplugin installation")
     a = ap.parse_args(argv)
     install_lightroom(force=a.force)
+    install_ps_bridge_launcher()
     venv_py = _venv_python()
     print(f"[INFO] FilmColor Python venv: {venv_py} ({'exists' if venv_py.exists() else 'NOT FOUND'})")
     print(f"[INFO] Photoshop UXP folder : {PS_SRC}")
