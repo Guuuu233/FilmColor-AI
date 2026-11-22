@@ -1312,10 +1312,17 @@ def apply_geometry(
             center = np.array([(h - 1) / 2.0, (w - 1) / 2.0], dtype=np.float64)
             offset = center - mat @ center
             rot_out = np.empty_like(out)
-            def _rot_ch(c):
-                affine_transform(out[..., c], mat, offset=offset, output=rot_out[..., c], order=1, mode="nearest")
-            list(_get_pool().map(_rot_ch, range(out.shape[2])))
-            np.clip(rot_out, np.float32(0.0), np.float32(1.0), out=rot_out)
+            src_cs = [np.ascontiguousarray(out[..., c]) for c in range(out.shape[2])]
+            def _rot_chunk(rr):
+                r0, r1 = rr
+                off_r = offset + mat[:, 0] * r0
+                for c in range(len(src_cs)):
+                    dst_c = np.empty((r1 - r0, w), dtype=np.float32)
+                    affine_transform(src_cs[c], mat, offset=off_r, output_shape=(r1 - r0, w),
+                                     output=dst_c, order=1, mode="nearest", prefilter=False)
+                    np.clip(dst_c, np.float32(0.0), np.float32(1.0), out=dst_c)
+                    rot_out[r0:r1, :, c] = dst_c
+            _run_row_chunks(h, _rot_chunk, step=256)
             out = rot_out
     if apply_crop and gm.crop is not None:
         t, l, b, r = gm.crop
@@ -1372,7 +1379,7 @@ def export_image(
             arr = np.clip(np.stack(chans, axis=-1), 0.0, 1.0)
             im = None
         else:
-            u8 = np.round(arr * 255.0).astype(np.uint8)
+            u8 = np.clip(arr * np.float32(255.0) + np.float32(0.5), np.float32(0.0), np.float32(255.0)).astype(np.uint8)
             im = Image.fromarray(u8, mode="RGB").resize((nw, nh), Image.Resampling.LANCZOS)
             arr = None
     else:
@@ -1400,7 +1407,7 @@ def export_image(
         return path
 
     if im is None:
-        u8 = np.round(arr * 255.0).astype(np.uint8)
+        u8 = np.clip(arr * np.float32(255.0) + np.float32(0.5), np.float32(0.0), np.float32(255.0)).astype(np.uint8)
         im = Image.fromarray(u8, mode="RGB")
     icc = icc_profile("srgb")
     if fmt == "jpeg":

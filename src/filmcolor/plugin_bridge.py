@@ -344,20 +344,29 @@ def _fast_load_camera_preview(
     base_mode: str,
     extra: dict,
     lr_crop: tuple[float, float, float, float] | None,
+    preloaded: tuple | None = None,
 ) -> tuple[Preview, list | None]:
     """Ultra-fast single-open camera RAW preview: uses C-level LibRaw half_size=True directly for base,
     white-point, T24 estimation, and preview (15-30x faster than full AHD + CFA copy)."""
-    with open_rawpy(path) as r:
-        raw_m = np.asarray(r.rgb_xyz_matrix)[:3].tolist()
-        s_sz = r.sizes
-        full_shape = (int(s_sz.height), int(s_sz.width))
-        rgb_half = _postprocess_half_linear(r)
+    if preloaded is not None:
+        rgb4, grid_div, raw_m, full_shape, sp, sp_sat = preloaded
+        hh, hw = full_shape[0] // 2, full_shape[1] // 2
+    else:
+        with open_rawpy(path) as r:
+            raw_m = np.asarray(r.rgb_xyz_matrix)[:3].tolist()
+            s_sz = r.sizes
+            full_shape = (int(s_sz.height), int(s_sz.width))
+            rgb_half = _postprocess_half_linear(r)
 
-    hh, hw = rgb_half.shape[:2]
-    # 12x12 blocks on half_size == exact 24x24 sensor blocks (~0.08s vs 5.7s CFA extract+linearize!)
-    sat_half = rgb_half.max(-1) >= np.float32(0.999)
-    sp, sp_sat = block_means(rgb_half, sat_half, 12)
-    del sat_half
+        hh, hw = rgb_half.shape[:2]
+        # 12x12 blocks on half_size == exact 24x24 sensor blocks (~0.08s vs 5.7s CFA extract+linearize!)
+        sat_half = rgb_half.max(-1) >= np.float32(0.999)
+        sp, sp_sat = block_means(rgb_half, sat_half, 12)
+        del sat_half
+        # Downsample rgb_half 2x2 -> exact 4x4 sensor grid (~0.18s vs 1.15s!) for white-point, T24 estimation & preview
+        rgb4 = _block_mean2_f32(rgb_half)
+        del rgb_half
+        grid_div = 4
 
     base_source = extra.get("base_source")
     if extra.get("base_rgb") is not None:
@@ -372,9 +381,6 @@ def _fast_load_camera_preview(
         inside_img = float(np.mean([t0 <= y < t0 + h0 and l0 <= x < l0 + w0 for y, x in centres]))
         base_info = dict(method="auto", estimate=est.to_dict(), rgb_render=base_rgb)
 
-    # Downsample rgb_half 2x2 -> exact 4x4 sensor grid (~0.18s vs 1.15s!) for white-point, T24 estimation & preview
-    rgb4 = _block_mean2_f32(rgb_half)
-    del rgb_half
     h4, w4 = rgb4.shape[:2]
 
     if lr_crop is not None:
@@ -387,7 +393,7 @@ def _fast_load_camera_preview(
         reg_src = "central_default"
 
     mask4 = region_mask((h4, w4), img_reg_4)
-    wb4 = max(1, WHITE_BLOCK // 4)
+    wb4 = max(1, WHITE_BLOCK // grid_div)
 
     def _fast_q_invert(b_rgb):
         b32 = np.asarray(b_rgb, dtype=np.float32)
@@ -474,7 +480,7 @@ def _fast_load_camera_preview(
     report = dict(inv_report, input_center_p99=center_p99, input_warnings=input_warnings(inv_dict["d_hi"], center_p99))
 
     pv = Preview(
-        path=path, sha256="", factor=f_down * 4, positive=small, mask=msk_small,
+        path=path, sha256="", factor=f_down * grid_div, positive=small, mask=msk_small,
         image_region=img_reg_full, region_source=reg_src, film=film,
         base_info=base_info, inversion=inv_dict, white_pct=WHITE_PCT, report=report,
         base_inside_image=inside_img, full_shape=full_shape, auto=auto_info,
@@ -917,12 +923,16 @@ class PluginBridgeState:
             raise ValueError(f"engine must be one of {ENGINES}, got {engine!r}")
         do_pool = bool(body.get("roll_pool", True)) and engine == "t24" and len(raw_paths) >= 2
 
+        from concurrent.futures import ThreadPoolExecutor
+
         exif = _exif_info(raw_paths)
-        own_map, exp_map, scans = {}, {}, {}
-        for p in raw_paths:
-            if not p.is_file():
-                continue
+        existing_paths = [p for p in raw_paths if p.is_file()]
+        own_map, exp_map, scans, preloaded_map = {}, {}, {}, {}
+        use_div8 = len(existing_paths) > 12
+
+        def _scan_frame(p: Path):
             is_scan = is_scanner_dng(p, allow_frozen=True)
+            preload = None
             if is_scan:
                 fr = load_scanner(p, allow_frozen=True)
                 sp, sp_sat = block_means(fr.rgb, fr.sat, 24)
@@ -930,20 +940,45 @@ class PluginBridgeState:
                 blk = 24
             else:
                 with open_rawpy(p) as r:
+                    raw_m = np.asarray(r.rgb_xyz_matrix)[:3].tolist()
+                    s_sz = r.sizes
+                    full_shape = (int(s_sz.height), int(s_sz.width))
                     rgb_half = _postprocess_half_linear(r)
                 sat_half = rgb_half.max(-1) >= np.float32(0.999)
                 sp, sp_sat = block_means(rgb_half, sat_half, 12)
-                del rgb_half, sat_half
+                del sat_half
+                if do_pool:
+                    rgb_g = _block_mean2_f32(rgb_half)
+                    g_div = 4
+                    if use_div8 and min(rgb_g.shape[:2]) >= 400:
+                        rgb_g = _block_mean2_f32(rgb_g)
+                        g_div = 8
+                    preload = (rgb_g, g_div, raw_m, full_shape, sp, sp_sat)
+                del rgb_half
                 blk = 12
             p01 = block48_L_p01(sp, sp_sat, block=blk, crop=None)
             try:
                 est = estimate_base_blocks(sp, sp_sat, block=blk, crop=None, exclude_near_saturated=not is_scan)
                 own = list(est.rgb)
-                own_map[str(p)] = own
-                exp_map[str(p)] = exif[p]["exposure"]
             except ValueError:
                 own = None
-            scans[str(p)] = dict(own_rgb=own, block48_L_p01=p01, exposure=exif[p]["exposure"])
+            return p, own, p01, preload
+
+        if len(existing_paths) >= 2:
+            with ThreadPoolExecutor(max_workers=min(3, len(existing_paths))) as ex:
+                scan_results = list(ex.map(_scan_frame, existing_paths))
+        else:
+            scan_results = [_scan_frame(p) for p in existing_paths]
+
+        for p, own, p01, preload in scan_results:
+            ps = str(p)
+            exp_v = exif[p]["exposure"]
+            if own is not None:
+                own_map[ps] = own
+                exp_map[ps] = exp_v
+            scans[ps] = dict(own_rgb=own, block48_L_p01=p01, exposure=exp_v)
+            if preload is not None:
+                preloaded_map[ps] = preload
 
         rb = None
         if len(own_map) >= 2:
@@ -974,10 +1009,12 @@ class PluginBridgeState:
                 try:
                     fe = frames_out.get(str(p), {})
                     extra = dict(base_rgb=fe["nat_rgb"]) if fe.get("nat_rgb") is not None else {}
-                    if not is_scanner_dng(p, allow_frozen=True):
+                    pl = preloaded_map.pop(str(p), None)
+                    if pl is not None or not is_scanner_dng(p, allow_frozen=True):
                         pv, _ = _fast_load_camera_preview(
                             p, max_side=256, film=film, engine="t24", preset="standard",
                             base_mode="roll_nat" if extra else "auto", extra=extra, lr_crop=None,
+                            preloaded=pl,
                         )
                     else:
                         cfg = _auto_cfg(p, film, "t24", "standard")

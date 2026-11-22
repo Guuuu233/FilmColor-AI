@@ -6,6 +6,7 @@ its description. It is not a colorimetric claim.
 """
 from __future__ import annotations
 
+from functools import lru_cache
 import struct
 
 import numpy as np
@@ -48,6 +49,7 @@ def _curv(encoding: str) -> bytes:
     return b"curv" + bytes(4) + struct.pack(">I", 4096) + table
 
 
+@lru_cache(maxsize=4)
 def icc_profile(encoding: str = "srgb") -> bytes:
     """Minimal ICC v2.1 RGB display profile (matrix/TRC). Deterministic: no date, no profile ID."""
     if encoding not in ENCODINGS:
@@ -83,7 +85,10 @@ def icc_profile(encoding: str = "srgb") -> bytes:
 
 
 def to_uint16(img) -> np.ndarray:
-    return np.round(np.clip(img, 0, 1) * 65535).astype(np.uint16)
+    out = np.clip(np.asarray(img, dtype=np.float32), np.float32(0.0), np.float32(1.0))
+    out *= np.float32(65535.0)
+    out += np.float32(0.5)
+    return out.astype(np.uint16)
 
 
 def write_tiff16(path, img, encoding: str = "srgb") -> None:
