@@ -156,7 +156,7 @@ T2（P4 / 7 参数上限的 ΔE 中位数，节选）：
 ## 9. 复现
 
 ```bash
-export FILMCOLOR_DATA_ROOT=/Volumes/waizhiyingpan/filmcolor_data
+export FILMCOLOR_DATA_ROOT=<EXTERNAL_VOLUME>/filmcolor_data
 F=data/manifests/s3_dev_frames.json
 python scripts/diag_roll_base.py $F experiments/s3_diag/roll_base.json own-e5207-20240401-dsc6161 own-e5207-20240323-dsc8242 own-g200-20240320-dsc4889
 python scripts/diag_build_T.py $F ext:A002 ext:A008 ext:A019 ext:A023 ext:A140 ext:A196

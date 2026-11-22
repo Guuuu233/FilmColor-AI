@@ -861,6 +861,31 @@ class PluginBridgeState:
         self._open_neg_size: tuple | None = None
 
         self.rolls: dict[str, dict] = {}
+        self._purge_stale_previews()
+
+    def _purge_stale_previews(self, max_age_s: float = 3600.0) -> None:
+        now = time.time()
+        try:
+            for f in self.preview_dir.iterdir():
+                if f.is_file() and f.suffix == ".png" and (f.name.startswith("prev_") or f.name.startswith("neg_")):
+                    if now - f.stat().st_mtime > max_age_s:
+                        f.unlink(missing_ok=True)
+        except OSError:
+            pass
+
+    def trim_caches(self) -> None:
+        """Release cached preview/roll arrays when bridge has been idle to minimize resident RAM."""
+        with self.lock:
+            had = self._open_pv is not None or bool(self.rolls)
+            self._open_pv = None
+            self._open_key = None
+            self._open_raw_m = None
+            self._open_neg_path = None
+            self._open_neg_size = None
+            self.rolls.clear()
+            self._cleanup_old_previews(keep=0)
+        if had:
+            gc.collect()
 
     def touch(self):
         self.last_activity = time.monotonic()
@@ -985,7 +1010,7 @@ class PluginBridgeState:
         preset = body.get("preset", "standard")
         base_mode = body.get("base_mode", "auto")
         roll_id = body.get("roll_id")
-        softness = float(body.get("softness", 0.5))
+        softness = float(np.clip(float(body.get("softness", 0.5)), 0.0, 1.0))
         use_roll_pool = bool(body.get("roll_pool", False))
         auto_crop = bool(body.get("auto_crop", False))
         use_lr_crop = bool(body.get("use_lr_crop", True))
@@ -1223,7 +1248,7 @@ class PluginBridgeState:
         base_mode = body.get("base_mode", "auto")
         roll_id = body.get("roll_id")
         use_roll_pool = bool(body.get("roll_pool", False))
-        softness = float(body.get("softness", 0.5))
+        softness = float(np.clip(float(body.get("softness", 0.5)), 0.0, 1.0))
         auto_crop = bool(body.get("auto_crop", False))
         use_lr_crop = bool(body.get("use_lr_crop", True))
         lr_crop = _normalize_lr_crop(body.get("lr_crop")) if use_lr_crop else None
@@ -1236,7 +1261,7 @@ class PluginBridgeState:
         if fmt not in ("tiff16", "jpeg", "png"):
             raise ValueError(f"unsupported format {fmt!r}; expected 'tiff16', 'jpeg', or 'png'")
         encoding = str(body.get("encoding", "srgb")).lower()
-        quality = int(body.get("quality", 95))
+        quality = int(np.clip(int(body.get("quality", 95)), 50, 100))
         max_edge = body.get("max_edge")
         max_edge = int(max_edge) if max_edge not in (None, "", 0, "0") else None
         write_sidecar = bool(body.get("write_sidecar", False))
@@ -1407,6 +1432,8 @@ class BridgeHandler(BaseHTTPRequestHandler):
 
     def _read_body(self) -> dict:
         n = int(self.headers.get("Content-Length") or 0)
+        if n < 0 or n > 16 * 1024 * 1024:
+            raise ValueError(f"invalid Content-Length: {n}")
         data = json.loads(self.rfile.read(n) or b"{}")
         if not isinstance(data, dict):
             raise ValueError("JSON request body must be an object")
@@ -1460,11 +1487,19 @@ def serve_bridge(port: int = DEFAULT_PORT, *, idle_timeout: int = DEFAULT_IDLE_T
 
     if idle_timeout and idle_timeout > 0:
         def watchdog():
+            trimmed = False
             while True:
                 time.sleep(min(30, max(1, idle_timeout // 4)))
-                if time.monotonic() - st.last_activity > idle_timeout:
+                idle = time.monotonic() - st.last_activity
+                if idle > idle_timeout:
+                    st.trim_caches()
                     srv.shutdown()
                     break
+                if idle > 300 and not trimmed:
+                    st.trim_caches()
+                    trimmed = True
+                elif idle < 60:
+                    trimmed = False
         threading.Thread(target=watchdog, daemon=True).start()
 
     return srv

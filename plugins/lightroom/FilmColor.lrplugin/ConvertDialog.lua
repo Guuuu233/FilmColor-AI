@@ -406,8 +406,9 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local errors = {}
     local adj = buildAdjustments(props)
 
+    local canceled = false
     for i, ph in ipairs(photos) do
-        if progress:isCanceled() then break end
+        if progress:isCanceled() then canceled = true; break end
         local pPath = ph:getRawMetadata("path")
         local pName = ph:getFormattedMetadata("fileName") or pPath
         local pGeom = Bridge.readLrGeometry(ph)
@@ -461,6 +462,8 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
             table.concat(errors, "\n"),
             "warning"
         )
+    elseif canceled then
+        LrDialogs.showBezel(string.format("FilmColor v1.0：已取消（已完成 %d / %d 张）", #imported, #photos), 3.0)
     else
         LrDialogs.showBezel(string.format("FilmColor v1.0：已完成 %d 张正片转换并导入堆叠", #imported), 3.0)
     end

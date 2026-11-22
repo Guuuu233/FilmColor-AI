@@ -241,6 +241,7 @@ $("bRotR").addEventListener("click", () => { rotDelta = (rotDelta + 3) % 4; upda
 
 $("bResetAdj").addEventListener("click", () => {
   for (const k of SLIDER_KEYS) $("sl_" + k).value = 0;
+  rotDelta = 0;
   updatePreview();
 });
 
@@ -256,4 +257,17 @@ for (const k of SLIDER_KEYS) {
   $("sl_" + k).addEventListener("change", () => schedulePreview(0));
 }
 
-checkBridge();
+let reconnectTimer = null;
+async function bootConnect() {
+  const ok = await checkBridge();
+  if (!ok && !reconnectTimer) {
+    reconnectTimer = setInterval(async () => {
+      if (await checkBridge()) {
+        clearInterval(reconnectTimer);
+        reconnectTimer = null;
+        if (sourcePath) updatePreview();
+      }
+    }, 4000);
+  }
+}
+bootConnect();

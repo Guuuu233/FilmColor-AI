@@ -46,20 +46,20 @@ ext:A016 shop B0 p4 9.55 ub7 7.17 B0w4 p4 8.01 ub7 5.40 B1 p4 1.62 ub7 1.03 B1w4
 concurrent.futures.process._RemoteTraceback: 
 """
 Traceback (most recent call last):
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/process.py", line 254, in _process_worker
     r = call_item.fn(*call_item.args, **call_item.kwargs)
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/process.py", line 203, in _process_chunk
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/process.py", line 203, in _process_chunk
     return [fn(*args) for args in chunk]
             ~~^^^^^^^
-  File "/Volumes/waizhiyingpan/FilmColor-AI/scripts/diag_rollcheck.py", line 82, in task
+  File "<REPO_ROOT>/scripts/diag_rollcheck.py", line 82, in task
     (Path(out_dir) / f"{stem}_{ref_kind}.json").write_text(json.dumps(out, indent=1, default=float))
                                                            ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/json/__init__.py", line 242, in dumps
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/json/__init__.py", line 242, in dumps
     **kw).encode(obj)
           ~~~~~~^^^^^
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/json/encoder.py", line 202, in encode
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/json/encoder.py", line 202, in encode
     chunks = self.iterencode(o, _one_shot=True)
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/json/encoder.py", line 263, in iterencode
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/json/encoder.py", line 263, in iterencode
     return _iterencode(o, 0)
 TypeError: keys must be str, int, float, bool or None, not tuple
 """
@@ -67,25 +67,25 @@ TypeError: keys must be str, int, float, bool or None, not tuple
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "/Volumes/waizhiyingpan/FilmColor-AI/scripts/diag_rollcheck.py", line 104, in <module>
+  File "<REPO_ROOT>/scripts/diag_rollcheck.py", line 104, in <module>
     main(*sys.argv[1:])
     ~~~~^^^^^^^^^^^^^^^
-  File "/Volumes/waizhiyingpan/FilmColor-AI/scripts/diag_rollcheck.py", line 99, in main
+  File "<REPO_ROOT>/scripts/diag_rollcheck.py", line 99, in main
     for r in ex.map(task, jobs):
              ~~~~~~^^^^^^^^^^^^
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/process.py", line 620, in _chain_from_iterable_of_lists
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/process.py", line 620, in _chain_from_iterable_of_lists
     for element in iterable:
                    ^^^^^^^^
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/_base.py", line 625, in result_iterator
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/_base.py", line 625, in result_iterator
     yield _result_or_cancel(fs.pop())
           ~~~~~~~~~~~~~~~~~^^^^^^^^^^
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/_base.py", line 318, in _result_or_cancel
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/_base.py", line 318, in _result_or_cancel
     return fut.result(timeout)
            ~~~~~~~~~~^^^^^^^^^
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/_base.py", line 453, in result
     return self.__get_result()
            ~~~~~~~~~~~~~~~~~^^
-  File "/Users/davidliu/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+  File "<HOME>/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
     raise self._exception
 TypeError: keys must be str, int, float, bool or None, not tuple
      3228.39 real     14624.67 user       381.10 sys

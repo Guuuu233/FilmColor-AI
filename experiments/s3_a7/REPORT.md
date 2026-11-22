@@ -1,6 +1,6 @@
 # A7R5 带片边翻拍：实测片基与估计片基（只读、探索性，2026-10-18）
 
-素材：`胶片负片素材/A7R5_RAW/` 的 6 张 ARW（Sony ILCE-7RM5、FE 90mm Macro、1/40 s、f/9、ISO 100，2026-06-11 在 3 分钟内连续拍完，应是同一卷或同一条），不在索引里。脚本：
+素材：`<DATA_ROOT>/film_negatives/A7R5_RAW/` 的 6 张 ARW（Sony ILCE-7RM5、FE 90mm Macro、1/40 s、f/9、ISO 100，2026-06-11 在 3 分钟内连续拍完，应是同一卷或同一条），不在索引里。脚本：
 
 - `scripts/a7_inspect.py`：按引擎的相机路径解码，生成带坐标网格的预览图；
 - `scripts/a7_measure.py`：测量。

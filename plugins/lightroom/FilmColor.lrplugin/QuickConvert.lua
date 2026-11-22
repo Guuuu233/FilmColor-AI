@@ -48,8 +48,9 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
     end
 
     local imported, errors, firstOutPath = {}, {}, nil
+    local canceled = false
     for i, ph in ipairs(photos) do
-        if progress:isCanceled() then break end
+        if progress:isCanceled() then canceled = true; break end
         local pPath = ph:getRawMetadata("path")
         local pName = ph:getFormattedMetadata("fileName") or pPath
         local pGeom = Bridge.readLrGeometry(ph)
@@ -95,6 +96,8 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
     if #errors > 0 then
         LrDialogs.message(string.format("FilmColor 快速转换（成功 %d / 失败 %d）", #imported, #errors),
             table.concat(errors, "\n"), "warning")
+    elseif canceled then
+        LrDialogs.showBezel(string.format("FilmColor v1.0：已取消（已完成 %d / %d 张）", #imported, #photos), 3.0)
     else
         LrDialogs.showBezel(string.format("FilmColor v1.0：已完成 %d 张正片转换", #imported), 3.0)
     end
