@@ -109,7 +109,7 @@ T24_STYLE_PRESETS = {
     ),
     "standard": dict(
         label="标准 Standard",
-        desc="最新 T24 锁定物理基准，无额外风格偏移（色度最保守）",
+        desc="FilmColor v1.0 锁定物理基准，无额外风格偏移（色度最保守）",
         offsets=dict(),
         grade=dict(),
     ),

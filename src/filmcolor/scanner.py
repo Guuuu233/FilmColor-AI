@@ -595,7 +595,7 @@ def block_means(rgb, sat, block: int):
         r1 = min(h, r0 + step)
         b0, b1 = r0 // block, r1 // block
         blk = rgb[r0:r1, :w].reshape(b1 - b0, block, wb, block, 3)
-        means[b0:b1] = (blk.sum(axis=3, dtype=np.float32).sum(axis=1, dtype=np.float64) * inv_area).astype(np.float32)
+        means[b0:b1] = (blk.sum(axis=3, dtype=np.float64).sum(axis=1) * inv_area).astype(np.float32)
         any_sat[b0:b1] = sat[r0:r1, :w].reshape(b1 - b0, block, wb, block).any(axis=3).any(axis=1)
 
     map_row_blocks(h, _run, step)

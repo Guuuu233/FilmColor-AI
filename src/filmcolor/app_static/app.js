@@ -1033,9 +1033,9 @@ function buildPresetsUI() {
 function buildEngineCards() {
   const box = $("engineCards"); box.innerHTML = "";
   const list = (meta && meta.engines) || [
-    { id: "t24", label: "T24 AI 残差（推荐）", desc: "最新物理+残差树联合模型，精度最高" },
-    { id: "t23", label: "T23 物理基准", desc: "纯物理参数估计 + T19 正交相纸曲线" },
-    { id: "v3",  label: "V3 经典引擎", desc: "经典暗房规则引擎（兼容旧预设）" },
+    { id: "t24", label: "FilmColor v1.0（智能推荐）", desc: "物理建模 + 智能残差联合引擎，精度最高" },
+    { id: "t23", label: "物理直出引擎", desc: "纯物理参数估计与胶片相纸曲线" },
+    { id: "v3",  label: "经典引擎", desc: "经典暗房规则引擎（兼容旧预设）" },
   ];
   for (const e of list) {
     const card = document.createElement("button");
@@ -1044,7 +1044,8 @@ function buildEngineCards() {
     card.onclick = () => switchEngine(e.id);
     box.appendChild(card);
   }
-  $("engineBadge").textContent = engineSel.toUpperCase();
+  const _engTagMap = { t24: "v1.0", t23: "物理", v3: "经典" };
+  $("engineBadge").textContent = _engTagMap[engineSel] || "v1.0";
 }
 
 function syncAllControls() {
@@ -1103,7 +1104,8 @@ async function loadFiles() {
   fileList = fj.files || [];
   userPresets = pj.presets || [];
   if (fj.default_engine) engineSel = fj.default_engine;
-  $("engineBadge").textContent = engineSel.toUpperCase();
+  const _engTagMap = { t24: "v1.0", t23: "物理", v3: "经典" };
+  $("engineBadge").textContent = _engTagMap[engineSel] || "v1.0";
   buildEngineCards();
   buildPresetsUI();
   renderFileList();
@@ -1294,7 +1296,8 @@ async function openFile(rel, explicitBaseMode) {
   await Promise.all([renderMain(), viewMode === "compare" ? renderBefore() : Promise.resolve()]);
   setLoading(false);
 
-  const engTag = (meta.engine || engineSel).toUpperCase();
+  const _engDisp = { t24: "FilmColor v1.0", t23: "物理直出", v3: "经典引擎" };
+  const engTag = _engDisp[meta.engine || engineSel] || "FilmColor v1.0";
   setStatus(`${meta.path} · ${engTag} + ${BASE_LABELS[meta.base.method] || meta.base.method}`);
   if (meta.auto && meta.auto.status === "manual_review_required") {
     toast("该画格密度跨度异常，已保持保守自动参数", true);
@@ -1304,7 +1307,8 @@ async function openFile(rel, explicitBaseMode) {
 async function switchEngine(newEng) {
   if (newEng === engineSel && meta) return;
   engineSel = newEng;
-  $("engineBadge").textContent = engineSel.toUpperCase();
+  const _engTagMap = { t24: "v1.0", t23: "物理", v3: "经典" };
+  $("engineBadge").textContent = _engTagMap[engineSel] || "v1.0";
   buildEngineCards();
   if (!meta) return;
   setLoading(true);
@@ -1318,7 +1322,8 @@ async function switchEngine(newEng) {
     persistCurrentFile(false);
     pushHistory();
     await Promise.all([renderMain(), viewMode === "compare" ? renderBefore() : Promise.resolve()]);
-    toast(`已切换至 ${newEng.toUpperCase()} 引擎`);
+    const _engDispSw = { t24: "FilmColor v1.0", t23: "物理直出", v3: "经典" };
+    toast(`已切换至 ${_engDispSw[newEng] || newEng} 引擎`);
   } catch (e) {
     toast("切换引擎失败：" + e.message, true);
   } finally {

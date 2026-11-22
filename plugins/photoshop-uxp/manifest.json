@@ -1,6 +1,6 @@
 {
   "id": "com.filmcolor.photoshop.uxp",
-  "name": "FilmColor T24",
+  "name": "FilmColor v1.0",
   "version": "1.0.0",
   "main": "index.html",
   "manifestVersion": 5,
@@ -40,7 +40,7 @@
         "height": 780
       },
       "label": {
-        "default": "FilmColor T24"
+        "default": "FilmColor v1.0"
       }
     }
   ]

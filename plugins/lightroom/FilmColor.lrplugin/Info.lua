@@ -2,19 +2,19 @@ return {
     LrSdkVersion = 13.0,
     LrSdkMinimumVersion = 6.0,
     LrToolkitIdentifier = "com.filmcolor.lightroom",
-    LrPluginName = "FilmColor T24",
+    LrPluginName = "FilmColor v1.0",
     LrPluginInfoUrl = "https://github.com/filmcolor-ai",
     LrPluginInfoProvider = "PluginInfoProvider.lua",
     LrShutdownPlugin = "Shutdown.lua",
 
     LrLibraryMenuItems = {
         {
-            title = "FilmColor T24 负片转换…",
+            title = "FilmColor 负片转换…",
             file = "ConvertDialog.lua",
             enabledWhen = "photosSelected",
         },
         {
-            title = "FilmColor 快速一键转换（T24 自动）",
+            title = "FilmColor 快速一键转换",
             file = "QuickConvert.lua",
             enabledWhen = "photosSelected",
         },
@@ -26,12 +26,12 @@ return {
 
     LrExportMenuItems = {
         {
-            title = "FilmColor T24 负片转换…",
+            title = "FilmColor 负片转换…",
             file = "ConvertDialog.lua",
             enabledWhen = "photosSelected",
         },
         {
-            title = "FilmColor 快速一键转换（T24 自动）",
+            title = "FilmColor 快速一键转换",
             file = "QuickConvert.lua",
             enabledWhen = "photosSelected",
         },

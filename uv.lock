@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.12, <3.14"
 
 [[package]]
@@ -133,11 +133,12 @@ wheels = [
 
 [[package]]
 name = "filmcolor"
-version = "0.0.1"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "exifread" },
     { name = "numpy" },
+    { name = "pillow" },
     { name = "rawpy" },
     { name = "scipy" },
     { name = "tifffile" },
@@ -145,7 +146,6 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "pillow" },
     { name = "pytest" },
 ]
 ml = [
@@ -158,16 +158,14 @@ ml = [
 requires-dist = [
     { name = "exifread" },
     { name = "numpy" },
+    { name = "pillow", specifier = ">=12.3.0" },
     { name = "rawpy" },
     { name = "scipy", specifier = ">=1.18.1" },
     { name = "tifffile" },
 ]
 
 [package.metadata.requires-dev]
-dev = [
-    { name = "pillow", specifier = ">=12.3.0" },
-    { name = "pytest" },
-]
+dev = [{ name = "pytest" }]
 ml = [
     { name = "safetensors", specifier = ">=0.8.0" },
     { name = "torch", specifier = ">=2.14.1" },

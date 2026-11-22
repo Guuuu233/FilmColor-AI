@@ -57,9 +57,9 @@ SLIDERS = ("ev", "temp", "tint", "sat", "contrast", "midtone", "shoulder")
 BASE_MODES = ("auto", "roll_nat", "roll_dq", "roll_b1")
 ENGINES = ("t24", "t23", "v3")
 ENGINE_LABELS = (
-    dict(id="t24", label="T24 AI 残差（推荐）", desc="最新物理+残差树联合模型，精度最高"),
-    dict(id="t23", label="T23 物理基准", desc="纯物理参数估计 + T19 正交相纸曲线"),
-    dict(id="v3", label="V3 经典引擎", desc="经典暗房规则引擎（兼容旧预设）"),
+    dict(id="t24", label="FilmColor v1.0（智能推荐）", desc="物理建模 + 智能残差联合引擎，精度最高"),
+    dict(id="t23", label="物理直出引擎", desc="纯物理参数估计与胶片相纸曲线"),
+    dict(id="v3", label="经典引擎", desc="经典暗房规则引擎（兼容旧预设）"),
 )
 T24_CAM_MATRIX_MIX = 0.35
 THUMB_SIDE = 240

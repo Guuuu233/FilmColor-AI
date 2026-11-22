@@ -51,7 +51,7 @@ function Bridge.ensureRunning()
     local p = Config.prefs()
     local py = p.pythonPath or Config.DEFAULT_PYTHON
     if not LrFileUtils.exists(py) then
-        return false, "找不到 FilmColor Python 环境：" .. tostring(py) .. "。请在「文件 → 增效工具管理器 → FilmColor T24」中设置 .venv/bin/python 路径。"
+        return false, "找不到 FilmColor Python 环境：" .. tostring(py) .. "。请在「文件 → 增效工具管理器 → FilmColor v1.0」中设置 .venv/bin/python 路径。"
     end
     local port = tostring(math.floor(tonumber(p.port) or Config.DEFAULT_PORT))
     local repoDir = py:match("^(.-)/%.venv/") or Config.DEFAULT_REPO
@@ -108,7 +108,7 @@ function Bridge.importAndStack(catalog, srcPhoto, outPath, opts)
     local stackTarget = (opts and opts.stackWithSource and opts.destMode == "same_folder") and srcPhoto or nil
     local stackPos = stackTarget and "above" or nil
 
-    catalog:withWriteAccessDo("FilmColor T24 导入正片", function()
+    catalog:withWriteAccessDo("FilmColor v1.0 导入正片", function()
         newPhoto = catalog:addPhoto(outPath, stackTarget, stackPos)
         if newPhoto and srcPhoto then
             pcall(function()

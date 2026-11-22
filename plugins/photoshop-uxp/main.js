@@ -1,4 +1,4 @@
-/* FilmColor T24 — Adobe Photoshop UXP v5 Plugin */
+/* FilmColor v1.0 — Adobe Photoshop UXP v5 Plugin */
 const BRIDGE_URL = "http://127.0.0.1:18765";
 const ps = require("photoshop");
 const { app, core, action } = ps;
@@ -74,7 +74,7 @@ async function updatePreview() {
     try { previewAbort.abort(); } catch (_) {}
   }
   previewAbort = typeof AbortController !== "undefined" ? new AbortController() : null;
-  setStatus("正在渲染 T24 预览…");
+  setStatus("正在渲染 FilmColor v1.0 预览…");
   try {
     const fetchOpts = {
       method: "POST",
@@ -102,7 +102,8 @@ async function updatePreview() {
       $("previewEmpty").style.display = "none";
     }
     const clip = j.above_white != null ? ` · 高光 ${(j.above_white * 100).toFixed(2)}%` : "";
-    setStatus(`预览就绪 · ${(j.engine || "t24").toUpperCase()}${clip}`);
+    const _eLbl = ({ t24: "FilmColor v1.0", t23: "物理直出", v3: "经典引擎" })[j.engine || "t24"] || "FilmColor v1.0";
+    setStatus(`预览就绪 · ${_eLbl}${clip}`);
   } catch (e) {
     if (e && e.name === "AbortError") return;
     if (mySeq === previewSeq) setStatus("预览失败：" + e.message);
@@ -162,7 +163,7 @@ async function runConvert(asNewDocument) {
   isConverting = true;
   $("bApplyLayer").disabled = true;
   $("bOpenDoc").disabled = true;
-  setStatus("正在全分辨率运行 FilmColor T24 转换（16 位）…");
+  setStatus("正在全分辨率运行 FilmColor v1.0 转换（16 位）…");
   try {
     const preset = $("pPreset").value || "frontier";
     const engine = $("pEngine").value || "t24";
@@ -201,10 +202,10 @@ async function runConvert(asNewDocument) {
           },
         ], { synchronousExecution: true });
         if (app.activeDocument && app.activeDocument.activeLayers.length) {
-          app.activeDocument.activeLayers[0].name = `FilmColor ${engine.toUpperCase()} [${preset}]`;
+          app.activeDocument.activeLayers[0].name = `FilmColor v1.0 [${preset}]`;
         }
       }
-    }, { commandName: "FilmColor T24 生成正片" });
+    }, { commandName: "FilmColor v1.0 生成正片" });
     setStatus("转换完成：" + j.output_path);
   } catch (e) {
     setStatus("转换失败：" + e.message);

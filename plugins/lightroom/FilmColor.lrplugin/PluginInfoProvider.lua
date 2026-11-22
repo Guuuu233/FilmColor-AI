@@ -24,7 +24,7 @@ return {
     sectionsForTopOfDialog = function(f, propertyTable)
         return {
             {
-                title = "FilmColor T24 引擎设置",
+                title = "FilmColor v1.0 引擎设置",
                 bind_to_object = propertyTable,
                 f:row {
                     f:static_text { title = "Python 路径", width = 90, alignment = "right" },
@@ -65,7 +65,7 @@ return {
                     f:static_text { title = bind "bridgeStatus", fill_horizontal = 1 },
                 },
                 f:static_text {
-                    title = "快捷键提示：在 macOS「系统设置 → 键盘 → 键盘快捷键 → App 快捷键」中为 Adobe Lightroom Classic 添加菜单「FilmColor T24 负片转换…」，即可绑定如 Ctrl+Option+F 一键唤出。",
+                    title = "快捷键提示：在 macOS「系统设置 → 键盘 → 键盘快捷键 → App 快捷键」中为 Adobe Lightroom Classic 添加菜单「FilmColor 负片转换…」，即可绑定如 Ctrl+Option+F 一键唤出。",
                     fill_horizontal = 1,
                     height_in_lines = 2,
                     font = "<system/small>",

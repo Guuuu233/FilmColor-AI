@@ -57,12 +57,12 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local catalog = LrApplication.activeCatalog()
     local rawPhotos = catalog:getTargetPhotos()
     if not rawPhotos or #rawPhotos == 0 then
-        LrDialogs.message("FilmColor T24", "请先在图库或胶片窗格中选中至少一张负片。", "info")
+        LrDialogs.message("FilmColor v1.0", "请先在图库或胶片窗格中选中至少一张负片。", "info")
         return
     end
     local photos, skippedCount = Bridge.filterNegativePhotos(rawPhotos)
     if #photos == 0 then
-        LrDialogs.message("FilmColor T24", "当前选中的文件均为已转换的正片（*_FilmColor）或不支持格式，请选中原始负片 RAW / DNG / 负片 TIFF。", "info")
+        LrDialogs.message("FilmColor v1.0", "当前选中的文件均为已转换的正片（*_FilmColor）或不支持格式，请选中原始负片 RAW / DNG / 负片 TIFF。", "info")
         return
     end
 
@@ -92,7 +92,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     props.autoCrop = prefs.autoCrop
     props.writeSidecar = prefs.writeSidecar
 
-    -- Optional fine-tuning sliders (0 = pure T24 + preset)
+    -- Optional fine-tuning sliders (0 = pure FilmColor v1.0 + preset)
     props.ev = 0.0
     props.temp = 0
     props.tint = 0
@@ -108,7 +108,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     props.viewMode = "after"
     props.rotDelta = 0
     props.previewPath = nil
-    props.statusLine = "正在解码并运行 T24 预览：" .. firstName .. " …"
+    props.statusLine = "正在解码并运行 FilmColor v1.0 预览：" .. firstName .. " …"
 
     local reqSeq = 0
     local closed = false
@@ -152,7 +152,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
             end
             props.statusLine = string.format(
                 "已选 %d 张 · 预览 %s · %s%s",
-                #photos, firstName, string.upper(props.engine), clipTxt
+                #photos, firstName, ((props.engine == "t24" and "FilmColor v1.0") or (props.engine == "t23" and "物理直出") or "经典引擎"), clipTxt
             )
         end)
     end
@@ -191,7 +191,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
                     f:row {
                         spacing = f:control_spacing(),
                         f:radio_button { title = "当前效果", value = bind "viewMode", checked_value = "after" },
-                        f:radio_button { title = "T24 基准", value = bind "viewMode", checked_value = "auto" },
+                        f:radio_button { title = "自动基准", value = bind "viewMode", checked_value = "auto" },
                         f:radio_button { title = "原始负片", value = bind "viewMode", checked_value = "negative" },
                         f:spacer { fill_horizontal = 1 },
                         f:push_button {
@@ -257,7 +257,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
                             { title = "富士 Frontier 鲜润（推荐直出）", value = "frontier" },
                             { title = "德味徕卡 Leica Look（立体油润）", value = "leica" },
                             { title = "诺日士 Noritsu 通透（自然高宽容）", value = "noritsu" },
-                            { title = "标准 Standard（T24 保守色度基准）", value = "standard" },
+                            { title = "标准 Standard（保守色度基准）", value = "standard" },
                             { title = "线性 Linear（高宽容后期自调底稿）", value = "linear" },
                             { title = "自然 Natural（柔和暗部层次）", value = "natural" },
                             { title = "人像 Portrait（肤色保护通透）", value = "portrait" },
@@ -273,9 +273,9 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
                         value = bind "engine",
                         width = 215,
                         items = {
-                            { title = "T24 AI 残差（最新推荐）", value = "t24" },
-                            { title = "T23 物理基准", value = "t23" },
-                            { title = "V3 经典规则引擎", value = "v3" },
+                            { title = "FilmColor v1.0（智能推荐）", value = "t24" },
+                            { title = "物理直出引擎", value = "t23" },
+                            { title = "经典引擎", value = "v3" },
                         },
                     },
                 },
@@ -330,7 +330,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
                     value = bind "stackWithSource",
                 },
                 f:checkbox {
-                    title = "多帧选中时启用整卷片基与 T21b 色彩协同",
+                    title = "多帧选中时启用整卷片基与色彩协同",
                     value = bind "rollSync",
                     enabled = (#photos >= 2),
                 },
@@ -355,7 +355,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
         or string.format("批量转换并导入 (%d 张)", #photos)
 
     local result = LrDialogs.presentModalDialog {
-        title = "FilmColor T24 负片暗房",
+        title = "FilmColor v1.0 负片暗房",
         contents = contents,
         actionVerb = actionVerb,
         cancelVerb = "取消",
@@ -378,7 +378,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
 
     -- Run full-resolution sequential conversion with native Lightroom progress bar
     local progress = LrProgressScope {
-        title = string.format("FilmColor T24 正在转换 %d 张负片", #photos),
+        title = string.format("FilmColor v1.0 正在转换 %d 张负片", #photos),
         functionContext = context,
     }
     progress:setCancelable(true)
@@ -386,7 +386,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local rollId = nil
     local effectiveBase = props.baseMode
     if #photos >= 2 and props.rollSync then
-        progress:setCaption("正在分析整卷片基与 T21b 色彩一致性…")
+        progress:setCaption("正在分析整卷片基与色彩一致性…")
         local paths = {}
         for i, ph in ipairs(photos) do paths[i] = ph:getRawMetadata("path") end
         local rres = Bridge.post("/plugin/roll_analyze", {
@@ -462,6 +462,6 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
             "warning"
         )
     else
-        LrDialogs.showBezel(string.format("FilmColor T24：已完成 %d 张正片转换并导入堆叠", #imported), 3.0)
+        LrDialogs.showBezel(string.format("FilmColor v1.0：已完成 %d 张正片转换并导入堆叠", #imported), 3.0)
     end
 end)

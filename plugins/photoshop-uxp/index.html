@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>FilmColor T24</title>
+  <title>FilmColor v1.0</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -26,12 +26,12 @@
     <!-- Live Preview Box -->
     <div class="preview-box">
       <img id="previewImg" alt="">
-      <div id="previewEmpty" class="preview-empty">选择负片后自动显示 T24 实时预览</div>
+      <div id="previewEmpty" class="preview-empty">选择负片后自动显示 FilmColor v1.0 实时预览</div>
     </div>
     <div class="row between">
       <div class="row gap4">
         <sp-action-button size="s" id="vAfter" selected>当前效果</sp-action-button>
-        <sp-action-button size="s" id="vAuto">T24 基准</sp-action-button>
+        <sp-action-button size="s" id="vAuto">自动基准</sp-action-button>
         <sp-action-button size="s" id="vNeg">原负片</sp-action-button>
       </div>
       <div class="row gap4">
@@ -58,9 +58,9 @@
         <sp-label size="S">算法引擎</sp-label>
         <sp-picker id="pEngine" size="s" class="full">
           <sp-menu slot="options">
-            <sp-menu-item value="t24" selected>T24 AI (推荐)</sp-menu-item>
-            <sp-menu-item value="t23">T23 物理基准</sp-menu-item>
-            <sp-menu-item value="v3">V3 经典</sp-menu-item>
+            <sp-menu-item value="t24" selected>FilmColor v1.0 (推荐)</sp-menu-item>
+            <sp-menu-item value="t23">物理直出引擎</sp-menu-item>
+            <sp-menu-item value="v3">经典引擎</sp-menu-item>
           </sp-menu>
         </sp-picker>
       </div>
@@ -73,7 +73,7 @@
           <sp-menu-item value="frontier" selected>富士 Frontier 鲜润（推荐）</sp-menu-item>
           <sp-menu-item value="leica">德味徕卡 Leica Look</sp-menu-item>
           <sp-menu-item value="noritsu">诺日士 Noritsu 通透</sp-menu-item>
-          <sp-menu-item value="standard">标准 Standard（T24 保守色度基准）</sp-menu-item>
+          <sp-menu-item value="standard">标准 Standard（保守色度基准）</sp-menu-item>
           <sp-menu-item value="linear">线性 Linear（高宽容后期自调底稿）</sp-menu-item>
           <sp-menu-item value="natural">自然 Natural</sp-menu-item>
           <sp-menu-item value="portrait">人像 Portrait</sp-menu-item>
@@ -86,7 +86,7 @@
 
     <sp-divider size="s"></sp-divider>
 
-    <!-- Fine-Tune Sliders (0 = Pure T24 + Preset) -->
+    <!-- Fine-Tune Sliders (0 = Pure FilmColor v1.0 + Preset) -->
     <div id="slidersBox" class="sliders">
       <sp-slider id="sl_ev" min="-2" max="2" step="0.05" value="0"><sp-label slot="label">曝光 EV</sp-label></sp-slider>
       <sp-slider id="sl_temp" min="-100" max="100" step="1" value="0"><sp-label slot="label">色温</sp-label></sp-slider>

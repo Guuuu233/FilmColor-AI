@@ -10,12 +10,12 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
     local catalog = LrApplication.activeCatalog()
     local rawPhotos = catalog:getTargetPhotos()
     if not rawPhotos or #rawPhotos == 0 then
-        LrDialogs.message("FilmColor T24", "请先选中至少一张负片。", "info")
+        LrDialogs.message("FilmColor v1.0", "请先选中至少一张负片。", "info")
         return
     end
     local photos = Bridge.filterNegativePhotos(rawPhotos)
     if #photos == 0 then
-        LrDialogs.message("FilmColor T24", "当前选中的文件均为已转换的正片（*_FilmColor），请选中原始负片。", "info")
+        LrDialogs.message("FilmColor v1.0", "当前选中的文件均为已转换的正片（*_FilmColor），请选中原始负片。", "info")
         return
     end
 
@@ -27,7 +27,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
 
     local prefs = Config.prefs()
     local progress = LrProgressScope {
-        title = string.format("FilmColor 快速转换 (%d 张 · %s)", #photos, string.upper(prefs.engine)),
+        title = string.format("FilmColor v1.0 快速转换 (%d 张)", #photos),
         functionContext = context,
     }
     progress:setCancelable(true)
@@ -35,7 +35,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
     local rollId = nil
     local baseMode = prefs.baseMode or "auto"
     if #photos >= 2 and prefs.rollSync then
-        progress:setCaption("正在分析整卷片基与 T21b 色彩一致性…")
+        progress:setCaption("正在分析整卷片基与色彩一致性…")
         local paths = {}
         for i, ph in ipairs(photos) do paths[i] = ph:getRawMetadata("path") end
         local rres = Bridge.post("/plugin/roll_analyze", {
@@ -96,6 +96,6 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
         LrDialogs.message(string.format("FilmColor 快速转换（成功 %d / 失败 %d）", #imported, #errors),
             table.concat(errors, "\n"), "warning")
     else
-        LrDialogs.showBezel(string.format("FilmColor T24：已完成 %d 张正片转换", #imported), 3.0)
+        LrDialogs.showBezel(string.format("FilmColor v1.0：已完成 %d 张正片转换", #imported), 3.0)
     end
 end)

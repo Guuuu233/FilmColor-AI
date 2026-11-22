@@ -33,7 +33,7 @@ def install_lightroom(*, force: bool = False) -> Path:
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="Install FilmColor T24 plugins for Lightroom Classic & Photoshop")
+    ap = argparse.ArgumentParser(description="Install FilmColor v1.0 plugins for Lightroom Classic & Photoshop")
     ap.add_argument("--force", action="store_true", help="replace existing FilmColor.lrplugin symlink")
     a = ap.parse_args(argv)
     install_lightroom(force=a.force)
@@ -42,7 +42,7 @@ def main(argv=None):
     print(f"[INFO] Photoshop UXP folder : {PS_SRC}")
     print("\nNext steps:")
     print("  1. Restart Adobe Lightroom Classic (or open 文件 → 增效工具管理器 → 添加 FilmColor.lrplugin).")
-    print("  2. Select 1 or more negatives -> 图库/文件 → 增效工具额外信息 → FilmColor T24 负片转换…")
+    print("  2. Select 1 or more negatives -> 图库/文件 → 增效工具额外信息 → FilmColor 负片转换…")
     print("  3. Photoshop UXP: Load plugins/photoshop-uxp/manifest.json via Adobe UXP Developer Tool.")
 
 
