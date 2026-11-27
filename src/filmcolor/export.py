@@ -85,7 +85,15 @@ def icc_profile(encoding: str = "srgb") -> bytes:
 
 
 def to_uint16(img) -> np.ndarray:
-    return np.round(np.clip(img, 0, 1) * 65535).astype(np.uint16)
+    arr = np.asarray(img)
+    if arr.ndim < 2 or arr.shape[0] <= 512:
+        return np.round(np.clip(arr, 0, 1) * 65535).astype(np.uint16)
+    out = np.empty(arr.shape, np.uint16)
+    step = 512
+    for r0 in range(0, arr.shape[0], step):
+        r1 = min(arr.shape[0], r0 + step)
+        out[r0:r1] = np.round(np.clip(arr[r0:r1], 0, 1) * 65535).astype(np.uint16)
+    return out
 
 
 def write_tiff16(path, img, encoding: str = "srgb") -> None:

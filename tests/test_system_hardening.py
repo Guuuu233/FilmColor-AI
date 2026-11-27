@@ -63,7 +63,7 @@ def test_software_info_handles_uninstalled_source_tree(monkeypatch):
 
     monkeypatch.setattr(importlib.metadata, "version", _missing)
     info = pipeline.software_info()
-    assert info["filmcolor"] == "1.0.0"
+    assert info["filmcolor"] == "2.0.0"
     assert "numpy" in info and "rawpy" in info
 
 

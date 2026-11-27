@@ -69,3 +69,12 @@ def test_tiff_bytes_are_reproducible(tmp_path):
 def test_tiff_rejects_bad_shape(tmp_path):
     with pytest.raises(ValueError):
         write_tiff16(tmp_path / "x.tif", np.zeros((10, 10), np.float32))
+
+
+def test_p10_to_uint16_chunked_bit_exact():
+    """P10: chunked to_uint16 (>512 rows) is bit-exact with unchunked reference."""
+    rng = np.random.default_rng(42)
+    img = rng.uniform(-0.1, 1.1, (600, 17, 3)).astype(np.float32)
+    expected = np.round(np.clip(img, 0, 1) * 65535).astype(np.uint16)
+    got = to_uint16(img)
+    np.testing.assert_array_equal(got, expected)

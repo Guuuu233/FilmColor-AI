@@ -1000,3 +1000,24 @@ def test_base_from_regions_empty_or_zero_median_is_safe():
         base_from_regions(img, [(0, 0, 0, 0)])
     out = base_from_regions(img, [(0, 0, 4, 4)])
     assert out["rgb"] == (0.0, 0.0, 0.0) and all(np.isfinite(out["rel_spread"]))
+
+
+def test_b01_block_white_point_non_div4_block_size():
+    """B01: block_white_point with block >= 16 not divisible by 4 (e.g. block=18) must not raise ValueError."""
+    from filmcolor.invert import block_white_point
+
+    rng = np.random.default_rng(11)
+    rgb = rng.uniform(0.05, 0.40, (180, 180, 3)).astype(np.float32)
+    mask = np.ones((180, 180), dtype=bool)
+    d_hi, info = block_white_point(rgb, (0.8, 0.6, 0.5), mask, block=18, pct=99.0)
+    assert len(d_hi) == 3 and all(np.isfinite(x) for x in d_hi)
+    assert "fine_highlight_rescue" not in info
+
+
+def test_b07_blue_white_guard_zero_green_no_zerodivision():
+    """B07: blue_white_guard with d_hi[1] == 0 returns cleanly without ZeroDivisionError."""
+    from filmcolor.invert import blue_white_guard
+
+    d_hi, info = blue_white_guard((0.5, 0.0, 0.0), (0.85, 0.90, 0.5))
+    assert d_hi == (0.5, 0.0, 0.0)
+    assert info["applied"] is False

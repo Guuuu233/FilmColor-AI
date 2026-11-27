@@ -3,7 +3,7 @@ chcp 65001 >nul
 setlocal
 cd /d "%~dp0.."
 echo ======================================================
-echo   FilmColor v1.0 Windows 一键自动安装（免预装 Python）
+echo   FilmColor v2.0 Windows 一键自动安装（免预装 Python）
 echo ======================================================
 
 set "UV_EXE="
@@ -34,7 +34,7 @@ if defined UV_EXE (
     exit /b 1
 )
 
-echo [3/3] 正在将 FilmColor v1.0 插件安装到 Lightroom Classic...
+echo [3/3] 正在将 FilmColor v2.0 插件安装到 Lightroom Classic...
 ".venv\Scripts\python.exe" scripts\install_plugins.py --force
 if errorlevel 1 (
     echo [错误] 插件安装失败。
@@ -43,7 +43,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo [完成] FilmColor v1.0 已就绪！
+echo [完成] FilmColor v2.0 已就绪！
 echo  - Lightroom Classic：重启即可在「图库 → 增效工具额外信息 → FilmColor 负片转换…」使用
 echo  - Photoshop UXP：先双击 scripts\start_filmcolor_bridge.bat，再加载 plugins\photoshop-uxp\manifest.json
 pause

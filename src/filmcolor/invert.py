@@ -278,20 +278,22 @@ def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[fl
                             info["holder_blocks_excluded"] = n_excluded
 
     # T5f: fine sub-block highlights (small bright canopy sky gaps < 16x16 px, A623.tif) smoothed away by 16x16 means
-    if block >= 16 and not info.get("holder_blocks_excluded"):
+    if block >= 16 and block % 4 == 0 and d_hi[1] >= 0.45 and not info.get("holder_blocks_excluded"):
         b4 = block // 4
-        m4_parts = []
-        for r0 in range(0, h, step):
-            r1, b0, b1 = min(h, r0 + step), r0 // block, min(h, r0 + step) // block
-            sub = (rgb[r0:r1, :w].reshape(b1 - b0, 4, b4, w // block, 4, b4, 3)
-                   .mean(axis=(2, 5), dtype=np.float64)
-                   .transpose(0, 2, 1, 3, 4)[ok[b0:b1]].reshape(-1, 3).astype(np.float32))
-            if len(sub):
-                m4_parts.append(sub)
+        wb = w // block
+
+        def _fine_block(r0: int):
+            r1 = min(h, r0 + step)
+            b0, b1 = r0 // block, r1 // block
+            return (rgb[r0:r1, :w].reshape(b1 - b0, 4, b4, wb, 4, b4, 3)
+                    .mean(axis=(2, 5), dtype=np.float64)
+                    .transpose(0, 2, 1, 3, 4)[ok[b0:b1]].reshape(-1, 3).astype(np.float32))
+
+        m4_parts = [sub for sub in map_row_blocks(h, _fine_block, step) if len(sub)]
         m4 = np.concatenate(m4_parts, axis=0) if m4_parts else np.empty((0, 3), np.float32)
         D4 = density(m4, base)
         d4_990 = estimate_white_point(D4, None, 99.0)
-        if d_hi[1] >= 0.45 and d4_990[1] - d_hi[1] >= 0.10 and d4_990[1] / d_hi[1] >= 1.15:
+        if d4_990[1] - d_hi[1] >= 0.10 and d4_990[1] / d_hi[1] >= 1.15:
             d_hi_own = list(d_hi)
             d_hi = estimate_white_point(D4, None, 99.5)
             info["fine_highlight_rescue"] = dict(sub_block=b4, pct=99.5, d4_p990_g=float(d4_990[1]),
@@ -344,6 +346,8 @@ def blue_white_guard(d_hi, guard, base=None) -> tuple[tuple[float, float, float]
     d = [float(x) for x in d_hi]
     ratio = d[2] / max(d[1], EPS)
     info = dict(guard=values, ratio_bg=ratio, applied=False)
+    if d[1] <= 0.0:
+        return tuple(d), info
     if len(values) == 4 and base is not None:
         bg = float(base[2] / max(base[1], EPS))
         info["base_bg"] = bg
@@ -402,19 +406,37 @@ def clamp_spikes(s, clamp, *, zero_escape: bool = False) -> tuple[np.ndarray, in
     pixels with min <= 1.6 are also clamped to min(bound_z, bound).
     Returns the clamped array and the number of pixels changed."""
     mid_max, margin = (np.float32(x) for x in clamp)
-    s_sort = np.sort(s, axis=-1)
-    s_min = s_sort[..., 0:1]
-    s_mid = s_sort[..., 1:2]
-    s_max = s_sort[..., 2:3]
+    one_plus_m = np.float32(1.0) + margin
+    if s.shape[-1] == 3:
+        r, g, b = s[..., 0], s[..., 1], s[..., 2]
+        # Exact 3-channel min/mid/max without np.sort allocation (~4-6x faster, bit-exact)
+        rg_min = np.minimum(r, g)
+        rg_max = np.maximum(r, g)
+        s_max_2d = np.maximum(rg_max, b)
+        # Fast path: no channel exceeds 1.0 + margin -> bound >= 1.0 + margin everywhere -> 0 clamped pixels
+        if not bool((s_max_2d > one_plus_m).any()):
+            return s, 0
+        s_min_2d = np.minimum(rg_min, b)
+        s_mid_2d = np.minimum(rg_max, np.maximum(rg_min, b))
+        s_min = s_min_2d[..., None]
+        s_mid = s_mid_2d[..., None]
+        s_max = s_max_2d[..., None]
+    else:
+        s_sort = np.sort(s, axis=-1)
+        s_min = s_sort[..., 0:1]
+        s_mid = s_sort[..., 1:2]
+        s_max = s_sort[..., 2:3]
+        if not bool((s_max > one_plus_m).any()):
+            return s, 0
 
     bound = np.where(s_mid > mid_max, np.float32(np.inf), np.maximum(s_mid, np.float32(1.0)) + margin)
 
     if not zero_escape:
-        escape = (s_mid > mid_max) & (s_min <= 1.6) & (s_max > 5.0)
+        escape = (s_mid > mid_max) & (s_min <= np.float32(1.6)) & (s_max > np.float32(5.0))
         zero_escape = float(np.mean(escape)) > 0.01
     if zero_escape:
         bound_z = np.maximum(s_min, np.float32(1.0)) + margin
-        bound = np.where(s_min <= 1.6, np.minimum(bound_z, bound), bound)
+        bound = np.where(s_min <= np.float32(1.6), np.minimum(bound_z, bound), bound)
 
     over = s > bound
     if not over.any():
@@ -536,34 +558,75 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
     zero_escape = False
     if spike_clamp is not None and Dm.ndim >= 1 and Dm.shape[-1] == 3 and len(Dm) > 0:
         mid_max = np.float32(spike_clamp[0])
-        sm = np.sort((Dm - lo) / (hi - lo), axis=-1)
         max_thr = np.float32(5.0 if (white_info or {}).get("holder_blocks_excluded") else 2.0)
-        zero_escape = float(np.mean((sm[..., 1] > mid_max) & (sm[..., 0] <= 1.6) & (sm[..., 2] > max_thr))) > 0.001
-        del sm
+        inv_span = (hi - lo).astype(np.float32)
+        n_dm = len(Dm)
+        esc_count = 0
+        dm_step = 262144
+        for i0 in range(0, n_dm, dm_step):
+            s_blk = (Dm[i0 : i0 + dm_step] - lo) / inv_span
+            r, g, b = s_blk[..., 0], s_blk[..., 1], s_blk[..., 2]
+            rg_min = np.minimum(r, g)
+            rg_max = np.maximum(r, g)
+            s_min = np.minimum(rg_min, b)
+            s_max = np.maximum(rg_max, b)
+            s_mid = np.minimum(rg_max, np.maximum(rg_min, b))
+            esc_count += int(np.count_nonzero((s_mid > mid_max) & (s_min <= np.float32(1.6)) & (s_max > max_thr)))
+        zero_escape = (esc_count / n_dm) > 0.001
     # share of the whole image denser than the white point: large values flag opaque areas
     # (holder mask) or highlights outside the region used for the white point
     clamp_stats = {}
     if rgb.ndim == 3:
         P = np.empty(rgb.shape, np.float32)
         step = CHUNK_ROWS
+        clip_thr = np.float32(1.0 / p.exposure)
+        zero_f32 = np.float32(0.0)
 
         def _block(r0: int):
             D = density(rgb[r0 : r0 + step], base)
             st: dict = {}
-            P[r0 : r0 + step] = invert(D, p, st, zero_escape=zero_escape)
-            return np.count_nonzero(D > hi, axis=(0, 1)), st.get("spike_px", 0)
+            p_blk = invert(D, p, st, zero_escape=zero_escape)
+            P[r0 : r0 + step] = p_blk
+            if mask is not None:
+                pm_blk = p_blk[mask[r0 : r0 + step]]
+                n_m = len(pm_blk)
+                c_hi = np.count_nonzero(pm_blk > clip_thr, axis=0) if n_m else np.zeros(3, dtype=np.int64)
+                c_lo = np.count_nonzero(pm_blk < zero_f32, axis=0) if n_m else np.zeros(3, dtype=np.int64)
+            else:
+                n_m = p_blk.shape[0] * p_blk.shape[1]
+                c_hi = np.count_nonzero(p_blk > clip_thr, axis=(0, 1))
+                c_lo = np.count_nonzero(p_blk < zero_f32, axis=(0, 1))
+            return np.count_nonzero(D > hi, axis=(0, 1)), st.get("spike_px", 0), n_m, c_hi, c_lo
 
         blocks = map_row_blocks(rgb.shape[0], _block, step)
         n_above = np.sum([b[0] for b in blocks], axis=0, dtype=np.int64)
         if spike_clamp is not None:
             clamp_stats["spike_px"] = int(sum(b[1] for b in blocks))
         above_white = [float(k / (rgb.shape[0] * rgb.shape[1])) for k in n_above]
+        if len(Dm) == 0:
+            raise ValueError("no pixels for range report")
+        total_m = sum(b[2] for b in blocks)
+        clip_high = np.sum([b[3] for b in blocks], axis=0, dtype=np.int64) / total_m
+        below_black = np.sum([b[4] for b in blocks], axis=0, dtype=np.int64) / total_m
+        q01, q999 = np.quantile(Dm, [0.001, 0.999], axis=0)
+        brighter_base = np.mean(Dm < zero_f32, axis=0)
+        rng_rep = {
+            name: dict(
+                clip_high=float(clip_high[c]),
+                below_black=float(below_black[c]),
+                brighter_than_base=float(brighter_base[c]),
+                density_p01=float(q01[c]),
+                density_p999=float(q999[c]),
+            )
+            for c, name in enumerate(CHANNELS)
+        }
     else:
         D = density(rgb, base)
         P = invert(D, p, clamp_stats, zero_escape=zero_escape)
         above_white = [float(np.mean(D[..., c] > p.d_hi[c])) for c in range(3)]
-    Pm = P[mask] if mask is not None else P.reshape(-1, 3)
-    report = dict(white_pct=white_pct, range=range_report(Dm, Pm, p),
+        Pm = P[mask] if mask is not None else P.reshape(-1, 3)
+        rng_rep = range_report(Dm, Pm, p)
+    report = dict(white_pct=white_pct, range=rng_rep,
                   full_image_above_white=above_white)
     if white_info is not None:  # reports of the default single-pixel white point keep their previous field set
         report["white_point"] = white_info

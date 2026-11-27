@@ -121,7 +121,7 @@ def install_ps_bridge_launcher() -> Path:
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="Install FilmColor v1.0 plugins for Lightroom Classic & Photoshop")
+    ap = argparse.ArgumentParser(description="Install FilmColor v2.0 plugins for Lightroom Classic & Photoshop")
     ap.add_argument("--force", action="store_true", help="replace existing FilmColor.lrplugin installation")
     a = ap.parse_args(argv)
     install_lightroom(force=a.force)

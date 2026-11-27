@@ -816,15 +816,16 @@ _T19_X_GRID = (MID_GREY * _T19_U_GRID / (1.0 - _T19_U_GRID)).astype(np.float32)
 _T19_LUT_CACHE: dict[tuple, tuple] = {}
 
 
-def _prepare_t19_lut(p: RenderParamsT19) -> tuple[np.ndarray, np.ndarray, np.float32]:
-    key = (p.contrast, p.shoulder, p.toe)
+def _prepare_t19_lut_values(contrast: float, shoulder: float, toe: float) -> tuple[np.ndarray, np.ndarray, np.float32]:
+    c_safe = max(float(contrast), 1e-4)
+    key = (c_safe, float(shoulder), float(toe))
     cached = _T19_LUT_CACHE.get(key)
     if cached is not None:
         return cached
-    lut = _t19_curve_only(_T19_X_GRID, p.contrast, p.shoulder, p.toe)
+    lut = _t19_curve_only(_T19_X_GRID, c_safe, float(shoulder), float(toe))
     dlut = np.diff(lut, append=np.float32(0.0))
     # u = c * log2(x / 0.18) > log2(1 / 0.18)  <=>  x > 0.18 * (1 / 0.18)**(1/c)
-    x_over = np.float32(MID_GREY * ((1.0 / MID_GREY) ** (1.0 / p.contrast)))
+    x_over = np.float32(MID_GREY * ((1.0 / MID_GREY) ** (1.0 / c_safe)))
     res = (lut, dlut, x_over)
     if len(_T19_LUT_CACHE) >= 256:
         _T19_LUT_CACHE.clear()
@@ -832,10 +833,35 @@ def _prepare_t19_lut(p: RenderParamsT19) -> tuple[np.ndarray, np.ndarray, np.flo
     return res
 
 
+def _prepare_t19_lut(p: RenderParamsT19 | RenderParamsT24):
+    if isinstance(p, RenderParamsT24) and (p.slope_r != 0.0 or p.slope_b != 0.0):
+        # Algebraically fold channel slope x -> MID_GREY*(x/MID_GREY)**(1+s) into contrast*(1+s),
+        # eliminating per-pixel log2/exp2 on R and B (<3e-7 max diff, bit-exact above_white).
+        lr, dlr, xor = _prepare_t19_lut_values(p.contrast * (1.0 + p.slope_r), p.shoulder, p.toe)
+        lg, dlg, xog = _prepare_t19_lut_values(p.contrast, p.shoulder, p.toe)
+        lb, dlb, xob = _prepare_t19_lut_values(p.contrast * (1.0 + p.slope_b), p.shoulder, p.toe)
+        return ((lr, lg, lb), (dlr, dlg, dlb), np.array([xor, xog, xob], dtype=np.float32), True)
+    return _prepare_t19_lut_values(p.contrast, p.shoulder, p.toe)
+
+
 def _apply_t19_curve_or_lut(
     x: np.ndarray, p: RenderParamsT19 | RenderParamsT24, _t19_pre, *, inplace: bool = False
 ) -> tuple[np.ndarray, np.ndarray]:
     if _t19_pre is not None:
+        if len(_t19_pre) == 4:
+            luts, dluts, x_over, _ = _t19_pre
+            over = x > x_over
+            xc = np.maximum(x, np.float32(0.0), out=x) if inplace else np.maximum(x, np.float32(0.0))
+            denom = xc + np.float32(MID_GREY)
+            np.divide(xc, denom, out=xc)
+            xc *= np.float32(_T19_LUT_N - 1)
+            i0 = xc.astype(np.int32)
+            np.minimum(i0, _T19_LUT_N - 2, out=i0)
+            xc -= i0
+            for ch in range(3):
+                ic = i0[..., ch]
+                xc[..., ch] = xc[..., ch] * dluts[ch][ic] + luts[ch][ic]
+            return xc, over
         lut, dlut, x_over = _t19_pre
         over = x > x_over
         xc = np.maximum(x, np.float32(0.0), out=x) if inplace else np.maximum(x, np.float32(0.0))
@@ -985,7 +1011,8 @@ def _render_t24_core(
         x = (x.reshape(-1, 3) @ m_lin.T).reshape(x.shape) if x.ndim >= 2 else (x @ m_lin.T)
         owned = True
     neg = x < np.float32(0.0)
-    if p.slope_r != 0.0 or p.slope_b != 0.0:
+    slopes_folded = _t19_pre is not None and len(_t19_pre) == 4
+    if not slopes_folded and (p.slope_r != 0.0 or p.slope_b != 0.0):
         x = np.maximum(x, np.float32(1e-6), out=x) if owned else np.maximum(x, np.float32(1e-6))
         owned = True
         inv_mid = np.float32(1.0 / MID_GREY)
@@ -1007,3 +1034,8 @@ def render_t24(P, p: RenderParamsT24, mask=None, *, chunk_rows: int = CHUNK_ROWS
     m_lin = _t24_linear_matrix(p)
     pre = _prepare_t19_lut(p) if fast else None
     return _render_chunked(np.asarray(P, np.float32), lambda xc: _render_t24_core(xc, p, m_lin, _t19_pre=pre), mask, chunk_rows)
+
+# T25 final release aliases (100% compatible with RenderParamsT24 / render_t24)
+RenderParamsT25 = RenderParamsT24
+T25_BOUNDS = T24_BOUNDS
+render_t25 = render_t24

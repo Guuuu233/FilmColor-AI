@@ -216,3 +216,50 @@ def test_t24_degenerate_frames_fail_cleanly():
     est = estimate_params_t24(P, np.zeros((64, 64), bool), d_hi=(0.85, 0.9, 0.4), has_cam_matrix=False)
     e, d = render_t24(P, RenderParamsT24.from_dict(est["params"]), np.zeros((64, 64), bool))
     assert np.isfinite(e).all() and np.isnan(d["above_white"])
+
+
+def test_t24_perceptual_v4_weights_and_non_flattening():
+    from filmcolor import noref
+    v4 = noref._load_t25_weights("t25_perceptual")
+    assert v4 is not None and v4["version"] == "T25"
+    cal_heads = v4["branches"]["cal"]
+    assert "d_contrast" in cal_heads and cal_heads["d_contrast"]["bounds"][0] >= 0.0
+    assert "d_sat" in cal_heads and cal_heads["d_sat"]["alpha"] > 0.0
+
+
+def test_noref_audit_bugfixes():
+    """Regression tests for B09-B13 and P07 in noref.py."""
+    from filmcolor import noref
+
+    # B09: _t24_density_feats handles gamma == 0 without ZeroDivisionError
+    P = np.full((16, 16, 3), 0.25, dtype=np.float32)
+    df, dg = noref._t24_density_feats(P, (0.0, 0.0, 0.0), (0.8, 0.8, 0.8), gamma=0.0)
+    assert all(np.isfinite(v) for v in df.values()) and dg > 0.0
+
+    # B10: estimate_params_v2 'sat' group handles neutral/B&W frames without ZeroDivisionError
+    neutral = np.linspace(0.05, 0.85, 64 * 64, dtype=np.float32).reshape(64, 64)
+    neutral_rgb = np.repeat(neutral[..., None], 3, axis=-1)
+    res_v2 = noref.estimate_params_v2(neutral_rgb, cfg=noref.NOREF_V2)
+    assert res_v2["status"] == "ok" and np.isfinite(res_v2["params"]["sat"])
+
+    # B11: _t20_interior_crop handles thin 2px mask without returning empty array
+    thin_mask = np.zeros((32, 160), dtype=bool)
+    thin_mask[10:12, 10:150] = True
+    crop_thin = noref._t20_interior_crop(np.full((32, 160, 3), 0.2, dtype=np.float32), thin_mask)
+    assert crop_thin.shape[0] > 0 and crop_thin.shape[1] > 0
+
+    # B12: estimate_params_t24 propagates v3_status and v3_flags
+    const_frame = np.full((64, 64, 3), 0.2, dtype=np.float32)
+    est_const = estimate_params_t24(const_frame, d_hi=(0.85, 0.9, 1.05))
+    assert "v3_status" in est_const and "v3_flags" in est_const
+    assert est_const["v3_status"] == "manual_review_required"
+
+    # B13: _eval_et_trees and _weighted_median handle empty inputs safely
+    assert noref._eval_et_trees([], np.zeros(5, dtype=np.float32)) == 0.0
+    assert noref._weighted_median(np.array([], dtype=np.float64), np.array([], dtype=np.float64)) == 0.0
+
+    # P07: load_look returns fresh copy so caller mutations do not pollute cache
+    l1 = noref.load_look()
+    l1["params"]["ev"] = 999.0
+    l2 = noref.load_look()
+    assert l2["params"]["ev"] != 999.0

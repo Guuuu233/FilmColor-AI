@@ -61,13 +61,14 @@ Config.DEFAULT_PYTHON = pickDefaultPython()
 
 function Config.prefs()
     local p = LrPrefs.prefsForPlugin()
-    -- Auto-heal if unset, missing on disk, or pointing outside .venv
-    if not p.pythonPath or p.pythonPath == "" or not string.find(p.pythonPath, "%.venv") or not LrFileUtils.exists(p.pythonPath) then
+    -- Auto-heal only when unset, empty, or missing on disk (preserve valid custom conda/pyenv/venv paths)
+    if not p.pythonPath or p.pythonPath == "" or not LrFileUtils.exists(p.pythonPath) then
         p.pythonPath = pickDefaultPython()
     end
-    if not p.port then p.port = Config.DEFAULT_PORT end
+    local pn = tonumber(p.port)
+    if not pn or pn < 1024 or pn > 65535 then p.port = Config.DEFAULT_PORT else p.port = math.floor(pn) end
     if not p.language then p.language = "auto" end
-    if not p.engine then p.engine = "t24" end
+    if not p.engine or p.engine == "t24" then p.engine = "t25" end
     if not p.film then p.film = "color" end
     if not p.preset then p.preset = "frontier" end
     if not p.baseMode then p.baseMode = "auto" end

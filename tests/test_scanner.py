@@ -1258,3 +1258,90 @@ def test_t5h_rational_levels_and_tiled_float_deflate(tmp_path):
         dec = _read_page_array(fake_page)
     assert dec.shape == (12, 14, 3) and dec.dtype == np.float16
     np.testing.assert_array_equal(dec, f16[:12, :14])
+
+
+def test_b03_tiled_float_predictor3_fallback_validation():
+    """B03: tiled float Predictor=3 fallback validates PlanarConfiguration, tile table, and deflate integrity."""
+    import types
+    import zlib
+    from io import BytesIO
+    from filmcolor.scanner import _read_page_array
+
+    class _FakePage:
+        def __init__(self, *, planarconfig=1, offsets=(0,), counts=(4,), blob=b"\x00\x00\x00\x00"):
+            self.is_tiled = True
+            self.compression = 8
+            self.dtype = np.dtype("<f4")
+            self.imagelength = 4
+            self.imagewidth = 4
+            self.samplesperpixel = 3
+            self.tilewidth = 4
+            self.tilelength = 4
+            self.planarconfig = planarconfig
+            self.dataoffsets = offsets
+            self.databytecounts = counts
+            self.tags = {"Predictor": types.SimpleNamespace(value=3)}
+            self.parent = types.SimpleNamespace(filename="fake.tif", filehandle=BytesIO(blob))
+
+        def asarray(self):
+            raise ValueError("requires the 'imagecodecs' package")
+
+    # PlanarConfiguration=2 rejected
+    with pytest.raises(ValueError, match="PlanarConfiguration"):
+        _read_page_array(_FakePage(planarconfig=2))
+    # Truncated tile table rejected
+    with pytest.raises(ValueError, match="truncated TIFF tile table"):
+        _read_page_array(_FakePage(offsets=(), counts=()))
+    # Truncated tile bytes rejected
+    with pytest.raises(ValueError, match="truncated TIFF tile"):
+        _read_page_array(_FakePage(offsets=(0,), counts=(100,), blob=b"short"))
+    # Corrupt zlib stream rejected as ValueError (not zlib.error)
+    with pytest.raises(ValueError, match="corrupt deflate TIFF tile"):
+        _read_page_array(_FakePage(offsets=(0,), counts=(8,), blob=b"not_zlib"))
+    # Wrong decoded length rejected
+    bad_len_blob = zlib.compress(b"\x00" * 16)
+    with pytest.raises(ValueError, match="decoded tile 0 length"):
+        _read_page_array(_FakePage(offsets=(0,), counts=(len(bad_len_blob),), blob=bad_len_blob))
+
+
+def test_b04_reconstruct_prestretched_rgb_negative_pixels_finite():
+    """B04: negative black-subtracted pixels do not produce NaNs in _reconstruct_prestretched_rgb."""
+    from filmcolor.scanner import _reconstruct_prestretched_rgb
+
+    rng = np.random.default_rng(7)
+    rgb = np.empty((64, 64, 3), dtype=np.float32)
+    rgb[..., 0] = rng.uniform(0.55, 1.0, (64, 64))
+    rgb[..., 1] = rng.uniform(0.05, 0.85, (64, 64))
+    rgb[..., 2] = rng.uniform(-0.60, 0.50, (64, 64))  # deeply negative black-subtracted values
+    rgb[:4, :4, 1] = -0.70
+    out, info = _reconstruct_prestretched_rgb(rgb)
+    assert info is not None
+    assert np.all(np.isfinite(out))
+    assert float(out.min()) >= 0.0
+
+
+def test_b08_parse_tiff_eotf_para_type3_distinguishes_non_srgb():
+    """B08: _parse_tiff_eotf maps non-sRGB ICC para type 3 (e.g. ProPhoto gamma 1.8) to lut, not srgb 2.4."""
+    import struct
+    from filmcolor.scanner import _parse_tiff_eotf
+
+    def _s15f16(v: float) -> bytes:
+        return struct.pack(">i", int(round(v * 65536.0)))
+
+    def _make_icc_para3(g, a, b, c, d):
+        tag = b"para" + bytes(4) + struct.pack(">HH", 3, 0) + b"".join(_s15f16(x) for x in (g, a, b, c, d))
+        header = bytearray(128)
+        header[12:16] = b"mntr"
+        table = struct.pack(">I", 1) + b"gTRC" + struct.pack(">II", 128 + 16, len(tag))
+        return bytes(header) + table + tag
+
+    # True sRGB para type 3 -> "srgb"
+    icc_srgb = _make_icc_para3(2.4, 1.0 / 1.055, 0.055 / 1.055, 1.0 / 12.92, 0.04045)
+    mode, gamma, curve = _parse_tiff_eotf(icc_srgb, 16)
+    assert mode == "srgb" and gamma == 2.4 and curve is None
+
+    # ProPhoto RGB para type 3 (gamma 1.8, a=1, b=0, c=1/16, d=1/32) -> "lut" matching x^1.8
+    icc_prophoto = _make_icc_para3(1.8, 1.0, 0.0, 1.0 / 16.0, 1.0 / 32.0)
+    mode2, gamma2, curve2 = _parse_tiff_eotf(icc_prophoto, 16)
+    assert mode2 == "lut" and gamma2 is None and curve2 is not None and len(curve2) == 4096
+    assert abs(float(curve2[2048]) - (0.5 ** 1.8)) < 1e-3

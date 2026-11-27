@@ -5,6 +5,7 @@ pinned RenderParams / RenderParamsT24 outputs remain bit-identical unless post-g
 """
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass, field
 import math
 from pathlib import Path
@@ -60,105 +61,165 @@ def _run_row_chunks(h: int, fn, *, step: int = 128) -> None:
 T24_STYLE_PRESETS = {
     "frontier": dict(
         label="富士 Frontier 鲜润",
-        desc="自适应 SP-3000 鲜润影调：通透翡翠绿与清亮肤色，按画面反差与色度余量动态调优（日常直出推荐）",
-        camera_matrix_mix=0.58,
-        offsets=dict(sat=0.12, contrast=0.08, shoulder=0.0, toe=-0.16, tint=0.018, temp=0.008),
+        desc="自适应 SP-3000 鲜润通透影调：翡翠通透绿、蜜桃清亮肤色、明澈天蓝与弹性反差（日常直出推荐）",
+        camera_matrix_mix=0.45,
+        offsets=dict(sat=0.05, contrast=0.06, shoulder=0.02, toe=-0.04, tint=0.008, temp=0.004),
         grade=dict(
-            vibrance=0.14, highlights=-0.10, blacks=-0.05, clarity=0.05,
-            hsl={"green": [-0.08, 0.12, -0.03], "orange": [0.0, 0.06, 0.04]},
+            vibrance=0.14, highlights=-0.08, shadows=0.04, blacks=-0.02, whites=0.03, clarity=0.05,
+            skin_protect=0.22,
+            tone_curve={"rgb": [[0.0, 0.0], [0.24, 0.222], [0.50, 0.504], [0.76, 0.784], [1.0, 1.0]]},
+            hsl={
+                "red": [0.06, 0.14, -0.06],
+                "orange": [0.03, 0.09, 0.14],
+                "yellow": [-0.14, 0.05, 0.10],
+                "green": [0.14, 0.18, 0.14],
+                "aqua": [-0.08, 0.12, 0.05],
+                "blue": [-0.14, 0.16, -0.10],
+            },
+            cg_shadows=[192.0, 0.10, -0.01],
+            cg_highlights=[46.0, 0.12, 0.015],
+            cg_blending=0.68,
         ),
     ),
     "leica": dict(
         label="德味徕卡 Leica Look",
-        desc="自适应德味大师影调：油润厚重红蓝、克制松木绿、强立体微反差、冷暗暖亮分离与轻光学暗角",
-        camera_matrix_mix=0.58,
-        offsets=dict(ev=-0.06, contrast=0.09, sat=0.05, shoulder=0.07, toe=-0.18, tint=0.014),
+        desc="自适应德味光学油润影调：深沉凝重红蓝、克制松烟橄榄绿、立体微反差与冷岩暗部/暖象牙高光",
+        camera_matrix_mix=0.46,
+        offsets=dict(ev=-0.05, contrast=0.09, sat=0.03, shoulder=0.07, toe=-0.07, tint=0.006),
         grade=dict(
-            vibrance=0.09, highlights=-0.12, shadows=0.05, blacks=-0.07,
-            clarity=0.12, dehaze=0.06, sharpen=0.10, vignette=-0.11, skin_protect=0.26,
-            tone_curve={"rgb": [[0.0, 0.0], [0.22, 0.195], [0.50, 0.492], [0.78, 0.805], [1.0, 1.0]]},
+            vibrance=0.10, highlights=-0.11, shadows=0.04, blacks=-0.04,
+            clarity=0.14, dehaze=0.03, sharpen=0.12, vignette=-0.14, skin_protect=0.28,
+            tone_curve={"rgb": [[0.0, 0.0], [0.22, 0.188], [0.50, 0.488], [0.78, 0.810], [1.0, 1.0]]},
             hsl={
-                "red": [-0.05, 0.14, -0.09],
-                "orange": [0.02, 0.01, 0.05],
-                "yellow": [-0.04, -0.04, 0.02],
-                "green": [0.05, -0.08, -0.01],
-                "aqua": [0.0, -0.08, -0.06],
-                "blue": [-0.05, 0.10, -0.13],
+                "red": [-0.14, 0.24, -0.24],
+                "orange": [-0.03, 0.04, 0.06],
+                "yellow": [-0.18, -0.18, -0.04],
+                "green": [0.14, -0.24, -0.14],
+                "aqua": [0.04, -0.18, -0.10],
+                "blue": [-0.16, 0.22, -0.24],
             },
-            cg_shadows=[218.0, 0.09, -0.04],
-            cg_highlights=[43.0, 0.08, 0.02],
-            cg_blending=0.68,
+            cg_shadows=[218.0, 0.20, -0.025],
+            cg_midtones=[36.0, 0.05, 0.0],
+            cg_highlights=[42.0, 0.17, 0.015],
+            cg_blending=0.66,
         ),
     ),
     "noritsu": dict(
         label="诺日士 Noritsu 通透",
-        desc="自适应 HS-1800 通透店扫：高光柔顺、暗部清澈开放、象牙白干净且肤色自然克制",
-        camera_matrix_mix=0.54,
-        offsets=dict(sat=0.08, contrast=0.04, shoulder=0.06, toe=-0.08, tint=0.014, temp=0.006),
+        desc="自适应 HS-1800 空气感店扫：柔和丝滑高光、通透开放暗部、干净象牙白与克制高级色彩",
+        camera_matrix_mix=0.42,
+        offsets=dict(ev=0.03, sat=0.03, contrast=0.01, shoulder=0.10, toe=0.04, tint=0.006, temp=0.004),
         grade=dict(
-            vibrance=0.10, highlights=-0.12, shadows=0.06, blacks=-0.03, skin_protect=0.25,
-            cg_highlights=[46.0, 0.05, 0.01], cg_blending=0.72,
+            vibrance=0.10, highlights=-0.12, shadows=0.12, blacks=0.0, whites=0.02, skin_protect=0.28,
+            hsl={
+                "orange": [0.04, 0.05, 0.14],
+                "yellow": [-0.12, -0.12, 0.12],
+                "green": [0.06, -0.04, 0.10],
+                "blue": [-0.10, 0.10, 0.02],
+            },
+            cg_shadows=[208.0, 0.06, 0.0],
+            cg_highlights=[46.0, 0.13, 0.015],
+            cg_blending=0.74,
         ),
     ),
     "linear": dict(
         label="线性 Linear",
         desc="自适应高宽容平坦底稿：最大化保留高光与暗部动态范围、中性色度且无风格化染调（专为 Lr/PS 深度自调设计）",
-        camera_matrix_mix=0.50,
-        offsets=dict(contrast=-0.20, sat=-0.08, shoulder=0.20, toe=0.08, tint=0.010),
-        grade=dict(highlights=-0.18, shadows=0.16, blacks=0.03),
+        camera_matrix_mix=0.40,
+        offsets=dict(contrast=-0.20, sat=-0.08, shoulder=0.20, toe=0.08, tint=0.008),
+        grade=dict(highlights=-0.18, shadows=0.16, blacks=0.04),
     ),
     "standard": dict(
         label="标准 Standard",
-        desc="FilmColor v1.0 锁定物理基准，无额外风格偏移（色度最保守）",
+        desc="FilmColor T25 锁定物理基准，无额外风格偏移（最忠实原始反相结果）",
         offsets=dict(),
         grade=dict(),
     ),
     "natural": dict(
         label="自然 Natural",
-        desc="自适应温润胶片影调：柔和光比、开放暗部与细腻暖白高光，耐看无侵略性",
-        offsets=dict(contrast=-0.06, sat=-0.02, shoulder=0.08),
-        grade=dict(shadows=0.08, highlights=-0.08, vibrance=0.05, cg_highlights=[42.0, 0.06, 0.01], cg_blending=0.72),
+        desc="自适应温润胶片本色：柔和光比、舒展暗部与阳光暖白高光，耐看无侵略性",
+        offsets=dict(ev=0.02, contrast=-0.04, sat=0.0, shoulder=0.10),
+        grade=dict(
+            shadows=0.10, highlights=-0.10, vibrance=0.08, skin_protect=0.20,
+            hsl={"yellow": [-0.10, -0.06, 0.08], "orange": [0.02, 0.05, 0.08]},
+            cg_highlights=[40.0, 0.15, 0.015], cg_blending=0.72,
+        ),
     ),
     "portrait": dict(
         label="人像 Portrait",
-        desc="自适应 Portra 柔美肤色：通透蜜桃肌理、柔化绿植反光、柔和光比与动态肤色保护",
-        offsets=dict(ev=0.07, contrast=-0.08, sat=-0.03, shoulder=0.10, temp=0.010, tint=0.014),
+        desc="自适应 Portra 蜜桃通透肤色：润泽粉桃肌理、柔化绿植反光、暖金柔光高比与强肤色保护",
+        offsets=dict(ev=0.05, contrast=-0.07, sat=-0.02, shoulder=0.13, toe=0.06, temp=0.008, tint=0.008),
         grade=dict(
-            shadows=0.10, highlights=-0.12, skin_protect=0.45, vibrance=0.06,
-            hsl={"orange": [0.02, -0.02, 0.06], "yellow": [-0.08, -0.08, 0.03], "green": [0.04, -0.10, -0.02]},
+            shadows=0.14, highlights=-0.14, skin_protect=0.48, vibrance=0.07,
+            hsl={
+                "red": [0.10, -0.06, 0.08],
+                "orange": [0.06, 0.02, 0.20],
+                "yellow": [-0.20, -0.22, 0.12],
+                "green": [0.10, -0.24, 0.04],
+                "blue": [-0.08, -0.06, 0.08],
+            },
+            cg_shadows=[212.0, 0.07, 0.0],
+            cg_highlights=[38.0, 0.17, 0.015],
+            cg_blending=0.72,
         ),
     ),
     "vivid": dict(
         label="鲜明 Vivid",
-        desc="自适应反转片 Velvia 浓郁质感：深邃天空与饱和红橙、通透微反差，强饱和场景自动防溢出",
-        camera_matrix_mix=0.58,
-        offsets=dict(contrast=0.11, sat=0.10, shoulder=-0.02),
+        desc="自适应反转片 Velvia/Ektar 浓郁毒色：宝石深邃蓝红绿、晶莹通透微反差，高饱和自动防溢色",
+        camera_matrix_mix=0.47,
+        offsets=dict(ev=-0.02, contrast=0.11, sat=0.07, shoulder=0.02, toe=-0.06),
         grade=dict(
-            vibrance=0.16, highlights=-0.08, blacks=-0.06, clarity=0.08,
-            hsl={"red": [-0.03, 0.12, -0.05], "blue": [-0.04, 0.10, -0.10]},
+            vibrance=0.18, highlights=-0.10, blacks=-0.04, clarity=0.10, skin_protect=0.22,
+            tone_curve={"rgb": [[0.0, 0.0], [0.23, 0.200], [0.50, 0.498], [0.77, 0.804], [1.0, 1.0]]},
+            hsl={
+                "red": [-0.08, 0.26, -0.18],
+                "orange": [-0.06, 0.18, -0.03],
+                "yellow": [-0.10, 0.10, 0.02],
+                "green": [0.12, 0.22, -0.10],
+                "aqua": [-0.06, 0.20, -0.10],
+                "blue": [-0.14, 0.28, -0.28],
+                "magenta": [-0.04, 0.14, -0.08],
+            },
+            cg_shadows=[214.0, 0.10, -0.015],
+            cg_highlights=[44.0, 0.10, 0.01],
+            cg_blending=0.68,
         ),
     ),
     "print_classic": dict(
         label="经典印相 Print",
-        desc="自适应光学暗房相纸：随底片反差动态调节 S 曲线，扎实黑位、温润纸白与细腻锐度",
-        offsets=dict(contrast=0.09, sat=0.02, shoulder=-0.04),
+        desc="自适应光学暗房 RA-4 印相：雕塑感经典 S 曲线、扎实丝绒黑位、巴莱塔温润纸白与细腻微锐",
+        offsets=dict(ev=-0.02, contrast=0.09, sat=0.02, shoulder=0.02, toe=-0.05),
         grade=dict(
-            blacks=-0.07, whites=0.03, sharpen=0.10,
-            tone_curve={"rgb": [[0.0, 0.0], [0.24, 0.21], [0.5, 0.50], [0.76, 0.79], [1.0, 1.0]]},
-            cg_highlights=[45.0, 0.07, 0.01], cg_blending=0.70,
+            blacks=-0.06, whites=0.03, highlights=-0.09, clarity=0.07, sharpen=0.12, skin_protect=0.18,
+            tone_curve={"rgb": [[0.0, 0.0], [0.24, 0.202], [0.50, 0.500], [0.76, 0.800], [1.0, 1.0]]},
+            hsl={
+                "yellow": [-0.10, -0.10, 0.02],
+                "green": [0.08, -0.12, -0.08],
+                "blue": [-0.08, 0.08, -0.14],
+            },
+            cg_shadows=[224.0, 0.08, -0.015],
+            cg_highlights=[44.0, 0.18, 0.015],
+            cg_blending=0.70,
         ),
     ),
     "cinema": dict(
         label="电影质感 Cinema",
-        desc="自适应 Vision3 银幕色调：油青暗部与钨丝暖高光分离、克制绿植与细腻有机颗粒",
-        offsets=dict(contrast=0.04, sat=-0.02, shoulder=0.12),
+        desc="自适应 Vision3 2383 银幕色调：油青深邃暗部与钨丝暖金高光分离、胶片宽容肩部与有机颗粒",
+        offsets=dict(ev=-0.02, contrast=0.04, sat=-0.01, shoulder=0.15, toe=0.03),
         grade=dict(
-            blacks=0.05, highlights=-0.10, grain=0.07,
-            hsl={"green": [0.06, -0.12, -0.06]},
-            cg_shadows=[198.0, 0.14, -0.03],
-            cg_highlights=[36.0, 0.12, 0.02],
-            cg_blending=0.65,
-            clarity=0.04,
+            blacks=0.04, highlights=-0.14, shadows=0.05, grain=0.08, clarity=0.06, skin_protect=0.30,
+            hsl={
+                "red": [0.06, 0.16, -0.14],
+                "orange": [0.02, 0.06, 0.08],
+                "yellow": [-0.22, -0.16, -0.04],
+                "green": [0.18, -0.26, -0.18],
+                "blue": [-0.22, 0.12, -0.14],
+            },
+            cg_shadows=[196.0, 0.30, -0.025],
+            cg_midtones=[28.0, 0.05, 0.0],
+            cg_highlights=[35.0, 0.26, 0.015],
+            cg_balance=-0.08,
+            cg_blending=0.62,
         ),
     ),
 }
@@ -171,25 +232,44 @@ def analyze_scene_metrics(
     above_white: float | None = None,
 ) -> dict[str, float]:
     """Compute compact, deterministic tonal & chromatic scene statistics on an sRGB [0, 1] display preview (~3 ms)."""
-    arr = np.clip(np.asarray(display, dtype=np.float32), np.float32(0.0), np.float32(1.0))
-    h, w = arr.shape[:2]
-    step = max(1, max(h, w) // 192)
-    sub = arr[::step, ::step]
+    arr = np.asarray(display, dtype=np.float32)
+    if arr.ndim == 2:
+        h, w = arr.shape
+        step = max(1, max(h, w) // 192)
+        sub_1 = arr[::step, ::step]
+        sub = np.repeat(sub_1[..., None], 3, axis=-1)
+    elif arr.ndim == 3 and arr.shape[2] >= 3:
+        h, w = arr.shape[:2]
+        step = max(1, max(h, w) // 192)
+        sub = arr[::step, ::step, :3]
+    elif arr.ndim == 3 and arr.shape[2] == 1:
+        h, w = arr.shape[:2]
+        step = max(1, max(h, w) // 192)
+        sub = np.repeat(arr[::step, ::step], 3, axis=-1)
+    else:
+        raise ValueError(f"analyze_scene_metrics expects 2D or 3D image, got shape {arr.shape}")
     if mask is not None and mask.shape[:2] == (h, w):
         m = np.asarray(mask[::step, ::step], dtype=bool)
         px = sub[m] if int(m.sum()) >= 64 else sub.reshape(-1, 3)
     else:
         px = sub.reshape(-1, 3)
+    finite_rows = np.all(np.isfinite(px), axis=1)
+    if not np.all(finite_rows):
+        px = px[finite_rows]
+    if px.size > 0:
+        px = np.clip(px, np.float32(0.0), np.float32(1.0))
     if px.size == 0:
         return dict(
-            luma_p02=0.04, luma_p05=0.08, luma_p50=0.45, luma_p95=0.82, luma_p98=0.90,
-            dr=0.74, hi_clip=0.0, sh_crush=0.02, chroma_p50=0.25, chroma_p90=0.45,
-            skin_share=0.0, blue_share=0.0, warm_bias=0.0, green_bias=0.0,
+            luma_p02=0.04, luma_p05=0.08, luma_p25=0.25, luma_p50=0.45, luma_p75=0.65,
+            luma_p95=0.82, luma_p98=0.90, dr=0.74, mid_dr=0.40, hi_clip=0.0, sh_crush=0.02,
+            chroma_p50=0.25, chroma_p90=0.45, skin_share=0.0, blue_share=0.0,
+            green_share=0.0, warm_share=0.0, warm_bias=0.0, green_bias=0.0,
+            shadow_warm_bias=0.0, hi_warm_bias=0.0,
         )
 
     r, g, b = px[:, 0], px[:, 1], px[:, 2]
     y = r * LUMA_F32[0] + g * LUMA_F32[1] + b * LUMA_F32[2]
-    p02, p05, p50, p95, p98 = (float(v) for v in np.percentile(y, [2, 5, 50, 95, 98]))
+    p02, p05, p25, p50, p75, p95, p98 = (float(v) for v in np.percentile(y, [2, 5, 25, 50, 75, 95, 98]))
 
     mx = np.maximum(np.maximum(r, g), b)
     mn = np.minimum(np.minimum(r, g), b)
@@ -216,6 +296,12 @@ def analyze_scene_metrics(
     else:
         warm_bias, green_bias = 0.0, 0.0
 
+    # Zonal warm/cool cast in shadows & highlights so split-toning adapts rather than double-tinting
+    sh_zone = (y >= np.float32(0.03)) & (y <= np.float32(0.28))
+    shadow_warm_bias = float(np.mean(r[sh_zone] - b[sh_zone])) if int(sh_zone.sum()) >= 32 else warm_bias * 0.5
+    hi_zone = (y >= np.float32(0.70)) & (y <= np.float32(0.96))
+    hi_warm_bias = float(np.mean(r[hi_zone] - b[hi_zone])) if int(hi_zone.sum()) >= 32 else warm_bias * 0.5
+
     # Natural skin-tone window: R > G > B, hue in [6, 42] deg, moderate saturation & luma
     skin_cand = (
         (r > g) & (g > b)
@@ -229,14 +315,18 @@ def analyze_scene_metrics(
     else:
         skin_share = 0.0
 
-    # Sky / water blue presence
-    blue_share = float(np.mean((b > g) & (b > r) & (sat >= np.float32(0.14)) & (y >= np.float32(0.22))))
+    # Dominant chromatic families for adaptive hue sculpting
+    blue_share = float(np.mean((b > g) & (b > r) & (sat >= np.float32(0.14)) & (y >= np.float32(0.20))))
+    green_share = float(np.mean((g > r) & (g > b) & (sat >= np.float32(0.14)) & (y >= np.float32(0.08))))
+    warm_share = float(np.mean((r > b) & (r >= g) & (sat >= np.float32(0.18)) & (y >= np.float32(0.10))))
 
     return dict(
-        luma_p02=p02, luma_p05=p05, luma_p50=p50, luma_p95=p95, luma_p98=p98,
-        dr=max(0.0, p95 - p05), hi_clip=hi_clip, sh_crush=sh_crush,
-        chroma_p50=c50, chroma_p90=c90, skin_share=skin_share, blue_share=blue_share,
+        luma_p02=p02, luma_p05=p05, luma_p25=p25, luma_p50=p50, luma_p75=p75,
+        luma_p95=p95, luma_p98=p98, dr=max(0.0, p95 - p05), mid_dr=max(0.0, p75 - p25),
+        hi_clip=hi_clip, sh_crush=sh_crush, chroma_p50=c50, chroma_p90=c90,
+        skin_share=skin_share, blue_share=blue_share, green_share=green_share, warm_share=warm_share,
         warm_bias=warm_bias, green_bias=green_bias,
+        shadow_warm_bias=shadow_warm_bias, hi_warm_bias=hi_warm_bias,
     )
 
 
@@ -245,291 +335,396 @@ def resolve_adaptive_preset(
     film: str = "color",
     scene_metrics: dict[str, float] | None = None,
 ) -> dict:
-    """Resolve preset parameters adaptively from scene_metrics (falls back cleanly to T24_STYLE_PRESETS when None)."""
+    """T25-calibrated adaptive preset resolver: modulates color density, hue separation, micro-contrast,
+    split-toning, and tonal roll-off continuously per image (falls back cleanly to T24_STYLE_PRESETS when None)."""
     spec = T24_STYLE_PRESETS.get(preset) or T24_STYLE_PRESETS["standard"]
     if preset == "standard" or scene_metrics is None:
-        return dict(
-            camera_matrix_mix=spec.get("camera_matrix_mix"),
-            offsets=dict(spec["offsets"]),
-            grade=dict(spec["grade"]),
-        )
+        mix = spec.get("camera_matrix_mix")
+        offsets = dict(spec["offsets"])
+        grade = copy.deepcopy(spec["grade"])
+        if film == "bw":
+            mix = None
+            for ck in ("vibrance", "skin_protect", "hsl", "cg_shadows", "cg_midtones", "cg_highlights", "cg_balance", "cg_blending"):
+                grade.pop(ck, None)
+        return dict(camera_matrix_mix=mix, offsets=offsets, grade=grade)
 
     m = scene_metrics
     dr = float(m.get("dr", 0.72))
+    mid_dr = float(m.get("mid_dr", 0.36))
     p02 = float(m.get("luma_p02", 0.04))
     p05 = float(m.get("luma_p05", 0.08))
     p50 = float(m.get("luma_p50", 0.45))
     p98 = float(m.get("luma_p98", 0.90))
     hi_clip = float(m.get("hi_clip", 0.0))
     sh_crush = float(m.get("sh_crush", 0.0))
-    c90 = float(m.get("chroma_p90", 0.45))
+    c50 = float(m.get("chroma_p50", 0.22))
+    c90 = float(m.get("chroma_p90", 0.48))
     skin_share = float(m.get("skin_share", 0.0))
     blue_share = float(m.get("blue_share", 0.0))
+    green_share = float(m.get("green_share", 0.0))
+    warm_share = float(m.get("warm_share", 0.0))
     warm_bias = float(m.get("warm_bias", 0.0))
     green_bias = float(m.get("green_bias", 0.0))
+    sh_warm = float(m.get("shadow_warm_bias", warm_bias * 0.5))
+    hi_warm = float(m.get("hi_warm_bias", warm_bias * 0.5))
 
-    # Smooth normalized adaptive drivers (calibrated on 294-negative / 8-camera-format benchmark)
-    flatness = float(np.clip((0.72 - dr) / 0.28, -0.60, 1.0))
+    # --- T25-calibrated continuous scene drivers ---
+    # Combine global DR flatness and midtone flatness so soft overcast scenes get crisp separation
+    # while punchy sunlit scenes stay controlled and never brittle.
+    flat_global = float(np.clip((0.72 - dr) / 0.28, -0.60, 1.0))
+    flat_mid = float(np.clip((0.36 - mid_dr) / 0.22, -0.55, 1.0))
+    flatness = float(np.clip(0.65 * flat_global + 0.35 * flat_mid, -0.60, 1.0))
+
     hi_pressure = float(np.clip((p98 - 0.87) / 0.12, 0.0, 1.0) * 0.55 + np.clip(hi_clip / 0.12, 0.0, 1.0) * 0.45)
-    sh_lift_need = float(np.clip(max((0.11 - p05) / 0.08, sh_crush / 0.14), 0.0, 1.0))
-    # Do not mistake bright high-key daylight or ultra-narrow open-sky scenes for milky haze
+    sh_lift_need = float(np.clip(max((0.10 - p05) / 0.08, sh_crush / 0.14), 0.0, 1.0))
+    low_key = float(np.clip((0.36 - p50) / 0.18, 0.0, 1.0))
+    high_key = float(np.clip((p50 - 0.62) / 0.16, 0.0, 1.0))
     high_key_guard = float(np.clip((0.64 - p50) / 0.14, 0.0, 1.0))
-    narrow_dr_guard = float(np.clip((dr - 0.43) / 0.12, 0.0, 1.0))
+    narrow_dr_guard = float(np.clip((dr - 0.42) / 0.14, 0.0, 1.0))
+
     milky_black = float(
         np.clip((p05 - 0.11) / 0.12, 0.0, 1.0)
-        * np.clip((p50 - 0.32) / 0.16, 0.20, 1.0)
+        * np.clip((p50 - 0.30) / 0.16, 0.20, 1.0)
         * high_key_guard
         * narrow_dr_guard
     )
     veil_need = float(np.clip((min(p02, p05) - 0.07) / 0.14, 0.0, 1.0) * high_key_guard * narrow_dr_guard)
-    chroma_headroom = float(np.clip((0.46 - c90) / 0.28, -1.0, 1.0))
-    chroma_guard = float(np.clip((c90 - 0.52) / 0.32, 0.0, 1.0))
+
+    # T25 native chroma is richer (~0.885 vs old T24 0.806): decouple saturation ceiling from hue/density craft!
+    chroma_headroom = float(np.clip((0.52 - c90) / 0.30, -0.85, 1.0))
+    mid_chroma_room = float(np.clip((0.26 - c50) / 0.18, -0.60, 1.0))
+    chroma_guard = float(np.clip((c90 - 0.60) / 0.30, 0.0, 1.0))
+    # Saturation pushes back smoothly when c90 is high, while hue/luminance signature stays 80-100% alive!
+    sat_sc = float(np.clip(1.0 - 0.62 * chroma_guard + 0.18 * max(chroma_headroom, 0.0), 0.35, 1.25))
+    hue_sc = float(np.clip(1.0 - 0.18 * chroma_guard, 0.80, 1.05))
+
     skin_present = float(np.clip((skin_share - 0.03) / 0.15, 0.0, 1.0))
-    blue_present = float(np.clip((blue_share - 0.04) / 0.20, 0.0, 1.0))
-    green_cast = float(np.clip(green_bias / 0.035, 0.0, 1.0))
-    magenta_cast = float(np.clip(-green_bias / 0.035, 0.0, 1.0))
+    blue_present = float(np.clip((blue_share - 0.04) / 0.22, 0.0, 1.0))
+    green_present = float(np.clip((green_share - 0.04) / 0.22, 0.0, 1.0))
+    warm_present = float(np.clip((warm_share - 0.05) / 0.24, 0.0, 1.0))
+
+    green_cast = float(np.clip(green_bias / 0.032, 0.0, 1.0))
+    magenta_cast = float(np.clip(-green_bias / 0.032, 0.0, 1.0))
     cool_need = float(np.clip(-warm_bias / 0.10, -0.5, 1.0))
-    warm_excess = float(np.clip((warm_bias - 0.06) / 0.14, 0.0, 1.0))
-    dark_mid = float(np.clip((0.48 - p50) / 0.20, -0.5, 1.0))
-    bright_mid = float(np.clip((p50 - 0.62) / 0.16, 0.0, 1.0))
+    warm_excess = float(np.clip((warm_bias - 0.07) / 0.14, 0.0, 1.0))
+    dark_mid = float(np.clip((0.44 - p50) / 0.20, -0.5, 1.0))
+
+    # Zonal split-tone headroom: back off cool shadow tint if shadows are already cold;
+    # back off warm highlight glow if highlights are already warm golden!
+    sh_cool_room = float(np.clip(1.0 + sh_warm / 0.08, 0.35, 1.25))
+    hi_warm_room = float(np.clip(1.0 - hi_warm / 0.09, 0.38, 1.25))
+    # Strong toning attenuation on ultra-narrow pale empty-sky frames (e.g. A025) so skies stay pristine
+    sky_blank_guard = float(np.clip((c90 - 0.12) / 0.16, 0.0, 1.0))
+    tone_body = float(np.clip(0.14 + 0.86 * narrow_dr_guard * (0.35 + 0.65 * sky_blank_guard), 0.14, 1.0))
 
     mix: float | None = None
     offsets: dict[str, float] = {}
     grade: dict = {}
 
     if preset == "leica":
-        # Authentic German-glass / Leica Look: sculptural micro-contrast, oil-rich reds & cobalt blues,
-        # restrained pine-olive greens, anchored velvety blacks on normal/milky frames with shadow-crush guard
-        # on low-key scenes, creamy ivory highlights, bidirectional neutral tint, adaptive EV centering.
-        mix = round(0.50 + 0.06 * (1.0 - chroma_guard) + 0.06 * max(chroma_headroom, 0.0), 3)
-        ev_adj = round(0.03 * (1.0 - hi_pressure) + 0.14 * max(dark_mid, 0.0) * (1.0 - 0.55 * hi_pressure) - 0.10 * bright_mid, 4)
-        s_low = round(0.22 - (0.024 + 0.016 * max(flatness, -0.35)) * (1.0 - 0.78 * sh_lift_need), 4)
-        s_hi = round(0.78 + (0.022 + 0.012 * max(flatness, -0.35)) * (1.0 - 0.55 * hi_pressure), 4)
-        hsl_c = 1.0 - 0.85 * chroma_guard
+        # Authentic Leica M / APO-Summicron film aesthetic:
+        # Dense, painterly midtones (never washed-out), oil-rich garnet reds & Prussian blues,
+        # aristocratic pine-olive greens, sculpted micro-contrast, slate-blue shadows vs alabaster highlights.
+        mix = round(0.42 + 0.04 * (1.0 - chroma_guard) + 0.04 * max(chroma_headroom, 0.0), 3)
+        # Keep rich midtone weight on normal scenes; gently protect only very dark low-key scenes
+        ev_adj = round((-0.055 * (1.0 - 0.75 * low_key) * (1.0 - 0.45 * sh_lift_need) + 0.055 * low_key * (1.0 - 0.55 * hi_pressure) - 0.03 * high_key) * (0.35 + 0.65 * narrow_dr_guard), 4)
+        s_low = round(0.22 - (0.030 + 0.018 * max(flatness, -0.35)) * (1.0 - 0.72 * sh_lift_need) * tone_body, 4)
+        s_hi = round(0.78 + (0.028 + 0.014 * max(flatness, -0.35)) * (1.0 - 0.55 * hi_pressure) * tone_body, 4)
         offsets = dict(
             ev=ev_adj,
-            contrast=round(0.07 + 0.09 * flatness - 0.03 * sh_lift_need, 4),
-            sat=round(0.03 + 0.07 * chroma_headroom - 0.04 * chroma_guard, 4),
-            shoulder=round(0.06 + 0.11 * hi_pressure, 4),
-            toe=round(-0.06 - 0.08 * milky_black + 0.20 * sh_lift_need, 4),
-            tint=round(0.002 + 0.028 * green_cast - 0.045 * magenta_cast, 4),
-            temp=round(0.002 + 0.008 * max(cool_need, 0.0) - 0.014 * warm_excess, 4),
+            contrast=round(0.08 + 0.09 * flatness - 0.03 * sh_lift_need, 4),
+            sat=round(0.025 + 0.07 * chroma_headroom - 0.05 * chroma_guard, 4),
+            shoulder=round(0.07 + 0.11 * hi_pressure, 4),
+            toe=round(-0.07 - 0.09 * milky_black + 0.18 * sh_lift_need, 4),
+            tint=round(0.002 + 0.026 * green_cast - 0.042 * magenta_cast, 4),
+            temp=round(0.002 + 0.008 * max(cool_need, 0.0) - 0.015 * warm_excess, 4),
         )
         hsl = {
-            "red": [-0.05, round((0.11 + 0.07 * max(chroma_headroom, 0.0)) * hsl_c, 3), -0.07],
-            "orange": [0.02, round((-0.02 + 0.04 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(0.04 + 0.03 * skin_present, 3)],
-            "yellow": [-0.04, -0.04, 0.02],
-            "green": [0.05, round(-0.08 + 0.05 * max(chroma_headroom, 0.0), 3), round(0.01 + 0.04 * max(dark_mid, 0.0), 3)],
-            "aqua": [0.0, -0.06, -0.03],
-            "blue": [-0.06, round((0.07 + 0.07 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(-0.02 - 0.02 * blue_present - 0.02 * hi_pressure, 3)],
+            "red": [round(-0.14 * hue_sc, 3), round((0.22 + 0.08 * max(chroma_headroom, 0.0)) * sat_sc, 3), round((-0.22 - 0.06 * warm_present) * hue_sc, 3)],
+            "orange": [round(-0.03 * hue_sc, 3), round((0.03 + 0.05 * max(chroma_headroom, 0.0)) * sat_sc, 3), round(0.06 + 0.05 * skin_present, 3)],
+            "yellow": [round(-0.18 * hue_sc, 3), round(-0.18 - 0.05 * warm_present, 3), -0.04],
+            "green": [round(0.14 * hue_sc, 3), round(-0.22 - 0.08 * green_present + 0.06 * max(chroma_headroom, 0.0), 3), round(-0.14 + 0.08 * low_key, 3)],
+            "aqua": [0.04, -0.18, -0.10],
+            "blue": [round(-0.16 * hue_sc, 3), round((0.20 + 0.08 * max(chroma_headroom, 0.0)) * sat_sc, 3), round((-0.22 - 0.10 * blue_present - 0.04 * hi_pressure) * hue_sc, 3)],
         }
-        split_s = 0.85 + 0.25 * max(chroma_headroom, -0.3)
         grade = dict(
-            vibrance=round(0.07 + 0.09 * chroma_headroom - 0.05 * chroma_guard, 4),
-            highlights=round(-0.08 - 0.18 * hi_pressure, 4),
-            shadows=round(0.06 + 0.19 * sh_lift_need, 4),
-            blacks=round(-0.02 - 0.05 * milky_black + 0.10 * sh_lift_need, 4),
-            clarity=round(0.08 + 0.06 * max(flatness, 0.0) * narrow_dr_guard, 4),
-            dehaze=round(0.01 + 0.07 * veil_need, 4),
-            sharpen=0.10,
-            vignette=round(-0.10 * (1.0 - 0.55 * sh_lift_need) * narrow_dr_guard, 3),
-            skin_protect=round(0.22 + 0.25 * skin_present, 4),
-            tone_curve={"rgb": [[0.0, 0.0], [0.22, s_low], [0.50, 0.494], [0.78, s_hi], [1.0, 1.0]]},
+            vibrance=round(0.10 + 0.10 * chroma_headroom + 0.04 * max(mid_chroma_room, 0.0) - 0.07 * chroma_guard, 4),
+            highlights=round(-0.10 - 0.19 * hi_pressure, 4),
+            shadows=round(0.03 + 0.18 * sh_lift_need + 0.05 * low_key, 4),
+            blacks=round(-0.04 - 0.06 * milky_black + 0.10 * sh_lift_need, 4),
+            clarity=round(0.12 + 0.08 * max(flatness, 0.0) * narrow_dr_guard, 4),
+            dehaze=round(0.02 * narrow_dr_guard + 0.07 * veil_need, 4),
+            sharpen=0.12,
+            vignette=round(-0.14 * (1.0 - 0.50 * low_key) * narrow_dr_guard, 3),
+            skin_protect=round(0.24 + 0.28 * skin_present, 4),
+            tone_curve={"rgb": [[0.0, 0.0], [0.22, s_low], [0.50, round(0.488 + 0.008 * low_key, 4)], [0.78, s_hi], [1.0, 1.0]]},
             hsl=hsl,
-            cg_shadows=[218.0, round(0.09 * split_s, 3), round(-0.035 * (1.0 - 0.85 * sh_lift_need), 4)],
-            cg_midtones=[35.0, round(0.025 * split_s, 3), 0.0],
-            cg_highlights=[43.0, round(0.08 * split_s, 3), 0.02],
-            cg_blending=0.68,
+            cg_shadows=[218.0, round(0.20 * sh_cool_room * tone_body, 3), round(-0.025 * (1.0 - 0.80 * sh_lift_need) * tone_body, 4)],
+            cg_midtones=[36.0, round(0.05 * hi_warm_room * tone_body, 3), 0.0],
+            cg_highlights=[42.0, round(0.17 * hi_warm_room * tone_body, 3), round(0.015 * (1.0 - 0.50 * hi_pressure), 4)],
+            cg_blending=0.66,
         )
     elif preset == "linear":
         # Wide-latitude, flat, neutral 16-bit grading canvas: zero crushed blacks, zero clipped highlights,
         # zero stylized HSL/split-tone/vignette/grain/sharpen so colorists have maximum headroom in Lr/PS.
-        mix = 0.50
+        mix = 0.40
         offsets = dict(
-            ev=round(0.08 * (1.0 - 0.65 * hi_pressure) + 0.08 * max(dark_mid, 0.0) * (1.0 - 0.65 * hi_pressure) - 0.06 * bright_mid, 4),
+            ev=round(0.04 * (1.0 - 0.65 * hi_pressure) + 0.06 * max(dark_mid, 0.0) * (1.0 - 0.65 * hi_pressure) - 0.05 * high_key, 4),
             contrast=round((-0.20 - 0.06 * max(-flatness, 0.0)) * float(np.clip((dr - 0.15) / 0.35, 0.30, 1.0)), 4),
             sat=round(-0.08 + 0.04 * max(chroma_headroom, 0.0) - 0.03 * chroma_guard, 4),
             shoulder=round(0.18 + 0.12 * hi_pressure, 4),
             toe=round(0.08 + 0.12 * sh_lift_need - 0.06 * milky_black, 4),
-            tint=round(0.022 * green_cast - 0.020 * magenta_cast, 4),
+            tint=round(0.020 * green_cast - 0.018 * magenta_cast, 4),
         )
         grade = dict(
-            highlights=round(-0.15 - 0.17 * hi_pressure, 4),
-            shadows=round(0.12 + 0.14 * sh_lift_need, 4),
+            highlights=round(-0.16 - 0.18 * hi_pressure, 4),
+            shadows=round(0.14 + 0.14 * sh_lift_need, 4),
             blacks=round(0.04 * (1.0 - milky_black) - 0.02 * milky_black, 4),
         )
     elif preset == "frontier":
-        mix = round(0.50 + 0.04 * (1.0 - chroma_guard) + 0.06 * max(chroma_headroom, 0.0), 3)
-        ev_adj = round(0.06 * (1.0 - 0.60 * hi_pressure) + 0.10 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.07 * bright_mid, 4)
-        hsl_c = 1.0 - 0.85 * chroma_guard
+        # Iconic Fuji Frontier SP-3000 aesthetic:
+        # Crystalline luminous jade-emerald greens, translucent creamy-peach skin, airy cerulean skies,
+        # springy elastic S-curve, clean neutral-ivory whites.
+        mix = round(0.41 + 0.04 * (1.0 - chroma_guard) + 0.04 * max(chroma_headroom, 0.0), 3)
+        ev_adj = round(0.015 * (1.0 - 0.70 * hi_pressure) + 0.05 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.04 * high_key, 4)
+        s_low = round(0.24 - (0.018 + 0.012 * max(flatness, -0.35)) * (1.0 - 0.72 * sh_lift_need) * tone_body, 4)
+        s_hi = round(0.76 + (0.022 + 0.012 * max(flatness, -0.35)) * (1.0 - 0.55 * hi_pressure) * tone_body, 4)
         offsets = dict(
             ev=ev_adj,
-            contrast=round(0.06 + 0.09 * flatness - 0.02 * sh_lift_need, 4),
-            sat=round(0.05 + 0.08 * chroma_headroom - 0.05 * chroma_guard, 4),
-            shoulder=round(-0.01 + 0.12 * hi_pressure, 4),
-            toe=round(-0.03 - 0.07 * milky_black + 0.18 * sh_lift_need, 4),
-            tint=round(0.002 + 0.028 * green_cast - 0.045 * magenta_cast, 4),
-            temp=round(0.001 + 0.009 * max(cool_need, 0.0) - 0.015 * warm_excess, 4),
-        )
-        hsl = {
-            "yellow": [0.02, round(0.03 * hsl_c, 3), 0.04],
-            "green": [0.02, round((0.08 + 0.05 * max(chroma_headroom, 0.0)) * hsl_c, 3), 0.06],
-            "orange": [0.0, round((0.04 + 0.03 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(0.03 + 0.03 * skin_present, 3)],
-            "blue": [-0.05, round(0.05 * max(chroma_headroom, 0.0) * hsl_c, 3), round(0.02 * blue_present - 0.02 * hi_pressure, 3)],
-        }
-        grade = dict(
-            vibrance=round(0.09 + 0.09 * chroma_headroom - 0.06 * chroma_guard, 4),
-            highlights=round(-0.05 - 0.19 * hi_pressure, 4),
-            shadows=round(0.05 + 0.18 * sh_lift_need, 4),
-            blacks=round(-0.01 - 0.04 * milky_black + 0.08 * sh_lift_need, 4),
-            whites=round(0.04 * (1.0 - hi_pressure), 4),
-            clarity=round(0.03 + 0.04 * max(flatness, 0.0) * narrow_dr_guard, 4),
-            dehaze=round(0.05 * veil_need, 4),
-            skin_protect=round(0.18 * skin_present, 4),
-            hsl=hsl,
-        )
-    elif preset == "noritsu":
-        mix = round(0.50 + 0.03 * (1.0 - chroma_guard) + 0.04 * max(chroma_headroom, 0.0), 3)
-        hsl_c = 1.0 - 0.85 * chroma_guard
-        offsets = dict(
-            ev=round(0.08 * (1.0 - 0.55 * hi_pressure) + 0.09 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.06 * bright_mid, 4),
-            contrast=round(0.03 + 0.07 * flatness - 0.02 * sh_lift_need, 4),
-            sat=round(0.04 + 0.06 * chroma_headroom - 0.04 * chroma_guard, 4),
-            shoulder=round(0.05 + 0.11 * hi_pressure, 4),
-            toe=round(-0.05 - 0.09 * milky_black + 0.10 * sh_lift_need, 4),
-            tint=round(0.002 + 0.026 * green_cast - 0.022 * magenta_cast, 4),
+            contrast=round(0.055 + 0.085 * flatness - 0.025 * sh_lift_need, 4),
+            sat=round(0.045 + 0.08 * chroma_headroom - 0.06 * chroma_guard, 4),
+            shoulder=round(0.02 + 0.12 * hi_pressure, 4),
+            toe=round(-0.04 - 0.07 * milky_black + 0.16 * sh_lift_need, 4),
+            tint=round(0.004 + 0.026 * green_cast - 0.042 * magenta_cast, 4),
             temp=round(0.002 + 0.008 * max(cool_need, 0.0) - 0.014 * warm_excess, 4),
         )
+        hsl = {
+            "red": [round(0.06 * hue_sc, 3), round((0.14 + 0.06 * max(chroma_headroom, 0.0)) * sat_sc, 3), -0.06],
+            "orange": [round(0.03 * hue_sc, 3), round((0.08 + 0.05 * max(chroma_headroom, 0.0)) * sat_sc, 3), round(0.12 + 0.08 * skin_present, 3)],
+            "yellow": [round(-0.14 * hue_sc, 3), round((0.05 + 0.04 * max(chroma_headroom, 0.0)) * sat_sc, 3), 0.10],
+            "green": [round(0.14 * hue_sc, 3), round((0.18 + 0.06 * max(chroma_headroom, 0.0)) * sat_sc, 3), round(0.14 + 0.06 * green_present, 3)],
+            "aqua": [round(-0.08 * hue_sc, 3), round(0.12 * sat_sc, 3), 0.05],
+            "blue": [round(-0.14 * hue_sc, 3), round((0.15 + 0.07 * max(chroma_headroom, 0.0)) * sat_sc, 3), round((-0.09 - 0.08 * blue_present - 0.04 * hi_pressure) * hue_sc, 3)],
+        }
         grade = dict(
-            vibrance=round(0.07 + 0.07 * chroma_headroom - 0.04 * chroma_guard, 4),
+            vibrance=round(0.13 + 0.10 * chroma_headroom + 0.04 * max(mid_chroma_room, 0.0) - 0.08 * chroma_guard, 4),
             highlights=round(-0.07 - 0.19 * hi_pressure, 4),
-            shadows=round(0.05 + 0.14 * sh_lift_need, 4),
-            blacks=round(-0.02 - 0.07 * milky_black + 0.05 * sh_lift_need, 4),
-            skin_protect=round(0.20 + 0.26 * skin_present, 4),
+            shadows=round(0.04 + 0.18 * sh_lift_need, 4),
+            blacks=round(-0.02 - 0.05 * milky_black + 0.09 * sh_lift_need, 4),
+            whites=round(0.035 * (1.0 - hi_pressure), 4),
+            clarity=round(0.05 + 0.05 * max(flatness, 0.0) * narrow_dr_guard, 4),
+            dehaze=round(0.06 * veil_need, 4),
+            skin_protect=round(0.20 + 0.24 * skin_present, 4),
+            tone_curve={"rgb": [[0.0, 0.0], [0.24, s_low], [0.50, 0.504], [0.76, s_hi], [1.0, 1.0]]},
+            hsl=hsl,
+            cg_shadows=[192.0, round(0.10 * sh_cool_room * tone_body, 3), round(-0.01 * (1.0 - 0.80 * sh_lift_need), 4)],
+            cg_highlights=[46.0, round(0.12 * hi_warm_room * tone_body, 3), round(0.015 * (1.0 - 0.50 * hi_pressure), 4)],
+            cg_blending=0.68,
+        )
+    elif preset == "noritsu":
+        # Classic Noritsu HS-1800 airy lab-scan look:
+        # Silky highlight roll-off, open breathable shadows, clean neutral-ivory whites, refined pastel clarity.
+        mix = round(0.39 + 0.03 * (1.0 - chroma_guard) + 0.03 * max(chroma_headroom, 0.0), 3)
+        offsets = dict(
+            ev=round(0.03 * (1.0 - 0.65 * hi_pressure) + 0.06 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.04 * high_key, 4),
+            contrast=round(0.01 + 0.065 * flatness - 0.02 * sh_lift_need, 4),
+            sat=round(0.03 + 0.06 * chroma_headroom - 0.05 * chroma_guard, 4),
+            shoulder=round(0.10 + 0.12 * hi_pressure, 4),
+            toe=round(0.04 - 0.08 * milky_black + 0.12 * sh_lift_need, 4),
+            tint=round(0.002 + 0.024 * green_cast - 0.024 * magenta_cast, 4),
+            temp=round(0.002 + 0.007 * max(cool_need, 0.0) - 0.013 * warm_excess, 4),
+        )
+        grade = dict(
+            vibrance=round(0.10 + 0.08 * chroma_headroom - 0.06 * chroma_guard, 4),
+            highlights=round(-0.11 - 0.20 * hi_pressure, 4),
+            shadows=round(0.11 + 0.16 * sh_lift_need, 4),
+            blacks=round(0.01 * (1.0 - milky_black) - 0.06 * milky_black + 0.05 * sh_lift_need, 4),
+            whites=round(0.02 * (1.0 - hi_pressure), 4),
+            skin_protect=round(0.24 + 0.26 * skin_present, 4),
             hsl={
-                "yellow": [-0.04, -0.06, 0.02],
-                "blue": [-0.04, round(0.04 * max(chroma_headroom, 0.0) * hsl_c, 3), round(-0.03 * blue_present, 3)],
+                "orange": [round(0.04 * hue_sc, 3), round(0.05 * sat_sc, 3), round(0.12 + 0.08 * skin_present, 3)],
+                "yellow": [round(-0.12 * hue_sc, 3), -0.12, 0.12],
+                "green": [round(0.06 * hue_sc, 3), round(-0.04 + 0.06 * max(chroma_headroom, 0.0), 3), 0.10],
+                "blue": [round(-0.10 * hue_sc, 3), round((0.09 + 0.05 * max(chroma_headroom, 0.0)) * sat_sc, 3), round(0.03 - 0.09 * blue_present, 3)],
             },
-            cg_highlights=[46.0, 0.05, 0.01],
-            cg_blending=0.72,
+            cg_shadows=[206.0, round(0.11 * sh_cool_room * tone_body, 3), 0.008],
+            cg_highlights=[48.0, round(0.08 * hi_warm_room * tone_body, 3), round(0.020 * (1.0 - 0.50 * hi_pressure), 4)],
+            cg_blending=0.74,
         )
     elif preset == "natural":
+        # Sun-kissed, unforced analog warmth: gentle tone, open shadows, subtle warm highlight paper glow.
         offsets = dict(
-            ev=round(0.07 * (1.0 - 0.60 * hi_pressure) + 0.08 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.06 * bright_mid, 4),
-            contrast=round(-0.05 + 0.06 * flatness, 4),
-            temp=round(-0.012 * warm_excess, 4),
-            sat=round(-0.02 + 0.04 * max(chroma_headroom, 0.0) - 0.03 * chroma_guard, 4),
-            shoulder=round(0.07 + 0.09 * hi_pressure, 4),
-            tint=round(0.022 * green_cast - 0.018 * magenta_cast, 4),
+            ev=round(0.02 * (1.0 - 0.65 * hi_pressure) + 0.05 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.04 * high_key, 4),
+            contrast=round(-0.04 + 0.06 * flatness, 4),
+            temp=round(0.012 + 0.010 * max(cool_need, 0.0) - 0.016 * warm_excess, 4),
+            sat=round(0.0 + 0.045 * max(chroma_headroom, 0.0) - 0.035 * chroma_guard, 4),
+            shoulder=round(0.10 + 0.10 * hi_pressure, 4),
+            tint=round(0.020 * green_cast - 0.018 * magenta_cast, 4),
         )
         grade = dict(
-            shadows=round(0.06 + 0.13 * sh_lift_need, 4),
-            highlights=round(-0.06 - 0.15 * hi_pressure, 4),
-            blacks=round(-0.05 * milky_black + 0.03 * sh_lift_need, 4),
-            vibrance=round(0.04 + 0.06 * max(chroma_headroom, 0.0) - 0.03 * chroma_guard, 4),
-            cg_highlights=[42.0, 0.06, 0.01],
+            shadows=round(0.09 + 0.14 * sh_lift_need, 4),
+            highlights=round(-0.09 - 0.16 * hi_pressure, 4),
+            blacks=round(-0.04 * milky_black + 0.04 * sh_lift_need, 4),
+            vibrance=round(0.07 + 0.06 * max(chroma_headroom, 0.0) - 0.04 * chroma_guard, 4),
+            skin_protect=round(0.18 + 0.18 * skin_present, 4),
+            hsl={
+                "yellow": [-0.10, -0.06, 0.08],
+                "orange": [0.02, round(0.05 * sat_sc, 3), round(0.07 + 0.05 * skin_present, 3)],
+            },
+            cg_highlights=[39.0, round(0.20 * hi_warm_room * tone_body, 3), round(0.016 * (1.0 - 0.50 * hi_pressure), 4)],
             cg_blending=0.72,
         )
     elif preset == "portrait":
+        # Kodak Portra 400 overexposed +1/3 stop aesthetic:
+        # Luminous warm-peach porcelain skin, calm sage-olive foliage, creamy golden highlight roll-off.
         offsets = dict(
-            ev=round(0.09 * (1.0 - 0.55 * hi_pressure) + 0.10 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.05 * bright_mid, 4),
-            contrast=round(-0.08 + 0.05 * flatness, 4),
-            sat=round(-0.03 + 0.04 * max(chroma_headroom, 0.0) - 0.03 * chroma_guard, 4),
-            shoulder=round(0.09 + 0.10 * hi_pressure, 4),
-            temp=round(0.005 + 0.009 * max(cool_need, 0.0) - 0.012 * warm_excess, 4),
-            tint=round(0.004 + 0.024 * green_cast - 0.018 * magenta_cast, 4),
+            ev=round(0.05 * (1.0 - 0.60 * hi_pressure) + 0.07 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.04 * high_key, 4),
+            contrast=round(-0.07 + 0.05 * flatness, 4),
+            sat=round(-0.02 + 0.045 * max(chroma_headroom, 0.0) - 0.04 * chroma_guard, 4),
+            shoulder=round(0.13 + 0.10 * hi_pressure, 4),
+            toe=round(0.06 - 0.06 * milky_black + 0.10 * sh_lift_need, 4),
+            temp=round(0.006 + 0.009 * max(cool_need, 0.0) - 0.014 * warm_excess, 4),
+            tint=round(0.005 + 0.024 * green_cast - 0.020 * magenta_cast, 4),
         )
         grade = dict(
-            shadows=round(0.08 + 0.13 * sh_lift_need, 4),
-            highlights=round(-0.09 - 0.17 * hi_pressure, 4),
-            blacks=round(-0.05 * milky_black + 0.03 * sh_lift_need, 4),
-            skin_protect=round(0.32 + 0.30 * skin_present, 4),
-            vibrance=round(0.05 + 0.05 * max(chroma_headroom, 0.0) - 0.03 * chroma_guard, 4),
+            shadows=round(0.13 + 0.15 * sh_lift_need, 4),
+            highlights=round(-0.13 - 0.18 * hi_pressure, 4),
+            blacks=round(0.02 * (1.0 - milky_black) - 0.05 * milky_black + 0.04 * sh_lift_need, 4),
+            skin_protect=round(0.38 + 0.30 * skin_present, 4),
+            vibrance=round(0.07 + 0.06 * max(chroma_headroom, 0.0) - 0.04 * chroma_guard, 4),
             hsl={
-                "orange": [0.02, round(-0.05 * chroma_guard, 3), round(0.05 + 0.04 * skin_present, 3)],
-                "yellow": [-0.08, -0.08, 0.03],
-                "green": [0.04, -0.10, -0.02],
+                "red": [round(0.10 * hue_sc, 3), -0.06, 0.08],
+                "orange": [round(0.06 * hue_sc, 3), round(-0.05 * chroma_guard + 0.04 * max(chroma_headroom, 0.0), 3), round(0.18 + 0.12 * skin_present, 3)],
+                "yellow": [round(-0.20 * hue_sc, 3), -0.22, 0.12],
+                "green": [round(0.10 * hue_sc, 3), round(-0.22 - 0.08 * green_present, 3), 0.04],
+                "blue": [-0.08, -0.06, 0.08],
             },
+            cg_shadows=[212.0, round(0.07 * sh_cool_room * tone_body, 3), 0.0],
+            cg_highlights=[38.0, round(0.17 * hi_warm_room * tone_body, 3), round(0.015 * (1.0 - 0.50 * hi_pressure), 4)],
+            cg_blending=0.72,
         )
     elif preset == "vivid":
-        mix = round(0.51 + 0.05 * (1.0 - chroma_guard) + 0.07 * max(chroma_headroom, 0.0), 3)
-        hsl_c = 1.0 - 0.80 * chroma_guard
+        # Fujichrome Velvia 50 / Kodak Ektar 100 slide-film jewel density:
+        # Deep sapphire skies, ruby reds, deep emerald greens (rich + dark luminance = jewel, never neon),
+        # punchy elastic S-curve, strong chroma-clipping & skin-tone guard.
+        mix = round(0.43 + 0.04 * (1.0 - chroma_guard) + 0.05 * max(chroma_headroom, 0.0), 3)
+        s_low = round(0.23 - (0.028 + 0.016 * max(flatness, -0.35)) * (1.0 - 0.72 * sh_lift_need) * tone_body, 4)
+        s_hi = round(0.77 + (0.030 + 0.014 * max(flatness, -0.35)) * (1.0 - 0.55 * hi_pressure) * tone_body, 4)
         offsets = dict(
-            ev=round(0.05 * (1.0 - 0.60 * hi_pressure) + 0.09 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.07 * bright_mid, 4),
-            contrast=round(0.09 + 0.10 * flatness - 0.03 * sh_lift_need, 4),
-            sat=round(0.06 + 0.09 * chroma_headroom - 0.06 * chroma_guard, 4),
-            shoulder=round(-0.02 + 0.12 * hi_pressure, 4),
-            toe=round(-0.05 - 0.11 * milky_black + 0.12 * sh_lift_need, 4),
-            tint=round(0.002 + 0.026 * green_cast - 0.022 * magenta_cast, 4),
+            ev=round(-0.025 * (1.0 - 0.70 * low_key) + 0.04 * low_key * (1.0 - 0.55 * hi_pressure) - 0.04 * high_key, 4),
+            contrast=round(0.10 + 0.10 * flatness - 0.03 * sh_lift_need, 4),
+            sat=round(0.065 + 0.10 * chroma_headroom - 0.075 * chroma_guard, 4),
+            shoulder=round(0.02 + 0.12 * hi_pressure, 4),
+            toe=round(-0.06 - 0.10 * milky_black + 0.14 * sh_lift_need, 4),
+            tint=round(0.002 + 0.024 * green_cast - 0.024 * magenta_cast, 4),
         )
         grade = dict(
-            vibrance=round(0.11 + 0.11 * chroma_headroom - 0.07 * chroma_guard, 4),
-            highlights=round(-0.05 - 0.18 * hi_pressure, 4),
-            shadows=round(0.13 * sh_lift_need, 4),
-            blacks=round(-0.04 - 0.08 * milky_black + 0.09 * sh_lift_need, 4),
-            clarity=round(0.06 + 0.06 * max(flatness, 0.0), 4),
-            dehaze=round(0.09 * veil_need, 4),
-            skin_protect=round(0.18 * skin_present, 4),
+            vibrance=round(0.17 + 0.12 * chroma_headroom + 0.04 * max(mid_chroma_room, 0.0) - 0.10 * chroma_guard, 4),
+            highlights=round(-0.09 - 0.19 * hi_pressure, 4),
+            shadows=round(0.02 + 0.14 * sh_lift_need, 4),
+            blacks=round(-0.04 - 0.07 * milky_black + 0.09 * sh_lift_need, 4),
+            clarity=round(0.09 + 0.06 * max(flatness, 0.0) * narrow_dr_guard, 4),
+            dehaze=round(0.08 * veil_need, 4),
+            skin_protect=round(0.22 + 0.28 * skin_present, 4),
+            tone_curve={"rgb": [[0.0, 0.0], [0.23, s_low], [0.50, 0.498], [0.77, s_hi], [1.0, 1.0]]},
             hsl={
-                "red": [-0.03, round((0.09 + 0.06 * max(chroma_headroom, 0.0)) * hsl_c, 3), -0.05],
-                "blue": [-0.04, round((0.08 + 0.06 * max(chroma_headroom, 0.0)) * hsl_c, 3), round(-0.08 - 0.05 * blue_present, 3)],
+                "red": [round(-0.08 * hue_sc, 3), round((0.24 + 0.08 * max(chroma_headroom, 0.0)) * sat_sc, 3), round(-0.18 * hue_sc, 3)],
+                "orange": [round(-0.06 * hue_sc, 3), round((0.16 + 0.06 * max(chroma_headroom, 0.0)) * sat_sc * (1.0 - 0.45 * skin_present), 3), round(-0.03 + 0.09 * skin_present, 3)],
+                "yellow": [round(-0.10 * hue_sc, 3), round(0.10 * sat_sc, 3), 0.02],
+                "green": [round(0.12 * hue_sc, 3), round((0.20 + 0.06 * max(chroma_headroom, 0.0)) * sat_sc, 3), round(-0.10 * hue_sc, 3)],
+                "aqua": [round(-0.06 * hue_sc, 3), round(0.20 * sat_sc, 3), -0.10],
+                "blue": [round(-0.14 * hue_sc, 3), round((0.26 + 0.08 * max(chroma_headroom, 0.0)) * sat_sc, 3), round((-0.26 - 0.12 * blue_present) * hue_sc, 3)],
+                "magenta": [-0.04, round(0.14 * sat_sc, 3), -0.08],
             },
+            cg_shadows=[214.0, round(0.10 * sh_cool_room * tone_body, 3), round(-0.015 * (1.0 - 0.80 * sh_lift_need), 4)],
+            cg_highlights=[44.0, round(0.10 * hi_warm_room * tone_body, 3), round(0.01 * (1.0 - 0.50 * hi_pressure), 4)],
+            cg_blending=0.68,
         )
     elif preset == "print_classic":
-        s_amp = 0.026 + 0.016 * max(flatness, -0.4)
+        # Optical RA-4 darkroom print on warm baryta paper:
+        # Authoritative sculpted S-curve, velvety D-max blacks, warm paper ivory highlights, quiet color poise.
+        s_amp = (0.034 + 0.018 * max(flatness, -0.35)) * tone_body
         offsets = dict(
-            ev=round(0.06 * (1.0 - 0.60 * hi_pressure) + 0.09 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.06 * bright_mid, 4),
-            contrast=round(0.08 + 0.08 * flatness - 0.03 * sh_lift_need, 4),
-            sat=round(0.02 + 0.04 * chroma_headroom - 0.03 * chroma_guard, 4),
-            shoulder=round(-0.03 + 0.13 * hi_pressure, 4),
-            tint=round(0.002 + 0.024 * green_cast - 0.020 * magenta_cast, 4),
+            ev=round((-0.02 * (1.0 - 0.70 * low_key) * (1.0 - 0.45 * sh_lift_need) + 0.04 * low_key * (1.0 - 0.55 * hi_pressure) - 0.025 * high_key) * (0.35 + 0.65 * narrow_dr_guard), 4),
+            contrast=round(0.085 + 0.085 * flatness - 0.03 * sh_lift_need, 4),
+            sat=round(0.02 + 0.05 * chroma_headroom - 0.04 * chroma_guard, 4),
+            shoulder=round(0.02 + 0.12 * hi_pressure, 4),
+            toe=round(-0.05 - 0.08 * milky_black + 0.14 * sh_lift_need, 4),
+            tint=round(0.002 + 0.024 * green_cast - 0.022 * magenta_cast, 4),
         )
         grade = dict(
-            blacks=round(-0.05 - 0.08 * milky_black + 0.10 * sh_lift_need, 4),
-            shadows=round(0.14 * sh_lift_need, 4),
-            whites=round(0.04 * (1.0 - hi_pressure), 4),
-            highlights=round(-0.05 - 0.17 * hi_pressure, 4),
-            sharpen=0.10,
+            blacks=round(-0.06 - 0.07 * milky_black + 0.11 * sh_lift_need, 4),
+            shadows=round(0.02 + 0.15 * sh_lift_need, 4),
+            whites=round(0.035 * (1.0 - hi_pressure), 4),
+            highlights=round(-0.08 - 0.18 * hi_pressure, 4),
+            clarity=round(0.07 + 0.05 * max(flatness, 0.0) * narrow_dr_guard, 4),
+            sharpen=0.12,
+            skin_protect=round(0.18 + 0.22 * skin_present, 4),
             tone_curve={
                 "rgb": [
                     [0.0, 0.0],
                     [0.24, round(0.24 - s_amp * (1.0 - 0.72 * sh_lift_need), 4)],
-                    [0.5, 0.50],
+                    [0.50, 0.500],
                     [0.76, round(0.76 + s_amp * (1.0 - 0.55 * hi_pressure), 4)],
                     [1.0, 1.0],
                 ]
             },
-            cg_highlights=[45.0, 0.07, 0.01],
+            hsl={
+                "yellow": [-0.10, -0.10, 0.02],
+                "green": [0.08, -0.12, -0.08],
+                "blue": [-0.08, round(0.08 * sat_sc, 3), round(-0.14 * hue_sc, 3)],
+            },
+            cg_shadows=[224.0, round(0.08 * sh_cool_room * tone_body, 3), round(-0.015 * (1.0 - 0.80 * sh_lift_need), 4)],
+            cg_highlights=[44.0, round(0.18 * hi_warm_room * tone_body, 3), round(0.015 * (1.0 - 0.50 * hi_pressure), 4)],
             cg_blending=0.70,
         )
     elif preset == "cinema":
-        split_scale = 0.85 + 0.30 * max(chroma_headroom, -0.3)
+        # Kodak Vision3 500T / 2383 theatrical DI print look:
+        # Deep oil-teal shadows vs warm tungsten-amber highlights, rolled filmic shoulder,
+        # subtle matte-velvet cinema toe on contrasty scenes, calm pine greens, natural skin, organic grain.
+        split_scale = (0.90 + 0.25 * max(chroma_headroom, -0.3)) * tone_body
+        toe_lift = round(0.014 * (1.0 - milky_black) * narrow_dr_guard, 4)
+        hi_cap = round(1.0 - 0.014 * (1.0 - 0.5 * hi_pressure) * narrow_dr_guard, 4)
         offsets = dict(
-            ev=round(0.05 * (1.0 - 0.60 * hi_pressure) + 0.09 * max(dark_mid, 0.0) * (1.0 - 0.60 * hi_pressure) - 0.07 * bright_mid, 4),
-            contrast=round(0.03 + 0.06 * flatness, 4),
-            sat=round(-0.02 + 0.04 * max(chroma_headroom, 0.0) - 0.03 * chroma_guard, 4),
-            shoulder=round(0.11 + 0.09 * hi_pressure, 4),
-            tint=round(0.022 * green_cast - 0.018 * magenta_cast, 4),
+            ev=round(-0.02 * (1.0 - 0.70 * low_key) + 0.05 * low_key * (1.0 - 0.55 * hi_pressure) - 0.05 * high_key, 4),
+            contrast=round(0.04 + 0.07 * flatness - 0.02 * sh_lift_need, 4),
+            sat=round(-0.01 + 0.045 * max(chroma_headroom, 0.0) - 0.04 * chroma_guard, 4),
+            shoulder=round(0.14 + 0.10 * hi_pressure, 4),
+            toe=round(0.03 - 0.08 * milky_black + 0.10 * sh_lift_need, 4),
+            tint=round(0.020 * green_cast - 0.018 * magenta_cast, 4),
         )
         grade = dict(
-            blacks=round(0.06 * (1.0 - milky_black) - 0.05 * milky_black + 0.04 * sh_lift_need, 4),
-            highlights=round(-0.07 - 0.16 * hi_pressure, 4),
-            shadows=round(0.10 * sh_lift_need, 4),
-            grain=0.07,
-            hsl={"green": [0.06, -0.12, -0.06]},
-            cg_shadows=[198.0, round(0.14 * split_scale, 3), round(-0.03 * (1.0 - 0.80 * sh_lift_need), 4)],
-            cg_highlights=[36.0, round(0.12 * split_scale, 3), 0.02],
-            cg_blending=0.65,
-            clarity=round(0.04 + 0.04 * max(flatness, 0.0), 4),
+            blacks=round(0.045 * (1.0 - milky_black) - 0.06 * milky_black + 0.05 * sh_lift_need, 4),
+            highlights=round(-0.13 - 0.18 * hi_pressure, 4),
+            shadows=round(0.04 + 0.12 * sh_lift_need, 4),
+            grain=0.08,
+            clarity=round(0.06 + 0.05 * max(flatness, 0.0) * narrow_dr_guard, 4),
+            skin_protect=round(0.28 + 0.26 * skin_present, 4),
+            tone_curve={"rgb": [[0.0, toe_lift], [0.22, round(0.210 + 0.010 * sh_lift_need, 4)], [0.50, 0.494], [0.78, 0.784], [1.0, hi_cap]]},
+            hsl={
+                "red": [round(0.06 * hue_sc, 3), round(0.16 * sat_sc, 3), -0.14],
+                "orange": [0.02, round(0.06 * sat_sc, 3), round(0.08 + 0.06 * skin_present, 3)],
+                "yellow": [round(-0.22 * hue_sc, 3), -0.16, -0.04],
+                "green": [round(0.18 * hue_sc, 3), round(-0.24 - 0.08 * green_present, 3), -0.18],
+                "blue": [round(-0.22 * hue_sc, 3), round(0.12 * sat_sc, 3), -0.14],
+            },
+            cg_shadows=[196.0, round(0.30 * sh_cool_room * split_scale, 3), round(-0.025 * (1.0 - 0.80 * sh_lift_need), 4)],
+            cg_midtones=[28.0, round(0.05 * hi_warm_room * split_scale, 3), 0.0],
+            cg_highlights=[35.0, round(0.26 * hi_warm_room * split_scale, 3), round(0.015 * (1.0 - 0.50 * hi_pressure), 4)],
+            cg_balance=-0.08,
+            cg_blending=0.62,
         )
     else:
-        return dict(camera_matrix_mix=spec.get("camera_matrix_mix"), offsets=dict(spec["offsets"]), grade=dict(spec["grade"]))
+        mix = spec.get("camera_matrix_mix")
+        offsets = dict(spec["offsets"])
+        grade = copy.deepcopy(spec["grade"])
 
     if film == "bw":
         mix = None
-        for ck in ("vibrance", "skin_protect", "hsl", "cg_shadows", "cg_midtones", "cg_highlights"):
+        for ck in ("vibrance", "skin_protect", "hsl", "cg_shadows", "cg_midtones", "cg_highlights", "cg_balance", "cg_blending"):
             grade.pop(ck, None)
     return dict(camera_matrix_mix=mix, offsets=offsets, grade=grade)
+
 
 def _clamp_finite(v: float, lo: float, hi: float, name: str) -> float:
     f = float(v)
@@ -833,14 +1028,14 @@ def _build_pil_lut3d(key: tuple):
 
 
 @lru_cache(maxsize=16)
-def _build_f32_lut3d(key: tuple) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def _build_f32_lut3d(key: tuple) -> np.ndarray:
     (hi, sh, wh, bl, vib, sp, cgs, cgm, cgh, cgb, cgbl, hsl, tc, film) = key
     g = DarkroomGrade(
         highlights=hi, shadows=sh, whites=wh, blacks=bl, vibrance=vib, skin_protect=sp,
         cg_shadows=cgs, cg_midtones=cgm, cg_highlights=cgh, cg_balance=cgb, cg_blending=cgbl, hsl=dict(hsl),
     )
     lut = _apply_pointwise_exact(_LUT3D_HI_GRID, g, tc, film)
-    return tuple(np.ascontiguousarray(lut[..., c]) for c in range(3))
+    return np.ascontiguousarray(lut.reshape(-1, 3), dtype=np.float32)
 
 
 def _apply_pointwise_lut3d(u: np.ndarray, g: DarkroomGrade, tc: tuple, film: str, *, inplace: bool = False) -> np.ndarray:
@@ -863,25 +1058,49 @@ def _apply_pointwise_lut3d(u: np.ndarray, g: DarkroomGrade, tc: tuple, film: str
 
 def _apply_pointwise_lut3d_f32(u: np.ndarray, g: DarkroomGrade, tc: tuple, film: str, *, inplace: bool = False) -> np.ndarray:
     """Chunked multi-threaded 33x33x33 float32 trilinear LUT for full-res 16-bit export (low RAM, L2-friendly)."""
-    lut_c = _build_f32_lut3d(_pointwise_cache_key(g, tc, film))
+    lut_flat = _build_f32_lut3d(_pointwise_cache_key(g, tc, film))
     h, w = u.shape[:2]
     out = u if inplace else np.empty_like(u)
-    scale = np.float32(_LUT3D_HI_N - 1)
+    n = _LUT3D_HI_N
+    max_i = np.int32(n - 2)
+    scale = np.float32(n - 1)
+    s0 = np.int32(n * n)
+    s1 = np.int32(n)
 
     def _run(rr):
         r0, r1 = rr
         ch = u[r0:r1]
-        n_px = (r1 - r0) * w
-        coords = np.empty((3, n_px), dtype=np.float32)
-        for c in range(3):
-            np.clip(ch[..., c].ravel(), np.float32(0.0), np.float32(1.0), out=coords[c])
-            coords[c] *= scale
-        buf = np.empty(n_px, dtype=np.float32)
-        dst = out[r0:r1]
-        for c in range(3):
-            map_coordinates(lut_c[c], coords, output=buf, order=1, mode="nearest", prefilter=False)
-            np.clip(buf, np.float32(0.0), np.float32(1.0), out=buf)
-            dst[..., c] = buf.reshape(r1 - r0, w)
+        rf = np.clip(ch[..., 0].ravel(), np.float32(0.0), np.float32(1.0)) * scale
+        gf = np.clip(ch[..., 1].ravel(), np.float32(0.0), np.float32(1.0)) * scale
+        bf = np.clip(ch[..., 2].ravel(), np.float32(0.0), np.float32(1.0)) * scale
+
+        ri = np.minimum(rf.astype(np.int32), max_i)
+        gi = np.minimum(gf.astype(np.int32), max_i)
+        bi = np.minimum(bf.astype(np.int32), max_i)
+
+        dr = (rf - ri)[:, None]
+        dg = (gf - gi)[:, None]
+        db = (bf - bi)[:, None]
+
+        idx000 = ri * s0 + gi * s1 + bi
+        c00 = lut_flat[idx000]
+        c00 = c00 + db * (lut_flat[idx000 + 1] - c00)
+        idx010 = idx000 + s1
+        c01 = lut_flat[idx010]
+        c01 = c01 + db * (lut_flat[idx010 + 1] - c01)
+        c0 = c00 + dg * (c01 - c00)
+
+        idx100 = idx000 + s0
+        c10 = lut_flat[idx100]
+        c10 = c10 + db * (lut_flat[idx100 + 1] - c10)
+        idx110 = idx100 + s1
+        c11 = lut_flat[idx110]
+        c11 = c11 + db * (lut_flat[idx110 + 1] - c11)
+        c1 = c10 + dg * (c11 - c10)
+
+        res = c0 + dr * (c1 - c0)
+        np.clip(res, np.float32(0.0), np.float32(1.0), out=res)
+        out[r0:r1] = res.reshape(r1 - r0, w, 3)
 
     _run_row_chunks(h, _run, step=64)
     return out
@@ -1112,14 +1331,37 @@ def _apply_clarity(e: np.ndarray, clarity: float, *, inplace: bool = False) -> n
 
 
 def _apply_sharpen(e: np.ndarray, sharpen: float, *, inplace: bool = False) -> np.ndarray:
-    """Chunked multi-threaded luminance-only unsharp mask with overlap halo damping (~8-10x faster)."""
+    """Chunked luminance-only unsharp mask with overlap halo damping (true in-place rolling halo when inplace=True)."""
     h, w = e.shape[:2]
     sigma = max(0.8, min(h, w) * 0.0012)
     pad = max(3, int(math.ceil(2.5 * sigma)))
     coeff = np.float32(1.25 * sharpen)
-    # Note: when inplace=True, read overlapping halo strips from e before mutating -> use out buffer only if small,
-    # or precompute strip deltas? Overlapping reads from e would race if another thread mutates e[r0:r1].
-    # So compute into out (or read-only e -> out) unless single-chunk; still 8x faster and tiny temp RAM!
+
+    if inplace:
+        step = max(256, pad)
+        prev_halo: np.ndarray | None = None
+        for r0 in range(0, h, step):
+            r1 = min(h, r0 + step)
+            p0 = max(0, r0 - pad)
+            p1 = min(h, r1 + pad)
+            if prev_halo is not None and p0 < r0:
+                ec_pad = np.concatenate([prev_halo, e[r0:p1]], axis=0)
+            else:
+                ec_pad = e[p0:p1]
+            next_halo = e[max(0, r1 - pad):r1].copy() if r1 < h else None
+            yp = ec_pad[..., 0] * LUMA_F32[0] + ec_pad[..., 1] * LUMA_F32[1] + ec_pad[..., 2] * LUMA_F32[2]
+            blur_p = gaussian_filter(yp, sigma=sigma, mode="nearest", truncate=2.5)
+            s0 = r0 - p0
+            s1 = s0 + (r1 - r0)
+            hp = yp[s0:s1] - blur_p[s0:s1]
+            gate = _smoothstep(np.abs(hp), 0.003, 0.015)
+            delta = coeff * hp * gate
+            ec = e[r0:r1]
+            ec += delta[..., None]
+            np.clip(ec, np.float32(0.0), np.float32(1.0), out=ec)
+            prev_halo = next_halo
+        return e
+
     out = np.empty_like(e)
 
     def _run(rr):
@@ -1150,9 +1392,11 @@ def _apply_grain(e: np.ndarray, grain: float, *, inplace: bool = False) -> np.nd
 
     def _run(rr):
         r0, r1 = rr
+        pad_t = 1 if r0 > 0 else 0
+        pad_b = 1 if r1 < h else 0
         rng = np.random.default_rng(20261121 + r0 * 131)
-        noise = rng.standard_normal((r1 - r0, w), dtype=np.float32)
-        noise = uniform_filter(noise, size=3, mode="nearest")
+        noise = rng.standard_normal((r1 - r0 + pad_t + pad_b, w), dtype=np.float32)
+        noise = uniform_filter(noise, size=3, mode="nearest")[pad_t : pad_t + (r1 - r0)]
         ec = e[r0:r1]
         yc = ec[..., 0] * LUMA_F32[0] + ec[..., 1] * LUMA_F32[1] + ec[..., 2] * LUMA_F32[2]
         w_mid = np.float32(0.25) + np.float32(3.0) * yc * (np.float32(1.0) - yc)
@@ -1216,6 +1460,12 @@ def apply_darkroom_grade(
     g = DarkroomGrade.from_dict(grade)
     if g.is_identity():
         return display
+    tc = tuple((ch, pts) for ch, pts in g.tone_curve if film != "bw" or ch == "rgb") if g.tone_curve else ()
+    has_1d = bool(g.highlights or g.shadows or g.whites or g.blacks or tc)
+    has_3d = bool((g.vibrance and film != "bw") or (g.hsl and film != "bw")
+                  or (g.skin_protect and film != "bw") or g.has_color_grading())
+    if not (g.dehaze or has_3d or has_1d or g.clarity or g.sharpen or g.grain or (apply_vignette_here and g.vignette)):
+        return display
     u = np.asarray(display, dtype=np.float32)
     owned = bool(inplace) or (u is not display)
 
@@ -1225,10 +1475,6 @@ def apply_darkroom_grade(
         owned = True
 
     # 2. Point-wise color/tone stack: zonal, vibrance, tone curve, HSL, skin protect, 3-way color grading
-    tc = tuple((ch, pts) for ch, pts in g.tone_curve if film != "bw" or ch == "rgb") if g.tone_curve else ()
-    has_1d = bool(g.highlights or g.shadows or g.whites or g.blacks or tc)
-    has_3d = bool((g.vibrance and film != "bw") or (g.hsl and film != "bw")
-                  or (g.skin_protect and film != "bw") or g.has_color_grading())
     is_large = (u.shape[0] * u.shape[1]) > 1_000_000
     if has_3d:
         if fast:
@@ -1249,7 +1495,7 @@ def apply_darkroom_grade(
         u = _apply_clarity(u, g.clarity, inplace=owned)
         owned = True
     if g.sharpen:
-        u = _apply_sharpen(u, g.sharpen)
+        u = _apply_sharpen(u, g.sharpen, inplace=owned)
         owned = True
 
     # 9. Film Grain
@@ -1286,11 +1532,11 @@ def apply_geometry(
     gm = Geometry.from_dict(geom)
     out = img
     if apply_rot90 and gm.rot90:
-        out = np.ascontiguousarray(np.rot90(out, gm.rot90))
+        out = np.rot90(out, gm.rot90)
     if gm.flip_h:
-        out = np.ascontiguousarray(out[:, ::-1])
+        out = out[:, ::-1]
     if gm.flip_v:
-        out = np.ascontiguousarray(out[::-1, :])
+        out = out[::-1, :]
     if abs(gm.angle) >= 1e-4:
         h, w = out.shape[:2]
         scale = _inscribed_scale(h, w, gm.angle)
@@ -1298,36 +1544,65 @@ def apply_geometry(
         ca, sa = math.cos(rad) / scale, math.sin(rad) / scale
         if fast_preview:
             from PIL import Image
-            # PIL affine uses (x, y) = (col, row) inverse mapping
-            cx, cy = (w - 1) / 2.0, (h - 1) / 2.0
-            # Note: (x_src, y_src) = R^T * (x - cx, y - cy) / scale + (cx, cy)
+            # PIL affine evaluates at pixel centers (u + 0.5, v + 0.5) and subtracts 0.5 on sample
+            cx_pil, cy_pil = w * 0.5, h * 0.5
             # Matches scipy row/col convention: row' = ca*r - sa*c, col' = sa*r + ca*c
             a_m, b_m = ca, sa
             d_m, e_m = -sa, ca
-            c_m = cx - a_m * cx - b_m * cy
-            f_m = cy - d_m * cx - e_m * cy
-            u8_f = np.clip(np.asarray(out, dtype=np.float32), np.float32(0.0), np.float32(1.0)); u8_f *= np.float32(255.0); u8_f += np.float32(0.5); u8 = u8_f.astype(np.uint8)
-            im = Image.fromarray(u8, mode="RGB").transform(
-                (w, h), Image.Transform.AFFINE, (a_m, b_m, c_m, d_m, e_m, f_m), resample=Image.Resampling.BILINEAR
-            )
-            out = np.asarray(im, dtype=np.float32) * np.float32(1.0 / 255.0)
+            c_m = cx_pil - a_m * cx_pil - b_m * cy_pil
+            f_m = cy_pil - d_m * cx_pil - e_m * cy_pil
+            u8_f = np.clip(np.asarray(out, dtype=np.float32), np.float32(0.0), np.float32(1.0))
+            u8_f *= np.float32(255.0)
+            u8_f += np.float32(0.5)
+            u8 = u8_f.astype(np.uint8)
+            if u8.ndim == 2:
+                im = Image.fromarray(u8, mode="L").transform(
+                    (w, h), Image.Transform.AFFINE, (a_m, b_m, c_m, d_m, e_m, f_m), resample=Image.Resampling.BILINEAR
+                )
+                out = np.asarray(im, dtype=np.float32) * np.float32(1.0 / 255.0)
+            elif u8.ndim == 3 and u8.shape[2] == 1:
+                im = Image.fromarray(u8[..., 0], mode="L").transform(
+                    (w, h), Image.Transform.AFFINE, (a_m, b_m, c_m, d_m, e_m, f_m), resample=Image.Resampling.BILINEAR
+                )
+                out = (np.asarray(im, dtype=np.float32) * np.float32(1.0 / 255.0))[..., None]
+            else:
+                im = Image.fromarray(u8, mode="RGB").transform(
+                    (w, h), Image.Transform.AFFINE, (a_m, b_m, c_m, d_m, e_m, f_m), resample=Image.Resampling.BILINEAR
+                )
+                out = np.asarray(im, dtype=np.float32) * np.float32(1.0 / 255.0)
         else:
             mat = np.array([[ca, -sa], [sa, ca]], dtype=np.float64)
             center = np.array([(h - 1) / 2.0, (w - 1) / 2.0], dtype=np.float64)
             offset = center - mat @ center
-            rot_out = np.empty_like(out)
-            src_cs = [np.ascontiguousarray(out[..., c]) for c in range(out.shape[2])]
-            def _rot_chunk(rr):
-                r0, r1 = rr
-                off_r = offset + mat[:, 0] * r0
-                for c in range(len(src_cs)):
+            if out.ndim == 2:
+                src_2d = np.ascontiguousarray(out, dtype=np.float32)
+                rot_out = np.empty((h, w), dtype=np.float32)
+                def _rot_chunk_2d(rr):
+                    r0, r1 = rr
+                    off_r = offset + mat[:, 0] * r0
                     dst_c = np.empty((r1 - r0, w), dtype=np.float32)
-                    affine_transform(src_cs[c], mat, offset=off_r, output_shape=(r1 - r0, w),
+                    affine_transform(src_2d, mat, offset=off_r, output_shape=(r1 - r0, w),
                                      output=dst_c, order=1, mode="nearest", prefilter=False)
                     np.clip(dst_c, np.float32(0.0), np.float32(1.0), out=dst_c)
-                    rot_out[r0:r1, :, c] = dst_c
-            _run_row_chunks(h, _rot_chunk, step=256)
-            out = rot_out
+                    rot_out[r0:r1, :] = dst_c
+                _run_row_chunks(h, _rot_chunk_2d, step=256)
+                out = rot_out
+            else:
+                n_ch = out.shape[2]
+                rot_out = np.empty((h, w, n_ch), dtype=np.float32)
+                for c in range(n_ch):
+                    src_c = np.ascontiguousarray(out[..., c], dtype=np.float32)
+                    def _rot_chunk(rr, _src=src_c, _c=c):
+                        r0, r1 = rr
+                        off_r = offset + mat[:, 0] * r0
+                        dst_c = np.empty((r1 - r0, w), dtype=np.float32)
+                        affine_transform(_src, mat, offset=off_r, output_shape=(r1 - r0, w),
+                                         output=dst_c, order=1, mode="nearest", prefilter=False)
+                        np.clip(dst_c, np.float32(0.0), np.float32(1.0), out=dst_c)
+                        rot_out[r0:r1, :, _c] = dst_c
+                    _run_row_chunks(h, _rot_chunk, step=256)
+                    del src_c
+                out = rot_out
     if apply_crop and gm.crop is not None:
         t, l, b, r = gm.crop
         h, w = out.shape[:2]
@@ -1336,7 +1611,151 @@ def apply_geometry(
         y1 = max(y0 + 1, min(h, int(round(b * h))))
         x1 = max(x0 + 1, min(w, int(round(r * w))))
         out = np.ascontiguousarray(out[y0:y1, x0:x1])
+    elif out is not img and not out.flags.c_contiguous:
+        out = np.ascontiguousarray(out)
     return out
+
+
+def apply_lr_crop_angle(
+    img: np.ndarray,
+    crop: tuple[float, float, float, float] | None,
+    angle: float = 0.0,
+    *,
+    fast_preview: bool = False,
+) -> np.ndarray:
+    """Apply Adobe Lightroom / Camera Raw (CropTop, CropLeft, CropBottom, CropRight, CropAngle).
+
+    In Lightroom's XMP / catalog geometry (in raw sensor space before 90-deg orientation):
+      - (CropLeft * W, CropTop * H) is the top-left corner of the rotated crop box
+        in source image coordinates; (CropRight * W, CropBottom * H) is its bottom-right.
+      - The rotated crop box's width/height are:
+            dx = (CropRight - CropLeft) * W,  dy = (CropBottom - CropTop) * H
+            cw =  dx * cos(th) + dy * sin(th)
+            ch = -dx * sin(th) + dy * cos(th)   where th = radians(CropAngle)
+      - Inverse mapping from output pixel (u, v) to source pixel (x_src, y_src):
+            x_src = cx_src + (u - cx_dst) * cos(th) - (v - cy_dst) * sin(th)
+            y_src = cy_src + (u - cx_dst) * sin(th) + (v - cy_dst) * cos(th)
+    """
+    ang = float(angle or 0.0)
+    if not np.isfinite(ang):
+        raise ValueError(f"angle must be finite, got {angle!r}")
+    if crop is not None:
+        if len(crop) != 4:
+            raise ValueError(f"crop must be a 4-tuple (top, left, bottom, right), got {crop!r}")
+        t, l, b, r = (float(v) for v in crop)
+        if not all(np.isfinite(v) for v in (t, l, b, r)):
+            raise ValueError(f"crop values must be finite, got {crop!r}")
+        if b <= t or r <= l:
+            raise ValueError(f"crop must satisfy bottom > top and right > left, got {crop!r}")
+        crop = (t, l, b, r)
+    if crop is None and abs(ang) < 1e-4:
+        return img
+    h, w = img.shape[:2]
+
+    # Axis-aligned crop only (no rotation): exact fast slice
+    if crop is not None and abs(ang) < 1e-4:
+        t, l, b, r = crop
+        y0 = max(0, min(h - 2, int(round(t * h))))
+        x0 = max(0, min(w - 2, int(round(l * w))))
+        y1 = max(y0 + 1, min(h, int(round(b * h))))
+        x1 = max(x0 + 1, min(w, int(round(r * w))))
+        return np.ascontiguousarray(img[y0:y1, x0:x1])
+
+    th = math.radians(ang)
+    ct, st = math.cos(th), math.sin(th)
+
+    if crop is not None:
+        t, l, b, r = crop
+        dx = (r - l) * w
+        dy = (b - t) * h
+        cw = dx * ct + dy * st
+        ch = -dx * st + dy * ct
+        if cw < 2.0 or ch < 2.0:
+            y0 = max(0, min(h - 2, int(round(t * h))))
+            x0 = max(0, min(w - 2, int(round(l * w))))
+            y1 = max(y0 + 1, min(h, int(round(b * h))))
+            x1 = max(x0 + 1, min(w, int(round(r * w))))
+            return np.ascontiguousarray(img[y0:y1, x0:x1])
+        out_w = max(2, int(round(cw)))
+        out_h = max(2, int(round(ch)))
+        cx_src = 0.5 * (l + r) * w - 0.5
+        cy_src = 0.5 * (t + b) * h - 0.5
+        cx_dst = (out_w - 1) / 2.0
+        cy_dst = (out_h - 1) / 2.0
+        ca, sa = ct, st
+    else:
+        # Angle only (no crop box): inscribed zoom around image center with LR sign
+        scale = _inscribed_scale(h, w, ang)
+        out_w, out_h = w, h
+        cx_src = (w - 1) / 2.0
+        cy_src = (h - 1) / 2.0
+        cx_dst, cy_dst = cx_src, cy_src
+        ca, sa = ct / scale, st / scale
+
+    if fast_preview:
+        from PIL import Image
+        a_m, b_m = ca, -sa
+        d_m, e_m = sa, ca
+        cx_src_pil, cy_src_pil = cx_src + 0.5, cy_src + 0.5
+        cx_dst_pil, cy_dst_pil = cx_dst + 0.5, cy_dst + 0.5
+        c_m = cx_src_pil - a_m * cx_dst_pil - b_m * cy_dst_pil
+        f_m = cy_src_pil - d_m * cx_dst_pil - e_m * cy_dst_pil
+        u8_f = np.clip(np.asarray(img, dtype=np.float32), np.float32(0.0), np.float32(1.0))
+        u8_f *= np.float32(255.0)
+        u8_f += np.float32(0.5)
+        u8 = u8_f.astype(np.uint8)
+        if u8.ndim == 2:
+            im = Image.fromarray(u8, mode="L").transform(
+                (out_w, out_h), Image.Transform.AFFINE, (a_m, b_m, c_m, d_m, e_m, f_m),
+                resample=Image.Resampling.BILINEAR,
+            )
+            return np.asarray(im, dtype=np.float32) * np.float32(1.0 / 255.0)
+        if u8.ndim == 3 and u8.shape[2] == 1:
+            im = Image.fromarray(u8[..., 0], mode="L").transform(
+                (out_w, out_h), Image.Transform.AFFINE, (a_m, b_m, c_m, d_m, e_m, f_m),
+                resample=Image.Resampling.BILINEAR,
+            )
+            return (np.asarray(im, dtype=np.float32) * np.float32(1.0 / 255.0))[..., None]
+        im = Image.fromarray(u8, mode="RGB").transform(
+            (out_w, out_h), Image.Transform.AFFINE, (a_m, b_m, c_m, d_m, e_m, f_m),
+            resample=Image.Resampling.BILINEAR,
+        )
+        return np.asarray(im, dtype=np.float32) * np.float32(1.0 / 255.0)
+
+    # Full-precision float32 SciPy affine_transform in (row, col) = (y, x) coordinates:
+    #   y_src =  ca * (v - cy_dst) + sa * (u - cx_dst) + cy_src
+    #   x_src = -sa * (v - cy_dst) + ca * (u - cx_dst) + cx_src
+    mat = np.array([[ca, sa], [-sa, ca]], dtype=np.float64)
+    offset = np.array([cy_src, cx_src], dtype=np.float64) - mat @ np.array([cy_dst, cx_dst], dtype=np.float64)
+    if img.ndim == 2:
+        src_2d = np.ascontiguousarray(img, dtype=np.float32)
+        rot_out = np.empty((out_h, out_w), dtype=np.float32)
+        def _rot_chunk_2d(rr):
+            r0, r1 = rr
+            off_r = offset + mat[:, 0] * r0
+            dst_c = np.empty((r1 - r0, out_w), dtype=np.float32)
+            affine_transform(src_2d, mat, offset=off_r, output_shape=(r1 - r0, out_w),
+                             output=dst_c, order=1, mode="nearest", prefilter=False)
+            np.clip(dst_c, np.float32(0.0), np.float32(1.0), out=dst_c)
+            rot_out[r0:r1, :] = dst_c
+        _run_row_chunks(out_h, _rot_chunk_2d, step=256)
+        return rot_out
+
+    n_ch = img.shape[2]
+    rot_out = np.empty((out_h, out_w, n_ch), dtype=np.float32)
+    for c in range(n_ch):
+        src_c = np.ascontiguousarray(img[..., c], dtype=np.float32)
+        def _rot_chunk(rr, _src=src_c, _c=c):
+            r0, r1 = rr
+            off_r = offset + mat[:, 0] * r0
+            dst_c = np.empty((r1 - r0, out_w), dtype=np.float32)
+            affine_transform(_src, mat, offset=off_r, output_shape=(r1 - r0, out_w),
+                             output=dst_c, order=1, mode="nearest", prefilter=False)
+            np.clip(dst_c, np.float32(0.0), np.float32(1.0), out=dst_c)
+            rot_out[r0:r1, :, _c] = dst_c
+        _run_row_chunks(out_h, _rot_chunk, step=256)
+        del src_c
+    return rot_out
 
 
 def free_stem_ext(out_dir: Path, stem: str, ext: str, *, check_json: bool = True) -> str:
@@ -1368,11 +1787,12 @@ def export_image(
         raise ValueError(f"unsupported encoding {encoding!r}")
 
     arr = np.asarray(img_float, dtype=np.float32)
-    if not (fmt == "tiff16" and fast_tiff and (max_edge is None or int(max_edge) <= 0)):
-        arr = np.clip(arr, np.float32(0.0), np.float32(1.0))
     h, w = arr.shape[:2]
+    will_resize = max_edge is not None and int(max_edge) > 0 and max(h, w) > int(max_edge)
+    if fmt == "tiff16" and not fast_tiff and not will_resize:
+        arr = np.clip(arr, np.float32(0.0), np.float32(1.0))
 
-    if max_edge is not None and int(max_edge) > 0 and max(h, w) > int(max_edge):
+    if will_resize:
         scale = int(max_edge) / float(max(h, w))
         nw, nh = max(1, int(round(w * scale))), max(1, int(round(h * scale)))
         if fmt == "tiff16":
@@ -1413,10 +1833,13 @@ def export_image(
     if im is None:
         u8 = np.clip(arr * np.float32(255.0) + np.float32(0.5), np.float32(0.0), np.float32(255.0)).astype(np.uint8)
         im = Image.fromarray(u8, mode="RGB")
-    icc = icc_profile("srgb")
+    icc = icc_profile(encoding)
     if fmt == "jpeg":
         q = int(np.clip(int(quality), 60, 100))
         im.save(path, format="JPEG", quality=q, subsampling=0 if q >= 92 else 2, optimize=True, icc_profile=icc)
     else:
         im.save(path, format="PNG", compress_level=6, icc_profile=icc)
     return path
+
+# T25 final release preset alias
+T25_STYLE_PRESETS = T24_STYLE_PRESETS

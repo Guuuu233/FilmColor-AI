@@ -39,9 +39,17 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
     if #photos >= 2 and prefs.rollSync then
         progress:setCaption(T("prog_roll"))
         local paths = {}
-        for i, ph in ipairs(photos) do paths[i] = ph:getRawMetadata("path") end
+        local lrCrops = {}
+        for i, ph in ipairs(photos) do
+            local pth = ph:getRawMetadata("path")
+            paths[i] = pth
+            if prefs.useLrCrop then
+                local pg = Bridge.readLrGeometry(ph)
+                if pg.lr_crop then lrCrops[pth] = pg.lr_crop end
+            end
+        end
         local rres = Bridge.post("/plugin/roll_analyze", {
-            paths = paths, film = prefs.film, engine = prefs.engine, roll_pool = true,
+            paths = paths, lr_crops = lrCrops, film = prefs.film, engine = prefs.engine, roll_pool = true,
         }, 180)
         if rres and rres.roll_id then
             rollId = rres.roll_id
@@ -50,6 +58,19 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
     end
 
     local imported, errors, firstOutPath = {}, {}, nil
+    local pendingImports = {}
+    local importOpts = {
+        stackWithSource = prefs.stackWithSource,
+        destMode = prefs.destMode,
+    }
+    local function flushImports()
+        if #pendingImports == 0 then return end
+        local added = Bridge.importAndStackBatch(catalog, pendingImports, importOpts)
+        for _, np in ipairs(added) do
+            imported[#imported + 1] = np
+        end
+        pendingImports = {}
+    end
     local canceled = false
     for i, ph in ipairs(photos) do
         if progress:isCanceled() then canceled = true; break end
@@ -70,6 +91,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
             lr_crop = pGeom.lr_crop,
             lr_orientation = pGeom.lr_orientation,
             lr_angle = pGeom.lr_angle,
+            lr_geom_err = pGeom.geom_err,
             auto_crop = prefs.autoCrop,
             format = prefs.format,
             encoding = prefs.encoding or "srgb",
@@ -79,25 +101,24 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorQuickConvert", function(con
             copy_exif = true,
         }, 300)
         if res and res.output_path then
-            local np = Bridge.importAndStack(catalog, ph, res.output_path, {
-                stackWithSource = prefs.stackWithSource,
-                destMode = prefs.destMode,
-            })
             if not firstOutPath then firstOutPath = res.output_path end
-            if np then imported[#imported + 1] = np end
+            pendingImports[#pendingImports + 1] = { srcPhoto = ph, outPath = res.output_path }
+            if #pendingImports >= 20 then
+                flushImports()
+            end
         else
             errors[#errors + 1] = pName .. ": " .. tostring(cerr)
         end
         progress:setPortionComplete(i, #photos)
     end
+    flushImports()
     progress:done()
 
     if #imported > 0 then
         Bridge.revealImportedPhotos(catalog, imported, firstOutPath)
     end
     if #errors > 0 then
-        LrDialogs.message(T("done_err_title", #imported, #errors), table.concat(errors, "
-"), "warning")
+        LrDialogs.message(T("done_err_title", #imported, #errors), table.concat(errors, "\n"), "warning")
     elseif canceled then
         LrDialogs.showBezel(T("done_canceled", #imported, #photos), 3.0)
     else

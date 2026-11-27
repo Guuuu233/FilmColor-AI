@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from .invert import CHUNK_ROWS, _all_finite
 from .raw import CHANNELS
 
 THRESHOLDS = dict(
@@ -32,24 +33,65 @@ def quality_checks(display, mask, report, base_inside_image: float | None = None
     scene shadow instead (denser than base, often coloured). Not all such cases are caught.
     Returns overall status (pass / warn / fail) and the individual checks."""
     t = THRESHOLDS
-    px = display[mask] if mask is not None else display.reshape(-1, 3)
     checks = []
-    if len(px) == 0:
-        checks.append(_check("non_empty_mask", 0, False, 1, "fail"))
+    if display.ndim == 3 and (mask is None or mask.ndim == 2):
+        n_valid = int(np.count_nonzero(mask)) if mask is not None else display.shape[0] * display.shape[1]
+        if n_valid == 0:
+            checks.append(_check("non_empty_mask", 0, False, 1, "fail"))
+        else:
+            finite = True
+            lo = float("inf")
+            hi = float("-inf")
+            ch_sum = np.zeros(3, dtype=np.float64)
+            y = np.empty(n_valid, dtype=np.float32)
+            pos = 0
+            step = CHUNK_ROWS
+            for r0 in range(0, display.shape[0], step):
+                blk = display[r0 : r0 + step]
+                if mask is not None:
+                    blk = blk[mask[r0 : r0 + step]]
+                    if len(blk) == 0:
+                        continue
+                else:
+                    blk = blk.reshape(-1, 3)
+                if not _all_finite(blk):
+                    finite = False
+                    break
+                b_lo, b_hi = float(blk.min()), float(blk.max())
+                if b_lo < lo:
+                    lo = b_lo
+                if b_hi > hi:
+                    hi = b_hi
+                ch_sum += blk.sum(axis=0, dtype=np.float64)
+                n_b = len(blk)
+                y[pos : pos + n_b] = blk @ LUMA
+                pos += n_b
+            checks.append(_check("finite", finite, finite, True, "fail"))
+            if finite:
+                checks.append(_check("value_range", [lo, hi], lo >= 0 and hi <= 1, [0, 1], "fail"))
+                p1, med, p99 = (float(v) for v in np.percentile(y, [1, 50, 99]))
+                checks.append(_check("median_luma", med, t["median_luma"][0] <= med <= t["median_luma"][1], t["median_luma"]))
+                checks.append(_check("tonal_range", float(p99 - p1), p99 - p1 >= t["min_tonal_range"], t["min_tonal_range"]))
+                means = ch_sum / n_valid
+                ratio = float(means.max() / max(means.min(), 1e-6))
+                checks.append(_check("channel_mean_ratio", ratio, ratio <= t["channel_mean_ratio"], t["channel_mean_ratio"]))
     else:
-        finite = bool(np.all(np.isfinite(px)))
-        checks.append(_check("finite", finite, finite, True, "fail"))
-        if finite:
-            lo, hi = float(px.min()), float(px.max())
-            checks.append(_check("value_range", [lo, hi], lo >= 0 and hi <= 1, [0, 1], "fail"))
-            y = px @ LUMA
-            med = float(np.median(y))
-            checks.append(_check("median_luma", med, t["median_luma"][0] <= med <= t["median_luma"][1], t["median_luma"]))
-            p1, p99 = np.percentile(y, [1, 99])
-            checks.append(_check("tonal_range", float(p99 - p1), p99 - p1 >= t["min_tonal_range"], t["min_tonal_range"]))
-            means = px.mean(0)
-            ratio = float(means.max() / max(means.min(), 1e-6))
-            checks.append(_check("channel_mean_ratio", ratio, ratio <= t["channel_mean_ratio"], t["channel_mean_ratio"]))
+        px = display[mask] if mask is not None else display.reshape(-1, 3)
+        if len(px) == 0:
+            checks.append(_check("non_empty_mask", 0, False, 1, "fail"))
+        else:
+            finite = bool(_all_finite(px))
+            checks.append(_check("finite", finite, finite, True, "fail"))
+            if finite:
+                lo, hi = float(px.min()), float(px.max())
+                checks.append(_check("value_range", [lo, hi], lo >= 0 and hi <= 1, [0, 1], "fail"))
+                y = px @ LUMA
+                p1, med, p99 = (float(v) for v in np.percentile(y, [1, 50, 99]))
+                checks.append(_check("median_luma", med, t["median_luma"][0] <= med <= t["median_luma"][1], t["median_luma"]))
+                checks.append(_check("tonal_range", float(p99 - p1), p99 - p1 >= t["min_tonal_range"], t["min_tonal_range"]))
+                means = px.mean(0)
+                ratio = float(means.max() / max(means.min(), 1e-6))
+                checks.append(_check("channel_mean_ratio", ratio, ratio <= t["channel_mean_ratio"], t["channel_mean_ratio"]))
     r = report["range"]
     clip = max(r[c]["clip_high"] for c in CHANNELS)
     checks.append(_check("clip_high", clip, clip <= t["max_clip_high"], t["max_clip_high"]))

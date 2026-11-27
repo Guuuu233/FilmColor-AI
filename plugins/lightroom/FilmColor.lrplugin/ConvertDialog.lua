@@ -4,6 +4,7 @@ local LrDialogs = import "LrDialogs"
 local LrFunctionContext = import "LrFunctionContext"
 local LrProgressScope = import "LrProgressScope"
 local LrTasks = import "LrTasks"
+local LrFileUtils = import "LrFileUtils"
 local LrView = import "LrView"
 
 local Bridge = require "Bridge"
@@ -78,11 +79,15 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local firstPhoto = photos[1]
     local firstPath = firstPhoto:getRawMetadata("path")
     local firstName = firstPhoto:getFormattedMetadata("fileName") or ""
+    if not firstPath or firstPath == "" or not LrFileUtils.exists(firstPath) then
+        LrDialogs.message(T("app_name"), T("err_file_offline", tostring(firstPath or firstName)), "warning")
+        return
+    end
     local firstGeom = Bridge.readLrGeometry(firstPhoto)
 
     local props = LrBinding.makePropertyTable(context)
     props.film = prefs.film or "color"
-    props.engine = prefs.engine or "t24"
+    props.engine = (prefs.engine == "t24" or not prefs.engine) and "t25" or prefs.engine
     props.preset = prefs.preset or "frontier"
     props.useLrCrop = prefs.useLrCrop
     props.baseMode = prefs.baseMode or "auto"
@@ -94,7 +99,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     props.autoCrop = prefs.autoCrop
     props.writeSidecar = prefs.writeSidecar
 
-    -- Optional fine-tuning sliders (0 = pure FilmColor v1.0 + preset)
+    -- Optional fine-tuning sliders (0 = pure FilmColor v2.0 + preset)
     props.ev = 0.0
     props.temp = 0
     props.tint = 0
@@ -115,6 +120,49 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local reqSeq = 0
     local closed = false
     local suppressPreview = false
+    local rollCache = { key = nil, rollId = nil, hasRollBase = false, inFlight = false, inFlightKey = nil }
+
+    local function ensureRollAnalyzed(film, engine, useLrCrop)
+        local key = tostring(film) .. "|" .. tostring(engine) .. "|" .. tostring(useLrCrop)
+        -- Serialize concurrent preview clicks so /plugin/roll_analyze is never triggered twice simultaneously
+        while rollCache.inFlight and not closed do
+            LrTasks.sleep(0.1)
+        end
+        if closed then return nil, false end
+        if rollCache.key == key and rollCache.rollId then
+            return rollCache.rollId, rollCache.hasRollBase
+        end
+        rollCache.inFlight = true
+        rollCache.inFlightKey = key
+        local okCall, rres = LrTasks.pcall(function()
+            local paths = {}
+            local lrCrops = {}
+            for i, ph in ipairs(photos) do
+                local pth = ph:getRawMetadata("path")
+                paths[i] = pth
+                if useLrCrop then
+                    local pg = Bridge.readLrGeometry(ph)
+                    if pg.lr_crop then lrCrops[pth] = pg.lr_crop end
+                end
+            end
+            return Bridge.post("/plugin/roll_analyze", {
+                paths = paths,
+                lr_crops = lrCrops,
+                film = film,
+                engine = engine,
+                roll_pool = true,
+            }, 180)
+        end)
+        rollCache.inFlight = false
+        rollCache.inFlightKey = nil
+        if okCall and type(rres) == "table" and rres.roll_id then
+            rollCache.key = key
+            rollCache.rollId = rres.roll_id
+            rollCache.hasRollBase = (rres.has_roll_base == true)
+            return rollCache.rollId, rollCache.hasRollBase
+        end
+        return nil, false
+    end
 
     local function requestPreview()
         if closed or suppressPreview then return end
@@ -125,17 +173,35 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
             -- Small debounce for rapid slider nudges
             LrTasks.sleep(0.08)
             if closed or mySeq ~= reqSeq then return end
+            local activeRollId = nil
+            local activeRollPool = (#photos >= 2 and props.rollSync == true)
+            local effBase = props.baseMode
+            if activeRollPool then
+                local rkey = tostring(props.film) .. "|" .. tostring(props.engine) .. "|" .. tostring(props.useLrCrop)
+                if rollCache.key ~= rkey or not rollCache.rollId then
+                    props.statusLine = T("prog_roll")
+                end
+                local rid, hasRb = ensureRollAnalyzed(props.film, props.engine, props.useLrCrop)
+                if closed or mySeq ~= reqSeq then return end
+                activeRollId = rid
+                if hasRb and effBase == "auto" then
+                    effBase = "roll_nat"
+                end
+            end
             local res, perr = Bridge.post("/plugin/preview", {
                 path = firstPath,
                 film = props.film,
                 engine = props.engine,
                 preset = props.preset,
-                base_mode = props.baseMode,
+                base_mode = effBase,
+                roll_id = activeRollId,
+                roll_pool = activeRollPool,
                 auto_crop = props.autoCrop,
                 use_lr_crop = props.useLrCrop,
                 lr_crop = firstGeom.lr_crop,
                 lr_orientation = firstGeom.lr_orientation,
                 lr_angle = firstGeom.lr_angle,
+                lr_geom_err = firstGeom.geom_err,
                 rot_delta = props.rotDelta,
                 view = props.viewMode,
                 max_width = 520,
@@ -154,14 +220,14 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
             end
             props.statusLine = T(
                 "st_ready",
-                #photos, firstName, ((props.engine == "t24" and T("app_name")) or (props.engine == "t23" and T("e_t23")) or T("e_v3")), clipTxt
+                #photos, firstName, (((props.engine == "t25" or props.engine == "t24") and T("e_t25")) or (props.engine == "t23" and T("e_t23")) or T("e_v3")), clipTxt
             )
         end)
     end
 
     -- Trigger preview when any parameter changes
     local watchKeys = {
-        "film", "engine", "preset", "baseMode", "useLrCrop", "autoCrop", "viewMode", "rotDelta",
+        "film", "engine", "preset", "baseMode", "rollSync", "useLrCrop", "autoCrop", "viewMode", "rotDelta",
         "ev", "temp", "tint", "contrast", "highlights", "shadows",
         "whites", "blacks", "vibrance", "sat", "skin_protect",
     }
@@ -216,6 +282,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
                                 props.contrast = 0; props.highlights = 0; props.shadows = 0
                                 props.whites = 0; props.blacks = 0
                                 props.vibrance = 0; props.sat = 0; props.skin_protect = 0
+                                props.rotDelta = 0
                                 suppressPreview = false
                                 requestPreview()
                             end,
@@ -275,7 +342,7 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
                         value = bind "engine",
                         width = 215,
                         items = {
-                            { title = T("e_t24"), value = "t24" },
+                            { title = T("e_t25"), value = "t25" },
                             { title = T("e_t23"), value = "t23" },
                             { title = T("e_v3"), value = "v3" },
                         },
@@ -389,17 +456,10 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local effectiveBase = props.baseMode
     if #photos >= 2 and props.rollSync then
         progress:setCaption(T("prog_roll"))
-        local paths = {}
-        for i, ph in ipairs(photos) do paths[i] = ph:getRawMetadata("path") end
-        local rres = Bridge.post("/plugin/roll_analyze", {
-            paths = paths,
-            film = props.film,
-            engine = props.engine,
-            roll_pool = true,
-        }, 180)
-        if rres and rres.roll_id then
-            rollId = rres.roll_id
-            if rres.has_roll_base then effectiveBase = "roll_nat" end
+        local rid, hasRb = ensureRollAnalyzed(props.film, props.engine, props.useLrCrop)
+        if rid then
+            rollId = rid
+            if hasRb and effectiveBase == "auto" then effectiveBase = "roll_nat" end
         end
     end
 
@@ -409,6 +469,20 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
     local adj = buildAdjustments(props)
 
     local canceled = false
+    local pendingImports = {}
+    local importOpts = {
+        stackWithSource = props.stackWithSource,
+        destMode = props.destMode,
+    }
+    local function flushImports()
+        if #pendingImports == 0 then return end
+        local added = Bridge.importAndStackBatch(catalog, pendingImports, importOpts)
+        for _, np in ipairs(added) do
+            imported[#imported + 1] = np
+        end
+        pendingImports = {}
+    end
+
     for i, ph in ipairs(photos) do
         if progress:isCanceled() then canceled = true; break end
         local pPath = ph:getRawMetadata("path")
@@ -429,7 +503,8 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
             lr_crop = pGeom.lr_crop,
             lr_orientation = pGeom.lr_orientation,
             lr_angle = pGeom.lr_angle,
-            rot_delta = props.rotDelta,
+            lr_geom_err = pGeom.geom_err,
+            rot_delta = (#photos == 1) and props.rotDelta or 0,
             auto_crop = props.autoCrop,
             format = props.format,
             encoding = props.encoding or "srgb",
@@ -441,17 +516,17 @@ LrFunctionContext.postAsyncTaskWithContext("FilmColorConvertDialog", function(co
         }, 300)
 
         if res and res.output_path then
-            local np = Bridge.importAndStack(catalog, ph, res.output_path, {
-                stackWithSource = props.stackWithSource,
-                destMode = props.destMode,
-            })
             if not firstOutPath then firstOutPath = res.output_path end
-            if np then imported[#imported + 1] = np end
+            pendingImports[#pendingImports + 1] = { srcPhoto = ph, outPath = res.output_path }
+            if #pendingImports >= 20 then
+                flushImports()
+            end
         else
-            errors[#errors + 1] = pName .. "：" .. tostring(cerr)
+            errors[#errors + 1] = pName .. ": " .. tostring(cerr)
         end
         progress:setPortionComplete(i, #photos)
     end
+    flushImports()
     progress:done()
 
     if #imported > 0 then

@@ -6,9 +6,11 @@ local I18n = require "I18n"
 
 local bind = LrView.bind
 local T = I18n.t
+local dialogOpen = false
 
 return {
     startDialog = function(propertyTable)
+        dialogOpen = true
         local p = Config.prefs()
         propertyTable.language = p.language or "auto"
         propertyTable.pythonPath = p.pythonPath
@@ -17,6 +19,7 @@ return {
     end,
 
     endDialog = function(propertyTable)
+        dialogOpen = false
         local p = Config.prefs()
         p.language = propertyTable.language or "auto"
         p.pythonPath = propertyTable.pythonPath
@@ -50,10 +53,17 @@ return {
                             local p = Config.prefs()
                             p.language = propertyTable.language or "auto"
                             p.pythonPath = propertyTable.pythonPath
-                            p.port = tonumber(propertyTable.port) or Config.DEFAULT_PORT
+                            local pn = tonumber(propertyTable.port)
+                            if pn and pn >= 1024 and pn <= 65535 then
+                                p.port = math.floor(pn)
+                            else
+                                p.port = Config.DEFAULT_PORT
+                                propertyTable.port = tostring(p.port)
+                            end
                             propertyTable.bridgeStatus = T("pi_connecting")
                             LrTasks.startAsyncTask(function()
                                 local ok, info = Bridge.ensureRunning()
+                                if not dialogOpen then return end
                                 if ok then
                                     propertyTable.bridgeStatus = T("pi_running", tostring(info.version), tostring(info.pid))
                                 else
@@ -67,7 +77,9 @@ return {
                         action = function()
                             LrTasks.startAsyncTask(function()
                                 Bridge.shutdown()
-                                propertyTable.bridgeStatus = T("pi_stopped")
+                                if dialogOpen then
+                                    propertyTable.bridgeStatus = T("pi_stopped")
+                                end
                             end)
                         end,
                     },

@@ -106,3 +106,92 @@ def test_linear_and_leica_presets():
     assert lei["grade"]["clarity"] >= 0.08
     assert lei["grade"]["vignette"] < 0.0
     assert "red" in lei["grade"]["hsl"] and "blue" in lei["grade"]["hsl"]
+
+
+def test_darkroom_audit_bugfixes_and_parity(tmp_path):
+    """Regression tests for B01-B07 and P02/P08 in darkroom.py."""
+    import numpy as np
+    import pytest
+    from PIL import Image
+    from filmcolor.darkroom import (
+        DarkroomGrade,
+        Geometry,
+        T24_STYLE_PRESETS,
+        _apply_grain,
+        _apply_pointwise_exact,
+        _apply_pointwise_lut3d_f32,
+        _apply_sharpen,
+        analyze_scene_metrics,
+        apply_darkroom_grade,
+        apply_geometry,
+        apply_lr_crop_angle,
+        export_image,
+        resolve_adaptive_preset,
+    )
+    from filmcolor.export import icc_profile
+
+    # B01: apply_geometry fast_preview=False supports 2D grayscale and returns float32
+    H, W = 120, 160
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    ramp = np.stack([xx / W, yy / H, np.full((H, W), 0.5, dtype=np.float32)], axis=-1)
+    g2d = apply_geometry(ramp[..., 0], Geometry(angle=5.0), fast_preview=False)
+    assert g2d.shape == (H, W) and g2d.dtype == np.float32
+
+    # B02: fast_preview=True vs SciPy affine parity (< 2/255 quantization error)
+    g_fast = apply_geometry(ramp, Geometry(angle=10.0), fast_preview=True)
+    g_full = apply_geometry(ramp, Geometry(angle=10.0), fast_preview=False)
+    assert float(np.max(np.abs(g_fast[4:-4, 4:-4] - g_full[4:-4, 4:-4]))) < 0.01
+    c_fast = apply_lr_crop_angle(ramp, (0.1, 0.1, 0.9, 0.9), 10.0, fast_preview=True)
+    c_full = apply_lr_crop_angle(ramp, (0.1, 0.1, 0.9, 0.9), 10.0, fast_preview=False)
+    assert float(np.max(np.abs(c_fast[4:-4, 4:-4] - c_full[4:-4, 4:-4]))) < 0.01
+
+    # B03: export_image embeds requested ICC profile for PNG/JPEG
+    png_lin = tmp_path / "out_lin.png"
+    export_image(png_lin, ramp, fmt="png", encoding="linear")
+    with Image.open(png_lin) as im:
+        assert im.info.get("icc_profile") == icc_profile("linear")
+
+    # B04: _apply_grain has no variance jump across 256-row chunk seam
+    flat = np.full((512, 128, 3), 0.5, dtype=np.float32)
+    g_out = _apply_grain(flat, 0.5)
+    row_std = np.std(g_out[..., 0] - 0.5, axis=1)
+    med_std = float(np.median(row_std[10:250]))
+    assert abs(float(row_std[255]) - med_std) / med_std < 0.2
+    assert abs(float(row_std[256]) - med_std) / med_std < 0.2
+
+    # B05: resolve_adaptive_preset deep-copies globals & strips B&W keys when scene_metrics is None
+    res_c = resolve_adaptive_preset("frontier", film="color", scene_metrics=None)
+    assert res_c["grade"]["hsl"] is not T24_STYLE_PRESETS["frontier"]["grade"]["hsl"]
+    res_bw = resolve_adaptive_preset("frontier", film="bw", scene_metrics=None)
+    assert res_bw["camera_matrix_mix"] is None
+    assert not any(k in res_bw["grade"] for k in ("hsl", "vibrance", "cg_shadows", "cg_blending", "cg_balance"))
+
+    # B06: analyze_scene_metrics ignores NaN pixels and handles 2D/4-ch inputs
+    nan_img = ramp.copy()
+    nan_img[0, 0, 0] = np.nan
+    m_nan = analyze_scene_metrics(nan_img)
+    assert all(np.isfinite(v) for v in m_nan.values())
+    m_2d = analyze_scene_metrics(ramp[..., 0])
+    assert all(np.isfinite(v) for v in m_2d.values())
+    m_4ch = analyze_scene_metrics(np.concatenate([ramp, np.ones((H, W, 1), dtype=np.float32)], axis=-1))
+    assert all(np.isfinite(v) for v in m_4ch.values())
+
+    # B07: apply_lr_crop_angle rejects non-finite angle and malformed crops
+    with pytest.raises(ValueError, match="angle"):
+        apply_lr_crop_angle(ramp, (0.1, 0.1, 0.9, 0.9), float("nan"))
+    with pytest.raises(ValueError, match="crop"):
+        apply_lr_crop_angle(ramp, (0.9, 0.1, 0.1, 0.9), 0.0)
+
+    # P02: vectorized float32 trilinear LUT3D matches exact pointwise closely
+    gr = DarkroomGrade(highlights=-0.2, shadows=0.25, vibrance=0.2, hsl={"orange": [0.1, 0.1, 0.0]})
+    rng = np.random.default_rng(7)
+    sample = rng.random((64, 64, 3), dtype=np.float32)
+    lut_res = _apply_pointwise_lut3d_f32(sample, gr, (), "color")
+    exact_res = _apply_pointwise_exact(sample, gr, (), "color")
+    assert float(np.max(np.abs(lut_res - exact_res))) < 0.02
+
+    # P08: _apply_sharpen inplace=True is bit-exact with inplace=False, and vignette-only no-op returns input
+    sh_copy = sample.copy()
+    assert np.array_equal(_apply_sharpen(sample, 0.4, inplace=False), _apply_sharpen(sh_copy, 0.4, inplace=True))
+    vig_only = apply_darkroom_grade(sample, DarkroomGrade(vignette=-0.3), apply_vignette_here=False)
+    assert vig_only is sample

@@ -27,8 +27,8 @@ import numpy as np
 
 from .holder import film_box, holder_mask
 from .render import (BOUNDS, EXTENDED_BOUNDS, IDENTITY, LUMA, LUMA_F32, RenderParams, RenderParamsT19,
-                     T19_BOUNDS, ZERO_MATRIX, _all_finite, _max3, pre_shoulder_linear,
-                     render_fast_full, render_t19, shoulder_curve)
+                     RenderParamsT24, T19_BOUNDS, T24_BOUNDS, ZERO_MATRIX, _all_finite, _max3, pre_shoulder_linear,
+                     render_fast_full, render_t19, render_t24, shoulder_curve)
 
 NOREF_V1 = dict(
     id="noref_v1",
@@ -163,8 +163,14 @@ def _quadrant_estimates(P, mask, cfg):
 
 
 def _weighted_median(x, w):
+    x = np.asarray(x)
+    w = np.asarray(w)
+    if x.size == 0 or w.size == 0:
+        return 0.0
     o = np.argsort(x)
     c = np.cumsum(w[o])
+    if c[-1] <= 0:
+        return float(np.median(x))
     return float(x[o][np.searchsorted(c, c[-1] / 2)])
 
 
@@ -226,12 +232,20 @@ NOREF_V2 = dict(
 )
 
 
+_LOOK_CACHE: dict[str, dict] = {}
+
+
 def load_look(name: str = "global_look_v1") -> dict:
-    look = json.loads((CONFIG_DIR / f"{name}.json").read_text())
-    if look.get("id") != name:
-        raise ValueError(f"look file {name}.json has id {look.get('id')!r}")
-    RenderParams.from_dict(look["params"])  # validates names and bounds
-    return look
+    cached = _LOOK_CACHE.get(name)
+    if cached is None:
+        look = json.loads((CONFIG_DIR / f"{name}.json").read_text())
+        if look.get("id") != name:
+            raise ValueError(f"look file {name}.json has id {look.get('id')!r}")
+        RenderParams.from_dict(look["params"])  # validates names and bounds
+        cached = _LOOK_CACHE.setdefault(name, look)
+    out = dict(cached)
+    out["params"] = dict(cached["params"])
+    return out
 
 
 def estimate_params_v2(P, mask=None, cfg=NOREF_V2, roll=None, look=None, *, span_d_g: float | None = None) -> dict:
@@ -305,8 +319,9 @@ def estimate_params_v2(P, mask=None, cfg=NOREF_V2, roll=None, look=None, *, span
         out["diagnostics"]["spread_before"] = spread
     if "sat" in g:  # the look's saturation boost, reduced for frames that are already very colourful
         c = _chroma(px[(px @ LUMA_F32) > cfg["min_luma"]])
-        p90 = float(np.percentile(np.linalg.norm(c, axis=1), 90))
-        p["sat"] = float(1 + (lp["sat"] - 1) * min(1.0, cfg["sat_colourful"] / p90))
+        p90 = float(np.percentile(np.linalg.norm(c, axis=1), 90)) if len(c) else 0.0
+        scale = min(1.0, cfg["sat_colourful"] / p90) if p90 > cfg["sat_colourful"] else 1.0
+        p["sat"] = float(1 + (lp["sat"] - 1) * scale)
         out["diagnostics"]["chroma_p90"] = p90
 
     params = RenderParams(**p)
@@ -716,14 +731,13 @@ def _textured_cells(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> dict:
         cs = max(1, min(h, w) // 4)
     hc, wc = h // cs, w // cs
     Pc = np.asarray(P[: hc * cs, : wc * cs], np.float32).reshape(hc, cs, wc, cs, 3)
-    Pc_flat = np.swapaxes(Pc, 1, 2).reshape(hc, wc, cs * cs, 3)
-    Y = np.maximum(Pc_flat @ LUMA_F32, np.float32(1e-4))
+    Y = np.maximum(Pc @ LUMA_F32, np.float32(1e-4))
     D = -np.log10(Y)
-    mean_D = D.mean(axis=-1)
-    std_D = np.sqrt(np.maximum(((D - mean_D[..., None]) ** 2).mean(axis=-1), np.float32(0.0)))
-    mean_rgb = Pc_flat.mean(axis=2)
+    mean_D = D.mean(axis=(1, 3))
+    std_D = np.sqrt(np.maximum(((D - mean_D[:, None, :, None]) ** 2).mean(axis=(1, 3)), np.float32(0.0)))
+    mean_rgb = Pc.mean(axis=(1, 3))
     if mask is not None:
-        mc = np.swapaxes(mask[: hc * cs, : wc * cs].reshape(hc, cs, wc, cs), 1, 2).reshape(hc, wc, cs * cs).mean(axis=-1) > 0.5
+        mc = mask[: hc * cs, : wc * cs].reshape(hc, cs, wc, cs).mean(axis=(1, 3)) > 0.5
     else:
         mc = np.ones((hc, wc), bool)
     valid = mc & np.isfinite(std_D) & (_max3(mean_rgb) > cfg["min_luma"])
@@ -809,38 +823,34 @@ def _metering_mask(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> tuple[n
         p_black = P.max(axis=-1) <= strip_luma
         trimmed = dict(top=0, bottom=0, left=0, right=0)
         for side in trimmed:
-            rows = np.flatnonzero(m.any(1))
-            cols = np.flatnonzero(m.any(0))
-            if len(rows) == 0 or len(cols) == 0:
-                break
-            if side == "top":
-                for i in rows:
-                    sel = m[i]
-                    if float(p_black[i, sel].mean()) < strip_share:
-                        break
-                    m[i] = False
-                    trimmed[side] += 1
-            elif side == "bottom":
-                for i in rows[::-1]:
-                    sel = m[i]
-                    if float(p_black[i, sel].mean()) < strip_share:
-                        break
-                    m[i] = False
-                    trimmed[side] += 1
-            elif side == "left":
-                for i in cols:
-                    sel = m[:, i]
-                    if float(p_black[sel, i].mean()) < strip_share:
-                        break
-                    m[:, i] = False
-                    trimmed[side] += 1
+            if side in ("top", "bottom"):
+                cnt = m.sum(axis=1)
+                idx = np.flatnonzero(cnt > 0)
+                if len(idx) == 0:
+                    break
+                if side == "bottom":
+                    idx = idx[::-1]
+                b_cnt = (p_black & m).sum(axis=1)
+                shares = b_cnt[idx] / cnt[idx]
+                stop = np.flatnonzero(shares < strip_share)
+                n_trim = int(stop[0]) if len(stop) else len(idx)
+                if n_trim:
+                    m[idx[:n_trim]] = False
+                    trimmed[side] = n_trim
             else:
-                for i in cols[::-1]:
-                    sel = m[:, i]
-                    if float(p_black[sel, i].mean()) < strip_share:
-                        break
-                    m[:, i] = False
-                    trimmed[side] += 1
+                cnt = m.sum(axis=0)
+                idx = np.flatnonzero(cnt > 0)
+                if len(idx) == 0:
+                    break
+                if side == "right":
+                    idx = idx[::-1]
+                b_cnt = (p_black & m).sum(axis=0)
+                shares = b_cnt[idx] / cnt[idx]
+                stop = np.flatnonzero(shares < strip_share)
+                n_trim = int(stop[0]) if len(stop) else len(idx)
+                if n_trim:
+                    m[:, idx[:n_trim]] = False
+                    trimmed[side] = n_trim
             if trimmed[side]:  # the strip's soft edge
                 rows2, cols2 = np.flatnonzero(m.any(1)), np.flatnonzero(m.any(0))
                 if side == "top" and len(rows2):
@@ -861,11 +871,13 @@ def _metering_mask(P: np.ndarray, mask: np.ndarray | None, cfg: dict) -> tuple[n
 
 def _huber_location(c, k: float, iters: int = 10) -> np.ndarray:
     """Huber M-estimate of the 2-D location of chroma samples ``c`` (n, 2), starting from the median."""
-    m = np.median(c, 0)
+    c64 = np.asarray(c, dtype=np.float64)
+    m = np.median(c64, 0)
+    c0, c1 = c64[:, 0], c64[:, 1]
     for _ in range(iters):
-        r = np.linalg.norm(c - m, axis=1)
+        r = np.hypot(c0 - m[0], c1 - m[1])
         w = np.minimum(1.0, k / np.maximum(r, 1e-9))
-        m = (w[:, None] * c).sum(0) / w.sum()
+        m = (w @ c64) / w.sum()
     return m
 
 
@@ -1989,12 +2001,59 @@ def _apply_backlit_v3(base_p: dict, px_tone: np.ndarray, q25: float, q90: float,
                                      base_p["contrast"] + w_bl * float(cfg["backlit_contrast_step"]))
         lo_m = m0 = base_p["midtone"]
         hi_m = max(m0, min(float(cfg["backlit_midtone_cap"]), m0 + float(cfg["backlit_midtone_step"])))
-        if _encoded_quantiles(px_tone, RenderParams(**dict(base_p, midtone=hi_m)), qs=(25,))[0] <= cfg["backlit_p25_target"]:
+        # Precompute midtone-invariant linear/shoulder/LUT-index state once for the 15-step bisection
+        _rp0 = RenderParams(**base_p)
+        if _rp0.hd_curve == 0.0 and not _rp0.skin_protect and (not _rp0.tone_curve or set(_rp0.tone_curve) <= {"rgb"}):
+            from .render import (
+                _SQRT_LUT_N, _eval_sqrt_lut, _prepare_render_luts,
+                _soft_clip_arr, pre_shoulder_linear, shoulder_curve,
+            )
+            _x_lin, _ = pre_shoulder_linear(np.asarray(px_tone, np.float32), _rp0, fast_pow=True)
+            _eff_sh = float(np.clip(_rp0.shoulder + max(0.0, -0.45 * _rp0.highlights) + max(0.0, -0.25 * _rp0.whites), 0.0, 1.0))
+            _v_pre = _soft_clip_arr(shoulder_curve(_x_lin, _eff_sh), _rp0.soft_clip)
+            _n1 = np.float32(_SQRT_LUT_N - 1)
+            _pos_v = np.sqrt(_v_pre)
+            _pos_v *= _n1
+            _i0_v = _pos_v.astype(np.int32)
+            np.minimum(_i0_v, _SQRT_LUT_N - 2, out=_i0_v)
+            _frac_v = _pos_v - _i0_v
+            _cp_w = np.float32(_rp0.chroma_preserve)
+            if _rp0.chroma_preserve:
+                _y_in = _x_lin @ LUMA_F32
+                _y_soft = _soft_clip_arr(shoulder_curve(_y_in, _eff_sh), _rp0.soft_clip)
+                _pos_y = np.sqrt(_y_soft)
+                _pos_y *= _n1
+                _i0_y = _pos_y.astype(np.int32)
+                np.minimum(_i0_y, _SQRT_LUT_N - 2, out=_i0_y)
+                _frac_y = _pos_y - _i0_y
+                _inv_y = np.float32(1.0) / np.maximum(_y_in, np.float32(1e-6))
+
+            def _p25_for_midtone(m_val: float) -> float:
+                rp_m = RenderParams(**dict(base_p, midtone=m_val))
+                pre_m = _prepare_render_luts(rp_m)
+                if pre_m is None:
+                    return _encoded_quantiles(px_tone, rp_m, qs=(25,))[0]
+                _, _, post_lut, post_dlut, pow_g_lut, pow_g_dlut, _, use_cp = pre_m
+                if use_cp:
+                    v_ch = pow_g_lut[_i0_v] + _frac_v * pow_g_dlut[_i0_v]
+                    y_out = pow_g_lut[_i0_y] + _frac_y * pow_g_dlut[_i0_y]
+                    scale = (y_out * _inv_y)[..., None]
+                    v_lum = np.minimum(_x_lin * scale, np.float32(1.0))
+                    v_bl = (np.float32(1.0) - _cp_w) * v_ch + _cp_w * v_lum
+                    e_m = _eval_sqrt_lut(v_bl, post_lut, post_dlut, preclipped=True)
+                else:
+                    e_m = post_lut[_i0_v] + _frac_v * post_dlut[_i0_v]
+                return float(np.quantile(e_m @ LUMA_F32, 0.25))
+        else:
+            def _p25_for_midtone(m_val: float) -> float:
+                return _encoded_quantiles(px_tone, RenderParams(**dict(base_p, midtone=m_val)), qs=(25,))[0]
+
+        if _p25_for_midtone(hi_m) <= cfg["backlit_p25_target"]:
             m_t = hi_m
         else:
             for _ in range(14):
                 mid_m = 0.5 * (lo_m + hi_m)
-                if _encoded_quantiles(px_tone, RenderParams(**dict(base_p, midtone=mid_m)), qs=(25,))[0] < cfg["backlit_p25_target"]:
+                if _p25_for_midtone(mid_m) < cfg["backlit_p25_target"]:
                     lo_m = mid_m
                 else:
                     hi_m = mid_m
@@ -2352,6 +2411,19 @@ NOREF_T24 = dict(
     id="noref_t24",
     version="T24",
     weights_name="t24",
+    v4_weights_name="t25_perceptual",
+    t18_version="t23",
+    roll_alpha_wb=0.35,
+    roll_alpha_tone=0.45,
+    roll_k_shrink=4.0,
+    roll_mad_wb_scale=0.12,
+)
+
+NOREF_T25 = dict(
+    id="noref_t25",
+    version="T25",
+    weights_name="t24",
+    v4_weights_name="t25_perceptual",
     t18_version="t23",
     roll_alpha_wb=0.35,
     roll_alpha_tone=0.45,
@@ -2362,32 +2434,99 @@ NOREF_T24 = dict(
 _T20_WEIGHTS_CACHE: dict[str, dict] = {}
 
 
+def _compile_xgb_spec(spec: dict) -> list:
+    return [
+        (t["lc"], t["rc"], t["fi"], [float(np.float32(v)) for v in t["sc"]], t["sc"], t["dl"])
+        for t in spec["trees"]
+    ]
+
+
+def _compile_et_list(trees: list[dict]) -> list:
+    return [(t["cl"], t["cr"], t["f"], t["th"], t["v"]) for t in trees]
+
+
+def _precompile_tree_specs(obj) -> None:
+    """Recursively pre-compile XGB/ET/HGB tree dicts before publishing into module caches (thread-safe)."""
+    if not isinstance(obj, dict):
+        return
+    trees = obj.get("trees")
+    if isinstance(trees, list) and trees and isinstance(trees[0], dict) and "_compiled" not in obj:
+        t0 = trees[0]
+        if "sc" in t0 and "dl" in t0:
+            obj["_compiled"] = _compile_xgb_spec(obj)
+        elif "leaf" in t0 and "ml" in t0:
+            obj["_compiled"] = [
+                (t["leaf"], t["lc"], t["rc"], t["fi"], t["th"], t["val"], t["ml"])
+                for t in trees
+            ]
+        elif "lc" in t0 and "th" in t0 and "val" in t0:
+            obj["_compiled"] = [
+                (t["lc"], t["rc"], t["fi"], [float(np.float32(v)) for v in t["th"]], t["val"])
+                for t in trees
+            ]
+        return
+    for v in obj.values():
+        if isinstance(v, dict):
+            _precompile_tree_specs(v)
+
+
 def _load_t20_weights(name: str = "t20_v3") -> dict:
     cached = _T20_WEIGHTS_CACHE.get(name)
     if cached is not None:
         return cached
     p = CONFIG_DIR / f"{name}.json"
     data = json.loads(p.read_text())
-    _T20_WEIGHTS_CACHE[name] = data
-    return data
+    # Pre-compile all trees BEFORE publishing into the shared cache so concurrent readers never mutate it
+    _precompile_tree_specs(data)
+    for br in data.get("residual_branches", {}).values():
+        for hs in br.get("heads", {}).values():
+            if "et" in hs and "_et_compiled" not in hs:
+                hs["_et_compiled"] = _compile_et_list(hs["et"])
+    return _T20_WEIGHTS_CACHE.setdefault(name, data)
+
+
+def _t20_crop_bounds(shape: tuple[int, ...], mask: np.ndarray | None) -> tuple[int, int, int, int]:
+    H, W = shape[:2]
+    if mask is not None and mask.shape[:2] == (H, W):
+        mb = mask if mask.dtype == np.bool_ else mask.astype(bool)
+        if int(mb.sum()) > 100:
+            row_any = np.flatnonzero(mb.any(axis=1))
+            col_any = np.flatnonzero(mb.any(axis=0))
+            y0, y1 = int(row_any[0]), int(row_any[-1]) + 1
+            x0, x1 = int(col_any[0]), int(col_any[-1]) + 1
+        else:
+            y0, y1, x0, x1 = int(0.04 * H), int(0.96 * H), int(0.04 * W), int(0.96 * W)
+            if y1 <= y0 or x1 <= x0:
+                y0, y1, x0, x1 = 0, H, 0, W
+    else:
+        y0, y1, x0, x1 = int(0.04 * H), int(0.96 * H), int(0.04 * W), int(0.96 * W)
+    dy = max(1, int(0.03 * (y1 - y0))) if (y1 - y0) >= 3 else 0
+    dx = max(1, int(0.03 * (x1 - x0))) if (x1 - x0) >= 3 else 0
+    y0i = min(y0 + dy, max(y1 - 1, y0))
+    y1i = max(y0i + 1, min(H, y1 - dy)) if y1 > y0 else y0i
+    x0i = min(x0 + dx, max(x1 - 1, x0))
+    x1i = max(x0i + 1, min(W, x1 - dx)) if x1 > x0 else x0i
+    return y0i, y1i, x0i, x1i
 
 
 def _t20_interior_crop(P: np.ndarray, mask: np.ndarray | None) -> np.ndarray:
-    H, W = P.shape[:2]
-    if mask is not None and mask.shape[:2] == (H, W):
-        ys, xs = np.where(mask.astype(bool))
-        if len(ys) > 100:
-            y0, y1 = int(ys.min()), int(ys.max()) + 1
-            x0, x1 = int(xs.min()), int(xs.max()) + 1
-        else:
-            y0, y1, x0, x1 = 0, H, 0, W
-    else:
-        y0, y1, x0, x1 = int(0.04 * H), int(0.96 * H), int(0.04 * W), int(0.96 * W)
-    dy = max(1, int(0.03 * (y1 - y0)))
-    dx = max(1, int(0.03 * (x1 - x0)))
-    y0i, y1i = min(y0 + dy, max(y1 - 1, y0 + 1)), max(y1 - dy, min(y0 + 1, H))
-    x0i, x1i = min(x0 + dx, max(x1 - 1, x0 + 1)), max(x1 - dx, min(x0 + 1, W))
-    return np.clip(np.asarray(P[y0i:y1i, x0i:x1i], dtype=np.float32), 1e-6, None)
+    y0i, y1i, x0i, x1i = _t20_crop_bounds(P.shape, mask)
+    return np.clip(np.asarray(P[y0i:y1i, x0i:x1i], dtype=np.float32), np.float32(1e-6), None)
+
+
+def _t20_crop_and_downsample(P: np.ndarray, bounds: tuple[int, int, int, int], max_side: int) -> np.ndarray:
+    y0i, y1i, x0i, x1i = bounds
+    h, w = y1i - y0i, x1i - x0i
+    step = max(1, int(max(h, w) // max_side))
+    return np.clip(np.ascontiguousarray(P[y0i:y1i:step, x0i:x1i:step], dtype=np.float32), np.float32(1e-6), None)
+
+
+def _t20_crop_and_resize(P: np.ndarray, bounds: tuple[int, int, int, int], side: int) -> np.ndarray:
+    y0i, y1i, x0i, x1i = bounds
+    h, w = y1i - y0i, x1i - x0i
+    ys = y0i + np.linspace(0, h - 1, side).astype(np.int32)
+    xs = x0i + np.linspace(0, w - 1, side).astype(np.int32)
+    return np.clip(np.ascontiguousarray(P[ys][:, xs], dtype=np.float32), np.float32(1e-6), None)
 
 
 def extract_t20_features(
@@ -2397,20 +2536,23 @@ def extract_t20_features(
     d_hi=(0.85, 0.85, 0.85),
     d_lo=(0.0, 0.0, 0.0),
     matrix=IDENTITY,
+    _bounds: tuple[int, int, int, int] | None = None,
 ) -> dict:
     """Extract clean holder-masked 2D spatial, luminance, and pre-matrix WB cues from T18-inverted ``P_t18``."""
-    P_in = _t20_downsample_for_v3(_t20_interior_crop(P_t18, mask), max_side=360)
+    bounds = _bounds if _bounds is not None else _t20_crop_bounds(P_t18.shape, mask)
+    P_in = _t20_crop_and_downsample(P_t18, bounds, max_side=360)
     hi, wi = P_in.shape[:2]
 
     # Pre-matrix WB & luminance features (exact space where wb_gains() operates)
-    luma_pre = np.clip((P_in * LUMA_F32).sum(axis=-1), 1e-6, None)
-    valid_pre = luma_pre > 1e-4
-    if valid_pre.sum() < 100:
+    luma_pre = np.clip(P_in @ LUMA_F32, np.float32(1e-6), None)
+    valid_pre = luma_pre > np.float32(1e-4)
+    if int(np.count_nonzero(valid_pre)) < 100:
         valid_pre = np.ones_like(luma_pre, dtype=bool)
-    z_pre = np.log2(luma_pre / 0.18).astype(np.float64)
+    z_pre = np.log2(luma_pre * np.float32(1.0 / 0.18)).astype(np.float64)
     zq_pre5, zq_pre85, zq_pre95 = np.percentile(z_pre[valid_pre], [5, 85, 95])
-    lr_pre = np.log2(np.maximum(P_in[..., 0], 1e-6) / np.maximum(P_in[..., 1], 1e-6))
-    lb_pre = np.log2(np.maximum(P_in[..., 2], 1e-6) / np.maximum(P_in[..., 1], 1e-6))
+    log_rgb = np.log2(np.maximum(P_in, np.float32(1e-6)))
+    lr_pre = log_rgb[..., 0] - log_rgb[..., 1]
+    lb_pre = log_rgb[..., 2] - log_rgb[..., 1]
     mid_pre = valid_pre & (z_pre > zq_pre5) & (z_pre < zq_pre95) & (luma_pre > 0.004)
     if mid_pre.sum() < 50:
         mid_pre = valid_pre
@@ -2424,7 +2566,6 @@ def extract_t20_features(
     c_wp_pre = [float((w_wp * lr_pre).sum()), float((w_wp * lb_pre).sum())]
 
     if hi >= 4 and wi >= 4:
-        log_rgb = np.log2(P_in)
         gm = np.sqrt(
             (0.25 * (log_rgb[1:-1, 2:] - log_rgb[1:-1, :-2]) ** 2
              + 0.25 * (log_rgb[2:, 1:-1] - log_rgb[:-2, 1:-1]) ** 2).sum(-1) / 3.0
@@ -2525,8 +2666,8 @@ def extract_t20_features(
 
     # Working-space (post-matrix) luma, saliency, edge & chroma quantiles
     mat = np.asarray(matrix, dtype=np.float32)
-    P_w = np.clip(P_in @ mat.T, 1e-6, None)
-    luma = np.clip((P_w * LUMA_F32).sum(axis=-1), 1e-6, None)
+    P_w = np.clip(P_in @ mat.T, np.float32(1e-6), None)
+    luma = np.clip(P_w @ LUMA_F32, np.float32(1e-6), None)
     valid = luma > 1e-4
     if valid.sum() < 100:
         valid = np.ones_like(luma, dtype=bool)
@@ -2622,7 +2763,9 @@ def extract_t20_features(
     t_lo_wb, n_lo_wb = _wb_from_c(lo_m.astype(np.float64))
 
     P_clip = np.clip(P_in, 1e-6, 4.0).astype(np.float64)
-    m6 = np.power(np.mean(np.power(P_clip[valid_pre], 6.0), axis=0), 1.0 / 6.0)
+    p_v = P_clip[valid_pre]
+    p2 = p_v * p_v
+    m6 = np.power(np.mean(p2 * p2 * p2, axis=0), 1.0 / 6.0)
     lr_s6 = float(np.log2(max(float(m6[0]), 1e-6) / max(float(m6[1]), 1e-6)))
     lb_s6 = float(np.log2(max(float(m6[2]), 1e-6) / max(float(m6[1]), 1e-6)))
 
@@ -2734,15 +2877,18 @@ def estimate_params_t20(
     orange_branch = bool(has_cam_matrix or (float(dh[2]) / max(float(dh[1]), 1e-4) > 0.80))
     branch_name = "cal" if orange_branch else "uncal"
     mat_tup = RenderParams(matrix=matrix).matrix
-    P_anchor_in = _t20_interior_crop(P_v1 if P_v1 is not None else P_t18, mask)
-    if min(P_anchor_in.shape[:2]) < 2:
-        raise ValueError(f"frame too small for the automatic estimate: interior crop {P_anchor_in.shape[:2]}")
-    P_anchor = _t20_downsample_for_v3(P_anchor_in, max_side=320)
+    bounds_t18 = _t20_crop_bounds(P_t18.shape, mask)
+    P_anchor_src = P_v1 if P_v1 is not None else P_t18
+    bounds_anchor = bounds_t18 if P_anchor_src.shape[:2] == P_t18.shape[:2] else _t20_crop_bounds(P_anchor_src.shape, mask)
+    ah, aw = bounds_anchor[1] - bounds_anchor[0], bounds_anchor[3] - bounds_anchor[2]
+    if min(ah, aw) < 2:
+        raise ValueError(f"frame too small for the automatic estimate: interior crop {(ah, aw)}")
+    P_anchor = _t20_crop_and_downsample(P_anchor_src, bounds_anchor, max_side=320)
     v3_cfg = dict(cfg_v3, matrix=mat_tup)
     res_v3 = estimate_params_v3(P_anchor, None, v3_cfg, span_d_g=span_d_g)
     pv17 = res_v3["params"]
 
-    feats = extract_t20_features(P_t18, mask, d_hi=d_hi, d_lo=d_lo, matrix=mat_tup)
+    feats = extract_t20_features(P_t18, mask, d_hi=d_hi, d_lo=d_lo, matrix=mat_tup, _bounds=bounds_t18)
     feats.update(
         ev17=float(pv17["ev"]),
         tp17=float(pv17["temp"]),
@@ -2808,6 +2954,8 @@ def estimate_params_t20(
         status="ok",
         params=params.to_dict(),
         v3_anchor=pv17,
+        v3_status=res_v3.get("status", "ok"),
+        v3_flags=list(res_v3.get("flags", [])),
         features=feats,
         branch=branch_name,
     )
@@ -2878,31 +3026,44 @@ def estimate_params_t23(
     )
 
 
-def _eval_et_trees(trees: list[dict], x32: np.ndarray) -> float:
+def _eval_et_trees(trees: list, x32: np.ndarray) -> float:
+    if not trees:
+        return 0.0
+    xs = x32.astype(np.float32).tolist() if isinstance(x32, np.ndarray) else [float(np.float32(v)) for v in x32]
     acc = 0.0
-    for t in trees:
-        cl, cr, feat, th, val = t["cl"], t["cr"], t["f"], t["th"], t["v"]
-        nid = 0
-        while cl[nid] != -1:
-            nid = cl[nid] if float(x32[feat[nid]]) <= th[nid] else cr[nid]
-        acc += val[nid]
+    if isinstance(trees[0], tuple):
+        for cl, cr, feat, th, val in trees:
+            nid = 0
+            while cl[nid] != -1:
+                nid = cl[nid] if xs[feat[nid]] <= th[nid] else cr[nid]
+            acc += val[nid]
+    else:
+        for t in trees:
+            cl, cr, feat, th, val = t["cl"], t["cr"], t["f"], t["th"], t["v"]
+            nid = 0
+            while cl[nid] != -1:
+                nid = cl[nid] if xs[feat[nid]] <= th[nid] else cr[nid]
+            acc += val[nid]
     return acc / len(trees)
 
 
 def _eval_xgb_trees(spec: dict, x32: np.ndarray) -> float:
+    compiled = spec.get("_compiled")
+    if compiled is None:
+        compiled = spec.setdefault("_compiled", _compile_xgb_spec(spec))
+    xs = x32.astype(np.float32).tolist() if isinstance(x32, np.ndarray) else [float(np.float32(v)) for v in x32]
     acc = float(spec["base_score"])
-    for t in spec["trees"]:
-        lc, rc, fi, sc, dl = t["lc"], t["rc"], t["fi"], t["sc"], t["dl"]
+    for lc, rc, fi, sc32, sc_raw, dl in compiled:
         nid = 0
         while lc[nid] != -1:
-            v = np.float32(x32[fi[nid]])
-            if np.isnan(v):
+            v = xs[fi[nid]]
+            if v != v:
                 nid = lc[nid] if dl[nid] else rc[nid]
-            elif v < np.float32(sc[nid]):
+            elif v < sc32[nid]:
                 nid = lc[nid]
             else:
                 nid = rc[nid]
-        acc += sc[nid]
+        acc += sc_raw[nid]
     return acc
 
 
@@ -2943,7 +3104,7 @@ def _t24_density_feats(P_v1_crop: np.ndarray, d_lo, d_hi, gamma: float) -> tuple
     d_lo_a = np.asarray(d_lo, dtype=np.float64)
     d_hi_a = np.asarray(d_hi, dtype=np.float64)
     dg = max(float(d_hi_a[1] - d_lo_a[1]), 1e-4)
-    Rv = dg / float(gamma)
+    Rv = dg / max(float(gamma), 1e-4)
     flr = 10.0 ** (-Rv)
     inner = np.maximum(np.asarray(P_v1_crop, dtype=np.float64) * (1.0 - flr) + flr, 1e-12)
     s_orig = 1.0 + np.log10(inner) / Rv
@@ -3007,6 +3168,215 @@ def _t24_closed_loop_feats(P_crop128: np.ndarray, p_dict: dict, matrix) -> dict:
 pool_roll_params_t24 = pool_roll_params_t21
 
 
+_T25_WEIGHTS_CACHE: dict[str, dict | None] = {}
+_T24_V3_CACHE = _T25_WEIGHTS_CACHE  # backward-compatible alias
+
+
+def _load_t25_weights(name: str = "t25_perceptual") -> dict | None:
+    if name in _T25_WEIGHTS_CACHE:
+        return _T25_WEIGHTS_CACHE[name]
+    p = CONFIG_DIR / f"{name}.json"
+    if not p.is_file() and name == "t24_v4_perceptual":
+        p = CONFIG_DIR / "t25_perceptual.json"
+    if not p.is_file():
+        return _T25_WEIGHTS_CACHE.setdefault(name, None)
+    data = json.loads(p.read_text(encoding="utf-8"))
+    _precompile_tree_specs(data)
+    return _T25_WEIGHTS_CACHE.setdefault(name, data)
+
+
+_load_t24_v3_weights = _load_t25_weights
+
+
+def _eval_et_v3_trees(spec: dict, x32: np.ndarray) -> float:
+    compiled = spec.get("_compiled")
+    if compiled is None:
+        compiled = spec.setdefault(
+            "_compiled",
+            [
+                (t["lc"], t["rc"], t["fi"], [float(np.float32(v)) for v in t["th"]], t["val"])
+                for t in spec["trees"]
+            ],
+        )
+    xs = x32.astype(np.float32).tolist() if isinstance(x32, np.ndarray) else [float(np.float32(v)) for v in x32]
+    acc = 0.0
+    for lc, rc, fi, th32, val in compiled:
+        nid = 0
+        while lc[nid] != -1:
+            nid = lc[nid] if xs[fi[nid]] <= th32[nid] else rc[nid]
+        acc += val[nid]
+    return acc / max(len(compiled), 1)
+
+
+def _eval_hgb_trees(spec: dict, x32: np.ndarray) -> float:
+    compiled = spec.get("_compiled")
+    if compiled is None:
+        compiled = spec.setdefault(
+            "_compiled",
+            [
+                (t["leaf"], t["lc"], t["rc"], t["fi"], t["th"], t["val"], t["ml"])
+                for t in spec["trees"]
+            ],
+        )
+    xs = x32.tolist() if isinstance(x32, np.ndarray) else [float(v) for v in x32]
+    acc = float(spec["base_score"])
+    for leaf, lc, rc, fi, th, val, ml in compiled:
+        nid = 0
+        while not leaf[nid]:
+            v = xs[fi[nid]]
+            if v != v:
+                nid = lc[nid] if ml[nid] else rc[nid]
+            elif v <= th[nid]:
+                nid = lc[nid]
+            else:
+                nid = rc[nid]
+        acc += val[nid]
+    return acc
+
+
+def _t24_clamp_dict(pdict: dict) -> dict:
+    pd = dict(pdict)
+    for k, (lo, hi) in T24_BOUNDS.items():
+        if k in pd:
+            pd[k] = float(np.clip(pd[k], lo, hi))
+    if "floor_restore" in pd:
+        pd["floor_restore"] = float(np.clip(pd["floor_restore"], 0.0, 0.50))
+    if "eps_rgb" in pd:
+        pd["eps_rgb"] = [float(np.clip(v, -0.05, 0.05)) for v in pd["eps_rgb"]]
+    return pd
+
+
+def _t24_closed_loop_v3(P_crop128: np.ndarray, pdict: dict) -> dict:
+    rp = RenderParamsT24.from_dict(_t24_clamp_dict(pdict))
+    disp, _ = render_t24(P_crop128, rp, fast=True)
+    px = disp.reshape(-1, 3).astype(np.float64)
+    luma = np.clip((px * LUMA).sum(-1), 1e-5, None)
+    lr = np.log2(np.maximum(px[:, 0], 1e-4) / np.maximum(px[:, 1], 1e-4))
+    lb = np.log2(np.maximum(px[:, 2], 1e-4) / np.maximum(px[:, 1], 1e-4))
+    sat = (px.max(-1) - px.min(-1)) / np.maximum(px.max(-1), 1e-3)
+    ql = np.percentile(luma, [2, 10, 25, 50, 75, 90, 98])
+    sh_m = luma <= ql[2]
+    hi_m = luma >= ql[4]
+    sh_lr = float(np.median(lr[sh_m])) if sh_m.any() else float(np.median(lr))
+    sh_lb = float(np.median(lb[sh_m])) if sh_m.any() else float(np.median(lb))
+    hi_lr = float(np.median(lr[hi_m])) if hi_m.any() else float(np.median(lr))
+    hi_lb = float(np.median(lb[hi_m])) if hi_m.any() else float(np.median(lb))
+    wn = np.exp(-(lr ** 2 + lb ** 2) / 0.25)
+    wn /= max(float(wn.sum()), 1e-8)
+    return dict(
+        p02=float(ql[0]), p10=float(ql[1]), p25=float(ql[2]), p50=float(ql[3]),
+        p75=float(ql[4]), p90=float(ql[5]), p98=float(ql[6]),
+        luma_std=float(luma.std()),
+        clip_hi=float((px.max(-1) > 0.96).mean()),
+        clip_lo=float((px.min(-1) < 0.02).mean()),
+        sat_med=float(np.median(sat)),
+        sat_p90=float(np.percentile(sat, 90)),
+        sh_lr=sh_lr, sh_lb=sh_lb, hi_lr=hi_lr, hi_lb=hi_lb,
+        cross_lr=hi_lr - sh_lr, cross_lb=hi_lb - sh_lb,
+        nlr=float((wn * lr).sum()), nlb=float((wn * lb).sum()),
+    )
+
+
+def _apply_t24_base_v4(
+    P_crop128: np.ndarray,
+    p_locked: dict,
+    p_prod: dict,
+    d_lo,
+    d_hi,
+    gamma: float,
+    *,
+    return_cl: bool = False,
+):
+    """Perceptual Base+ v4: rescues pure crushed flat-sky frames while keeping zero fog on dark-foreground scenes."""
+    d_lo_a = np.asarray(d_lo, dtype=np.float64)
+    d_hi_a = np.asarray(d_hi, dtype=np.float64)
+    dg = max(float(d_hi_a[1] - d_lo_a[1]), 1e-4)
+
+    p = dict(p_locked)
+    p["floor_restore"] = 0.0
+    cl_lock = _t24_closed_loop_v3(P_crop128, p)
+
+    w_dg = float(np.clip((0.48 - dg) / 0.07, 0.0, 1.0))
+    w_ev = float(np.clip((-0.96 - p_locked["ev"]) / 0.12, 0.0, 1.0))
+    w_hi = float(np.clip((0.69 - cl_lock["p90"]) / 0.06, 0.0, 1.0))
+    w_bl = float(np.clip((0.05 - cl_lock["clip_lo"]) / 0.03, 0.0, 1.0))
+    sky_rescue_w = float(np.clip(w_dg * w_ev * w_hi * w_bl, 0.0, 1.0))
+
+    if sky_rescue_w > 1e-3:
+        for k in ("ev", "toe", "contrast", "temp", "tint"):
+            if k in p_prod and k in p:
+                p[k] = float(p[k] * (1.0 - sky_rescue_w) + p_prod[k] * sky_rescue_w)
+        fr_prod = float(p_prod.get("floor_restore", 0.0))
+        p["floor_restore"] = round(float(np.clip(sky_rescue_w * fr_prod, 0.0, 0.32)), 5)
+        return (p, None) if return_cl else p
+    return (p, cl_lock) if return_cl else p
+
+
+def _apply_t24_tree_v4(
+    P_crop128: np.ndarray,
+    p_v4: dict,
+    fvec5: list[float],
+    d_lo,
+    d_hi,
+    branch_name: str,
+    v4_pkg: dict,
+    *,
+    cl: dict | None = None,
+) -> dict:
+    br_heads = v4_pkg.get("branches", {}).get(branch_name)
+    if not br_heads:
+        return _t24_clamp_dict(p_v4)
+    if cl is None:
+        cl = _t24_closed_loop_v3(P_crop128, p_v4)
+    dg = max(float(d_hi[1] - d_lo[1]), 1e-4)
+    dr_g = float(d_hi[0] - d_lo[0]) / dg
+    db_g = float(d_hi[2] - d_lo[2]) / dg
+    thin_sig = float(1.0 / (1.0 + np.exp((dg - 0.58) / 0.10)))
+    extra = np.array([
+        cl["p02"], cl["p10"], cl["p25"], cl["p50"], cl["p75"], cl["p90"], cl["p98"],
+        cl["luma_std"], cl["clip_hi"], cl["clip_lo"], cl["sat_med"], cl["sat_p90"],
+        cl["sh_lr"], cl["sh_lb"], cl["hi_lr"], cl["hi_lb"],
+        cl["nlr"], cl["nlb"], cl["cross_lr"], cl["cross_lb"],
+        cl["p90"] - cl["p10"],
+        cl["p50"] / max(cl["p90"], 0.05),
+        abs(cl["nlr"]) + abs(cl["nlb"]),
+        np.hypot(cl["cross_lr"], cl["cross_lb"]),
+        dg, dr_g, db_g, thin_sig,
+        p_v4["ev"], p_v4["temp"], p_v4["tint"], p_v4["contrast"],
+        p_v4["shoulder"], p_v4["toe"],
+        p_v4.get("slope_r", 0.0), p_v4.get("slope_b", 0.0),
+        p_v4.get("floor_restore", 0.0),
+    ], dtype=np.float32)
+    x_v4 = np.nan_to_num(np.concatenate([np.asarray(fvec5, dtype=np.float32), extra]), nan=0.0, posinf=0.0, neginf=0.0)
+
+    p_out = dict(p_v4)
+    for hspec in br_heads.values():
+        alpha = float(hspec["alpha"])
+        if alpha <= 0.0:
+            continue
+        w0, w1, w2 = hspec["weights"]
+        v1 = _eval_xgb_trees(hspec["xgb"], x_v4)
+        v2 = _eval_et_v3_trees(hspec["et"], x_v4)
+        v3 = _eval_hgb_trees(hspec["hgb"], x_v4)
+        mp = w0 * v1 + w1 * v2 + w2 * v3
+        sp = float(np.std([v1, v2, v3]))
+        tau = max(float(hspec["tau"]), 1e-4)
+        pred = mp / (1.0 + (sp / tau) ** 2)
+        lo, hi = hspec["bounds"]
+        dv = float(np.clip(pred, lo, hi)) * alpha
+        pk = hspec["param_key"]
+        p_out[pk] = float(p_out.get(pk, 0.0) + dv)
+
+    p_out = _t24_clamp_dict(p_out)
+    for k in ("ev", "temp", "tint", "sat", "contrast", "shoulder", "toe"):
+        if k in p_out:
+            p_out[k] = round(float(p_out[k]), 4)
+    for k in ("slope_r", "slope_b", "floor_restore"):
+        if k in p_out:
+            p_out[k] = round(float(p_out[k]), 5)
+    return p_out
+
+
 def estimate_params_t24(
     P_t23: np.ndarray,
     mask: np.ndarray | None = None,
@@ -3034,9 +3404,11 @@ def estimate_params_t24(
     mat_tup = RenderParamsT19(matrix=p23["matrix"]).matrix
     p23_nomat = {k: v for k, v in p23.items() if k != "matrix"}
 
-    P_crop128 = _t24_resize(_t20_interior_crop(P_t23, mask), 128)
-    P_v1_crop = _t20_interior_crop(P_v1 if P_v1 is not None else P_t23, mask)
-    P_v1_64 = _t24_resize(P_v1_crop, 64)
+    bounds_t23 = _t20_crop_bounds(P_t23.shape, mask)
+    P_crop128 = _t20_crop_and_resize(P_t23, bounds_t23, 128)
+    P_v1_src = P_v1 if P_v1 is not None else P_t23
+    bounds_v1 = bounds_t23 if P_v1_src.shape[:2] == P_t23.shape[:2] else _t20_crop_bounds(P_v1_src.shape, mask)
+    P_v1_64 = _t20_crop_and_resize(P_v1_src, bounds_v1, 64)
 
     df, dg = _t24_density_feats(P_v1_64, d_lo, d_hi, gamma)
     cl = _t24_closed_loop_feats(P_crop128, p23_nomat, mat_tup)
@@ -3046,7 +3418,6 @@ def estimate_params_t24(
     d_hi_a = np.asarray(d_hi, dtype=np.float64)
     dr_g = float(d_hi_a[0] - d_lo_a[0]) / max(dg, 1e-4)
     db_g = float(d_hi_a[2] - d_lo_a[2]) / max(dg, 1e-4)
-    # Flat-sky / uniform-exposure detector: narrow density span AND near-unity R/G/B span ratios
     flat_sky = (
         float(np.clip((0.48 - dg) / 0.08, 0.0, 1.0))
         * float(np.clip((dr_g - 0.65) / 0.08, 0.0, 1.0))
@@ -3062,7 +3433,11 @@ def estimate_params_t24(
                 if d_ev_guard > 1e-4:
                     p23_nomat["ev"] = float(np.clip(p23_nomat["ev"] + d_ev_guard, -2.5, 2.5))
                     cl = _t24_closed_loop_feats(P_crop128, p23_nomat, mat_tup)
-        # Headroom-gated exposure guard for thin/sky-dominated negatives (e.g. 80% sky + dark foreground)
+
+    p23_locked_nomat = dict(p23_nomat)
+    cl_locked = dict(cl)
+
+    if use_ev_guard and branch_name == "cal":
         if dg < 0.60 and p23_nomat["ev"] < -0.40 and cl["cl_luma_p50"] < 0.45 and cl["cl_luma_p90"] < 0.76 and cl["cl_clip_hi"] < 0.01:
             thin_soft = float(np.clip((0.60 - dg) / 0.10, 0.0, 1.0))
             headroom_cap = max(0.0, 2.4 * (0.85 - cl["cl_luma_p90"]))
@@ -3072,7 +3447,6 @@ def estimate_params_t24(
                 d_ev_guard += lift_soft
                 p23_nomat["ev"] = float(np.clip(p23_nomat["ev"] + lift_soft, -2.5, 2.5))
                 cl = _t24_closed_loop_feats(P_crop128, p23_nomat, mat_tup)
-        # Flat-sky exposure recovery: avoid dragging open sky down to dark grey
         if flat_sky > 0.0 and p23_nomat["ev"] < -0.35 and cl["cl_luma_p98"] < 0.92:
             lift_sky = min(0.95, 0.85 * flat_sky * (-0.30 - p23_nomat["ev"]))
             if lift_sky > 1e-3:
@@ -3080,28 +3454,44 @@ def estimate_params_t24(
                 p23_nomat["ev"] = float(np.clip(p23_nomat["ev"] + lift_sky, -2.5, 2.5))
                 cl = _t24_closed_loop_feats(P_crop128, p23_nomat, mat_tup)
 
-    raw7 = _t24_params_to_raw7(p23_nomat)
-    feats = dict(est23["features"])
-    feats.update(df)
-    feats.update(cl)
-    feats.update({"b_ev": raw7[0], "b_tp": raw7[1], "b_tn": raw7[2], "b_sh": raw7[5], "b_to": raw7[6]})
-
     br_pkg = bundle["residual_branches"][branch_name]
     fnames = br_pkg["feature_names"]
-    x32 = np.array([feats[k] for k in fnames], dtype=np.float32)
     wx = float(br_pkg["weights"]["xgb"])
     we = float(br_pkg["weights"]["et"])
-    preds = {}
-    for tname, hspec in br_pkg["heads"].items():
-        vx = _eval_xgb_trees(hspec["xgb"], x32)
-        ve = _eval_et_trees(hspec["et"], x32)
-        preds[tname] = wx * vx + we * ve
 
-    raw7_out = list(raw7)
-    raw7_out[5] += float(np.clip(preds["d_shoulder"], -1.5, 1.5))
-    raw7_out[6] += float(np.clip(preds["d_toe"], -1.5, 1.5))
-    p_out = _t24_raw7_to_params(raw7_out, p23["matrix"])
-    # Flat-sky contrast/toe/WB guard: prevent gentle sky vignetting from crushing black or turning purple
+    def _run_t24_heads(p_nomat: dict, cl_d: dict) -> tuple[dict, dict, list[float]]:
+        r7 = _t24_params_to_raw7(p_nomat)
+        f_d = dict(est23["features"])
+        f_d.update(df)
+        f_d.update(cl_d)
+        f_d.update({"b_ev": r7[0], "b_tp": r7[1], "b_tn": r7[2], "b_sh": r7[5], "b_to": r7[6]})
+        x32 = np.array([f_d[k] for k in fnames], dtype=np.float32)
+        pr = {tn: wx * _eval_xgb_trees(hs["xgb"], x32) + we * _eval_et_trees(hs.get("_et_compiled", hs["et"]), x32)
+              for tn, hs in br_pkg["heads"].items()}
+        r7_out = list(r7)
+        r7_out[5] += float(np.clip(pr["d_shoulder"], -1.5, 1.5))
+        r7_out[6] += float(np.clip(pr["d_toe"], -1.5, 1.5))
+        po = _t24_raw7_to_params(r7_out, p23["matrix"])
+        po["slope_r"] = round(float(np.clip(pr["slope_r"], -0.40, 0.40)), 5)
+        po["slope_b"] = round(float(np.clip(pr["slope_b"], -0.40, 0.40)), 5)
+        if br_pkg["use_eps"]:
+            esc = float(br_pkg.get("eps_scale", 1.0))
+            po["eps_rgb"] = [round(float(esc * np.clip(pr[c], -0.04, 0.04)), 6) for c in ("eps_r", "eps_g", "eps_b")]
+        else:
+            po["eps_rgb"] = [0.0, 0.0, 0.0]
+        if br_pkg["use_mat"]:
+            v6 = [float(np.clip(pr[c], -0.20, 0.20)) for c in ("dm_01", "dm_02", "dm_10", "dm_12", "dm_20", "dm_21")]
+            dm = [
+                [-(v6[0] + v6[1]), v6[0], v6[1]],
+                [v6[2], -(v6[2] + v6[3]), v6[3]],
+                [v6[4], v6[5], -(v6[4] + v6[5])],
+            ]
+            po["residual_matrix"] = [[round(float(x), 6) for x in row] for row in dm]
+        else:
+            po["residual_matrix"] = [list(r) for r in ZERO_MATRIX]
+        return po, f_d, [float(f_d[k]) for k in fnames[:5]]
+
+    p_out, feats, fvec5 = _run_t24_heads(p23_nomat, cl)
     if flat_sky > 0.0:
         if p_out["contrast"] > 1.00:
             blend = 0.65 * flat_sky
@@ -3111,15 +3501,7 @@ def estimate_params_t24(
         if p_out["tint"] > 0.0:
             p_out["tint"] = round(float(p_out["tint"] * (1.0 - 0.90 * flat_sky) - 0.06 * flat_sky), 4)
         p_out["temp"] = round(float(np.clip(p_out["temp"] - 0.14 * flat_sky, -1.0, 1.0)), 4)
-    p_out["slope_r"] = round(float(np.clip(preds["slope_r"], -0.40, 0.40)), 5)
-    p_out["slope_b"] = round(float(np.clip(preds["slope_b"], -0.40, 0.40)), 5)
-    if br_pkg["use_eps"]:
-        esc = float(br_pkg.get("eps_scale", 1.0))
-        p_out["eps_rgb"] = [round(float(esc * np.clip(preds[c], -0.04, 0.04)), 6) for c in ("eps_r", "eps_g", "eps_b")]
-    else:
-        p_out["eps_rgb"] = [0.0, 0.0, 0.0]
-    # Physical floor restoration for narrow density-span negatives, gated against double-lifting
-    # frames whose shadows were already well-opened by T24 (toe > 0.65, cl_luma_p10 > 0.12, ev > -0.35).
+
     flr_phys = float(10.0 ** (-dg / max(float(gamma), 1e-4)))
     already_open = (
         float(np.clip((p_out["toe"] - 0.60) / 0.25, 0.0, 1.0))
@@ -3133,23 +3515,29 @@ def estimate_params_t24(
     fr_val = round(float(np.clip(alpha_flr * flr_phys, 0.0, 0.45)), 5)
     if fr_val > 1e-4:
         p_out["floor_restore"] = fr_val
-    if br_pkg["use_mat"]:
-        v6 = [float(np.clip(preds[c], -0.20, 0.20)) for c in ("dm_01", "dm_02", "dm_10", "dm_12", "dm_20", "dm_21")]
-        dm = [
-            [-(v6[0] + v6[1]), v6[0], v6[1]],
-            [v6[2], -(v6[2] + v6[3]), v6[3]],
-            [v6[4], v6[5], -(v6[4] + v6[5])],
-        ]
-        p_out["residual_matrix"] = [[round(float(x), 6) for x in row] for row in dm]
-    else:
-        p_out["residual_matrix"] = [list(r) for r in ZERO_MATRIX]
+
+    v4_pkg = _load_t25_weights(cfg.get("v4_weights_name", "t25_perceptual"))
+    if v4_pkg is not None:
+        if p23_locked_nomat == p23_nomat and cl_locked == cl and flat_sky <= 0.0:
+            p_locked = dict(p_out)
+            p_locked["floor_restore"] = 0.0
+        else:
+            p_locked, _, _ = _run_t24_heads(p23_locked_nomat, cl_locked)
+        p_base_v4, cl_v4 = _apply_t24_base_v4(P_crop128, p_locked, p_out, d_lo, d_hi, gamma, return_cl=True)
+        p_out = _apply_t24_tree_v4(P_crop128, p_base_v4, fvec5, d_lo, d_hi, branch_name, v4_pkg, cl=cl_v4)
 
     return dict(
         status="ok",
         params=p_out,
         v3_anchor=est23["v3_anchor"],
+        v3_status=est23.get("v3_status", "ok"),
+        v3_flags=est23.get("v3_flags", []),
         features=feats,
         branch=branch_name,
         p23_base=p23,
         d_ev_guard=round(float(d_ev_guard), 4),
     )
+
+# T25 final release entrypoints (unified with Perceptual Base+ / Tree+ weights)
+estimate_params_t25 = estimate_params_t24
+pool_roll_params_t25 = pool_roll_params_t21

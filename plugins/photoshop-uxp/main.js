@@ -1,4 +1,4 @@
-/* FilmColor v1.0 — Adobe Photoshop UXP v5 Plugin */
+/* FilmColor v2.0 — Adobe Photoshop UXP v5 Plugin */
 const BRIDGE_URL = "http://127.0.0.1:18765";
 const ps = require("photoshop");
 const { app, core, action } = ps;
@@ -9,6 +9,8 @@ const shell = uxp.shell;
 const $ = id => document.getElementById(id);
 const T = (...args) => (window.FC_I18N ? window.FC_I18N.t(...args) : args[0]);
 
+let bridgeVersion = "2.0.0";
+
 function applyI18n() {
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const k = el.getAttribute("data-i18n");
@@ -16,7 +18,7 @@ function applyI18n() {
     el.textContent = T(k);
   });
   if (bridgeOk) {
-    $("connText").textContent = T("ps_connected", "1.0.0");
+    $("connText").textContent = T("ps_connected", bridgeVersion);
   } else {
     $("connText").textContent = T("ps_disconnected");
   }
@@ -25,14 +27,36 @@ function applyI18n() {
 const SLIDER_KEYS = ["ev", "temp", "tint", "contrast", "highlights", "shadows", "whites", "blacks", "vibrance", "sat", "skin_protect"];
 
 let sourcePath = null;
+let sourceIsTemp = false;
 let lastTempEntry = null;
 let viewMode = "after";
 let rotDelta = 0;
 let previewTimer = null;
 let previewSeq = 0;
 let previewAbort = null;
+let lastPreviewPayload = null;
 let isConverting = false;
 let bridgeOk = false;
+let healthCheckInFlight = false;
+
+async function cleanupTempEntry() {
+  if (lastTempEntry) {
+    const entry = lastTempEntry;
+    lastTempEntry = null;
+    try { await entry.delete(); } catch (_) {}
+  }
+}
+
+async function safeReadJson(r) {
+  const txt = await r.text();
+  if (!txt) return {};
+  try {
+    return JSON.parse(txt);
+  } catch (_) {
+    if (!r.ok) throw new Error(txt.slice(0, 200) || `HTTP ${r.status}`);
+    throw new Error(`Invalid JSON response (HTTP ${r.status})`);
+  }
+}
 const COLOR_ONLY_SLIDERS = ["temp", "tint", "vibrance", "sat", "skin_protect"];
 
 function encodeFileUrl(nativePath) {
@@ -58,17 +82,31 @@ function setStatus(msg) {
 }
 
 async function checkBridge() {
+  if (healthCheckInFlight) return bridgeOk;
+  healthCheckInFlight = true;
+  let timer = null;
   try {
-    const r = await fetch(`${BRIDGE_URL}/health`);
-    const j = await r.json();
-    if (r.ok && j.ok) {
+    const opts = {};
+    if (typeof AbortController !== "undefined") {
+      const ctrl = new AbortController();
+      opts.signal = ctrl.signal;
+      timer = setTimeout(() => { try { ctrl.abort(); } catch (_) {} }, 2500);
+    }
+    const r = await fetch(`${BRIDGE_URL}/health`, opts);
+    const j = await safeReadJson(r);
+    if (r.ok && j && j.ok) {
       bridgeOk = true;
+      bridgeVersion = j.version || bridgeVersion;
       $("connDot").className = "dot ok";
-      $("connText").textContent = T("ps_connected", j.version);
+      $("connText").textContent = T("ps_connected", bridgeVersion);
       if ($("bStartBridge")) $("bStartBridge").style.display = "none";
       return true;
     }
   } catch (_) {}
+  finally {
+    if (timer) clearTimeout(timer);
+    healthCheckInFlight = false;
+  }
   bridgeOk = false;
   $("connDot").className = "dot err";
   $("connText").textContent = T("ps_disconnected");
@@ -90,9 +128,30 @@ function schedulePreview(delay = 120) {
   previewTimer = setTimeout(updatePreview, delay);
 }
 
-async function updatePreview() {
+function engineLabel(eng) {
+  const key = ({ t25: "ps_eng_t25", t24: "ps_eng_t25", t23: "ps_eng_t23", v3: "ps_eng_v3" })[eng || "t25"] || "ps_eng_t25";
+  return T(key);
+}
+
+async function updatePreview(force = false) {
   if (!sourcePath) return;
   if (!bridgeOk && !(await checkBridge())) return;
+  const payloadStr = JSON.stringify({
+    path: sourcePath,
+    film: $("pFilm").value || "color",
+    engine: $("pEngine").value || "t25",
+    preset: $("pPreset").value || "frontier",
+    auto_crop: $("chkAutoCrop").checked,
+    rot_delta: rotDelta,
+    view: viewMode,
+    max_width: 640,
+    max_height: 400,
+    return_base64: true,
+    write_preview_file: false,
+    adjustments: readAdjustments(),
+  });
+  if (!force && payloadStr === lastPreviewPayload) return;
+  lastPreviewPayload = payloadStr;
   const mySeq = ++previewSeq;
   if (previewAbort) {
     try { previewAbort.abort(); } catch (_) {}
@@ -103,21 +162,11 @@ async function updatePreview() {
     const fetchOpts = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        path: sourcePath,
-        film: $("pFilm").value || "color",
-        engine: $("pEngine").value || "t24",
-        preset: $("pPreset").value || "frontier",
-        auto_crop: $("chkAutoCrop").checked,
-        rot_delta: rotDelta,
-        view: viewMode,
-        return_base64: true,
-        adjustments: readAdjustments(),
-      }),
+      body: payloadStr,
     };
     if (previewAbort) fetchOpts.signal = previewAbort.signal;
     const r = await fetch(`${BRIDGE_URL}/plugin/preview`, fetchOpts);
-    const j = await r.json();
+    const j = await safeReadJson(r);
     if (mySeq !== previewSeq) return;
     if (!r.ok || j.error) throw new Error(j.error || `HTTP ${r.status}`);
     if (j.image_data_url) {
@@ -125,12 +174,12 @@ async function updatePreview() {
       $("previewImg").style.display = "block";
       $("previewEmpty").style.display = "none";
     }
-    const clip = j.above_white != null ? ` · 高光 ${(j.above_white * 100).toFixed(2)}%` : "";
-    const _eLbl = ({ t24: "FilmColor v1.0", t23: "物理直出", v3: "经典引擎" })[j.engine || "t24"] || "FilmColor v1.0";
-    setStatus(`预览就绪 · ${_eLbl}${clip}`);
+    const clip = j.above_white != null ? T("ps_clip_pct", j.above_white * 100) : "";
+    setStatus(T("ps_preview_ready", engineLabel(j.engine), clip));
   } catch (e) {
     if (e && e.name === "AbortError") return;
-    if (mySeq === previewSeq) setStatus("预览失败：" + e.message);
+    lastPreviewPayload = null;
+    if (mySeq === previewSeq) setStatus(T("ps_preview_failed", e.message));
   }
 }
 
@@ -140,11 +189,14 @@ async function pickNegativeFile() {
       types: ["nef", "nrw", "raf", "cr2", "cr3", "arw", "rw2", "orf", "pef", "srw", "dng", "tif", "tiff"],
     });
     if (!entry) return;
+    await cleanupTempEntry();
     sourcePath = entry.nativePath;
+    sourceIsTemp = false;
+    lastPreviewPayload = null;
     $("srcPathText").textContent = sourcePath;
-    await updatePreview();
+    await updatePreview(true);
   } catch (e) {
-    setStatus("选择文件取消或失败：" + e.message);
+    setStatus(T("ps_pick_failed", e.message));
   }
 }
 
@@ -153,44 +205,53 @@ async function useActiveDocument() {
     return setStatus(T("ps_no_doc"));
   }
   try {
-    // Try direct file path if active doc is a supported negative on disk
+    // Use direct file path only if active doc is an unmodified single-layer negative on disk
     const doc = app.activeDocument;
-    if (doc.path && /\.(nef|nrw|raf|cr2|cr3|arw|rw2|orf|pef|srw|dng|tif|tiff)$/i.test(doc.path)) {
+    const isUnmodifiedDiskNegative = (
+      doc.path
+      && /\.(nef|nrw|raf|cr2|cr3|arw|rw2|orf|pef|srw|dng|tif|tiff)$/i.test(doc.path)
+      && doc.saved !== false
+      && (!doc.layers || doc.layers.length <= 1)
+    );
+    if (isUnmodifiedDiskNegative) {
+      await cleanupTempEntry();
       sourcePath = doc.path;
+      sourceIsTemp = false;
+      lastPreviewPayload = null;
       $("srcPathText").textContent = sourcePath;
-      await updatePreview();
+      await updatePreview(true);
       return;
     }
-    // Otherwise save a temporary 16-bit TIFF copy for conversion (cleaning up prior temp file)
-    if (lastTempEntry) {
-      try { await lastTempEntry.delete(); } catch (_) {}
-      lastTempEntry = null;
-    }
+    // Otherwise save a temporary 16-bit TIFF copy capturing current edits/crops/layers
+    await cleanupTempEntry();
     const tmpDir = await fs.getTemporaryFolder();
     const tmpFile = await tmpDir.createFile(`fc_ps_src_${Date.now()}.tif`, { overwrite: true });
     await core.executeAsModal(async () => {
       await doc.saveAs.tiff(tmpFile, { byteOrder: "IBM", imageCompression: "none" }, true);
-    }, { commandName: "FilmColor 读取当前文档" });
+    }, { commandName: T("ps_cmd_read_doc") });
     lastTempEntry = tmpFile;
     sourcePath = tmpFile.nativePath;
-    $("srcPathText").textContent = doc.title + "（临时 16 位副本）";
-    await updatePreview();
+    sourceIsTemp = true;
+    lastPreviewPayload = null;
+    $("srcPathText").textContent = T("ps_temp_copy", doc.title);
+    await updatePreview(true);
   } catch (e) {
-    setStatus("读取当前文档失败：" + e.message);
+    setStatus(T("ps_read_doc_failed", e.message));
   }
 }
 
 async function runConvert(asNewDocument) {
   if (isConverting) return;
-  if (!sourcePath) return setStatus("请先选择负片文件或读取当前文档");
+  if (!sourcePath) return setStatus(T("ps_pick_src_first"));
   if (!bridgeOk && !(await checkBridge())) return;
   isConverting = true;
   $("bApplyLayer").disabled = true;
   $("bOpenDoc").disabled = true;
   setStatus(T("ps_converting"));
+  let tempOutEntry = null;
   try {
     const preset = $("pPreset").value || "frontier";
-    const engine = $("pEngine").value || "t24";
+    const engine = $("pEngine").value || "t25";
     const r = await fetch(`${BRIDGE_URL}/plugin/convert`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -208,32 +269,43 @@ async function runConvert(asNewDocument) {
         adjustments: readAdjustments(),
       }),
     });
-    const j = await r.json();
+    const j = await safeReadJson(r);
     if (!r.ok || j.error) throw new Error(j.error || `HTTP ${r.status}`);
 
     const outEntry = await fs.getEntryWithUrl(encodeFileUrl(j.output_path));
+    const placingIntoDoc = !asNewDocument && !!app.activeDocument;
+    if (sourceIsTemp && placingIntoDoc) {
+      tempOutEntry = outEntry;
+    }
     await core.executeAsModal(async () => {
-      if (asNewDocument || !app.activeDocument) {
+      if (!placingIntoDoc) {
         await app.open(outEntry);
       } else {
         const token = fs.createSessionToken(outEntry);
-        await action.batchPlay([
+        const bpRes = await action.batchPlay([
           {
             _obj: "placeEvent",
             null: { _path: token, _kind: "local" },
             freeTransformCenterState: { _enum: "quadCenterState", _value: "QCSAverage" },
             _options: { dialogOptions: "dontDisplay" },
           },
-        ], { synchronousExecution: true });
+        ], {});
+        const bpErr = Array.isArray(bpRes) ? bpRes.find(item => item && item._obj === "error") : null;
+        if (bpErr) {
+          throw new Error(bpErr.message || "Photoshop placeEvent failed");
+        }
         if (app.activeDocument && app.activeDocument.activeLayers.length) {
-          app.activeDocument.activeLayers[0].name = `FilmColor v1.0 [${preset}]`;
+          app.activeDocument.activeLayers[0].name = `${engineLabel(engine)} [${preset}]`;
         }
       }
-    }, { commandName: "FilmColor v1.0 生成正片" });
+    }, { commandName: T("ps_cmd_convert") });
     setStatus(T("ps_done", j.output_path));
   } catch (e) {
-    setStatus("转换失败：" + e.message);
+    setStatus(T("ps_convert_failed", e.message));
   } finally {
+    if (tempOutEntry) {
+      try { await tempOutEntry.delete(); } catch (_) {}
+    }
     isConverting = false;
     $("bApplyLayer").disabled = false;
     $("bOpenDoc").disabled = false;
@@ -271,30 +343,30 @@ async function findBridgeLauncher() {
 
 async function launchBridgeAndWait(silent = false) {
   if (!shell || typeof shell.openPath !== "function") {
-    if (!silent) setStatus("当前 Photoshop 版本不支持自动拉起，请双击运行 Start_Bridge_for_Photoshop 脚本");
+    if (!silent) setStatus(T("ps_auto_launch_unsupported"));
     return false;
   }
   const launcher = await findBridgeLauncher();
   if (!launcher) {
-    if (!silent) setStatus("未找到已安装的本地引擎，请先运行 FilmColor 安装脚本");
+    if (!silent) setStatus(T("ps_launcher_missing"));
     return false;
   }
   setStatus(T("ps_starting"));
   try {
     await shell.openPath(launcher);
   } catch (e) {
-    if (!silent) setStatus("自动启动引擎失败：" + e.message);
+    if (!silent) setStatus(T("ps_launch_failed", e.message));
     return false;
   }
   for (let i = 0; i < 24; i++) {
     await new Promise(res => setTimeout(res, 500));
     if (await checkBridge()) {
       setStatus(T("ps_started"));
-      if (sourcePath) updatePreview();
+      if (sourcePath) updatePreview(true);
       return true;
     }
   }
-  if (!silent) setStatus("引擎启动超时，请手动运行 Start_Bridge_for_Photoshop 脚本");
+  if (!silent) setStatus(T("ps_launch_timeout"));
   return false;
 }
 
@@ -335,6 +407,7 @@ for (const k of SLIDER_KEYS) {
 }
 
 let reconnectTimer = null;
+let reconnectBusy = false;
 async function bootConnect() {
   let ok = await checkBridge();
   if (!ok && !autoStartTried) {
@@ -343,13 +416,25 @@ async function bootConnect() {
   }
   if (!ok && !reconnectTimer) {
     reconnectTimer = setInterval(async () => {
-      if (await checkBridge()) {
-        clearInterval(reconnectTimer);
-        reconnectTimer = null;
-        if (sourcePath) updatePreview();
+      if (reconnectBusy) return;
+      reconnectBusy = true;
+      try {
+        if (await checkBridge()) {
+          clearInterval(reconnectTimer);
+          reconnectTimer = null;
+          if (sourcePath) updatePreview(true);
+        }
+      } finally {
+        reconnectBusy = false;
       }
     }, 4000);
   }
+}
+if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
+  window.addEventListener("unload", () => {
+    if (reconnectTimer) { clearInterval(reconnectTimer); reconnectTimer = null; }
+    cleanupTempEntry();
+  });
 }
 if ($("pLang")) {
   $("pLang").value = window.FC_I18N ? window.FC_I18N.getSavedLang() : "auto";

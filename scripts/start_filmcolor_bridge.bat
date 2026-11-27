@@ -9,6 +9,6 @@ if not exist "%PY%" (
     pause
     exit /b 1
 )
-echo Starting FilmColor v1.0 Plugin Bridge (http://127.0.0.1:18765)...
+echo Starting FilmColor v2.0 Plugin Bridge (http://127.0.0.1:18765)...
 "%PY%" -m filmcolor.plugin_bridge --port 18765
 if errorlevel 1 pause

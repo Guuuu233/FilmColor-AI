@@ -21,6 +21,16 @@ REBATE_STRIP_MAX_GAP = 0.01
 REBATE_STRIP_MIN_SPAN = 0.35
 
 
+def _mid_max3(arr: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    if arr.shape[-1] == 3:
+        r, g, b = arr[..., 0], arr[..., 1], arr[..., 2]
+        rg_min = np.minimum(r, g)
+        rg_max = np.maximum(r, g)
+        return np.minimum(rg_max, np.maximum(rg_min, b)), np.maximum(rg_max, b)
+    s = np.sort(arr, axis=-1)
+    return s[..., 1], s[..., 2]
+
+
 def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.ndarray:
     """Pixels of positive ``P`` (h, w, 3) above ``over`` in two channels and ``peak`` in one that connect to the image
     edge (a highlight inside the frame does not). T4m: default dual threshold ((s1>2)&(s2>16))|((s1>1.25)&(s2>8))."""
@@ -31,8 +41,7 @@ def holder_mask(P, over: float = HOLDER_OVER, peak: float = HOLDER_PEAK) -> np.n
     peak_thr = 8.0 if default_thr else peak
     if float(arr.max()) <= peak_thr:
         return np.zeros(arr.shape[:2], dtype=bool)
-    s = np.sort(arr, axis=-1)
-    s1, s2 = s[..., 1], s[..., 2]
+    s1, s2 = _mid_max3(arr)
     if default_thr:
         hot = ((s1 > 2.0) & (s2 > 16.0)) | ((s1 > 1.25) & (s2 > 8.0))
     else:
@@ -84,38 +93,48 @@ def scene_highlight_components(holder: np.ndarray, min_depth: float = SCENE_HOLD
     lab, n = ndimage.label(sub)
     if not n:
         return keep
-    dist = ndimage.distance_transform_edt(np.pad(np.ones((h, w), bool), 1, constant_values=False))[1:-1, 1:-1]
+    rr = np.minimum(np.arange(1, h + 1, dtype=np.int32), np.arange(h, 0, -1, dtype=np.int32))
+    cc = np.minimum(np.arange(1, w + 1, dtype=np.int32), np.arange(w, 0, -1, dtype=np.int32))
+    dist = np.minimum(rr[:, None], cc[None, :])
     depth = ndimage.maximum(dist, lab, np.arange(1, n + 1))
     short = min(h, w)
     comp_info = []
-    for i in range(n):
-        m = lab == i + 1
-        rows, cols = np.where(m.any(1))[0], np.where(m.any(0))[0]
+    for i, sl in enumerate(ndimage.find_objects(lab)):
+        if sl is None:
+            continue
+        rs, cs = sl
+        r0, r1 = rs.start, rs.stop - 1
+        c0, c1 = cs.start, cs.stop - 1
+        t_top = r0 == 0
+        t_bot = r1 == h - 1
+        t_left = c0 == 0
+        t_right = c1 == w - 1
         spans = []
-        if m[0].any() or m[-1].any():
-            spans.append((cols[-1] - cols[0] + 1) / w)
-        if m[:, 0].any() or m[:, -1].any():
-            spans.append((rows[-1] - rows[0] + 1) / h)
-        touch = (bool(m[0].any()), bool(m[-1].any()), bool(m[:, 0].any()), bool(m[:, -1].any()))
-        comp_info.append((m, float(depth[i]) / short, max(spans) if spans else 0.0, touch))
-    if low_share and ((t, l, h, w) != (0, 0, *holder.shape) or any(sp >= max_edge_span for _, _, sp, _ in comp_info)):
+        if t_top or t_bot:
+            spans.append((c1 - c0 + 1) / w)
+        if t_left or t_right:
+            spans.append((r1 - r0 + 1) / h)
+        touch = (t_top, t_bot, t_left, t_right)
+        comp_info.append((i + 1, sl, float(depth[i]) / short, max(spans) if spans else 0.0, touch))
+    if low_share and ((t, l, h, w) != (0, 0, *holder.shape) or any(sp >= max_edge_span for _, _, _, sp, _ in comp_info)):
         return keep
+    keep_sub = keep[t:t + h, l:l + w]
     sky_edges = [False, False, False, False]
-    for m, d_ratio, sp, touch in comp_info:
+    for label_id, sl, d_ratio, sp, touch in comp_info:
         if sp >= max_edge_span:
             continue
         if not low_share:
             if d_ratio >= min_depth:
-                keep[t:t + h, l:l + w] |= m
+                keep_sub[sl] |= (lab[sl] == label_id)
         elif sum(touch) == 1 and ((d_ratio >= 0.10 and sp >= 0.18) or (d_ratio >= 0.04 and sp >= 0.30)):
-            keep[t:t + h, l:l + w] |= m
+            keep_sub[sl] |= (lab[sl] == label_id)
             for ei, tv in enumerate(touch):
                 if tv:
                     sky_edges[ei] = True
     if low_share and any(sky_edges):
-        for m, _, sp, touch in comp_info:
+        for label_id, sl, _, sp, touch in comp_info:
             if sp < max_edge_span and sum(touch) == 1 and any(t_i and s_i for t_i, s_i in zip(touch, sky_edges)):
-                keep[t:t + h, l:l + w] |= m
+                keep_sub[sl] |= (lab[sl] == label_id)
     return keep
 
 
@@ -138,20 +157,22 @@ def rebate_strip_components(P, holder: np.ndarray, max_gap: float = REBATE_STRIP
         return keep
     short = min(h, w)
     gap, dep = max_gap * short, max_depth * short
-    s = np.sort(sub_arr, axis=-1)
-    s1, s2 = s[..., 1], s[..., 2]
+    s1, s2 = _mid_max3(sub_arr)
     sub = (((s1 > 2.0) & (s2 > 16.0)) | ((s1 > 1.25) & (s2 > 8.0))) & ~holder[t:t + h, l:l + w]
     if not sub.any():
         return keep
     from scipy import ndimage
     lab, n = ndimage.label(sub)
-    for i in range(n):
-        m = lab == i + 1
-        rs, cs = np.where(m)
-        r0, r1, c0, c1 = int(rs.min()), int(rs.max()), int(cs.min()), int(cs.max())
+    keep_sub = keep[t:t + h, l:l + w]
+    for i, sl in enumerate(ndimage.find_objects(lab)):
+        if sl is None:
+            continue
+        rs, cs = sl
+        r0, r1 = rs.start, rs.stop - 1
+        c0, c1 = cs.start, cs.stop - 1
         if ((c0 <= gap and c1 + 1 <= dep and (r1 - r0 + 1) >= min_span * h)
                 or (w - 1 - c1 <= gap and w - c0 <= dep and (r1 - r0 + 1) >= min_span * h)
                 or (r0 <= gap and r1 + 1 <= dep and (c1 - c0 + 1) >= min_span * w)
                 or (h - 1 - r1 <= gap and h - r0 <= dep and (c1 - c0 + 1) >= min_span * w)):
-            keep[t:t + h, l:l + w] |= m
+            keep_sub[sl] |= (lab[sl] == i + 1)
     return keep

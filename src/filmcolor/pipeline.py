@@ -21,12 +21,12 @@ from . import __version__
 from .base import estimate_base_auto, estimate_base_manual
 from .scanner import estimate_base_scanner, is_scanner_dng, load_scanner
 from .export import DESCRIPTION, write_tiff16
-from .invert import base_from_regions, central_region, invert_negative, invert_t18_from_positive, neutral_transmission, region_mask
+from .invert import CHUNK_ROWS, base_from_regions, central_region, invert_negative, invert_t18_from_positive, map_row_blocks, neutral_transmission, region_mask
 from .qc import quality_checks
 from .raw import check_region, linearize, saturation_mask
-from .noref import (CONFIG_DIR, NOREF_T20, NOREF_T22, NOREF_T23, NOREF_T24, NOREF_V2, estimate_params_t20,
-                    estimate_params_t24, estimate_params_v2, estimation_input)
-from .render import IDENTITY, RenderParams, RenderParamsT19, RenderParamsT24, ZERO_MATRIX, render as render_image, render_t19, render_t24, srgb_eotf
+from .noref import (CONFIG_DIR, NOREF_T20, NOREF_T22, NOREF_T23, NOREF_T24, NOREF_T25, NOREF_V2, estimate_params_t20,
+                    estimate_params_t24, estimate_params_t25, estimate_params_v2, estimation_input)
+from .render import IDENTITY, RenderParams, RenderParamsT19, RenderParamsT24, RenderParamsT25, ZERO_MATRIX, render as render_image, render_t19, render_t24, srgb_eotf
 from .rawpy_io import open_raw_session
 
 SCHEMA = "filmcolor.sidecar/0.2"  # 0.2: render section (Sprint 2 parameters)
@@ -34,7 +34,7 @@ FILM_MODES = ("color", "bw")
 BW_NEUTRAL = dict(temp=0.0, tint=0.0, sat=1.0, matrix=IDENTITY)  # look parts not applied to B&W film
 BW_EXTENDED_ZERO = ("vibrance", "slope_r", "slope_b", "skin_protect", "log_unmix")
 T19_FAMILY = (RenderParamsT19, RenderParamsT24)  # parameters defined on the T18/T23 re-inverted positive
-_T18_VERSION_BY_CONFIG = {c["id"]: c["t18_version"] for c in (NOREF_T20, NOREF_T22, NOREF_T23, NOREF_T24)}
+_T18_VERSION_BY_CONFIG = {c["id"]: c["t18_version"] for c in (NOREF_T20, NOREF_T22, NOREF_T23, NOREF_T24, NOREF_T25)}
 T18_VERSIONS = ("t18", "t23")
 
 
@@ -62,12 +62,13 @@ def neutralise_bw_params(params: dict) -> tuple[dict, list[str]]:
                 dropped.add(k)
             out[k] = 0.0
     tc = out.get("tone_curve")
-    if isinstance(tc, dict) and any(ch in tc for ch in ("r", "g", "b")):
-        out["tone_curve"] = {"rgb": tc["rgb"]} if "rgb" in tc else {}
+    if isinstance(tc, dict) and any(str(ch).lower() in ("r", "g", "b") for ch in tc):
+        rgb_entries = {ch: pts for ch, pts in tc.items() if str(ch).lower() == "rgb"}
+        out["tone_curve"] = {"rgb": next(iter(rgb_entries.values()))} if rgb_entries else {}
         dropped.add("tone_curve")
     elif isinstance(tc, (list, tuple)) and tc and isinstance(tc[0], (list, tuple)) and len(tc[0]) == 2 \
-            and isinstance(tc[0][0], str) and any(ch in ("r", "g", "b") for ch, _ in tc):
-        out["tone_curve"] = tuple((ch, pts) for ch, pts in tc if ch == "rgb")
+            and isinstance(tc[0][0], str) and any(str(ch).lower() in ("r", "g", "b") for ch, _ in tc):
+        out["tone_curve"] = tuple((ch, pts) for ch, pts in tc if str(ch).lower() == "rgb")
         dropped.add("tone_curve")
     if "eps_rgb" in out:
         if any(float(x) != 0.0 for x in out["eps_rgb"]):
@@ -85,8 +86,11 @@ def coerce_render_params(params) -> RenderParams | RenderParamsT19 | RenderParam
         return params
     if not params:
         return RenderParams()
-    if isinstance(params, dict) and ("eps_rgb" in params or "residual_matrix" in params):
-        return RenderParamsT24.from_dict(params)
+    if isinstance(params, dict) and (
+        any(k in params for k in ("eps_rgb", "residual_matrix", "floor_restore"))
+        or ("toe" in params and ("slope_r" in params or "slope_b" in params))
+    ):
+        return RenderParamsT25.from_dict(params)
     if isinstance(params, dict) and "toe" in params:
         return RenderParamsT19.from_dict(params)
     return RenderParams.from_dict(params)
@@ -108,9 +112,9 @@ def run_auto_estimate(est_input, auto: dict, *, d_lo, d_hi, gamma: float, film: 
         spec = t18_spec(auto)
         pos4_t18 = invert_t18_from_positive(pos4, d_lo, d_hi, gamma, has_cam_matrix=spec["has_cam_matrix"],
                                             version=spec["version"])
-        is_t24 = auto["id"] == NOREF_T24["id"]
+        is_t24 = auto["id"] in (NOREF_T24["id"], NOREF_T25["id"])
         kw = dict(d_hi=d_hi, d_lo=d_lo, has_cam_matrix=spec["has_cam_matrix"], matrix=mat, P_v1=pos4)
-        est = (estimate_params_t24(pos4_t18, mask4, auto, gamma=gamma, **kw) if is_t24
+        est = (estimate_params_t25(pos4_t18, mask4, auto, gamma=gamma, **kw) if is_t24
                else estimate_params_t20(pos4_t18, mask4, auto, **kw))
         if film == "bw":
             est_p, bw_dropped = neutralise_bw_params(est["params"])
@@ -252,7 +256,7 @@ def _scanner_input(path, *, base_regions, base_rgb, image_region):
 def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=None,
              white_pct: float = 99.9, gamma: float = 0.6, exposure: float = 1.0, film: str = "color",
              white_block: int | None = None, white_ratio=None, white_b_guard=None, white_self_ratio=None,
-             spike_clamp=None) -> dict:
+             spike_clamp=None, compute_input_p99: bool = True) -> dict:
     """The scene-linear positive of one negative before any render parameter: decode, film base, inversion,
     times the inversion exposure (``convert`` renders exactly this). Returns ``positive`` (H, W, 3 float32),
     ``mask`` (unsaturated pixels in the image region), ``image_region``, ``region_source``, ``inversion``
@@ -275,11 +279,14 @@ def positive(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=
     rgb, sat, base_rgb, base_info, regions, input_info, decode_info = load(
         path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region)
 
-    region_source = "manual" if image_region else "central_default"
-    image_region = tuple(int(x) for x in (image_region or central_region(sat.shape)))
+    region_source = "manual" if image_region is not None else "central_default"
+    image_region = tuple(int(x) for x in (image_region if image_region is not None else central_region(sat.shape)))
     mask = ~sat & region_mask(sat.shape, image_region)
-    ct, cl, ch, cw = central_region(sat.shape)  # T5a: linear input of the central region, for preview.input_warnings
-    input_p99 = [float(x) for x in np.percentile(rgb[ct:ct + ch, cl:cl + cw].reshape(-1, 3), 99, axis=0)]
+    if compute_input_p99:
+        ct, cl, ch, cw = central_region(sat.shape)  # T5a: linear input of the central region, for preview.input_warnings
+        input_p99 = [float(x) for x in np.percentile(rgb[ct:ct + ch, cl:cl + cw].reshape(-1, 3), 99, axis=0)]
+    else:
+        input_p99 = None
     inv_base = base_rgb
     if film == "bw":
         rgb, inv_base = neutral_transmission(rgb, base_rgb), (1.0, 1.0, 1.0)
@@ -345,7 +352,8 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     path = Path(path)
     p = positive(path, base_regions=base_regions, base_rgb=base_rgb, image_region=image_region, d_hi=d_hi,
                  white_pct=white_pct, gamma=gamma, exposure=exposure, film=film, white_block=white_block,
-                 white_b_guard=white_b_guard, white_self_ratio=white_self_ratio, spike_clamp=spike_clamp)
+                 white_b_guard=white_b_guard, white_self_ratio=white_self_ratio, spike_clamp=spike_clamp,
+                 compute_input_p99=False)
     pos, mask, image_region, res = p["positive"], p["mask"], p["image_region"], p["inversion"]
     base_info, input_info, decode_info = p["base_info"], p["input_info"], p["decode_info"]
     region_source, inside = p["region_source"], p["base_inside_image"]
@@ -373,7 +381,16 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
     display, render_diag = render_fn(pos, rp, mask)
     del pos
     qc = quality_checks(display, mask, res.report, base_inside_image=inside)
-    out = display if encoding == "srgb" else srgb_eotf(display).astype(np.float32)
+    if encoding == "srgb":
+        out = display
+    else:
+        out = np.empty(display.shape, np.float32)
+        step = CHUNK_ROWS
+
+        def _eotf_block(r0: int):
+            out[r0 : r0 + step] = srgb_eotf(display[r0 : r0 + step]).astype(np.float32, copy=False)
+
+        map_row_blocks(display.shape[0], _eotf_block, step)
     k = int(rot90) % 4
     if k:
         out = np.ascontiguousarray(np.rot90(out, k))
@@ -385,7 +402,7 @@ def convert(path, *, base_regions=None, base_rgb=None, image_region=None, d_hi=N
         decode=decode_info,
         base=base_info,
         image_region=dict(region=list(image_region), source=region_source),
-        inversion=dict(params=res.params.to_dict(), white_pct=white_pct, d_hi_source="given" if d_hi else "auto",
+        inversion=dict(params=res.params.to_dict(), white_pct=white_pct, d_hi_source="given" if d_hi is not None else "auto",
                        **({"white_point": white_point_source} if white_point_source is not None else {})),
         render=dict(params=rp.to_dict(), diagnostics=render_diag, definition="docs/SPRINT2_PARAMS.md"),
         report=res.report,

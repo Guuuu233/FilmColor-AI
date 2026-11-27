@@ -29,8 +29,8 @@ from .holder import HOLDER_GREY, HOLDER_OVER, HOLDER_PEAK, film_box, holder_mask
 from .holder import rebate_strip_components, scene_highlight_components
 from .invert import invert_t18_from_positive
 from .noref import estimation_input
-from .pipeline import (T19_FAMILY, coerce_render_params, normalize_auto_cfg, positive, run_auto_estimate, sha256,
-                       t18_spec, write)
+from .pipeline import (T19_FAMILY, _T18_VERSION_BY_CONFIG, _t18_spec_for_params, coerce_render_params,
+                       normalize_auto_cfg, positive, run_auto_estimate, sha256, t18_spec, write)
 from .render import RenderParams, RenderParamsT19, RenderParamsT24, _max3, _min3, render, render_fast_full, render_t19, render_t24
 
 
@@ -60,32 +60,64 @@ class Preview:
     holder: np.ndarray | None = field(default=None, repr=False)  # holder_mask of ``positive`` (T4i), display only
     _scene: np.ndarray | None = field(default=None, repr=False)   # T5a: scene_highlight_components(holder), cached
     _rebate: np.ndarray | None = field(default=None, repr=False)  # T5c: rebate_strip_components(positive, holder)
+    _holder_paint_mask: np.ndarray | None = field(default=None, repr=False)
+    _t18_cache: tuple | None = field(default=None, repr=False)    # (spec_key, t18_arr, below_black_share)
+
+    def _get_holder_paint_mask(self) -> np.ndarray | None:
+        if self.holder is None or not self.holder.any():
+            return None
+        if self._holder_paint_mask is not None:
+            return self._holder_paint_mask
+        if self._scene is None:
+            self._scene = scene_highlight_components(self.holder)
+        if self._rebate is None:
+            self._rebate = rebate_strip_components(self.positive, self.holder)
+        pm = (self.holder & ~self._scene) | self._rebate
+        if float(self.holder.mean()) >= 0.15:
+            fb = film_box(self.holder)
+            if fb is not None:
+                t, l, h, w = fb
+                outer = np.ones(self.holder.shape[:2], dtype=bool)
+                outer[t:t + h, l:l + w] = False
+                if outer.any():
+                    pm = pm | outer
+        self._holder_paint_mask = pm
+        return pm
 
     def _paint_holder(self, e: np.ndarray) -> np.ndarray:
-        if self.holder is not None and self.holder.any():
-            if self._scene is None:
-                self._scene = scene_highlight_components(self.holder)
-            if self._rebate is None:
-                self._rebate = rebate_strip_components(self.positive, self.holder)
-            e[(self.holder & ~self._scene) | self._rebate] = np.float32(HOLDER_GREY)
-            if float(self.holder.mean()) >= 0.15:
-                fb = film_box(self.holder)
-                if fb is not None:
-                    t, l, h, w = fb
-                    outer = np.ones(e.shape[:2], dtype=bool)
-                    outer[t:t + h, l:l + w] = False
-                    if outer.any():
-                        e[outer] = np.float32(HOLDER_GREY)
+        pm = self._get_holder_paint_mask()
+        if pm is not None:
+            e[pm] = np.float32(HOLDER_GREY)
         return e
 
-    def t18_inversion(self) -> dict:
+    def t18_inversion(self, rp=None) -> dict:
         """Re-inversion used for T19-family parameters here and in ``export`` (``pipeline.t18_spec`` of the config)."""
-        return t18_spec(self.load_kwargs.get("auto"))
+        auto = self.load_kwargs.get("auto")
+        if isinstance(auto, dict) and auto.get("id") in _T18_VERSION_BY_CONFIG:
+            return t18_spec(auto)
+        if rp is not None and isinstance(rp, T19_FAMILY):
+            return _t18_spec_for_params(rp)
+        return t18_spec(auto)
 
-    def _t18_pos(self, src_arr: np.ndarray) -> np.ndarray:
-        spec = self.t18_inversion()
+    def _t18_pos(self, src_arr: np.ndarray, rp=None) -> np.ndarray:
+        spec = self.t18_inversion(rp)
         return invert_t18_from_positive(src_arr, self.inversion["d_lo"], self.inversion["d_hi"], self.inversion["gamma"],
                                         has_cam_matrix=spec["has_cam_matrix"], version=spec["version"])
+
+    def _t18_positive(self, rp=None) -> tuple[np.ndarray, float]:
+        """Cached T18 re-inversion of ``self.positive`` and its ``below_black`` share over ``self.mask``."""
+        spec = self.t18_inversion(rp)
+        key = (bool(spec["has_cam_matrix"]), str(spec["version"]))
+        cached = self._t18_cache
+        if cached is not None and cached[0] == key:
+            return cached[1], cached[2]
+        t18 = invert_t18_from_positive(self.positive, self.inversion["d_lo"], self.inversion["d_hi"],
+                                       self.inversion["gamma"], has_cam_matrix=key[0], version=key[1])
+        m = self.mask
+        n = int(m.sum())
+        bb = float(((_min3(t18) < 0)[m]).sum() / n) if n else float("nan")
+        self._t18_cache = (key, t18, bb)
+        return t18, bb
 
     def render_crop(self, region, params=None) -> np.ndarray:
         """1:1 render of a sensor-pixel region (top, left, height, width) of the full-resolution positive,
@@ -100,9 +132,9 @@ class Preview:
         crop = self.full_positive[t:t + h, l:l + w]
         rp = coerce_render_params(params)
         if isinstance(rp, RenderParamsT24):
-            return render_t24(self._t18_pos(crop), rp, None)[0]
+            return render_t24(self._t18_pos(crop, rp), rp, None)[0]
         if isinstance(rp, RenderParamsT19):
-            return render_t19(self._t18_pos(crop), rp, None)[0]
+            return render_t19(self._t18_pos(crop, rp), rp, None)[0]
         return render(crop, rp, None)[0]
 
     def reload(self, **changes) -> "Preview":
@@ -115,9 +147,11 @@ class Preview:
         (``holder.scene_highlight_components``, T5a)."""
         rp = coerce_render_params(params)
         if isinstance(rp, RenderParamsT24):
-            return self._paint_holder(render_t24(self._t18_pos(self.positive), rp, self.mask)[0])
+            t18, _ = self._t18_positive(rp)
+            return self._paint_holder(render_t24(t18, rp, self.mask)[0])
         if isinstance(rp, RenderParamsT19):
-            return self._paint_holder(render_t19(self._t18_pos(self.positive), rp, self.mask)[0])
+            t18, _ = self._t18_positive(rp)
+            return self._paint_holder(render_t19(t18, rp, self.mask)[0])
         return self._paint_holder(render(self.positive, rp, self.mask, fast=True)[0])
 
     def render_stats(self, params=None) -> tuple[np.ndarray, dict]:
@@ -126,14 +160,13 @@ class Preview:
         before the white clip > 1 in at least one channel). Measured on the block-mean copy, so isolated clipped
         pixels averaged into a block are not counted (use render_crop to inspect)."""
         rp = coerce_render_params(params)
+        if isinstance(rp, (RenderParamsT19, RenderParamsT24)):
+            t18, bb = self._t18_positive(rp)
+            e, diag = render_t24(t18, rp, self.mask) if isinstance(rp, RenderParamsT24) else render_t19(t18, rp, self.mask)
+            return self._paint_holder(e), dict(below_black=bb, above_white=float(diag["above_white"]))
         m = self.mask
         n = int(m.sum())
         share = (lambda flags: float(flags[m].sum() / n)) if n else (lambda flags: float("nan"))
-        if isinstance(rp, (RenderParamsT19, RenderParamsT24)):
-            t18 = self._t18_pos(self.positive)
-            e, diag = render_t24(t18, rp, self.mask) if isinstance(rp, RenderParamsT24) else render_t19(t18, rp, self.mask)
-            return self._paint_holder(e), dict(below_black=share(_min3(t18) < 0),
-                                               above_white=float(diag["above_white"]))
         e, _, _, pre = render_fast_full(self.positive, rp)
         return self._paint_holder(e), dict(below_black=share(_min3(self.positive) < 0),
                                            above_white=share(_max3(pre) > 1))
@@ -184,7 +217,8 @@ class Preview:
                      exposure=self.inversion["exposure"], encoding=encoding, render_params=rp, film=self.film,
                      base_source=self.base_source(), white_point_source=self.report.get("white_point"), rot90=rot90,
                      render_source=render_source, spike_clamp=self.inversion.get("spike_clamp"),
-                     t18_inversion=self.t18_inversion() if isinstance(coerce_render_params(rp), T19_FAMILY) else None)
+                     t18_inversion=(self.t18_inversion(rp_obj)
+                                    if isinstance((rp_obj := coerce_render_params(rp)), T19_FAMILY) else None))
 
 
 class SourceChangedError(RuntimeError):
@@ -230,10 +264,12 @@ def input_warnings(d_hi, center_p99) -> list[dict]:
 
 
 def auto_estimate(est_input, auto, film: str = "color", span_d_g: float | None = None, *,
-                  d_lo=(0.0, 0.0, 0.0), d_hi=None, gamma: float = 0.6) -> dict:
+                  d_lo=(0.0, 0.0, 0.0), d_hi=None, gamma: float = 0.6) -> dict | None:
     """noref estimate (``Preview.auto``) for config ``auto`` on ``est_input`` = ``noref.estimation_input`` of the
     full-resolution positive, as ``convert``; ``span_d_g``: the inversion's G density range (``green_span``)."""
     cfg = normalize_auto_cfg(auto)
+    if cfg is None:
+        return None
     if d_hi is None:
         sg = float(span_d_g) if span_d_g is not None else 0.85
         d_hi = (sg, sg, sg)

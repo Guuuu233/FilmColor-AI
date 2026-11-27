@@ -59,11 +59,19 @@ def _trc(data: bytes):
         def _eval_uniform_lut(x):
             pos = np.clip(x, 0.0, 1.0) * scale
             if np.ndim(pos) == 0:
-                idx = min(int(pos), max_idx)
+                if not np.isfinite(pos):
+                    return float("nan")
+                idx = min(max(int(pos), 0), max_idx)
                 return float(table[idx] + (float(pos) - idx) * dtbl[idx])
-            i0 = pos.astype(np.intp)
-            np.minimum(i0, max_idx, out=i0)
-            return table[i0] + (pos - i0) * dtbl[i0]
+            nan_mask = np.isnan(pos)
+            has_nan = bool(nan_mask.any())
+            pos_safe = np.where(nan_mask, 0.0, pos) if has_nan else pos
+            i0 = pos_safe.astype(np.intp)
+            np.clip(i0, 0, max_idx, out=i0)
+            out = table[i0] + (pos_safe - i0) * dtbl[i0]
+            if has_nan:
+                out = np.where(nan_mask, np.nan, out)
+            return out
 
         return _eval_uniform_lut
     if kind == b"para":
@@ -132,7 +140,9 @@ def lab_to_xyz(lab, white=D50):
 
 
 def xyz_to_srgb_preview(xyz):
-    lin = np.clip(xyz @ XYZ_D50_TO_SRGB.T, 0, 1)
+    arr = np.asarray(xyz)
+    mat = XYZ_D50_TO_SRGB.astype(np.float32) if arr.dtype == np.float32 else XYZ_D50_TO_SRGB
+    lin = np.clip(arr @ mat.T, 0, 1)
     if lin.ndim > 0 and lin.dtype == np.float32:
         out = lin * np.float32(12.92)
         hi = lin > np.float32(0.0031308)

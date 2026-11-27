@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a self-contained, zero-dependency FilmColor v1.0 release bundle (macOS or Windows).
+"""Build a self-contained, zero-dependency FilmColor v2.0 release bundle (macOS or Windows).
 
 Embeds a PyInstaller standalone `filmcolor-bridge` binary directly inside `FilmColor.lrplugin/bin/`,
 so end users do NOT need Python, uv, or internet access — just like Negative Lab Pro.
@@ -17,7 +17,7 @@ import sys
 import zipfile
 
 REPO = Path(__file__).resolve().parents[1]
-VERSION = "1.0"
+VERSION = "2.0"
 
 
 def _platform_tag() -> tuple[str, str]:
@@ -117,7 +117,7 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
             'if not exist "%APPDATA%\\FilmColor" mkdir "%APPDATA%\\FilmColor"\r\n'
             '(\@echo off & echo start "" /B /D "%DST%\\bin\\win\\filmcolor-bridge" "%DST%\\bin\\win\\filmcolor-bridge\\filmcolor-bridge.exe" --port 18765) > "%APPDATA%\\FilmColor\\start_bridge.bat"\r\n'
             "echo.\r\n"
-            "echo [OK] FilmColor v1.0 已安装到 Lightroom Classic（内置引擎，免装 Python）！\r\n"
+            "echo [OK] FilmColor v2.0 已安装到 Lightroom Classic（内置引擎，免装 Python）！\r\n"
             "echo 重启 Adobe Lightroom Classic 即可在「图库 → 增效工具额外信息 → FilmColor 负片转换…」使用。\r\n"
             "pause\r\n"
         )
@@ -126,7 +126,7 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
         ps_bat = (
             "@echo off\r\nchcp 65001 >nul\r\n"
             'start "" /B "%~dp0FilmColor.lrplugin\\bin\\win\\filmcolor-bridge\\filmcolor-bridge.exe" --port 18765\r\n'
-            "echo FilmColor v1.0 引擎已在后台启动（端口 18765），可直接使用 Photoshop UXP 插件。\r\n"
+            "echo FilmColor v2.0 引擎已在后台启动（端口 18765），可直接使用 Photoshop UXP 插件。\r\n"
             "timeout /t 3 >nul\r\n"
         )
         (rel_dir / "Start_Bridge_for_Photoshop.bat").write_text(ps_bat, encoding="utf-8")
@@ -148,7 +148,7 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
             'EOF\n'
             'chmod +x "$FC_DIR/start_bridge.command"\n'
             'echo ""\n'
-            'echo "[OK] FilmColor v1.0 已安装到 Lightroom Classic（内置独立引擎，免装 Python）！"\n'
+            'echo "[OK] FilmColor v2.0 已安装到 Lightroom Classic（内置独立引擎，免装 Python）！"\n'
             'echo "重启 Adobe Lightroom Classic 即可在「图库 → 增效工具额外信息 → FilmColor 负片转换…」使用。"\n'
         )
         p_inst = rel_dir / "Install_FilmColor_macOS.command"
@@ -181,7 +181,7 @@ def build_bundle(*, out_dir: Path, make_zip: bool = True) -> Path:
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="Build standalone zero-dependency FilmColor v1.0 plugin bundle")
+    ap = argparse.ArgumentParser(description="Build standalone zero-dependency FilmColor v2.0 plugin bundle")
     ap.add_argument("--out", type=Path, default=REPO / "dist", help="Output directory (default: dist/)")
     ap.add_argument("--no-zip", action="store_true", help="Skip creating .zip archive")
     a = ap.parse_args(argv)

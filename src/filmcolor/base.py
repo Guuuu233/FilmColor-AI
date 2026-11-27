@@ -75,7 +75,7 @@ def estimate_base_manual(linear, colors, sat, regions) -> BaseEstimate:
     if len(regions) > 1:
         for c in CHANNELS:
             meds = [s[c]["median"] for s in per_region if s[c]["n"]]
-            spread[c] = float((max(meds) - min(meds)) / np.median(meds))
+            spread[c] = float((max(meds) - min(meds)) / max(abs(float(np.median(meds))), 1e-12))
             if spread[c] > MAX_REGION_SPREAD:
                 warnings.append(f"regions disagree on {c} by {spread[c]:.1%}")
     return BaseEstimate(
@@ -456,6 +456,8 @@ def estimate_base_roll(candidates: dict, exposures: dict, *, t_ref: float | None
     if not np.all(np.isfinite(t)) or np.any(t <= 0):
         raise ValueError("exposure times must be finite and positive")
     t_ref = float(np.median(t)) if t_ref is None else float(t_ref)
+    if not (np.isfinite(t_ref) and t_ref > 0):
+        raise ValueError(f"reference exposure t_ref must be finite and positive, got {t_ref}")
     norm = rgb * (t_ref / t)[:, None]
     chroma = np.log2(norm[:, [0, 2]] / norm[:, [1]])
     orange = (chroma[:, 0] >= 0.16) & (chroma[:, 1] <= -0.36)

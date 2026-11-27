@@ -1,4 +1,4 @@
-name: Build FilmColor v1.0 Standalone Plugins
+name: Build FilmColor v2.0 Standalone Plugins
 
 on:
   workflow_dispatch:
@@ -16,9 +16,9 @@ jobs:
       matrix:
         include:
           - os: macos-14
-            artifact: FilmColor-v1.0-macOS-arm64
+            artifact: FilmColor-v2.0-macOS-arm64
           - os: windows-latest
-            artifact: FilmColor-v1.0-Windows-x64
+            artifact: FilmColor-v2.0-Windows-x64
 
     runs-on: ${{ matrix.os }}
     steps:

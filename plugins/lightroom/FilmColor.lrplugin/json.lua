@@ -31,7 +31,8 @@ local function encode_val(val)
     if tv == "boolean" then return val and "true" or "false" end
     if tv == "number" then
         if val ~= val or val == math.huge or val == -math.huge then return "null" end
-        return tostring(val)
+        local s = tostring(val)
+        return (s:gsub(",", "."))
     end
     if tv == "string" then return encode_str(val) end
     if tv == "table" then
@@ -104,11 +105,12 @@ function json.decode(str)
                 elseif esc == "t" then out[#out + 1] = "\t"; pos = pos + 1
                 elseif esc == "u" then
                     local hex = str:sub(pos + 1, pos + 4)
-                    local cp = tonumber(hex, 16) or 63
+                    local cp = (#hex == 4) and tonumber(hex, 16) or nil
+                    if not cp then error("invalid unicode escape") end
                     pos = pos + 5
                     if cp >= 0xD800 and cp <= 0xDBFF and str:sub(pos, pos + 1) == "\\u" then
                         local hex2 = str:sub(pos + 2, pos + 5)
-                        local cp2 = tonumber(hex2, 16)
+                        local cp2 = (#hex2 == 4) and tonumber(hex2, 16) or nil
                         if cp2 and cp2 >= 0xDC00 and cp2 <= 0xDFFF then
                             cp = 0x10000 + (cp - 0xD800) * 1024 + (cp2 - 0xDC00)
                             pos = pos + 6

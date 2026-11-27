@@ -79,73 +79,102 @@ def _decode_packbits(data: bytes, expected_len: int | None = None) -> bytes:
     return bytes(out)
 
 
+_LZW_BASE_TABLE: list[bytes | None] = [bytes([i]) for i in range(256)] + [None, None]
+
+
 def _decode_tiff_lzw(data: bytes, expected_len: int | None = None) -> bytes:
     """Decode TIFF LZW stream (MSB-first, 9..12-bit variable code length with early change)."""
     pos = 0
     bit_buf = 0
     bits_in_buf = 0
     n_data = len(data)
-
-    def get_code(size):
-        nonlocal pos, bit_buf, bits_in_buf
-        while bits_in_buf < size:
-            if pos >= n_data:
-                return None
-            bit_buf = (bit_buf << 8) | data[pos]
-            pos += 1
-            bits_in_buf += 8
-        bits_in_buf -= size
-        code = (bit_buf >> bits_in_buf) & ((1 << size) - 1)
-        bit_buf &= (1 << bits_in_buf) - 1
-        return code
+    n_data_m4 = n_data - 4
 
     out = bytearray()
-    table = [bytes([i]) for i in range(256)] + [None, None]
+    out_extend = out.extend
+    out_len = 0
+    has_expected = expected_len is not None
+    table = _LZW_BASE_TABLE.copy()
+    table_append = table.append
+    table_len = 258
     code_size = 9
-    old_code = None
+    code_mask = 511
+    next_bump = 511
+    old_code = -1
     eoi_found = False
 
     while True:
-        if expected_len is not None and len(out) >= expected_len:
+        if has_expected and out_len >= expected_len:
             break
-        code = get_code(code_size)
-        if code is None:
-            break
+        if bits_in_buf < code_size:
+            bit_buf &= (1 << bits_in_buf) - 1
+            if pos <= n_data_m4:
+                bit_buf = (
+                    (bit_buf << 32)
+                    | (data[pos] << 24)
+                    | (data[pos + 1] << 16)
+                    | (data[pos + 2] << 8)
+                    | data[pos + 3]
+                )
+                pos += 4
+                bits_in_buf += 32
+            else:
+                while bits_in_buf < code_size:
+                    if pos >= n_data:
+                        break
+                    bit_buf = (bit_buf << 8) | data[pos]
+                    pos += 1
+                    bits_in_buf += 8
+                if bits_in_buf < code_size:
+                    break
+        bits_in_buf -= code_size
+        code = (bit_buf >> bits_in_buf) & code_mask
+
         if code == 257:  # EOI
             eoi_found = True
             break
         if code == 256:  # ClearCode
-            table = [bytes([i]) for i in range(256)] + [None, None]
+            table = _LZW_BASE_TABLE.copy()
+            table_append = table.append
+            table_len = 258
             code_size = 9
-            old_code = None
+            code_mask = 511
+            next_bump = 511
+            old_code = -1
             continue
-        if old_code is None:
+        if old_code < 0:
             if code >= 256:
                 raise ValueError(f"invalid initial LZW code {code}")
             entry = table[code]
-            out.extend(entry)
+            out_extend(entry)
+            out_len += len(entry)
             old_code = code
-            if expected_len is not None and len(out) > expected_len:
-                raise ValueError(f"LZW decoded length {len(out)} exceeds expected {expected_len}")
+            if has_expected and out_len > expected_len:
+                raise ValueError(f"LZW decoded length {out_len} exceeds expected {expected_len}")
             continue
-        if code < len(table):
+        if code < table_len:
             entry = table[code]
-        elif code == len(table):
-            entry = table[old_code] + table[old_code][:1]
+        elif code == table_len:
+            prev = table[old_code]
+            entry = prev + prev[:1]
         else:
-            raise ValueError(f"corrupt LZW code {code} out of range (table len {len(table)})")
-        out.extend(entry)
-        if expected_len is not None and len(out) > expected_len:
-            raise ValueError(f"LZW decoded length {len(out)} exceeds expected {expected_len}")
-        if len(table) < 4096:
-            table.append(table[old_code] + entry[:1])
-            if len(table) + 1 == (1 << code_size) and code_size < 12:
+            raise ValueError(f"corrupt LZW code {code} out of range (table len {table_len})")
+        out_extend(entry)
+        out_len += len(entry)
+        if has_expected and out_len > expected_len:
+            raise ValueError(f"LZW decoded length {out_len} exceeds expected {expected_len}")
+        if table_len < 4096:
+            table_append(table[old_code] + entry[:1])
+            table_len += 1
+            if table_len == next_bump and code_size < 12:
                 code_size += 1
+                code_mask = (1 << code_size) - 1
+                next_bump = code_mask
         old_code = code
 
-    if expected_len is not None:
-        if len(out) != expected_len:
-            raise ValueError(f"LZW decoded length {len(out)} != expected {expected_len}")
+    if has_expected:
+        if out_len != expected_len:
+            raise ValueError(f"LZW decoded length {out_len} != expected {expected_len}")
     elif not eoi_found:
         raise ValueError("LZW stream truncated (missing EOI code)")
     return bytes(out)
@@ -175,16 +204,32 @@ def _read_page_array(page) -> np.ndarray:
     itemsize = page.dtype.itemsize
     if (getattr(page, "is_tiled", False) and compression in (8, 32946)
             and predictor == 3 and np.dtype(page.dtype).kind == "f" and itemsize in (2, 4)):
+        planarconfig = getattr(page, "planarconfig", 1) or 1
+        if planarconfig != 1:
+            raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: PlanarConfiguration={planarconfig} tiled float fallback not supported")
         h, w, spp = page.imagelength, page.imagewidth, page.samplesperpixel
         tw, tl = page.tilewidth, page.tilelength
         nt_y, nt_x = (h + tl - 1) // tl, (w + tw - 1) // tw
+        n_tiles = nt_y * nt_x
+        if len(page.dataoffsets) < n_tiles or len(page.databytecounts) < n_tiles:
+            raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: truncated TIFF tile table ({len(page.dataoffsets)}/{len(page.databytecounts)} < {n_tiles})")
+        expected_dec = tl * tw * spp * itemsize
         out = np.empty((nt_y * tl, nt_x * tw, spp) if spp > 1 else (nt_y * tl, nt_x * tw), dtype=page.dtype)
         fh = page.parent.filehandle
         fdt = ">f2" if itemsize == 2 else ">f4"
-        for idx, (off, bc) in enumerate(zip(page.dataoffsets, page.databytecounts)):
+        for idx in range(n_tiles):
+            off, bc = page.dataoffsets[idx], page.databytecounts[idx]
             ty, tx = divmod(idx, nt_x)
             fh.seek(off)
-            dec = zlib.decompress(fh.read(bc))
+            raw = fh.read(bc)
+            if len(raw) != bc:
+                raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: truncated TIFF tile {idx} ({len(raw)} != {bc})")
+            try:
+                dec = zlib.decompress(raw)
+            except zlib.error as exc:
+                raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: corrupt deflate TIFF tile {idx}: {exc}") from exc
+            if len(dec) != expected_dec:
+                raise ValueError(f"{getattr(page.parent, 'filename', 'image')}: decoded tile {idx} length {len(dec)} != expected {expected_dec}")
             r = np.cumsum(np.frombuffer(dec, dtype=np.uint8).reshape(tl, -1, spp), axis=1, dtype=np.uint8)
             be = np.transpose(r.reshape(tl, itemsize, tw * spp), (0, 2, 1)).copy()
             tile = be.view(fdt).reshape((tl, tw, spp) if spp > 1 else (tl, tw)).astype(page.dtype, copy=False)
@@ -391,8 +436,10 @@ def _parse_tiff_eotf(icc_bytes, bits: int) -> tuple[str, float | None, np.ndarra
     except (TypeError, ValueError):
         b = b""
     if len(b) >= 132 and (bits == 8 or b[12:16] in (b"mntr", b"spac")):
+        from .colorimetry import _trc as _icc_trc
+
         count = struct.unpack_from(">I", b, 128)[0]
-        for i in range(min(count, 64)):
+        for i in range(min(count, 4096)):
             off = 132 + 12 * i
             if off + 12 > len(b):
                 break
@@ -400,7 +447,7 @@ def _parse_tiff_eotf(icc_bytes, bits: int) -> tuple[str, float | None, np.ndarra
             if sig not in (b"gTRC", b"rTRC", b"kTRC"):
                 continue
             if size < 12 or start + size > len(b):
-                break
+                continue
             tag = b[start:start + size]
             if tag[:4] == b"curv":
                 n = struct.unpack_from(">I", tag, 8)[0]
@@ -416,11 +463,23 @@ def _parse_tiff_eotf(icc_bytes, bits: int) -> tuple[str, float | None, np.ndarra
             elif tag[:4] == b"para" and len(tag) >= 16:
                 function = struct.unpack_from(">H", tag, 8)[0]
                 gamma = struct.unpack_from(">i", tag, 12)[0] / 65536.0
-                if function == 3:
-                    return "srgb", 2.4, None
-                if gamma > 0:
-                    return "gamma", gamma, None
-            break
+                if function == 0:
+                    if gamma > 0:
+                        return "gamma", gamma, None
+                    continue
+                if function == 3 and len(tag) >= 32:
+                    g, a, b_p, c, d = (struct.unpack_from(">i", tag, 12 + 4 * j)[0] / 65536.0 for j in range(5))
+                    if (abs(g - 2.4) < 0.02 and abs(a - 1.0 / 1.055) < 0.01
+                            and abs(b_p - 0.055 / 1.055) < 0.01 and abs(c - 1.0 / 12.92) < 0.01
+                            and abs(d - 0.04045) < 0.01):
+                        return "srgb", 2.4, None
+                try:
+                    fn = _icc_trc(tag)
+                    curve = np.asarray(fn(np.linspace(0.0, 1.0, 4096, dtype=np.float64)), dtype=np.float32)
+                    if np.all(np.isfinite(curve)) and np.all(np.diff(curve) >= 0):
+                        return "lut", None, curve
+                except ValueError:
+                    continue
     return ("srgb", 2.4, None) if bits == 8 else ("linear", 1.0, None)
 
 
@@ -444,8 +503,8 @@ def _reconstruct_prestretched_rgb(rgb: np.ndarray) -> tuple[np.ndarray, dict | N
     r_base_est = 1.0 + delta_r
     best_p0, best_err = 0.0, 1e9
     for candidate in np.linspace(0.02, 0.55, 107):
-        dg = np.log10((g_p95 + candidate) / max(g_p01 + candidate, 1e-4))
-        db = np.log10((b_p95 + candidate) / max(b_p01 + candidate, 1e-4))
+        dg = np.log10(max(g_p95 + candidate, 1e-4) / max(g_p01 + candidate, 1e-4))
+        db = np.log10(max(b_p95 + candidate, 1e-4) / max(b_p01 + candidate, 1e-4))
         error = abs(db / max(dg, 1e-4) - 1.18)
         if error < best_err:
             best_err, best_p0 = error, float(candidate)
@@ -458,9 +517,9 @@ def _reconstruct_prestretched_rgb(rgb: np.ndarray) -> tuple[np.ndarray, dict | N
                          np.float32(1.0), np.float32(r_base_est))
         weight = np.clip((sl[..., 0] - np.float32(0.990)) / np.float32(0.009), 0.0, 1.0)
         r_rec = (np.float32(1.0) - weight) * sl[..., 0] + weight * r_pred
-        out[r0:r0 + 256, :, 0] = np.power((r_rec + p0) / scale, np.float32(2.2))
-        out[r0:r0 + 256, :, 1] = np.power((sl[..., 1] + p0) / scale, np.float32(2.2))
-        out[r0:r0 + 256, :, 2] = np.power((sl[..., 2] + p0) / scale, np.float32(2.2))
+        out[r0:r0 + 256, :, 0] = np.power(np.maximum((r_rec + p0) / scale, np.float32(0.0)), np.float32(2.2))
+        out[r0:r0 + 256, :, 1] = np.power(np.maximum((sl[..., 1] + p0) / scale, np.float32(0.0)), np.float32(2.2))
+        out[r0:r0 + 256, :, 2] = np.power(np.maximum((sl[..., 2] + p0) / scale, np.float32(0.0)), np.float32(2.2))
     return out, dict(r_base_est=round(r_base_est, 4), slope_rg=round(slope_rg, 4),
                      pedestal_p0=round(best_p0, 4), gamma_eotf=2.2)
 
@@ -550,8 +609,11 @@ def load_scanner(path, *, allow_frozen: bool = False) -> ScannerFrame:
     else:
         sat = np.any(sat_ch, -1)
     del sat_ch
-    rgb = ((rgb_raw.astype(np.float32) - np.float32(black)) / np.float32(white - black))
+    rgb = rgb_raw.astype(np.float32, copy=True)
     del a, rgb_raw
+    if black != 0.0:
+        rgb -= np.float32(black)
+    rgb /= np.float32(white - black)
     if allow_tiff and lut is None:
         reconstruction = None
         if bits == 16 and meta.get("single_channel_prestretched") == "R" and mode == "linear":
