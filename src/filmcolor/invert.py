@@ -207,6 +207,20 @@ def estimate_white_point(D, mask=None, pct: float = 99.9) -> tuple[float, float,
 MIN_WHITE_BLOCKS = 100  # fewer valid blocks than this: the block white point falls back to single pixels
 
 
+def check_white_point(d_hi, d_lo=None) -> None:
+    """Raise ``ValueError`` when the white point has no density above the black point in some channel.
+
+    That happens on frames without an image: blank or unexposed film, a capture of the light source
+    without film (the film base estimate then lands on the light itself), or a wrong image region or film
+    base. The inversion log range would be zero there (``1 / (1 - 10**-R)`` divides by zero)."""
+    lo = d_lo or (0.0, 0.0, 0.0)
+    flat = [c for c, hi, l in zip("RGB", d_hi, lo) if hi <= l]
+    if flat:
+        raise ValueError(f"no density above the black point in channel(s) {''.join(flat)} of the image "
+                         "region: blank or unexposed frame (or the light source without film), "
+                         "or wrong image region / film base")
+
+
 def block_white_point(rgb, base, mask, block: int, pct: float) -> tuple[tuple[float, float, float], dict]:
     """White point on ``block`` x ``block`` means of the linear signal (T4b): per-channel ``pct`` percentile of the
     density of block means, over blocks whose pixels are all in ``mask``. Averaging in the linear domain removes the
@@ -547,11 +561,7 @@ def invert_negative(rgb, base, *, mask=None, white_pct: float = 99.9, gamma: flo
         if white_b_guard is not None:
             d_hi, guard_info = blue_white_guard(d_hi, white_b_guard, base=base)
             white_info = dict(white_info or dict(method="pixel", pct=white_pct), blue_guard=guard_info)
-        lo = d_lo or (0.0, 0.0, 0.0)
-        flat = [c for c, hi, l in zip("RGB", d_hi, lo) if hi <= l]
-        if flat:
-            raise ValueError(f"no density above the black point in channel(s) {''.join(flat)} of the image "
-                             "region: blank or unexposed frame, or wrong image region / film base")
+        check_white_point(d_hi, d_lo)
     p = InversionParams(base=tuple(float(x) for x in base), d_lo=tuple(d_lo or (0.0, 0.0, 0.0)),
                         d_hi=tuple(float(x) for x in d_hi), gamma=gamma, exposure=exposure, spike_clamp=spike_clamp)
     lo, hi = np.asarray(p.d_lo, np.float32), np.asarray(p.d_hi, np.float32)
@@ -704,6 +714,8 @@ def _t18_affine_params(d_lo, d_hi, gamma: float, *, has_cam_matrix: bool = True,
 
 
 def _t18_chunk_from_s(s: np.ndarray, R: float, flr: float) -> np.ndarray:
+    if not (R > 0.0 and flr < 1.0):
+        raise ValueError(f"T18 inversion needs a positive log range, got R={R!r} (white point on the film base)")
     max_e2 = np.float32(12.0 * _INV_LOG10_2)
     r_log2 = np.float32(R * _INV_LOG10_2)
     flr32 = np.float32(flr)

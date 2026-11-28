@@ -71,6 +71,7 @@ from .invert import (
     _t18_affine_params,
     _t18_chunk_from_s,
     central_region,
+    check_white_point,
     clamp_spikes,
     region_mask,
 )
@@ -755,6 +756,7 @@ def _fast_load_camera_preview(
             d_hi, sr_info = self_ratio_white_point(d_hi, WHITE_SELF_RATIO)
             wp_info = dict(wp_info, self_ratio=sr_info)
         d_lo = (0.0, 0.0, 0.0)
+        check_white_point(d_hi, d_lo)  # blank frame / light source only: clear error, not 1/0
         gamma = 0.6
         lo32 = np.asarray(d_lo, dtype=np.float32)
         hi32 = np.asarray(d_hi, dtype=np.float32)
