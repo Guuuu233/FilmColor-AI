@@ -4,7 +4,7 @@
 
 **面向 Adobe Lightroom Classic 与 Adobe Photoshop 的物理优先胶片负片反相引擎**
 
-[English](README.md) · **简体中文** · [下载 v2.0.0 正式版](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.0)
+[English](README.md) · **简体中文** · [下载 v2.0.1 正式版](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.1)
 
 [![Release](https://img.shields.io/github/v/release/Guuuu233/FilmColor-AI?color=0f766e&label=版本)](https://github.com/Guuuu233/FilmColor-AI/releases)
 [![Platform](https://img.shields.io/badge/支持平台-macOS%20%7C%20Windows-1e293b)](#安装指南)
@@ -138,7 +138,7 @@ FilmColor 直接嵌入摄影师最常用的后期软件——无需打开浏览�
 
 ### 方式一：下载零依赖离线安装包（推荐）
 
-前往 **[Releases v2.0.0](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.0)** 下载对应系统的压缩包，无需安装 Python 或 Conda：
+前往 **[Releases v2.0.1](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.1)** 下载对应系统的压缩包，无需安装 Python 或 Conda：
 
 - **macOS（Apple Silicon）**：`FilmColor-v2.0-macOS-arm64.zip`（34.0 MB）
 - **Windows（64 位）**：`FilmColor-v2.0-Windows-x64.zip`（由 GitHub Actions 自动构建并附加到发布页）
@@ -152,7 +152,7 @@ FilmColor 直接嵌入摄影师最常用的后期软件——无需打开浏览�
 1. 双击 `FilmColor-v2.0-Photoshop.ccx` 通过 Creative Cloud 安装；或在 Adobe UXP Developer Tool 中加载 `plugins/photoshop-uxp/manifest.json`。
 2. 在 Photoshop 中打开 **增效工具** → **FilmColor v2.0**。
 
-从 v1.0 升级：直接覆盖安装即可，原有设置保留。
+从 v1.0 或 v2.0.0 升级：直接覆盖安装即可，原有设置保留。
 
 ---
 

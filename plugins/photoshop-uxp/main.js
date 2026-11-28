@@ -9,7 +9,7 @@ const shell = uxp.shell;
 const $ = id => document.getElementById(id);
 const T = (...args) => (window.FC_I18N ? window.FC_I18N.t(...args) : args[0]);
 
-let bridgeVersion = "2.0.0";
+let bridgeVersion = "2.0.1";
 
 function applyI18n() {
   document.querySelectorAll("[data-i18n]").forEach(el => {

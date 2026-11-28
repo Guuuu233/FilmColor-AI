@@ -4,7 +4,7 @@
 
 **Physics-First Film Negative Inversion for Adobe Lightroom Classic & Adobe Photoshop**
 
-**English** · [简体中文](README.zh-CN.md) · [Download v2.0.0](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.0)
+**English** · [简体中文](README.zh-CN.md) · [Download v2.0.1](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.1)
 
 [![Release](https://img.shields.io/github/v/release/Guuuu233/FilmColor-AI?color=0f766e&label=Release)](https://github.com/Guuuu233/FilmColor-AI/releases)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows-1e293b)](#installation)
@@ -138,7 +138,7 @@ Switch interface language live inside both Lightroom Classic and Photoshop with 
 
 ### Option 1 — Zero-Dependency Offline Bundle (Recommended)
 
-Download the pre-built archive for your platform from **[Releases v2.0.0](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.0)** — no Python, Conda, or command-line tools required:
+Download the pre-built archive for your platform from **[Releases v2.0.1](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.1)** — no Python, Conda, or command-line tools required:
 
 - **macOS (Apple Silicon)**: `FilmColor-v2.0-macOS-arm64.zip` (34.0 MB)
 - **Windows (64-bit)**: `FilmColor-v2.0-Windows-x64.zip` (built automatically by GitHub Actions and attached to the release)
@@ -152,7 +152,7 @@ Download the pre-built archive for your platform from **[Releases v2.0.0](https:
 1. Double-click `FilmColor-v2.0-Photoshop.ccx` (installed via Creative Cloud Desktop), **or** load `plugins/photoshop-uxp/manifest.json` via the Adobe UXP Developer Tool.
 2. Open **Plugins** → **FilmColor v2.0** in Photoshop.
 
-Upgrading from v1.0: install over the existing copy; settings are kept.
+Upgrading from v1.0 or v2.0.0: install over the existing copy; settings are kept.
 
 ---
 
