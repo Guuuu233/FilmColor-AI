@@ -19,7 +19,7 @@
 
 ![FilmColor v2.0 Before and After Negative Conversion](docs/assets/showcase_before_after.jpg)
 
-> **Real camera-scanned 35mm color negatives** converted directly to 16-bit positives by **FilmColor v2.0** with no manual per-channel curve work. Left: original orange-masked RAW negative. Center: **Frontier** preset. Right: **Leica Look** preset.
+> **Color-negative RAW camera scans that photographers shared on [PIXLS.us](https://discuss.pixls.us/c/playraw/30) under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)**, converted directly to 16-bit positives by **FilmColor v2.0** with no manual adjustments. Left: original orange-masked negative. Center: **Frontier** preset. Right: **Leica Look** preset. Some of these public frames were among the unpaired negatives used in training, so they show typical output rather than blind accuracy; see the [blind benchmark](#blind-color-accuracy-benchmark) for frames the model never saw. Negatives by hpbirkeland, jonathanBieler and clennep; this composite is licensed CC BY-SA 4.0 ([image credits](docs/assets/CREDITS.md)).
 
 ---
 
@@ -92,6 +92,8 @@ FilmColor integrates directly into the tools film photographers already use — 
 
 ![FilmColor v2.0 Lightroom Classic and Photoshop UXP Interfaces](docs/assets/ui_preview.png)
 
+> Sample photo: `10-1.NEF` by jjbraun ([PIXLS.us](https://discuss.pixls.us/t/43472), CC BY-SA 4.0); this image is licensed CC BY-SA 4.0 ([image credits](docs/assets/CREDITS.md)).
+
 ### Adobe Lightroom Classic (`FilmColor.lrplugin`)
 - **True 16-bit Forward Positive Workflow**: Outputs a calibrated 16-bit linear TIFF positive automatically imported and stacked above your original negative — every Lightroom slider, tone curve, HSL wheel, and AI mask works in the natural forward direction.
 - **Exact Crop, Straighten & Orientation Inheritance**: Reproduces your Lightroom crop, straighten angle and rotation, and samples the film base inside the crop, automatically rejecting sprocket holes and backlight borders.
@@ -110,6 +112,8 @@ FilmColor integrates directly into the tools film photographers already use — 
 Each preset adapts to the frame's own tonal range and color content, and switches in real time (~130 ms preview via a 33³ float32 trilinear 3D LUT):
 
 ![FilmColor v2.0 10 Adaptive Style Presets](docs/assets/showcase_presets.jpg)
+
+> Negative: `1997_0001.cr2` by hpbirkeland ([PIXLS.us](https://discuss.pixls.us/t/20293), CC BY-SA 4.0); this image is licensed CC BY-SA 4.0 ([image credits](docs/assets/CREDITS.md)).
 
 `Frontier` · `Noritsu` · `Leica Look` · `Standard` · `Natural` · `Portrait` · `Vivid` · `Print Classic` · `Cinema` · `Linear`
 

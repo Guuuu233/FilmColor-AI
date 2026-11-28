@@ -19,7 +19,7 @@
 
 ![FilmColor v2.0 胶片负片反相前后效果对比](docs/assets/showcase_before_after.jpg)
 
-> **真实相机翻拍 135 彩色负片**经 **FilmColor v2.0** 一键直出 16-bit 正片（无需手动分通道拉曲线）。左：原始带橙色色罩 RAW 负片；中：**Frontier** 富士冲印预设；右：**Leica Look** 徕卡影调预设。
+> **摄影师在 [PIXLS.us](https://discuss.pixls.us/c/playraw/30) 以 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 许可公开分享的彩色负片 RAW 翻拍**，经 **FilmColor v2.0** 一键直出 16-bit 正片，未做任何手动调整。左：原始带橙色色罩负片；中：**Frontier** 富士冲印预设；右：**Leica Look** 徕卡影调预设。其中部分画格曾作为无配对样本参与训练，所以这组图展示的是一般效果，不是盲测；模型从未见过的画格上的准确度见下方[盲测](#盲测色彩准确度对比)。负片作者：hpbirkeland、jonathanBieler、clennep；本图以 CC BY-SA 4.0 发布（[图片署名](docs/assets/CREDITS.md)）。
 
 ---
 
@@ -92,6 +92,8 @@ FilmColor 直接嵌入摄影师最常用的后期软件——无需打开浏览�
 
 ![FilmColor v2.0 Lightroom Classic 与 Photoshop UXP 插件界面](docs/assets/ui_preview.png)
 
+> 示例照片：jjbraun 的 `10-1.NEF`（[PIXLS.us](https://discuss.pixls.us/t/43472)，CC BY-SA 4.0）；本图以 CC BY-SA 4.0 发布（[图片署名](docs/assets/CREDITS.md)）。
+
 ### Adobe Lightroom Classic（`FilmColor.lrplugin`）
 - **真 16-bit 正向正片工作流**：输出标定后的 16-bit 线性正片 TIFF，自动导入图库并堆叠在原始负片上方——所有 Lightroom 原生滑块、曲线、HSL 与 AI 蒙版均正向工作。
 - **精确继承裁剪、拉直与方向**：还原你在 Lightroom 中设置的裁剪框、拉直角度与旋转，并在裁剪范围内采样片基，自动屏蔽齿孔与背光板漏光。
@@ -110,6 +112,8 @@ FilmColor 直接嵌入摄影师最常用的后期软件——无需打开浏览�
 每套预设都会根据当前画面的影调与色彩内容自适应调整，并通过 33³ float32 三线性 3D LUT 实时切换（预览约 130 ms）：
 
 ![FilmColor v2.0 10 套自适应风格预设](docs/assets/showcase_presets.jpg)
+
+> 负片：hpbirkeland 的 `1997_0001.cr2`（[PIXLS.us](https://discuss.pixls.us/t/20293)，CC BY-SA 4.0）；本图以 CC BY-SA 4.0 发布（[图片署名](docs/assets/CREDITS.md)）。
 
 `Frontier（富士冲印）` · `Noritsu（诺日士）` · `Leica Look（徕卡影调）` · `Standard（标准平衡）` · `Natural（自然纪实）` · `Portrait（人像肤色）` · `Vivid（鲜明）` · `Print Classic（经典相纸）` · `Cinema（电影质感）` · `Linear（线性底稿）`
 
