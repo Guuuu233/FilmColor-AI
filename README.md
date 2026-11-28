@@ -1,12 +1,12 @@
 <div align="center">
 
-# FilmColor v2.0
+# FilmColor
 
 **Physics-First Film Negative Inversion for Adobe Lightroom Classic & Adobe Photoshop**
 
-**English** · [简体中文](README.zh-CN.md) · [Download v2.0.1](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.1)
+**English** · [简体中文](README.zh-CN.md) · [Download](https://github.com/Guuuu233/FilmColor-AI/releases/latest)
 
-[![Release](https://img.shields.io/github/v/release/Guuuu233/FilmColor-AI?color=0f766e&label=Release)](https://github.com/Guuuu233/FilmColor-AI/releases)
+[![Download](https://img.shields.io/badge/Download-Latest%20Release-0f766e)](https://github.com/Guuuu233/FilmColor-AI/releases/latest)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows-1e293b)](#installation)
 [![Adobe](https://img.shields.io/badge/Plugins-Lightroom%20Classic%20%2B%20Photoshop%20UXP-0f766e)](#native-plugin-experience)
 [![Languages](https://img.shields.io/badge/UI%20Languages-8%20Built--in-334155)](#8-built-in-languages)
@@ -17,20 +17,9 @@
 
 ---
 
-![FilmColor v2.0 Before and After Negative Conversion](docs/assets/showcase_before_after.jpg)
+![FilmColor before and after negative conversion](docs/assets/showcase_before_after.jpg)
 
-> **Color-negative RAW camera scans that photographers shared on [PIXLS.us](https://discuss.pixls.us/c/playraw/30) under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)**, converted directly to 16-bit positives by **FilmColor v2.0** with no manual adjustments. Left: original orange-masked negative. Center: **Frontier** preset. Right: **Leica Look** preset. Some of these public frames were among the unpaired negatives used in training, so they show typical output rather than blind accuracy; see the [blind benchmark](#blind-color-accuracy-benchmark) for frames the model never saw. Negatives by hpbirkeland, jonathanBieler and clennep; this composite is licensed CC BY-SA 4.0 ([image credits](docs/assets/CREDITS.md)).
-
----
-
-## What's New in v2.0
-
-- **New default color engine.** The learned residual stage is retrained with a perceptual objective that protects tonal range, chroma and clean blacks, on **186 paired lab-print frames plus 177 visually verified frames**. On the frozen blind holdout it lowers median color error from 8.19 to **8.14**, mean from 8.95 to **8.75** and P90 from 13.46 to **13.14** ΔE2000, improving 73 frames and worsening 32 (Wilcoxon *p* = 3.0 × 10⁻⁶; details below).
-- **10 scene-adaptive style presets.** `Frontier`, `Noritsu`, `Leica Look` and the rest now adapt to each frame's tonal and color content instead of applying a fixed look.
-- **Exact Lightroom crop & straighten.** Crops and rotation angles set in Lightroom Classic are reproduced pixel-exactly in the converted positive.
-- **Faster and leaner.** Lower peak memory on full-resolution 16-bit export (chunked writing), 4.4× faster LZW TIFF decoding, and a bridge that renders, decodes and encodes outside its cache lock so slider drags stay responsive.
-- **Hardening.** More than 20 robustness fixes across scanner TIFF parsing, inversion, export, the local bridge, and both plugins (including clean shutdown during long batch exports and NaN-safe responses to Lightroom and Photoshop).
-- **Upgrade in place.** Plugin identifiers are unchanged, so installing v2.0 over v1.0 keeps your Lightroom and Photoshop settings.
+> **Color-negative RAW camera scans that photographers shared on [PIXLS.us](https://discuss.pixls.us/c/playraw/30) under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)**, converted directly to 16-bit positives by **FilmColor** with no manual adjustments. Left: original orange-masked negative. Center: **Frontier** preset. Right: **Leica Look** preset. Some of these public frames were among the unpaired negatives used in training, so they show typical output rather than blind accuracy; see the [blind benchmark](#blind-color-accuracy-benchmark) for frames the model never saw. Negatives by hpbirkeland, jonathanBieler and clennep; this composite is licensed CC BY-SA 4.0 ([image credits](docs/assets/CREDITS.md)).
 
 ---
 
@@ -38,7 +27,7 @@
 
 Most film conversion tools force a trade-off between **color accuracy**, **editing ergonomics**, and **ecosystem lock-in**. FilmColor runs a calibrated physical density-space inversion engine locally, inside both **Adobe Lightroom Classic** and **Adobe Photoshop**:
 
-| Capability | **FilmColor v2.0** | Negative Lab Pro (NLP) | NegPy v0.69.0 |
+| Capability | **FilmColor** | Negative Lab Pro (NLP) | NegPy |
 | :--- | :--- | :--- | :--- |
 | **Adobe Lightroom Classic Native Plugin** | **Yes** (Darkroom dialog + auto-stack) | Yes (Dialog) | No (standalone app) |
 | **Adobe Photoshop Native Plugin** | **Yes** (UXP v5 panel, 16-bit layer) | No | No |
@@ -54,35 +43,35 @@ Most film conversion tools force a trade-off between **color accuracy**, **editi
 
 ## Blind Color Accuracy Benchmark
 
-FilmColor v2.0, FilmColor v1.0 and **NegPy v0.69.0** were scored on the same **179-frame frozen blind holdout**: 69 orange-mask negatives (camera-scanned RAW and scanner) and 110 blue-base scanner negatives. None of these frames was used to train or tune any FilmColor version. Each conversion is compared with the lab print of the same frame using the perceptual color difference **CIEDE2000 (ΔE2000, lower is better)**, after automatic registration. FilmColor is scored engine-only (no style preset), with roll pooling, exactly as for the published v1.0 numbers.
+FilmColor and **NegPy** were scored on the same **179-frame frozen blind holdout**: 69 orange-mask negatives (camera-scanned RAW and scanner) and 110 blue-base scanner negatives. None of these frames was used to train or tune FilmColor. Each conversion is compared with the lab print of the same frame using the perceptual color difference **CIEDE2000 (ΔE2000, lower is better)**, after automatic registration. FilmColor is scored engine-only (no style preset), with roll pooling.
 
-![FilmColor v2.0 vs v1.0 vs NegPy on the 179-frame blind holdout](docs/assets/benchmark_accuracy.png)
+![FilmColor vs NegPy on the 179-frame blind holdout](docs/assets/benchmark_accuracy.png)
 
-| Blind holdout subset | Frames | **v2.0** median / mean / P90 | v1.0 median / mean / P90 | NegPy v0.69.0 median / mean / P90 | **v2.0 beats NegPy** | **v2.0 vs v1.0** (better / worse) |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **All frozen holdout** | **179** | **8.14 / 8.75 / 13.14** | 8.19 / 8.95 / 13.46 | 15.45 / 16.10 / 22.93 | **163 / 179 (91.1%)** | **73 / 32** (*p* = 3.0 × 10⁻⁶) |
-| **Orange-mask camera & scanner** | **69** | **6.61 / 7.94** / 14.20 | 6.68 / 8.12 / **13.48** | 12.08 / 12.59 / 18.22 | **54 / 69 (78.3%)** | **47 / 22** (*p* = 8.8 × 10⁻⁴) |
-| **Blue-base scanner negatives** | **110** | **8.73 / 9.26 / 12.65** | 8.77 / 9.47 / 13.45 | 17.65 / 18.30 / 23.99 | **109 / 110 (99.1%)** | **26 / 10** (*p* = 9.2 × 10⁻⁴) |
+| Blind holdout subset | Frames | **FilmColor** median / mean / P90 | NegPy median / mean / P90 | **Frames where FilmColor is closer to the lab print** |
+| :--- | :---: | :---: | :---: | :---: |
+| **All frozen holdout** | **179** | **8.14 / 8.75 / 13.14** | 15.45 / 16.10 / 22.93 | **163 / 179 (91.1%)** |
+| **Orange-mask camera & scanner** | **69** | **6.61 / 7.94 / 14.20** | 12.08 / 12.59 / 18.22 | **54 / 69 (78.3%)** |
+| **Blue-base scanner negatives** | **110** | **8.73 / 9.26 / 12.65** | 17.65 / 18.30 / 23.99 | **109 / 110 (99.1%)** |
 
-*p*-values: two-sided Wilcoxon signed-rank test on per-frame ΔE2000, v2.0 vs v1.0. Without roll pooling (single-frame mode), median ΔE2000 is 8.10 for v2.0 and 8.35 for v1.0.
+The per-frame differences are significant in every subset (two-sided Wilcoxon signed-rank test: *p* = 2.7 × 10⁻²⁷ overall, 6.0 × 10⁻⁸ orange-mask, 9.5 × 10⁻²⁰ blue-base). Without roll pooling (single-frame mode), FilmColor's median ΔE2000 is 8.10.
 
 **Notes on the benchmark**
 
-- The v1.0 README also reported 46 extra frames (`n = 225`). Four of them are now in the v2.0 training set, so v2.0 cannot be scored blind on that group and all three tools are compared on the 179 frozen frames only.
-- On this holdout the orange-mask P90 is higher for v2.0 (14.20 vs 13.48). It is driven by two snow scenes (A184, A189) whose cached film-base densities were recorded by an older estimator at about half the value the shipping pipeline measures. The v2.0 plugin, which measures the film base itself, renders both frames correctly.
+- NegPy version: v0.69.0. Negative Lab Pro is closed source and runs only inside Lightroom's interactive dialog, so it could not be scored automatically.
+- Two snow scenes (A184, A189) are scored with film-base densities cached from an earlier estimator (about half the value the plugin measures itself), so their scores here do not reflect the plugin's output; both frames render correctly in the plugin.
 - Reproduce with `scripts/eval_ho179.py` (frozen holdout data is not distributed).
 
 ### Runtime Speed & Memory Footprint
 
-Measured on macOS Apple Silicon (18 GiB RAM, CPU only). Interactive figures are from the v1.0 release build; v2.0 adds further export and bridge optimizations.
+Measured on an Apple Silicon Mac (18 GiB RAM, CPU only) with a 20-megapixel camera-scanned RAW negative; ranges cover two runs.
 
-| Operation | Measured Latency / Footprint |
+| Operation | Measured |
 | :--- | :--- |
-| **Interactive 3D LUT Darkroom Preview (1.7 MP)** | **130.7 ms** (warm LUT cache) / **165.2 ms** (full grade) |
-| **20 MP Camera RAW Preview (`half_size` single-pass)** | **3.30 s** |
-| **20 MP Camera RAW Full-Resolution 16-bit TIFF Export** | **12.95 s** |
-| **Idle Resident RAM (local bridge daemon)** | **~61 MB** (auto-trims caches at 5 min, auto-exits at 30 min) |
-| **Offline Standalone Bundle Size (v2.0)** | **34.0 MB** zip (macOS arm64) |
+| **First preview of a 20 MP camera RAW** | **2.0–3.1 s** |
+| **Preview refresh after changing a preset or slider** | **64–85 ms** |
+| **Full-resolution 16-bit TIFF export (20 MP)** | **24–26 s** |
+| **Idle memory of the local engine** | **about 58 MB** (caches trimmed after 5 min idle, exits after 30 min) |
+| **Offline bundle size** | **34.0 MB** zip (macOS arm64) |
 
 ---
 
@@ -90,7 +79,7 @@ Measured on macOS Apple Silicon (18 GiB RAM, CPU only). Interactive figures are 
 
 FilmColor integrates directly into the tools film photographers already use — no browser tabs, no cloud uploads, and no Python setup required.
 
-![FilmColor v2.0 Lightroom Classic and Photoshop UXP Interfaces](docs/assets/ui_preview.png)
+![FilmColor Lightroom Classic and Photoshop UXP interfaces](docs/assets/ui_preview.png)
 
 > Sample photo: `10-1.NEF` by jjbraun ([PIXLS.us](https://discuss.pixls.us/t/43472), CC BY-SA 4.0); this image is licensed CC BY-SA 4.0 ([image credits](docs/assets/CREDITS.md)).
 
@@ -100,7 +89,7 @@ FilmColor integrates directly into the tools film photographers already use — 
 - **Roll Analysis & Batch Sync**: Pool film-base and color-cast statistics across an entire roll for consistent frame-to-frame color.
 - **Interactive Darkroom Dialog**: Live Positive / Split A-B / Original Negative / Clip Overlay views with exposure, contrast, highlights, shadows, white balance, tint, and saturation sliders.
 
-### Adobe Photoshop (`FilmColor-v2.0-Photoshop.ccx`)
+### Adobe Photoshop (UXP panel, `.ccx` installer)
 - **Native UXP v5 Panel**: Matches the Adobe Spectrum dark UI with one-click preset chips, live preview, and fine-tuning sliders.
 - **Auto-Starting Local Bridge**: Automatically launches the bundled local engine on demand — no terminal commands.
 - **Non-Destructive 16-bit Positive Layer**: Inserts the converted 16-bit positive directly into your active document for retouching and printing.
@@ -109,9 +98,9 @@ FilmColor integrates directly into the tools film photographers already use — 
 
 ## 10 Scene-Adaptive Style Presets
 
-Each preset adapts to the frame's own tonal range and color content, and switches in real time (~130 ms preview via a 33³ float32 trilinear 3D LUT):
+Each preset adapts to the frame's own tonal range and color content, and switches in real time (the preview refreshes in under 0.1 s, via a 33³ float32 trilinear 3D LUT):
 
-![FilmColor v2.0 10 Adaptive Style Presets](docs/assets/showcase_presets.jpg)
+![FilmColor 10 adaptive style presets](docs/assets/showcase_presets.jpg)
 
 > Negative: `1997_0001.cr2` by hpbirkeland ([PIXLS.us](https://discuss.pixls.us/t/20293), CC BY-SA 4.0); this image is licensed CC BY-SA 4.0 ([image credits](docs/assets/CREDITS.md)).
 
@@ -138,10 +127,10 @@ Switch interface language live inside both Lightroom Classic and Photoshop with 
 
 ### Option 1 — Zero-Dependency Offline Bundle (Recommended)
 
-Download the pre-built archive for your platform from **[Releases v2.0.1](https://github.com/Guuuu233/FilmColor-AI/releases/tag/v2.0.1)** — no Python, Conda, or command-line tools required:
+Download the pre-built archive for your platform from the **[latest release](https://github.com/Guuuu233/FilmColor-AI/releases/latest)** — no Python, Conda, or command-line tools required:
 
-- **macOS (Apple Silicon)**: `FilmColor-v2.0-macOS-arm64.zip` (34.0 MB)
-- **Windows (64-bit)**: `FilmColor-v2.0-Windows-x64.zip` (built automatically by GitHub Actions and attached to the release)
+- **macOS (Apple Silicon)**: the archive ending in `macOS-arm64.zip` (34.0 MB)
+- **Windows (64-bit)**: the archive ending in `Windows-x64.zip`
 
 #### Lightroom Classic Setup
 1. Unzip the downloaded archive to a permanent folder.
@@ -149,10 +138,10 @@ Download the pre-built archive for your platform from **[Releases v2.0.1](https:
 3. Select any scanned negative(s) → **File** → **Plug-in Extras** → **FilmColor Negative Conversion...** (or **FilmColor Quick Convert** for one-click batch conversion).
 
 #### Photoshop Setup
-1. Double-click `FilmColor-v2.0-Photoshop.ccx` (installed via Creative Cloud Desktop), **or** load `plugins/photoshop-uxp/manifest.json` via the Adobe UXP Developer Tool.
-2. Open **Plugins** → **FilmColor v2.0** in Photoshop.
+1. Double-click the `.ccx` file in the unzipped folder (installed via Creative Cloud Desktop), **or** load `plugins/photoshop-uxp/manifest.json` via the Adobe UXP Developer Tool.
+2. Open **Plugins** → **FilmColor** in Photoshop.
 
-Upgrading from v1.0 or v2.0.0: install over the existing copy; settings are kept.
+Updating: install the new release over the existing copy; your Lightroom and Photoshop settings are kept.
 
 ---
 
@@ -184,7 +173,7 @@ uv run --no-group ml --with pyinstaller scripts/build_standalone.py --out dist
 
 - **100% Local & Private**: All RAW decoding (`rawpy` / LibRaw) and color inversion run on your machine via `127.0.0.1:18765` — no telemetry, no cloud calls.
 - **3 Selectable Engines**:
-  - **FilmColor v2.0 (Recommended)** — Default calibrated physical inversion + perceptual residual model with adaptive style presets.
+  - **FilmColor (recommended, default)** — Calibrated physical inversion plus a learned residual color model, trained with a perceptual objective (tonal range, chroma, clean blacks) on 186 paired lab-print frames and 177 visually verified frames, with adaptive style presets.
   - **Physical Direct Engine** — Pure analytical density-space inversion.
   - **Classic Engine** — Legacy baseline engine retained for backward compatibility.
 - **Lean Runtime**: Inference uses only `numpy`, `scipy`, `Pillow`, `rawpy`, `tifffile`, and `exifread` — no PyTorch or other deep-learning runtime.
